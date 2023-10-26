@@ -2,6 +2,10 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
+- Next js is a framework for building fast and search-engine friendly applications.
+- It is built on top of React.
+- It enables server-side rendering (SSR), static site generation (SSG), and client-side rendering (CSR) for your React applications
+
 First, run the development server:
 
 ```bash
