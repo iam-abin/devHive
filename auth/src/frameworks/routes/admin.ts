@@ -3,9 +3,9 @@ import express from "express"
 export const adminRouter = (dependencies: any)=>{
     const router = express.Router();
 
-    router.post("/api/v1/admin/signup");
-    router.post("/api/v1/admin/signin");
-    router.post("/api/v1/admin/signout");
+    router.post("/signup");
+    router.post("/signin");
+    router.post("/signout");
 
     return router
 }

@@ -3,11 +3,11 @@ import express from "express"
 export const recruiterRouter = (dependencies: any)=>{
     const router = express.Router();
 
-    router.post("/api/v1/recruiter/signup",[
+    router.post("/signup",[
         
     ]);
-    router.post("/api/v1/recruiter/signin");
-    router.post("/api/v1/recruiter/signout");
+    router.post("/signin");
+    router.post("/signout");
 
     return router
 }
