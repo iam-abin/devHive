@@ -11,18 +11,17 @@ const repository = () => {
 		email: string;
 		phone: number;
 		password: string;
-		role: string;
-		isActive: boolean;
+		userType: string;
+		// isActive: boolean;
 		// userId: string;
 	}
-
 	// 2.
 	interface UserDocument extends mongoose.Document {
 		name: string;
 		email: string;
 		phone: number;
 		password: string;
-		role: string;
+		userType: string;
 		isActive: boolean;
 		userId: string;
 		createdAt: string;
@@ -42,8 +41,8 @@ const repository = () => {
 			email: attributes.email,
 			phone: attributes.phone,
 			password: attributes.password,
-			role: attributes.role,
-			isActive: attributes.isActive,
+			userType: attributes.userType,
+			// isActive: attributes.isActive,
 		});
 	};
 
@@ -53,13 +52,23 @@ const repository = () => {
 		userSchema
 	);
 
+	// interfaces for main
+
+	interface UpdatePasswordInput {
+		id: string;
+		newPassword: string;
+	  }
+
+
+	// main code
+
 	return {
-		register: async (userData: any) => {
+		register: async (userData: UserAttributes) => {
 			const userObject = new UserModel(userData);
 			return userObject.save();
 		},
 
-		updatePassword: async ({ id , newPassword}: any) => {
+		updatePassword: async ({ id , newPassword}: UpdatePasswordInput) => {
 			const user = await UserModel.findById({id});
 			if(!user){
 				throw new Error("User not found")
@@ -70,7 +79,10 @@ const repository = () => {
 
 		},
 
-		// delete: async () => {},
+		getByEmail: async (email: string) => {
+			const user = await UserModel.findOne({email: email});
+			return user
+		},
 
 		// getById: async () => {},
 	};

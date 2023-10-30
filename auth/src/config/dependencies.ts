@@ -1,3 +1,4 @@
-import repositories from "../frameworks/repositories/mongo"
+import repositories from "../frameworks/repositories/mongo";
+import useCases from "../useCases";
 
-export default { ...repositories }
+export default { ...repositories, useCases };

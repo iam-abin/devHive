@@ -1,7 +1,7 @@
 import { User } from "../../entities";
 import { UserDataSignup } from "../../frameworks/types/userInterface";
 
-export const signin = (dependencies: any) => {
+export  = (dependencies: any) => {
 	const { usersRepository } = dependencies;
 
 	if (!usersRepository) {

@@ -1,7 +1,7 @@
 import express from "express";
 
 import { adminRouter } from "./admin";
-import { candidateRouter } from "./candidate";
+import candidateRouter from "./candidate";
 import { recruiterRouter } from "./recruiter";
 
 export const routes = (dependencies: any) => {

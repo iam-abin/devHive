@@ -1,13 +1,15 @@
 import express from "express";
-import { candidateControllers } '../../controllers'
+import { candidateControllers } from "../../controllers";
 
 
-export const candidateRouter = (dependencies: any)=>{
+export = (dependencies: any)=>{
     const router = express.Router();
 
-    router.post("/api/v1/candidate/signup");
-    router.post("/api/v1/candidate/signin");
-    router.post("/api/v1/candidate/signout");
+    const { candidateSignupController } = candidateControllers(dependencies)
+
+    router.post("/signup", candidateSignupController);
+    router.post("/signin", );
+    router.post("/signout");
 
     return router
 }
