@@ -1,6 +1,9 @@
 import candidateSignupUseCase from "./signup";
 import getCandidateByEmailUseCase from "./getCandidateByEmail";
-import updateCandidatePasswordUseCase from "./updatePassword"
+import updateCandidatePasswordUseCase from "./updatePassword";
 
-
-export { candidateSignupUseCase, getCandidateByEmailUseCase, updateCandidatePasswordUseCase };
+export {
+	candidateSignupUseCase,
+	getCandidateByEmailUseCase,
+	updateCandidatePasswordUseCase,
+};

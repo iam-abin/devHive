@@ -10,6 +10,8 @@ import {
 	updateRecruiterPasswordUseCase,
 } from "./recruiter";
 
+import { getAdminByEmailUseCase } from "./admin";
+
 export default {
 	candidateSignupUseCase,
 	getCandidateByEmailUseCase,
@@ -18,4 +20,6 @@ export default {
 	recruiterSignupUseCase,
 	getRecruiterByEmailUseCase,
 	updateRecruiterPasswordUseCase,
+
+	getAdminByEmailUseCase,
 };

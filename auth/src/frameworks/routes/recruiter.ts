@@ -2,7 +2,6 @@ import express from "express";
 
 import { requireAuth } from "@abijobportal/common";
 import { recruiterControllers } from "../../controllers";
-
 import { signupRequestBodyValidatorMiddlewares } from "../middlewares/signupValidation";
 import { signinRequestBodyValidatorMiddlewares } from "../middlewares/signinValidation";
 
