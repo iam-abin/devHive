@@ -1,10 +1,15 @@
 import express from "express"
 
+import { adminControllers } from "../../controllers";
+import { signinRequestBodyValidatorMiddlewares } from "../middlewares/signinValidation";
+
 export const adminRouter = (dependencies: any)=>{
     const router = express.Router();
 
-    router.post("/signin");
-    router.post("/signout");
+    const { adminSigninController, adminSignoutController } = adminControllers(dependencies)
+
+    router.post("/signin", signinRequestBodyValidatorMiddlewares, adminSigninController);
+    router.post("/signout", adminSignoutController);
 
     return router
 }
