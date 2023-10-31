@@ -2,20 +2,33 @@ import express from "express";
 
 import { requireAuth } from "@abijobportal/common";
 import { candidateControllers } from "../../controllers";
+import { signupRequestBodyValidatorMiddlewares } from "../middlewares/signupValidation";
+import { signinRequestBodyValidatorMiddlewares } from "../middlewares/signinValidation";
 
+export const candidateRouter = (dependencies: any) => {
+	const router = express.Router();
 
-export const candidateRouter = (dependencies: any)=>{
-    const router = express.Router();
+	const {
+		candidateSignupController,
+		candidateSigninController,
+		candidateSignoutController,
+		candidateUpdatePasswordController,
+	} = candidateControllers(dependencies);
 
-    const { candidateSignupController, candidateSigninController, candidateSignoutController, candidateUpdatePasswordController } = candidateControllers(dependencies)
+	router.post(
+		"/signup",
+		signupRequestBodyValidatorMiddlewares,
+		candidateSignupController
+	);
+	router.post(
+		"/signin",
+		signinRequestBodyValidatorMiddlewares,
+		candidateSigninController
+	);
 
-    router.post("/signup", candidateSignupController);
-    router.post("/signin", candidateSigninController);
-    router.post("/signin", candidateSigninController);
-    router.put("/updatePassword", candidateUpdatePasswordController);
+	// router.post("/signout",requireAuth, candidateSignoutController);
+	router.put("/updatePassword", candidateUpdatePasswordController);
+	router.post("/signout", candidateSignoutController);
 
-    // router.post("/signout",requireAuth, candidateSignoutController);
-    router.post("/signout", candidateSignoutController);
-
-    return router
-}
+	return router;
+};

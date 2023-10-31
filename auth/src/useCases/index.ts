@@ -1,3 +1,21 @@
-import { candidateSignupUseCase, getCandidateByEmailUseCase, updatePasswordUseCase } from "./candidate";
+import {
+	candidateSignupUseCase,
+	getCandidateByEmailUseCase,
+	updateCandidatePasswordUseCase,
+} from "./candidate";
 
-export default { candidateSignupUseCase, getCandidateByEmailUseCase, updatePasswordUseCase };
+import {
+	recruiterSignupUseCase,
+	getRecruiterByEmailUseCase,
+	updateRecruiterPasswordUseCase,
+} from "./recruiter";
+
+export default {
+	candidateSignupUseCase,
+	getCandidateByEmailUseCase,
+	updateCandidatePasswordUseCase,
+
+	recruiterSignupUseCase,
+	getRecruiterByEmailUseCase,
+	updateRecruiterPasswordUseCase,
+};
