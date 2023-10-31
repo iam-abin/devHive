@@ -1,15 +1,15 @@
 import express from "express";
 import morgan from "morgan";
-import dotenv from "dotenv"
+// import dotenv from "dotenv"
 
 import { routes } from './frameworks/routes'
 import dependencies from "./config/dependencies";
 import { NotFoundError, currentUser, errorHandler } from "@abijobportal/common";
 
 const app = express();
-dotenv.config()
+// dotenv.config()
 
-const API_PREFIX = process.env.API_PREFIX || '/api/v1/auth'
+const API_PREFIX = process.env.API_PREFIX || '/api/v1/admin'
 
 app.set("trust proxy", true); // trust first proxy
 

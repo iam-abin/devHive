@@ -4,7 +4,7 @@ import { requireAuth } from "@abijobportal/common";
 import { candidateControllers } from "../../controllers";
 
 
-export = (dependencies: any)=>{
+export const candidateRouter = (dependencies: any)=>{
     const router = express.Router();
 
     const { candidateSignupController, candidateSigninController, candidateSignoutController, candidateUpdatePasswordController } = candidateControllers(dependencies)
