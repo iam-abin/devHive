@@ -1,3 +1,3 @@
-import { candidateSignupUseCase, candidateSigninUseCase, getCandidateByEmailUseCase } from "./candidate";
+import { candidateSignupUseCase, getCandidateByEmailUseCase, updatePasswordUseCase } from "./candidate";
 
-export default { candidateSignupUseCase, candidateSigninUseCase, getCandidateByEmailUseCase };
+export default { candidateSignupUseCase, getCandidateByEmailUseCase, updatePasswordUseCase };

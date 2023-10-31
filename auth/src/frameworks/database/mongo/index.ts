@@ -1,4 +1,4 @@
-import schemas from "./schemas";
+import schemas from "./models";
 
 
 

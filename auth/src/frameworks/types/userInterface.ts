@@ -11,3 +11,8 @@ export interface UserDataSignin {
 	password: string;
 	userType: string;
 }
+
+export interface UpdatePasswordInput {
+	id: string;
+	newPassword: string;
+}
