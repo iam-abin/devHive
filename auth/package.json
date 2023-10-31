@@ -5,12 +5,12 @@
   "main": "index.ts",
   "scripts": {
     "start": "ts-node-dev --poll index.ts",
-    "dev": "nodemon ts-node-dev  index.ts"
+    "dev": "nodemon index.ts"
   },
   "author": "abin",
   "license": "ISC",
   "dependencies": {
-    "@abijobportal/common": "^1.0.7",
+    "@abijobportal/common": "^1.0.8",
     "@types/bcryptjs": "^2.4.5",
     "@types/express": "^4.17.20",
     "@types/jsonwebtoken": "^9.0.4",

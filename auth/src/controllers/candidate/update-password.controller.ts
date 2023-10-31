@@ -1,12 +1,13 @@
 import { Request, Response } from "express";
 export = (dependencies: any)=>{
 
-    const { useCases: { updatePasswordUseCase }} = dependencies
+    const { useCases: { updateCandidatePasswordUseCase }} = dependencies
 
     return async (req: Request, res: Response)=>{
         const {id, password} = req.body;
+        
 
-        const user = await updatePasswordUseCase(dependencies).execute({
+        const user = await updateCandidatePasswordUseCase(dependencies).execute({
             id, password
         });
 

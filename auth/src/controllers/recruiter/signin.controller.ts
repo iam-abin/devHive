@@ -6,7 +6,7 @@ import { createJwtToken } from "../../frameworks/services/jwtToken";
 
 export = (dependencies: any) => {
 	const {
-		useCases: { getCandidateByEmailUseCase },
+		useCases: { getRecruiterByEmailUseCase },
 	} = dependencies;
 
 	return async (req: Request, res: Response) => {
@@ -14,7 +14,7 @@ export = (dependencies: any) => {
 			const { email, password } = req.body;
 
             // check user exist
-			const isExistingUser = await getCandidateByEmailUseCase(
+			const isExistingUser = await getRecruiterByEmailUseCase(
 				dependencies
 			).execute(email);
 
@@ -34,20 +34,20 @@ export = (dependencies: any) => {
             }
 
 			// Generate Jwt
-            const candidatePayloadData = {
+            const recruiterPayloadData = {
 				id: isExistingUser.id,
 				email: isExistingUser.email,
 				userType: isExistingUser.userType,
 			};
 			
             // Generate Jwt key
-			const candidateJWT = createJwtToken(candidatePayloadData);
+			const recruiterJWT = createJwtToken(recruiterPayloadData);
 
             // Store it on session object
-            // req.session = {jwt: candidateJwt};
+            // req.session = {jwt: recruiterJWT};
 
             // Store it on cookie
-            res.cookie('candidateToken', candidateJWT, { httpOnly: true })
+            res.cookie('recruiterToken', recruiterJWT, { httpOnly: true })
 
             res.status(200).json({message: "Login successful", data: isExistingUser})
 		} catch (error) {

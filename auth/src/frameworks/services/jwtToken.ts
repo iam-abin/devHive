@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 
-export const createCandidateJwtToken = (payload: {id:string,email: string,userType:string}) =>{
+export const createJwtToken = (payload: {id:string,email: string,userType:string}) =>{
     
     const createdJwtToken = jwt.sign(
         payload,

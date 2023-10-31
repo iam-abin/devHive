@@ -5,7 +5,7 @@ import { createJwtToken } from "../../frameworks/services/jwtToken";
 
 export = (dependencies: any) => {
 	const {
-		useCases: { candidateSignupUseCase, getCandidateByEmailUseCase },
+		useCases: { recruiterSignupUseCase, getRecruiterByEmailUseCase },
 	} = dependencies;
 
 	return async (req: Request, res: Response) => {
@@ -13,7 +13,7 @@ export = (dependencies: any) => {
 			const { name, email, phone, password } = req.body;
 			// const userData = req.body;
 
-			const isExistingUser = await getCandidateByEmailUseCase(
+			const isExistingUser = await getRecruiterByEmailUseCase(
 				dependencies
 			).execute(email);
 
@@ -23,34 +23,34 @@ export = (dependencies: any) => {
 			}
 
 			// userData.password = await  // password hashing can be done in schema or model
-			const newUser = await candidateSignupUseCase(dependencies).execute({
+			const newUser = await recruiterSignupUseCase(dependencies).execute({
 				name,
 				email,
 				phone,
 				password,
-				userType: "candidate",
+				userType: "recruiter",
 			});
 
 			if (!newUser) {
 				console.log("register error");
 			}
 
-			const candidatePayloadData = {
+			const recruiterPayloadData = {
 				id: newUser.id,
 				email: newUser.email,
 				userType: newUser.userType,
 			};
 
 			// Generate Jwt key
-			const candidateJWT = createJwtToken(candidatePayloadData);
+			const recruiterJWT = createJwtToken(recruiterPayloadData);
 
 			// Store it on session object
 			// req.session = {
-			// 	jwt: candidateJWT,
+			// 	jwt: recruiterJWT,
 			// };
 
             // Store it on cookie
-			res.cookie("candidateToken", candidateJWT, { httpOnly: true });
+			res.cookie("recruiterToken", recruiterJWT, { httpOnly: true });
 			res.status(201).json({
 				message: "user is register successfully",
 				data: newUser,

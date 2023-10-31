@@ -14,5 +14,5 @@ export interface UserDataSignin {
 
 export interface UpdatePasswordInput {
 	id: string;
-	newPassword: string;
+	password: string;
 }
