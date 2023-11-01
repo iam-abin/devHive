@@ -3,8 +3,9 @@ import express from "express";
 import { adminRouter } from "./admin";
 import { candidateRouter } from "./candidate";
 import { recruiterRouter } from "./recruiter";
+import { DependenciesData } from "../types/dependencyInterface";
 
-export const routes = (dependencies: any) => {
+export const routes = (dependencies: DependenciesData) => {
 	const router = express.Router();
 
 	const admin = adminRouter(dependencies);

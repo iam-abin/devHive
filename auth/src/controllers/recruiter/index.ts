@@ -3,7 +3,9 @@ import recruiterSigninController from "./signin.controller";
 import recruiterSignoutController from "./signout.controller";
 import recruiterUpdatePasswordController from "./update-password.controller";
 
-export = (dependencies: any) => {
+import { DependenciesData } from "../../frameworks/types/dependencyInterface";
+
+export = (dependencies: DependenciesData) => {
 	return {
 		recruiterSignupController: recruiterSignupController(dependencies),
 		recruiterSigninController: recruiterSigninController(dependencies),

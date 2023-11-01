@@ -1,5 +1,5 @@
 export = (dependencies: any) => {
-	const { usersRepository } = dependencies;
+	const { repositories:{usersRepository} } = dependencies;
 
 	if (!usersRepository) {
 		throw new Error("usersRepository should exist in dependencies");

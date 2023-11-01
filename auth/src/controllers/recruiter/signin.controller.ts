@@ -3,8 +3,9 @@ import { BadRequestError } from "@abijobportal/common";
 
 import { comparePassword } from "../../frameworks/services/password";
 import { createJwtToken } from "../../frameworks/services/jwtToken";
+import { DependenciesData } from "../../frameworks/types/dependencyInterface";
 
-export = (dependencies: any) => {
+export = (dependencies: DependenciesData) => {
 	const {
 		useCases: { getRecruiterByEmailUseCase },
 	} = dependencies;

@@ -1,5 +1,5 @@
-// export interface DependenciesData {
-//     useCase: useCaseData;
-//     repository: repositoryData
+export interface DependenciesData {
+    useCases: any;
+    repositories: any
 
-// }
+}

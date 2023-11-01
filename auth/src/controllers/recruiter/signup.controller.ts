@@ -2,8 +2,9 @@ import { Request, Response } from "express";
 import { BadRequestError } from "@abijobportal/common";
 
 import { createJwtToken } from "../../frameworks/services/jwtToken";
+import { DependenciesData } from "../../frameworks/types/dependencyInterface";
 
-export = (dependencies: any) => {
+export = (dependencies: DependenciesData) => {
 	const {
 		useCases: { recruiterSignupUseCase, getRecruiterByEmailUseCase },
 	} = dependencies;

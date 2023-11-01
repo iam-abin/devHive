@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
+import { DependenciesData } from "../../frameworks/types/dependencyInterface";
 
-export = (dependencies: any) => {
+export = (dependencies: DependenciesData) => {
 	return async (req: Request, res: Response) => {
 		console.log(req.currentUser);
 		

@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
-export = (dependencies: any)=>{
+import { DependenciesData } from "../../frameworks/types/dependencyInterface";
+
+export = (dependencies: DependenciesData)=>{
 
     const { useCases: { updateCandidatePasswordUseCase }} = dependencies
 
