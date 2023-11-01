@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { BadRequestError } from "@abijobportal/common";
-
 import { comparePassword } from "../../frameworks/services/password";
 import { createJwtToken } from "../../frameworks/services/jwtToken";
 import { DependenciesData } from "../../frameworks/types/dependencyInterface";
@@ -11,7 +10,6 @@ export = (dependencies: DependenciesData) => {
 	} = dependencies;
 
 	return async (req: Request, res: Response) => {
-		try {
 			const { email, password } = req.body;
 
             // check user exist
@@ -51,8 +49,6 @@ export = (dependencies: DependenciesData) => {
             res.cookie('recruiterToken', recruiterJWT, { httpOnly: true })
 
             res.status(200).json({message: "Login successful", data: isExistingUser})
-		} catch (error) {
-			console.log(error);
-		}
+		
 	};
 };
