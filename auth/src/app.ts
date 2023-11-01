@@ -1,5 +1,5 @@
-import "express-async-errors"
 import express from "express";
+import "express-async-errors"
 import morgan from "morgan";
 import dotenv from "dotenv"
 // import cookieSession from "cookie-session";
@@ -32,8 +32,7 @@ app.use(currentUser)
 // Routes
 app.use(API_PREFIX, routes(dependencies))
 
-
-app.all('*',()=>{
+app.all('*',async ()=>{
     throw new NotFoundError()
 })
 

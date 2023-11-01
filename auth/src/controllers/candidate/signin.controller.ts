@@ -11,7 +11,6 @@ export = (dependencies: DependenciesData) => {
 	} = dependencies;
 
 	return async (req: Request, res: Response) => {
-		try {
 			const { email, password } = req.body;
 
             // check user exist
@@ -50,9 +49,6 @@ export = (dependencies: DependenciesData) => {
             // Store it on cookie
             res.cookie('candidateToken', candidateJWT, { httpOnly: true })
 
-            res.status(200).json({message: "Login successful", data: isExistingUser})
-		} catch (error) {
-			console.log(error);
-		}
+            res.status(200).json({message: "Login successful", data: isExistingUser});
 	};
 };

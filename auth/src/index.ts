@@ -1,7 +1,5 @@
-import { connectDB } from "./src/config/db"
-import { app } from "./src/app";
-
-
+import { connectDB } from "./config/db"
+import { app } from "./app";
 
 
 const start = async () => {
@@ -16,12 +14,11 @@ const start = async () => {
 	// if (!process.env.MONGO_URI) {
 	// 	throw new Error("MONGO_URI must be defined");
 	// }
-	await connectDB();
 
 
-	app.listen(4000, async() => {
-
+	app.listen(4000, () => {
 		console.log("auth Listening on port 4000....");
+        connectDB();
 	});
 };
 
