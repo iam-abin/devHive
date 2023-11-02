@@ -1,13 +1,13 @@
 import express from "express"
 import { DependenciesData } from "../types/dependencyInterface";
 
-export const candidateRouter = (dependencies: DependenciesData)=>{
+export const companyRouter = (dependencies: DependenciesData)=>{
     const router = express.Router();
 
-    // candidate
+    // company
     router.get("/candidates");
     router.get("/viewProfile");
-    router.put("/candidate-blockUnblock/:id");
+    router.put("/company-blockUnblock/:id");
 
     return router
 }

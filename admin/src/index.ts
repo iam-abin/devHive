@@ -17,7 +17,7 @@ const start = async () => {
 
 
 	app.listen(4001, () => {
-		console.log("auth Listening on port 4000....");
+		console.log("admin Listening on port 4001....");
         connectDB();
 	});
 };

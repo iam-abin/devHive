@@ -7,11 +7,12 @@ const { UserModel } = schemas;
 const repository = () => {
 	return {
 
+		 // these fn's are returning a promise as async so we can defile return type as Promise<CandidateDataInterface>
+
 		register: async (userData: any) => {
 
 			const userObject = new UserModel(userData);
-			return userObject.save();
-
+			return await userObject.save();
 		},
 
 		updatePassword: async ({ id, password }: UpdatePasswordInput) => {
