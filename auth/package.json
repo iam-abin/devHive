@@ -4,8 +4,8 @@
   "description": "this is auth service",
   "main": "index.ts",
   "scripts": {
-    "start": "ts-node-dev --poll index.ts",
-    "dev": "nodemon index.ts"
+    "start": "ts-node-dev --poll src/index.ts",
+    "dev": "nodemon src/index.ts"
   },
   "author": "abin",
   "license": "ISC",

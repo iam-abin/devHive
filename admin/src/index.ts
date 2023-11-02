@@ -1,5 +1,5 @@
-import { connectDB } from "./src/config/db"
-import { app } from "./src/app";
+import { connectDB } from "./config/db"
+import { app } from "./app";
 
 
 const start = async () => {
@@ -17,7 +17,7 @@ const start = async () => {
 
 
 	app.listen(4001, () => {
-		console.log("auth Listening on port 4000....");
+		console.log("admin Listening on port 4001....");
         connectDB();
 	});
 };

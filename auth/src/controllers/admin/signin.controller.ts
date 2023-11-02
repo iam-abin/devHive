@@ -10,7 +10,6 @@ export = (dependencies: DependenciesData) => {
 	} = dependencies;
 
 	return async (req: Request, res: Response) => {
-		try {
 			const { email, password } = req.body;
 
             // check admin exist
@@ -49,9 +48,6 @@ export = (dependencies: DependenciesData) => {
             // Store it on cookie
             res.cookie('adminToken', adminJWT, { httpOnly: true })
 
-            res.status(200).json({message: "Login successfull", data: isExistingUser})
-		} catch (error) {
-			console.log(error);
-		}
+            res.status(200).json({message: "Login successfull", data: isExistingUser});
 	};
 };

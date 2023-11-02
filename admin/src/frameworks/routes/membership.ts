@@ -1,6 +1,7 @@
 import express from "express"
+import { DependenciesData } from "../types/dependencyInterface";
 
-export const membershipRouter = (dependencies: any)=>{
+export const membershipRouter = (dependencies: DependenciesData)=>{
     const router = express.Router();
 
     // recruiter

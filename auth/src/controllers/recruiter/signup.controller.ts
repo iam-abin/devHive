@@ -10,7 +10,6 @@ export = (dependencies: DependenciesData) => {
 	} = dependencies;
 
 	return async (req: Request, res: Response) => {
-		try {
 			const { name, email, phone, password } = req.body;
 			// const userData = req.body;
 
@@ -56,8 +55,5 @@ export = (dependencies: DependenciesData) => {
 				message: "user is register successfully",
 				data: newUser,
 			});
-		} catch (error) {
-			console.log(error);
-		}
 	};
 };
