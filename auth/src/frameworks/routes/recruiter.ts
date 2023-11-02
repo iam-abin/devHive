@@ -28,8 +28,9 @@ export const recruiterRouter = (dependencies: DependenciesData) => {
 	);
 
 	// router.post("/signout",requireAuth, candidateSignoutController);
-	router.put("/updatePassword", recruiterUpdatePasswordController);
-	router.post("/signout", recruiterSignoutController);
+	router.put("/forgotPassword", recruiterUpdatePasswordController);
+	router.put("/resetPassword", requireAuth, recruiterUpdatePasswordController);
+	router.post("/signout", requireAuth, recruiterSignoutController);
 
 	return router;
 };
