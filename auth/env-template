@@ -1,6 +1,0 @@
-# DEVHIVE_MONGO_URL_AUTH = mongodb+srv://iamabin1100:iamabin1100@secondproject.ay2ng2v.mongodb.net/auth
-DEVHIVE_MONGO_URL_AUTH = 'auth mongo url'
-# JWT
-JWT_SECRET_KEY = 'your jwt key'  
-# JWT_RECRUITER_SECRET = this_is_jwt_recruiter_secret123
-# JWT_ADMIN_SECRET = this_is_jwt_admin_secret123
