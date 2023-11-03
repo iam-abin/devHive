@@ -6,7 +6,9 @@ export = (dependencies: DependenciesData)=>{
     const { useCases: { updateCandidatePasswordUseCase }} = dependencies
 
     return async (req: Request, res: Response)=>{
-        // console.log(req.currentUser,"jdfjasidjfiashdfidyyyyyyyyyyyyyyyyyyyyyyyy");
+        console.log(req,"//////////////////////////////");
+        
+        console.log(req.currentUser,"jdfjasidjfiashdfidyyyyyyyyyyyyyyyyyyyyyyyy");
         
         const {id, password} = req.body;
         

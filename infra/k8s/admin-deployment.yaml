@@ -1,28 +1,28 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata: 
-  name: auth-depl
+  name: admin-depl
 spec:
   replicas: 1
   selector:
     matchLabels: 
-      app: auth
+      app: admin
   template: 
     metadata: 
       labels: 
-        app: auth
+        app: admin
     spec: 
       containers: 
-        - name: auth
-          image: abinv/auth
+        - name: admin
+          image: abinv/admin
           env:
             - name: MONGO_URI
-              value: 'mongodb://auth-mongo-srv:27017/auth'
-            - name: MONGO_URL_AUTH
+              value: 'mongodb://admin-mongo-srv:27017/admin'
+            - name: MONGO_URL_ADMIN
               valueFrom: 
                 secretKeyRef:
-                  name: devhive-mongo-url-auth
-                  key: MONGO_URL_AUTH
+                  name: devhive-mongo-url-admin
+                  key: MONGO_URL_ADMIN
             - name: JWT_SECRET_KEY
               valueFrom: 
                 secretKeyRef:
@@ -32,12 +32,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata: 
-  name: auth-srv
+  name: admin-srv
 spec: 
   selector: 
-    app: auth
+    app: admin
   ports: 
-    - name: auth
+    - name: admin
       protocol: TCP
       port: 3000
       targetPort: 3000
