@@ -1,6 +1,6 @@
 import express from "express";
 
-import { requireAuth } from "@abijobportal/common";
+import { requireAuthRecruiter } from "@abijobportal/common";
 import { recruiterControllers } from "../../controllers";
 import { signupRequestBodyValidatorMiddlewares } from "../middlewares/signupValidation";
 import { signinRequestBodyValidatorMiddlewares } from "../middlewares/signinValidation";
@@ -29,8 +29,8 @@ export const recruiterRouter = (dependencies: DependenciesData) => {
 
 	// router.post("/signout",requireAuth, candidateSignoutController);
 	router.put("/forgotPassword", recruiterUpdatePasswordController);
-	router.put("/resetPassword", requireAuth, recruiterUpdatePasswordController);
-	router.post("/signout", requireAuth, recruiterSignoutController);
+	router.put("/resetPassword", requireAuthRecruiter, recruiterUpdatePasswordController);
+	router.post("/signout", requireAuthRecruiter, recruiterSignoutController);
 
 	return router;
 };
