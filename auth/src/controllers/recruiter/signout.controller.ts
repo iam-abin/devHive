@@ -3,12 +3,14 @@ import { DependenciesData } from "../../frameworks/types/dependencyInterface";
 
 export = (dependencies: DependenciesData) => {
 	return async (req: Request, res: Response) => {
-		console.log(req.currentUser);
+		console.log(req.currentUser, "req.currentUser in recruiter controller");
 		
-		res.cookie("recruiterToken", "", {
-			httpOnly: true,
-			expires: new Date(0),
-		});
-		res.status(200).json({ message: "candidate successfully logged out" });
+		// res.cookie("recruiterToken", "", {
+		// 	httpOnly: true,
+		// 	expires: new Date(0),
+		// });
+
+		req.session!.recruiterToken = null
+		res.status(200).json({ message: "recruiter successfully logged out" });
 	};
 };

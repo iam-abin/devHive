@@ -42,11 +42,11 @@ export = (dependencies: DependenciesData) => {
             // Generate Jwt key
 			const adminJWT = createJwtToken(adminPayloadData);
 
-            // Store it on session object
-            // req.session = {jwt: candidateJwt};
+			// Store it on session object
+			req.session = {adminToken: adminJWT};
 
-            // Store it on cookie
-            res.cookie('adminToken', adminJWT, { httpOnly: true })
+            // // Store it on cookie
+            // res.cookie('adminToken', adminJWT, { httpOnly: true })
 
             res.status(200).json({message: "Login successfull", data: isExistingUser});
 	};
