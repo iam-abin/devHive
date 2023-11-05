@@ -5,7 +5,7 @@ import morgan from "morgan";
 
 import { routes } from './frameworks/routes'
 import dependencies from "./config/dependencies";
-import { NotFoundError, currentUser, errorHandler } from "@abijobportal/common";
+import { NotFoundError, currentUserAdmin, errorHandler } from "@abijobportal/common";
 
 const app = express();
 // dotenv.config()
@@ -20,7 +20,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // it extract current user from jwt, if user is present add it to req.currentUser
-// app.use(currentUserA)
+app.use(currentUserAdmin)
 
 // Routes
 app.use(API_PREFIX, routes(dependencies))

@@ -21,7 +21,7 @@ spec:
             - name: KAFKA_ZOOKEEPER_CONNECT
               value: "zookeeper-srv:2181"
             - name: KAFKA_ADVERTISED_LISTENERS
-              value: "PLAINTEXT://10.103.199.218:9092"
+              value: "PLAINTEXT://kafka-srv:9092"
             - name: ALLOW_ANONYMOUS_LOGIN
               value: "yes"
             - name: ALLOW_PLAINTEXT_LISTENER
