@@ -3,6 +3,7 @@ import { BadRequestError } from "@abijobportal/common";
 
 import { createJwtToken } from "../../frameworks/services/jwtToken";
 import { DependenciesData } from "../../frameworks/types/dependencyInterface";
+import { produceMessage } from "../../frameworks/services/kafka/producer";
 
 export = (dependencies: DependenciesData) => {
 	const {
@@ -35,6 +36,9 @@ export = (dependencies: DependenciesData) => {
 				console.log("register error");
 			}
 
+			// to produce a message to kafka topic
+			await produceMessage(newUser);
+			
 			const candidatePayloadData = {
 				id: newUser.id,
 				email: newUser.email,

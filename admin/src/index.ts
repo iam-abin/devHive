@@ -1,5 +1,6 @@
 import { connectDB } from "./config/db"
 import { app } from "./app";
+import { consumeMessage } from "./frameworks/services/kafka/consumer";
 
 
 const start = async () => {
@@ -19,6 +20,8 @@ const start = async () => {
 	app.listen(3000, () => {
 		console.log("admin Listening on port 3000....");
         connectDB();
+		// it is used to listen to incomming message from kafka topics
+		consumeMessage()
 	});
 };
 
