@@ -6,12 +6,12 @@ export = (dependencies: DependenciesData) => {
 		console.log(req.currentUser, "req.currentUser in admin controller");
 
 		
-		// res.cookie("adminToken", "", {
-		// 	httpOnly: true,
-		// 	expires: new Date(0),
-		// });
+		res.cookie("adminToken", "", {
+			httpOnly: true,
+			expires: new Date(0),
+		});
 
-		req.session!.adminToken = null
+		// req.session!.adminToken = null
 		res.status(200).json({ message: "admin successfully logged out" });
 	};
 };
