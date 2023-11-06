@@ -8,7 +8,7 @@ export const consumeMessage = async () => {
 
     // Connect to the Kafka cluster
 	await consumer.connect();
-	console.log("consumer connected!!!");
+	console.log("consumer admin connected!!!");
 
     // Subscribe to multiple topics
 	await consumer.subscribe({
@@ -26,20 +26,27 @@ export const consumeMessage = async () => {
 	// 	fromBeginning: true,
 	// });
 
-    // // Consume messages from all subscribed topics
+    // Consume messages from all subscribed topics
 	await consumer.run({
 		eachMessage: async ({ topic, partition, message: data }) => {
 			console.log("message received from topic: ", topic);
-            console.log("-----------"+JSON.stringify(data)+"---------------");
-            // Convert the "value" buffer data to a string
-const originalData = Buffer.from(data?.value!).toString('utf8');
 
-// Now, `originalData` should contain the original data in a string format.
-console.log(originalData);
-            
-			handleMessage({ topic, data });
+            // Convert the "value" buffer data to a string
+			const parsedMessage: string | null | undefined = data?.value?.toString('utf8')
+			
+			if(parsedMessage){
+				// converting a json string to js object
+				const parsedObject = JSON.parse(parsedMessage)
+				console.log("-----------"+parsedObject+"---------------");
+				console.log("-----------"+parsedObject?.name+"---------------");
+
+				handleMessage({ topic, parsedObject });
+
+			}else{
+				console.log("parsed message is null or undefined");
+				return
+			}
 		},
 	});
 
-	// console.log(`produced data is ${JSON.stringify(producedData)}`);
 };

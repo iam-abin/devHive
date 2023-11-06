@@ -21,8 +21,8 @@ spec:
             - name: MONGO_URL_ADMIN
               valueFrom: 
                 secretKeyRef:
-                  name: devhive-mongo-url-admin
-                  key: MONGO_URL_ADMIN
+                  name: devhive-mongo-url-admindbdevhive
+                  key: MONGO_URL_ADMINDB_DEVHIVE
             - name: JWT_SECRET_KEY
               valueFrom: 
                 secretKeyRef:

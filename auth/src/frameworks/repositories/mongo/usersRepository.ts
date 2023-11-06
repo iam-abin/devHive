@@ -35,9 +35,20 @@ const repository = () => {
 			
 		},
 
-		// getById: async (id: string) => {
-		// 	const user = await UserModel.findByIdAndUpdate(id, {password})
-		// },
+		updateStatus: async ({ email, isActive }: any) => {
+
+			console.log("in pudate status",);
+
+			const user = await UserModel.findOne({email});
+			if (!user) {
+				throw new Error("User not found");
+			}
+
+			user.isActive = isActive;
+
+			return await user.save();
+
+		},
 	};
 };
 

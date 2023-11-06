@@ -6,7 +6,7 @@ interface CandidateAttributes {
 	email: string;
 	phone: number;
     profile_pic?: string;
-	password: string;
+	isActive: boolean;
 	userType: string;
 	// userId: string;
 }
@@ -16,7 +16,7 @@ interface CandidateDocument extends mongoose.Document {
 	name: string;
 	email: string;
 	phone: number;
-    profile_pic: string;
+    profile_pic?: string;
 	userType: string;
 	isActive: boolean;
 	userId: string;
@@ -40,7 +40,6 @@ const candidateSchema = new mongoose.Schema(
 		},
 		phone: {
 			type: Number,
-			required: true,
 			trim: true,
 		},
         profile_pic: String,
@@ -51,7 +50,7 @@ const candidateSchema = new mongoose.Schema(
 		},
 		isActive: {
 			type: Boolean,
-			default: true,
+			required: true
 		},
 	},
 	{

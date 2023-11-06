@@ -1,4 +1,13 @@
-import { blockInblockUseCase } from "./candidate";
+import {
+	blockUnblockCandidateUseCase ,
+	getAllCandidatesUseCase,
+	getCandidateByIdUseCase,
+} from "./candidate";
 
 
-export default { blockInblockUseCase };
+
+export default {
+	blockUnblockCandidateUseCase ,
+	getAllCandidatesUseCase,
+	getCandidateByIdUseCase,
+};

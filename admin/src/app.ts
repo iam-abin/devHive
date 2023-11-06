@@ -20,7 +20,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // it extract current user from jwt, if user is present add it to req.currentUser
-app.use(currentUserAdmin)
+// app.use(currentUserAdmin)
 
 // Routes
 app.use(API_PREFIX, routes(dependencies))

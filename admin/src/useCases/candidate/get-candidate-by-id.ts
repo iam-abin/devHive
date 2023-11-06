@@ -6,7 +6,7 @@ export = (dependencies: any) => {
 	}
 
 	const execute = (id: string) => {
-		return candidateRepository.blockUnblock(id);
+		return candidateRepository.getById(id);
 	};
 
 	return { execute };
