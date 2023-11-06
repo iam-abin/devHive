@@ -1,3 +1,3 @@
-import candidateRepository from "./candidate";
+import candidateRepository from "./candidateRepository";
 
 export = { candidateRepository }

@@ -1,4 +1,6 @@
-import blockInblockUseCase from "./block-unblock";
+import blockUnblockCandidateUseCase from "./block-unblock";
+import getCandidateByIdUseCase from "./get-candidate-by-id";
+import getAllCandidatesUseCase from "./get-all-candidates";
 
 
-export { blockInblockUseCase };
+export { blockUnblockCandidateUseCase, getCandidateByIdUseCase, getAllCandidatesUseCase };
