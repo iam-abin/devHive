@@ -9,12 +9,10 @@ export const handleMessage = ({ topic, parsedObject: data }: handleMessageInterf
 	switch (topic) {
 		case "USER_UPDATED_TOPIC":
 			console.log("auth handleMessage updateYserTopic",data);
-			if(data.userType === "candidate"){
-				usersRepository.updateStatus(data);
-			}else if(data.userType === "recruiter"){
-
-			}
 			
+			// dont need to check userType as every users are stored in one collection 
+			usersRepository.updateStatus(data);
+
 			break;
 		default:
 			break;

@@ -37,7 +37,7 @@ const repository = () => {
 
 		updateStatus: async ({ email, isActive }: any) => {
 
-			console.log("in pudate status",);
+			console.log("in update status",);
 
 			const user = await UserModel.findOne({email});
 			if (!user) {

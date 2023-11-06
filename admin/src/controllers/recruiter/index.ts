@@ -1,11 +1,14 @@
-import { DependenciesData } from "../../frameworks/types/dependencyInterface";
+import getAllRecruitersController from "./view-recruiters.controller";
+import getRecruiterByIdController from "./view-profile.controller";
+import recruiterBlockUnblockController from "./block-unblock.controller";
 
-// import adminSigninController from "./signin.controller";
-// import adminSignoutController from "./signout.controller";
+import { DependenciesData } from "../../frameworks/types/dependencyInterface";
 
 export = (dependencies: DependenciesData) => {
 	return {
-		// adminSigninController: adminSigninController(dependencies),
-		// adminSignoutController: adminSignoutController(dependencies)
+		getAllRecruitersController: getAllRecruitersController(dependencies),
+		getRecruiterByIdController: getRecruiterByIdController(dependencies),
+		recruiterBlockUnblockController: recruiterBlockUnblockController(dependencies),
+		
 	};
 };
