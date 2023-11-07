@@ -6,12 +6,12 @@ export = (dependencies: DependenciesData) => {
 		console.log(req.currentUser, "req.currentUser in candidate controller");
 
 		
-		// res.cookie("candidateToken", "", {
-		// 	httpOnly: true,
-		// 	expires: new Date(0),
-		// });
+		res.cookie("candidateToken", "", {
+			httpOnly: true,
+			expires: new Date(0),
+		});
 
-		req.session!.candidateToken = null
+		// req.session!.candidateToken = null
 		res.status(200).json({ message: "candidate successfully logged out" });
 	};
 };
