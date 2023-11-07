@@ -18,7 +18,7 @@ export = (dependencies: DependenciesData)=>{
         // isBlocked contains user data with 'isActive' value changed
 		await produceMessage(isBlocked, 'USER_UPDATED_TOPIC')
 
-        res.status(200).json({message: `candidate ${isBlocked ? "blocked" : "unBlocked"}  successfully`, data: {blocked: isBlocked}})
+        res.status(200).json({message: `candidate ${isBlocked ? "unBlocked" : "Blocked"}  successfully`, data: {blocked: isBlocked}})
     };
 
 }

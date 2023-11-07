@@ -27,7 +27,7 @@ export const candidateRouter = (dependencies: DependenciesData) => {
 		candidateSigninController
 	);
 
-	// router.post("/signout",requireAuth, candidateSignoutController);
+	
 	router.put("/forgotPassword", candidateUpdatePasswordController);
 
 	router.put("/resetPassword", requireAuthCandidate, candidateUpdatePasswordController);
