@@ -2,9 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
-/* 
-body {
-  padding: 1rem;
-} */
+body{
+  margin: 0;
+}
