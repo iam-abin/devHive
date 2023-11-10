@@ -1,10 +1,9 @@
-import React from 'react'
+import AdminDashboard from '../../components/admin/AdminDashboard'
 
 function AdminHomePage() {
   return (
     <div>
-        <p className='font-bold text-yellow-300'>Admin Home page</p>
-    {/*  <h1 className='font-normal text-yellow-300'>Admin Home page</h1> */}
+      <AdminDashboard />
     </div>
   )
 }

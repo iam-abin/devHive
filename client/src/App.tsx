@@ -1,18 +1,17 @@
+import { Routes, Route } from "react-router-dom";
 
-// import RecruiterSignupForm from "./components/recruiter/RecruiterSignupForm";
-import AdminSigninPage from "./pages/admin/AdminSigninPage";
-// import CandidateSigninPage from "./pages/candidate/CandidateSigninPage";
-// import RecruiterSigninPage from "./pages/recruiter/RecruiterSigninPage";
+import LandingPage from "./pages/LandingPage";
+import CandidateRoutes from "./routes/CandidateRoutes";
+import RecruiterRouters from "./routes/RecruiterRouters";
+import AdminRoutes from "./routes/AdminRoutes";
 
 export default function App() {
 	return (
-    <>
-    <AdminSigninPage />
-    {/* <CandidateSigninPage /> */}
-    {/* <RecruiterSigninPage />
-    <RecruiterSignupForm /> */}
-   </>
+			<Routes>
+        <Route path="/"  element={<LandingPage />} />
+        <Route path="/admin/*"  element={<AdminRoutes />} />
+        <Route path="/candidate/*" element={<CandidateRoutes />} />
+        <Route path="/recruiter/*" element={<RecruiterRouters />} />
+      </Routes>
 	);
 }
-
-
