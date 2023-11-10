@@ -6,7 +6,7 @@ export default defineConfig({
 	plugins: [react()],
 	server: {
 		host: true,
-		port: 3000, // This is the port which we will use in docker
+		port: 3000, // This is the port which we will use in docker ,or (port on which the development server will run)
 		watch: {
 			usePolling: true
 		}
