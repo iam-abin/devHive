@@ -1,22 +1,61 @@
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { ErrorMessage, Field, Form, Formik } from "formik";
+
 import {
 	initialSigninValues,
 	signInSchema,
 } from "../common-form-validation/signin";
+import { recruiterSigninApi } from "../../../api/axios/auth/recruiterAuth";
+import { recruiterSignin } from "../../redux/slice/recruiterSlice/recruiterAuthSlice";
+import { setRecruiter } from "../../redux/slice/recruiterSlice/recruiterDataSlice";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function RecruiterSigninForm() {
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
+
+	console.log("hi");
+
+	const notify = (msg: any, type: string) => {
+		type === "error"
+			? toast.error(msg, {
+					position: toast.POSITION.TOP_RIGHT,
+			  })
+			: toast.success(msg, {
+					position: toast.POSITION.TOP_RIGHT,
+			  });
+	};
+
+	// // const isLoggedIn =
+	const handleSubmit = async (userData: any) => {
+		try {
+			const { data, message } = await recruiterSigninApi(userData);
+			// console.log("hiiii", response);
+			dispatch(recruiterSignin());
+			dispatch(setRecruiter(data));
+			notify(message, "success");
+			navigate("/");
+		} catch (error: any) {
+			notify(error.response.data.errors[0].message, "error");
+		}
+	};
+
 	return (
 		<Formik
 			initialValues={initialSigninValues}
 			validationSchema={signInSchema}
 			onSubmit={(values) => {
 				console.log(values);
+				handleSubmit(values);
 			}}
 		>
 			{(formik) => {
 				const { errors, touched } = formik;
 				return (
 					<div className="w-1/2 h-full flex flex-col p-14 justify-between items-center">
+						<ToastContainer />
 						<h1 className="text-xl font-semibold">
 							Recruiter Sign In
 						</h1>
@@ -39,7 +78,7 @@ function RecruiterSigninForm() {
 										className={`w-full py-2 mt-2 text-black bg-transparent border-b border-black outline-none focus:outline-none ${
 											errors.email && touched.email
 												? "input-error border-red-500"
-												: null 
+												: null
 										}`}
 									/>
 									<label className="label mb-3">
@@ -52,9 +91,9 @@ function RecruiterSigninForm() {
 									</label>
 
 									<Field
-									type="password"
-									name="password"
-									placeholder="Password"
+										type="password"
+										name="password"
+										placeholder="Password"
 										className={`w-full py-2 mt-2 text-black bg-transparent border-b border-black outline-none focus:outline-none ${
 											errors.password && touched.password
 												? "input-error  border-red-500"
@@ -62,18 +101,18 @@ function RecruiterSigninForm() {
 										}`}
 									/>
 									<label className="label">
-									<span className="label-text-alt text-red-500">
-										<ErrorMessage
-											name="password"
-											className="error label-text-alt"
-										/>
-									</span>
-									<div className="flex justify-end">
-										<p className="text-sm font-medium whitespace-nowrap cursor-pointer underline underline-offset-2">
-											Forgot password?
-										</p>
-									</div>
-								</label>
+										<span className="label-text-alt text-red-500">
+											<ErrorMessage
+												name="password"
+												className="error label-text-alt"
+											/>
+										</span>
+										<div className="flex justify-end">
+											<p className="text-sm font-medium whitespace-nowrap cursor-pointer underline underline-offset-2">
+												Forgot password?
+											</p>
+										</div>
+									</label>
 
 									<div className="w-full flex flex-col my-4">
 										<button
@@ -90,9 +129,12 @@ function RecruiterSigninForm() {
 						<div className="w-full items-center justify-center flex">
 							<p className="text-sm font-normal">
 								Don't have an account?
-								<span className="font-semibold underline underline-offset-2 cursor-pointer">
+								<Link
+									to="/recruiter/signup"
+									className="font-semibold underline underline-offset-2 cursor-pointer"
+								>
 									Sign up
-								</span>
+								</Link>
 							</p>
 						</div>
 					</div>
