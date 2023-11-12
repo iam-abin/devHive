@@ -1,0 +1,1 @@
+export const BASE_URL = "https://devhive.dev/api/v1"

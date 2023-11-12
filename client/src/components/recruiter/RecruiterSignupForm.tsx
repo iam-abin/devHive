@@ -1,23 +1,44 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import {
 	initialSignupValues,
 	signUpSchema,
 } from "../common-form-validation/signup";
+// import {recruiterSignupApi} from "../../../api/axios/auth/recruiterAuth"
+import { ToastContainer, toast } from "react-toastify";
 
 function RecruiterSignupForm() {
+
+	// const dispatch = useDispatch();
+	// const navigate = useNavigate()
+
+	// const notify = (msg: any, type: string) => {
+	// 	type === "error"
+	// 		? toast.error(msg, {
+	// 				position: toast.POSITION.TOP_RIGHT,
+	// 		  })
+	// 		: toast.success(msg, {
+	// 				position: toast.POSITION.TOP_RIGHT,
+	// 		  });
+	// };
+
 	return (
 		<Formik
 			initialValues={initialSignupValues}
 			validationSchema={signUpSchema}
 			onSubmit={(values) => {
+
 				console.log(values);
+				
 			}}
 		>
 			{(formik) => {
 				const { errors, touched } = formik;
 				return (
 					<div className="w-1/2 h-full flex flex-col p-14 justify-between items-center">
+							<ToastContainer />
 						<h1 className="text-xl font-semibold">
 							Recruiter Sign Up
 						</h1>
@@ -117,9 +138,12 @@ function RecruiterSignupForm() {
 								<div className="w-full items-center justify-center flex">
 									<p className="text-sm font-normal">
 										Already have an account?
-										<span className="font-semibold underline underline-offset-2 cursor-pointer">
-											Sign In
-										</span>
+										<Link
+											to="/recruiter/signin"
+											className="font-semibold underline underline-offset-2 cursor-pointer"
+										>
+											Sign in
+										</Link>
 									</p>
 								</div>
 							</Form>
