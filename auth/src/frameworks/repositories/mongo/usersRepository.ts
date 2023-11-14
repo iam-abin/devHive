@@ -44,7 +44,23 @@ const repository = () => {
 				throw new Error("User not found");
 			}
 
+			// user status is updated only by 'admin'
 			user.isActive = isActive;
+
+			return await user.save();
+
+		},
+
+		updateVerification: async (id:any) => {
+
+			console.log("in update status",id);
+
+			const user = await UserModel.findById(id);
+			if (!user) {
+				throw new Error("User not found");
+			}
+
+			user.isVarified = !user.isVarified;
 
 			return await user.save();
 

@@ -8,14 +8,14 @@ const candidateAuthSlice = createSlice({
 	name: "candidate-auth",
 	initialState,
 	reducers: {
-		candidateLoginReducer: (state) => {
+		candidateSignin: (state) => {
 			state.candidateLoggedIn = true;
 		},
-		candidateLogoutReducer: (state) => {
+		candidateSignout: (state) => {
 			state.candidateLoggedIn = false;
 		},
 	},
 });
 
-export const { candidateLoginReducer, candidateLogoutReducer } = candidateAuthSlice.actions;
+export const { candidateSignin, candidateSignout } = candidateAuthSlice.actions;
 export default candidateAuthSlice.reducer;

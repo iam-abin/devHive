@@ -1,3 +1,4 @@
 import { UserModel } from "./users";
+import { TokenModel } from "./tocken"
 
-export default { UserModel }
+export default { UserModel, TokenModel }

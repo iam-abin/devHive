@@ -7,14 +7,70 @@ import {
 	initialSigninValues,
 	signInSchema,
 } from "../common-form-validation/signin";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { adminSigninApi } from "../../api/axios/auth/adminAuth";
+import { adminSignin } from "../../redux/slice/adminSlice/adminAuthSlice";
+import { setAdmin } from "../../redux/slice/adminSlice/adminDataSlice";
+import { RootState } from "../../redux/reducer/reducer";
+import { useEffect } from "react";
 
 function Signin() {
+
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
+
+	const isLoggedIn = useSelector((state: RootState)=>{
+		return state.adminAuth.adminLoggedIn;
+	})
+
+	useEffect(()=>{
+		console.log("admin is logged in",isLoggedIn);
+		
+		if(isLoggedIn){
+			navigate("/")
+		}
+
+	},[])
+
+	console.log("hi admin signin");
+
+	const notify = (msg: any, type: string) => {
+		type === "error"
+			? toast.error(msg, {
+					position: toast.POSITION.TOP_RIGHT,
+			  })
+			: toast.success(msg, {
+					position: toast.POSITION.TOP_RIGHT,
+			  });
+	};
+
+	const handleSubmit = async (userData: any) => {
+		try {
+			const { data, message } = await adminSigninApi(userData);
+			// console.log("hiiii", response);
+			dispatch(adminSignin());
+			dispatch(setAdmin(data));
+		  console.log(message);
+		  
+			notify(message, "success");
+
+			setTimeout(() => {
+				navigate("/");
+			  }, 2000);
+		} catch (error: any) {
+			notify(error.response.data.errors[0].message, "error");
+		}
+	};
+
 	return (
 		<Formik
-			initialValues={initialSigninValues}
+		initialValues={initialSigninValues}
 			validationSchema={signInSchema}
 			onSubmit={(values) => {
 				console.log(values);
+				handleSubmit(values);
 			}}
 		>
 			{(formik) => {

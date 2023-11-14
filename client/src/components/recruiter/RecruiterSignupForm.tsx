@@ -6,39 +6,53 @@ import {
 	initialSignupValues,
 	signUpSchema,
 } from "../common-form-validation/signup";
-// import {recruiterSignupApi} from "../../../api/axios/auth/recruiterAuth"
+import { recruiterSignupApi } from "../../../src/api/axios/auth/recruiterAuth";
 import { ToastContainer, toast } from "react-toastify";
+import { recruiterSignin } from "../../redux/slice/recruiterSlice/recruiterAuthSlice";
+import { setRecruiter } from "../../redux/slice/recruiterSlice/recruiterDataSlice";
 
 function RecruiterSignupForm() {
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
-	// const dispatch = useDispatch();
-	// const navigate = useNavigate()
+	const notify = (msg: any, type: string) => {
+		type === "error"
+			? toast.error(msg, {
+					position: toast.POSITION.TOP_RIGHT,
+			  })
+			: toast.success(msg, {
+					position: toast.POSITION.TOP_RIGHT,
+			  });
+	};
 
-	// const notify = (msg: any, type: string) => {
-	// 	type === "error"
-	// 		? toast.error(msg, {
-	// 				position: toast.POSITION.TOP_RIGHT,
-	// 		  })
-	// 		: toast.success(msg, {
-	// 				position: toast.POSITION.TOP_RIGHT,
-	// 		  });
-	// };
+	const handleSubmit = async (userData: any) => {
+		try {
+			
+			const { data, message } = await recruiterSignupApi(userData);
+			console.log("Hello",data);
+			dispatch(recruiterSignin());
+			dispatch(setRecruiter(data));
+			notify(message, "success");
+			navigate("/");
+		} catch (error: any) {
+			notify(error.response.data.errors[0].message, "error");
+		}
+	};
 
 	return (
 		<Formik
 			initialValues={initialSignupValues}
 			validationSchema={signUpSchema}
 			onSubmit={(values) => {
-
-				console.log(values);
-				
+				console.log(values,"formik");
+				handleSubmit(values);
 			}}
 		>
 			{(formik) => {
 				const { errors, touched } = formik;
 				return (
 					<div className="w-1/2 h-full flex flex-col p-14 justify-between items-center">
-							<ToastContainer />
+						<ToastContainer />
 						<h1 className="text-xl font-semibold">
 							Recruiter Sign Up
 						</h1>
@@ -131,7 +145,10 @@ function RecruiterSignupForm() {
 									</label>
 								</div>
 								<div className="w-full flex flex-col my-4">
-									<button className="w-full text-white bg-black rounded-md p-4 my-2 text-center flex items-center justify-center">
+									<button
+										type="submit"
+										className="w-full text-white bg-black rounded-md p-4 my-2 text-center flex items-center justify-center"
+									>
 										Sign Up
 									</button>
 								</div>

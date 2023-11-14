@@ -1,22 +1,37 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 
 import {
 	initialSigninValues,
 	signInSchema,
 } from "../common-form-validation/signin";
-import { recruiterSigninApi } from "../../../api/axios/auth/recruiterAuth";
+import { recruiterSigninApi } from "../../../src/api/axios/auth/recruiterAuth";
 import { recruiterSignin } from "../../redux/slice/recruiterSlice/recruiterAuthSlice";
 import { setRecruiter } from "../../redux/slice/recruiterSlice/recruiterDataSlice";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { RootState } from "../../redux/reducer/reducer";
+import { useEffect } from "react";
 
 function RecruiterSigninForm() {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
-	console.log("hi");
+	const isLoggedIn = useSelector((state: RootState)=>{
+		return state.recruiterAuth.recruiterLoggedIn;
+	})
+
+	useEffect(()=>{
+		console.log("recruiter is logged in",isLoggedIn);
+		
+		if(isLoggedIn){
+			navigate("/")
+		}
+
+	},[])
+
+	console.log("hi recruiter signin");
 
 	const notify = (msg: any, type: string) => {
 		type === "error"

@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function HeaderLandingPage() {
 	return (
 		<div className="navbar bg-base-100">
@@ -7,10 +9,10 @@ function HeaderLandingPage() {
 			<div className="flex-none">
 				<ul className="menu menu-horizontal px-1">
 					<li>
-						<a>Candidate Login</a>
+						<Link to="/candidate/signin">Candidate Signin</Link>
 					</li>
 					<li>
-						<a>Recruiter Login</a>
+					<Link to="/recruiter/signin">Recruiter Signin</Link>
 					</li>
 				</ul>
 			</div>

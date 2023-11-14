@@ -18,6 +18,7 @@ interface UserDocument extends mongoose.Document {
 	phone: number;
 	password: string;
 	userType: string;
+	isVarified:boolean;
 	isActive: boolean;
 	userId: string;
 	createdAt: string;
@@ -52,6 +53,10 @@ const userSchema = new mongoose.Schema(
 			type: String,
 			required: true,
 			enum: ["admin", "candidate", "recruiter"],
+		},
+		isVarified: {  // field for signup email verificetion
+			type: Boolean,
+			default: false,
 		},
 		isActive: {
 			type: Boolean,

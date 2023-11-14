@@ -1,10 +1,9 @@
 import axios from "axios";
-import { BASE_URL } from "../../../src/config/baseUrl";
+import { BASE_URL } from "../../../config/baseUrl";
 
 const BASE_URL_CANDIDATE = `${BASE_URL}/auth/candidate`;
 
-export const candidateLoginApi = async (data: any): Promise<any> => {
-	try {
+export const candidateSigninApi = async (data: any): Promise<any> => {
 		const response = await axios({
 			method: "post",
 			url: `${BASE_URL_CANDIDATE}/signin`,
@@ -13,23 +12,23 @@ export const candidateLoginApi = async (data: any): Promise<any> => {
         console.log(response);
         
 		return response;
-	} catch (error) {
-		console.log(error, "signin axios api 1234");
-		throw new Error(error.response.data.message);
-	}
 };
 
 
 export const candidateSignupApi = async (data: any): Promise<any> => {
-	try {
 		const response = await axios({
 			method: "post",
 			url: `${BASE_URL_CANDIDATE}/signup`,
 			data: data,
 		});
 		return response;
-	} catch (error) {
-		console.log(error, "signup axios api 1234");
-		throw new Error(error.response.data.message);
-	}
 };
+
+export const emailVerifyApi = async (url: string): Promise<any> => {
+	const response = await axios({
+		method: "get",
+		url: url,
+	});
+	return response;
+};
+

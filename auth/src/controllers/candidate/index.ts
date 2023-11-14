@@ -2,6 +2,7 @@ import candidateSignupController from "./signup.controller";
 import candidateSigninController from "./signin.controller";
 import candidateSignoutController from "./signout.controller";
 import candidateUpdatePasswordController from "./update-password.controller";
+import candidateSignupEmailVerifyController from "./signup.email-verification.controller"
 
 import { DependenciesData } from "../../frameworks/types/dependencyInterface";
 
@@ -11,5 +12,6 @@ export = (dependencies: DependenciesData) => {
 		candidateSigninController: candidateSigninController(dependencies),
 		candidateSignoutController: candidateSignoutController(dependencies),
 		candidateUpdatePasswordController: candidateUpdatePasswordController(dependencies),
+		candidateSignupEmailVerifyController: candidateSignupEmailVerifyController(dependencies)
 	};
 };

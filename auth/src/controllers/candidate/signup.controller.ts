@@ -4,10 +4,11 @@ import { BadRequestError } from "@abijobportal/common";
 import { createJwtToken } from "../../frameworks/services/jwtToken";
 import { DependenciesData } from "../../frameworks/types/dependencyInterface";
 import { produceMessage } from "../../frameworks/services/kafka/producer";
+import { generateEmailVerificationToken, sendVerificationEmail } from "../../frameworks/services/sendEmail";
 
 export = (dependencies: DependenciesData) => {
 	const {
-		useCases: { candidateSignupUseCase, getCandidateByEmailUseCase },
+		useCases: { candidateSignupUseCase, getCandidateByEmailUseCase, createEmailVerificationTokenUseCase },
 	} = dependencies;
 
 	return async (req: Request, res: Response) => {
@@ -36,29 +37,23 @@ export = (dependencies: DependenciesData) => {
 				console.log("register error");
 			}
 
-			// to produce a message to kafka topic
-			await produceMessage(newUser);
+			const emailVerificationToken = generateEmailVerificationToken()
+			console.log("-------newUser",newUser);
+			console.log("-------newUser._id",newUser._id);
+			console.log("-------emailVerificationToken",emailVerificationToken);
 			
-			const candidatePayloadData = {
-				id: newUser.id,
-				email: newUser.email,
-				userType: newUser.userType,
-			};
+			// to add values to token collection, 
+			const emailVerify = await createEmailVerificationTokenUseCase(dependencies).execute({
+				userId: newUser._id,
+				token: emailVerificationToken,
+				email: newUser.email
 
-			// Generate Jwt key
-			const candidateJWT = createJwtToken(candidatePayloadData);
-
-			// // Store it on session object
-			// req.session = {
-			// 	candidateToken: candidateJWT,
-			// };
-
-            // Store it on cookie
-			res.cookie("candidateToken", candidateJWT, { httpOnly: true });
-			
-			res.status(201).json({
-				message: "user is register successfully",
-				data: newUser,
 			});
+
+			console.log("token collection created",emailVerify);
+			
+			await sendVerificationEmail(newUser.email,emailVerify.userId,emailVerify.token, "Verify Yout Email","click on the following link to verify your email account!");
+			console.log("email sended");
+			res.status(200).json({"message": "An email is send to your email, please verify."});
 	};
 };
