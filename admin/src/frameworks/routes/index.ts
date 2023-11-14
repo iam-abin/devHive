@@ -23,7 +23,8 @@ export const routes = (dependencies: DependenciesData) => {
 	// router.use()
 
 	router.use("/dashboard", dashboard);
-	router.use("/candidate",requireAuthAdmin, candidate);
+	// router.use("/candidate",requireAuthAdmin, candidate);
+	router.use("/candidate", candidate);
 	router.use("/recruiter", recruiter);
 	router.use("/membership", membership);
 	router.use("/company", company);

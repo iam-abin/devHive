@@ -1,37 +1,36 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import googleIcon from "../../assets/google-icon.svg";
 
-import { initialSigninValues, signInSchema } from "../common-form-validation/signin";
-import { candidateSigninApi } from "../../api/axios/auth/candidateAuth"
+import {
+	initialSigninValues,
+	signInSchema,
+} from "../common-form-validation/signin";
+import { candidateSigninApi } from "../../api/axios/auth/candidateAuth";
 import { candidateSignin } from "../../redux/slice/candidateSlice/candidateAuthSlice";
 import { setCandidate } from "../../redux/slice/candidateSlice/candidateDataSlice";
 import { RootState } from "../../redux/reducer/reducer";
 import { useEffect } from "react";
 
-
-
 function CandidateSigninForm() {
-
-	const dispatch = useDispatch()
+	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
-	const isLoggedIn = useSelector((state: RootState)=>{
+	const isLoggedIn = useSelector((state: RootState) => {
 		return state.candidateAuth.candidateLoggedIn;
-	})
+	});
 
-	useEffect(()=>{
-		console.log("candidate is logged in",isLoggedIn);
-		
-		if(isLoggedIn){
-			navigate("/")
+	useEffect(() => {
+		console.log("candidate is logged in", isLoggedIn);
+
+		if (isLoggedIn) {
+			navigate("/");
 		}
-
-	},[])
+	}, []);
 
 	console.log("hi recruiter signin");
 
@@ -71,9 +70,8 @@ function CandidateSigninForm() {
 				const { errors, touched } = formik;
 
 				return (
-					<div className="w-6/12 h-5/6">
-						<ToastContainer />
-						<div className="mb-16">
+					<div className="w-6/12 h-5/6 flex flex-col justify-between">
+						<div className="mb-10">
 							<h1 className="text-center  text-5xl font-bold">
 								Sign In
 							</h1>
@@ -144,18 +142,25 @@ function CandidateSigninForm() {
 								<div className="mx-4 text-black">or</div>
 								<div className="flex-1 h-0 border-t border-black"></div>
 							</div>
-
 						</Form>
-							<div className="flex items-center justify-center gap-3">
-								<button className="btn border-gray-600 w-60">
-									<img
-										src={googleIcon}
-										className="w-7"
-										alt=""
-									/>
-									Sign in With Google
-								</button>
-							</div>
+						<div className="flex items-center justify-center gap-3">
+							<button className="btn border-gray-600 w-60">
+								<img src={googleIcon} className="w-7" alt="" />
+								Sign in With Google
+							</button>
+						</div>
+
+						<div className="w-full mt-5 items-center justify-center flex">
+							<p className="text-sm font-normal">
+								Don't have an account?
+								<Link
+									to="/candidate/signup"
+									className="font-semibold underline underline-offset-2 cursor-pointer"
+								>
+									Sign up
+								</Link>
+							</p>
+						</div>
 					</div>
 				);
 			}}
