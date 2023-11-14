@@ -8,14 +8,14 @@ const adminAuthSlice = createSlice({
 	name: "admin-auth",
 	initialState,
 	reducers: {
-		adminLoginReducer: (state) => {
+		adminSignin: (state) => {
 			state.adminLoggedIn = true;
 		},
-		adminLogoutReducer: (state) => {
+		adminSignout: (state) => {
 			state.adminLoggedIn = false;
 		},
 	},
 });
 
-export const { adminLoginReducer, adminLogoutReducer } = adminAuthSlice.actions;
+export const { adminSignin, adminSignout } = adminAuthSlice.actions;
 export default adminAuthSlice.reducer;

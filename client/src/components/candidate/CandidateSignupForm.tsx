@@ -4,9 +4,13 @@ import {
 	initialSignupValues,
 	signUpSchema,
 } from "../common-form-validation/signup";
+
 import googleIcon from "../../assets/google-icon.svg";
 
 function CandidateSignupForm() {
+
+	
+
 	return (
 		<Formik
 			initialValues={initialSignupValues}
