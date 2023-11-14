@@ -14,10 +14,9 @@ export const sendVerificationEmail = async (email: string,userId: string, token:
 		port: 587,
 		secure:false,
 		auth: {
-			user: "iamabin1100@gmail.com",
-			pass: "vlun lqmu tgnb bcvr",
+			user: process.env.EMAIL,
+			pass: process.env.EMAIL_APP_PASSWORD
 		},
-		connectionTimeout: 10000,
 	});
 
 	console.log("mail options");

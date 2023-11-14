@@ -6,11 +6,11 @@ import {
 } from "../common-form-validation/signup";
 
 import googleIcon from "../../assets/google-icon.svg";
+import { Link } from "react-router-dom";
 
 function CandidateSignupForm() {
 
 	
-
 	return (
 		<Formik
 			initialValues={initialSignupValues}
@@ -117,7 +117,11 @@ function CandidateSignupForm() {
 								</label>
 								<label className="label mt-1">
 									<span className="label-text-alt cursor-pointer">
+										<Link to="/candidate/signin"
+									className="cursor-pointer">
+										
 										Already have an account?
+										</Link>
 									</span>
 								</label>
 							</div>

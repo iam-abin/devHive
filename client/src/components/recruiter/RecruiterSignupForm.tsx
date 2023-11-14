@@ -7,7 +7,7 @@ import {
 	signUpSchema,
 } from "../common-form-validation/signup";
 import { recruiterSignupApi } from "../../../src/api/axios/auth/recruiterAuth";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { recruiterSignin } from "../../redux/slice/recruiterSlice/recruiterAuthSlice";
 import { setRecruiter } from "../../redux/slice/recruiterSlice/recruiterDataSlice";
 
@@ -52,7 +52,6 @@ function RecruiterSignupForm() {
 				const { errors, touched } = formik;
 				return (
 					<div className="w-1/2 h-full flex flex-col p-14 justify-between items-center">
-						<ToastContainer />
 						<h1 className="text-xl font-semibold">
 							Recruiter Sign Up
 						</h1>

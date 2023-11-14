@@ -17,8 +17,9 @@ export = (dependencies: DependenciesData)=>{
         // to produce a message to kafka topic
         // isBlocked contains user data with 'isActive' value changed
 		await produceMessage(isBlocked, 'USER_UPDATED_TOPIC')
+        
 
-        res.status(200).json({message: `candidate ${isBlocked ? "unBlocked" : "Blocked"}  successfully`, data: {blocked: isBlocked}})
+        res.status(200).json({message: `candidate ${isBlocked.isActive ? "unBlocked" : "Blocked"}  successfully`, data: isBlocked})
     };
 
 }
