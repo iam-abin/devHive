@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
 
-function HeaderLandingPage() {
+function HeaderLanding() {
+
+
+
 	return (
 		<div className="navbar bg-base-100">
 			<div className="flex-1">
@@ -8,9 +11,10 @@ function HeaderLandingPage() {
 			</div>
 			<div className="flex-none">
 				<ul className="menu menu-horizontal px-1">
-					<li>
-						<Link to="/candidate/signin">Candidate Signin</Link>
+				<li>
+					<Link to="/candidate/signin">Candidate Signin</Link>
 					</li>
+
 					<li>
 					<Link to="/recruiter/signin">Recruiter Signin</Link>
 					</li>
@@ -20,4 +24,4 @@ function HeaderLandingPage() {
 	);
 }
 
-export default HeaderLandingPage;
+export default HeaderLanding;

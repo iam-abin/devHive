@@ -23,8 +23,8 @@ export const candidateRouter = (dependencies: DependenciesData) => {
 		candidateSignupController
 	);
 	
-	router.get("/:userId/verifyEmail/:token",candidateSignupEmailVerifyController)
-
+	router.post("/:userId/verifyEmail/:token",candidateSignupEmailVerifyController)
+	// router.post("/verifyEmail",candidateSignupEmailVerifyController)
 	router.post(
 		"/signin",
 		signinRequestBodyValidatorMiddlewares,

@@ -5,7 +5,7 @@ import morgan from "morgan";
 
 import { routes } from './frameworks/routes'
 import dependencies from "./config/dependencies";
-import { NotFoundError, currentUserAdmin, errorHandler } from "@abijobportal/common";
+import { NotFoundError, currentUserAdminCheck, errorHandler } from "@abijobportal/common";
 
 const app = express();
 // dotenv.config()

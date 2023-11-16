@@ -7,16 +7,18 @@ import companies from "../../assets/companies.svg";
 import candidates from "../../assets/candidates.svg";
 import membership from "../../assets/membership.svg";
 import logout from "../../assets/logout.svg";
+import { Link } from "react-router-dom";
 
 function AdminDashboard() {
 	const [open, setOpen] = useState(true);
 	const menus = [
-    { title: "Dashboard", src: dashboard },
-    { title: "Finance", src: finance },
-    { title: "Companies", src: companies },
-    { title: "Candidates", src: candidates },
-    { title: "MemberShip", src: membership },
-    { title: "Logout", src: logout },
+    { title: "Dashboard", src: dashboard, to:"/admin" },
+    { title: "Finance", src: finance, to:"/admin" },
+    { title: "Companies", src: companies, to:"/admin" },
+    { title: "Candidates", src: candidates, to:"/admin/candidates" },
+	{ title: "Recruiters", src: finance, to:"/admin/recruiters" },
+    { title: "MemberShip", src: membership, to:"/admin" },
+    { title: "Logout", src: logout, to:"/admin" },
 	];
 	return (
 		<div className="flex">
@@ -48,7 +50,8 @@ function AdminDashboard() {
 						return (
 							<li key={index} className={`text-white text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-slate-400 rounded-md gap-5 mt-7`}>
                 <img src={menu.src} className="w-5" alt="" />
-								<span className={`${!open && "hidden"} duration-200`}>{menu.title}</span>
+				<Link to={menu.to}><span className={`${!open && "hidden"} duration-200`}>{menu.title}</span></Link>
+								
 							</li>
 						);
 					})}

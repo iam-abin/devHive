@@ -14,19 +14,20 @@ export const sendVerificationEmail = async (email: string,userId: string, token:
 		port: 587,
 		secure:false,
 		auth: {
-			user: process.env.EMAIL,
-			pass: process.env.EMAIL_APP_PASSWORD
+			user: "abinvarghese273@gmail.com",
+			pass: "frjn aczl fyet pxaj",
 		},
+		connectionTimeout: 10000,
 	});
 
 	console.log("mail options");
 	console.log("in sendMail service: userId:",userId," token: ",token);
 	
 	
-	const verificationLink = `https://devhive.dev/api/v1/auth/candidate/${userId}/verifyEmail/${token }`
+	const verificationLink = `https://devhive.dev/candidate/${userId}/verifyEmail/${token }`
 	const mailOptions = {
 		from:"devHive ",
-		to: email,
+		to: "iamabin1100@gmail.com",
 		subject: subject,
 		text: text,
 		html:  `

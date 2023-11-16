@@ -6,7 +6,7 @@ import cookieParser from "cookie-parser"
 
 import { routes } from './frameworks/routes'
 import dependencies from "./config/dependencies";
-import { NotFoundError, currentUserAdmin, currentUserCandidate, currentUserRecruiter, errorHandler } from "@abijobportal/common";
+import { NotFoundError, currentUserAdminCheck, currentUserCandidateCheck, currentUserRecruiterCheck, errorHandler } from "@abijobportal/common";
 
 const app = express();
 
@@ -27,9 +27,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser())
 
 
-// app.use(currentUserAdmin)
-// app.use(currentUserCandidate)
-// app.use(currentUserRecruiter)
+// app.use(currentUserAdminCheck)
+// app.use(currentUserCandidateCheck)
+// app.use(currentUserRecruiterCheck)
 
 // Routes
 app.use(API_PREFIX, routes(dependencies))

@@ -8,7 +8,7 @@ export = (dependencies: DependenciesData)=>{
     return async (req: Request, res: Response)=>{
         console.log(req,"//////////////////////////////");
         
-        console.log(req.currentUser,"jdfjasidjfiashdfidyyyyyyyyyyyyyyyyyyyyyyyy");
+        console.log(req.currentUserCandidate,"jdfjasidjfiashdfidyyyyyyyyyyyyyyyyyyyyyyyy");
         
         const {id, password} = req.body;
         

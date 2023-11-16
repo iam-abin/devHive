@@ -26,7 +26,7 @@ export const candidateSignupApi = async (data: any): Promise<any> => {
 
 export const emailVerifyApi = async (url: string): Promise<any> => {
 	const response = await axios({
-		method: "get",
+		method: "post",
 		url: url,
 	});
 	return response;

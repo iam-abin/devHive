@@ -28,7 +28,7 @@ function CandidateSigninForm() {
 		console.log("candidate is logged in", isLoggedIn);
 
 		if (isLoggedIn) {
-			navigate("/");
+			navigate("/candidate");
 		}
 	}, []);
 
@@ -51,7 +51,7 @@ function CandidateSigninForm() {
 			dispatch(candidateSignin());
 			dispatch(setCandidate(data));
 			notify(message, "success");
-			navigate("/");
+			navigate("/candidate");
 		} catch (error: any) {
 			notify(error.response.data.errors[0].message, "error");
 		}

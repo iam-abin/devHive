@@ -3,7 +3,7 @@ import { DependenciesData } from "../../frameworks/types/dependencyInterface";
 
 export = (dependencies: DependenciesData) => {
 	return async (req: Request, res: Response) => {
-		console.log(req.currentUser, "req.currentUser in admin controller");
+		console.log(req.currentUserAdmin, "req.currentUser in admin controller");
 
 		
 		res.cookie("adminToken", "", {
