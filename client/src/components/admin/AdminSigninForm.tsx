@@ -55,10 +55,7 @@ function Signin() {
 		  console.log(message);
 		  
 			notify(message, "success");
-
-			setTimeout(() => {
-				navigate("/");
-			  }, 2000);
+				navigate("/admin");
 		} catch (error: any) {
 			notify(error.response.data.errors[0].message, "error");
 		}

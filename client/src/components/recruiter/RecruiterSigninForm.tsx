@@ -26,9 +26,8 @@ function RecruiterSigninForm() {
 		console.log("recruiter is logged in",isLoggedIn);
 		
 		if(isLoggedIn){
-			navigate("/")
+			navigate("/recruiter")
 		}
-
 	},[])
 
 	console.log("hi recruiter signin");
@@ -51,7 +50,7 @@ function RecruiterSigninForm() {
 			dispatch(recruiterSignin());
 			dispatch(setRecruiter(data));
 			notify(message, "success");
-			navigate("/");
+			navigate("/recruiter");
 		} catch (error: any) {
 			notify(error.response.data.errors[0].message, "error");
 		}

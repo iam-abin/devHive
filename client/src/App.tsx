@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 
-import LandingPage from "./pages/LandingPage";
+import LandingPage from "./pages/landing/LandingPage";
 import CandidateRoutes from "./routes/CandidateRoutes";
 import RecruiterRouters from "./routes/RecruiterRouters";
 import AdminRoutes from "./routes/AdminRoutes";
