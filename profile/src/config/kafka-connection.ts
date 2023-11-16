@@ -1,7 +1,7 @@
 import { Kafka } from "kafkajs";
 
 const kafka = new Kafka({
-    clientId: 'admin-client',
+    clientId: 'profile-client',
     brokers: ['kafka-srv:9092']
 })
 
