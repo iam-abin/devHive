@@ -38,7 +38,7 @@ export = (dependencies: DependenciesData) => {
 			}
 
 			const emailVerificationToken = generateEmailVerificationToken()
-			console.log("-------newUser",newUser);
+			console.log("-------newUserCandidate",newUser);
 			console.log("-------newUser._id",newUser._id);
 			console.log("-------emailVerificationToken",emailVerificationToken);
 			

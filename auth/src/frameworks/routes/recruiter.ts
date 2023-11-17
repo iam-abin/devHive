@@ -14,6 +14,7 @@ export const recruiterRouter = (dependencies: DependenciesData) => {
 		recruiterSigninController,
 		recruiterSignoutController,
 		recruiterUpdatePasswordController,
+		recruiterSignupEmailVerifyController
 	} = recruiterControllers(dependencies);
 
 	router.post(
@@ -21,6 +22,10 @@ export const recruiterRouter = (dependencies: DependenciesData) => {
 		signupRequestBodyValidatorMiddlewares,
 		recruiterSignupController
 	);
+
+	router.post("/:userId/verifyEmail/:token",recruiterSignupEmailVerifyController)
+	// router.post("/verifyEmail",recruiterSignupEmailVerifyController)
+
 	router.post(
 		"/signin",
 		signinRequestBodyValidatorMiddlewares,

@@ -32,9 +32,9 @@ export const candidateRouter = (dependencies: DependenciesData) => {
 	);
 
 	
-	router.put("/forgotPassword", candidateUpdatePasswordController);
+	router.put("/forgotPassword",requireAuthCandidate, candidateUpdatePasswordController);
 
-	router.put("/resetPassword", requireAuthCandidate, candidateUpdatePasswordController);
+	router.put("/resetPassword", candidateUpdatePasswordController);
 
 	router.post("/signout", requireAuthCandidate, candidateSignoutController);
 
