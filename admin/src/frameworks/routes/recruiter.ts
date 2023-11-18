@@ -9,14 +9,14 @@ export const recruiterRouter = (dependencies: DependenciesData)=>{
 
     const { getAllRecruitersController, getRecruiterByIdController,recruiterBlockUnblockController  } = recruiterControllers(dependencies);
 
-    // recruiter
-    router.get("/recruiters",requireAuthAdmin, getAllRecruitersController);
-    router.get("/viewProfile",requireAuthAdmin, getRecruiterByIdController);
-    router.put("/blockUnblock/:id",requireAuthAdmin, recruiterBlockUnblockController);
+    // // recruiter
+    // router.get("/recruiters",requireAuthAdmin, getAllRecruitersController);
+    // router.get("/viewProfile",requireAuthAdmin, getRecruiterByIdController);
+    // router.put("/blockUnblock/:id",requireAuthAdmin, recruiterBlockUnblockController);
 
-    // router.get("/recruiters", getAllRecruitersController);
-    // router.get("/viewProfile", getRecruiterByIdController);
-    // router.put("/blockUnblock/:id", recruiterBlockUnblockController);
+    router.get("/recruiters", getAllRecruitersController);
+    router.get("/viewProfile", getRecruiterByIdController);
+    router.put("/blockUnblock/:id", recruiterBlockUnblockController);
 
     return router
 }

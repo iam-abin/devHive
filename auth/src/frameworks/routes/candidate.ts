@@ -15,6 +15,8 @@ export const candidateRouter = (dependencies: DependenciesData) => {
 		candidateSignoutController,
 		candidateUpdatePasswordController,
 		candidateSignupEmailVerifyController,
+		candidateSendOtpController,
+		candidateVerifyOtpController
 	} = candidateControllers(dependencies);
 
 	router.post(
@@ -32,11 +34,17 @@ export const candidateRouter = (dependencies: DependenciesData) => {
 	);
 
 	
-	router.put("/forgotPassword",requireAuthCandidate, candidateUpdatePasswordController);
+	// router.put("/forgotPassword",requireAuthCandidate, candidateUpdatePasswordController);
+	router.put("/forgotPassword", candidateUpdatePasswordController);
 
+	router.post("/sendOtp", candidateSendOtpController);
+
+	router.post("/verifyOtp", candidateVerifyOtpController);
+	
 	router.put("/resetPassword", candidateUpdatePasswordController);
 
-	router.post("/signout", requireAuthCandidate, candidateSignoutController);
+	// router.post("/signout", requireAuthCandidate, candidateSignoutController);
+	router.post("/signout", candidateSignoutController);
 
 	return router;
 };
