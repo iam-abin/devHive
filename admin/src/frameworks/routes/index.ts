@@ -22,14 +22,15 @@ export const routes = (dependencies: DependenciesData) => {
 
 	// router.use(currentUserAdminCheck);
 	console.log("==========================================================================================");
-	
+	router.use(currentUserAdminCheck)
+	router.use(requireAuthAdmin)
 
-	router.use("/dashboard", currentUserAdminCheck, dashboard);
+	router.use("/dashboard", dashboard);
 	// router.use("/candidate",requireAuthAdmin, candidate);
-	router.use("/candidate", currentUserAdminCheck, candidate);
-	router.use("/recruiter", currentUserAdminCheck, recruiter);
-	router.use("/membership", currentUserAdminCheck, membership);
-	router.use("/company", currentUserAdminCheck, company);
+	router.use("/candidate",  candidate);
+	router.use("/recruiter",  recruiter);
+	router.use("/membership",  membership);
+	router.use("/company",  company);
 
 	return router;
 };

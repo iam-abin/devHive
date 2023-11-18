@@ -35,7 +35,7 @@ export const candidateRouter = (dependencies: DependenciesData) => {
 
 	
 	// router.put("/forgotPassword",requireAuthCandidate, candidateUpdatePasswordController);
-	router.put("/forgotPassword", candidateUpdatePasswordController);
+	router.put("/forgotPassword",requireAuthCandidate, candidateUpdatePasswordController);
 
 	router.post("/sendOtp", candidateSendOtpController);
 

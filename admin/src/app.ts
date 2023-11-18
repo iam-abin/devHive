@@ -6,6 +6,7 @@ import morgan from "morgan";
 import { routes } from './frameworks/routes'
 import dependencies from "./config/dependencies";
 import { NotFoundError, currentUserAdminCheck, errorHandler } from "@abijobportal/common";
+import cookieParser from "cookie-parser";
 
 const app = express();
 // dotenv.config()
@@ -18,6 +19,7 @@ app.set("trust proxy", true); // trust first proxy
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser())
 
 // Routes
 app.use(API_PREFIX, routes(dependencies))
