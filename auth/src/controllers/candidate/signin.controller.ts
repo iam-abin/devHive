@@ -44,10 +44,10 @@ export = (dependencies: DependenciesData) => {
 			const candidateJWT = createJwtToken(candidatePayloadData);
 
             // // Store it on session object
-            // req.session = {candidateToken: candidateJWT};
+            req.session!.candidateToken = candidateJWT;
 
-            // Store it on cookie
-            res.cookie('candidateToken', candidateJWT, { httpOnly: true })
+            // // Store it on cookie
+            // res.cookie('candidateToken', candidateJWT, { httpOnly: true })
 
             res.status(200).json({message: "Login successful", data: isExistingUser});
 	};

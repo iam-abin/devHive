@@ -54,11 +54,11 @@ export = (dependencies: DependenciesData) => {
 	// Generate Jwt key
 	const recruiterJWT = createJwtToken(recruiterPayloadData);
 
-//    // Store it on session object
-//    req.session = {recruiterToken: recruiterJWT};
+   // Store it on session object
+   req.session = {recruiterToken: recruiterJWT};
 
-	// Store it on cookie
-	res.cookie("recruiterToken", recruiterJWT, { httpOnly: true });
+	// // Store it on cookie
+	// res.cookie("recruiterToken", recruiterJWT, { httpOnly: true });
 
 	res.status(201).json({
 		message: "user is register successfully",
