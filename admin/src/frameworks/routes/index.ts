@@ -20,14 +20,16 @@ export const routes = (dependencies: DependenciesData) => {
 	// currentUserAdmin extract current user from jwt, if user is present add it to req.currentUser
 	// here every routes are used by admin, so it is easy to understand for us when define it at the top.
 
-	router.use(currentUserAdminCheck);
+	// router.use(currentUserAdminCheck);
+	console.log("==========================================================================================");
+	
 
-	router.use("/dashboard", dashboard);
+	router.use("/dashboard", currentUserAdminCheck, dashboard);
 	// router.use("/candidate",requireAuthAdmin, candidate);
-	router.use("/candidate", candidate);
-	router.use("/recruiter", recruiter);
-	router.use("/membership", membership);
-	router.use("/company", company);
+	router.use("/candidate", currentUserAdminCheck, candidate);
+	router.use("/recruiter", currentUserAdminCheck, recruiter);
+	router.use("/membership", currentUserAdminCheck, membership);
+	router.use("/company", currentUserAdminCheck, company);
 
 	return router;
 };

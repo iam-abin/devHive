@@ -22,19 +22,16 @@ export =  (dependencies: any) => {
 	const execute = async ({
 		userId,
 		token,
-		email,
+		
 	}: emailVerificationTokenInterface) => {
-		const tockenDetails = new EmailVerificationToken({
-			userId,
-			token,
-			email,
-		});
-		const tokenFind = await emailVerificationTokenRepository.getToken(tockenDetails);
+		const tokenDetails = { userId, token}
+		const tokenFind = await emailVerificationTokenRepository.getToken(tokenDetails);
 		console.log("tokenFind in signupEmailVerificationUseCase", tokenFind);
 		
-
 		// delete verified token 
-		emailVerificationTokenRepository.deleteToken(tockenDetails);
+		emailVerificationTokenRepository.deleteToken(tokenDetails);
+		// delete verified token 
+		emailVerificationTokenRepository.deleteToken(tokenDetails);
 
 		// to update user verification status in users collection
 		usersRepository.updateVerification(userId);

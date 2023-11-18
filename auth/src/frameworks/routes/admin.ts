@@ -9,9 +9,9 @@ export const adminRouter = (dependencies: DependenciesData)=>{
     const router = express.Router();
 
     const { adminSigninController, adminSignoutController } = adminControllers(dependencies)
-
+    
     router.post("/signin", signinRequestBodyValidatorMiddlewares, adminSigninController);
-    router.post("/signout", adminSignoutController);
+    router.post("/signout" ,requireAuthAdmin ,adminSignoutController);
 
     return router
 }

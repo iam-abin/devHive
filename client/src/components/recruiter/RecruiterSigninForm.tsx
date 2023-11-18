@@ -45,11 +45,12 @@ function RecruiterSigninForm() {
 	// // const isLoggedIn =
 	const handleSubmit = async (userData: any) => {
 		try {
-			const { data, message } = await recruiterSigninApi(userData);
-			// console.log("hiiii", response);
+			const response = await recruiterSigninApi(userData);
+			console.log("hiiii", response);
 			dispatch(recruiterSignin());
-			dispatch(setRecruiter(data));
-			notify(message, "success");
+			dispatch(setRecruiter(response.data.data));
+			
+			notify(response.data.message, "success");
 			navigate("/recruiter");
 		} catch (error: any) {
 			notify(error.response.data.errors[0].message, "error");

@@ -7,16 +7,42 @@ import {
 
 import googleIcon from "../../assets/google-icon.svg";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import Swal from "sweetalert2";
+import { candidateSignupApi } from "../../api/axios/auth/candidateAuth";
 
 function CandidateSignupForm() {
+	const notify = (msg: any, type: string) => {
+		type === "error"
+			? toast.error(msg, {
+					position: toast.POSITION.TOP_RIGHT,
+			  })
+			: toast.success(msg, {
+					position: toast.POSITION.TOP_RIGHT,
+			  });
+	};
 
-	
+	const handleSubmit = async (userData: any) => {
+		try {
+			const data = await candidateSignupApi(userData);
+
+			console.log("Hello");
+			Swal.fire({
+				text: data.data.message,
+				confirmButtonText: "ok",
+			});
+		} catch (error: any) {
+			notify(error.response.data.errors[0].message, "error");
+		}
+	};
+
 	return (
 		<Formik
 			initialValues={initialSignupValues}
 			validationSchema={signUpSchema}
 			onSubmit={(values) => {
 				console.log(values);
+				handleSubmit(values);
 			}}
 		>
 			{(formik) => {
@@ -117,10 +143,11 @@ function CandidateSignupForm() {
 								</label>
 								<label className="label mt-1">
 									<span className="label-text-alt cursor-pointer">
-										<Link to="/candidate/signin"
-									className="cursor-pointer">
-										
-										Already have an account?
+										<Link
+											to="/candidate/signin"
+											className="cursor-pointer"
+										>
+											Already have an account?
 										</Link>
 									</span>
 								</label>
@@ -140,18 +167,13 @@ function CandidateSignupForm() {
 								<div className="mx-4 text-black">or</div>
 								<div className="flex-1 h-0 border-t border-black"></div>
 							</div>
-
 						</Form>
-							<div className="flex items-center justify-center gap-3">
-								<button className="btn border-gray-600 w-60">
-									<img
-										src={googleIcon}
-										className="w-7"
-										alt=""
-									/>
-									Sign up With Google
-								</button>
-							</div>
+						<div className="flex items-center justify-center gap-3">
+							<button className="btn border-gray-600 w-60">
+								<img src={googleIcon} className="w-7" alt="" />
+								Sign up With Google
+							</button>
+						</div>
 					</div>
 				);
 			}}

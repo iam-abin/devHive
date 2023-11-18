@@ -26,8 +26,8 @@ export const sendVerificationEmail = async (email: string,userId: string, token:
 	
 	const verificationLink = `https://devhive.dev/candidate/${userId}/verifyEmail/${token }`
 	const mailOptions = {
-		from:"devHive ",
-		to: "iamabin1100@gmail.com",
+		from:"devHive abinvarghese273@gmail.com",
+		to: email,
 		subject: subject,
 		text: text,
 		html:  `

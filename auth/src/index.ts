@@ -16,6 +16,21 @@ const start = async () => {
 		throw new Error("MONGO_URL_AUTH must be defined");
 	}
 
+	// if we do not set twilio auth token
+	if (!process.env.TWILIO_AUTH_TOKEN) {
+		throw new Error("TWILIO_AUTH_TOKEN must be defined");
+	}
+
+	// if we do not set twilio account sid
+	if (!process.env.TWILIO_ACCOUNT_SID) {
+		throw new Error("TWILIO_ACCOUNT_SID must be defined");
+	}
+
+	// if we do not set twilio service sid
+	if (!process.env.TWILIO_SERVICE_SID) {
+		throw new Error("TWILIO_SERVICE_SID must be defined");
+	}
+
 
 	app.listen(3000, () => {
 		console.log("auth Listening on port 3000....");

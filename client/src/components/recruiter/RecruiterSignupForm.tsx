@@ -1,6 +1,5 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 
 import {
 	initialSignupValues,
@@ -8,12 +7,9 @@ import {
 } from "../common-form-validation/signup";
 import { recruiterSignupApi } from "../../../src/api/axios/auth/recruiterAuth";
 import { toast } from "react-toastify";
-import { recruiterSignin } from "../../redux/slice/recruiterSlice/recruiterAuthSlice";
-import { setRecruiter } from "../../redux/slice/recruiterSlice/recruiterDataSlice";
+import Swal from "sweetalert2";
 
 function RecruiterSignupForm() {
-	const dispatch = useDispatch();
-	const navigate = useNavigate();
 
 	const notify = (msg: any, type: string) => {
 		type === "error"
@@ -27,13 +23,13 @@ function RecruiterSignupForm() {
 
 	const handleSubmit = async (userData: any) => {
 		try {
-			
-			const { data, message } = await recruiterSignupApi(userData);
+			const data = await recruiterSignupApi(userData);
+
 			console.log("Hello",data);
-			dispatch(recruiterSignin());
-			dispatch(setRecruiter(data));
-			notify("Recruiter signup successful ", "success");
-			navigate("/recruiter");
+			Swal.fire({
+				text: data.data.message,
+				confirmButtonText: "ok",
+			});
 		} catch (error: any) {
 			notify(error.response.data.errors[0].message, "error");
 		}

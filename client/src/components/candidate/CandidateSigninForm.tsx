@@ -46,11 +46,11 @@ function CandidateSigninForm() {
 
 	const handleSubmit = async (userData: any) => {
 		try {
-			const { data, message } = await candidateSigninApi(userData);
-			// console.log("hiiii", response);
+			const response = await candidateSigninApi(userData);
+			console.log("hiiii", response);
 			dispatch(candidateSignin());
-			dispatch(setCandidate(data));
-			notify(message, "success");
+			dispatch(setCandidate(response.data.data));
+			notify(response.data.message, "success");
 			navigate("/candidate");
 		} catch (error: any) {
 			notify(error.response.data.errors[0].message, "error");

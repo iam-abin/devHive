@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import successImg from "../../assets/successIcon.svg";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { emailVerifyApi } from "../../api/axios/auth/candidateAuth";
+import { emailRecruiterVerifyApi } from "../../api/axios/auth/recruiterAuth";
 import { useDispatch } from "react-redux";
-import { candidateSignin } from "../../redux/slice/candidateSlice/candidateAuthSlice";
-import { setCandidate } from "../../redux/slice/candidateSlice/candidateDataSlice";
 import { toast } from "react-toastify";
+import { setRecruiter } from "../../redux/slice/recruiterSlice/recruiterDataSlice";
+import { recruiterSignin } from "../../redux/slice/recruiterSlice/recruiterAuthSlice";
 
-function EmailVerify() {
+function EmailVerifyRecruiter() {
 	const [isValidUrl, setIsValidUrl] = useState(false);
 	const params = useParams();
 
@@ -30,19 +30,19 @@ function EmailVerify() {
 			try {
 				console.log("in email verify");
 				
-				const url = `https://devhive.dev/api/v1/auth/candidate/${params.id}/verifyEmail/${params.token}`;
-				const { data } = await emailVerifyApi(url);
+				const url = `https://devhive.dev/api/v1/auth/recruiter/${params.id}/verifyEmail/${params.token}`;
+				const { data } = await emailRecruiterVerifyApi(url);
 				console.log(data);
 				setIsValidUrl(true);
-				dispatch(candidateSignin());
-				dispatch(setCandidate(data));
+				dispatch(recruiterSignin());
+				dispatch(setRecruiter(data));
 				notify("login success","success")
 
-				navigate("/candidate");
+				navigate("/recruiter");
 				// // Close the current tab
 				// window.close();
 			} catch (error) {
-				console.log("url candidate", error);
+				console.log("url recruiter", error);
 				setIsValidUrl(false);
 			}
 		};
@@ -59,7 +59,7 @@ function EmailVerify() {
 					</h1>
 					<Link
 						className="btn bg-slate-500 w-20"
-						to="/candidate/signin"
+						to="/recruiter/signin"
 					>
 						login
 					</Link>
@@ -73,4 +73,4 @@ function EmailVerify() {
 	);
 }
 
-export default EmailVerify;
+export default EmailVerifyRecruiter;

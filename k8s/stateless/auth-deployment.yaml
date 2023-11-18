@@ -28,6 +28,21 @@ spec:
                 secretKeyRef:
                   name: jwt-secret
                   key: JWT_SECRET_KEY
+            - name: TWILIO_AUTH_TOKEN
+              valueFrom: 
+                secretKeyRef:
+                  name: twilio-auth-token
+                  key: TWILIO_AUTH_TOKEN
+            - name: TWILIO_ACCOUNT_SID
+              valueFrom: 
+                secretKeyRef:
+                  name: twilio-account-sid
+                  key: TWILIO_ACCOUNT_SID
+            - name: TWILIO_SERVICE_SID
+              valueFrom: 
+                secretKeyRef:
+                  name: twilio-service-sid
+                  key: TWILIO_SERVICE_SID
 ---
 apiVersion: v1
 kind: Service
