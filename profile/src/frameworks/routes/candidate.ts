@@ -1,18 +1,20 @@
 import express from "express"
 
-import { candidateControllers } from "../../controllers";
+import { candidateProfileControllers } from "../../controllers";
 import { DependenciesData } from "../types/dependencyInterface"
 
-const candidateRouter = (dependencies: DependenciesData)=>{
+export const candidateRouter = (dependencies: DependenciesData)=>{
     const router = express.Router();
 
-    // const {} = candidateControllers(dependencies);
+    const { createCandidateProfileController, viewCandidateProfileController, updateCandidateProfileController } = candidateProfileControllers(dependencies);
 
     // candidate authentication
 	// router.use(requireAuthCandidate)
 
 	// candidate
-	router.get("/viewProfile", getCandidateByIdController);
+	router.post("/createProfile", createCandidateProfileController);
+	router.get("/viewProfile", viewCandidateProfileController);
+	router.put("/updateProfile", updateCandidateProfileController);
 
     return router
 }

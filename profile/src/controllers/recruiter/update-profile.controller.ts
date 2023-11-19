@@ -3,17 +3,17 @@ import { DependenciesData } from "../../frameworks/types/dependencyInterface";
 
 export = (dependencies: DependenciesData)=>{
 
-    const { useCases: { createRecruiterProfileUseCase }} = dependencies
+    const { useCases: { updateRecruiterProfileUseCase }} = dependencies
 
     return async (req: Request, res: Response)=>{
         const data = req.body;
-        console.log("in recruiter create profile controller data: ",data);
+        console.log("in recruiter update profile controller data: ",data);
         
 
-        const recruiter = await createRecruiterProfileUseCase(dependencies).execute({
+        const recruiter = await updateRecruiterProfileUseCase(dependencies).execute({
             data
         });
-        console.log("in recruiter create profile controller recruiter: ",recruiter);
+        console.log("in recruiter update profile controller recruiter: ",recruiter);
 
 
 

@@ -1,7 +1,6 @@
-import schemas from "../../database/models"
-import { blockUnBlockInterface } from "../../types/candidateInterface";
+import schemas from "../../database/mongo/models"
 
-const { RecruiterModel } = schemas;
+const { RecruiterProfileModel } = schemas;
 
 // we want to export some closure
 export = {
@@ -12,30 +11,14 @@ export = {
 		console.log("inside createRecruiter fn in admin service", userData);
 		
 		const {name, email, phone, userType, isActive} = userData
-		const userObject = new RecruiterModel({name, email, phone, userType, isActive});
+		const userObject = new RecruiterProfileModel({name, email, phone, userType, isActive});
 		return await userObject.save();
 	},
 
-	blockUnblock: async ({ id }: blockUnBlockInterface) => {
-		const recruiter = await RecruiterModel.findById(id);
-		if (!recruiter) {
-			throw new Error("recruiter not found");
-		}
-
-		recruiter.isActive = !recruiter.isActive;
-
-		return await recruiter.save();
-	},
-
 	getById: async (id: string) => {
-		const recruiter = await RecruiterModel.findById(id);
+		const recruiter = await RecruiterProfileModel.findById(id);
 		return recruiter;
-	},
-
-	getAllRecruiters: async () => {
-		const recruiters = await RecruiterModel.find({});
-		return recruiters;
-	},
+	}
 };
 
 // export default repository();
