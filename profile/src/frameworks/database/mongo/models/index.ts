@@ -1,4 +1,5 @@
-import { CandidateProfileModel } from "./candidate"
-import { RecruiterProfileModel } from "./recruiter";
+import { CandidateProfileModel } from "./candidate-profile";
+import { RecruiterProfileModel } from "./recruiter-profile";
+import { CompanyProfileModel } from "./company-profile";
 
-export default { CandidateProfileModel, RecruiterProfileModel }
+export default { CandidateProfileModel, RecruiterProfileModel, CompanyProfileModel }
