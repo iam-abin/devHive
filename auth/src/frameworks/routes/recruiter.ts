@@ -33,7 +33,10 @@ export const recruiterRouter = (dependencies: DependenciesData) => {
 	);
 
 	router.put("/forgotPassword", recruiterUpdatePasswordController);
-	router.put("/resetPassword", recruiterUpdatePasswordController);
+
+	router.put("/resetPassword", requireAuthRecruiter, recruiterUpdatePasswordController);
+	// router.put("/resetPassword", recruiterUpdatePasswordController);
+
 	router.post("/signout", recruiterSignoutController);
 
 	return router;

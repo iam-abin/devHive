@@ -3,6 +3,7 @@ import getCandidateByEmailUseCase from "./getCandidateByEmail";
 import updateCandidatePasswordUseCase from "./updatePassword";
 import createEmailVerificationTokenUseCase from "./createEmailToken"
 import signupEmailVerificationTokenUseCase from "./signupEmailVerificationToken";
+import getEmailVerifyTokenUseCase from "./getEmailVerifyToken"
 
 export {
 	candidateSignupUseCase,
@@ -10,5 +11,6 @@ export {
 	updateCandidatePasswordUseCase,
 	createEmailVerificationTokenUseCase,
 	signupEmailVerificationTokenUseCase,
+	getEmailVerifyTokenUseCase
 
 };

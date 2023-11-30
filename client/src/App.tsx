@@ -7,6 +7,7 @@ import AdminRoutes from "./routes/AdminRoutes";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+// import OtpForm from "./pages/Otp";
 
 export default function App() {
 	return (
@@ -18,6 +19,7 @@ export default function App() {
 				<Route path="/candidate/*" element={<CandidateRoutes />} />
 				<Route path="/recruiter/*" element={<RecruiterRouters />} />
 			</Routes>
+			{/* <OtpForm /> */}
 		</>
 	);
 }

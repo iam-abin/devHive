@@ -34,3 +34,70 @@ MONGO_URL_ADMIN = "admin db url"
 MONGO_URL_PROFILE = "profile db url"
 
 
+### steps to start
+
+1. start minikube
+
+```
+minikube start
+
+```
+
+2.  to apply configuration to a resource to create deployment, services and pods
+
+- go to root folder
+
+- for ingress deployments
+
+```
+kubectl apply -f ./k8s/ingress
+
+```
+- for stateful deployments
+
+```
+kubectl apply -f ./k8s/stateful
+
+```
+- for stateless deployments
+
+```
+kubectl apply -f ./k8s/stateless
+
+```
+
+- to see deployments 
+
+```
+kubectl get deployments
+
+```
+- to see services 
+
+```
+kubectl get services
+
+```
+- to see pods 
+
+```
+kubectl get pods
+
+```    
+- to see pods from another namespace( ingress is on another namespace )
+
+```
+kubectl get namespaces
+```
+
+```
+kubectl get pods -n namespace_name
+
+```    
+
+- to delete all pods ( also can be used for deployments and services by changing 'pods' )
+
+```
+kubectl delete pods --all
+
+```
