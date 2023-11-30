@@ -26,6 +26,15 @@ const repository = () => {
 			
 		},
 
+		getTokenByEmail: async (email: string) => {
+			const tokenDetails = await TokenModel.findOne({ email });
+			
+			console.log(tokenDetails,"token found repo");
+			
+			return tokenDetails;
+			
+		},
+
 		deleteToken: async (tokenData: any) => {
 			const {userId,  token} = tokenData;
 			const userObject = await TokenModel.deleteOne({userId,  token} );

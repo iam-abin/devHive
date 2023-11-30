@@ -8,7 +8,7 @@ import { generateEmailVerificationToken, sendVerificationEmail } from "../../fra
 
 export = (dependencies: DependenciesData) => {
 	const {
-		useCases: { candidateSignupUseCase, getCandidateByEmailUseCase, createEmailVerificationTokenUseCase },
+		useCases: { candidateSignupUseCase, getCandidateByEmailUseCase, createEmailVerificationTokenUseCase, getEmailVerifyTokenUseCase },
 	} = dependencies;
 
 	return async (req: Request, res: Response) => {
@@ -19,11 +19,17 @@ export = (dependencies: DependenciesData) => {
 				dependencies
 			).execute(email);
 
-			if (isExistingUser) {
+			if (isExistingUser && isExistingUser.isVarified) {
                 // return res.status(400).json({message:"Email already exist"})
 				throw new BadRequestError("Email already exist");
 			}
 
+			if(isExistingUser && !isExistingUser.isVarified){
+				const token = await getEmailVerifyTokenUseCase(dependencies).execute(email)
+				await sendVerificationEmail(isExistingUser.email,token.userId,token.token, "Verify Yout Email","click on the following link to verify your email account!");
+				console.log("email sended");
+				return res.status(200).json({"message": "An email is send to your email, please verify."});
+			}
 			// userData.password = await  // password hashing can be done in schema or model
 			const newUser = await candidateSignupUseCase(dependencies).execute({
 				name,

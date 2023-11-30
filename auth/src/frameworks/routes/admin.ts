@@ -11,7 +11,7 @@ export const adminRouter = (dependencies: DependenciesData)=>{
     const { adminSigninController, adminSignoutController } = adminControllers(dependencies)
     
     router.post("/signin", signinRequestBodyValidatorMiddlewares, adminSigninController);
-    router.post("/signout" ,requireAuthAdmin ,adminSignoutController);
+    router.post("/signout" ,requireAuthAdmin ,adminSignoutController);  
 
     return router
 }

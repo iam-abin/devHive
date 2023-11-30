@@ -4,6 +4,7 @@ import {
 	updateCandidatePasswordUseCase,
 	createEmailVerificationTokenUseCase,
 	signupEmailVerificationTokenUseCase,
+	getEmailVerifyTokenUseCase
 } from "./candidate";
 
 import {
@@ -21,6 +22,7 @@ export default {
 	updateCandidatePasswordUseCase,
 	createEmailVerificationTokenUseCase,
 	signupEmailVerificationTokenUseCase,
+	getEmailVerifyTokenUseCase,
 
 	recruiterSignupUseCase,
 	getRecruiterByEmailUseCase,
