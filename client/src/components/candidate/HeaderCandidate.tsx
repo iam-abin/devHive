@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearCandidate } from "../../redux/slice/candidateSlice/candidateDataSlice";
 import { candidateSignout } from "../../redux/slice/candidateSlice/candidateAuthSlice";
 import { toast } from "react-toastify";
+import { candidateSignoutApi } from "../../api/axios/auth/candidateAuth";
 
 function HeaderCandidate() {
 	const dispatch = useDispatch();
@@ -13,7 +14,15 @@ function HeaderCandidate() {
 		return state.candidateAuth.candidateLoggedIn;
 	});
 
-	const handleCandidateLogout = () => {
+	const candidate = useSelector((state: RootState)=>{
+		return state.candidateData.candidate
+	})
+
+	console.log("candidate details: ",candidate);
+	
+
+	const handleCandidateLogout = async() => {
+		const response = await candidateSignoutApi(candidate);
 		dispatch(clearCandidate());
 		dispatch(candidateSignout());
 		notify("Logged out successfully","success")

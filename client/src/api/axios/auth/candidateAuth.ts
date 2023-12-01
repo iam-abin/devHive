@@ -32,3 +32,13 @@ export const emailVerifyApi = async (url: string): Promise<any> => {
 	return response;
 };
 
+export const candidateSignoutApi = async(data: any): Promise<any> =>{
+	console.log(data," in axios");
+	
+	const response = await axios({
+		method: "post",
+		url: `${BASE_URL_CANDIDATE}/signout`,
+		data: data,
+	});
+	return response;
+}
