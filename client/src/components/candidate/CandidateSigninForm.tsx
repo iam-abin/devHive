@@ -13,24 +13,13 @@ import {
 import { candidateSigninApi } from "../../api/axios/auth/candidateAuth";
 import { candidateSignin } from "../../redux/slice/candidateSlice/candidateAuthSlice";
 import { setCandidate } from "../../redux/slice/candidateSlice/candidateDataSlice";
-import { RootState } from "../../redux/reducer/reducer";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 
 function CandidateSigninForm() {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-
-	const isLoggedIn = useSelector((state: RootState) => {
-		return state.candidateAuth.candidateLoggedIn;
-	});
-
-	useEffect(() => {
-		console.log("candidate is logged in", isLoggedIn);
-
-		if (isLoggedIn) {
-			navigate("/candidate");
-		}
-	}, []);
+	// useEffect(() => {
+	// }, []);
 
 	console.log("hi recruiter signin");
 
