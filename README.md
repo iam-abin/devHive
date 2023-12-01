@@ -40,7 +40,6 @@ MONGO_URL_PROFILE = "profile db url"
 
 ```
 minikube start
-
 ```
 
 2.  to apply configuration to a resource to create deployment, services and pods
@@ -51,40 +50,34 @@ minikube start
 
 ```
 kubectl apply -f ./k8s/ingress
-
 ```
 - for stateful deployments
 
 ```
 kubectl apply -f ./k8s/stateful
-
 ```
 - for stateless deployments
 
 ```
 kubectl apply -f ./k8s/stateless
-
 ```
 
 - to see deployments 
 
 ```
 kubectl get deployments
-
 ```
 - to see services 
 
 ```
 kubectl get services
-
 ```
 - to see pods 
 
 ```
 kubectl get pods
-
 ```    
-- to see pods from another namespace( ingress is on another namespace )
+- to see pods in another namespace( ingress is on another namespace )
 
 ```
 kubectl get namespaces
@@ -92,12 +85,10 @@ kubectl get namespaces
 
 ```
 kubectl get pods -n namespace_name
-
 ```    
 
 - to delete all pods ( also can be used for deployments and services by changing 'pods' )
 
 ```
 kubectl delete pods --all
-
 ```
