@@ -1,13 +1,15 @@
-export = (dependencies: any) => {
-	const { repositories:{usersRepository} } = dependencies;
+import { CandidateDataProfile } from "../../frameworks/types/candidate-profile-interface";
 
-	if (!usersRepository) {
-		throw new Error("usersRepository should exist in dependencies");
+export  = (dependencies: any) => {
+	const { repositories:{candidateProfileRepository} } = dependencies;
+
+	if (!candidateProfileRepository) {
+		throw new Error("candidateProfileRepository should exist in dependencies");
 	}
 
-	const execute = (email: string) => {
-		return usersRepository.getByEmail(email);
+	const execute = (profileData: CandidateDataProfile) => {
+        return candidateProfileRepository.updateCandidateProfile(profileData);
 	};
 
-	return { execute };
+    return { execute }
 };

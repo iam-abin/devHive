@@ -3,14 +3,14 @@ import { DependenciesData } from "../../frameworks/types/dependencyInterface";
 
 export = (dependencies: DependenciesData)=>{
 
-    const { useCases: { getCandidateProfileByIdUseCase }} = dependencies
+    const { useCases: { getCandidateProfileUseCase }} = dependencies
 
     return async (req: Request, res: Response)=>{
         const { id } = req.params;
         console.log("in candidate view profile controller id: ",id);
         
 
-        const candidate = await getCandidateProfileByIdUseCase(dependencies).execute({
+        const candidate = await getCandidateProfileUseCase(dependencies).execute({
             id
         });
         console.log("in canidiare view profile controller candidate: ",candidate);

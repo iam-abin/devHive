@@ -1,6 +1,6 @@
 import { CandidateDataProfile } from "../frameworks/types/candidate-profile-interface";
 
-export class Candidate {
+export class CandidateProfile {
 	name: string;
 	email: string;
 	phone: number;

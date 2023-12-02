@@ -10,9 +10,11 @@ export = (dependencies: any) => {
 	}
 
 	const execute = (id: string) => {
-		const createdToken = candidateProfileRepository.getProfileById(id);
+		const candidate = candidateProfileRepository.getProfileById(id);
+
+		// write code to remove some unwanted fields from result
 		
-		return createdToken;
+		return candidate;
 	};
 
 	return { execute };
