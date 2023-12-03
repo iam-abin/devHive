@@ -10,6 +10,8 @@ export  = (dependencies: any) => {
 
 	const execute = (profileData: CandidateDataProfile) => {
 		const profile = new CandidateProfile(profileData);
+		console.log("in candidate create profile usecase execute: ", profile);
+		
         return candidateProfileRepository.createCandidateProfile(profile);
 	};
 

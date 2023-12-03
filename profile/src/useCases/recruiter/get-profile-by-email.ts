@@ -9,10 +9,10 @@ export = (dependencies: any) => {
 		);
 	}
 
-	const execute = (id: string) => {
-		const createdToken = recruiterProfileRepository.getProfileById(id);
+	const execute = async(email: string) => {
+		const profile = await recruiterProfileRepository.getProfileByEmail(email);
 		
-		return createdToken;
+		return profile;
 	};
 
 	return { execute };

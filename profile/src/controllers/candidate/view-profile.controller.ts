@@ -10,9 +10,7 @@ export = (dependencies: DependenciesData)=>{
         console.log("in candidate view profile controller id: ",id);
         
 
-        const candidate = await getCandidateProfileUseCase(dependencies).execute({
-            id
-        });
+        const candidate = await getCandidateProfileUseCase(dependencies).execute(id);
         console.log("in canidiare view profile controller candidate: ",candidate);
 
 

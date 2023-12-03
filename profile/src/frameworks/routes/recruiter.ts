@@ -11,10 +11,10 @@ export const recruiterRouter = (dependencies: DependenciesData)=>{
 
     // recruiter
 	router.post("/createProfile", createRecruiterProfileController);
-	router.get("/viewProfile", viewRecruiterProfileController);
+	router.get("/viewProfile/:id", viewRecruiterProfileController);
 	router.patch("/updateProfile", updateRecruiterProfileController);
     router.put("/uploadProfilePic", updateRecruiterProfileController);
-	router.get("/viewCandidateProfile",viewCandidateProfileController);
+	router.get("/viewCandidateProfile/:id",viewCandidateProfileController);
 
     return router
 }

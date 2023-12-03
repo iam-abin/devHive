@@ -10,9 +10,7 @@ export = {
 	 // createCandidateProfile is calling when the user is signed in, and then creates a basic profile
 	 createCandidateProfile: async (userData: any) => {
 		console.log("inside createCandidate fn in admin service", userData);
-		
-		const {name, email, phone, userType, isActive} = userData
-		const userObject = new CandidateProfileModel({name, email, phone, userType, isActive});
+		const userObject = new CandidateProfileModel(userData);
 		return await userObject.save();
 	},
 
@@ -22,8 +20,14 @@ export = {
 		return candidate;
 	},
 
+	getProfileByEmail: async (email: string) => {
+		const candidate = await CandidateProfileModel.findOne({email});
+		return candidate;
+	},
+
+
 	updateCandidateProfile: async (id: string, data: any) => {
-		const candidate = await CandidateProfileModel.updateOne({ "_id": id }, { $set: data });
+		const candidate = await CandidateProfileModel.findOneAndUpdate({ "_id": id }, { $set: data }, {new: true});
 		return candidate;
 	},
 

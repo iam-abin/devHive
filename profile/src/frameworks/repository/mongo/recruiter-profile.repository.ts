@@ -11,9 +11,7 @@ export = {
 
 	 createRecruiterProfile: async (userData: any) => {
 		console.log("inside createRecruiter fn in admin service", userData);
-		
-		const {name, email, phone, userType, isActive} = userData
-		const userObject = new RecruiterProfileModel({name, email, phone, userType, isActive});
+		const userObject = new RecruiterProfileModel(userData);
 		return await userObject.save();
 	},
 
@@ -22,8 +20,13 @@ export = {
 		return recruiter;
 	},
 
+	getProfileByEmail: async (email: string) => {
+		const candidate = await RecruiterProfileModel.findOne({email});
+		return candidate;
+	},
+
 	updateRecruiterProfile: async (id: string, data: any) => {
-		const recruiter = await RecruiterProfileModel.updateOne({ "_id": id }, { $set: data });
+		const recruiter = await RecruiterProfileModel.findOneAndUpdate({ "_id": id }, { $set: data }, {new: true});
 		return recruiter;
 	},
 

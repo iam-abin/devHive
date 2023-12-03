@@ -11,8 +11,7 @@ export = (dependencies: any) => {
 
 	const execute = async (id: string) => {
 		const profile = await candidateProfileRepository.getProfileById(id);
-
-		// write code to remove some unwanted fields from result
+		console.log(profile);
 		
 		return profile;
 	};

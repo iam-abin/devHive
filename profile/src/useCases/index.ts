@@ -2,14 +2,16 @@ import {
     createCandidateProfileUseCase,
 	updateCandidateProfileUseCase,
 	uploadResumeUseCase,
-	getCandidateProfileUseCase,
+	getCandidateProfileByIdUseCase,
+	getCandidateProfileByEmailUseCase,
 	uploadCandidateProfilePicUseCase,
 } from "./candidate";
 
 import {
 	createRecruiterProfileUseCase,
 	updateRecruiterProfileUseCase,
-	getRecruiterProfileUseCase,
+	getRecruiterProfileByIdUseCase,
+	getRecruiterProfileByEmailUseCase,
 	getCandidateProfileByRecruiterUseCase,
 	uploadRecruiterProfilePicUseCase,
 } from "./recruiter";
@@ -19,12 +21,14 @@ export default {
     createCandidateProfileUseCase,
 	updateCandidateProfileUseCase,
 	uploadResumeUseCase,
-	getCandidateProfileUseCase,
+	getCandidateProfileByIdUseCase,
+	getCandidateProfileByEmailUseCase,
 	uploadCandidateProfilePicUseCase,
 
-    createRecruiterProfileUseCase,
+	createRecruiterProfileUseCase,
 	updateRecruiterProfileUseCase,
-	getRecruiterProfileUseCase,
+	getRecruiterProfileByIdUseCase,
+	getRecruiterProfileByEmailUseCase,
 	getCandidateProfileByRecruiterUseCase,
 	uploadRecruiterProfilePicUseCase,
 };

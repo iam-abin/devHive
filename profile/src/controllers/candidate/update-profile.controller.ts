@@ -3,16 +3,16 @@ import { DependenciesData } from "../../frameworks/types/dependencyInterface";
 
 export = (dependencies: DependenciesData)=>{
 
-    const { useCases: { updateCandidateProfileUseCase }} = dependencies
+    const { useCases: { getCandidateProfileByIdUseCase, updateCandidateProfileUseCase }} = dependencies
 
     return async (req: Request, res: Response)=>{
-        const data = req.body;
-        console.log("in candidate update profile controller data: ",data);
+        const updatedData = req.body;
+        console.log("in candidate update profile controller data: ",updatedData);
+        const { id } = req.body
+        const existingData = await getCandidateProfileByIdUseCase(dependencies).execute(id);
         
 
-        const candidate = await updateCandidateProfileUseCase(dependencies).execute({
-            data
-        });
+        const candidate = await updateCandidateProfileUseCase(dependencies).execute(existingData,updatedData);
         console.log("in canidiare update profile controller candidate: ",candidate);
 
 
