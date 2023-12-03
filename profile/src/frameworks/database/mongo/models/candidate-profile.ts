@@ -5,8 +5,8 @@ interface CandidateAttributes {
 	name: string;
 	email: string;
 	phone: number;
-	userType: string;
-	isVarified: boolean;
+	// userType: string;
+	// isVarified: boolean;
 	isActive: boolean;
 	gender: string;
 	currentLocation: string;
@@ -25,8 +25,8 @@ interface CandidateDocument extends mongoose.Document {
 	name: string;
 	email: string;
 	phone: number;
-	userType: string;
-	isVarified: boolean;
+	// userType: string;
+	// isVarified: boolean;
 	isActive: boolean;
 	gender: string;
 	currentLocation: string;
@@ -62,11 +62,6 @@ const candidateSchema = new mongoose.Schema(
 			required: true,
 			trim: true,
 		},
-		password: {
-			type: String,
-			required: true,
-			trim: true,
-		},
 		userType: {
 			type: String,
 			default: "candidate"
@@ -96,8 +91,8 @@ const candidateSchema = new mongoose.Schema(
 		keySkills: Array,
 		profile_image: {
 			type: String,
-			default:
-				"https://res.cloudinary.com/dprxebwil/image/upload/v1679341215/Recruiter/recruiter-images.jpeg.jpg",
+			// default:
+			// 	"https://res.cloudinary.com/dprxebwil/image/upload/v1679341215/Recruiter/recruiter-images.jpeg.jpg",
 		},
 		about: String,
 		resume: String,

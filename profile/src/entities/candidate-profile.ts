@@ -4,7 +4,7 @@ export class CandidateProfile {
 	name: string;
 	email: string;
 	phone: number;
-	userType: string;
+	// userType: string;
 	// isVarified: boolean;
 	// isActive: boolean;
 	gender?: string;
@@ -20,7 +20,7 @@ export class CandidateProfile {
 		name,
 		email,
 		phone,
-		userType,
+		// userType,
 		gender,
 		currentLocation,
 		address,
@@ -33,7 +33,7 @@ export class CandidateProfile {
 		this.name = name;
 		this.email = email;
 		this.phone = phone;
-		this.userType = userType;
+		// this.userType = userType;
 		this.gender = gender;
 		this.currentLocation = currentLocation;
 		this.address = address;

@@ -62,11 +62,6 @@ const recruiterSchema = new mongoose.Schema(
 			required: true,
 			trim: true,
 		},
-		password: {
-			type: String,
-			required: true,
-			trim: true,
-		},
 		userType: {
 			type: String,
 			default: "recruiter"
@@ -92,8 +87,8 @@ const recruiterSchema = new mongoose.Schema(
 		currentLocation: String,
 		profile_image: {
 			type: String,
-			default:
-				"https://res.cloudinary.com/dprxebwil/image/upload/v1679341215/Recruiter/recruiter-images.jpeg.jpg",
+			// default:
+			// 	"https://res.cloudinary.com/dprxebwil/image/upload/v1679341215/Recruiter/recruiter-images.jpeg.jpg",
 		},
 		about: String,
 	},

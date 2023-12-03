@@ -7,8 +7,18 @@ export  = (dependencies: any) => {
 		throw new Error("candidateProfileRepository should exist in dependencies");
 	}
 
-	const execute = (profileData: CandidateDataProfile) => {
-        return candidateProfileRepository.updateCandidateProfile(profileData);
+	const execute = async(existingData: any,updatedData: any) => {
+
+		const modifiedFields: { [key: string]: any } = {};
+		for (const field in updatedData) {
+		  if (updatedData[field] !== existingData[field]) {
+			modifiedFields[field] = updatedData[field];
+		  }
+		}
+		
+
+
+        return await candidateProfileRepository.updateCandidateProfile(existingData.id,modifiedFields);
 	};
 
     return { execute }
