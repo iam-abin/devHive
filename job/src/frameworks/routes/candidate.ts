@@ -8,19 +8,21 @@ import { DependenciesData } from "../types/dependencyInterface";
 
 export const candidateRouter = (dependencies: DependenciesData) => {
 	const router = express.Router();
+	console.log("routeeeeeeeeeee");
+	
 
 	const {
-		viewAllJobsController,
-		viewJobController,
 		applyJobController,
-		filterJobController
+		filterJobCandidateController,
+		viewAllJobsCandidateController,
+		viewJobCandidateController
 	} = candidateJobControllers(dependencies);
 
-	router.get("/", viewAllJobsController);
+	router.get("/", viewAllJobsCandidateController);
 	
-	router.get("/:slug",viewJobController);
+	router.get("/:id",viewJobCandidateController);
 
-	router.post("/filter",filterJobController);
+	router.post("/filter",filterJobCandidateController);
 	
 	router.post("/apply", applyJobController);
 

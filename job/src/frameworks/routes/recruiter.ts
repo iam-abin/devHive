@@ -9,7 +9,6 @@ import { DependenciesData } from "../types/dependencyInterface";
 
 export const recruiterRouter = (dependencies: DependenciesData) => {
 	const router = express.Router();
-
 	const {
 		createJobController,
 		updateJobController,
@@ -19,11 +18,11 @@ export const recruiterRouter = (dependencies: DependenciesData) => {
 		deleteJobController
 	} = recruiterJobControllers(dependencies);
 
+	router.post("/create", createJobController);
+	
 	router.get("/", viewAllJobsRecruiterController);
 	
-	router.route("/:slug").get(viewJobRecruiterController).patch(updateJobController).delete(deleteJobController);
-	
-	router.post("/create", createJobController);
+	router.route("/:id").get(viewJobRecruiterController).patch(updateJobController).delete(deleteJobController);
 
 	router.post("/filter", filterJobRecruiterController);
 

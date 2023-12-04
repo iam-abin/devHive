@@ -1,7 +1,5 @@
-import candidateJobRepository from "./candidate-job.repository";
-import recruiterJobRepository from "./recruiter-job.repository";
+import jobRepository from "./job.repository";
 
 export = {
-    candidateJobRepository,
-    recruiterJobRepository
-}
+	jobRepository,
+};

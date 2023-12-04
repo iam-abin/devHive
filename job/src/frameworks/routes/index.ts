@@ -14,8 +14,11 @@ export const routes = (dependencies: DependenciesData) => {
 	const recruiter = recruiterRouter(dependencies);
 
 	// router.use("/admin",currentUserAdminCheck, admin); // currentUserAdmin extract current user from jwt, if user is present add it to req.currentUser
-	router.use("/candidate",currentUserCandidateCheck, candidate);
-	router.use("/recruiter",currentUserRecruiterCheck, recruiter);
+	// router.use("/candidate",currentUserCandidateCheck, candidate);
+	// router.use("/recruiter",currentUserRecruiterCheck, recruiter);
+
+	router.use("/candidate",candidate);
+	router.use("/recruiter",recruiter);
 
 	return router;
 };

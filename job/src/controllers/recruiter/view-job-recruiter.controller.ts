@@ -3,13 +3,13 @@ import { DependenciesData } from "../../frameworks/types/dependencyInterface";
 
 export = (dependencies: DependenciesData)=>{
 
-    const { useCases: { getJobByIdUseCase }} = dependencies
+    const { useCases: { getJobByIdRecruiterUseCase }} = dependencies
 
     return async (req: Request, res: Response)=>{
         const {id} = req.params;
         console.log("in get job controller 1: ",id);
 
-        const response = await getJobByIdUseCase(dependencies).execute(id);
+        const response = await getJobByIdRecruiterUseCase(dependencies).execute(id);
         console.log("in get job controller 2: ",response);
 
 

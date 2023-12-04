@@ -3,8 +3,8 @@ import "express-async-errors";
 import morgan from "morgan";
 import cookieSession from "cookie-session";
 
-// import { routes } from "./frameworks/routes";
-// import dependencies from "./config/dependencies";
+import { routes } from "./frameworks/routes";
+import dependencies from "./config/dependencies";
 import { NotFoundError, errorHandler } from "@abijobportal/common";
 
 const app = express();
@@ -24,8 +24,8 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// // Routes
-// app.use(API_PREFIX, routes(dependencies));
+// Routes
+app.use(API_PREFIX, routes(dependencies));
 
 app.all("*", async () => {
 	throw new NotFoundError();
