@@ -24,6 +24,20 @@ spec:
                 name: admin-srv
                 port:
                   number: 3000
+          - path: /api/v1/job/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: job-srv
+                port:
+                  number: 3000
+          - path: /api/v1/profile/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: profile-srv
+                port:
+                  number: 3000
           - path: /?(.*)
             pathType: Prefix
             backend:

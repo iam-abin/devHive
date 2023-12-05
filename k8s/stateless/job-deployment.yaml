@@ -1,28 +1,28 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata: 
-  name: profile-depl
+  name: job-depl
 spec:
   replicas: 1
   selector:
     matchLabels: 
-      app: profile
+      app: job
   template: 
     metadata: 
       labels: 
-        app: profile
+        app: job
     spec: 
       containers: 
-        - name: profile
-          image: abinv/profile
+        - name: job
+          image: abinv/job
           env:
             - name: MONGO_URI
-              value: 'mongodb://profile-mongo-srv:27017/profile'
-            - name: MONGO_URL_PROFILE
+              value: 'mongodb://job-mongo-srv:27017/job'
+            - name: MONGO_URL_JOB
               valueFrom: 
                 secretKeyRef:
-                  name: devhive-mongo-url-profile
-                  key: MONGO_URL_PROFILEDB_DEVHIVE
+                  name: devhive-mongo-url-job
+                  key: MONGO_URL_JOBDB_DEVHIVE
             - name: JWT_SECRET_KEY
               valueFrom: 
                 secretKeyRef:
@@ -32,12 +32,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata: 
-  name: profile-srv
+  name: job-srv
 spec: 
   selector: 
-    app: profile
+    app: job
   ports: 
-    - name: profile
+    - name: job
       protocol: TCP
       port: 3000
       targetPort: 3000

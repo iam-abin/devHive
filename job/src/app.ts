@@ -11,7 +11,7 @@ const app = express();
 
 const API_PREFIX = process.env.API_PREFIX || "/api/v1/job";
 
-app.set("trust proxy", true); // trust first proxy
+// app.set("trust proxy", true); // trust first proxy
 app.use(
 	cookieSession({
 		signed: false,

@@ -1,28 +1,28 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: profile-mongo-depl
+  name: job-mongo-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: profile-mongo
+      app: job-mongo
   template:
     metadata:
       labels:
-        app: profile-mongo
+        app: job-mongo
     spec:
       containers:
-        - name: profile-mongo
+        - name: job-mongo
           image: mongo
 ---
 apiVersion: v1
 kind: Service
 metadata: 
-  name: profile-mongo-srv
+  name: job-mongo-srv
 spec: 
   selector:
-    app: profile-mongo
+    app: job-mongo
   ports:
     - name: db
       protocol: TCP
