@@ -34,6 +34,7 @@ interface RecruiterDocument extends mongoose.Document {
 	userId: string;
 	createdAt: string;
 	updatedAt: string;
+	// "membership": "no"
 }
 
 // 3.
