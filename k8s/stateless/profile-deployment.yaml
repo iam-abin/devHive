@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: profile-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels: 
+      app: profile
+  template: 
+    metadata: 
+      labels: 
+        app: profile
+    spec: 
+      containers: 
+        - name: profile
+          image: abinv/profile
+          env:
+            - name: MONGO_URI
+              value: 'mongodb://profile-mongo-srv:27017/profile'
+            - name: MONGO_URL_PROFILE
+              valueFrom: 
+                secretKeyRef:
+                  name: devhive-mongo-url-profile
+                  key: MONGO_URL_PROFILEDB_DEVHIVE
+            - name: JWT_SECRET_KEY
+              valueFrom: 
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_SECRET_KEY
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  name: profile-srv
+spec: 
+  selector: 
+    app: profile
+  ports: 
+    - name: profile
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

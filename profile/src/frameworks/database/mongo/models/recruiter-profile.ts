@@ -5,17 +5,14 @@ interface RecruiterAttributes {
 	name: string;
 	email: string;
 	phone: number;
-	userType: string;
 	isVarified: boolean;
 	isActive: boolean;
 	gender: string;
-	currentLocation: string;
-	address: object;
-	keySkills: object;
+	company_name: string;
+	company_location: string;
+	company_address: string;
 	profile_image: string;
 	about: string;
-	resume: string;
-	experience: object;
 	userId: string;
 	// isActive: boolean;
 	// userId: string;
@@ -29,18 +26,15 @@ interface RecruiterDocument extends mongoose.Document {
 	isVarified: boolean;
 	isActive: boolean;
 	gender: string;
-	currentLocation: string;
-	address: object;
-	keySkills: object;
+	company_name: string;
+	company_location: string;
+	company_address: string;
 	profile_image: string;
 	about: string;
-	resume: string;
-	experience: object;
-
-
 	userId: string;
 	createdAt: string;
 	updatedAt: string;
+	// "membership": "no"
 }
 
 // 3.
@@ -75,22 +69,24 @@ const recruiterSchema = new mongoose.Schema(
 			type: Boolean,
 			default: true,
 		},
-		company: {
-			type: mongoose.Schema.Types.ObjectId,
-			ref:"Company"
-
-		},
 		gender: {
 			type: String,
 			enum: ["Male", "Female", "Other"],
 		},
-		currentLocation: String,
+		company_name: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref:"Company"
+
+		},
+		company_location: String,
+		company_address: String,
 		profile_image: {
 			type: String,
 			// default:
 			// 	"https://res.cloudinary.com/dprxebwil/image/upload/v1679341215/Recruiter/recruiter-images.jpeg.jpg",
 		},
 		about: String,
+		userId: mongoose.Schema.Types.ObjectId
 	},
 	{
 		// to reformat id and remove password,__v from response when converting to json (we can also use other approaches)
@@ -112,7 +108,7 @@ interface RecruiterProfileModel extends mongoose.Model<RecruiterDocument> {
 
 // 5.In Mongoose, you can also add custom functions to a model using statics.
 recruiterSchema.statics.buildRecruiter = (attributes: RecruiterAttributes) => {
-	return new RecruiterProfileModel({attributes});
+	return new RecruiterProfileModel(attributes);
 };
 
 // 6. // 6.hover on 'Recruiter' ,we can see that 'Recruiter' is getting 'RecruiterProfileModel', ie,a Second arg indicate returning type

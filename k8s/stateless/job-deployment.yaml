@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: job-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels: 
+      app: job
+  template: 
+    metadata: 
+      labels: 
+        app: job
+    spec: 
+      containers: 
+        - name: job
+          image: abinv/job
+          env:
+            - name: MONGO_URI
+              value: 'mongodb://job-mongo-srv:27017/job'
+            - name: MONGO_URL_JOB
+              valueFrom: 
+                secretKeyRef:
+                  name: devhive-mongo-url-job
+                  key: MONGO_URL_JOBDB_DEVHIVE
+            - name: JWT_SECRET_KEY
+              valueFrom: 
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_SECRET_KEY
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  name: job-srv
+spec: 
+  selector: 
+    app: job
+  ports: 
+    - name: job
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

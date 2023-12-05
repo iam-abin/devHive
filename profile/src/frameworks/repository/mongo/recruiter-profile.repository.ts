@@ -11,7 +11,8 @@ export = {
 
 	 createRecruiterProfile: async (userData: any) => {
 		console.log("inside createRecruiter fn in admin service", userData);
-		const userObject = new RecruiterProfileModel(userData);
+		// const userObject = new RecruiterProfileModel(userData);
+		const userObject = RecruiterProfileModel.buildRecruiter(userData);
 		return await userObject.save();
 	},
 

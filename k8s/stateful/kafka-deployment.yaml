@@ -26,7 +26,7 @@ spec:
               value: "yes"
             - name: ALLOW_PLAINTEXT_LISTENER
               value: "yes"
-
+              
 ---
 apiVersion: v1
 kind: Service

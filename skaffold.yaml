@@ -24,6 +24,22 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
+    - image: abinv/job
+      context: job
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
+    - image: abinv/profile
+      context: profile
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
     - image: abinv/client-app
       context: client
       docker:
