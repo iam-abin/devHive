@@ -10,7 +10,7 @@ export = {
 	 // createRecruiterProfile is calling when the user is signed in, and then creates a basic profile
 
 	 createRecruiterProfile: async (userData: any) => {
-		console.log("inside createRecruiter fn in admin service", userData);
+		console.log("inside createRecruiter fn in  profile service", userData);
 		// const userObject = new RecruiterProfileModel(userData);
 		const userObject = RecruiterProfileModel.buildRecruiter(userData);
 		return await userObject.save();

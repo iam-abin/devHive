@@ -14,12 +14,14 @@ export = (dependencies: any) => {
 	const execute = async (existingData: any, updatedData: any) => {
 		console.log("hgftd");
 
+		//  function to find the changes fields to update
 		const modifiedFields: { [key: string]: any } = {};
 		for (const field in updatedData) {
 			if (updatedData[field] !== existingData[field]) {
 				modifiedFields[field] = updatedData[field];
 			}
 		}
+
 
 		console.log("modified fields", modifiedFields);
 

@@ -10,12 +10,12 @@ interface RecruiterAttributes {
 	gender: string;
 	company_name: string;
 	company_location: string;
-	company_address: string;
+	company_state: string;
+	company_country: string;
 	profile_image: string;
 	about: string;
-	userId: string;
+	recruiterId: string;
 	// isActive: boolean;
-	// userId: string;
 }
 // 2. An interface that describes the properties ,that a Candidate Document has
 interface RecruiterDocument extends mongoose.Document {
@@ -28,10 +28,11 @@ interface RecruiterDocument extends mongoose.Document {
 	gender: string;
 	company_name: string;
 	company_location: string;
-	company_address: string;
+	company_state: string;
+	company_country: string;
 	profile_image: string;
 	about: string;
-	userId: string;
+	recruiterId: string;
 	createdAt: string;
 	updatedAt: string;
 	// "membership": "no"
@@ -58,7 +59,7 @@ const recruiterSchema = new mongoose.Schema(
 		},
 		userType: {
 			type: String,
-			default: "recruiter"
+			default: "recruiter",
 		},
 		isVarified: {
 			// field for signup email verificetion
@@ -73,20 +74,21 @@ const recruiterSchema = new mongoose.Schema(
 			type: String,
 			enum: ["Male", "Female", "Other"],
 		},
-		company_name: {
-			type: mongoose.Schema.Types.ObjectId,
-			ref:"Company"
-
-		},
+		// company_name: {
+		// 	type: mongoose.Schema.Types.ObjectId,
+		// 	ref: "Company",
+		// },
+		company_name: String,
 		company_location: String,
-		company_address: String,
+		company_state: String,
+		company_country: String,
 		profile_image: {
 			type: String,
 			// default:
 			// 	"https://res.cloudinary.com/dprxebwil/image/upload/v1679341215/Recruiter/recruiter-images.jpeg.jpg",
 		},
 		about: String,
-		userId: mongoose.Schema.Types.ObjectId
+		recruiterId: mongoose.Schema.Types.ObjectId,
 	},
 	{
 		// to reformat id and remove password,__v from response when converting to json (we can also use other approaches)
@@ -112,6 +114,9 @@ recruiterSchema.statics.buildRecruiter = (attributes: RecruiterAttributes) => {
 };
 
 // 6. // 6.hover on 'Recruiter' ,we can see that 'Recruiter' is getting 'RecruiterProfileModel', ie,a Second arg indicate returning type
-const RecruiterProfileModel = mongoose.model<RecruiterDocument, RecruiterProfileModel>("Recruiter", recruiterSchema);
+const RecruiterProfileModel = mongoose.model<
+	RecruiterDocument,
+	RecruiterProfileModel
+>("Recruiter", recruiterSchema);
 
 export { RecruiterProfileModel };

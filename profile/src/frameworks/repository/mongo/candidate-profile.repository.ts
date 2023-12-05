@@ -9,8 +9,8 @@ export = {
 
 	 // createCandidateProfile is calling when the user is signed in, and then creates a basic profile
 	 createCandidateProfile: async (userData: any) => {
-		console.log("inside createCandidate fn in admin service", userData);
-		const userObject = new CandidateProfileModel(userData);
+		console.log("inside createCandidate fn in  profile service", userData);
+		const userObject = CandidateProfileModel.buildCandidate(userData);
 		return await userObject.save();
 	},
 

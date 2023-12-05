@@ -4,9 +4,8 @@ export class CandidateProfile {
 	name: string;
 	email: string;
 	phone: number;
-	// userType: string;
-	// isVarified: boolean;
-	// isActive: boolean;
+	isVarified: boolean;
+	isActive: boolean;
 	gender?: string;
 	currentLocation?: string;
 	address?: object;
@@ -14,13 +13,15 @@ export class CandidateProfile {
 	profile_image?: string;
 	about?: string;
 	resume?: string;
-	experience?: object;
-	// userId: string;
+	// experience?: object;
+	experience?: string;
+	candidateId: string;
 	constructor({
 		name,
 		email,
 		phone,
-		// userType,
+		isVarified,
+		isActive,
 		gender,
 		currentLocation,
 		address,
@@ -29,11 +30,13 @@ export class CandidateProfile {
 		about,
 		resume,
 		experience,
+		candidateId
 	}: CandidateDataProfile) {
 		this.name = name;
 		this.email = email;
 		this.phone = phone;
-		// this.userType = userType;
+		this.isVarified = isVarified;
+		this.isActive = isActive;
 		this.gender = gender;
 		this.currentLocation = currentLocation;
 		this.address = address;
@@ -42,5 +45,6 @@ export class CandidateProfile {
 		this.about = about;
 		this.resume = resume;
 		this.experience = experience;
+		this.candidateId = candidateId;
 	}
 }
