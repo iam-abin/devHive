@@ -5,8 +5,7 @@ interface CandidateAttributes {
 	name: string;
 	email: string;
 	phone: number;
-	// userType: string;
-	// isVarified: boolean;
+	isVarified: boolean;
 	isActive: boolean;
 	gender: string;
 	currentLocation: string;
@@ -16,17 +15,15 @@ interface CandidateAttributes {
 	about: string;
 	resume: string;
 	experience: object;
-	userId: string;
-	// isActive: boolean;
-	// userId: string;
+	candidateId: string;
 }
 // 2. An interface that describes the properties ,that a Candidate Document has
 interface CandidateDocument extends mongoose.Document {
 	name: string;
 	email: string;
 	phone: number;
-	// userType: string;
-	// isVarified: boolean;
+	userType: string;
+	isVarified: boolean;
 	isActive: boolean;
 	gender: string;
 	currentLocation: string;
@@ -36,9 +33,7 @@ interface CandidateDocument extends mongoose.Document {
 	about: string;
 	resume: string;
 	experience: object;
-
-
-	userId: string;
+	candidateId: string;
 	createdAt: string;
 	updatedAt: string;
 }
@@ -97,6 +92,7 @@ const candidateSchema = new mongoose.Schema(
 		about: String,
 		resume: String,
 		experience: Object,
+		candidateId: String
 	},
 	{
 		// to reformat id and remove password,__v from response when converting to json (we can also use other approaches)
@@ -118,7 +114,9 @@ interface CandidateProfileModel extends mongoose.Model<CandidateDocument> {
 
 // 5.In Mongoose, you can also add custom functions to a model using statics.
 candidateSchema.statics.buildCandidate = (attributes: CandidateAttributes) => {
-	return new CandidateProfileModel({attributes});
+	console.log("inside build candidate ",attributes);
+	
+	return new CandidateProfileModel(attributes);
 };
 
 // 6. // 6.hover on 'Candidate' ,we can see that 'Candidate' is getting 'CandidateMdel', ie,a Second arg indicate returning type

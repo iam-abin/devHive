@@ -12,6 +12,7 @@ export interface CandidateDataProfile{
 	profile_image?: string;
 	about?: string;
 	resume?: string;
-	experience?: object;
-	userId: string;
+	// experience?: object;
+	experience?: string;
+	candidateId: string;
 }

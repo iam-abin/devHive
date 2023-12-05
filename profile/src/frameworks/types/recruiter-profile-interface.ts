@@ -3,14 +3,15 @@ export interface RecruiterDataProfile{
 	email: string;
 	phone: number;
 	userType: string;
-	// isVarified: boolean;
-	// isActive: boolean;
+	isVarified: boolean;
+	isActive: boolean;
 	gender?: string;
-	currentLocation?: string;
+	company_name?: string;
+	company_location?: string;
+	company_state?: string;
+	company_country?: string;
 	profile_image?: string;
 	about?: string;
-	membership?: string;
-	userId: string;
-	company_name?: string;
-	company_size?: number;
+	recruiterId?: string;
+	// company_size?: number;
 }

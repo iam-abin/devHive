@@ -8,11 +8,12 @@ export  = (dependencies: any) => {
 		throw new Error("candidateProfileRepository should exist in dependencies");
 	}
 
-	const execute = (profileData: CandidateDataProfile) => {
+	const execute = async (profileData: CandidateDataProfile) => {
+
 		const profile = new CandidateProfile(profileData);
 		console.log("in candidate create profile usecase execute: ", profile);
-		
-        return candidateProfileRepository.createCandidateProfile(profile);
+
+		return await candidateProfileRepository.createCandidateProfile(profile);
 	};
 
     return { execute }

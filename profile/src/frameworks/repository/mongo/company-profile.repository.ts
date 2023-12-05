@@ -8,22 +8,25 @@ export = {
 
 	 // these fn's are returning a promise as async so we can defile return type as Promise<CandidateDataInterface>
 
-	 createCandidate: async (userData: any) => {
-		console.log("inside createCandidate fn in admin service", userData);
-		
-		const {name, email, phone, userType, isActive} = userData
-		const userObject = new CompanyProfileModel({name, email, phone, userType, isActive});
+	 createCompanyProfile: async (companyData: any) => {
+		console.log("inside createCompany fn in profile service", companyData);
+		const {company_name, company_location, company_state, company_country} = companyData
+		const userObject = CompanyProfileModel.buildCompany({company_name, company_location, company_state, company_country});
 		return await userObject.save();
+	},
+	getCompany: async (companyDetails: object) => {
+		const company = await CompanyProfileModel.findOne(companyDetails);
+		return company;
 	},
 
 	getById: async (id: string) => {
-		const candidate = await CompanyProfileModel.findById(id);
-		return candidate;
+		const company = await CompanyProfileModel.findById(id);
+		return company;
 	},
 
-	getAllCandidates: async () => {
-		const candidates = await CompanyProfileModel.find({});
-		return candidates;
+	getAllCompanies: async () => {
+		const companys = await CompanyProfileModel.find({});
+		return companys;
 	},
 };
 

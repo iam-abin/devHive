@@ -4,40 +4,46 @@ export class RecruiterProfile {
 	name: string;
 	email: string;
 	phone: number;
-	userType: string;
-	// isVarified: boolean;
-	// isActive: boolean;
+	isVarified: boolean;
+	isActive: boolean;
 	gender?: string;
-	currentLocation?: string;
+	company_name?: string;
+	company_location?: string;
+	company_state?: string;
+	company_country?: string;
 	profile_image?: string;
 	about?: string;
-	membership?: string;
-	company_name?: string;
-	company_size?: number;
-	// userId: string;
+	recruiterId?: string;
+	// membership?: string;
+	// company_size?: number;
 	constructor({
 		name,
 		email,
 		phone,
 		userType,
+		isVarified,
+		isActive,
 		gender,
-		currentLocation,
+		company_name,
+		company_location,
+		company_state,
+		company_country,
 		profile_image,
 		about,
-		membership,
-		company_name,
-		company_size,
+		recruiterId,
 	}: RecruiterDataProfile) {
-		this.name = name,
-		this.email = email,
-		this.phone = phone,
-		this.userType = userType,
-		this.gender = gender,
-		this.currentLocation = currentLocation,
-		this.profile_image = profile_image,
-		this.about = about,
-		this.membership = membership,
-		this.company_name = company_name,
-		this.company_size = company_size
+		(this.name = name),
+			(this.email = email),
+			(this.phone = phone),
+			(this.isVarified = isVarified),
+			(this.isActive = isActive),
+			(this.gender = gender),
+			(this.company_name = company_name),
+			(this.company_location = company_location),
+			(this.company_state = company_state),
+			(this.company_country = company_country),
+			(this.profile_image = profile_image),
+			(this.about = about),
+			(this.recruiterId = recruiterId);
 	}
 }

@@ -2,26 +2,26 @@ import mongoose from "mongoose";
 
 // 1. An interface that describes the properties ,that are requried to create a new Company
 interface CompanyAttributes {
-	name: string;
-	email: string;
-	logo: string;
-	website: string;
-	location: string;
-	state: string;
-	country: string;
-	description: string;
-	isActive: boolean;
+	company_name: string;
+	email?: string;
+	logo?: string;
+	website?: string;
+	company_location: string;
+	company_state?: string;
+	company_country?: string;
+	description?: string;
+	isActive?: boolean;
 	// companyId: string;
 }
 // 2. An interface that describes the properties ,that a Company Document has
 interface CompanyDocument extends mongoose.Document {
-	name: string;
+	company_name: string;
 	email: string;
 	logo: string;
 	website: string;
-	location: string;
-	state: string;
-	country: string;
+	company_location: string;
+	company_state: string;
+	company_country: string;
 	description: string;
 	isActive: boolean;
 	createdAt: string;
@@ -31,13 +31,19 @@ interface CompanyDocument extends mongoose.Document {
 // 3.
 const companySchema = new mongoose.Schema(
 	{
-		name: String,
+		company_name:{
+			type: String,
+			required: true
+		},
 		email: String,
 		logo: String,
 		website: String,
-		location: String,
-		state: String,
-		country: String,
+		company_location: {
+			type: String,
+			required: true
+		},
+		company_state: String,
+		company_country: String,
 		description: String,
 		isActive: {
             type:Boolean,
@@ -64,7 +70,7 @@ interface CompanyProfileModel extends mongoose.Model<CompanyDocument> {
 
 // 5.In Mongoose, you can also add custom functions to a model using statics.
 companySchema.statics.buildCompany = (attributes: CompanyAttributes) => {
-	return new CompanyProfileModel({ attributes });
+	return new CompanyProfileModel( attributes );
 };
 
 // 6. // 6.hover on 'Company' ,we can see that 'Company' is getting 'CompanyMdel', ie,a Second arg indicate returning type
