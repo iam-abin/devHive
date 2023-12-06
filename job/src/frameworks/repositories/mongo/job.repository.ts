@@ -3,10 +3,12 @@ import schemas from "../../database/mongo/models";
 const { JobModel } = schemas;
 
 export = {
-    createJob: async (jobData: object)=>{
-        const newJob = await JobModel.create(jobData);
+    createJob: async (jobData: any)=>{
+        console.log("job repository jobData", jobData);
+        
+        const newJob = JobModel.buildJob(jobData);
         console.log(newJob);
-        return newJob
+        return await newJob.save()
     },
 
     deleteJob: async (id: string)=>{

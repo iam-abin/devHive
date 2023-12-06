@@ -97,6 +97,7 @@ kubectl delete pods --all
 ## docker commands
 
 ### to bild an image for a service
+- Go to the root directory of the service,
 
 ```
 docker build -t your_image_name:tag .
