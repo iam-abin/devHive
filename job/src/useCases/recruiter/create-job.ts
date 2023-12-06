@@ -11,9 +11,11 @@ export = (dependencies: DependenciesData) => {
 		throw new Error("jobRepository should exist in dependencies");
 	}
 
-	const execute = (jobData: JobInterface) => {
+	const execute = async (jobData: JobInterface) => {
 		const job = new Job(jobData);
-		return jobRepository.createJob(job);
+		console.log("in execute ", job);
+		
+		return await jobRepository.createJob(job);
 	};
 
 	return { execute };
