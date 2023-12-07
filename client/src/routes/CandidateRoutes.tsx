@@ -8,6 +8,8 @@ import { RootState } from "../redux/reducer/reducer";
 import { useSelector } from "react-redux";
 import LandingPage from "../pages/landing/LandingPage";
 import CandidateProfilePage from "../pages/candidate/CandidateProfilePage";
+import AllJobsPage from "../pages/candidate/AllJobsPage";
+import JobDetailsPage from "../pages/candidate/JobDetailsPage";
 
 function CandidateRoutes() {
 	const isCandidateLoggedIn = useSelector(
@@ -22,6 +24,8 @@ function CandidateRoutes() {
 				<Route path="/landing" element={isCandidateLoggedIn?<Navigate to={"/candidate"} />: <LandingPage /> } />
 				<Route path="/signin" element={isCandidateLoggedIn?<Navigate to={"/candidate"} />:<CandidateSigninPage /> } />
 				<Route path="/signup" element={isCandidateLoggedIn? <Navigate to={"/candidate"} />:<CandidateSignupPage />} />
+				<Route path="/all-jobs" element={isCandidateLoggedIn?<AllJobsPage />:<Navigate to={"/candidate/signin"} />} />
+			<Route path="/job-details" element={isCandidateLoggedIn?<JobDetailsPage />:<Navigate to={"/candidate/signin"} />} />
 				<Route path="/:id/verifyEmail/:token" element={<EmailVerificationPage/>}/>
 			</Routes>
 		</>

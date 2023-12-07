@@ -15,8 +15,8 @@ export = {
 	},
 
 
-	getProfileById: async (id: string) => {
-		const candidate = await CandidateProfileModel.findById(id);
+	getProfileByCandidateId: async (candidateId: string) => {
+		const candidate = await CandidateProfileModel.findOne({candidateId});
 		return candidate;
 	},
 

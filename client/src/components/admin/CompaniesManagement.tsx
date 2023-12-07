@@ -1,28 +1,25 @@
+
 import { useEffect, useState } from "react";
-import {
-	blockUnblockCandidateApi,
-	getAllCandidatesApi,
-} from "../../api/axios/admin/candidates";
+import { blockUnblockCompanyApi, getAllCompaniesApi } from "../../api/axios/admin/company";
 
 // import { useDispatch, useSelector } from "react-redux";
 // import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import Swal from "sweetalert2";
 
-interface CandidateInterface {
+interface CompanyInterface {
 	id: string;
 	name: string;
-	email: string;
-	phone: string;
+	company_location: string;
+	email?: string;
 	isActive: boolean;
 }
 
-function CandidatesManagement() {
-	const [candidatesData, setCandidatesData] = useState<CandidateInterface[]>(
+function CompaniesManagement() {
+	const [companiesData, setCompaniesData] = useState<CompanyInterface[]>(
 		[]
 	);
-	const [filteredCandidatesData, setFilteredCandidatesData] = useState<
-		CandidateInterface[]
+	const [filteredCompaniesData, setFilteredCompaniesData] = useState<
+		CompanyInterface[]
 	>([]);
 
 	const [originalIndexMap, setOriginalIndexMap] = useState<{
@@ -41,70 +38,58 @@ function CandidatesManagement() {
 
 	useEffect(() => {
 		(async () => {
-			const candidates = await getAllCandidatesApi();
-			console.log("in useEffect",candidates.data.data);
-			// console.log(Array.isArray(candidates.data.data));
+			const companies = await getAllCompaniesApi();
+			// console.log(companies.data.data);
+			// console.log(Array.isArray(companies.data.data));
 
 			const indexMap: { [key: string]: number } = {};
-			const formattedCandidates = candidates.data.data.map(
-				(candidate: CandidateInterface, index: number) => {
-					indexMap[candidate.id] = index;
-					return { ...candidate };
+			const formattedCompanies = companies.data.data.map(
+				(companies: CompanyInterface, index: number) => {
+					indexMap[companies.id] = index;
+					return { ...companies };
 				}
 			);
 
-			setCandidatesData(formattedCandidates);
-			setFilteredCandidatesData(formattedCandidates);
+			setCompaniesData(formattedCompanies);
+			setFilteredCompaniesData(formattedCompanies);
 			setOriginalIndexMap(indexMap);
 		})();
 	}, []);
 
-	const handleBlockUnblock = async (id: string) => {
-		Swal.fire({
-			title: "Do you want to Block this Candidate?",
-			text: "Are you sure!",
-			icon: "warning",
-			showCancelButton: true,
-			confirmButtonColor: "#3085d6",
-			cancelButtonColor: "#d33",
-			confirmButtonText: "Yes, Block",
-		}).then(async (result) => {
-			if (result.isConfirmed) {
-				const updatedCandidate = await blockUnblockCandidateApi(id);
-				if (updatedCandidate) {
-					notify(updatedCandidate.data.message, "success");
-				}
 
-				const candidates = candidatesData.map((candidate) => {
-					if (candidate.id === id) {
-						return {
-							...candidate,
-							isActive: updatedCandidate.data.data.isActive,
-						};
-					}
-		
-					return candidate;
-				});
-		
-				setCandidatesData(candidates);
-				setFilteredCandidatesData(candidates);
-			}
+	const handleBlockUnblock = async (id: string) => {
+		const updatedCandidate = await blockUnblockCompanyApi(id);
+
+		toast.success(updatedCandidate.data.message, {
+			position: toast.POSITION.TOP_RIGHT,
 		});
-		
+
+		const companies = companiesData.map((companies) => {
+			if (companies.id === id) {
+				return {
+					...companies,
+					isActive: updatedCandidate.data.data.isActive,
+				};
+			}
+
+			return companies;
+		});
+
+		setCompaniesData(companies);
+		setFilteredCompaniesData(companies);
 	};
 
 	const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const searchText = e.target.value.toLowerCase().trim();
 
-		const filteredCandidates = candidatesData.filter((candidate) => {
+		const filteredCompanies = companiesData.filter((companies) => {
 			return (
-				candidate.name.toLowerCase().includes(searchText) ||
-				candidate.email.toLowerCase().includes(searchText) ||
-				candidate.phone.toString().toLowerCase().includes(searchText)
+				companies.name.toLowerCase().includes(searchText) ||
+				companies?.email?.toLowerCase().includes(searchText)
 			);
 		});
 
-		setFilteredCandidatesData(filteredCandidates);
+		setFilteredCompaniesData(filteredCompanies);
 	};
 
 	return (
@@ -139,14 +124,13 @@ function CandidatesManagement() {
 						</thead>
 						<tbody>
 							{/* row 1 */}
-							{filteredCandidatesData &&
-								filteredCandidatesData.map(
-									({ id, name, email, phone, isActive }) => (
+							{filteredCompaniesData &&
+								filteredCompaniesData.map(
+									({ id, name, email, isActive }) => (
 										<tr key={id}>
 											<th>{originalIndexMap[id] + 1}</th>
 											<td>{name}</td>
 											<td>{email}</td>
-											<td>{phone}</td>
 											<td className="text-center">
 												<button className="btn btn-info">
 													view details
@@ -192,4 +176,4 @@ function CandidatesManagement() {
 	);
 }
 
-export default CandidatesManagement;
+export default CompaniesManagement;

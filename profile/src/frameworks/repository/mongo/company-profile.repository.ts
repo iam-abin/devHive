@@ -14,6 +14,7 @@ export = {
 		const userObject = CompanyProfileModel.buildCompany({company_name, company_location, company_state, company_country});
 		return await userObject.save();
 	},
+
 	getCompany: async (companyDetails: object) => {
 		const company = await CompanyProfileModel.findOne(companyDetails);
 		return company;
@@ -24,9 +25,19 @@ export = {
 		return company;
 	},
 
-	getAllCompanies: async () => {
-		const companys = await CompanyProfileModel.find({});
-		return companys;
+	// getAllCompanies: async () => {
+	// 	const companys = await CompanyProfileModel.find({});
+	// 	return companys;
+	// },
+
+	updateCompanyProfile: async (id: string, data: any) => {
+		const company = await CompanyProfileModel.findOneAndUpdate({ "_id": id }, { $set: data }, {new: true});
+		return company;
+	},
+
+	uploadLogoPic : async (id: string, data: any)=>{
+		const company = await CompanyProfileModel.updateOne({ "_id": id }, { $set:{ profile_image: data }});
+		return company;
 	},
 };
 
