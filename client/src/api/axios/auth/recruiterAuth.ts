@@ -31,3 +31,15 @@ export const emailRecruiterVerifyApi = async (url: string): Promise<any> => {
 	});
 	return response;
 };
+
+
+export const recruiterSignoutApi = async(data: any): Promise<any> =>{
+	console.log(data," in axios");
+	
+	const response = await axios({
+		method: "post",
+		url: `${BASE_URL_RECRUITER}/signout`,
+		data: data,
+	});
+	return response;
+}

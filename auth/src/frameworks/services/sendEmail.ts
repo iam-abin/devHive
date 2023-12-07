@@ -2,6 +2,8 @@ import nodemailer from "nodemailer";
 import crypto from "crypto";
 
 export const generateEmailVerificationToken = ()=>{
+	console.log("in generate email token fn");
+	
     return crypto.randomBytes(16).toString("hex");
 }
 

@@ -4,6 +4,7 @@ import express from "express"
 import { adminControllers } from "../../controllers";
 import { signinRequestBodyValidatorMiddlewares } from "../middlewares/signinValidation";
 import { DependenciesData } from "../types/dependencyInterface";
+import { requireAuthAdmin } from "@abijobportal/common";
 
 export const adminRouter = (dependencies: DependenciesData)=>{
     const router = express.Router();
@@ -11,7 +12,7 @@ export const adminRouter = (dependencies: DependenciesData)=>{
     const { adminSigninController, adminSignoutController } = adminControllers(dependencies)
     
     router.post("/signin", signinRequestBodyValidatorMiddlewares, adminSigninController);
-    // router.post("/signout" ,requireAuthAdmin ,adminSignoutController);  
+    router.post("/signout" ,requireAuthAdmin ,adminSignoutController);  
 
     return router
 }

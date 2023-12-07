@@ -59,7 +59,7 @@ const candidateSchema = new mongoose.Schema(
 		},
 		userType: {
 			type: String,
-			default: "candidate"
+			default: "candidate",
 		},
 		isVarified: {
 			// field for signup email verificetion
@@ -92,7 +92,7 @@ const candidateSchema = new mongoose.Schema(
 		about: String,
 		resume: String,
 		experience: Object,
-		candidateId: String
+		candidateId: String,
 	},
 	{
 		// to reformat id and remove password,__v from response when converting to json (we can also use other approaches)
@@ -107,6 +107,16 @@ const candidateSchema = new mongoose.Schema(
 	}
 );
 
+// candidateSchema.pre("save", async function (next) {
+// 	try {
+// 		// Convert the string ID to a Mongoose ObjectId
+// 		this.candidateId = new mongoose.Types.ObjectId(this.candidateId as string);
+// 		next();
+// 	} catch (error) {
+// 		console.log(error);
+// 	}
+// });
+
 // 4. An interface that describes the properties ,that a candidate model has
 interface CandidateProfileModel extends mongoose.Model<CandidateDocument> {
 	buildCandidate(attributes: CandidateAttributes): CandidateDocument;
@@ -114,12 +124,15 @@ interface CandidateProfileModel extends mongoose.Model<CandidateDocument> {
 
 // 5.In Mongoose, you can also add custom functions to a model using statics.
 candidateSchema.statics.buildCandidate = (attributes: CandidateAttributes) => {
-	console.log("inside build candidate ",attributes);
-	
+	console.log("inside build candidate ", attributes);
+
 	return new CandidateProfileModel(attributes);
 };
 
 // 6. // 6.hover on 'Candidate' ,we can see that 'Candidate' is getting 'CandidateMdel', ie,a Second arg indicate returning type
-const CandidateProfileModel = mongoose.model<CandidateDocument, CandidateProfileModel>("Candidate", candidateSchema);
+const CandidateProfileModel = mongoose.model<
+	CandidateDocument,
+	CandidateProfileModel
+>("Candidate", candidateSchema);
 
 export { CandidateProfileModel };

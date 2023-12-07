@@ -13,11 +13,14 @@ export = (dependencies: DependenciesData) => {
 
 	return async (req: Request, res: Response) => {
 			const { name, email, phone, password } = req.body;
+			console.log("in signUp controller",name, email, phone, password);
+			
 			// const userData = req.body;
 
 			const isExistingUser = await getRecruiterByEmailUseCase(
 				dependencies
 			).execute(email);
+			console.log("isExistingUser ",isExistingUser);
 
 			if (isExistingUser) {
                 // return res.status(400).json({message:"Email already exist"})

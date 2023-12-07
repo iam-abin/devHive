@@ -14,6 +14,8 @@ export = (dependencies: DependenciesData) => {
 	return async (req: Request, res: Response) => {
 			const { name, email, phone, password } = req.body;
 			// const userData = req.body;
+			console.log("in candidate signup controller" ,name, email, phone, password );
+			
 
 			const isExistingUser = await getCandidateByEmailUseCase(
 				dependencies
