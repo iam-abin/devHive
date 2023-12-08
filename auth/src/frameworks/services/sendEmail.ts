@@ -1,20 +1,34 @@
 import nodemailer from "nodemailer";
-import crypto from "crypto";
+import otpGenerator from "otp-generator";
+import { otpNodemailerInterface } from "../types/otp-nodemailer-interface"; 
 
-export const generateEmailVerificationToken = ()=>{
-	console.log("in generate email token fn");
-	
-    return crypto.randomBytes(16).toString("hex");
-}
+export const generateEmailVerificationOtp = (): otpNodemailerInterface => {
+	console.log("in generate email otp fn");
+	const otpLength = 6;
+	const otp = otpGenerator.generate(otpLength, {
+		digits: true,
+		lowerCaseAlphabets:false,
+		upperCaseAlphabets:false,
+		specialChars: false,
+	});
+	const expiryTime = Date.now() + 10 * 60 * 1000; // 10 minutes expiry
+	console.log("Generated OTP:", otp);
+	return { otp, expiryTime };
+};
 
-export const sendVerificationEmail = async (email: string,userId: string, token:string, subject: string, text: string) => {
+export const sendVerificationEmail = async (
+	email: string,
+	otp: string,
+	subject: string,
+	text: string
+) => {
 	console.log("transporter");
-	
+
 	const transporter = nodemailer.createTransport({
 		service: "gmail",
 		host: "smtp.gmail.com",
 		port: 587,
-		secure:false,
+		secure: false,
 		auth: {
 			user: "abinvarghese273@gmail.com",
 			pass: "frjn aczl fyet pxaj",
@@ -23,34 +37,30 @@ export const sendVerificationEmail = async (email: string,userId: string, token:
 	});
 
 	console.log("mail options");
-	console.log("in sendMail service: userId:",userId," token: ",token);
-	
-	
-	const verificationLink = `https://devhive.dev/candidate/${userId}/verifyEmail/${token }`
+	console.log("in sendMail service: email:", email, " otp: ", otp);
+
 	const mailOptions = {
-		from:"devHive abinvarghese273@gmail.com",
+		from: "devHive abinvarghese273@gmail.com",
 		to: email,
 		subject: subject,
 		text: text,
-		html:  `
+		html: `
 		<h3>devHive</h3><br/>
-		<p>Click the following link to verify your email:</p>
-		<a href="${verificationLink}">${verificationLink}</a>
-	  `
+		<p>Enter the following otp : ${otp}</p>
+	  `,
 	};
 
-	try {
-		console.log("in try before send mail ");
-		
-        const info = await transporter.sendMail(mailOptions);
-        console.log("Email send successfully info is- ",info);
-        
-        
-    } catch (error:any) {
-        console.log("Email not send",error);
-        throw new Error(error.message)
-        
-    }
+	// try {
+	console.log("before send mail ");
 
-	console.log("email send successfully");
+	const info = await transporter.sendMail(mailOptions);
+	console.log("Email send successfully info is- ", info);
+
+	// } catch (error:any) {
+	//     console.log("Email not send",error);
+	//     throw new Error(error.message)
+
+	// }
+
+	return info;
 };

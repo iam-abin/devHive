@@ -4,6 +4,7 @@ export interface UserDataSignup {
 	phone: string;
 	password: string;
 	userType: string;
+	otp: number
 }
 
 export interface UserDataSignin {

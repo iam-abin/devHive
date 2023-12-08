@@ -6,7 +6,7 @@ export = (dependencies: any) => {
 	}
 
 	const execute = (email: string) => {
-		return emailVerificationTokenRepository.getTokenByEmail(email);
+		return emailVerificationTokenRepository.getOtpByEmail(email);
 	};
 
 	return { execute };

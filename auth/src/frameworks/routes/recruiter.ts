@@ -1,7 +1,7 @@
 import express from "express";
 
 import { requireAuthRecruiter } from "@abijobportal/common";
-import { recruiterControllers } from "../../controllers";
+import { otpControllers, passwordUpdateControllers, recruiterControllers } from "../../controllers";
 import { signupRequestBodyValidatorMiddlewares } from "../middlewares/signupValidation";
 import { signinRequestBodyValidatorMiddlewares } from "../middlewares/signinValidation";
 import { DependenciesData } from "../types/dependencyInterface";
@@ -13,9 +13,12 @@ export const recruiterRouter = (dependencies: DependenciesData) => {
 		recruiterSignupController,
 		recruiterSigninController,
 		recruiterSignoutController,
-		recruiterUpdatePasswordController,
-		recruiterSignupEmailVerifyController
+		recruiterSignupEmailOtpVerificationController,
 	} = recruiterControllers(dependencies);
+
+	const { sendOtpTwilioController, verifyOtpTwilioController} = otpControllers(dependencies);
+
+	const { updatePasswordController } = passwordUpdateControllers(dependencies)
 
 	router.post(
 		"/signup",
@@ -23,7 +26,7 @@ export const recruiterRouter = (dependencies: DependenciesData) => {
 		recruiterSignupController
 	);
 
-	router.post("/:userId/verifyEmail/:token",recruiterSignupEmailVerifyController)
+	router.post("/verifyEmail",recruiterSignupEmailOtpVerificationController)
 	// router.post("/verifyEmail",recruiterSignupEmailVerifyController)
 
 	router.post(
@@ -32,10 +35,14 @@ export const recruiterRouter = (dependencies: DependenciesData) => {
 		recruiterSigninController
 	);
 
-	router.put("/forgotPassword", recruiterUpdatePasswordController);
+	router.put("/forgotPassword", updatePasswordController);
 
-	router.put("/resetPassword", requireAuthRecruiter, recruiterUpdatePasswordController);
-	// router.put("/resetPassword", recruiterUpdatePasswordController);
+	router.post("/sendOtp", sendOtpTwilioController);
+
+	router.post("/verifyOtp", verifyOtpTwilioController);
+
+	router.put("/resetPassword", requireAuthRecruiter, updatePasswordController);
+	// router.put("/resetPassword", updatePasswordController);
 
 	router.post("/signout", recruiterSignoutController);
 

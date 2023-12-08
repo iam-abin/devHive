@@ -1,7 +1,7 @@
 import express from "express";
 
 import { requireAuthCandidate } from "@abijobportal/common";
-import { candidateControllers } from "../../controllers";
+import { candidateControllers, otpControllers, passwordUpdateControllers } from "../../controllers";
 import { signupRequestBodyValidatorMiddlewares } from "../middlewares/signupValidation";
 import { signinRequestBodyValidatorMiddlewares } from "../middlewares/signinValidation";
 import { DependenciesData } from "../types/dependencyInterface";
@@ -13,11 +13,12 @@ export const candidateRouter = (dependencies: DependenciesData) => {
 		candidateSignupController,
 		candidateSigninController,
 		candidateSignoutController,
-		candidateUpdatePasswordController,
-		candidateSignupEmailVerifyController,
-		candidateSendOtpController,
-		candidateVerifyOtpController
+		candidateSignupEmailOtpVerificationController,
 	} = candidateControllers(dependencies);
+
+	const { sendOtpTwilioController, verifyOtpTwilioController} = otpControllers(dependencies);
+
+	const { updatePasswordController } = passwordUpdateControllers(dependencies)
 
 	router.post(
 		"/signup",
@@ -25,7 +26,7 @@ export const candidateRouter = (dependencies: DependenciesData) => {
 		candidateSignupController
 	);
 	
-	router.post("/:userId/verifyEmail/:token",candidateSignupEmailVerifyController)
+	router.post("/verifyEmail",candidateSignupEmailOtpVerificationController)
 	// router.post("/verifyEmail",candidateSignupEmailVerifyController)
 	router.post(
 		"/signin",
@@ -34,15 +35,15 @@ export const candidateRouter = (dependencies: DependenciesData) => {
 	);
 
 	
-	// router.put("/forgotPassword",requireAuthCandidate, candidateUpdatePasswordController);
-	router.put("/forgotPassword",requireAuthCandidate, candidateUpdatePasswordController);
+	// router.put("/forgotPassword",requireAuthCandidate, updatePasswordController);
+	router.put("/forgotPassword",requireAuthCandidate, updatePasswordController);
 
-	router.post("/sendOtp", candidateSendOtpController);
+	router.post("/sendOtp", sendOtpTwilioController);
 
-	router.post("/verifyOtp", candidateVerifyOtpController);
+	router.post("/verifyOtp", verifyOtpTwilioController);
 	
-	// router.put("/resetPassword", candidateUpdatePasswordController);
-	router.put("/resetPassword", requireAuthCandidate, candidateUpdatePasswordController);
+	// router.put("/resetPassword", updatePasswordController);
+	router.put("/resetPassword", requireAuthCandidate, updatePasswordController);
 
 	// router.post("/signout", requireAuthCandidate, candidateSignoutController);
 	router.post("/signout", candidateSignoutController);

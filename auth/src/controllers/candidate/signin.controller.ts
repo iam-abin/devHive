@@ -7,14 +7,14 @@ import { DependenciesData } from "../../frameworks/types/dependencyInterface";
 
 export = (dependencies: DependenciesData) => {
 	const {
-		useCases: { getCandidateByEmailUseCase },
+		useCases: { getUserByEmailUseCase },
 	} = dependencies;
 
 	return async (req: Request, res: Response) => {
 			const { email, password } = req.body;
 
             // check user exist
-			const isExistingUser = await getCandidateByEmailUseCase(
+			const isExistingUser = await getUserByEmailUseCase(
 				dependencies
 			).execute(email);
 

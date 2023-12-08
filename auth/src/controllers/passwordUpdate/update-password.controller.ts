@@ -3,17 +3,16 @@ import { DependenciesData } from "../../frameworks/types/dependencyInterface";
 
 export = (dependencies: DependenciesData)=>{
 
-    const { useCases: { updateCandidatePasswordUseCase }} = dependencies
+    const { useCases: { updatePasswordUseCase }} = dependencies
 
     return async (req: Request, res: Response)=>{
         // console.log(req,"req--//////////////////////////////");
-        
-        console.log(req.currentUserCandidate,"req.currentUserCandidate--jdfjasidjfiashdfidyyyyyyyyyyyyyyyyyyyyyyyy");
+        console.log("password Update");
         
         const {id, password} = req.body;
         
 
-        const user = await updateCandidatePasswordUseCase(dependencies).execute({
+        const user = await updatePasswordUseCase(dependencies).execute({
             id, password
         });
 

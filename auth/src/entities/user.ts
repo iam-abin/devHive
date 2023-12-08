@@ -6,12 +6,14 @@ export class User {
 	phone: string;
 	password: string;
 	userType: string;
+	otp: number;
 
-	constructor({ name, email, phone, password, userType }: UserDataSignup) {
+	constructor({ name, email, phone, password, userType, otp }: UserDataSignup) {
 		this.name = name;
 		this.email = email;
 		this.phone = phone;
 		this.password = password;
 		this.userType = userType;
+		this.otp = otp;
 	}
 }
