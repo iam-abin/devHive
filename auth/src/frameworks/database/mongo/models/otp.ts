@@ -1,11 +1,12 @@
-// this model for storing token generating during email verification
+// this model for storing nodemailer otp generating during signup email verification
 
 import mongoose from "mongoose";
 
 // 1. An interface that describes the properties ,that are requried to create a new Token
-interface TokenAttributes {
+interface OtpAttributes {
 	userId: string;
-	token: string;
+	otp: string;
+	expiry: Date;
     createdAt: Date
 }
 // 2. An interface that describes the properties ,that a Token Document has
@@ -50,11 +51,11 @@ const tokenSchema = new mongoose.Schema(
 
 // 4. An interface that describes the properties ,that a token model has
 interface TokenModel extends mongoose.Model<TokenDocument> {
-	buildToken(attributes: TokenAttributes): TokenDocument;
+	buildToken(attributes: OtpAttributes): TokenDocument;
 }
 
 // 5.In Mongoose, you can also add custom functions to a model using statics.
-tokenSchema.statics.buildToken = (attributes: TokenAttributes) => {
+tokenSchema.statics.buildToken = (attributes: OtpAttributes) => {
 	return new TokenModel(attributes)
 };
 

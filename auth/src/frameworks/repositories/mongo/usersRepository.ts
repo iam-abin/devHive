@@ -1,5 +1,5 @@
 import schemas from "../../database/mongo/models";
-import { UpdatePasswordInput } from "../../types/userInterface";
+import { UpdatePasswordInput, UserDataSignup } from "../../types/userInterface";
 
 const { UserModel } = schemas;
 
@@ -9,8 +9,7 @@ const repository = () => {
 
 		 // these fn's are returning a promise as async so we can defile return type as Promise<CandidateDataInterface>
 
-		register: async (userData: any) => {
-
+		register: async (userData: UserDataSignup) => {
 			const userObject = new UserModel(userData);
 			return await userObject.save();
 		},
@@ -25,9 +24,9 @@ const repository = () => {
 			user.password = password;
 
 			return await user.save();
-
+			
 		},
-
+		
 		getByEmail: async (email: string) => {
 
 			const user = await UserModel.findOne({ email: email });
@@ -35,6 +34,34 @@ const repository = () => {
 			
 		},
 
+		getByPhone: async (phone: number) => {
+
+			const user = await UserModel.findOne({ phone: phone });
+			return user;
+			
+		},
+
+
+		deleteOtp: async (email: string) => {
+
+			console.log("in delete otp",);
+
+			const result = await UserModel.findOneAndUpdate(
+				{ email },
+				{ $unset: { otp: "" } },
+				{ new: true }
+			);
+			console.log("delete result: ", result);
+			
+			if (!result) {
+				throw new Error("User not found");
+			}
+
+			return result
+
+		},
+
+		// user status is updated only by 'admin'
 		updateStatus: async ({ email, isActive }: any) => {
 
 			console.log("in update status",);
@@ -44,18 +71,17 @@ const repository = () => {
 				throw new Error("User not found");
 			}
 
-			// user status is updated only by 'admin'
 			user.isActive = isActive;
 
 			return await user.save();
 
 		},
 
-		updateVerification: async (id:any) => {
+		updateVerification: async (email: string) => {
 
-			console.log("in update status",id);
+			console.log("in update status",email);
 
-			const user = await UserModel.findById(id);
+			const user = await UserModel.findOne({email});
 			if (!user) {
 				throw new Error("User not found");
 			}

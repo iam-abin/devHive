@@ -1,39 +1,54 @@
 import { Request, Response } from "express";
 import { BadRequestError } from "@abijobportal/common";
 
-import { createJwtToken } from "../../frameworks/services/jwtToken";
 import { DependenciesData } from "../../frameworks/types/dependencyInterface";
-import { produceMessage } from "../../frameworks/services/kafka/producer";
-import { generateEmailVerificationToken, sendVerificationEmail } from "../../frameworks/services/sendEmail";
+import { generateEmailVerificationOtp, sendVerificationEmail } from "../../frameworks/services/sendEmail";
 
 export = (dependencies: DependenciesData) => {
 	const {
-		useCases: { recruiterSignupUseCase, getRecruiterByEmailUseCase, createEmailVerificationTokenUseCase },
+		useCases: { userSignupUseCase, getUserByEmailUseCase},
 	} = dependencies;
 
 	return async (req: Request, res: Response) => {
 			const { name, email, phone, password } = req.body;
-			console.log("in signUp controller",name, email, phone, password);
-			
 			// const userData = req.body;
+			console.log("in recriter signup controller" ,name, email, phone, password );
+			
 
-			const isExistingUser = await getRecruiterByEmailUseCase(
+			const isExistingUser = await getUserByEmailUseCase(
 				dependencies
 			).execute(email);
-			console.log("isExistingUser ",isExistingUser);
 
-			if (isExistingUser) {
+			if (isExistingUser && isExistingUser.isVarified) {
                 // return res.status(400).json({message:"Email already exist"})
 				throw new BadRequestError("Email already exist");
 			}
 
+			const subject = "Verify Your Email";
+			const topic = "Enter the 6 digit otp to verify your email"
+			if(isExistingUser && !isExistingUser.isVarified){
+				const response = await sendVerificationEmail(isExistingUser.email, isExistingUser.otp ,subject ,topic);
+				// if(response){
+				// 	return res.status(200).json({"message": "An email is send to your email, please verify."});
+				// }else{
+				// 	return res.status(200).json({"message": "An email is send to your email, please verify."});
+				// }
+				console.log("email sended response ", response);
+				return res.status(200).json({"message": "An email is send to your email, please verify."});
+			}
 			// userData.password = await  // password hashing can be done in schema or model
-			const newUser = await recruiterSignupUseCase(dependencies).execute({
+
+			const {otp, expiryTime} = generateEmailVerificationOtp()
+			console.log("-------emailVerificationOtp ",otp);
+			console.log("-------expiryTime ",expiryTime);
+
+			const newUser = await userSignupUseCase(dependencies).execute({
 				name,
 				email,
 				phone,
 				password,
 				userType: "recruiter",
+				otp: otp
 			});
 
 			if (!newUser) {
@@ -41,23 +56,20 @@ export = (dependencies: DependenciesData) => {
 			}
 
 			
-			const emailVerificationToken = generateEmailVerificationToken()
-			console.log("-------newUserRecruiter",newUser);
+			
+			// to add values to otp collection, 
+			// const emailVerify = await createEmailVerificationOtpUseCase(dependencies).execute({
+			// 	userId: newUser._id,
+			// 	email: newUser.email,
+			// 	otp: otp,
+			// 	expiry: expiryTime
+			// });
+
+			console.log("-------newUserCandidate ",newUser);
 			console.log("-------newUser._id",newUser._id);
-			console.log("-------emailVerificationToken",emailVerificationToken);
-			
-			// to add values to token collection, 
-			const emailVerify = await createEmailVerificationTokenUseCase(dependencies).execute({
-				userId: newUser._id,
-				token: emailVerificationToken,
-				email: newUser.email
-
-			});
-
-			console.log("token collection created",emailVerify);
-			
-			await sendVerificationEmail(newUser.email,emailVerify.userId,emailVerify.token, "Verify Yout Email","click on the following link to verify your email account!");
-			console.log("email sended");
-			res.status(200).json({"message": "An email is send to your email, please verify."});
+			// console.log("token collection created",emailVerify);
+			const response = await sendVerificationEmail(newUser.email, newUser.otp ,subject ,topic);
+			console.log("email sended response", response);
+			return res.status(200).json({"message": "An email is send to your email, please verify."});
 	};
 };

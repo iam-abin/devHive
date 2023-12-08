@@ -1,5 +1,5 @@
-import { User } from "../../entities";
-import { UserDataSignup } from "../../frameworks/types/userInterface";
+import { User } from "../entities";
+import { UserDataSignup } from "../frameworks/types/userInterface";
 
 export  = (dependencies: any) => {
 	const { repositories:{usersRepository} } = dependencies;
@@ -8,15 +8,17 @@ export  = (dependencies: any) => {
 		throw new Error("usersRepository should exist in dependencies");
 	}
 
-	const execute = ({ name, email, phone, password, userType }: UserDataSignup) => {
+	const execute = async ({ name, email, phone, password, userType, otp }: UserDataSignup) => {
 		const user = new User({
 			name,
 			email,
 			phone,
 			password,
 			userType,
+			otp
 		});
-        return usersRepository.register(user);
+
+        return await usersRepository.register(user);
 	};
 
     return { execute }

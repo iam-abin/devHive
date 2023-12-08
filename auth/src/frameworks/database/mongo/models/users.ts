@@ -8,6 +8,7 @@ interface UserAttributes {
 	phone: number;
 	password: string;
 	userType: string;
+	otp: number
 	// isActive: boolean;
 	// userId: string;
 }
@@ -20,7 +21,7 @@ interface UserDocument extends mongoose.Document {
 	userType: string;
 	isVarified:boolean;
 	isActive: boolean;
-	userId: string;
+	otp?: number
 	createdAt: string;
 	updatedAt: string;
 }
@@ -62,6 +63,7 @@ const userSchema = new mongoose.Schema(
 			type: Boolean,
 			default: true,
 		},
+		otp: Number,
 	},
 	{
 		// to reformat id and remove password,__v from response when converting to json (we can also use other approaches)
@@ -106,7 +108,7 @@ userSchema.statics.buildUser = (attributes: UserAttributes) => {
 		phone: attributes.phone,
 		password: attributes.password,
 		userType: attributes.userType,
-		// isActive: attributes.isActive,
+		otp: attributes.otp,
 	});
 };
 

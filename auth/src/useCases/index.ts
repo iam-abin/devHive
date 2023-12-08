@@ -1,32 +1,15 @@
-import {
-	candidateSignupUseCase,
-	getCandidateByEmailUseCase,
-	updateCandidatePasswordUseCase,
-	createEmailVerificationTokenUseCase,
-	signupEmailVerificationTokenUseCase,
-	getEmailVerifyTokenUseCase
-} from "./candidate";
-
-import {
-	recruiterSignupUseCase,
-	getRecruiterByEmailUseCase,
-	updateRecruiterPasswordUseCase,
-
-} from "./recruiter";
-
-import { getAdminByEmailUseCase } from "./admin";
+import checkEmailVerificationOtpUseCase from "./checkEmailVerificationOtp";
+import getEmailVerifyOtpUseCase from "./getEmailVerifyOtp";
+import getUserByEmailUseCase from "./getUserByEmail";
+import getUserByPhoneUseCase from "./getUserByPhone";
+import userSignupUseCase from "./userSignup";
+import updatePasswordUseCase from "./updatePassword";
 
 export default {
-	candidateSignupUseCase,
-	getCandidateByEmailUseCase,
-	updateCandidatePasswordUseCase,
-	createEmailVerificationTokenUseCase,
-	signupEmailVerificationTokenUseCase,
-	getEmailVerifyTokenUseCase,
-
-	recruiterSignupUseCase,
-	getRecruiterByEmailUseCase,
-	updateRecruiterPasswordUseCase,
-
-	getAdminByEmailUseCase,
+	checkEmailVerificationOtpUseCase,
+	getEmailVerifyOtpUseCase,
+	getUserByEmailUseCase,
+	getUserByPhoneUseCase,
+	userSignupUseCase,
+	updatePasswordUseCase
 };
