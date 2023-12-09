@@ -1,30 +1,48 @@
 import express from "express";
 
 import { requireAuthRecruiter } from "@abijobportal/common";
-import { recruiterJobControllers } from "../../controllers";
+import { jobsController, recruiterJobControllers } from "../../controllers";
 // import { signupRequestBodyValidatorMiddlewares } from "../middlewares/signupValidation";
 // import { signinRequestBodyValidatorMiddlewares } from "../middlewares/signinValidation";
-import { DependenciesData } from "../types/dependencyInterface"; 
-
+import { DependenciesData } from "../types/dependencyInterface";
 
 export const recruiterRouter = (dependencies: DependenciesData) => {
 	const router = express.Router();
+
+	const {
+		viewAllJobsController,
+		filterJobsController,
+		viewJobByJobIdController,
+	} = jobsController(dependencies);
+
 	const {
 		createJobController,
 		updateJobController,
-		viewAllJobsRecruiterController,
-		viewJobRecruiterController,
-		filterJobRecruiterController,
-		deleteJobController
+		deleteJobController,
+		createdJobsByRecruiterController,
+		viewJobApplicationsController
 	} = recruiterJobControllers(dependencies);
 
-	router.post("/create", createJobController);
 	
-	router.get("/", viewAllJobsRecruiterController);
-	
-	router.route("/:id").get(viewJobRecruiterController).patch(updateJobController).delete(deleteJobController);
+	router.get("/", viewAllJobsController);
 
-	router.post("/filter", filterJobRecruiterController);
+	router.post("/filter", filterJobsController);
+
+	router.post("/create",  createJobController);
+
+	router.get("/created-jobs/:id",  createdJobsByRecruiterController);
+	
+	router.get("/job-applications/:id",  viewJobApplicationsController);
+
+	router
+		.route("/:id")
+		// .all(requireAuthRecruiter)
+		.get(viewJobByJobIdController)
+		.patch(updateJobController)
+		.delete(deleteJobController);
+
+
+	// router.patch('/change-status/:id', requireAuthRecruiter, changeTheApplicationStatus);
 
 	return router;
 };

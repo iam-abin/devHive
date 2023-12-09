@@ -3,12 +3,12 @@ import { DependenciesData } from "../../frameworks/types/dependencyInterface";
 
 export = (dependencies: DependenciesData)=>{
 
-    const { useCases: { getAllJobsCandidateUseCase }} = dependencies
+    const { useCases: { getAllJobsUseCase }} = dependencies
 
     return async (req: Request, res: Response)=>{
         console.log("in getAll job controller 1: ");
 
-        const jobs = await getAllJobsCandidateUseCase(dependencies).execute();
+        const jobs = await getAllJobsUseCase(dependencies).execute();
         console.log("in getAll job controller 2: ", jobs);
 
 
