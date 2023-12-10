@@ -7,13 +7,10 @@ interface RecruiterAttributes {
 	phone: number;
 	isVarified: boolean;
 	isActive: boolean;
-	gender: string;
-	company_name: string;
-	company_location: string;
-	company_state: string;
-	company_country: string;
-	profile_image: string;
-	about: string;
+	gender?: string;
+	company_id?: string;
+	profile_image?: string;
+	about?: string;
 	recruiterId: string;
 	// isActive: boolean;
 }
@@ -26,10 +23,7 @@ interface RecruiterDocument extends mongoose.Document {
 	isVarified: boolean;
 	isActive: boolean;
 	gender: string;
-	company_name: string;
-	company_location: string;
-	company_state: string;
-	company_country: string;
+	company_id?: string;
 	profile_image: string;
 	about: string;
 	recruiterId: string;
@@ -78,16 +72,13 @@ const recruiterSchema = new mongoose.Schema(
 		// 	type: mongoose.Schema.Types.ObjectId,
 		// 	ref: "Company",
 		// },
-		company_name: String,
-		company_location: String,
-		company_state: String,
-		company_country: String,
 		profile_image: {
 			type: String,
 			// default:
 			// 	"https://res.cloudinary.com/dprxebwil/image/upload/v1679341215/Recruiter/recruiter-images.jpeg.jpg",
 		},
 		about: String,
+		company_id: mongoose.Schema.Types.ObjectId,
 		recruiterId: mongoose.Schema.Types.ObjectId,
 	},
 	{

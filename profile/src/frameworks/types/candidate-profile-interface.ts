@@ -8,7 +8,7 @@ export interface CandidateDataProfile{
 	gender?: string;
 	currentLocation?: string;
 	address?: object;
-	keySkills?: object;
+	keySkills?: string[];
 	profile_image?: string;
 	about?: string;
 	resume?: string;

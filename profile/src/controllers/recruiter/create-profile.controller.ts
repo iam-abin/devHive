@@ -16,6 +16,7 @@ export = (dependencies: DependenciesData)=>{
         }
         
 
+        
         const recruiter = await createRecruiterProfileUseCase(dependencies).execute(data);
         console.log("in recruiter create profile controller recruiter: ",recruiter);
 

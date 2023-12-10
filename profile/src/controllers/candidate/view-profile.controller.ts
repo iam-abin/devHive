@@ -6,7 +6,8 @@ export = (dependencies: DependenciesData)=>{
     const { useCases: { getCandidateProfileByCandidateIdUseCase }} = dependencies
 
     return async (req: Request, res: Response)=>{
-        const { candidateId } = req.params;
+        const { id } = req.params;
+        const candidateId = id
         console.log("in candidate view profile controller id: ",candidateId);
         
 
