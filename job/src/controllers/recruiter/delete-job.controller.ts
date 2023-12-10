@@ -13,12 +13,19 @@ export = (dependencies: DependenciesData)=>{
         const response = await deleteJobUseCase(dependencies).execute(id);
         console.log("in recruiter delete job controller 2: ",response);
 
-        // // to produce a message to kafka topic
-        // // isBlocked contains user data with 'isActive' value changed
-		// await produceMessage(response, 'JOB_DELETED_TOPIC')
+        if(response?.deletedCount === 1){
+
+            // // to produce a message to kafka topic
+            // // isBlocked contains user data with 'isActive' value changed
+            // await produceMessage(response, 'JOB_DELETED_TOPIC')
+    
+    
+           return res.status(200).json({message: "Job deleted successfully", data: response })
+        }
+
+        return res.status(200).json({message: "Job couldn't deleted", data: response })
 
 
-        res.status(200).json({message: "Job deleted successfully", data: response })
     };
 
 }

@@ -1,31 +1,28 @@
-import {
-	getAllJobsCandidateUseCase,
-	getJobByIdCandidateUseCase,
-	filterJobCandidateUseCase,
-	applyJobUseCase,
-} from "./candidate"
+import { applyJobUseCase, getAllAppliedJobs } from "./candidate";
 
+import { filterJobUseCase, getAllJobsUseCase, getJobByIdUseCase } from "./job";
 
 import {
-    createJobUseCase,
+	createJobUseCase,
 	updateJobUseCase,
 	deleteJobUseCase,
-	getAllJobsRecruiterUseCase,
-	getJobByIdRecruiterUseCase,
-	filterJobRecruiterUseCase,
-} from "./recruiter"
-
+	getAllJobApplicationsUseCase,
+	updateJobApplicationStatusUseCase,
+	getRecruiterCreatedJobsUseCase,
+} from "./recruiter";
 
 export default {
-    getAllJobsCandidateUseCase,
-	getJobByIdCandidateUseCase,
-	filterJobCandidateUseCase,
 	applyJobUseCase,
+	getAllAppliedJobs,
 
-    createJobUseCase,
+	filterJobUseCase,
+	getAllJobsUseCase,
+	getJobByIdUseCase,
+
+	createJobUseCase,
 	updateJobUseCase,
 	deleteJobUseCase,
-	getAllJobsRecruiterUseCase,
-	getJobByIdRecruiterUseCase,
-	filterJobRecruiterUseCase,
-}
+	getAllJobApplicationsUseCase,
+	updateJobApplicationStatusUseCase,
+	getRecruiterCreatedJobsUseCase,
+};

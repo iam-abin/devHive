@@ -9,10 +9,8 @@ export = (dependencies: DependenciesData) => {
 		throw new Error("jobApplicationRepository should exist in dependencies");
 	}
 
-	const execute =(data: object) => {
-        console.log(data);
-        
-		return jobApplicationRepository.applyJob(data);
+	const execute = (id: string, status: string) => {
+		return jobApplicationRepository.updateJobApplicationStatus(id, status);
 	};
 
 	return { execute };

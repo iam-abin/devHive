@@ -18,20 +18,28 @@ export = {
     },
 
     updateJob: async (id: string, data: object)=>{
+        console.log("in updateJob repository id", id, " data ", data);
+        
         const updatedJob = await JobModel.findOneAndUpdate({ "_id": id }, { $set: data }, {new: true});
+        console.log("in updateJob repository after update", updatedJob);
 		return updatedJob;
     },
 
-	applyJob: async(id: string, data: object) => {
-        
-    },
 
 	filterJob: async(jobFilterData: object) => {
         const filteredJobs = await JobModel.find({},jobFilterData) 
+        return filteredJobs
     },
 
-	getAllJobs: async () => {
-		const jobs = await JobModel.aggregate([{ $sort: { updatedAt: 1 } }]);
+	getAllJobs: async ():Promise<any[]> => {
+		// const jobs = await JobModel.aggregate([{ $sort: { createdAt: 1 } }]);
+        const jobs = await JobModel.find().sort({createdAt: -1})
+        console.log(jobs);
+        return jobs
+	},
+
+    getAllJobsByRecruiterId: async (id: string): Promise<any[]> => {
+		const jobs = await JobModel.find({recruiterId: id}).sort({createdAt: -1})
         console.log(jobs);
         return jobs
 	},

@@ -1,3 +1,4 @@
+
 import { DependenciesData } from "../../frameworks/types/dependencyInterface";
 
 export = (dependencies: DependenciesData) => {
@@ -9,10 +10,8 @@ export = (dependencies: DependenciesData) => {
 		throw new Error("jobApplicationRepository should exist in dependencies");
 	}
 
-	const execute =(data: object) => {
-        console.log(data);
-        
-		return jobApplicationRepository.applyJob(data);
+	const execute = (id: string) => {
+		return jobApplicationRepository.getAllAppliedJobsByCandidateId(id);
 	};
 
 	return { execute };
