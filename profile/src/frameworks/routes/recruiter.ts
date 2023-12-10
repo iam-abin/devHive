@@ -1,13 +1,14 @@
 import express from "express"
 
-import {recruiterProfileControllers} from "../../controllers";
+import {recruiterProfileControllers, candidateProfileControllers} from "../../controllers";
 
 import { DependenciesData } from "../types/dependencyInterface"
 
 export const recruiterRouter = (dependencies: DependenciesData)=>{
     const router = express.Router();
 
-    const { createRecruiterProfileController, viewRecruiterProfileController, updateRecruiterProfileController, viewCandidateProfileController } = recruiterProfileControllers(dependencies)
+    const { createRecruiterProfileController, viewRecruiterProfileController, updateRecruiterProfileController,  } = recruiterProfileControllers(dependencies)
+    const { viewCandidateProfileController} = candidateProfileControllers(dependencies);
 
     // recruiter
 	router.post("/createProfile", createRecruiterProfileController);

@@ -4,23 +4,20 @@ export class CandidateProfile {
 	name: string;
 	email: string;
 	phone: number;
-	isVarified: boolean;
 	isActive: boolean;
 	gender?: string;
 	currentLocation?: string;
 	address?: object;
-	keySkills?: object;
+	keySkills?: string[];
 	profile_image?: string;
 	about?: string;
 	resume?: string;
-	// experience?: object;
 	experience?: string;
 	candidateId: string;
 	constructor({
 		name,
 		email,
 		phone,
-		isVarified,
 		isActive,
 		gender,
 		currentLocation,
@@ -35,7 +32,6 @@ export class CandidateProfile {
 		this.name = name;
 		this.email = email;
 		this.phone = phone;
-		this.isVarified = isVarified;
 		this.isActive = isActive;
 		this.gender = gender;
 		this.currentLocation = currentLocation;

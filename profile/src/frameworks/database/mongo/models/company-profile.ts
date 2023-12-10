@@ -11,7 +11,7 @@ interface CompanyAttributes {
 	company_country?: string;
 	description?: string;
 	isActive?: boolean;
-	// companyId: string;
+	recruiters?: string[];
 }
 // 2. An interface that describes the properties ,that a Company Document has
 interface CompanyDocument extends mongoose.Document {
@@ -24,6 +24,7 @@ interface CompanyDocument extends mongoose.Document {
 	company_country: string;
 	description: string;
 	isActive: boolean;
+	recruiters: string[];
 	createdAt: string;
 	updatedAt: string;
 }
@@ -48,6 +49,10 @@ const companySchema = new mongoose.Schema(
 		isActive: {
             type:Boolean,
             default:true
+        },
+		recruiters: {
+            type:Array,
+            default:[]
         },
 	},
 	{
