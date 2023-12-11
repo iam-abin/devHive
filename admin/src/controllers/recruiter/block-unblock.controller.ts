@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { DependenciesData } from "../../frameworks/types/dependencyInterface";
-import { produceMessage } from "../../frameworks/services/kafka/producer";
+import { UserUpdatedEventPublisher } from "../../frameworks/services/kafka-events/publishers/user-updated-publisher";
+import { kafkaClient } from "../../config/kafka-connection";
 
 export = (dependencies: DependenciesData)=>{
 
@@ -16,7 +17,8 @@ export = (dependencies: DependenciesData)=>{
 
         // to produce a message to kafka topic
         // isBlocked contains user data with 'isActive' value changed
-		await produceMessage(isBlocked, 'USER_UPDATED_TOPIC')
+        const userUpdatedEvent = new UserUpdatedEventPublisher(kafkaClient)
+		await userUpdatedEvent.publish(isBlocked)
 
         res.status(200).json({message: `recruiter ${isBlocked.isActive ? "unBlocked" : "blocked"}  successfully`, data: isBlocked})
     };
