@@ -1,6 +1,7 @@
 import { connectDB } from "./config/db"
 import { app } from "./app";
-import { consumeMessage } from "./frameworks/services/kafka/consumer";
+import { UserCreatedEventConsumer } from "./frameworks/services/kafka-events/consumers/user-created-consumer";
+import { kafkaClient } from "./config/kafka-connection";
 
 
 const start = async () => {
@@ -16,12 +17,22 @@ const start = async () => {
 		throw new Error("MONGO_URL_ADMIN must be defined");
 	}
 
+	// to connect to mongodb
+	await connectDB();
+
+	// it is used to listen to incomming message from kafka topics
+	const userCreatedEvent = new UserCreatedEventConsumer(kafkaClient)
+	await userCreatedEvent.subscribe()
+
 
 	app.listen(3000, () => {
 		console.log("admin Listening on port 3000....");
-        connectDB();
-		// it is used to listen to incomming message from kafka topics
-		consumeMessage()
+	})
+	.on("error", async () => {
+		await userCreatedEvent.disconnect();
+	})
+	.on("close", async () => {
+		await userCreatedEvent.disconnect();
 	});
 };
 

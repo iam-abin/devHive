@@ -3,8 +3,9 @@ import { Request, Response } from "express";
 
 import { createJwtToken } from "../../frameworks/services/jwtToken";
 import { DependenciesData } from "../../frameworks/types/dependencyInterface";
-import { produceMessage } from "../../frameworks/services/kafka/producer";
 import { BadRequestError } from "@abijobportal/common";
+import { UserCreatedEventPublisher } from "../../frameworks/services/kafka-events/publishers/user-created-publisher";
+import { kafkaClient } from "../../config/kafka-connection";
 
 export = (dependencies: DependenciesData) => {
 	const {
@@ -41,7 +42,16 @@ export = (dependencies: DependenciesData) => {
 		// const user = await getUserByEmailUseCase(dependencies).execute(checkToken.email);
 
 		// to produce a message to kafka topic
-		await produceMessage(user);
+		const userCreatedEvent = new UserCreatedEventPublisher(kafkaClient)
+		await userCreatedEvent.publish({
+			name: user.name,
+			email: user.email,
+			phone: user.phone,
+			userType: user.userType,
+			isActive: user.isActive,
+			userId: user.id
+		})
+		// await produceMessage(user);
 
 		const candidatePayloadData = {
 			id: user.id,
