@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { DependenciesData } from "../../frameworks/types/dependencyInterface";
-import { produceMessage } from "../../frameworks/services/kafka/producer";
+// import { produceMessage } from "../../frameworks/services/kafka/producer";
 
 export = (dependencies: DependenciesData)=>{
 

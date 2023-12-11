@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { DependenciesData } from "../../frameworks/types/dependencyInterface";
 // import { BadRequestError } from "@abijobportal/common";
-import { produceMessage } from "../../frameworks/services/kafka/producer";
 
 export = (dependencies: DependenciesData)=>{
 

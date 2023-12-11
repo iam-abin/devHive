@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { DependenciesData } from "../../frameworks/types/dependencyInterface";
-import { produceMessage } from "../../frameworks/services/kafka/producer";
+import { JobUpdatedEventPublisher } from "../../frameworks/services/kafka-events/publishers/job-updated-publisher";
+import { kafkaClient } from "../../config/kafka-connection";
 
 export = (dependencies: DependenciesData)=>{
 
@@ -17,6 +18,22 @@ export = (dependencies: DependenciesData)=>{
         //  // to produce a message to kafka topic
         // // isBlocked contains user data with 'isActive' value changed
 		// await produceMessage(updatedJob, 'JOB_UPDATED_TOPIC')
+        const jobUpdatedEvent = new JobUpdatedEventPublisher(kafkaClient);
+        await jobUpdatedEvent.publish({
+            title : updatedJob?.title,
+            recruiter : updatedJob?.recruiter,
+            company : updatedJob?.company,
+            job_descriptions : updatedJob?.job_descriptions,
+            skills_required : updatedJob?.skills_required,
+            available_position : updatedJob?.available_position,
+            experience_required : updatedJob?.experience_required,
+            education_required : updatedJob?.education_required,
+            location : updatedJob?.location,
+            employment_type : updatedJob?.employment_type,
+            salary_min : updatedJob?.salary_min,
+            salary_max : updatedJob?.salary_max,
+            blocked : updatedJob?.blocked,
+        });
 
 
         res.status(200).json({message: "Job updated successfully", data: updatedJob })
