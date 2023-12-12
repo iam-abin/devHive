@@ -1,5 +1,4 @@
 import { Kafka,  KafkaMessage } from "kafkajs";
-import { groupId } from "../group-id";
 import { KafkaConsumer, TOPICS, USER_CREATED_EVENT } from "@abijobportal/common";
 import { handleMessage } from "../handleMessage";
 
@@ -7,7 +6,7 @@ export class UserCreatedEventConsumer extends KafkaConsumer<USER_CREATED_EVENT>{
 
     topic: TOPICS.USER_CREATED_TOPIC = TOPICS.USER_CREATED_TOPIC;
 
-    groupId: string = groupId;
+    groupId: string = "admin-3";
 
     constructor(client: Kafka){
         super(client);

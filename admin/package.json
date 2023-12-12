@@ -10,7 +10,7 @@
   "author": "abin",
   "license": "ISC",
   "dependencies": {
-    "@abijobportal/common": "^1.0.33",
+    "@abijobportal/common": "^1.0.35",
     "@types/cookie-session": "^2.0.47",
     "@types/express": "^4.17.20",
     "@types/jsonwebtoken": "^9.0.4",

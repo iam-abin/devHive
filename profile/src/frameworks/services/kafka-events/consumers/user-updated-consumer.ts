@@ -1,5 +1,4 @@
 import { Kafka,  KafkaMessage } from "kafkajs";
-import { groupId } from "../group-id";
 import { KafkaConsumer, TOPICS, USER_UPDATED_EVENT } from "@abijobportal/common";
 import { handleMessage } from "../handleMessage";
 
@@ -7,7 +6,7 @@ export class UserUpdatedEventConsumer extends KafkaConsumer<USER_UPDATED_EVENT>{
 
     topic: TOPICS.USER_UPDATED_TOPIC = TOPICS.USER_UPDATED_TOPIC;
 
-    groupId: string = groupId;
+    groupId: string = "profile-3";
 
     constructor(client: Kafka){
         super(client);

@@ -63,8 +63,9 @@ const candidateSchema = new mongoose.Schema(
 		},
 		isVarified: {
 			// field for signup email verificetion
+			// data will come to profile service only after verification
 			type: Boolean,
-			default: false,
+			default: true,
 		},
 		isActive: {
 			type: Boolean,

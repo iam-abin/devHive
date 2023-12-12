@@ -1,12 +1,11 @@
 import { Kafka,  KafkaMessage } from "kafkajs";
-import { groupId } from "../group-id";
 import { KafkaConsumer, TOPICS, JOB_UPDATED_EVENT } from "@abijobportal/common";
 import { handleMessage } from "../handleMessage";
 
 export class jobUpdatedEventConsumer extends KafkaConsumer<JOB_UPDATED_EVENT>{
     topic: TOPICS.JOB_UPDATED_TOPIC = TOPICS.JOB_UPDATED_TOPIC;
 
-    groupId: string = groupId;
+    groupId: string = "job-1";
 
     constructor(client: Kafka){
         super(client);
