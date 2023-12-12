@@ -1,11 +1,14 @@
 import { DependenciesData } from "../../frameworks/types/dependencyInterface";
 
-// import adminSigninController from "./signin.controller";
-// import adminSignoutController from "./signout.controller";
+import blockUnblockJobController from "./block-unblock-job.controller";
+import viewJobController from "./view-job.controller";
+import viewJobsController from "./view-jobs.controller";
 
 export = (dependencies: DependenciesData) => {
 	return {
-		// adminSigninController: adminSigninController(dependencies),
-		// adminSignoutController: adminSignoutController(dependencies)
+		blockUnblockJobController: blockUnblockJobController(dependencies),
+		viewJobController: viewJobController(dependencies),
+		viewJobsController: viewJobsController(dependencies),
+
 	};
 };

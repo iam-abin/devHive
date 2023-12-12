@@ -3,17 +3,17 @@ import { DependenciesData } from "../../frameworks/types/dependencyInterface";
 
 export = (dependencies: DependenciesData)=>{
 
-    const { useCases: { getJobByIdUseCase }} = dependencies
+    const { useCases: { getCompanyByIdUseCase }} = dependencies
 
     return async (req: Request, res: Response)=>{
         const {id} = req.params;
         
 
-        const job = await getJobByIdUseCase(dependencies).execute({
+        const company = await getCompanyByIdUseCase(dependencies).execute({
             id
         });
 
-        res.status(200).json({message: "job data", data: job })
+        res.status(200).json({message: "company data", data: company })
     };
 
 }
