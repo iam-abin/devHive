@@ -1,6 +1,6 @@
 import getAllRecruitersController from "./view-recruiters.controller";
-import getRecruiterByIdController from "./view-profile.controller";
-import recruiterBlockUnblockController from "./block-unblock.controller";
+import getRecruiterByIdController from "./view-recruiter-profile.controller";
+import recruiterBlockUnblockController from "./block-unblock-recruiter.controller";
 
 import { DependenciesData } from "../../frameworks/types/dependencyInterface";
 

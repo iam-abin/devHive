@@ -1,13 +1,30 @@
-import express from "express"
+import express from "express";
+
+
+import { companyControllers } from "../../controllers";
 import { DependenciesData } from "../types/dependencyInterface";
+import { requireAuthAdmin } from "@abijobportal/common";
 
-export const companyRouter = (dependencies: DependenciesData)=>{
-    const router = express.Router();
+export const companyRouter = (dependencies: DependenciesData) => {
+	const router = express.Router();
 
-    // company
-    // router.get("/candidates");
-    // router.get("/viewProfile");
-    // router.put("/company-blockUnblock/:id");
+	const {
+		blockUnblockCompanyController,
+        viewCompaniesController,
+        viewCompanyProfileController
+	} = companyControllers(dependencies);
 
-    return router
-}
+	// router.use(requireAuthAdmin)
+
+	// // company
+
+    // router.get("/companies", requireAuthAdmin, viewCompaniesController);
+	// router.get("/viewCompanyProfile", requireAuthAdmin, viewCompanyProfileController);
+	// router.put("/blockUnblock/:id", requireAuthAdmin, blockUnblockCompanyController);
+
+	router.get("/companies", viewCompaniesController);
+	router.get("/viewCompanyProfile", viewCompanyProfileController);
+	router.put("/blockUnblock/:id", blockUnblockCompanyController);
+
+	return router;
+};

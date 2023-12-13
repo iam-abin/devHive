@@ -25,7 +25,7 @@ export = {
 		return candidate;
 	},
 
-
+	// updating and block unblocking is also doing here
 	updateCandidateProfile: async (id: string, data: any): Promise<any> => {
 		const candidate = await CandidateProfileModel.findOneAndUpdate({ "_id": id }, { $set: data }, {new: true});
 		return candidate;

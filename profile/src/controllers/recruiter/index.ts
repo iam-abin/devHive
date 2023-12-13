@@ -1,4 +1,4 @@
-import createRecruiterProfileController from "./create-profile.controller";
+// import createRecruiterProfileController from "./create-profile.controller";
 import viewCompanyProfileController from "./view-company-profile.controller";
 import viewRecruiterProfileController from "./view-profile.controller";
 import updateCompanyProfileController from "./update-company-profile.controller";
@@ -12,7 +12,7 @@ export = (dependencies: DependenciesData)=>{
     return {
         viewRecruiterProfileController: viewRecruiterProfileController(dependencies),
         viewCompanyProfileController: viewCompanyProfileController(dependencies),
-        createRecruiterProfileController: createRecruiterProfileController(dependencies),
+        // createRecruiterProfileController: createRecruiterProfileController(dependencies),
         updateRecruiterProfileController: updateRecruiterProfileController(dependencies),
         updateCompanyProfileController: updateCompanyProfileController(dependencies),
         uploadRecruiterProfilePicController: uploadRecruiterProfilePicController(dependencies),

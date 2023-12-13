@@ -40,7 +40,7 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
-    - image: abinv/client-app
+    - image: abinv/client-devhive
       context: client
       docker:
         dockerfile: Dockerfile

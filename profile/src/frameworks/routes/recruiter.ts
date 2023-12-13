@@ -7,11 +7,11 @@ import { DependenciesData } from "../types/dependencyInterface"
 export const recruiterRouter = (dependencies: DependenciesData)=>{
     const router = express.Router();
 
-    const { createRecruiterProfileController, viewRecruiterProfileController, updateRecruiterProfileController,  } = recruiterProfileControllers(dependencies)
+    const {  viewRecruiterProfileController, updateRecruiterProfileController,  } = recruiterProfileControllers(dependencies)
     const { viewCandidateProfileController} = candidateProfileControllers(dependencies);
 
     // recruiter
-	router.post("/createProfile", createRecruiterProfileController);
+	// router.post("/createProfile", createRecruiterProfileController);
 	router.get("/viewProfile/:id", viewRecruiterProfileController);
 	router.patch("/updateProfile", updateRecruiterProfileController);
     router.put("/uploadProfilePic", updateRecruiterProfileController);
