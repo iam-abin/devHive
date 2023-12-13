@@ -6,7 +6,7 @@ export class JobUpdatedEventConsumer extends KafkaConsumer<JOB_UPDATED_EVENT>{
     topic: TOPICS.JOB_UPDATED_TOPIC = TOPICS.JOB_UPDATED_TOPIC;
     
 
-    groupId: string = "admin-5";
+    groupId: string = "admin-6";
 
     constructor(client: Kafka){
         super(client);

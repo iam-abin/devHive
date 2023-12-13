@@ -5,7 +5,7 @@ import { handleMessage } from "../handleMessage";
 export class CompanyProfileCreatedEventConsumer extends KafkaConsumer<COMPANY_PROFILE_CREATED_EVENT>{
     topic: TOPICS.COMPANY_PROFILE_CREATED_TOPIC = TOPICS.COMPANY_PROFILE_CREATED_TOPIC;
 
-    groupId: string = "admin-1";
+    groupId: string = "admin-2";
 
     constructor(client: Kafka){
         super(client);

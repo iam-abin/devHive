@@ -62,20 +62,26 @@ const repository = () => {
 		},
 
 		// user status is updated only by 'admin'
-		updateStatus: async ({ email, isActive }: any) => {
-
-			console.log("in update status",);
-
-			const user = await UserModel.findOne({email});
-			if (!user) {
-				throw new Error("User not found");
-			}
-
-			user.isActive = isActive;
-
-			return await user.save();
-
+		updateUser: async (userId: string, data: any): Promise<any> => {
+			const user = await UserModel.findOneAndUpdate({ "_id": userId }, { $set: data }, {new: true});
+			return user;
 		},
+		
+
+		// updateStatus: async ({ email, isActive }: any) => {
+
+		// 	console.log("in update status",);
+
+		// 	const user = await UserModel.findOne({email});
+		// 	if (!user) {
+		// 		throw new Error("User not found");
+		// 	}
+
+		// 	user.isActive = isActive;
+
+		// 	return await user.save();
+
+		// },
 
 		updateVerification: async (email: string) => {
 

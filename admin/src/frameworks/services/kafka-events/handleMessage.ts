@@ -24,9 +24,9 @@ export const handleMessage = (data: any, topic: string, message: any) => {
 			console.log("admin handleMessage createUserTopic", data);
 
 			if (data.userType === "candidate") {
-				candidateRepository.createCandidate(data);
+				candidateRepository.updateCandidateProfile(data.userId,data);
 			} else if (data.userType === "recruiter") {
-				recruiterRepository.createRecruiter(data);
+				recruiterRepository.updateRecruiterProfile(data.userId, data);
 			}
 
 			break;
@@ -50,8 +50,8 @@ export const handleMessage = (data: any, topic: string, message: any) => {
 			break;
 
 		case "CANDIDATE-PROFILE-UPDATED-TOPIC":
-			console.log("admin handleMessage companyProfileUpdatedTopic", data);
-			candidateRepository.createCandidate(data);
+			console.log("admin handleMessage CandidateProfileUpdatedTopic", data);
+			candidateRepository.updateCandidateProfile(data.userId,data);
 
 			break;
 
@@ -62,7 +62,7 @@ export const handleMessage = (data: any, topic: string, message: any) => {
 			break;
 
 		case "RECRUITER-PROFILE-UPDATED-TOPIC":
-			console.log("admin handleMessage companyProfileUpdatedTopic", data);
+			console.log("admin handleMessage RecruiterProfileUpdatedTopic", data);
 			candidateRepository.createCandidate(data);
 
 			break;

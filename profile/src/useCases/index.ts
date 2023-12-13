@@ -2,7 +2,7 @@ import {
     // createCandidateProfileUseCase,
 	updateCandidateProfileUseCase,
 	uploadResumeUseCase,
-	getCandidateProfileByCandidateIdUseCase,
+	getCandidateProfileByuserIdUseCase,
 	getCandidateProfileByEmailUseCase,
 	uploadCandidateProfilePicUseCase,
 } from "./candidate";
@@ -22,7 +22,7 @@ export default {
     // createCandidateProfileUseCase,
 	updateCandidateProfileUseCase,
 	uploadResumeUseCase,
-	getCandidateProfileByCandidateIdUseCase,
+	getCandidateProfileByuserIdUseCase,
 	getCandidateProfileByEmailUseCase,
 	uploadCandidateProfilePicUseCase,
 

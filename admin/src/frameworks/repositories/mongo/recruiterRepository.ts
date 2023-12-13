@@ -16,6 +16,12 @@ export = {
 		return await userObject.save();
 	},
 
+	// updating and block unblocking is also doing here
+	updateRecruiterProfile: async (userId: string, data: any): Promise<any> => {
+		const recruiter = await RecruiterModel.findOneAndUpdate({ "userId": userId }, { $set: data }, {new: true});
+		return recruiter;
+	},
+
 	blockUnblock: async ({ id }: blockUnBlockInterface) => {
 		const recruiter = await RecruiterModel.findById(id);
 		if (!recruiter) {

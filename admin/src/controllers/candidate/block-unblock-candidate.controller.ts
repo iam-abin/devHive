@@ -10,7 +10,8 @@ export = (dependencies: DependenciesData)=>{
     return async (req: Request, res: Response)=>{
         const {id} = req.params;
         
-
+        console.log("in block unblock controller");
+        
         const isBlocked = await blockUnblockCandidateUseCase(dependencies).execute({
             id
         });

@@ -9,7 +9,7 @@ export class RecruiterProfile {
 	profile_image?: string;
 	about?: string;
 	company_id?: string;
-	recruiterId?: string;
+	userId?: string;
 	// membership?: string;
 	// company_size?: number;
 	constructor({
@@ -21,7 +21,7 @@ export class RecruiterProfile {
 		profile_image,
 		about,
 		company_id,
-		recruiterId,
+		userId,
 	}: RecruiterDataProfile) {
 		(this.name = name),
 			(this.email = email),
@@ -31,6 +31,6 @@ export class RecruiterProfile {
 			(this.profile_image = profile_image),
 			(this.about = about),
 			(this.company_id = company_id),
-			(this.recruiterId = recruiterId);
+			(this.userId = userId);
 	}
 }

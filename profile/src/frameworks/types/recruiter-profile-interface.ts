@@ -15,5 +15,5 @@ export interface RecruiterDataProfile{
 	about?: string;
 	
 	company_id?: string;
-	recruiterId?: string;
+	userId?: string;
 }

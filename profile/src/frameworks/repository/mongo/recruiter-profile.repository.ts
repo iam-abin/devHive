@@ -17,7 +17,7 @@ export = {
 	},
 
 	getProfileById: async (id: string): Promise<any> => {
-		const recruiter = await RecruiterProfileModel.findById(id);
+		const recruiter = await RecruiterProfileModel.findById(id); // profile Id
 		return recruiter;
 	},
 
@@ -28,18 +28,18 @@ export = {
 
 	// updating and block unblocking is also doing here
 	updateRecruiterProfile: async (id: string, data: any): Promise<any> => {
-		const recruiter = await RecruiterProfileModel.findOneAndUpdate({ "_id": id }, { $set: data }, {new: true});
+		const recruiter = await RecruiterProfileModel.findOneAndUpdate({ "userId": id }, { $set: data }, {new: true});
 		return recruiter;
 	},
 
 	uploadProfilePic : async (id: string, data: any): Promise<any>=>{
-		const recruiter = await RecruiterProfileModel.updateOne({ "_id": id }, { $set:{ resume: data }});
+		const recruiter = await RecruiterProfileModel.updateOne({ "userId": id }, { $set:{ "resume": data }});
 		return recruiter;
 	},
 
 
 	getCandidateResume: async (id: string): Promise<any>=>{
-		const candidate = await RecruiterProfileModel.findById(id)
+		const candidate = await RecruiterProfileModel.findOne({"userId":id})
 		return candidate;
 	}
 	

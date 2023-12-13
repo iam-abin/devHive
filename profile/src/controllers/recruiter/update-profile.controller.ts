@@ -28,7 +28,7 @@ export = (dependencies: DependenciesData)=>{
             profile_image: updatedData?.profile_image,
             about: updatedData?.about,
             company_id: updatedData?.company_id,
-            recruiterId: updatedData?.recruiterId,
+            userId: updatedData?.userId,
         })
 
 

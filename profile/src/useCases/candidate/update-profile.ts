@@ -9,16 +9,16 @@ export  = (dependencies: any) => {
 
 	const execute = async(existingData: any,updatedData: any) => {
 
-		const modifiedFields: { [key: string]: any } = {};
-		for (const field in updatedData) {
-		  if (updatedData[field] !== existingData[field]) {
-			modifiedFields[field] = updatedData[field];
-		  }
-		}
+		// const modifiedFields: { [key: string]: any } = {};
+		// for (const field in updatedData) {
+		//   if (updatedData[field] !== existingData[field]) {
+		// 	modifiedFields[field] = updatedData[field];
+		//   }
+		// }
 		
 
 
-        return await candidateProfileRepository.updateCandidateProfile(existingData.id,modifiedFields);
+        return await candidateProfileRepository.updateCandidateProfile(existingData.userId,updatedData);
 	};
 
     return { execute }

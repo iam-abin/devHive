@@ -6,7 +6,7 @@ export class UserCreatedEventConsumer extends KafkaConsumer<USER_CREATED_EVENT>{
 
     topic: TOPICS.USER_CREATED_TOPIC = TOPICS.USER_CREATED_TOPIC;
 
-    groupId: string = "admin-6";
+    groupId: string = "admin-8";
 
     constructor(client: Kafka){
         super(client);

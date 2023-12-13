@@ -15,8 +15,10 @@ export = {
 	},
 
 
-	getProfileByCandidateId: async (candidateId: string): Promise<any> => {
-		const candidate = await CandidateProfileModel.findOne({candidateId});
+	getProfileByuserId: async (userId: string): Promise<any> => {
+		console.log("in getProfileByuserId repository");
+		
+		const candidate = await CandidateProfileModel.findOne({userId});
 		return candidate;
 	},
 
@@ -27,7 +29,9 @@ export = {
 
 	// updating and block unblocking is also doing here
 	updateCandidateProfile: async (id: string, data: any): Promise<any> => {
-		const candidate = await CandidateProfileModel.findOneAndUpdate({ "_id": id }, { $set: data }, {new: true});
+		console.log("user update candidate repo----");
+		
+		const candidate = await CandidateProfileModel.findOneAndUpdate({ "userId": id }, { $set: data }, {new: true});
 		return candidate;
 	},
 
