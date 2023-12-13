@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: client-app-depl
+  name: client-app-depls
 spec:
   replicas: 1
   selector:
@@ -19,7 +19,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: client-app-srv
+  name: client-app-srvs
 spec:
   selector:
     app: client-app

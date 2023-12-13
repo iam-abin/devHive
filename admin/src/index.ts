@@ -8,6 +8,7 @@ import { UserCreatedEventConsumer } from "./frameworks/services/kafka-events/con
 import { UserUpdatedEventConsumer } from "./frameworks/services/kafka-events/consumers/user-updated-consumer";
 
 import { kafkaClient } from "./config/kafka-connection";
+import { JobDeletedEventConsumer } from "./frameworks/services/kafka-events/consumers/job-deleted-consumer";
 
 const start = async () => {
 	console.log("Starting up....");
@@ -36,11 +37,13 @@ const start = async () => {
 	const jobUpdatedEvent = new JobUpdatedEventConsumer(kafkaClient);
 	const userCreatedEvent = new UserCreatedEventConsumer(kafkaClient);
 	const userUpdatedEvent = new UserUpdatedEventConsumer(kafkaClient);
+	const jobDeletedEvent = new JobDeletedEventConsumer(kafkaClient);
 
 	await companyProfileCreatedEvent.subscribe();
 	await companyProfileUpdatedEvent.subscribe();
 	await jobCreatedEvent.subscribe();
 	await jobUpdatedEvent.subscribe();
+	await jobDeletedEvent.subscribe();
 	await userUpdatedEvent.subscribe();
 	await userCreatedEvent.subscribe();
 
@@ -52,6 +55,7 @@ const start = async () => {
 			await companyProfileUpdatedEvent.disconnect();
 			await jobCreatedEvent.disconnect();
 			await jobUpdatedEvent.disconnect();
+			await jobDeletedEvent.disconnect();
 			await userUpdatedEvent.disconnect();
 			await userCreatedEvent.disconnect();
 		})
@@ -60,6 +64,7 @@ const start = async () => {
 			await companyProfileUpdatedEvent.disconnect();
 			await jobCreatedEvent.disconnect();
 			await jobUpdatedEvent.disconnect();
+			await jobDeletedEvent.disconnect();
 			await userUpdatedEvent.disconnect();
 			await userCreatedEvent.disconnect();
 		});

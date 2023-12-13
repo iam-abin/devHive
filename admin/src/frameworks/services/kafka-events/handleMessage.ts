@@ -75,7 +75,13 @@ export const handleMessage = (data: any, topic: string, message: any) => {
 
 		case "JOB-UPDATED-TOPIC":
 			console.log("admin handleMessage jobUpdatedTopic", data);
-			jobRepository.updateJob(data.jobId,data);
+			jobRepository.updateJob(data.jobId, data);
+
+			break;
+
+		case "JOB-DELETED-TOPIC":
+			console.log("admin handleMessage jobDeletedTopic", data);
+			jobRepository.deleteJob(data.jobId);
 
 			break;
 

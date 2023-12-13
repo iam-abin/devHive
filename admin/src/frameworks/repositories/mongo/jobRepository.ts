@@ -21,9 +21,9 @@ export = {
 	},
 
 	blockUnblock: async ({ id }: blockUnBlockInterface) => {
-		const job = await JobModel.findById(id);
+		const job = await JobModel.findOne({jobId:id});
 		if (!job) {
-			throw new Error("recruiter not found");
+			throw new Error("job not found");
 		}
 
 		job.blocked = !job.blocked;
@@ -34,7 +34,7 @@ export = {
 	updateJob: async (id: string, data: object)=>{
         console.log("in updateJob repository id", id, " data ", data);
         
-        const updatedJob = await JobModel.findOneAndUpdate({ "_id": id }, { $set: data }, {new: true});
+        const updatedJob = await JobModel.findOneAndUpdate({ "jobId": id }, { $set: data }, {new: true});
         console.log("in updateJob repository after update", updatedJob);
 		return updatedJob;
     },
@@ -50,6 +50,8 @@ export = {
 	},
 
 	deleteJob: async (jobId: string)=>{
+		console.log("in delete job admin");
+		
         const deletedJob = await JobModel.deleteOne({jobId: jobId});
         console.log("deletedJob: ",deletedJob);
         return deletedJob

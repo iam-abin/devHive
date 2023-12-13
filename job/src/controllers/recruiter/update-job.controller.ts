@@ -9,7 +9,8 @@ export = (dependencies: DependenciesData)=>{
 
     return async (req: Request, res: Response)=>{
         const data = req.body;
-        const {id} = req.params;
+        const {jobId} = data;
+        const id = jobId
         console.log("in recruiter update job controller 1: ",data, "id: ",id);
 
         const updatedJob = await updateJobUseCase(dependencies).execute(id, data);

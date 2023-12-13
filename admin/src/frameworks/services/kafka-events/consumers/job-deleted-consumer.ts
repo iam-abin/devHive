@@ -17,6 +17,8 @@ export class JobDeletedEventConsumer extends KafkaConsumer<JOB_DELETED_EVENT>{
         console.log("JobDeletedTopic consumer admin",data);
 			
 			// dont need to check userType as every users are stored in one collection 
+            console.log("before handle message ", topic);
+            
 			handleMessage(data, topic, message )
         
     }
