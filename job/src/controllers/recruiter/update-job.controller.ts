@@ -20,6 +20,7 @@ export = (dependencies: DependenciesData)=>{
 		// await produceMessage(updatedJob, 'JOB_UPDATED_TOPIC')
         const jobUpdatedEvent = new JobUpdatedEventPublisher(kafkaClient);
         await jobUpdatedEvent.publish({
+            jobId: updatedJob.id,
             title : updatedJob?.title,
             recruiter : updatedJob?.recruiter,
             company : updatedJob?.company,

@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { DependenciesData } from "../../frameworks/types/dependencyInterface";
+// import { RecruiterProfileUpdatedEventPublisher } from "../../frameworks/services/kafka-events/publishers/recruiter-profile-updated-publisher";
 import { CompanyProfileUpdatedEventPublisher } from "../../frameworks/services/kafka-events/publishers/company-profile-update-publisher";
 import { kafkaClient } from "../../config/kafka-connection";
 

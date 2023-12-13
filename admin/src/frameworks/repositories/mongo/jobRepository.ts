@@ -13,8 +13,11 @@ export = {
 		
 		// const {name, email, phone, userType, isActive} = jobData
 		// const userObject = new JobModel({name, email, phone, userType, isActive});
-		const userObject = new JobModel(jobData);
-		return await userObject.save();
+		// const userObject = new JobModel(jobData);
+		// return await userObject.save();
+
+		const jobObject = JobModel.buildJob(jobData);
+		return await jobObject.save();
 	},
 
 	blockUnblock: async ({ id }: blockUnBlockInterface) => {
@@ -28,6 +31,14 @@ export = {
 		return await job.save();
 	},
 
+	updateJob: async (id: string, data: object)=>{
+        console.log("in updateJob repository id", id, " data ", data);
+        
+        const updatedJob = await JobModel.findOneAndUpdate({ "_id": id }, { $set: data }, {new: true});
+        console.log("in updateJob repository after update", updatedJob);
+		return updatedJob;
+    },
+
 	getById: async (id: string) => {
 		const job = await JobModel.findById(id);
 		return job;
@@ -37,6 +48,12 @@ export = {
 		const jobs = await JobModel.find({});
 		return jobs;
 	},
+
+	deleteJob: async (jobId: string)=>{
+        const deletedJob = await JobModel.deleteOne({jobId: jobId});
+        console.log("deletedJob: ",deletedJob);
+        return deletedJob
+    },
 };
 
 // export default repository();

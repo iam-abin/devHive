@@ -13,12 +13,9 @@ export class Job {
 	employment_type?: string;
 	salary_min?: number;
 	salary_max?: number;
-	has_applied?: boolean;
 	blocked?: boolean;
 	deadline?: Date;
-	number_applied?: number;
-	number_hired?: number;
-	number_rejected?: number;
+	jobId: string
 	constructor({
 		title,
 		recruiter,
@@ -32,12 +29,9 @@ export class Job {
 		employment_type,
 		salary_min,
 		salary_max,
-		has_applied,
 		blocked,
 		deadline,
-		number_applied,
-		number_hired,
-		number_rejected,
+		jobId,
 	}: JobInterface) {
         this.title = title ,
 		this.recruiter = recruiter ,
@@ -51,11 +45,8 @@ export class Job {
 		this.employment_type = employment_type ,
 		this.salary_min = salary_min ,
 		this.salary_max = salary_max ,
-		this.has_applied = has_applied ,
 		this.blocked = blocked ,
-		this.deadline = deadline ,
-		this.number_applied = number_applied ,
-		this.number_hired = number_hired,
-		this.number_rejected = number_rejected 
+		this.deadline = deadline
+		this.jobId = jobId
     }
 }

@@ -11,10 +11,7 @@ export interface JobInterface {
 	employment_type?: string;
 	salary_min?: number;
 	salary_max?: number;
-	has_applied?: boolean;
 	blocked?: boolean;
 	deadline?: Date;
-	number_applied?: number;
-	number_hired?: number;
-	number_rejected?: number;
+	jobId: string
 }

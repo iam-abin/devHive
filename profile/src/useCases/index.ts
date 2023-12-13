@@ -1,5 +1,5 @@
 import {
-    createCandidateProfileUseCase,
+    // createCandidateProfileUseCase,
 	updateCandidateProfileUseCase,
 	uploadResumeUseCase,
 	getCandidateProfileByCandidateIdUseCase,
@@ -19,7 +19,7 @@ import {
 
 
 export default {
-    createCandidateProfileUseCase,
+    // createCandidateProfileUseCase,
 	updateCandidateProfileUseCase,
 	uploadResumeUseCase,
 	getCandidateProfileByCandidateIdUseCase,

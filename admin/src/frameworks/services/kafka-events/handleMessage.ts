@@ -1,5 +1,6 @@
 import candidateRepository from "../../repositories/mongo/candidateRepository";
 import recruiterRepository from "../../repositories/mongo/recruiterRepository";
+import jobRepository from "../../repositories/mongo/jobRepository";
 
 // interface handleMessageInterface {
 // 	data: any;
@@ -68,13 +69,13 @@ export const handleMessage = (data: any, topic: string, message: any) => {
 
 		case "JOB-CREATED-TOPIC":
 			console.log("admin handleMessage jobCreatedTopic", data);
-			candidateRepository.createCandidate(data);
+			jobRepository.createJob(data);
 
 			break;
 
 		case "JOB-UPDATED-TOPIC":
 			console.log("admin handleMessage jobUpdatedTopic", data);
-			candidateRepository.createCandidate(data);
+			jobRepository.updateJob(data.jobId,data);
 
 			break;
 

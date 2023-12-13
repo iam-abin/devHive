@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: client-app
-          image: abinv/client-app
+          image: abinv/client-devhive
 ---
 apiVersion: v1
 kind: Service
