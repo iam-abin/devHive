@@ -30,16 +30,18 @@ export const recruiterRouter = (dependencies: DependenciesData) => {
 
 	router.post("/create",  createJobController);
 
-	router.get("/created-jobs/:id",  createdJobsByRecruiterController);
-	
-	router.get("/job-applications/:id",  viewJobApplicationsController);
-
 	router
 		.route("/:id")
 		// .all(requireAuthRecruiter)
 		.get(viewJobByJobIdController)
-		.patch(updateJobController)
 		.delete(deleteJobController);
+
+	router.patch("/update-job",  updateJobController);
+
+	router.get("/created-jobs/:recruiterId",  createdJobsByRecruiterController);
+	
+	router.get("/job-applications/:id",  viewJobApplicationsController);
+
 
 
 	// router.patch('/change-status/:id', requireAuthRecruiter, changeTheApplicationStatus);

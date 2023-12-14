@@ -13,7 +13,7 @@ export class CandidateProfile {
 	about?: string;
 	resume?: string;
 	experience?: string;
-	candidateId: string;
+	userId: string;
 	constructor({
 		name,
 		email,
@@ -27,7 +27,7 @@ export class CandidateProfile {
 		about,
 		resume,
 		experience,
-		candidateId
+		userId
 	}: CandidateDataProfile) {
 		this.name = name;
 		this.email = email;
@@ -41,6 +41,6 @@ export class CandidateProfile {
 		this.about = about;
 		this.resume = resume;
 		this.experience = experience;
-		this.candidateId = candidateId;
+		this.userId = userId;
 	}
 }

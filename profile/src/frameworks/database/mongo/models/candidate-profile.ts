@@ -15,7 +15,7 @@ interface CandidateAttributes {
 	about: string;
 	resume: string;
 	experience: object;
-	candidateId: string;
+	userId: string;
 }
 // 2. An interface that describes the properties ,that a Candidate Document has
 interface CandidateDocument extends mongoose.Document {
@@ -33,7 +33,7 @@ interface CandidateDocument extends mongoose.Document {
 	about: string;
 	resume: string;
 	experience: object;
-	candidateId: string;
+	userId: string;
 	createdAt: string;
 	updatedAt: string;
 }
@@ -63,8 +63,9 @@ const candidateSchema = new mongoose.Schema(
 		},
 		isVarified: {
 			// field for signup email verificetion
+			// data will come to profile service only after verification
 			type: Boolean,
-			default: false,
+			default: true,
 		},
 		isActive: {
 			type: Boolean,
@@ -92,7 +93,7 @@ const candidateSchema = new mongoose.Schema(
 		about: String,
 		resume: String,
 		experience: Object,
-		candidateId: String,
+		userId: String,
 	},
 	{
 		// to reformat id and remove password,__v from response when converting to json (we can also use other approaches)
@@ -110,7 +111,7 @@ const candidateSchema = new mongoose.Schema(
 // candidateSchema.pre("save", async function (next) {
 // 	try {
 // 		// Convert the string ID to a Mongoose ObjectId
-// 		this.candidateId = new mongoose.Types.ObjectId(this.candidateId as string);
+// 		this.userId = new mongoose.Types.ObjectId(this.userId as string);
 // 		next();
 // 	} catch (error) {
 // 		console.log(error);

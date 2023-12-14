@@ -1,5 +1,8 @@
 import { Request, Response } from "express";
 import { DependenciesData } from "../../frameworks/types/dependencyInterface";
+// import { RecruiterProfileUpdatedEventPublisher } from "../../frameworks/services/kafka-events/publishers/recruiter-profile-updated-publisher";
+import { CompanyProfileUpdatedEventPublisher } from "../../frameworks/services/kafka-events/publishers/company-profile-update-publisher";
+import { kafkaClient } from "../../config/kafka-connection";
 
 export = (dependencies: DependenciesData)=>{
 
@@ -15,7 +18,19 @@ export = (dependencies: DependenciesData)=>{
         const recruiter = await updateCompanyProfileByRecruiterUseCase(dependencies).execute(existingData, updatedData);
         console.log("in recruiter update profile controller recruiter: ",recruiter);
 
-
+        const companyProfileUpdatedEvent = new CompanyProfileUpdatedEventPublisher(kafkaClient);
+        await companyProfileUpdatedEvent.publish({
+            company_name: updatedData?.company_name,
+            company_location: updatedData?.company_location,
+            email: updatedData?.email,
+            isActive: updatedData?.isActive,
+            logo: updatedData?.logo,
+            website: updatedData?.website,
+            company_state: updatedData?.company_state,
+            company_country: updatedData?.company_country,
+            description: updatedData?.description,
+            recruiters: updatedData?.recruiters,
+        })
 
         res.status(200).json({message: "recruiter data", data: recruiter })
     };

@@ -1,8 +1,8 @@
 import { Kafka } from "kafkajs";
 
-const kafka = new Kafka({
+const kafkaClient = new Kafka({
     clientId: 'profile-client',
-    brokers: ['kafka-srv:9092']
+    brokers: ['kafka-srv:9092'],
 })
 
-export { kafka }
+export { kafkaClient }

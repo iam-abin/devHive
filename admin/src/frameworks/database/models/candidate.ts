@@ -8,7 +8,16 @@ interface CandidateAttributes {
     profile_pic?: string;
 	isActive: boolean;
 	userType: string;
-	// userId: string;
+	userId: string;
+
+	gender?: string;
+	currentLocation?: string;
+	address?: object;
+	keySkills?: string[];
+	profile_image?: string;
+	about?: string;
+	resume?: string;
+	experience?: string;
 }
 
 // 2. An interface that describes the properties ,that a Candidate Document has
@@ -20,6 +29,16 @@ interface CandidateDocument extends mongoose.Document {
 	userType: string;
 	isActive: boolean;
 	userId: string;
+
+	gender?: string;
+	currentLocation?: string;
+	address?: object;
+	keySkills?: string[];
+	profile_image?: string;
+	about?: string;
+	resume?: string;
+	experience?: string;
+
 	createdAt: string;
 	updatedAt: string;
 }
@@ -52,6 +71,30 @@ const candidateSchema = new mongoose.Schema(
 			type: Boolean,
 			required: true
 		},
+		userId: String,
+
+		gender: {
+			type: String,
+			enum: ["Male", "Female", "Other"],
+		},
+		currentLocation: String,
+		address: {
+			houseNumber: String,
+			street: String,
+			city: String,
+			state: String,
+			country: String,
+			pinCode: String,
+		},
+		keySkills: Array,
+		profile_image: {
+			type: String,
+			// default:
+			// 	"https://res.cloudinary.com/dprxebwil/image/upload/v1679341215/Recruiter/recruiter-images.jpeg.jpg",
+		},
+		about: String,
+		resume: String,
+		experience: Object,
 	},
 	{
 		// to reformat id and remove __v from response when converting to json (we can also use other approaches)
@@ -75,14 +118,14 @@ interface CandidateModel extends mongoose.Model<CandidateDocument> {
 candidateSchema.statics.buildCandidate = (attributes: CandidateAttributes) => {
 	return new CandidateModel({
 		// to create a new candidate document
-		// _id: attributes.userId,
 		name: attributes.name,
 		email: attributes.email,
 		profile_pic: attributes.profile_pic,
         
 		phone: attributes.phone,
 		userType: attributes.userType,
-		// isActive: attributes.isActive,
+		isActive: attributes.isActive,
+		userId: attributes.userId,
 	});
 };
 

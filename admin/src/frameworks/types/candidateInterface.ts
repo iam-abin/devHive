@@ -4,6 +4,16 @@ export interface CandidateData{
 	phone: string;
 	password: string;
 	userType: string;
+	userId: string
+
+	gender?: string;
+	currentLocation?: string;
+	address?: object;
+	keySkills?: string[];
+	profile_image?: string;
+	about?: string;
+	resume?: string;
+	experience?: string;
 }
 
 export interface blockUnBlockInterface{

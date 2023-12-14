@@ -14,5 +14,5 @@ export interface CandidateDataProfile{
 	resume?: string;
 	// experience?: object;
 	experience?: string;
-	candidateId: string;
+	userId: string;
 }

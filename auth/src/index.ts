@@ -1,6 +1,7 @@
 import { connectDB } from "./config/db"
 import { app } from "./app";
-import { consumeMessage } from "./frameworks/services/kafka/consumer";
+import { UserUpdatedEventConsumer } from "./frameworks/services/kafka-events/consumers/user-updated-consumer";
+import { kafkaClient } from "./config/kafka-connection";
 
 
 const start = async () => {
@@ -31,11 +32,22 @@ const start = async () => {
 		throw new Error("TWILIO_SERVICE_SID must be defined");
 	}
 
+	// to connect to mongodb
+	await connectDB();
+
+	// it is used to listen to incomming message from kafka topics
+	const userUpdatedEvent = new UserUpdatedEventConsumer(kafkaClient)
+	await userUpdatedEvent.subscribe()
+
 
 	app.listen(3000, () => {
 		console.log("auth Listening on port 3000....");
-        connectDB();
-		consumeMessage()
+	})
+	.on("error", async () => {
+		await userUpdatedEvent.disconnect();
+	})
+	.on("close", async () => {
+		await userUpdatedEvent.disconnect();
 	});
 };
 
