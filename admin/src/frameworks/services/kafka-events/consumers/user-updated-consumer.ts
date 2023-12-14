@@ -5,7 +5,7 @@ import { handleMessage } from "../handleMessage";
 export class UserUpdatedEventConsumer extends KafkaConsumer<USER_UPDATED_EVENT>{
     topic: TOPICS.USER_UPDATED_TOPIC = TOPICS.USER_UPDATED_TOPIC;
 
-    groupId: string = "admin-7";
+    groupId: string = "admin-9";
 
     constructor(client: Kafka){
         super(client);

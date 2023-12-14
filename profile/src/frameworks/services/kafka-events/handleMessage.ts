@@ -21,15 +21,16 @@ export const handleMessage = (data: any, topic: string, message: any) => {
 			break;
 		
 			case "USER-UPDATED-TOPIC":
-				console.log("admin handleMessage createUserTopic", data);
+				console.log("admin handleMessage UpdateUserTopic", data);
 	
 				if (data.userType === "candidate") {
-					candidateProfileRepository.createCandidateProfile(data);
+					candidateProfileRepository.updateCandidateProfile(data.userId,data);
 				} else if (data.userType === "recruiter") {
-					recruiterProfileRepository.createRecruiterProfile(data);
-				} else {
-					companyProfileRepository.createCompanyProfile(data);
+					recruiterProfileRepository.updateRecruiterProfile(data.userId,data);
 				}
+				//  else {
+				// 	companyProfileRepository.createCompanyProfile(data);
+				// }
 	
 				break;
 		default:

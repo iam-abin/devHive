@@ -9,6 +9,8 @@ import { UserUpdatedEventConsumer } from "./frameworks/services/kafka-events/con
 
 import { kafkaClient } from "./config/kafka-connection";
 import { JobDeletedEventConsumer } from "./frameworks/services/kafka-events/consumers/job-deleted-consumer";
+import { CandidateProfileUpdatedEventConsumer } from "./frameworks/services/kafka-events/consumers/candidate-profile-updated-consumer";
+import { RecruiterProfileUpdatedEventConsumer } from "./frameworks/services/kafka-events/consumers/recruiter-profile-updated-consumer";
 
 const start = async () => {
 	console.log("Starting up....");
@@ -33,6 +35,12 @@ const start = async () => {
 	const companyProfileUpdatedEvent = new CompanyProfileUpdatedEventConsumer(
 		kafkaClient
 	);
+
+	const candidateProfileUpdatedEvent =
+		new CandidateProfileUpdatedEventConsumer(kafkaClient);
+	const recruiterProfileUpdatedEvent =
+		new RecruiterProfileUpdatedEventConsumer(kafkaClient);
+
 	const jobCreatedEvent = new JobCreatedEventConsumer(kafkaClient);
 	const jobUpdatedEvent = new JobUpdatedEventConsumer(kafkaClient);
 	const userCreatedEvent = new UserCreatedEventConsumer(kafkaClient);
@@ -41,6 +49,8 @@ const start = async () => {
 
 	await companyProfileCreatedEvent.subscribe();
 	await companyProfileUpdatedEvent.subscribe();
+	await candidateProfileUpdatedEvent.subscribe();
+	await recruiterProfileUpdatedEvent.subscribe();
 	await jobCreatedEvent.subscribe();
 	await jobUpdatedEvent.subscribe();
 	await jobDeletedEvent.subscribe();
@@ -53,6 +63,8 @@ const start = async () => {
 		.on("error", async () => {
 			await companyProfileCreatedEvent.disconnect();
 			await companyProfileUpdatedEvent.disconnect();
+			await candidateProfileUpdatedEvent.disconnect();
+			await recruiterProfileUpdatedEvent.disconnect();
 			await jobCreatedEvent.disconnect();
 			await jobUpdatedEvent.disconnect();
 			await jobDeletedEvent.disconnect();
@@ -62,6 +74,8 @@ const start = async () => {
 		.on("close", async () => {
 			await companyProfileCreatedEvent.disconnect();
 			await companyProfileUpdatedEvent.disconnect();
+			await candidateProfileUpdatedEvent.disconnect();
+			await recruiterProfileUpdatedEvent.disconnect();
 			await jobCreatedEvent.disconnect();
 			await jobUpdatedEvent.disconnect();
 			await jobDeletedEvent.disconnect();

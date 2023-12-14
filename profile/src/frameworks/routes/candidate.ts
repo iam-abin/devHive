@@ -6,13 +6,13 @@ import { DependenciesData } from "../types/dependencyInterface"
 export const candidateRouter = (dependencies: DependenciesData)=>{
     const router = express.Router();
 
-    const { createCandidateProfileController, viewCandidateProfileController, updateCandidateProfileController } = candidateProfileControllers(dependencies);
+    const { viewCandidateProfileController, updateCandidateProfileController } = candidateProfileControllers(dependencies);
 
     // candidate authentication
 	// router.use(requireAuthCandidate)
 
 	// candidate
-	router.post("/createProfile", createCandidateProfileController);
+	// router.post("/createProfile", createCandidateProfileController);
 	router.get("/viewProfile/:id", viewCandidateProfileController);
 	router.patch("/updateProfile", updateCandidateProfileController);
 	router.put("/uploadProfilePic", updateCandidateProfileController);

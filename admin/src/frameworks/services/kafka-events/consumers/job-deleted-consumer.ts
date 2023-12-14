@@ -6,7 +6,7 @@ export class JobDeletedEventConsumer extends KafkaConsumer<JOB_DELETED_EVENT>{
     topic: TOPICS.JOB_DELETED_TOPIC = TOPICS.JOB_DELETED_TOPIC;
     
 
-    groupId: string = "admin-4";
+    groupId: string = "admin-5";
 
     constructor(client: Kafka){
         super(client);

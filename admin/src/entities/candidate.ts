@@ -6,12 +6,23 @@ export class Candidate {
 	phone: string;
 	password: string;
 	userType: string;
+	userId: string;
 
-	constructor({ name, email, phone, password, userType }: CandidateData) {
+	gender?: string;
+	currentLocation?: string;
+	address?: object;
+	keySkills?: string[];
+	profile_image?: string;
+	about?: string;
+	resume?: string;
+	experience?: string;
+
+	constructor({ name, email, phone, password, userType, userId }: CandidateData) {
 		this.name = name;
 		this.email = email;
 		this.phone = phone;
 		this.password = password;
 		this.userType = userType;
+		this.userId = userId;
 	}
 }

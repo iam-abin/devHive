@@ -24,7 +24,7 @@ export = (dependencies: any) => {
 			company_location,
 			company_state,
 			company_country,
-			recruiterId,
+			userId,
 		} = profileData;
 
 		// dont need these info's when creating recruiter profile
@@ -35,7 +35,7 @@ export = (dependencies: any) => {
 
 		// const id = profileData.id
 		// delete profileData.id
-		// profileData.candidateId = id
+		// profileData.userId = id
 
 		// multiple recruiters can have same company
 		// to avoid creating a company again and again, Check if the company exists
@@ -58,7 +58,7 @@ export = (dependencies: any) => {
 					company_location,
 					company_state,
 					company_country,
-					recruiterId, // it is not working, need to solve
+					userId, // it is not working, need to solve
 				});
 
 			// console.log("new Company ", newCompany);
@@ -68,7 +68,7 @@ export = (dependencies: any) => {
 			profileData.company_id = newCompany._id.toString();
 		} else {
 			// if the company already exists, need to push new recruiter to the company
-			isCompanyExist.recruiterId.push(recruiterId); 
+			isCompanyExist.userId.push(userId); 
 			await companyProfileRepository.updateCompanyProfile(isCompanyExist)
 
 			profileData.company_id = isCompanyExist.id;
