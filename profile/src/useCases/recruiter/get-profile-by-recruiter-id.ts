@@ -9,18 +9,12 @@ export = (dependencies: any) => {
 		);
 	}
 
-	const execute = async (id: string) => {
-		console.log(id);
-		console.log("llll");
-		
-		const profile = await recruiterProfileRepository.getProfileById(id);
-		console.log("llllllllllllllllll");
-		
-		console.log(profile);
-		console.log("llllllllllllllllll");
+	const execute = async (userId: string) => {
+		console.log("in recruiter profile execute ", userId);
 
 		
-		console.log("llll");
+		const profile = await recruiterProfileRepository.getProfileByUserId(userId);
+		console.log("profile ", profile);
 		
 		
 		return profile;

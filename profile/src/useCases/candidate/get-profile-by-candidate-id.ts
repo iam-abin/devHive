@@ -12,7 +12,7 @@ export = (dependencies: any) => {
 	const execute = async (userId: string) => {
 		console.log("in candidate profile execute ", userId);
 		
-		const profile = await candidateProfileRepository.getProfileByuserId(userId);
+		const profile = await candidateProfileRepository.getProfileByUserId(userId);
 		console.log("profile ", profile);
 		
 		return profile;

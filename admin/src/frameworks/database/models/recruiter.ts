@@ -8,6 +8,8 @@ interface RecruiterAttributes {
     profile_pic?: string;
 	isActive: boolean;
 	userType: string;
+	userId: string;
+
     company?: string;
     bio?: string;
     membership?: string;
@@ -22,10 +24,11 @@ interface RecruiterDocument extends mongoose.Document {
     profile_pic?: string;
 	userType: string;
 	isActive: boolean;
+	userId: string;
+
     company?: String;
     bio?: String;
     membership?: String;
-	userId: string;
 	createdAt: string;
 	updatedAt: string;
 }
@@ -58,6 +61,8 @@ const recruiterSchema = new mongoose.Schema(
 			type: Boolean,
 			required: true
 		},
+		userId: String,
+
         company: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: "Company"
@@ -83,14 +88,15 @@ const recruiterSchema = new mongoose.Schema(
 
 // 4. An interface that describes the properties ,that a recruiter model has
 interface RecruiterModel extends mongoose.Model<RecruiterDocument> {
-	buildCandidate(attributes: RecruiterAttributes): RecruiterDocument;
+	buildRecruiter(attributes: RecruiterAttributes): RecruiterDocument;
 }
 
 // 5.In Mongoose, you can also add custom functions to a model using statics.
 recruiterSchema.statics.buildRecruiter = (attributes: RecruiterAttributes) => {
+	console.log("recruiterSchema userType", attributes.userType);
+	
 	return new RecruiterModel({
 		// to create a new recruiter document
-		// _id: attributes.userId,
 		name: attributes.name,
 		email: attributes.email,
 		phone: attributes.phone,
@@ -100,6 +106,7 @@ recruiterSchema.statics.buildRecruiter = (attributes: RecruiterAttributes) => {
         company: attributes.company,
         bio: attributes.bio,
         membership: attributes.membership,
+		userId: attributes.userId,
         
 	});
 };

@@ -16,8 +16,8 @@ export = {
 		return await userObject.save();
 	},
 
-	getProfileById: async (id: string): Promise<any> => {
-		const recruiter = await RecruiterProfileModel.findById(id); // profile Id
+	getProfileByUserId: async (userId: string): Promise<any> => {
+		const recruiter = await RecruiterProfileModel.findOne({userId});
 		return recruiter;
 	},
 

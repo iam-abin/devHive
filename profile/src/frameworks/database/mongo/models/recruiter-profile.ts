@@ -58,7 +58,7 @@ const recruiterSchema = new mongoose.Schema(
 		isVarified: {
 			// field for signup email verificetion
 			type: Boolean,
-			default: false,
+			default: true,
 		},
 		isActive: {
 			type: Boolean,
@@ -79,7 +79,7 @@ const recruiterSchema = new mongoose.Schema(
 		},
 		about: String,
 		company_id: mongoose.Schema.Types.ObjectId,
-		userId: mongoose.Schema.Types.ObjectId,
+		userId: String,
 	},
 	{
 		// to reformat id and remove password,__v from response when converting to json (we can also use other approaches)

@@ -11,8 +11,8 @@ export = {
 	 createRecruiter: async (userData: any) => {
 		console.log("inside createRecruiter fn in admin service", userData);
 		
-		const {name, email, phone, userType, isActive} = userData
-		const userObject = new RecruiterModel({name, email, phone, userType, isActive});
+		const {name, email, phone, userType, isActive, userId} = userData
+		const userObject = RecruiterModel.buildRecruiter({name, email, phone, userType, isActive, userId});
 		return await userObject.save();
 	},
 
@@ -23,7 +23,9 @@ export = {
 	},
 
 	blockUnblock: async ({ id }: blockUnBlockInterface) => {
-		const recruiter = await RecruiterModel.findById(id);
+		console.log("blockUnblock repo recruiter id", id);
+
+		const recruiter = await RecruiterModel.findOne({userId: id});
 		if (!recruiter) {
 			throw new Error("recruiter not found");
 		}
