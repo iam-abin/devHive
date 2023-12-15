@@ -8,13 +8,17 @@ export = (dependencies: DependenciesData)=>{
     const { useCases: { blockUnblockCandidateUseCase }} = dependencies
 
     return async (req: Request, res: Response)=>{
-        const {id} = req.params;
+        const {userId} = req.params;
         
         console.log("in block unblock controller");
         
         const isBlocked = await blockUnblockCandidateUseCase(dependencies).execute({
-            id
+            userId
         });
+
+        if(!isBlocked){
+            throw new Error("Candidate Not Found")
+        }
 
         console.log("in bocke unblock controller before message send to kafka", isBlocked);
         

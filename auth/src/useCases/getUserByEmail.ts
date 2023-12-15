@@ -6,6 +6,8 @@ export = (dependencies: any) => {
 	}
 
 	const execute = (email: string) => {
+		console.log("get user by email usecase");
+		
 		return usersRepository.getByEmail(email);
 	};
 

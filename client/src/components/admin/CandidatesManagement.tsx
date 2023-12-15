@@ -8,6 +8,7 @@ import {
 // import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 interface CandidateInterface {
 	id: string;
@@ -15,6 +16,7 @@ interface CandidateInterface {
 	email: string;
 	phone: string;
 	isActive: boolean;
+	userId: string;
 }
 
 function CandidatesManagement() {
@@ -28,6 +30,7 @@ function CandidatesManagement() {
 	const [originalIndexMap, setOriginalIndexMap] = useState<{
 		[key: string]: number;
 	}>({});
+	const navigate = useNavigate();
 
 	const notify = (msg: any, type: string) => {
 		type === "error"
@@ -59,7 +62,12 @@ function CandidatesManagement() {
 		})();
 	}, []);
 
-	const handleBlockUnblock = async (id: string) => {
+	const viewProfileDetails = async (userId: string) => {
+		console.log("in viewProfileDetails fn ", userId);
+		navigate(`/admin/candidate/viewProfileDetails/${userId}`);
+	};
+
+	const handleBlockUnblock = async (userId: string) => {
 		Swal.fire({
 			title: "Do you want to Block this Candidate?",
 			text: "Are you sure!",
@@ -70,13 +78,13 @@ function CandidatesManagement() {
 			confirmButtonText: "Yes, Block",
 		}).then(async (result) => {
 			if (result.isConfirmed) {
-				const updatedCandidate = await blockUnblockCandidateApi(id);
+				const updatedCandidate = await blockUnblockCandidateApi(userId);
 				if (updatedCandidate) {
 					notify(updatedCandidate.data.message, "success");
 				}
 
 				const candidates = candidatesData.map((candidate) => {
-					if (candidate.id === id) {
+					if (candidate.userId === userId) {
 						return {
 							...candidate,
 							isActive: updatedCandidate.data.data.isActive,
@@ -141,14 +149,16 @@ function CandidatesManagement() {
 							{/* row 1 */}
 							{filteredCandidatesData &&
 								filteredCandidatesData.map(
-									({ id, name, email, phone, isActive }) => (
+									({ id, name, email, phone, isActive, userId }) => (
 										<tr key={id}>
 											<th>{originalIndexMap[id] + 1}</th>
 											<td>{name}</td>
 											<td>{email}</td>
 											<td>{phone}</td>
 											<td className="text-center">
-												<button className="btn btn-info">
+												<button onClick={() => {
+														viewProfileDetails(userId);
+													}} className="btn btn-info ">
 													view details
 												</button>
 											</td>
@@ -164,11 +174,12 @@ function CandidatesManagement() {
 														? "active"
 														: "inActive"}
 												</div>
+												{/* /admin/candidate/viewProfile/ */}
 											</td>
 											<td className="text-center">
 												<button
 													onClick={() => {
-														handleBlockUnblock(id);
+														handleBlockUnblock(userId);
 													}}
 													className={`btn ${
 														isActive

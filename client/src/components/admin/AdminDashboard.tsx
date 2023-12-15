@@ -55,11 +55,12 @@ function AdminDashboard() {
 	const [open, setOpen] = useState(true);
 	const menus = [
 		{ title: "Dashboard", src: dashboard, to: "/admin" },
-		{ title: "Finance", src: finance, to: "/admin" },
-		{ title: "Companies", src: companies, to: "/admin" },
+		{ title: "Finance", src: finance, to: "/admin/finance" },
+		{ title: "Companies", src: companies, to: "/admin/companies" },
 		{ title: "Candidates", src: candidates, to: "/admin/candidates" },
 		{ title: "Recruiters", src: finance, to: "/admin/recruiters" },
-		{ title: "MemberShip", src: membership, to: "/admin" },
+		{ title: "jobs", src: finance, to: "/admin/jobs" },
+		{ title: "MemberShip", src: membership, to: "/admin/memberships" },
 		{ title: "Logout", src: logout, onClick: handleLogout, to: "/admin" },
 	];
 	return (

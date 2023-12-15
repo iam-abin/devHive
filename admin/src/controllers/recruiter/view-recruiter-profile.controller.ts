@@ -3,15 +3,15 @@ import { DependenciesData } from "../../frameworks/types/dependencyInterface";
 
 export = (dependencies: DependenciesData)=>{
 
-    const { useCases: { getRecruiterByIdUseCase }} = dependencies
+    const { useCases: { getRecruiterProfileByuserIdUseCase }} = dependencies
 
     return async (req: Request, res: Response)=>{
-        const {id} = req.params;
+        
+        const {userId} = req.params;
+        console.log(" in getRecruiterByIdController", userId);
         
 
-        const recruiter = await getRecruiterByIdUseCase(dependencies).execute({
-            id
-        });
+        const recruiter = await getRecruiterProfileByuserIdUseCase(dependencies).execute(userId);
 
         res.status(200).json({message: "recruiter data", data: recruiter })
     };

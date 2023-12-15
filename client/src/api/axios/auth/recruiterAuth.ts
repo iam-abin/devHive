@@ -24,13 +24,24 @@ export const recruiterSignupApi = async (data: any): Promise<any> => {
 		return response;
 };
 
-export const emailRecruiterVerifyApi = async (url: string): Promise<any> => {
+export const verifySignupOtpRecruiterApi = async (otp: any, email: string): Promise<any> => {
 	const response = await axios({
 		method: "post",
-		url: url,
+		url: `${BASE_URL_RECRUITER}/verifyEmail`,
+		data: {otp, email},
 	});
+	console.log("response is ", response);
+	
 	return response;
 };
+
+// export const emailRecruiterVerifyApi = async (url: string): Promise<any> => {
+// 	const response = await axios({
+// 		method: "post",
+// 		url: url,
+// 	});
+// 	return response;
+// };
 
 
 export const recruiterSignoutApi = async(data: any): Promise<any> =>{

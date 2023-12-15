@@ -13,10 +13,20 @@ export const getAllRecruitersApi = async (): Promise<any> => {
 		return response;
 };
 
-export const blockUnblockRecruiterApi = async (id: string): Promise<any> => {
+export const blockUnblockRecruiterApi = async (userId: string): Promise<any> => {
     const response = await axios({
         method: "put",
-        url: `${BASE_URL_RECRUITER}/blockUnblock/${id}`
+        url: `${BASE_URL_RECRUITER}/blockUnblock/${userId}`
+    });
+    console.log(response);
+    
+    return response;
+};
+
+export const viewRecruiterProfileDetailsApi = async (userId: any): Promise<any> => {
+    const response = await axios({
+        method: "get",
+        url: `${BASE_URL_RECRUITER}/viewProfile/${userId}`  
     });
     console.log(response);
     

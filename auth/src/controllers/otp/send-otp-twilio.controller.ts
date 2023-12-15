@@ -6,19 +6,27 @@ import { sendOtp } from "../../frameworks/services/twilio";
 
 export = (dependencies: DependenciesData) => {
 	const {
-		useCases: { getUserByPhoneUseCase },
+		useCases: { getUserByPhoneUseCase, getUserByEmailUseCase },
 	} = dependencies;
 
 	return async (req: Request, res: Response) => {
-			const { email, phone } = req.body;
+			let { email, phone } = req.body;
 
+			phone = parseInt(phone)
+			console.log(email, phone);
+			
             // check user exist
-			const isExistingUser = await getUserByPhoneUseCase(
+			const isExistingUser = await getUserByEmailUseCase(
 				dependencies
-			).execute(phone);
+			).execute(email);
 
 			if (!isExistingUser) {
                 // return res.status(400).json({message:"Invalid email or password"})
+
+				throw new BadRequestError("User with this phone number is not existing");
+			}
+
+			if (isExistingUser.phone != phone) {
 
 				throw new BadRequestError("User with this phone number is not existing");
 			}

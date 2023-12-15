@@ -5,8 +5,10 @@ export = (dependencies: any) => {
 		throw new Error("candidateRepository should exist in dependencies");
 	}
 
-	const execute = (id: string) => {
-		return candidateRepository.getById(id);
+	const execute = (userId: string) => {
+		console.log("inside get candidate profile by id repo, " ,userId);
+		
+		return candidateRepository.getById(userId);
 	};
 
 	return { execute };

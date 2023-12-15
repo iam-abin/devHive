@@ -106,7 +106,7 @@ recruiterSchema.statics.buildRecruiter = (attributes: RecruiterAttributes) => {
         company: attributes.company,
         bio: attributes.bio,
         membership: attributes.membership,
-		userId: attributes.userId,
+		userId: String,
         
 	});
 };

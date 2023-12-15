@@ -15,7 +15,7 @@ interface JobAttributes {
 	salary_max?: number;
 	blocked?: boolean;
 	deadline?: Date;
-	jobId: string
+	jobId: String
 }
 
 interface JobDocument extends mongoose.Document {

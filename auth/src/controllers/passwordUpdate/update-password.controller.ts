@@ -7,10 +7,11 @@ export = (dependencies: DependenciesData)=>{
 
     return async (req: Request, res: Response)=>{
         // console.log(req,"req--//////////////////////////////");
-        console.log("password Update");
         
         const {id, password} = req.body;
         
+        console.log("password Update", id);
+        console.log("password Update", password);
 
         const user = await updatePasswordUseCase(dependencies).execute({
             id, password

@@ -37,8 +37,12 @@ export = {
 		return await candidate.save();
 	},
 
-	getById: async (id: string) => {
-		const candidate = await CandidateModel.findById(id);
+	getById: async (userId: string) => {
+		console.log("inside get candidate by userId candidate repo ", userId , typeof userId);
+		
+		const candidate = await CandidateModel.findOne({userId: userId});
+		console.log("candidate found is ", candidate);
+		
 		return candidate;
 	},
 

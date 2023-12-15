@@ -1,6 +1,6 @@
 import blockUnblockCandidateUseCase from "./block-unblock";
-import getCandidateByIdUseCase from "./get-candidate-by-id";
+import getCandidateProfileByuserIdUseCase from "./get-candidate-by-id";
 import getAllCandidatesUseCase from "./get-all-candidates";
 
 
-export { blockUnblockCandidateUseCase, getCandidateByIdUseCase, getAllCandidatesUseCase };
+export { blockUnblockCandidateUseCase, getCandidateProfileByuserIdUseCase, getAllCandidatesUseCase };

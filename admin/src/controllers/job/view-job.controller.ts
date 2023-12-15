@@ -6,12 +6,10 @@ export = (dependencies: DependenciesData)=>{
     const { useCases: { getJobByIdUseCase }} = dependencies
 
     return async (req: Request, res: Response)=>{
-        const {id} = req.params;
+        const {jobId} = req.params;
         
 
-        const job = await getJobByIdUseCase(dependencies).execute({
-            id
-        });
+        const job = await getJobByIdUseCase(dependencies).execute(jobId);
 
         res.status(200).json({message: "job data", data: job })
     };

@@ -35,7 +35,7 @@ function HeaderCandidate() {
 					dispatch(clearCandidate());
 					dispatch(candidateSignout());
 					notify("Logged out successfully", "success");
-					navigate("/recruiter/signin");
+					navigate("/candidate/signin");
 				}
 			}
 		});
@@ -77,17 +77,20 @@ function HeaderCandidate() {
 								tabIndex={0}
 								className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
 							>
-								<li>
+								<li onClick={()=> navigate("/candidate/all-jobs")}>
 									<a>Jobs</a>
 								</li>
 								<li>
 									<a>Applied Jobs</a>
 								</li>
-								<li>
+								<li onClick={()=> navigate("/candidate/profile")}>
 									<a>Profile</a>
 								</li>
 								<li>
 									<a>Chat</a>
+								</li>
+								<li onClick={()=> navigate("/candidate/passwordResetMobile")}>
+									<a>Reset Password</a>
 								</li>
 								<li onClick={handleCandidateLogout}>
 									<a>Logout</a>

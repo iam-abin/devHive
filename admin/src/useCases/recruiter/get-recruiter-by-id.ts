@@ -5,8 +5,9 @@ export = (dependencies: any) => {
 		throw new Error("recruiterRepository should exist in dependencies");
 	}
 
-	const execute = (id: string) => {
-		return recruiterRepository.getById(id);
+	const execute = (userId: string) => {
+		console.log(" in getRecruiterById useCase", userId);
+		return recruiterRepository.getById(userId);
 	};
 
 	return { execute };

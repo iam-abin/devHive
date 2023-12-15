@@ -35,8 +35,9 @@ export = {
 		return await recruiter.save();
 	},
 
-	getById: async (id: string) => {
-		const recruiter = await RecruiterModel.findById(id);
+	getById: async (userId: string) => {
+		console.log(" in getRecruiterById useCase", userId);
+		const recruiter = await RecruiterModel.findOne({userId})
 		return recruiter;
 	},
 

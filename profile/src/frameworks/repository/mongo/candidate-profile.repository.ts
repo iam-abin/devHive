@@ -16,7 +16,7 @@ export = {
 
 
 	getProfileByUserId: async (userId: string): Promise<any> => {
-		console.log("in getProfileByuserId repository");
+		console.log("in getProfileByuserId repository userId is " , userId);
 		
 		const candidate = await CandidateProfileModel.findOne({userId});
 		return candidate;

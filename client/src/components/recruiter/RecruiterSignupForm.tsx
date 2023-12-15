@@ -1,5 +1,5 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import {
 	initialSignupValues,
@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 
 function RecruiterSignupForm() {
-
+	const navigate = useNavigate()
 	const notify = (msg: any, type: string) => {
 		type === "error"
 			? toast.error(msg, {
@@ -29,7 +29,13 @@ function RecruiterSignupForm() {
 			Swal.fire({
 				text: data.data.message,
 				confirmButtonText: "ok",
-			});
+			}).then((response)=>{
+				console.log(response);
+				
+				if(response){
+					navigate(`/recruiter/otpSignupRecruiter/${userData.email}`)
+				}
+			})
 		} catch (error: any) {
 			notify(error.response.data.errors[0].message, "error");
 		}

@@ -5,8 +5,8 @@ export = (dependencies: any) => {
 		throw new Error("jobRepository should exist in dependencies");
 	}
 
-	const execute = (id: string) => {
-		return jobRepository.getById(id);
+	const execute = (jobId: string) => {
+		return jobRepository.getById(jobId);
 	};
 
 	return { execute };

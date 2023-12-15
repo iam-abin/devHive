@@ -6,12 +6,13 @@ import {
 } from "../common-form-validation/signup";
 
 import googleIcon from "../../assets/google-icon.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import { candidateSignupApi } from "../../api/axios/auth/candidateAuth";
 
 function CandidateSignupForm() {
+	const navigate = useNavigate()
 	const notify = (msg: any, type: string) => {
 		type === "error"
 			? toast.error(msg, {
@@ -30,7 +31,13 @@ function CandidateSignupForm() {
 			Swal.fire({
 				text: data.data.message,
 				confirmButtonText: "ok",
-			});
+			}).then((response)=>{
+				console.log(response);
+				
+				if(response){
+					navigate(`/candidate/otpSignupCandidate/${userData.email}`)
+				}
+			})
 		} catch (error: any) {
 			notify(error.response.data.errors[0].message, "error");
 		}
