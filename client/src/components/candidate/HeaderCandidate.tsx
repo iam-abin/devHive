@@ -55,7 +55,7 @@ function HeaderCandidate() {
 		<>
 			<nav className="navbar bg-base-100 bg-primary">
 				<div className="flex-1">
-					<a className="btn btn-ghost text-xl">DevHive</a>
+					<a className="btn btn-ghost text-xl" onClick={()=> navigate("/")}>DevHive</a>
 				</div>
 
 				{isLoggedIn ? (
