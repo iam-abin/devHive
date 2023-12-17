@@ -2,6 +2,8 @@ import axios from "axios";
 import { BASE_URL } from "../../../config/baseUrl";
 
 const BASE_URL_CANDIDATE = `${BASE_URL}/auth/candidate`;
+const BASE_URL_OTP = `${BASE_URL}/auth/otp`;
+
 
 export const candidateSigninApi = async (data: any): Promise<any> => {
 		const response = await axios({
@@ -24,13 +26,14 @@ export const candidateSignupApi = async (data: any): Promise<any> => {
 		return response;
 };
 
-export const verifySignupOtpCandidateApi = async (otp: any, email: string): Promise<any> => {
+// -----------------------------------------------------------------------
+export const verifySignupOtpApi = async (otp: any, email: string): Promise<any> => {
 	const response = await axios({
 		method: "post",
-		url: `${BASE_URL_CANDIDATE}/verifyEmail`,
+		url: `${BASE_URL_OTP}/verifyEmail`,
 		data: {otp, email},
 	});
-	console.log("response is ", response);
+	console.log("otp verify response is ", response);
 	
 	return response;
 };
@@ -58,11 +61,25 @@ export const verifyResetPasswordOtpCandidateApi = async (phone: string, otp:stri
 	return response;
 };
 
-export const resetPasswordCandidateApi = async (password:string, email: string): Promise<any> => {
+export const resetPasswordCandidateApi = async (id:string, password: string): Promise<any> => {
 	const response = await axios({
 		method: "put",
 		url: `${BASE_URL_CANDIDATE}/resetPassword`,
-		data: {password, email },
+		data: {id, password },
+	});
+	console.log("response is ", response);
+	
+	return response;
+};
+
+
+//--------------------------------------------------------------------------------------------
+
+export const verifyForgotPasswordOtpCandidateApi = async (otp:string, email: string): Promise<any> => {
+	const response = await axios({
+		method: "post",
+		url: `${BASE_URL_CANDIDATE}/verify-forgotPassword-otp`,
+		data: {  otp, email },
 	});
 	console.log("response is ", response);
 	

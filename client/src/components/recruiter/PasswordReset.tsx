@@ -5,12 +5,12 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/reducer/reducer';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { resetPasswordCandidateApi } from '../../api/axios/auth/candidateAuth';
+import { resetPasswordRecruiterApi } from '../../api/axios/auth/recruiterAuth';
 
 const PasswordReset: React.FC = () => {
   const navigate = useNavigate();
-  const candidateData = useSelector(
-		(state: RootState) => state.candidateData.candidate
+  const recruiterData = useSelector(
+		(state: RootState) => state.recruiterData.recruiter
 	);
   
 
@@ -50,10 +50,10 @@ const PasswordReset: React.FC = () => {
   
       console.log('Submitted OTP:', values.password);
   
-      const response = await resetPasswordCandidateApi(candidateData.id,values.password );
+      const response = await resetPasswordRecruiterApi(recruiterData.id,values.password );
       console.log('hiiii', response);
       notify(response.data.message, 'success');
-      navigate('/candidate');
+      navigate('/recruiter');
     } catch (error: any) {
       console.error('Error during OTP submission:', error);
       notify(

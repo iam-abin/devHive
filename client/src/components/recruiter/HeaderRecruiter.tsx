@@ -70,23 +70,42 @@ function HeaderRecruiter() {
 		<>
 			<div className="navbar bg-base-100">
 				<div className="flex-1">
-					<a className="btn btn-ghost normal-case text-xl">DevHive</a>
+					<a className="btn btn-ghost normal-case text-xl" onClick={()=> navigate("/recruiter")}>DevHive</a>
 				</div>
 				<div className="flex-none">
 					<ul className="menu menu-horizontal px-1">
-						{isLoggedIn ? (
-							<li>
-								<button onClick={handleRecruiterLogout}>
-									Recruiter Signout
-								</button>
-							</li>
-						) : (
-							<li>
-								<Link to="/recruiter/signin">
-									Recruiter Signin
-								</Link>
-							</li>
-						)}
+
+					{isLoggedIn ? (
+					<div className="flex-none">
+						<div className="dropdown dropdown-end">
+							<div
+								tabIndex={0}
+								role="button"
+								className="btn btn-ghost mr-10 p-5"
+							>
+								<div className=" rounded-full">
+									{recruiter.name}
+								</div>
+							</div>
+							<ul
+								tabIndex={0}
+								className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-40"
+							>
+								<li onClick={()=> navigate("/recruiter/passwordResetMobile")}>
+									<a>Reset Password</a>
+								</li>
+								<li  onClick={handleRecruiterLogout}>
+									<a>Recruiter Logout</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				) : (
+					<li>
+						<Link to="/recruiter/signin">Recruiter Signin</Link>
+					</li>
+				)}
+
 					</ul>
 				</div>
 			</div>

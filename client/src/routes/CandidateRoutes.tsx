@@ -14,9 +14,9 @@ import CandidateHomePage from "../pages/candidate/CandidateHomePage";
 import PasswordReset from "../components/candidate/PasswordReset";
 import PasswordResetOtpFrom from "../components/candidate/PasswordResetOtpFrom";
 import ForgotPasswordFormEmail from "../components/candidate/ForgotPasswordFormEmail";
-import ForgotPasswordOtpFrom2 from "../components/candidate/ForgotPasswordOtpFrom2";
 import ForgotPasswordPassword from "../components/candidate/ForgotPasswordPassword";
 import ResetPasswordFormMobile from "../components/candidate/ResetPasswordFormMobile";
+import ForgotPasswordOtpFrom from "../components/candidate/ForgotPasswordOtpFrom";
 
 function CandidateRoutes() {
 	const isCandidateLoggedIn = useSelector(
@@ -29,13 +29,13 @@ function CandidateRoutes() {
 				<Route path="/" element={isCandidateLoggedIn? <CandidateHomePage />: <Navigate to={"/candidate/landing"} />} />
 				<Route path="/profile" element={isCandidateLoggedIn? <CandidateProfilePage />: <Navigate to={"/candidate/landing"} />} />
 
+				<Route path="/passwordResetMobile" element={isCandidateLoggedIn? <ResetPasswordFormMobile />: <Navigate to={"/candidate/landing"} />} />
 				<Route path="/passwordResetOtp" element={isCandidateLoggedIn? <PasswordResetOtpFrom />: <Navigate to={"/candidate/landing"} />} />
 				<Route path="/passwordReset" element={isCandidateLoggedIn? <PasswordReset />: <Navigate to={"/candidate/landing"} />} />
-				<Route path="/passwordResetMobile" element={isCandidateLoggedIn? <ResetPasswordFormMobile />: <Navigate to={"/candidate/landing"} />} />
 
-				<Route path="/forgotPasswordOtp" element={!isCandidateLoggedIn? <ForgotPasswordOtpFrom2 />: <Navigate to={"/candidate/landing"} />} />
-				<Route path="/forgotPassword" element={!isCandidateLoggedIn? <ForgotPasswordPassword />: <Navigate to={"/candidate/landing"} />} />
 				<Route path="/forgotPasswordEmail" element={!isCandidateLoggedIn? <ForgotPasswordFormEmail />: <Navigate to={"/candidate/landing"} />} />
+				<Route path="/forgotPasswordOtp/:email" element={!isCandidateLoggedIn? <ForgotPasswordOtpFrom />: <Navigate to={"/candidate/landing"} />} />
+				<Route path="/forgotPassword" element={!isCandidateLoggedIn? <ForgotPasswordPassword />: <Navigate to={"/candidate/landing"} />} />
 				
 				<Route path="/landing" element={isCandidateLoggedIn?<Navigate to={"/candidate"} />: <LandingPage /> } />
 				<Route path="/signin" element={isCandidateLoggedIn?<Navigate to={"/candidate"} />:<CandidateSigninPage /> } />
@@ -43,7 +43,7 @@ function CandidateRoutes() {
 				<Route path="/otpSignupCandidate/:email" element={!isCandidateLoggedIn? <OtpFormPageSignup /> :<Navigate to={"/candidate"} />} />
 
 				<Route path="/all-jobs" element={isCandidateLoggedIn?<AllJobsPage />:<Navigate to={"/candidate/signin"} />} />
-			<Route path="/job-details" element={isCandidateLoggedIn?<JobDetailsPage />:<Navigate to={"/candidate/signin"} />} />
+				<Route path="/job-details" element={isCandidateLoggedIn?<JobDetailsPage />:<Navigate to={"/candidate/signin"} />} />
 			</Routes>
 		</>
 	);

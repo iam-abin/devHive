@@ -5,15 +5,15 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import { passwordResetMobileCandidateApi } from '../../api/axios/auth/candidateAuth';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/reducer/reducer';
+import { passwordResetMobileRecruiterApi } from '../../api/axios/auth/recruiterAuth';
 
 const ResetPasswordFormMobile: React.FC = () => {
   const navigate = useNavigate();
 
-  const candidateData = useSelector(
-		(state: RootState) => state.candidateData.candidate
+  const recruiterData = useSelector(
+		(state: RootState) => state.recruiterData.recruiter
 	);
   
   const mobileSchema = yup.object().shape({
@@ -49,12 +49,12 @@ const ResetPasswordFormMobile: React.FC = () => {
         
         console.log('Mobile number submitted:', values.mobile);
     
-        const response = await passwordResetMobileCandidateApi(candidateData.email, values.mobile);
+        const response = await passwordResetMobileRecruiterApi(recruiterData.email, values.mobile);
         console.log('hiiii', response);
         // dispatch(candidateSignin());
         // dispatch(setCandidate(response.data.data));
         notify(response.data.message, 'success');
-        navigate('/candidate/passwordResetOtp');
+        navigate('/recruiter/passwordResetOtp');
       } catch (error: any) {
         console.error('Error during OTP submission:', error);
         notify(

@@ -54,6 +54,11 @@ const PasswordResetOtpFrom: React.FC = () => {
         console.log('hiiii', response);
         // dispatch(recruiterSignin());
         // dispatch(setRecruiter(response.data.data));
+
+        if(response.data.data == "pending") {
+          notify(response.data.message, 'error');
+          return
+        }
         notify(response.data.message, 'success');
         navigate('/candidate/passwordReset');
       } catch (error: any) {

@@ -1,7 +1,7 @@
 export interface UserDataSignup {
 	name: string;
 	email: string;
-	phone: string;
+	phone: number;
 	password: string;
 	userType: string;
 	otp: number

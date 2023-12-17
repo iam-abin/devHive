@@ -2,15 +2,15 @@ import mongoose from "mongoose";
 
 interface jobApplicationAttributes {
 	jobId: string;
-	candidateId: string;
-	recruiterId: string;
+	candidateId:string;
+	recruiterId:string;
 	applicationStatus: string;
 }
 
 interface jobApplicationDocument extends mongoose.Document {
-	jobId: string;
-	candidateId: string;
-	recruiterId: string;
+	jobId: mongoose.Schema.Types.ObjectId;
+	candidateId:mongoose.Schema.Types.ObjectId;
+	recruiterId:mongoose.Schema.Types.ObjectId;
 	applicationStatus: string;
 	createdAt: string;
 	updatedAt: string;
@@ -51,11 +51,31 @@ interface jobApplicationModel extends mongoose.Model<jobApplicationDocument> {
 	buildJob(attributes: jobApplicationAttributes): jobApplicationDocument;
 }
 
-jobApplicationSchema.statics.buildJob = (attributes: jobApplicationAttributes) => {
-	console.log("in build jobApplication attributes", attributes);
+// jobApplicationSchema.statics.buildJob = (attributes: jobApplicationAttributes) => {
+// 	console.log("in build jobApplication attributes", attributes);
 	
-	return new jobApplicationModel( attributes );
+// 	return new jobApplicationModel( attributes );
+// };
+
+jobApplicationSchema.statics.buildJob = (attributes: jobApplicationAttributes) => {
+    console.log("in build jobApplication attributes", attributes);
+
+    // Convert string IDs to mongoose.Types.ObjectId
+    const jobId = new mongoose.Types.ObjectId(attributes.jobId);
+    const candidateId = new mongoose.Types.ObjectId(attributes.candidateId);
+    const recruiterId = new mongoose.Types.ObjectId(attributes.recruiterId);
+
+    // Build the job application document
+    const jobApplication = new jobApplicationModel({
+        ...attributes,
+        jobId,
+        candidateId,
+        recruiterId,
+    });
+
+    return jobApplication;
 };
+
 
 const jobApplicationModel = mongoose.model<jobApplicationDocument, jobApplicationModel>(
 	"jobApplication",

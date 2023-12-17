@@ -3,7 +3,7 @@ import { UserDataSignup } from "../frameworks/types/userInterface";
 export class User {
 	name: string;
 	email: string;
-	phone: string;
+	phone: number;
 	password: string;
 	userType: string;
 	otp: number;

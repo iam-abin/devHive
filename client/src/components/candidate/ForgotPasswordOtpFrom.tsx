@@ -3,20 +3,58 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import { toast } from 'react-toastify';
+import { useNavigate, useParams } from 'react-router-dom';
+import { verifyForgotPasswordOtpCandidateApi } from '../../api/axios/auth/recruiterAuth';
 
-const ForgotPasswordOtpFrom2: React.FC = () => {
+const ForgotPasswordOtpFrom: React.FC = () => {
+
+  const navigate = useNavigate()
+  const { email } = useParams();
+
   const otpSchema = yup.object().shape({
     otp: yup.string().length(6, 'OTP must be 6 digits').required('OTP is required'),
   });
+
+
+  const notify = (msg: any, type: string) => {
+    type === 'error'
+      ? toast.error(msg, {
+          position: toast.POSITION.TOP_RIGHT,
+        })
+      : toast.success(msg, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+  };
 
   const formik = useFormik({
     initialValues: {
       otp: '',
     },
     validationSchema: otpSchema,
-    onSubmit: (values) => {
-      // Handle the OTP submission logic here
-      console.log('OTP submitted:', values.otp);
+    onSubmit: async (values) => {
+      try {
+        if (!values) {
+          console.error('Form values are undefined.');
+          return;
+        }
+    
+        console.log('Submitted OTP:', values.otp);
+    
+        const response = await verifyForgotPasswordOtpCandidateApi(values.otp, email!);
+        console.log('hiiii', response);
+        // dispatch(recruiterSignin());
+        // dispatch(setRecruiter(response.data.data));
+        notify(response.data.message, 'success');
+        navigate('/candidate/forgotPassword');
+      } catch (error: any) {
+        console.error('Error during OTP submission:', error);
+        notify(
+          error.response?.data?.message ||
+            'An error occurred during OTP submission',
+          'error'
+        );
+      }
     },
   });
 
@@ -62,4 +100,4 @@ const ForgotPasswordOtpFrom2: React.FC = () => {
   );
 };
 
-export default ForgotPasswordOtpFrom2;
+export default ForgotPasswordOtpFrom;

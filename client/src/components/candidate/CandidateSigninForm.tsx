@@ -110,7 +110,7 @@ function CandidateSigninForm() {
 										/>
 									</span>
 								</label>
-								<label className="label mt-1">
+								<label className="label mt-1" onClick={()=> navigate("/candidate/forgotPasswordEmail")}>
 									<span className="label-text-alt cursor-pointer">
 										Forgot Password?
 									</span>

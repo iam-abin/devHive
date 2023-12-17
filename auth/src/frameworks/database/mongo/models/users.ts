@@ -9,6 +9,7 @@ interface UserAttributes {
 	password: string;
 	userType: string;
 	otp: number
+	// expiry: Date
 	// isActive: boolean;
 	// userId: string;
 }

@@ -2,8 +2,8 @@ import mongoose from "mongoose";
 
 interface JobAttributes {
 	title: string;
-	recruiter: string;
-	company: string;
+	recruiterId: string;
+	companyId: string;
 	job_descriptions?: string;
 	skills_required?:string | string[];
 	available_position?: string;
@@ -18,8 +18,8 @@ interface JobAttributes {
 
 interface JobDocument extends mongoose.Document {
 	title: string;
-	recruiter: string;
-	company: string;
+	recruiterId: mongoose.Schema.Types.ObjectId;
+	companyId: mongoose.Schema.Types.ObjectId;
 	job_descriptions?: string;
 	skills_required?: string | string[];
 	available_position?: string;
@@ -42,8 +42,8 @@ interface JobDocument extends mongoose.Document {
 const jobSchema = new mongoose.Schema(
 	{
 		title: String,
-		recruiter: String,
-		company: String,
+		recruiterId: mongoose.Schema.Types.ObjectId,
+		companyId: mongoose.Schema.Types.ObjectId,
 		job_descriptions: String,
 		skills_required: Array,
 		available_position: String,
@@ -84,8 +84,11 @@ interface JobModel extends mongoose.Model<JobDocument> {
 
 jobSchema.statics.buildJob = (attributes: JobAttributes) => {
 	console.log("in build job attributes", attributes);
+
+    const recruiterId = new mongoose.Types.ObjectId(attributes.recruiterId);
+	const companyId = new mongoose.Types.ObjectId(attributes.companyId);
 	
-	return new JobModel( attributes );
+	return new JobModel( {...attributes, recruiterId, companyId } );
 };
 
 const JobModel = mongoose.model<JobDocument, JobModel>(

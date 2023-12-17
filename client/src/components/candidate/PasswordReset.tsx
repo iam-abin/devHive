@@ -48,10 +48,14 @@ const PasswordReset: React.FC = () => {
         return;
       }
   
-      console.log('Submitted OTP:', values.password);
+      console.log('Submitted password:', values.password);
   
       const response = await resetPasswordCandidateApi(candidateData.id,values.password );
       console.log('hiiii', response);
+      if(response.data.data == "pending") {
+        notify(response.data.message, 'error');
+        return
+      }
       notify(response.data.message, 'success');
       navigate('/candidate');
     } catch (error: any) {

@@ -10,8 +10,8 @@ export = {
 
 	 createCompanyProfile: async (companyData: any): Promise<any> => {
 		console.log("inside create Company repo in profile service", companyData);
-		const {company_name, company_location, company_state, company_country} = companyData
-		const userObject = CompanyProfileModel.buildCompany({company_name, company_location, company_state, company_country});
+		const {company_name, company_location, company_state, company_country,recruiterId} = companyData
+		const userObject = CompanyProfileModel.buildCompany({company_name, company_location, company_state, company_country, recruiterId});
 		return await userObject.save();
 	},
 

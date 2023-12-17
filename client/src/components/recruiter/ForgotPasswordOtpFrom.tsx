@@ -1,25 +1,21 @@
-// OtpFromSignup.tsx
+// SelfContainedOtpForm.tsx
+
 import React from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { verifySignupOtpRecruiterApi } from '../../api/axios/auth/recruiterAuth';
-import { recruiterSignin } from '../../redux/slice/recruiterSlice/recruiterAuthSlice';
-import { setRecruiter } from '../../redux/slice/recruiterSlice/recruiterDataSlice';
+import { useNavigate, useParams } from 'react-router-dom';
+import { verifyForgotPasswordOtpCandidateApi } from '../../api/axios/auth/recruiterAuth';
 
-interface OtpFromSignupProps {
-  email?: string;
-}
+const ForgotPasswordOtpFrom: React.FC = () => {
 
-const otpSchema = yup.object().shape({
-  otp: yup.string().length(6, 'OTP must be 6 digits').required('OTP is required'),
-});
+  const navigate = useNavigate()
+  const { email } = useParams();
 
-const ForgotPasswordOtpFrom: React.FC<OtpFromSignupProps> = ({ email }) => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const otpSchema = yup.object().shape({
+    otp: yup.string().length(6, 'OTP must be 6 digits').required('OTP is required'),
+  });
+
 
   const notify = (msg: any, type: string) => {
     type === 'error'
@@ -45,16 +41,16 @@ const ForgotPasswordOtpFrom: React.FC<OtpFromSignupProps> = ({ email }) => {
     
         console.log('Submitted OTP:', values.otp);
     
-        const response = await verifySignupOtpRecruiterApi(values.otp, email!);
+        const response = await verifyForgotPasswordOtpCandidateApi(values.otp, email!);
         console.log('hiiii', response);
-        dispatch(recruiterSignin());
-        dispatch(setRecruiter(response.data.data));
+        // dispatch(recruiterSignin());
+        // dispatch(setRecruiter(response.data.data));
         notify(response.data.message, 'success');
-        navigate('/recruiter');
+        navigate('/candidate/forgotPassword');
       } catch (error: any) {
         console.error('Error during OTP submission:', error);
         notify(
-          error.response?.data?.errors?.[0]?.message ||
+          error.response?.data?.message ||
             'An error occurred during OTP submission',
           'error'
         );
@@ -84,7 +80,6 @@ const ForgotPasswordOtpFrom: React.FC<OtpFromSignupProps> = ({ email }) => {
                 formik.errors.otp && formik.touched.otp ? 'input-error' : null
               }`}
             />
-            <p>an email is send to : {email}</p>
           </div>
           <label className="label mb-3">
             <span className="label-text-alt text-red-500">
@@ -95,10 +90,7 @@ const ForgotPasswordOtpFrom: React.FC<OtpFromSignupProps> = ({ email }) => {
           </label>
 
           <div className="flex items-center justify-center mb-3">
-            <button
-              type="submit"
-              className={`btn btn-outline w-60 btn-primary`}
-            >
+            <button type="submit" className={`btn btn-outline w-60 btn-primary`}>
               Submit OTP
             </button>
           </div>

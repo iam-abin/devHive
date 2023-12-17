@@ -122,7 +122,7 @@ function RecruiterSigninForm() {
 											/>
 										</span>
 										<div className="flex justify-end">
-											<p className="text-sm font-medium whitespace-nowrap cursor-pointer underline underline-offset-2">
+											<p onClick={()=> navigate("/recruiter/forgotPasswordEmail")} className="text-sm font-medium whitespace-nowrap cursor-pointer underline underline-offset-2">
 												Forgot password?
 											</p>
 										</div>

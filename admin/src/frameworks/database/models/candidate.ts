@@ -28,10 +28,7 @@ interface CandidateDocument extends mongoose.Document {
     profile_pic?: string;
 	userType: string;
 	isActive: boolean;
-	userId: {
-		type: String,
-		unique: true
-	},
+	userId: mongoose.Schema.Types.ObjectId;
 
 	gender?: string;
 	currentLocation?: string;
@@ -74,7 +71,7 @@ const candidateSchema = new mongoose.Schema(
 			type: Boolean,
 			required: true
 		},
-		userId: String,
+		userId: mongoose.Schema.Types.ObjectId,
 
 		gender: {
 			type: String,
@@ -128,7 +125,7 @@ candidateSchema.statics.buildCandidate = (attributes: CandidateAttributes) => {
 		phone: attributes.phone,
 		userType: attributes.userType,
 		isActive: attributes.isActive,
-		userId: attributes.userId,
+		userId: new mongoose.Types.ObjectId(attributes.userId),
 	});
 };
 

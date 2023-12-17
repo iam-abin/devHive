@@ -6,13 +6,15 @@ import { verifyOtp } from "../../frameworks/services/twilio";
 
 export = (dependencies: DependenciesData) => {
 	const {
-		useCases: { getUserByPhoneUseCase, getUserByEmailUseCase },
+		useCases: { getUserByEmailUseCase },
 	} = dependencies;
 
 	return async (req: Request, res: Response) => {
 			let { phone, otp, email } = req.body;
-			phone = parseInt(phone)
-			otp = parseInt(otp)
+			console.log("otp before parse", otp);
+			
+			// phone = parseInt(phone,)
+			// otp = parseInt(otp)
 
 			console.log(`in verify otp twilio phone ${phone} otp ${otp} email ${email}`);
 			console.log(`in verify otp twilio phone `, typeof phone);

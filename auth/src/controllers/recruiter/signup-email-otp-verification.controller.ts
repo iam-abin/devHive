@@ -14,16 +14,26 @@ export = (dependencies: DependenciesData) => {
 
 	return async (req: Request, res: Response) => {
 		const { email, otp } = req.body;
-		console.log("email ", email, "otp ", otp);
+		console.log("email ",email,"otp ",otp);
+		let parsedOtp;
+		if(typeof otp == "string"){
+			parsedOtp = parseInt(otp)
+		}else{
+			// no change
+			parsedOtp = otp
+		}
+		
+
 
 		const user = await getUserByEmailUseCase(dependencies).execute(email);
 		if (!user) {
 			throw new BadRequestError("Invalid email");
 		}
+		console.log(user,"fetched user");
 
 		const checkOtp = await checkEmailVerificationOtpUseCase(
 			dependencies
-		).execute({ otp, email });
+		).execute({ otp: parsedOtp, email });
 
 		if (!checkOtp) {
 			return res.status(403).json({
