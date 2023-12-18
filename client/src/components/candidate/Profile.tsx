@@ -44,7 +44,7 @@ const Profile: React.FC = () => {
 							<button
 								onClick={() =>
 									navigate(
-										`/candidate/edit-profile/${candidateData.id}`
+										`/candidate/edit-profile`
 									)
 								}
 								className="btn btn-primary absolute top-0 right-0 m-4"

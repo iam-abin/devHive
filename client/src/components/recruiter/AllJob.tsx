@@ -55,6 +55,7 @@ function AllJob() {
 			<div className="flex flex-col w-full">
 				{jobs.map((job: any) => {
 					return (
+						job.isActive &&
 						<div className="grid h-20 py-2 px-5 card bg-base-300 rounded-box items-center mb-2 " key={job.id}>
 							<div className="flex flex-row justify-between">
 								<div>
@@ -80,15 +81,15 @@ function AllJob() {
 									</div>
 								</div>
 								<div>
-									<button onClick={()=> handleEdit(job.id)} className="btn btn-outline ml-3">
+									{/* <button onClick={()=> handleEdit(job.id)} className="btn btn-outline ml-3">
 										Edit
-									</button>
+									</button> */}
 									<button onClick={()=> handleView(job.id)} className="btn btn-outline ml-3">
 										View
 									</button>
-									<button className="btn btn-error ml-3">
+									{/* <button className="btn btn-error ml-3">
 										Delete
-									</button>
+									</button> */}
 								</div>
 							</div>
 						</div>

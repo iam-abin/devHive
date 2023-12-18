@@ -2,6 +2,7 @@ import express from "express"
 
 import { candidateProfileControllers } from "../../controllers";
 import { DependenciesData } from "../types/dependencyInterface"
+import { requireAuthCandidate } from "@abijobportal/common";
 
 export const candidateRouter = (dependencies: DependenciesData)=>{
     const router = express.Router();
@@ -9,7 +10,7 @@ export const candidateRouter = (dependencies: DependenciesData)=>{
     const { viewCandidateProfileController, updateCandidateProfileController } = candidateProfileControllers(dependencies);
 
     // candidate authentication
-	// router.use(requireAuthCandidate)
+	router.use(requireAuthCandidate)
 
 	// candidate
 	// router.post("/createProfile", createCandidateProfileController);

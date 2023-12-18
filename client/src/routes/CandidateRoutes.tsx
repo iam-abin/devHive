@@ -17,7 +17,7 @@ import ForgotPasswordFormEmail from "../components/candidate/ForgotPasswordFormE
 import ForgotPasswordPassword from "../components/candidate/ForgotPasswordPassword";
 import ResetPasswordFormMobile from "../components/candidate/ResetPasswordFormMobile";
 import ForgotPasswordOtpFrom from "../components/candidate/ForgotPasswordOtpFrom";
-import EditProfile from "../components/candidate/EditProfile";
+import CandidateProfileEditPage from "../pages/candidate/CandidateProfileEditPage";
 
 function CandidateRoutes() {
 	const isCandidateLoggedIn = useSelector(
@@ -29,7 +29,7 @@ function CandidateRoutes() {
 				{/* <Route path="/" element={isCandidateLoggedIn? <CandidateHomePage />: <Navigate to={"/candidate/landing"} />} /> */}
 				<Route path="/" element={isCandidateLoggedIn? <CandidateHomePage />: <Navigate to={"/candidate/landing"} />} />
 				<Route path="/profile" element={isCandidateLoggedIn? <CandidateProfilePage />: <Navigate to={"/candidate/landing"} />} />
-				<Route path="/edit-profile/:userId" element={isCandidateLoggedIn? <EditProfile />: <Navigate to={"/candidate/landing"} />} />
+				<Route path="/edit-profile/" element={isCandidateLoggedIn? <CandidateProfileEditPage />: <Navigate to={"/candidate/landing"} />} />
 
 				<Route path="/passwordResetMobile" element={isCandidateLoggedIn? <ResetPasswordFormMobile />: <Navigate to={"/candidate/landing"} />} />
 				<Route path="/passwordResetOtp" element={isCandidateLoggedIn? <PasswordResetOtpFrom />: <Navigate to={"/candidate/landing"} />} />

@@ -19,6 +19,7 @@ import ForgotPasswordFormEmail from "../components/recruiter/ForgotPasswordFormE
 import ForgotPasswordOtpFrom from "../components/recruiter/ForgotPasswordOtpFrom"
 import ForgotPasswordPassword from "../components/recruiter/ForgotPasswordPassword"
 import AllAddedJobs from "../components/recruiter/AllAddedJobs"
+import RecruiterProfileEditPage from "../pages/recruiter/RecruiterProfileEditPage"
 
 function RecruiterRouters() {
 	const isRecruiterLoggedIn = useSelector(
@@ -28,9 +29,10 @@ function RecruiterRouters() {
     <>
     	<Routes>
 			<Route path="/" element={isRecruiterLoggedIn? <RecruiterHomePage />: <Navigate to={"/recruiter/landing"} />} />
-
+			
 			<Route path="/" element={isRecruiterLoggedIn? <RecruiterHomePage />: <Navigate to={"/recruiter/landing"} />} />
 			<Route path="/profile" element={isRecruiterLoggedIn? <RecruiterProfilePage />: <Navigate to={"/recruiter/landing"} />} />
+			<Route path="/edit-profile" element={isRecruiterLoggedIn? <RecruiterProfileEditPage />: <Navigate to={"/recruiter/landing"} />} />
 
 			<Route path="/passwordResetMobile" element={isRecruiterLoggedIn? <ResetPasswordFormMobile />: <Navigate to={"/recruiter/landing"} />} />
 			<Route path="/passwordResetOtp" element={isRecruiterLoggedIn? <PasswordResetOtpFrom />: <Navigate to={"/recruiter/landing"} />} />

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/reducer/reducer';
 import { recruiterGetProfileApi } from '../../api/axios/profile/recruiter';
+import { useNavigate } from 'react-router-dom';
 
 const Profile: React.FC = () => {
 const recruiterData = useSelector(
@@ -13,6 +14,8 @@ const recruiterData = useSelector(
 	// const [updateCandidateProfileData, setUpdateCandidateProfileData] = useState<
 	// 	any
 	// >([]);
+
+	const navigate = useNavigate()
 
 	useEffect(() => {
 		(async () => {
@@ -42,7 +45,7 @@ const recruiterData = useSelector(
                 <p className="text-gray-600">Recruiter at ABC Company</p>
               </div>
             </div>
-            <button className="bg-blue-500 text-white px-4 py-2 rounded-md">
+            <button onClick={()=> navigate("/recruiter/edit-profile")} className="bg-blue-500 text-white px-4 py-2 rounded-md">
               Edit
             </button>
           </div>

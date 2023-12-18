@@ -16,3 +16,17 @@ export const candidateGetProfileApi = async (userId: string): Promise<any> => {
     return response;
 };
 
+
+export const updateCandidateProfileApi = async (recruiterProfileData: any): Promise<any> => {
+    const response = await axios({
+        method: "patch",
+        url: `${BASE_URL_CANDIDATE}/updateProfile`,
+        data: recruiterProfileData
+    });
+
+    console.log(recruiterProfileData.userId);
+    
+    console.log(response.data);
+    
+    return response;
+};

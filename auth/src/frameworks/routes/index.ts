@@ -18,7 +18,7 @@ export const routes = (dependencies: DependenciesData) => {
 	router.use("/admin",currentUserAdminCheck, admin); // currentUserAdmin extract current user from jwt, if user is present add it to req.currentUser
 	router.use("/candidate",currentUserCandidateCheck, candidate);
 	router.use("/recruiter",currentUserRecruiterCheck, recruiter);
-	router.use("/otp", otp)
+	router.use("/otp", otp) // forgot password nodemailer otps
 
 	return router;
 };
