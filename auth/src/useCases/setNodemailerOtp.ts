@@ -7,7 +7,7 @@ export = (dependencies: any)=>{
 	}
 
     const execute = ({email, otp}: any)=>{
-        return usersRepository.setOtp({email, otp})
+        return usersRepository.setOtp(email, otp)
     }
 
     return { execute }

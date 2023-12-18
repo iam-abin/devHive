@@ -8,12 +8,10 @@ export = (dependencies: DependenciesData)=>{
     const { useCases: { blockUnblockRecruiterUseCase }} = dependencies
 
     return async (req: Request, res: Response)=>{
-        const {id} = req.params;
+        const {userId} = req.params;
         
 
-        const isBlocked = await blockUnblockRecruiterUseCase(dependencies).execute({
-            id
-        });
+        const isBlocked = await blockUnblockRecruiterUseCase(dependencies).execute(userId);
 
         // to produce a message to kafka topic
         // isBlocked contains user data with 'isActive' value changed

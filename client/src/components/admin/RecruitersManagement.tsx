@@ -69,9 +69,9 @@ function RecruitersManagement() {
 		navigate(`/admin/recruiter/viewProfileDetails/${userId}`);
 	};
 
-	const handleBlockUnblock = async (userId: string) => {
+	const handleBlockUnblock = async (userId: string,  isActive: boolean) => {
 		Swal.fire({
-			title: "Do you want to Block this Recruiter?",
+			title: `Do you want to ${isActive ?"block": "unblock"} this Recruiter?`,
 			text: "Are you sure!",
 			icon: "warning",
 			showCancelButton: true,
@@ -181,7 +181,7 @@ function RecruitersManagement() {
 											<td className="text-center">
 												<button
 													onClick={() => {
-														handleBlockUnblock(userId);
+														handleBlockUnblock(userId, isActive);
 													}}
 													className={`btn ${
 														isActive

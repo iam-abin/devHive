@@ -3,20 +3,58 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import { forgotPasswordEmailCandidateApi } from '../../api/axios/auth/candidateAuth';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const ForgotPasswordFormEmail: React.FC = () => {
+  const navigate = useNavigate()
   const emailSchema = yup.object().shape({
     email: yup.string().email('Invalid email address').required('Email is required'),
   });
+
+  const notify = (msg: any, type: string) => {
+
+    // const dispatch = useDispatch();
+
+    type === 'error'
+      ? toast.error(msg, {
+          position: toast.POSITION.TOP_RIGHT,
+        })
+      : toast.success(msg, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+  };
 
   const formik = useFormik({
     initialValues: {
       email: '',
     },
     validationSchema: emailSchema,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       // Handle the form submission logic here
-      console.log('Email submitted:', values.email);
+      try {
+        if (!values) {
+          console.error('Form values are undefined.');
+          return;
+        }
+        
+        console.log('Email submitted:', values.email);
+    
+        const response = await forgotPasswordEmailCandidateApi(values.email);
+        console.log('hiiii', response);
+        // dispatch(candidateSignin());
+        // dispatch(setCandidate(response.data.data));
+        notify(response.data.message, 'success');
+        navigate(`/candidate/forgotPasswordOtp/${values.email}`);
+      } catch (error: any) {
+        console.error('Error during OTP submission:', error);
+        notify(
+          error.response?.data?.errors?.[0]?.message ||
+            'An error occurred during OTP submission',
+          'error'
+        );
+      }
     },
   });
 

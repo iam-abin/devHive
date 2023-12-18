@@ -9,7 +9,8 @@ export = (dependencies: DependenciesData) => {
 		throw new Error("jobRepository should exist in dependencies");
 	}
 
-	const execute = async(id: string, data: object) => {
+	const execute = async(id: string, data: any) => {
+		data.deadline = new Date(data.deadline)
 		return await jobRepository.updateJob(id, data);
 	};
 

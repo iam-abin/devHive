@@ -13,7 +13,7 @@ export const candidateRouter = (dependencies: DependenciesData)=>{
 
 	// candidate
 	// router.post("/createProfile", createCandidateProfileController);
-	router.get("/viewProfile/:id", viewCandidateProfileController);
+	router.get("/viewProfile/:userId", viewCandidateProfileController);
 	router.patch("/updateProfile", updateCandidateProfileController);
 	router.put("/uploadProfilePic", updateCandidateProfileController);
 	router.put("/uploadResume", updateCandidateProfileController);

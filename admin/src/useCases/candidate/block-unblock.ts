@@ -5,8 +5,8 @@ export = (dependencies: any) => {
 		throw new Error("candidateRepository should exist in dependencies");
 	}
 
-	const execute = (id: string) => {
-		return candidateRepository.blockUnblock(id);
+	const execute = (userId: string) => {
+		return candidateRepository.blockUnblock(userId);
 	};
 
 	return { execute };

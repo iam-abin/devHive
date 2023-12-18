@@ -1,5 +1,4 @@
 import schemas from "../../database/models"
-import { blockUnBlockInterface } from "../../types/candidateInterface";
 
 const { JobModel } = schemas;
 
@@ -20,21 +19,21 @@ export = {
 		return await jobObject.save();
 	},
 
-	blockUnblock: async ({ id }: blockUnBlockInterface) => {
-		const job = await JobModel.findOne({jobId:id});
+	blockUnblock: async (jobId: string) => {
+		const job = await JobModel.findOne({jobId});
 		if (!job) {
 			throw new Error("job not found");
 		}
 
-		job.blocked = !job.blocked;
+		job.isActive = !job.isActive;
 
 		return await job.save();
 	},
 
-	updateJob: async (id: string, data: object)=>{
-        console.log("in updateJob repository id", id, " data ", data);
+	updateJob: async (jobId: string, data: object)=>{
+        console.log("in updateJob repository jobId", jobId, " data ", data);
         
-        const updatedJob = await JobModel.findOneAndUpdate({ "jobId": id }, { $set: data }, {new: true});
+        const updatedJob = await JobModel.findOneAndUpdate({ "jobId": jobId }, { $set: data }, {new: true});
         console.log("in updateJob repository after update", updatedJob);
 		return updatedJob;
     },

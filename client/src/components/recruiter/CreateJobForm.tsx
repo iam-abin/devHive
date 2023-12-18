@@ -2,11 +2,14 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import { createJobApi } from "../../api/axios/jobs/jobs";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/reducer/reducer";
+import { useNavigate } from "react-router-dom";
 
 interface JobFormData {
 	title: string;
-	recruiter: string;
-	company: string;
+	recruiterId: string;
+	companyId?: string;
 	job_descriptions: string;
 	skills_required: string[];
 	available_position: number;
@@ -20,7 +23,12 @@ interface JobFormData {
 }
 
 function CreateJobForm() {
-	const notify = (msg: string, type: string) => {
+	const recruiterData = useSelector(
+		(state: RootState) => state.recruiterData.recruiter
+	);
+
+	const navigate = useNavigate();
+	const notify = (msg: any, type: string) => {
 		type === "error"
 			? toast.error(msg, {
 					position: toast.POSITION.TOP_RIGHT,
@@ -32,13 +40,12 @@ function CreateJobForm() {
 
 	const handleSubmit = async (jobData: JobFormData) => {
 		try {
-			const data = await createJobApi(jobData);
+			const response = await createJobApi(jobData);
 
 			console.log("Hello");
-			Swal.fire({
-				text: data.data.message,
-				confirmButtonText: "OK",
-			});
+
+			notify(response.data.message, "success");
+			navigate("/recruiter/all-jobs");
 		} catch (error: any) {
 			notify(error.response.data.errors[0].message, "error");
 		}
@@ -46,15 +53,15 @@ function CreateJobForm() {
 
 	const initialJobValues: JobFormData = {
 		title: "",
-		recruiter: "",
-		company: "",
+		recruiterId: "",
+		// companyId: "",
 		job_descriptions: "",
 		skills_required: [],
 		available_position: 0,
 		experience_required: "",
 		education_required: "",
 		location: "",
-		employment_type: "",
+		employment_type: "full-time",
 		salary_min: 0,
 		salary_max: 0,
 		deadline: "",
@@ -67,6 +74,7 @@ function CreateJobForm() {
 			initialValues={initialJobValues}
 			// validationSchema={jobCreationSchema}
 			onSubmit={(values) => {
+				values.recruiterId = recruiterData.id;
 				console.log(values);
 				handleSubmit(values);
 			}}
@@ -105,7 +113,7 @@ function CreateJobForm() {
 								/>
 							</div>
 
-							{/* Recruiter field */}
+							{/* Recruiter field
 							<div className="form-control w-6/6">
 								<label htmlFor="recruiter" className="label">
 									Recruiter
@@ -125,9 +133,9 @@ function CreateJobForm() {
 									component="div"
 									className="error label-text-alt"
 								/>
-							</div>
+							</div> */}
 
-							{/* Company field */}
+							{/* Company field
 							<div className="form-control w-6/6">
 								<label htmlFor="company" className="label">
 									Company
@@ -147,7 +155,7 @@ function CreateJobForm() {
 									component="div"
 									className="error label-text-alt"
 								/>
-							</div>
+							</div> */}
 
 							{/* Job Descriptions field */}
 							<div className="form-control w-6/6">
@@ -285,11 +293,29 @@ function CreateJobForm() {
 										Employment Type
 									</label>
 
-									<select className="select select-primary w-full max-w-xs">
-										<option selected>full-time</option>
-										<option>part-time</option>
-										<option>work-from-home</option>
-									</select>
+									<Field
+										as="select" // Use the 'as' prop to render a select element
+										id="employment_type"
+										name="employment_type"
+										className={`select select-primary w-full max-w-xs ${
+											errors.employment_type &&
+											touched.employment_type
+												? "input-error"
+												: ""
+										}`}
+									>
+										<option value="full-time">
+											Full-time
+										</option>
+										<option value="part-time">
+											Part-time
+										</option>
+									</Field>
+									<ErrorMessage
+										name="employment_type"
+										component="div"
+										className="error label-text-alt"
+									/>
 								</div>
 							</div>
 

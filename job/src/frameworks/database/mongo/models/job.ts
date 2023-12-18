@@ -30,7 +30,7 @@ interface JobDocument extends mongoose.Document {
 	salary_min?: number;
 	salary_max?: number;
 	has_applied?: boolean;
-	blocked?: boolean;
+	isActive?: boolean;
 	deadline?: Date;
 	number_applied?: number;
 	number_hired?: number;
@@ -50,16 +50,19 @@ const jobSchema = new mongoose.Schema(
 		experience_required: String,
 		education_required: String,
 		location: String,
-		employment_type: String,
+		employment_type: {
+			type: String,
+			enum: ["full-time", "part-time"]
+		},
 		salary_min: Number,
 		salary_max: Number,
 		has_applied: {
 			type: Boolean,
 			default: false
 		},
-		blocked:{
+		isActive:{
 			type: Boolean,
-			default: false
+			default: true
 		},
 		deadline: Date,
 		number_applied: Number,
@@ -85,11 +88,21 @@ interface JobModel extends mongoose.Model<JobDocument> {
 jobSchema.statics.buildJob = (attributes: JobAttributes) => {
 	console.log("in build job attributes", attributes);
 
-    const recruiterId = new mongoose.Types.ObjectId(attributes.recruiterId);
-	const companyId = new mongoose.Types.ObjectId(attributes.companyId);
+	if (attributes.recruiterId && !mongoose.Types.ObjectId.isValid(attributes.recruiterId)) {
+        throw new Error("Invalid ObjectId format for recruiterId");
+    }
+
+    // if (attributes.companyId && !mongoose.Types.ObjectId.isValid(attributes.companyId)) {
+    //     throw new Error("Invalid ObjectId format for companyId");
+    // }
+
+      // Create ObjectId instances or set to null if not provided
+	  const recruiterId = attributes.recruiterId ? new mongoose.Types.ObjectId(attributes.recruiterId) : null;
+	//   const companyId = attributes.companyId ? new mongoose.Types.ObjectId(attributes.companyId) : null;
 	
-	return new JobModel( {...attributes, recruiterId, companyId } );
-};
+
+		//   return new JobModel( {...attributes, recruiterId, companyId } );
+		return new JobModel( {...attributes, recruiterId } )};
 
 const JobModel = mongoose.model<JobDocument, JobModel>(
 	"Job",

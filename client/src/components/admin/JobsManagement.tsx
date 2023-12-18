@@ -23,7 +23,7 @@ interface JobInterface {
 	salary_min?: number;
 	salary_max?: number;
 	has_applied?: boolean;
-	blocked?: boolean;
+	isActive?: boolean;
 	deadline?: Date;
 }
 
@@ -150,8 +150,7 @@ function JobsManagement() {
 							<tr>
 								<th>No</th>
 								<th>Name</th>
-								<th>Email</th>
-								<th>Phone</th>
+								<th>Location</th>
 								<th className="text-center">view</th>
 								<th className="">status</th>
 								<th className="text-center">Action</th>
@@ -161,12 +160,13 @@ function JobsManagement() {
 							{/* row 1 */}
 							{filteredAdminsJobData &&
 								filteredAdminsJobData.map(
-									({ id, title, recruiter, company, blocked, jobId }) => (
+									({ id, title, location, isActive, jobId }) => (
 										<tr key={id}>
 											<th>{originalIndexMap[id] + 1}</th>
 											<td>{title}</td>
-											<td>{recruiter}</td>
-											<td>{company}</td>
+											<td>{location}</td>
+											{/* <td>{recruiter}</td>
+											<td>{company}</td> */}
 											<td className="text-center">
 												<button onClick={() => {
 														viewJobDetails(jobId);
@@ -177,12 +177,12 @@ function JobsManagement() {
 											<td>
 												<div
 													className={`badge ${
-														blocked
+														isActive
 															? "badge badge-success gap-2"
 															: "badge badge-error gap-2"
 													} `}
 												>
-													{blocked
+													{isActive
 														? "active"
 														: "inActive"}
 												</div>
@@ -193,12 +193,12 @@ function JobsManagement() {
 														handleBlockUnblock(jobId);
 													}}
 													className={`btn ${
-														blocked
+														isActive
 															? "btn-success bg-green-600"
 															: "btn btn-error bg-red-600"
 													} `}
 												>
-													{blocked
+													{isActive
 														? "Block"
 														: "unBlock"}
 												</button>

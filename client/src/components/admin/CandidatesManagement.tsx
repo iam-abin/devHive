@@ -67,9 +67,9 @@ function CandidatesManagement() {
 		navigate(`/admin/candidate/viewProfileDetails/${userId}`);
 	};
 
-	const handleBlockUnblock = async (userId: string) => {
+	const handleBlockUnblock = async (userId: string, isActive: boolean) => {
 		Swal.fire({
-			title: "Do you want to Block this Candidate?",
+			title: `Do you want to ${isActive ?"block": "unblock"}  this Candidate?`,
 			text: "Are you sure!",
 			icon: "warning",
 			showCancelButton: true,
@@ -79,6 +79,8 @@ function CandidatesManagement() {
 		}).then(async (result) => {
 			if (result.isConfirmed) {
 				const updatedCandidate = await blockUnblockCandidateApi(userId);
+				console.log("updated candidate data", updatedCandidate);
+				
 				if (updatedCandidate) {
 					notify(updatedCandidate.data.message, "success");
 				}
@@ -179,7 +181,7 @@ function CandidatesManagement() {
 											<td className="text-center">
 												<button
 													onClick={() => {
-														handleBlockUnblock(userId);
+														handleBlockUnblock(userId, isActive);
 													}}
 													className={`btn ${
 														isActive

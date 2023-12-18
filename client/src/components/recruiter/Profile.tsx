@@ -3,28 +3,28 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/reducer/reducer";
-import { candidateGetProfileApi } from "../../api/axios/profile/candidate";
+import { recruiterGetProfileApi } from "../../api/axios/profile/recruiter";
 
 const Profile: React.FC = () => {
 
-	const candidateData = useSelector(
-		(state: RootState) => state.candidateData.candidate
+	const recruiterData = useSelector(
+		(state: RootState) => state.recruiterData.recruiter
 	);
 
-	const [candidateProfileData, setCandidateProfileData] = useState<any>([]);
+	const [recruiterProfileData, setRecruiterProfileData] = useState<any>([]);
 	// const [updateCandidateProfileData, setUpdateCandidateProfileData] = useState<
 	// 	any
 	// >([]);
 
 	useEffect(() => {
 		(async () => {
-			console.log("before",candidateData);
+			console.log("before",recruiterData);
 			
-			const { id } = candidateData;
-			const candidateProfile = await candidateGetProfileApi(id);
+			const { id } = recruiterData;
+			const candidateProfile = await recruiterGetProfileApi(id);
 			console.log("candidateGetProfileApi", candidateProfile);
 			
-			setCandidateProfileData(candidateProfile);
+			setRecruiterProfileData(candidateProfile);
 		})();
 	}, []);
 	return (
@@ -38,10 +38,10 @@ const Profile: React.FC = () => {
 						/>
 						<div className="flex flex-col items-start lg:items-end">
 							<h1 className="text-5xl font-bold">
-								I'm {(candidateProfileData?.data?.data?.name)?? candidateData.name}
+								I'm {(recruiterProfileData?.data?.data?.name)?? recruiterData.name}
 							</h1>
 							<p className="py-6">
-							{candidateProfileData?.data?.data?.about}
+							{recruiterProfileData?.data?.data?.about}
 							</p>
 							<button className="btn btn-primary absolute top-0 right-0 m-4">
 								Edit
@@ -54,28 +54,28 @@ const Profile: React.FC = () => {
 				<div className="flex flex-col w-full border-opacity-50 mt-3">
 					<div className="grid h-12 pl-5 card bg-base-300 rounded-box items-center">
 						<div className="text-left">
-							Name: {(candidateProfileData?.data?.data?.name) ?? candidateData.name}
+							Name: {(recruiterProfileData?.data?.data?.name) ?? recruiterData.name}
 						</div>
 					</div>
 				</div>
 				<div className="flex flex-col w-full border-opacity-50 mt-3">
 					<div className="grid h-12 pl-5 card bg-base-300 rounded-box items-center">
 						<div className="text-left">
-							Email: {(candidateProfileData?.data?.data?.email) ?? candidateData.email}
+							Email: {(recruiterProfileData?.data?.data?.email) ?? recruiterData.email}
 						</div>
 					</div>
 				</div>
 				<div className="flex flex-col w-full border-opacity-50 mt-3">
 					<div className="grid h-12 pl-5 card bg-base-300 rounded-box items-center">
 						<div className="text-left">
-							Phone: {(candidateProfileData?.data?.data?.phone)?? candidateData.phone}
+							Phone: {(recruiterProfileData?.data?.data?.phone)?? recruiterData.phone}
 						</div>
 					</div>
 				</div>
 				<div className="flex flex-col w-full border-opacity-50 mt-3">
 					<div className="grid h-12 pl-5 card bg-base-300 rounded-box items-center">
 						<div className="text-left">
-							About: {candidateProfileData?.data?.data?.about}
+							About: {recruiterProfileData?.data?.data?.about}
 						</div>
 					</div>
 				</div>
@@ -83,7 +83,7 @@ const Profile: React.FC = () => {
 					<div className="grid h-12 pl-5 card bg-base-300 rounded-box items-center">
 						<div className="text-left">
 							Current Location:{" "}
-							{candidateProfileData?.data?.data?.currentLocation}
+							{recruiterProfileData?.data?.data?.currentLocation}
 						</div>
 					</div>
 				</div>

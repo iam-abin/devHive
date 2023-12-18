@@ -5,7 +5,7 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { toast } from 'react-toastify';
 import { useNavigate, useParams } from 'react-router-dom';
-import { verifyForgotPasswordOtpCandidateApi } from '../../api/axios/auth/recruiterAuth';
+import { verifyForgotPasswordOtpCandidateApi } from '../../api/axios/auth/candidateAuth';
 
 const ForgotPasswordOtpFrom: React.FC = () => {
 
@@ -46,7 +46,7 @@ const ForgotPasswordOtpFrom: React.FC = () => {
         // dispatch(recruiterSignin());
         // dispatch(setRecruiter(response.data.data));
         notify(response.data.message, 'success');
-        navigate('/candidate/forgotPassword');
+        navigate(`/candidate/forgotPassword/${response.data.data.id}`);
       } catch (error: any) {
         console.error('Error during OTP submission:', error);
         notify(

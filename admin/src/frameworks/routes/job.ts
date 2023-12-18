@@ -18,7 +18,7 @@ export const jobRouter = (dependencies: DependenciesData)=>{
     router.get("/jobs", viewJobsController);
     router.get("/viewJob/:jobId", viewJobController);
     // router.get("/updateJob", updateJobController);
-    router.put("/blockUnblock/:id", blockUnblockJobController);
+    router.put("/blockUnblock/:jobId", blockUnblockJobController);
 
     return router
 }

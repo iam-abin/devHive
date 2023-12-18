@@ -39,12 +39,12 @@ export const createJobApi = async (data: any): Promise<any> => {
     return response;
 };
 
-export const updateJobApi = async (data: any, id: string): Promise<any> => {
+export const updateJobApi = async (data: any): Promise<any> => {
     console.log("updateJobApi data ",data);
     
     const response = await axios({
         method: "patch",
-        url: `${BASE_URL_RECRUITER}/${id}`,
+        url: `${BASE_URL_RECRUITER}/update-job`,
         data: data
     });
     console.log(response);

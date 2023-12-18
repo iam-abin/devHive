@@ -13,7 +13,7 @@ interface JobAttributes {
 	employment_type?: string;
 	salary_min?: number;
 	salary_max?: number;
-	blocked?: boolean;
+	isActive?: boolean;
 	deadline?: Date;
 	jobId: string;
 }
@@ -31,7 +31,7 @@ interface JobDocument extends mongoose.Document {
 	employment_type?: string;
 	salary_min?: number;
 	salary_max?: number;
-	blocked?: boolean;
+	isActive?: boolean;
 	deadline?: Date;
 	jobId: mongoose.Schema.Types.ObjectId
 	createdAt: string;
@@ -52,9 +52,9 @@ const jobSchema = new mongoose.Schema(
 		employment_type: String,
 		salary_min: Number,
 		salary_max: Number,
-		blocked: {
+		isActive: {
 			type: Boolean,
-			default: false,
+			default: true,
 		},
 		deadline: Date,
 		jobId: mongoose.Schema.Types.ObjectId

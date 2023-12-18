@@ -34,7 +34,7 @@ export = (dependencies: DependenciesData)=>{
             employment_type : updatedJob?.employment_type,
             salary_min : updatedJob?.salary_min,
             salary_max : updatedJob?.salary_max,
-            blocked : updatedJob?.blocked,
+            isActive : updatedJob?.isActive,
         });
 
 

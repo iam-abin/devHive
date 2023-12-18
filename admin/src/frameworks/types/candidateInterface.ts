@@ -16,6 +16,3 @@ export interface CandidateData{
 	experience?: string;
 }
 
-export interface blockUnBlockInterface{
-    id: string
-}

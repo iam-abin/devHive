@@ -13,7 +13,7 @@ export class Job {
 	employment_type?: string;
 	salary_min?: number;
 	salary_max?: number;
-	blocked?: boolean;
+	isActive?: boolean;
 	deadline?: Date;
 	jobId: string
 	constructor({
@@ -29,7 +29,7 @@ export class Job {
 		employment_type,
 		salary_min,
 		salary_max,
-		blocked,
+		isActive,
 		deadline,
 		jobId,
 	}: JobInterface) {
@@ -45,7 +45,7 @@ export class Job {
 		this.employment_type = employment_type ,
 		this.salary_min = salary_min ,
 		this.salary_max = salary_max ,
-		this.blocked = blocked ,
+		this.isActive = isActive ,
 		this.deadline = deadline
 		this.jobId = jobId
     }

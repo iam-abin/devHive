@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import {  getAllJobsApi } from "../../api/axios/jobs/jobs";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setRecruiterJobId } from "../../redux/slice/recruiterSlice/recruiterJobIdSlice";
 
 
@@ -55,7 +55,7 @@ function AllJob() {
 			<div className="flex flex-col w-full">
 				{jobs.map((job: any) => {
 					return (
-						<div className="grid h-20 py-2 px-5 card bg-base-300 rounded-box items-center mb-2 " key={job._id}>
+						<div className="grid h-20 py-2 px-5 card bg-base-300 rounded-box items-center mb-2 " key={job.id}>
 							<div className="flex flex-row justify-between">
 								<div>
 									<div className="text-2xl font-bold">
@@ -80,10 +80,10 @@ function AllJob() {
 									</div>
 								</div>
 								<div>
-									<button onClick={()=> handleEdit(job._id)} className="btn btn-outline ml-3">
+									<button onClick={()=> handleEdit(job.id)} className="btn btn-outline ml-3">
 										Edit
 									</button>
-									<button onClick={()=> handleView(job._id)} className="btn btn-outline ml-3">
+									<button onClick={()=> handleView(job.id)} className="btn btn-outline ml-3">
 										View
 									</button>
 									<button className="btn btn-error ml-3">

@@ -1,5 +1,4 @@
 import schemas from "../../database/models"
-import { blockUnBlockInterface } from "../../types/candidateInterface";
 
 const { CandidateModel } = schemas;
 
@@ -22,10 +21,10 @@ export = {
 		return candidate;
 	},
 
-	blockUnblock: async ({ id }: blockUnBlockInterface) => {
-		console.log("blockUnblock repo candidate id", id);
+	blockUnblock: async (userId: string) => {
+		console.log("blockUnblock repo candidate id", userId);
 		
-		const candidate = await CandidateModel.findOne({userId: id});
+		const candidate = await CandidateModel.findOne({userId});
 		if (!candidate) {
 			console.log("hi");
 			

@@ -14,7 +14,7 @@ export const otpRouter = (dependencies: DependenciesData) => {
 
 	router.post("/sendOtp",  sendOtpNodemailerController);
 
-	router.post("/verifyOtp", verifyOtpNodemailerController);
+	router.post("/verify-forgotPassword-otp", verifyOtpNodemailerController);
 	
 	return router;
 };

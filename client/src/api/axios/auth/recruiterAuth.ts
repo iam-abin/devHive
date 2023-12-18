@@ -2,6 +2,7 @@ import axios from "axios";
 import { BASE_URL } from "../../../config/baseUrl";
 
 const BASE_URL_RECRUITER = `${BASE_URL}/auth/recruiter`;
+const BASE_URL_OTP = `${BASE_URL}/auth/otp`;
 
 export const recruiterSigninApi = async (data: any): Promise<any> => {
 	console.log("in recruiter signin api");
@@ -34,19 +35,42 @@ export const  verifySignupOtpRecruiterApi = async (otp: any, email: string): Pro
 	
 	return response;
 };
-//--------------------------------------------------------------------------------------------
-
-
-export const verifyForgotPasswordOtpCandidateApi = async (otp:string, email: string): Promise<any> => {
+// ================================================================================================
+export const forgotPasswordEmailRecruiterApi = async (email: string): Promise<any> => {
 	const response = await axios({
 		method: "post",
-		url: `${BASE_URL_RECRUITER}/verify-forgotPassword-otp`,
+		url: `${BASE_URL_OTP}/sendOtp`,
+		data: { email},
+	});
+	console.log("response is ", response);
+	
+	return response;
+};
+
+export const verifyForgotPasswordOtpRecruiterApi = async (otp:string, email: string): Promise<any> => {
+	const response = await axios({
+		method: "post",
+		url: `${BASE_URL_OTP}/verify-forgotPassword-otp`,
 		data: {  otp, email },
 	});
 	console.log("response is ", response);
 	
 	return response;
 };
+
+export const forgotPasswordRecruiterApi = async (userId:string, password: string): Promise<any> => {
+	const response = await axios({
+		method: "put",
+		url: `${BASE_URL_RECRUITER}/forgotPassword`,
+		data: {id: userId, password },
+	});
+	console.log("response is ", response);
+	
+	return response;
+};
+// ================================================================================================
+
+
 //--------------------------------------------------------------------------------------------
 export const passwordResetMobileRecruiterApi = async (email: string, phone: string): Promise<any> => {
 	const response = await axios({
@@ -81,14 +105,6 @@ export const resetPasswordRecruiterApi = async (id:string, password: string): Pr
 	return response;
 };
 //--------------------------------------------------------------------------------------------
-
-// export const emailRecruiterVerifyApi = async (url: string): Promise<any> => {
-// 	const response = await axios({
-// 		method: "post",
-// 		url: url,
-// 	});
-// 	return response;
-// };
 
 export const recruiterSignoutApi = async(data: any): Promise<any> =>{
 	console.log(data," in axios");

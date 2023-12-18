@@ -17,10 +17,10 @@ export const getAllCandidatesApi = async (): Promise<any> => {
 
 export const blockUnblockCandidateApi = async (userId: string): Promise<any> => {
     const response = await axios({
-        method: "get",
-        url: `${BASE_URL_CANDIDATE}/viewProfile/${userId}`
+        method: "put",
+        url: `${BASE_URL_CANDIDATE}/blockUnblock/${userId}`
     });
-    console.log(response);
+    console.log("response ", response);
     
     return response;
 };

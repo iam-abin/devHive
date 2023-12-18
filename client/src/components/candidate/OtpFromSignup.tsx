@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux';
 
 import { setCandidate } from '../../redux/slice/candidateSlice/candidateDataSlice';
 import { candidateSignin } from '../../redux/slice/candidateSlice/candidateAuthSlice';
+import { verifySignupOtpCandidateApi } from '../../api/axios/auth/candidateAuth';
 
 interface OtpFromSignupProps {
   email?: string;

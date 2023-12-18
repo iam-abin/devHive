@@ -37,7 +37,7 @@ function RecruiterRouters() {
 
 			<Route path="/forgotPasswordEmail" element={!isRecruiterLoggedIn? <ForgotPasswordFormEmail />: <Navigate to={"/recruiter/landing"} />} />
 			<Route path="/forgotPasswordOtp/:email" element={!isRecruiterLoggedIn? <ForgotPasswordOtpFrom />: <Navigate to={"/recruiter/landing"} />} />
-			<Route path="/forgotPassword" element={!isRecruiterLoggedIn? <ForgotPasswordPassword />: <Navigate to={"/recruiter/landing"} />} />
+			<Route path="/forgotPassword/:userId" element={!isRecruiterLoggedIn? <ForgotPasswordPassword />: <Navigate to={"/recruiter/landing"} />} />
 
 			<Route path="/landing" element={isRecruiterLoggedIn?<Navigate to={"/recruiter"} />: <LandingPage /> } />
 			<Route path="/signin" element={isRecruiterLoggedIn?<Navigate to={"/recruiter"} />:<RecruiterSigninPage /> } />

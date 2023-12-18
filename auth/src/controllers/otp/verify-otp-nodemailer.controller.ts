@@ -49,8 +49,8 @@ export = (dependencies: DependenciesData) => {
 		// const user = await getUserByEmailUseCase(dependencies).execute(checkToken.email);
 
 
-		res.status(201).json({
-			message: "user is registered successfully",
+		res.status(200).json({
+			message: "user is verified successfully",
 			data: user,
 		});
 	};
