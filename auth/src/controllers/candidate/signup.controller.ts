@@ -35,7 +35,7 @@ export = (dependencies: DependenciesData) => {
 				// 	return res.status(200).json({"message": "An email is send to your email, please verify."});
 				// }
 				console.log("email sended response ", response);
-				return res.status(200).json({"message": "An email is send to your email, please verify."});
+				return res.status(200).json({"message": `An email is send to ${isExistingUser.email}, please verify.`});
 			}
 			// userData.password = await  // password hashing can be done in schema or model
 
@@ -72,6 +72,6 @@ export = (dependencies: DependenciesData) => {
 			// console.log("token collection created",emailVerify);
 			const response = await sendVerificationEmail(newUser.email, newUser.otp ,subject ,topic);
 			console.log("email sended response", response);
-			return res.status(200).json({"message": "An email is send to your email, please verify."});
+			return res.status(200).json({"message": `An email is send to ${newUser.email}, please verify.`});
 	};
 };

@@ -29,7 +29,7 @@ function CandidateSignupForm() {
 
 			console.log("Hello");
 			Swal.fire({
-				text: data.data.message,
+				text:data?.data?.message || "Email sendedddd",
 				confirmButtonText: "ok",
 			}).then((response)=>{
 				console.log(response);

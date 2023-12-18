@@ -5,6 +5,8 @@ import { blockUnblockCompanyApi, getAllCompaniesApi } from "../../api/axios/admi
 // import { useDispatch, useSelector } from "react-redux";
 // import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { adminSignout } from "../../redux/slice/adminSlice/adminAuthSlice";
+import { useDispatch } from "react-redux";
 
 interface CompanyInterface {
 	id: string;
@@ -15,6 +17,7 @@ interface CompanyInterface {
 }
 
 function CompaniesManagement() {
+	const dispatch = useDispatch();
 	const [companiesData, setCompaniesData] = useState<CompanyInterface[]>(
 		[]
 	);
@@ -38,7 +41,8 @@ function CompaniesManagement() {
 
 	useEffect(() => {
 		(async () => {
-			const companies = await getAllCompaniesApi();
+			try {
+				const companies = await getAllCompaniesApi();
 			// console.log(companies.data.data);
 			// console.log(Array.isArray(companies.data.data));
 
@@ -53,6 +57,11 @@ function CompaniesManagement() {
 			setCompaniesData(formattedCompanies);
 			setFilteredCompaniesData(formattedCompanies);
 			setOriginalIndexMap(indexMap);
+			} catch (error: any) {
+				if (error.request.status === 401) {
+					dispatch(adminSignout());
+				}
+			}
 		})();
 	}, []);
 

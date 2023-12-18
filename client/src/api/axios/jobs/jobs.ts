@@ -15,6 +15,18 @@ export const getAllJobsApi = async (): Promise<any> => {
     return response;
 };
 
+export const getAllRecruiterAddedJobsApi = async (recruiterId: string): Promise<any> => {
+    const response = await axios({
+        method: "get",
+        url: `${BASE_URL_RECRUITER}/created-jobs/${recruiterId}`,
+    });
+    console.log(response);
+    
+    console.log(response.data);
+    return response;
+};
+
+
 export const getAJobApi = async (id: string): Promise<any> => {
     const response = await axios({
         method: "get",
@@ -39,12 +51,12 @@ export const createJobApi = async (data: any): Promise<any> => {
     return response;
 };
 
-export const updateJobApi = async (data: any, id: string): Promise<any> => {
+export const updateJobApi = async (data: any): Promise<any> => {
     console.log("updateJobApi data ",data);
     
     const response = await axios({
         method: "patch",
-        url: `${BASE_URL_RECRUITER}/${id}`,
+        url: `${BASE_URL_RECRUITER}/update-job`,
         data: data
     });
     console.log(response);

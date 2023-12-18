@@ -23,10 +23,10 @@ interface RecruiterDocument extends mongoose.Document {
 	isVarified: boolean;
 	isActive: boolean;
 	gender: string;
-	company_id?: string;
+	company_id?: mongoose.Schema.Types.ObjectId;
 	profile_image: string;
 	about: string;
-	userId: string;
+	userId: mongoose.Schema.Types.ObjectId;
 	createdAt: string;
 	updatedAt: string;
 	// "membership": "no"
@@ -79,7 +79,7 @@ const recruiterSchema = new mongoose.Schema(
 		},
 		about: String,
 		company_id: mongoose.Schema.Types.ObjectId,
-		userId: String
+		userId: mongoose.Schema.Types.ObjectId
 	},
 	{
 		// to reformat id and remove password,__v from response when converting to json (we can also use other approaches)
@@ -101,7 +101,9 @@ interface RecruiterProfileModel extends mongoose.Model<RecruiterDocument> {
 
 // 5.In Mongoose, you can also add custom functions to a model using statics.
 recruiterSchema.statics.buildRecruiter = (attributes: RecruiterAttributes) => {
-	return new RecruiterProfileModel(attributes);
+	console.log("inside build candidate ", attributes);
+	const userId =  new mongoose.Types.ObjectId(attributes.userId);
+	return new RecruiterProfileModel({...attributes, userId});
 };
 
 // 6. // 6.hover on 'Recruiter' ,we can see that 'Recruiter' is getting 'RecruiterProfileModel', ie,a Second arg indicate returning type

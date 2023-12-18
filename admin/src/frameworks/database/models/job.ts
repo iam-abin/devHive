@@ -13,9 +13,9 @@ interface JobAttributes {
 	employment_type?: string;
 	salary_min?: number;
 	salary_max?: number;
-	blocked?: boolean;
+	isActive?: boolean;
 	deadline?: Date;
-	jobId: String
+	jobId: string;
 }
 
 interface JobDocument extends mongoose.Document {
@@ -31,9 +31,9 @@ interface JobDocument extends mongoose.Document {
 	employment_type?: string;
 	salary_min?: number;
 	salary_max?: number;
-	blocked?: boolean;
+	isActive?: boolean;
 	deadline?: Date;
-	jobId: string
+	jobId: mongoose.Schema.Types.ObjectId
 	createdAt: string;
 	updatedAt: string;
 }
@@ -52,12 +52,12 @@ const jobSchema = new mongoose.Schema(
 		employment_type: String,
 		salary_min: Number,
 		salary_max: Number,
-		blocked: {
+		isActive: {
 			type: Boolean,
-			default: false,
+			default: true,
 		},
 		deadline: Date,
-		jobId: String,
+		jobId: mongoose.Schema.Types.ObjectId
 	},
 	{
 		toJSON: {
@@ -77,8 +77,9 @@ interface JobModel extends mongoose.Model<JobDocument> {
 
 jobSchema.statics.buildJob = (attributes: JobAttributes) => {
 	console.log("in build job attributes", attributes);
+	const jobId = new mongoose.Types.ObjectId(attributes.jobId)
 
-	return new JobModel(attributes);
+	return new JobModel({...attributes, jobId});
 };
 
 const JobModel = mongoose.model<JobDocument, JobModel>("Job", jobSchema);

@@ -11,7 +11,7 @@ export interface JobInterface {
 	employment_type?: string;
 	salary_min?: number;
 	salary_max?: number;
-	blocked?: boolean;
+	isActive?: boolean;
 	deadline?: Date;
 	jobId: string
 }

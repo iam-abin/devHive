@@ -4,6 +4,7 @@ import getUserByEmailUseCase from "./getUserByEmail";
 import getUserByPhoneUseCase from "./getUserByPhone";
 import userSignupUseCase from "./userSignup";
 import updatePasswordUseCase from "./updatePassword";
+import setNodemailerOtpUseCase from "./setNodemailerOtp";
 
 export default {
 	checkEmailVerificationOtpUseCase,
@@ -11,5 +12,6 @@ export default {
 	getUserByEmailUseCase,
 	getUserByPhoneUseCase,
 	userSignupUseCase,
-	updatePasswordUseCase
+	updatePasswordUseCase,
+	setNodemailerOtpUseCase
 };

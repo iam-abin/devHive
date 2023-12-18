@@ -20,29 +20,25 @@ export const recruiterRouter = (dependencies: DependenciesData) => {
 		updateJobController,
 		deleteJobController,
 		createdJobsByRecruiterController,
-		viewJobApplicationsController
+		viewJobApplicationsController,
 	} = recruiterJobControllers(dependencies);
 
-	
 	router.get("/", viewAllJobsController);
+	router.get("/:id", viewJobByJobIdController);
 
 	router.post("/filter", filterJobsController);
 
-	router.post("/create",  createJobController);
+	router.use(requireAuthRecruiter);
 
-	router
-		.route("/:id")
-		// .all(requireAuthRecruiter)
-		.get(viewJobByJobIdController)
-		.delete(deleteJobController);
+	router.post("/create", createJobController);
 
-	router.patch("/update-job",  updateJobController);
-
-	router.get("/created-jobs/:recruiterId",  createdJobsByRecruiterController);
+	router.patch("/update-job", updateJobController);
 	
-	router.get("/job-applications/:id",  viewJobApplicationsController);
+	router.delete("/:id", deleteJobController);
 
+	router.get("/created-jobs/:recruiterId", createdJobsByRecruiterController);
 
+	router.get("/job-applications/:id", viewJobApplicationsController);
 
 	// router.patch('/change-status/:id', requireAuthRecruiter, changeTheApplicationStatus);
 

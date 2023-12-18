@@ -9,6 +9,8 @@ import {
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { adminSignout } from "../../redux/slice/adminSlice/adminAuthSlice";
 
 interface CandidateInterface {
 	id: string;
@@ -20,6 +22,7 @@ interface CandidateInterface {
 }
 
 function CandidatesManagement() {
+	const dispatch = useDispatch();
 	const [candidatesData, setCandidatesData] = useState<CandidateInterface[]>(
 		[]
 	);
@@ -44,21 +47,27 @@ function CandidatesManagement() {
 
 	useEffect(() => {
 		(async () => {
-			const candidates = await getAllCandidatesApi();
-			console.log("in useEffect",candidates.data.data);
-			// console.log(Array.isArray(candidates.data.data));
+			try {
+				const candidates = await getAllCandidatesApi();
+				console.log("in useEffect", candidates.data.data);
+				// console.log(Array.isArray(candidates.data.data));
 
-			const indexMap: { [key: string]: number } = {};
-			const formattedCandidates = candidates.data.data.map(
-				(candidate: CandidateInterface, index: number) => {
-					indexMap[candidate.id] = index;
-					return { ...candidate };
+				const indexMap: { [key: string]: number } = {};
+				const formattedCandidates = candidates.data.data.map(
+					(candidate: CandidateInterface, index: number) => {
+						indexMap[candidate.id] = index;
+						return { ...candidate };
+					}
+				);
+
+				setCandidatesData(formattedCandidates);
+				setFilteredCandidatesData(formattedCandidates);
+				setOriginalIndexMap(indexMap);
+			} catch (error: any) {
+				if (error.request.status === 401) {
+					dispatch(adminSignout());
 				}
-			);
-
-			setCandidatesData(formattedCandidates);
-			setFilteredCandidatesData(formattedCandidates);
-			setOriginalIndexMap(indexMap);
+			}
 		})();
 	}, []);
 
@@ -67,9 +76,11 @@ function CandidatesManagement() {
 		navigate(`/admin/candidate/viewProfileDetails/${userId}`);
 	};
 
-	const handleBlockUnblock = async (userId: string) => {
+	const handleBlockUnblock = async (userId: string, isActive: boolean) => {
 		Swal.fire({
-			title: "Do you want to Block this Candidate?",
+			title: `Do you want to ${
+				isActive ? "block" : "unblock"
+			}  this Candidate?`,
 			text: "Are you sure!",
 			icon: "warning",
 			showCancelButton: true,
@@ -79,6 +90,8 @@ function CandidatesManagement() {
 		}).then(async (result) => {
 			if (result.isConfirmed) {
 				const updatedCandidate = await blockUnblockCandidateApi(userId);
+				console.log("updated candidate data", updatedCandidate);
+
 				if (updatedCandidate) {
 					notify(updatedCandidate.data.message, "success");
 				}
@@ -90,15 +103,14 @@ function CandidatesManagement() {
 							isActive: updatedCandidate.data.data.isActive,
 						};
 					}
-		
+
 					return candidate;
 				});
-		
+
 				setCandidatesData(candidates);
 				setFilteredCandidatesData(candidates);
 			}
 		});
-		
 	};
 
 	const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -149,16 +161,28 @@ function CandidatesManagement() {
 							{/* row 1 */}
 							{filteredCandidatesData &&
 								filteredCandidatesData.map(
-									({ id, name, email, phone, isActive, userId }) => (
+									({
+										id,
+										name,
+										email,
+										phone,
+										isActive,
+										userId,
+									}) => (
 										<tr key={id}>
 											<th>{originalIndexMap[id] + 1}</th>
 											<td>{name}</td>
 											<td>{email}</td>
 											<td>{phone}</td>
 											<td className="text-center">
-												<button onClick={() => {
-														viewProfileDetails(userId);
-													}} className="btn btn-info ">
+												<button
+													onClick={() => {
+														viewProfileDetails(
+															userId
+														);
+													}}
+													className="btn btn-info "
+												>
 													view details
 												</button>
 											</td>
@@ -179,7 +203,10 @@ function CandidatesManagement() {
 											<td className="text-center">
 												<button
 													onClick={() => {
-														handleBlockUnblock(userId);
+														handleBlockUnblock(
+															userId,
+															isActive
+														);
 													}}
 													className={`btn ${
 														isActive

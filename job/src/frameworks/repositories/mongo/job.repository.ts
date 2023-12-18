@@ -17,10 +17,10 @@ export = {
         return deletedJob
     },
 
-    updateJob: async (id: string, data: object)=>{
-        console.log("in updateJob repository id", id, " data ", data);
+    updateJob: async (jobId: string, data: object)=>{
+        console.log("in updateJob repository jobId", jobId, " data ", data);
         
-        const updatedJob = await JobModel.findOneAndUpdate({ "_id": id }, { $set: data }, {new: true});
+        const updatedJob = await JobModel.findOneAndUpdate({ "_id": jobId }, { $set: data }, {new: true});
         console.log("in updateJob repository after update", updatedJob);
 		return updatedJob;
     },
@@ -45,6 +45,8 @@ export = {
 	},
 
 	getAJob: async (id: string) => {
+        console.log(id,"in job repository");
+        
         const job = await JobModel.findById(id);
         return job
     }

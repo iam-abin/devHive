@@ -8,12 +8,10 @@ export = (dependencies: DependenciesData)=>{
     const { useCases: { blockUnblockJobUseCase }} = dependencies
 
     return async (req: Request, res: Response)=>{
-        const {id} = req.params;
+        const {jobId} = req.params;
         
 
-        const isBlocked = await blockUnblockJobUseCase(dependencies).execute({
-            id
-        });
+        const isBlocked = await blockUnblockJobUseCase(dependencies).execute(jobId);
 
         console.log("in bocke unblock controller before message send to kafka", isBlocked);
         

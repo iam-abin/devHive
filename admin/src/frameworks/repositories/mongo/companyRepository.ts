@@ -1,5 +1,4 @@
 import schemas from "../../database/models"
-import { blockUnBlockInterface } from "../../types/candidateInterface";
 
 const { CompanyProfileModel } = schemas;
 
@@ -17,8 +16,8 @@ export = {
 		return await companyObject.save();
 	},
 
-	blockUnblock: async ({ id }: blockUnBlockInterface) => {
-		const company = await CompanyProfileModel.findById(id);
+	blockUnblock: async (companyId: string) => {
+		const company = await CompanyProfileModel.findById(companyId);
 		if (!company) {
 			throw new Error("Company not found");
 		}

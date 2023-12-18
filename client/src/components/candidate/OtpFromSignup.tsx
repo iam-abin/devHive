@@ -4,23 +4,23 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { verifySignupOtpRecruiterApi } from '../../api/axios/auth/recruiterAuth';
-import { recruiterSignin } from '../../redux/slice/recruiterSlice/recruiterAuthSlice';
-import { setRecruiter } from '../../redux/slice/recruiterSlice/recruiterDataSlice';
-import { RootState } from '../../redux/reducer/reducer';
+import { useDispatch } from 'react-redux';
+
+import { setCandidate } from '../../redux/slice/candidateSlice/candidateDataSlice';
+import { candidateSignin } from '../../redux/slice/candidateSlice/candidateAuthSlice';
+import { verifySignupOtpCandidateApi } from '../../api/axios/auth/candidateAuth';
+
+interface OtpFromSignupProps {
+  email?: string;
+}
 
 const otpSchema = yup.object().shape({
   otp: yup.string().length(6, 'OTP must be 6 digits').required('OTP is required'),
 });
 
-const OtpFromSignup: React.FC = () => {
+const OtpFromSignup: React.FC<OtpFromSignupProps> = ({ email }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const candidateData = useSelector(
-		(state: RootState) => state.candidateData.candidate
-	);
-  
 
   const notify = (msg: any, type: string) => {
     type === 'error'
@@ -46,16 +46,16 @@ const OtpFromSignup: React.FC = () => {
     
         console.log('Submitted OTP:', values.otp);
     
-        const response = await verifySignupOtpRecruiterApi(candidateData.phone,values.otp );
+        const response = await verifySignupOtpCandidateApi(values.otp, email!);
         console.log('hiiii', response);
-        dispatch(recruiterSignin());
-        dispatch(setRecruiter(response.data.data));
+        dispatch(candidateSignin());
+        dispatch(setCandidate(response.data.data));
         notify(response.data.message, 'success');
-        navigate('/recruiter');
+        navigate('/candidate');
       } catch (error: any) {
         console.error('Error during OTP submission:', error);
         notify(
-          error.response?.data?.errors?.[0]?.message ||
+          error.response?.data?.message ||
             'An error occurred during OTP submission',
           'error'
         );
@@ -85,7 +85,7 @@ const OtpFromSignup: React.FC = () => {
                 formik.errors.otp && formik.touched.otp ? 'input-error' : null
               }`}
             />
-            <p>an otp is sent to your phone</p>
+            <p>an email is send to : {email}</p>
           </div>
           <label className="label mb-3">
             <span className="label-text-alt text-red-500">

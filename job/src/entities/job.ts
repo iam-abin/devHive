@@ -2,8 +2,8 @@ import { JobInterface } from "../frameworks/types/job-interface";
 
 export class Job {
 	title: string;
-	recruiter: string;
-	company: string;
+	recruiterId: string;
+	companyId?: string;
 	job_descriptions?: string;
 	skills_required?: string | string[];
 	available_position?: string;
@@ -14,15 +14,15 @@ export class Job {
 	salary_min?: number;
 	salary_max?: number;
 	has_applied?: boolean;
-	blocked?: boolean;
+	isActive?: boolean;
 	deadline?: Date;
 	number_applied?: number;
 	number_hired?: number;
 	number_rejected?: number;
 	constructor({
 		title,
-		recruiter,
-		company,
+		recruiterId,
+		companyId,
 		job_descriptions,
 		skills_required,
 		available_position,
@@ -33,15 +33,15 @@ export class Job {
 		salary_min,
 		salary_max,
 		has_applied,
-		blocked,
+		isActive,
 		deadline,
 		number_applied,
 		number_hired,
 		number_rejected,
 	}: JobInterface) {
         this.title = title ,
-		this.recruiter = recruiter ,
-		this.company = company ,
+		this.recruiterId = recruiterId ,
+		this.companyId = companyId ,
 		this.job_descriptions = job_descriptions ,
 		this.skills_required = skills_required ,
 		this.available_position = available_position ,
@@ -52,7 +52,7 @@ export class Job {
 		this.salary_min = salary_min ,
 		this.salary_max = salary_max ,
 		this.has_applied = has_applied ,
-		this.blocked = blocked ,
+		this.isActive = isActive ,
 		this.deadline = deadline ,
 		this.number_applied = number_applied ,
 		this.number_hired = number_hired,

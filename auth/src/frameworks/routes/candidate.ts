@@ -36,11 +36,11 @@ export const candidateRouter = (dependencies: DependenciesData) => {
 
 	
 	// router.put("/forgotPassword",requireAuthCandidate, updatePasswordController);
-	router.put("/forgotPassword",requireAuthCandidate, updatePasswordController);
+	router.put("/forgotPassword", updatePasswordController);
 
-	router.post("/sendOtp", sendOtpTwilioController);
+	router.post("/sendOtp",requireAuthCandidate, sendOtpTwilioController);
 
-	router.post("/verifyOtp", verifyOtpTwilioController);
+	router.post("/verifyOtp",requireAuthCandidate, verifyOtpTwilioController);
 	
 	// router.put("/resetPassword", updatePasswordController);
 	router.put("/resetPassword", requireAuthCandidate, updatePasswordController);

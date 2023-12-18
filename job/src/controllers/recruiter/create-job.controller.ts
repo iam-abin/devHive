@@ -21,8 +21,8 @@ export = (dependencies: DependenciesData)=>{
         const jobCreatedEvent = new JobCreatedEventPublisher(kafkaClient);
         await jobCreatedEvent.publish({
             title : newJob?.title,
-            recruiter : newJob?.recruiter,
-            company : newJob?.company,
+            recruiterId : newJob?.recruiterId,
+            companyId : newJob?.companyId,
             job_descriptions : newJob?.job_descriptions,
             skills_required : newJob?.skills_required,
             available_position : newJob?.available_position,
@@ -32,7 +32,7 @@ export = (dependencies: DependenciesData)=>{
             employment_type : newJob?.employment_type,
             salary_min : newJob?.salary_min,
             salary_max : newJob?.salary_max,
-            blocked : newJob?.blocked,
+            isActive : newJob?.isActive,
             jobId: newJob.id
         });
 

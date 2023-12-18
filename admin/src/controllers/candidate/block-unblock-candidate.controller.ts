@@ -10,11 +10,9 @@ export = (dependencies: DependenciesData)=>{
     return async (req: Request, res: Response)=>{
         const {userId} = req.params;
         
-        console.log("in block unblock controller");
+        console.log("in block unblock controller userId ",userId);
         
-        const isBlocked = await blockUnblockCandidateUseCase(dependencies).execute({
-            userId
-        });
+        const isBlocked = await blockUnblockCandidateUseCase(dependencies).execute(userId);
 
         if(!isBlocked){
             throw new Error("Candidate Not Found")

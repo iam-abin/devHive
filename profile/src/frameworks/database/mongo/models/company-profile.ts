@@ -11,7 +11,7 @@ interface CompanyAttributes {
 	company_country?: string;
 	description?: string;
 	isActive?: boolean;
-	recruiters?: string[];
+	recruiterId?: string;
 }
 // 2. An interface that describes the properties ,that a Company Document has
 interface CompanyDocument extends mongoose.Document {
@@ -24,7 +24,7 @@ interface CompanyDocument extends mongoose.Document {
 	company_country: string;
 	description: string;
 	isActive: boolean;
-	recruiters: string[];
+	recruiters:  mongoose.Schema.Types.ObjectId[];
 	createdAt: string;
 	updatedAt: string;
 }
@@ -50,10 +50,7 @@ const companySchema = new mongoose.Schema(
             type:Boolean,
             default:true
         },
-		recruiters: {
-            type:Array,
-            default:[]
-        },
+		recruiters: Array,
 	},
 	{
 		// to reformat id and remove password,__v from response when converting to json (we can also use other approaches)
@@ -75,7 +72,10 @@ interface CompanyProfileModel extends mongoose.Model<CompanyDocument> {
 
 // 5.In Mongoose, you can also add custom functions to a model using statics.
 companySchema.statics.buildCompany = (attributes: CompanyAttributes) => {
-	return new CompanyProfileModel( attributes );
+	console.log("inside build candidate ", attributes);
+	const recruiterId =  new mongoose.Types.ObjectId(attributes.recruiterId);
+	
+	return new CompanyProfileModel( {...attributes, recruiters: recruiterId? [recruiterId] : []} );
 };
 
 // 6. // 6.hover on 'Company' ,we can see that 'Company' is getting 'CompanyMdel', ie,a Second arg indicate returning type

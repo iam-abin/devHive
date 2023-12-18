@@ -24,7 +24,7 @@ interface RecruiterDocument extends mongoose.Document {
     profile_pic?: string;
 	userType: string;
 	isActive: boolean;
-	userId: string;
+	userId: mongoose.Schema.Types.ObjectId;
 
     company?: String;
     bio?: String;
@@ -61,7 +61,7 @@ const recruiterSchema = new mongoose.Schema(
 			type: Boolean,
 			required: true
 		},
-		userId: String,
+		userId:mongoose.Schema.Types.ObjectId,
 
         company: {
 			type: mongoose.Schema.Types.ObjectId,
@@ -106,7 +106,7 @@ recruiterSchema.statics.buildRecruiter = (attributes: RecruiterAttributes) => {
         company: attributes.company,
         bio: attributes.bio,
         membership: attributes.membership,
-		userId: String,
+		userId: new mongoose.Types.ObjectId(attributes.userId),
         
 	});
 };

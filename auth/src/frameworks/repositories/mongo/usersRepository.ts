@@ -10,7 +10,7 @@ const repository = () => {
 		 // these fn's are returning a promise as async so we can defile return type as Promise<CandidateDataInterface>
 
 		register: async (userData: UserDataSignup) => {
-			const userObject = new UserModel(userData);
+			const userObject = UserModel.buildUser(userData);
 			return await userObject.save();
 		},
 
@@ -39,6 +39,21 @@ const repository = () => {
 			const user = await UserModel.findOne({ phone: phone });
 			return user;
 			
+		},
+
+		// "setOtp" using only in forgot password email otp 
+		setOtp: async (email: string, otp: any) => {
+
+			console.log("in set otp",);
+
+			const result = await UserModel.findOneAndUpdate(
+				{ email },
+				{ $set: { otp: otp } },
+				{ new: true }
+			);
+			console.log("set result: ", result);
+			return result
+
 		},
 
 

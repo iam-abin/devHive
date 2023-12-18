@@ -5,6 +5,7 @@ import * as yup from 'yup';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+
 import { verifySignupOtpRecruiterApi } from '../../api/axios/auth/recruiterAuth';
 import { recruiterSignin } from '../../redux/slice/recruiterSlice/recruiterAuthSlice';
 import { setRecruiter } from '../../redux/slice/recruiterSlice/recruiterDataSlice';
@@ -54,7 +55,7 @@ const OtpFromSignup: React.FC<OtpFromSignupProps> = ({ email }) => {
       } catch (error: any) {
         console.error('Error during OTP submission:', error);
         notify(
-          error.response?.data?.errors?.[0]?.message ||
+          error.response?.data?.message ||
             'An error occurred during OTP submission',
           'error'
         );

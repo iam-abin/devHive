@@ -4,9 +4,9 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import { verifyResetPasswordOtpCandidateApi } from '../../api/axios/auth/candidateAuth';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/reducer/reducer';
+import { verifyResetPasswordOtpRecruiterApi } from '../../api/axios/auth/recruiterAuth';
 
 
 const otpSchema = yup.object().shape({
@@ -20,8 +20,8 @@ const otpSchema = yup.object().shape({
 const PasswordResetOtpFrom: React.FC = () => {
   const navigate = useNavigate();
 
-  const candidateData = useSelector(
-		(state: RootState) => state.candidateData.candidate
+  const recruiterData = useSelector(
+		(state: RootState) => state.recruiterData.recruiter
 	);
 
   const notify = (msg: any, type: string) => {
@@ -47,15 +47,17 @@ const PasswordResetOtpFrom: React.FC = () => {
         }
     
         console.log('Submitted OTP:', values.otp);
-        console.log("candidateData i otp form is ",candidateData);
+        console.log("recruiterData i otp form is ",recruiterData);
         
     
-        const response = await verifyResetPasswordOtpCandidateApi(candidateData.phone, values.otp, candidateData.email);
+        const response = await verifyResetPasswordOtpRecruiterApi(recruiterData.phone, values.otp, recruiterData.email);
         console.log('hiiii', response);
-        // dispatch(recruiterSignin());
-        // dispatch(setRecruiter(response.data.data));
+        if(response.data.data == "pending") {
+          notify(response.data.message, 'error');
+          return
+        }
         notify(response.data.message, 'success');
-        navigate('/candidate/passwordReset');
+        navigate('/recruiter/passwordReset');
       } catch (error: any) {
         console.error('Error during OTP submission:', error);
         notify(

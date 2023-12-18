@@ -37,9 +37,9 @@ export const recruiterRouter = (dependencies: DependenciesData) => {
 
 	router.put("/forgotPassword", updatePasswordController);
 
-	router.post("/sendOtp", sendOtpTwilioController);
+	router.post("/sendOtp",requireAuthRecruiter, sendOtpTwilioController);
 
-	router.post("/verifyOtp", verifyOtpTwilioController);
+	router.post("/verifyOtp",requireAuthRecruiter, verifyOtpTwilioController);
 
 	router.put("/resetPassword", requireAuthRecruiter, updatePasswordController);
 	// router.put("/resetPassword", updatePasswordController);

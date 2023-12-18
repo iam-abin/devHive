@@ -13,6 +13,7 @@ import { adminSignout } from "../../redux/slice/adminSlice/adminAuthSlice";
 import { adminSignoutApi } from "../../api/axios/auth/adminAuth";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
+import { clearAdmin } from "../../redux/slice/adminSlice/adminDataSlice";
 
 function AdminDashboard() {
 	const dispatch = useDispatch();
@@ -43,6 +44,7 @@ function AdminDashboard() {
 				const response = await adminSignoutApi();
 				if (response) {
 					dispatch(adminSignout());
+					dispatch(clearAdmin())
 					notify("Logged out successfully", "success");
 					navigate("/admin");
 				}

@@ -5,14 +5,13 @@ import { RootState } from "../../redux/reducer/reducer";
 
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { toast } from "react-toastify";
-import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 
 interface JobFormData {
-    id: string
+	jobId: string;
 	title: string;
 	recruiter: string;
-	company: string;
+	// company: string;
 	job_descriptions: string;
 	skills_required: string[];
 	available_position: number;
@@ -26,10 +25,9 @@ interface JobFormData {
 }
 
 function EditJob() {
-
 	// const [updatedJobDetails, setupdatedJobDetails] = useState("");
 	const [jobDetails, setJobDetails] = useState<any>(null);
-    const navigate = useNavigate()
+	const navigate = useNavigate();
 	const jobId = useSelector((state: RootState) => {
 		return state.recruiterJobId.jobId;
 	});
@@ -47,9 +45,9 @@ function EditJob() {
 
 		fetchJobDetails();
 	}, [jobId]);
-    if (!jobDetails) {
-        return <div>Loading...</div>;
-      }
+	if (!jobDetails) {
+		return <div>Loading...</div>;
+	}
 
 	console.log(jobDetails, "in edit job details component");
 
@@ -65,54 +63,52 @@ function EditJob() {
 
 	const handleSubmit = async (jobData: JobFormData) => {
 		try {
-            console.log("------------------------");
-            console.log("jobData ", jobData);
-            console.log("jobDetails.id ", jobDetails.id);
-            
-            console.log("------------------------");
-            
-			const data = await updateJobApi(jobData, jobDetails.id);
+			console.log("------------------------");
+			console.log("jobData ", jobData);
+			console.log("jobDetails.jobId ", jobDetails.jobId);
+
+			console.log("------------------------");
+
+			const data = await updateJobApi(jobData);
 
 			console.log("Hello");
-            if(data.data){
-                notify("updated successfully", "success");
-                navigate("/recruiter/all-jobs");
-            } else {
-                notify("not updated", "error");
-            }
-
+			if (data.data) {
+				notify("updated successfully", "success");
+				navigate("/recruiter/all-jobs");
+			} else {
+				notify("not updated", "error");
+			}
 		} catch (error: any) {
 			notify(error.response.data.errors[0].message, "error");
 		}
 	};
 
 	const initialJobValues: JobFormData = {
-        id: "",
-        title: jobDetails?.title ?? "",
-        recruiter: jobDetails?.recruiter ?? "",
-        company: jobDetails?.company ?? "",
-        job_descriptions: jobDetails?.job_descriptions ?? "",
-        skills_required: jobDetails?.skills_required ?? [],
-        available_position: jobDetails?.available_position ?? 0,
-        experience_required: jobDetails?.experience_required ?? "",
-        education_required: jobDetails?.education_required ?? "",
-        location: jobDetails?.location ?? "",
-        employment_type: jobDetails?.employment_type ?? "full-time",
-        salary_min: jobDetails?.salary_min ?? 0,
-        salary_max: jobDetails?.salary_max ?? 0,
-        deadline: new Date(jobDetails?.deadline).toLocaleDateString() ?? "",
+		jobId: "",
+		title: jobDetails?.title ?? "",
+		recruiter: jobDetails?.recruiter ?? "",
+		// company: jobDetails?.company ?? "",
+		job_descriptions: jobDetails?.job_descriptions ?? "",
+		skills_required: jobDetails?.skills_required ?? [],
+		available_position: jobDetails?.available_position ?? 0,
+		experience_required: jobDetails?.experience_required ?? "",
+		education_required: jobDetails?.education_required ?? "",
+		location: jobDetails?.location ?? "",
+		employment_type: jobDetails?.employment_type ?? "full-time",
+		salary_min: jobDetails?.salary_min ?? 0,
+		salary_max: jobDetails?.salary_max ?? 0,
+		deadline: new Date(jobDetails?.deadline).toLocaleDateString() ?? "",
 	};
 
 	//   const jobCreationSchema: /* Define your validation schema here */ = /* ... */;
 
 	return (
-      
 		<Formik
 			initialValues={initialJobValues}
 			// validationSchema={jobCreationSchema}
 			onSubmit={(values) => {
 				console.log(values);
-                values.id = jobDetails.id
+				values.jobId = jobDetails.id;
 				handleSubmit(values);
 			}}
 		>
@@ -150,7 +146,7 @@ function EditJob() {
 								/>
 							</div>
 
-							{/* Recruiter field */}
+							{/* Recruiter field
 							<div className="form-control w-6/6">
 								<label htmlFor="recruiter" className="label">
 									Recruiter
@@ -170,9 +166,9 @@ function EditJob() {
 									component="div"
 									className="error label-text-alt"
 								/>
-							</div>
+							</div> */}
 
-							{/* Company field */}
+							{/* Company field
 							<div className="form-control w-6/6">
 								<label htmlFor="company" className="label">
 									Company
@@ -192,7 +188,7 @@ function EditJob() {
 									component="div"
 									className="error label-text-alt"
 								/>
-							</div>
+							</div> */}
 
 							{/* Job Descriptions field */}
 							<div className="form-control w-6/6">
@@ -330,11 +326,29 @@ function EditJob() {
 										Employment Type
 									</label>
 
-									<select className="select select-primary w-full max-w-xs">
-										<option selected>full-time</option>
-										<option>part-time</option>
-										<option>work-from-home</option>
-									</select>
+									<Field
+										as="select" // Use the 'as' prop to render a select element
+										id="employment_type"
+										name="employment_type"
+										className={`select select-primary w-full max-w-xs ${
+											errors.employment_type &&
+											touched.employment_type
+												? "input-error"
+												: ""
+										}`}
+									>
+										<option value="full-time">
+											Full-time
+										</option>
+										<option value="part-time">
+											Part-time
+										</option>
+									</Field>
+									<ErrorMessage
+										name="employment_type"
+										component="div"
+										className="error label-text-alt"
+									/>
 								</div>
 							</div>
 

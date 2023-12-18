@@ -1,7 +1,7 @@
 export interface JobInterface {
 	title: string;
-	recruiter: string;
-	company: string;
+	recruiterId: string;
+	companyId?: string;
 	job_descriptions?: string;
 	skills_required?: string | string[];
 	available_position?: string;
@@ -12,7 +12,7 @@ export interface JobInterface {
 	salary_min?: number;
 	salary_max?: number;
 	has_applied?: boolean;
-	blocked?: boolean;
+	isActive?: boolean;
 	deadline?: Date;
 	number_applied?: number;
 	number_hired?: number;

@@ -25,6 +25,8 @@ export const candidateRouter = (dependencies: DependenciesData) => {
 
 	router.post("/filter", filterJobsController);
 
+	router.use(requireAuthCandidate)
+
 	router.post("/apply",  applyJobController);
 
 	router.get("/appliedJobs",  appliedJobsController);
