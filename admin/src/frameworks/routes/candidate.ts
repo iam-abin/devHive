@@ -23,8 +23,8 @@ export const candidateRouter = (dependencies: DependenciesData) => {
 	// router.put("/blockUnblock/:id", requireAuthAdmin, candidateBlockUnblockController);
 
 	router.get("/candidates", getAllCandidatesController);
-	router.get("/viewProfile", getCandidateByIdController);
-	router.put("/blockUnblock/:id", candidateBlockUnblockController);
+	router.get("/viewProfile/:userId", getCandidateByIdController);
+	router.put("/blockUnblock/:userId", candidateBlockUnblockController);
 
 	return router;
 };

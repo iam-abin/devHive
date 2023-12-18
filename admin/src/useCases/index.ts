@@ -1,13 +1,13 @@
 import {
 	blockUnblockCandidateUseCase,
 	getAllCandidatesUseCase,
-	getCandidateByIdUseCase,
+	getCandidateProfileByuserIdUseCase,
 } from "./candidate";
 
 import {
 	blockUnblockRecruiterUseCase,
 	getAllRecruitersUseCase,
-	getRecruiterByIdUseCase,
+	getRecruiterProfileByuserIdUseCase,
 } from "./recruiter";
 
 import {
@@ -25,11 +25,11 @@ import {
 export default {
 	blockUnblockCandidateUseCase,
 	getAllCandidatesUseCase,
-	getCandidateByIdUseCase,
+	getCandidateProfileByuserIdUseCase,
 
 	blockUnblockRecruiterUseCase,
 	getAllRecruitersUseCase,
-	getRecruiterByIdUseCase,
+	getRecruiterProfileByuserIdUseCase,
 
 	blockUnblockJobUseCase,
 	getAllJobsUseCase,

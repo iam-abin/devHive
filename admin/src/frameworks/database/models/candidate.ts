@@ -28,7 +28,10 @@ interface CandidateDocument extends mongoose.Document {
     profile_pic?: string;
 	userType: string;
 	isActive: boolean;
-	userId: string;
+	userId: {
+		type: String,
+		unique: true
+	},
 
 	gender?: string;
 	currentLocation?: string;
@@ -94,7 +97,7 @@ const candidateSchema = new mongoose.Schema(
 		},
 		about: String,
 		resume: String,
-		experience: Object,
+		experience: String,
 	},
 	{
 		// to reformat id and remove __v from response when converting to json (we can also use other approaches)

@@ -15,10 +15,20 @@ export const getAllCandidatesApi = async (): Promise<any> => {
 		return response;
 };
 
-export const blockUnblockCandidateApi = async (id: string): Promise<any> => {
+export const blockUnblockCandidateApi = async (userId: string): Promise<any> => {
     const response = await axios({
-        method: "put",
-        url: `${BASE_URL_CANDIDATE}/blockUnblock/${id}`
+        method: "get",
+        url: `${BASE_URL_CANDIDATE}/viewProfile/${userId}`
+    });
+    console.log(response);
+    
+    return response;
+};
+
+export const viewCandidateProfileDetailsApi = async (userId: any): Promise<any> => {
+    const response = await axios({
+        method: "get",
+        url: `${BASE_URL_CANDIDATE}/viewProfile/${userId}`  
     });
     console.log(response);
     

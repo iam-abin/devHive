@@ -15,7 +15,7 @@ export const recruiterRouter = (dependencies: DependenciesData)=>{
     // router.put("/blockUnblock/:id",requireAuthAdmin, recruiterBlockUnblockController);
 
     router.get("/recruiters", getAllRecruitersController);
-    router.get("/viewProfile", getRecruiterByIdController);
+    router.get("/viewProfile/:userId", getRecruiterByIdController);
     router.put("/blockUnblock/:id", recruiterBlockUnblockController);
 
     return router

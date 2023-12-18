@@ -6,13 +6,13 @@ import { UserUpdatedEventPublisher } from "../../frameworks/services/kafka-event
 
 export = (dependencies: DependenciesData)=>{
 
-    const { useCases: { getCandidateProfileByuserIdUseCase, updateCandidateProfileUseCase }} = dependencies
+    const { useCases: { getCandidateProfileByUserIdUseCase, updateCandidateProfileUseCase }} = dependencies
 
     return async (req: Request, res: Response)=>{
         const updatedData = req.body;
         console.log("in candidate update profile controller data: ",updatedData);
         const { userId } = req.body
-        const existingData = await getCandidateProfileByuserIdUseCase(dependencies).execute(userId);
+        const existingData = await getCandidateProfileByUserIdUseCase(dependencies).execute(userId);
         
 console.log("existing data", existingData);
 

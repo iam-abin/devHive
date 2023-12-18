@@ -1,8 +1,8 @@
 
 function HomeCandidate() {
 	return (
-		<div>
-			<h1>Candidate Home page</h1>
+		<div >
+			<h1 className="text-center text-8xl font-bold">Candidate Home page</h1>
 		</div>
 	);
 }

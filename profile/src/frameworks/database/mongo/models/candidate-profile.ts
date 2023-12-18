@@ -93,7 +93,7 @@ const candidateSchema = new mongoose.Schema(
 		about: String,
 		resume: String,
 		experience: Object,
-		userId: String,
+		userId: String
 	},
 	{
 		// to reformat id and remove password,__v from response when converting to json (we can also use other approaches)

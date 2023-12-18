@@ -39,8 +39,8 @@ export = {
 		return updatedJob;
     },
 
-	getById: async (id: string) => {
-		const job = await JobModel.findById(id);
+	getById: async (jobId: string) => {
+		const job = await JobModel.findOne({jobId});
 		return job;
 	},
 
