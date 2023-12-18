@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { adminSigninApi } from "../../api/axios/auth/adminAuth";
-import { adminSignin } from "../../redux/slice/adminSlice/adminAuthSlice";
+import { adminSignin, adminSignout } from "../../redux/slice/adminSlice/adminAuthSlice";
 import { setAdmin } from "../../redux/slice/adminSlice/adminDataSlice";
 import { RootState } from "../../redux/reducer/reducer";
 import { useEffect } from "react";
@@ -55,9 +55,10 @@ function Signin() {
 		  console.log(message);
 		  
 			notify(message, "success");
-				navigate("/admin");
+			navigate("/admin");
 		} catch (error: any) {
 			notify(error.response.data.errors[0].message, "error");
+		
 		}
 	};
 

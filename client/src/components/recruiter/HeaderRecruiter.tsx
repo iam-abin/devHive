@@ -58,6 +58,7 @@ function HeaderRecruiter() {
 	const menus = [
 		{ title: "Dashboard", src: dashboard, to: "/recruiter" },
 		{ title: "Jobs", src: finance, to: "/recruiter/all-jobs" },
+		{ title: "Added Jobs", src: finance, to: "/recruiter/recruiter-added-jobs" },
 		{
 			title: "Applications",
 			src: companies,
@@ -130,7 +131,7 @@ function HeaderRecruiter() {
 						})}
 					</ul>
 				</div>
-				<div className="p-7 text-2xl flex-1 font-semibold bg-red-300 h-screen">
+				<div className="p-7 text-2xl flex-1 font-semibold bg-slate-400 h-screen">
 					<h1>Home page</h1>
 				</div>
 			</div>

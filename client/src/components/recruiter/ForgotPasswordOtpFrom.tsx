@@ -44,8 +44,6 @@ const ForgotPasswordOtpFrom: React.FC = () => {
     
         const response = await verifyForgotPasswordOtpRecruiterApi(values.otp, email!);
         console.log('hiiii', response);
-        // dispatch(recruiterSignin());
-        // dispatch(setRecruiter(response.data.data));
         notify(response.data.message, 'success');
         navigate(`/recruiter/forgotPassword/${response.data.data.id}`);
       } catch (error: any) {

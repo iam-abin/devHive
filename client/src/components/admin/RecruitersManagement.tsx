@@ -9,6 +9,8 @@ import {
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { adminSignout } from "../../redux/slice/adminSlice/adminAuthSlice";
 
 interface RecruiterInterface {
 	id: string;
@@ -20,6 +22,7 @@ interface RecruiterInterface {
 }
 
 function RecruitersManagement() {
+	const dispatch = useDispatch();
 	const [recruitersData, setRecruitersData] = useState<RecruiterInterface[]>(
 		[]
 	);
@@ -45,7 +48,8 @@ function RecruitersManagement() {
 
 	useEffect(() => {
 		(async () => {
-			const recruiters = await getAllRecruitersApi();
+			try {
+				const recruiters = await getAllRecruitersApi();
 			console.log(recruiters.data.data);
 			// console.log(Array.isArray(recruiters.data.data));
 
@@ -60,6 +64,11 @@ function RecruitersManagement() {
 			setRecruitersData(formattedRecruiters);
 			setFilteredRecruitersData(formattedRecruiters);
 			setOriginalIndexMap(indexMap);
+			} catch (error: any) {
+				if (error.request.status === 401) {
+					dispatch(adminSignout());
+				}
+			}
 		})();
 	}, []);
 

@@ -51,8 +51,6 @@ const ResetPasswordFormMobile: React.FC = () => {
     
         const response = await passwordResetMobileRecruiterApi(recruiterData.email, values.mobile);
         console.log('hiiii', response);
-        // dispatch(candidateSignin());
-        // dispatch(setCandidate(response.data.data));
         notify(response.data.message, 'success');
         navigate('/recruiter/passwordResetOtp');
       } catch (error: any) {

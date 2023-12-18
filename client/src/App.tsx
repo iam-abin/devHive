@@ -9,6 +9,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useSelector } from "react-redux";
 import { RootState } from "./redux/reducer/reducer";
+import NotFound from "./components/Error/NotFound";
 // import OtpForm from "./pages/Otp";
 
 export default function App() {
@@ -28,6 +29,7 @@ export default function App() {
 				<Route path="/admin/*" element={<AdminRoutes />} />
 				<Route path="/candidate/*" element={<CandidateRoutes />} />
 				<Route path="/recruiter/*" element={<RecruiterRouters />} />
+				<Route path="/*" element={<NotFound />} />
 			</Routes>
 			{/* <OtpForm /> */}
 		</>

@@ -15,6 +15,18 @@ export const getAllJobsApi = async (): Promise<any> => {
     return response;
 };
 
+export const getAllRecruiterAddedJobsApi = async (recruiterId: string): Promise<any> => {
+    const response = await axios({
+        method: "get",
+        url: `${BASE_URL_RECRUITER}/created-jobs/${recruiterId}`,
+    });
+    console.log(response);
+    
+    console.log(response.data);
+    return response;
+};
+
+
 export const getAJobApi = async (id: string): Promise<any> => {
     const response = await axios({
         method: "get",

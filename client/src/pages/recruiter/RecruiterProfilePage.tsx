@@ -1,6 +1,6 @@
 import React from 'react'
 import Profile from '../../components/recruiter/Profile'
-import HeaderRecruiter from '../../components/recruiter/HeaderRecruiter'
+// import HeaderRecruiter from '../../components/recruiter/HeaderRecruiter'
 
 function RecruiterProfilePage() {
   return (
@@ -9,7 +9,7 @@ function RecruiterProfilePage() {
     {/* <header className="bg-blue-500 p-4 text-white">
       <h1 className="text-2xl font-bold">Job Portal</h1>
     </header> */}
-    <HeaderRecruiter />
+    {/* <HeaderRecruiter /> */}
     <main className="h-screen flex items-center justify-center">
       <Profile />
     </main>

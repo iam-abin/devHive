@@ -1,13 +1,11 @@
-// Profile.tsx
-
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "../../redux/reducer/reducer";
-import { recruiterGetProfileApi } from "../../api/axios/profile/recruiter";
+// src/Profile.tsx
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/reducer/reducer';
+import { recruiterGetProfileApi } from '../../api/axios/profile/recruiter';
 
 const Profile: React.FC = () => {
-
-	const recruiterData = useSelector(
+const recruiterData = useSelector(
 		(state: RootState) => state.recruiterData.recruiter
 	);
 
@@ -27,80 +25,73 @@ const Profile: React.FC = () => {
 			setRecruiterProfileData(candidateProfile);
 		})();
 	}, []);
-	return (
-		<div className="bg-gray-200 min-h-screen md: w-9/12 p-8 mt-16">
-			<div className="w-md mx-auto bg-white p-8 rounded shadow-md">
-				<div className="hero h-56 bg-base-200 relative">
-					<div className="hero-content flex-col lg:flex-row-reverse">
-						<img
-							src="https://daisyui.com/images/stock/photo-1635805737707-575885ab0820.jpg"
-							className="w-1/6 max-w-sm rounded-lg shadow-2xl"
-						/>
-						<div className="flex flex-col items-start lg:items-end">
-							<h1 className="text-5xl font-bold">
-								I'm {(recruiterProfileData?.data?.data?.name)?? recruiterData.name}
-							</h1>
-							<p className="py-6">
-							{recruiterProfileData?.data?.data?.about}
-							</p>
-							<button className="btn btn-primary absolute top-0 right-0 m-4">
-								Edit
-							</button>
-						</div>
-					</div>
-				</div>
+  return (
+    <div className="bg-gray-100 min-h-screen flex">
+      {/* Main Content */}
+      <div className="flex-1 p-8">
+        <div className="bg-white p-8 shadow-md rounded-md">
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <img
+                src="https://via.placeholder.com/150"
+                alt="Recruiter Avatar"
+                className="w-20 h-20 rounded-full mr-4"
+              />
+              <div>
+                <h1 className="text-2xl font-bold text-gray-800">{(recruiterProfileData?.data?.data?.name)?? recruiterData.name}</h1>
+                <p className="text-gray-600">Recruiter at ABC Company</p>
+              </div>
+            </div>
+            <button className="bg-blue-500 text-white px-4 py-2 rounded-md">
+              Edit
+            </button>
+          </div>
+          <div>
+            <h2 className="text-lg font-semibold text-gray-800 mb-2">About Me</h2>
+            <p className="text-gray-600">
+              I am a seasoned recruiter with expertise in technical hiring and talent acquisition.
+            </p>
+          </div>
 
-				{/* Add more profile information as needed */}
-				<div className="flex flex-col w-full border-opacity-50 mt-3">
-					<div className="grid h-12 pl-5 card bg-base-300 rounded-box items-center">
-						<div className="text-left">
-							Name: {(recruiterProfileData?.data?.data?.name) ?? recruiterData.name}
-						</div>
-					</div>
-				</div>
-				<div className="flex flex-col w-full border-opacity-50 mt-3">
-					<div className="grid h-12 pl-5 card bg-base-300 rounded-box items-center">
-						<div className="text-left">
-							Email: {(recruiterProfileData?.data?.data?.email) ?? recruiterData.email}
-						</div>
-					</div>
-				</div>
-				<div className="flex flex-col w-full border-opacity-50 mt-3">
-					<div className="grid h-12 pl-5 card bg-base-300 rounded-box items-center">
-						<div className="text-left">
-							Phone: {(recruiterProfileData?.data?.data?.phone)?? recruiterData.phone}
-						</div>
-					</div>
-				</div>
-				<div className="flex flex-col w-full border-opacity-50 mt-3">
-					<div className="grid h-12 pl-5 card bg-base-300 rounded-box items-center">
-						<div className="text-left">
-							About: {recruiterProfileData?.data?.data?.about}
-						</div>
-					</div>
-				</div>
-				<div className="flex flex-col w-full border-opacity-50 mt-3">
-					<div className="grid h-12 pl-5 card bg-base-300 rounded-box items-center">
-						<div className="text-left">
-							Current Location:{" "}
-							{recruiterProfileData?.data?.data?.currentLocation}
-						</div>
-					</div>
-				</div>
+		  <div>
+            <h2 className="text-lg font-semibold text-gray-800 mb-2">Email</h2>
+            <p className="text-gray-600">
+			{(recruiterProfileData?.data?.data?.email)?? recruiterData.email}
+            </p>
+          </div>
 
-				<div className="mt-8">
-					<h2 className="text-xl font-bold mb-2">Skills</h2>
-					<ul className="list-disc pl-4">
-						{}
-						<li>React.js</li>
-						<li>TypeScript</li>
-						<li>Tailwind CSS</li>
-						{/* Add more skills */}
-					</ul>
-				</div>
-			</div>
-		</div>
-	);
+		  <div>
+            <h2 className="text-lg font-semibold text-gray-800 mb-2">Phone</h2>
+            <p className="text-gray-600">
+			{(recruiterProfileData?.data?.data?.phone)?? recruiterData.phone}
+            </p>
+          </div>
+
+		  <div>
+            <h2 className="text-lg font-semibold text-gray-800 mb-2">About</h2>
+            <p className="text-gray-600">
+			{recruiterProfileData?.data?.data?.about ??
+									"Not specified"}
+            </p>
+          </div>
+
+
+
+
+          <div className="mt-6">
+            <h2 className="text-lg font-semibold text-gray-800 mb-2">Recent Job Postings</h2>
+            <ul>
+              <li className="mb-4">
+                <h3 className="text-blue-500 font-semibold">Software Engineer</h3>
+                <p className="text-gray-600">ABC Company - Full-time - Remote</p>
+              </li>
+              {/* Add more job postings */}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Profile;

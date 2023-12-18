@@ -6,6 +6,8 @@ import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { getAllJobsApi, blockUnblockJobApi, getAllJobsAdminApi } from "../../api/axios/admin/job";
+import { useDispatch } from "react-redux";
+import { adminSignout } from "../../redux/slice/adminSlice/adminAuthSlice";
 
 interface JobInterface {
 	id: string;
@@ -28,6 +30,7 @@ interface JobInterface {
 }
 
 function JobsManagement() {
+	const dispatch = useDispatch();
 	const [adminsjobsData, setAdminsjobsData] = useState<JobInterface[]>(
 		[]
 	);
@@ -53,7 +56,8 @@ function JobsManagement() {
 
 	useEffect(() => {
 		(async () => {
-			const jobs = await getAllJobsAdminApi();
+			try {
+				const jobs = await getAllJobsAdminApi();
 
 			console.log(jobs.data.data);
 			// console.log(Array.isArray(jobs.data.data));
@@ -69,6 +73,11 @@ function JobsManagement() {
 			setAdminsjobsData(formattedjobs);
 			setFilteredAdminsJobData(formattedjobs);
 			setOriginalIndexMap(indexMap);
+			} catch (error: any) {
+				if (error.request.status === 401) {
+					dispatch(adminSignout());
+				}
+			}
 		})();
 	}, []);
 
