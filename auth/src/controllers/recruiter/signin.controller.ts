@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { BadRequestError } from "@abijobportal/common";
-import { comparePassword } from "../../frameworks/services/password";
-import { createJwtToken } from "../../frameworks/services/jwtToken";
+import { comparePassword } from "../../frameworks/utils/password";
+import { createJwtToken } from "../../frameworks/utils/jwtToken";
 import { DependenciesData } from "../../frameworks/types/dependencyInterface";
 
 export = (dependencies: DependenciesData) => {

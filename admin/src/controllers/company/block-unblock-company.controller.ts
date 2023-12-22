@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import { DependenciesData } from "../../frameworks/types/dependencyInterface";
 import { kafkaClient } from "../../config/kafka-connection";
-import { JobUpdatedEventPublisher } from "../../frameworks/services/kafka-events/publishers/job-updated-publisher";
-import { CompanyProfileUpdatedEventPublisher } from "../../frameworks/services/kafka-events/publishers/company-profile-updated-publisher";
+import { JobUpdatedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/job-updated-publisher";
+import { CompanyProfileUpdatedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/company-profile-updated-publisher";
 
 export = (dependencies: DependenciesData)=>{
 

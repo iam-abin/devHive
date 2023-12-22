@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { BadRequestError } from "@abijobportal/common";
 
 import { DependenciesData } from "../../frameworks/types/dependencyInterface";
-import { generateEmailVerificationOtp, sendVerificationEmail } from "../../frameworks/services/sendEmail";
+import { generateEmailVerificationOtp, sendVerificationEmail } from "../../frameworks/utils/sendEmail";
 
 export = (dependencies: DependenciesData) => {
 	const {

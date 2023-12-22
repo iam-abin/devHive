@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { DependenciesData } from "../../frameworks/types/dependencyInterface";
-import { UserUpdatedEventPublisher } from "../../frameworks/services/kafka-events/publishers/user-updated-publisher";
+import { UserUpdatedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/user-updated-publisher";
 import { kafkaClient } from "../../config/kafka-connection";
 
 export = (dependencies: DependenciesData)=>{

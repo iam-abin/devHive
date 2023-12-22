@@ -1,8 +1,8 @@
 import { connectDB } from "./config/db";
 import { app } from "./app";
-import { UserCreatedEventConsumer } from "./frameworks/services/kafka-events/consumers/user-created-consumer";
-import { UserUpdatedEventConsumer } from "./frameworks/services/kafka-events/consumers/user-updated-consumer";
-import { CompanyProfileUpdatedEventConsumer } from "./frameworks/services/kafka-events/consumers/company-profile-updated-consumer";
+import { UserCreatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/user-created-consumer";
+import { UserUpdatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/user-updated-consumer";
+import { CompanyProfileUpdatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/company-profile-updated-consumer";
 import { kafkaClient } from "./config/kafka-connection";
 
 const start = async () => {

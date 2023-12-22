@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
 // import { BadRequestError } from "@abijobportal/common";
 
-import { createJwtToken } from "../../frameworks/services/jwtToken";
+import { createJwtToken } from "../../frameworks/utils/jwtToken";
 import { DependenciesData } from "../../frameworks/types/dependencyInterface";
 import { BadRequestError } from "@abijobportal/common";
-import { UserCreatedEventPublisher } from "../../frameworks/services/kafka-events/publishers/user-created-publisher";
+import { UserCreatedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/user-created-publisher";
 import { kafkaClient } from "../../config/kafka-connection";
 
 export = (dependencies: DependenciesData) => {

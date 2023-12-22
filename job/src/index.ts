@@ -1,7 +1,7 @@
 import { connectDB } from "./config/db";
 import { app } from "./app";
 import { kafkaClient } from "./config/kafka-connection";
-import { jobUpdatedEventConsumer } from "./frameworks/services/kafka-events/consumers/job-updated-consumer";
+import { jobUpdatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/job-updated-consumer";
 
 const start = async () => {
 	console.log("Job Starting up....");

@@ -1,16 +1,16 @@
 import { connectDB } from "./config/db";
 import { app } from "./app";
-import { CompanyProfileCreatedEventConsumer } from "./frameworks/services/kafka-events/consumers/company-profile-created-consumer";
-import { CompanyProfileUpdatedEventConsumer } from "./frameworks/services/kafka-events/consumers/company-profile-updated-consumer";
-import { JobCreatedEventConsumer } from "./frameworks/services/kafka-events/consumers/job-created-consumer";
-import { JobUpdatedEventConsumer } from "./frameworks/services/kafka-events/consumers/job-updated-consumer";
-import { UserCreatedEventConsumer } from "./frameworks/services/kafka-events/consumers/user-created-consumer";
-import { UserUpdatedEventConsumer } from "./frameworks/services/kafka-events/consumers/user-updated-consumer";
+import { CompanyProfileCreatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/company-profile-created-consumer";
+import { CompanyProfileUpdatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/company-profile-updated-consumer";
+import { JobCreatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/job-created-consumer";
+import { JobUpdatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/job-updated-consumer";
+import { UserCreatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/user-created-consumer";
+import { UserUpdatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/user-updated-consumer";
 
 import { kafkaClient } from "./config/kafka-connection";
-import { JobDeletedEventConsumer } from "./frameworks/services/kafka-events/consumers/job-deleted-consumer";
-import { CandidateProfileUpdatedEventConsumer } from "./frameworks/services/kafka-events/consumers/candidate-profile-updated-consumer";
-import { RecruiterProfileUpdatedEventConsumer } from "./frameworks/services/kafka-events/consumers/recruiter-profile-updated-consumer";
+import { JobDeletedEventConsumer } from "./frameworks/utils/kafka-events/consumers/job-deleted-consumer";
+import { CandidateProfileUpdatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/candidate-profile-updated-consumer";
+import { RecruiterProfileUpdatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/recruiter-profile-updated-consumer";
 
 const start = async () => {
 	console.log("Starting up....");

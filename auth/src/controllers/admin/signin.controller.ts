@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { BadRequestError } from "@abijobportal/common";
 
-import { createJwtToken } from "../../frameworks/services/jwtToken";
+import { createJwtToken } from "../../frameworks/utils/jwtToken";
 import { DependenciesData } from "../../frameworks/types/dependencyInterface";
 
 export = (dependencies: DependenciesData) => {
