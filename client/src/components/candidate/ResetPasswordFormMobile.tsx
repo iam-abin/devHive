@@ -3,11 +3,11 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import { passwordResetMobileCandidateApi } from '../../api/axios/auth/candidateAuth';
+import { passwordResetMobileCandidateApi } from '../../axios/api/auth/candidateAuth';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/reducer/reducer';
+import { notify } from '../../utils/toastMessage';
 
 const ResetPasswordFormMobile: React.FC = () => {
   const navigate = useNavigate();
@@ -20,19 +20,6 @@ const ResetPasswordFormMobile: React.FC = () => {
     mobile: yup.string().matches(/^[0-9]+$/, 'Invalid mobile number').required('Mobile number is required'),
   });
   
-
-  const notify = (msg: any, type: string) => {
-
-    // const dispatch = useDispatch();
-
-    type === 'error'
-      ? toast.error(msg, {
-          position: toast.POSITION.TOP_RIGHT,
-        })
-      : toast.success(msg, {
-          position: toast.POSITION.TOP_RIGHT,
-        });
-  };
 
   const formik = useFormik({
     initialValues: {

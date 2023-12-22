@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/reducer/reducer";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { candidateGetProfileApi, updateCandidateProfileApi } from "../../api/axios/profile/candidate";
+import { candidateGetProfileApi, updateCandidateProfileApi } from "../../axios/api/profile/candidate";
+import { notify } from "../../utils/toastMessage";
 
 interface ProfileFormData {
   name: string;
@@ -47,16 +47,6 @@ function EditProfile() {
   if (!profileDetails) {
     return <div>Loading...</div>;
   }
-
-  const notify = (msg: string, type: string) => {
-    type === "error"
-      ? toast.error(msg, {
-          position: toast.POSITION.TOP_RIGHT,
-        })
-      : toast.success(msg, {
-          position: toast.POSITION.TOP_RIGHT,
-        });
-  };
 
   const handleSubmit = async (profileData: ProfileFormData) => {
     try {

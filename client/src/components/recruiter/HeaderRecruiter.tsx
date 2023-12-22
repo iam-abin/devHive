@@ -7,11 +7,11 @@ import finance from "../../assets/finance.svg";
 import companies from "../../assets/companies.svg";
 import candidates from "../../assets/candidates.svg";
 import membership from "../../assets/membership.svg";
-import { recruiterSignoutApi } from "../../api/axios/auth/recruiterAuth";
+import { recruiterSignoutApi } from "../../axios/api/auth/recruiterAuth";
 import { clearRecruiter } from "../../redux/slice/recruiterSlice/recruiterDataSlice";
 import { recruiterSignout } from "../../redux/slice/recruiterSlice/recruiterAuthSlice";
-import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import { notify } from "../../utils/toastMessage";
 
 function HeaderRecruiter() {
 	const dispatch = useDispatch();
@@ -24,15 +24,7 @@ function HeaderRecruiter() {
 		return state.recruiterData.recruiter;
 	});
 
-	const notify = (msg: any, type: string) => {
-		type === "error"
-			? toast.error(msg, {
-					position: toast.POSITION.TOP_RIGHT,
-			  })
-			: toast.success(msg, {
-					position: toast.POSITION.TOP_RIGHT,
-			  });
-	};
+	
 
 	const handleRecruiterLogout = async () => {
 		Swal.fire({

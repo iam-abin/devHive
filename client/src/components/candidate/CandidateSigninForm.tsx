@@ -1,7 +1,6 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import googleIcon from "../../assets/google-icon.svg";
@@ -9,10 +8,11 @@ import googleIcon from "../../assets/google-icon.svg";
 import {
 	initialSigninValues,
 	signInSchema,
-} from "../common-form-validation/signin";
-import { candidateSigninApi } from "../../api/axios/auth/candidateAuth";
+} from "../../utils/signin-validation";
+import { candidateSigninApi } from "../../axios/api/auth/candidateAuth";
 import { candidateSignin } from "../../redux/slice/candidateSlice/candidateAuthSlice";
 import { setCandidate } from "../../redux/slice/candidateSlice/candidateDataSlice";
+import { notify } from "../../utils/toastMessage";
 // import { useEffect } from "react";
 
 function CandidateSigninForm() {
@@ -23,15 +23,7 @@ function CandidateSigninForm() {
 
 	console.log("hi recruiter signin");
 
-	const notify = (msg: any, type: string) => {
-		type === "error"
-			? toast.error(msg, {
-					position: toast.POSITION.TOP_RIGHT,
-			  })
-			: toast.success(msg, {
-					position: toast.POSITION.TOP_RIGHT,
-			  });
-	};
+	
 
 	const handleSubmit = async (userData: any) => {
 		try {

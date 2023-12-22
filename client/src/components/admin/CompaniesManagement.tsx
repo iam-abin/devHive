@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from "react";
-import { blockUnblockCompanyApi, getAllCompaniesApi } from "../../api/axios/admin/company";
+import { blockUnblockCompanyApi, getAllCompaniesApi } from "../../axios/api/admin/company";
 
 // import { useDispatch, useSelector } from "react-redux";
 // import { useNavigate } from "react-router-dom";
@@ -29,15 +29,7 @@ function CompaniesManagement() {
 		[key: string]: number;
 	}>({});
 
-	const notify = (msg: any, type: string) => {
-		type === "error"
-			? toast.error(msg, {
-					position: toast.POSITION.TOP_RIGHT,
-			  })
-			: toast.success(msg, {
-					position: toast.POSITION.TOP_RIGHT,
-			  });
-	};
+	
 
 	useEffect(() => {
 		(async () => {

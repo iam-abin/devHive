@@ -3,9 +3,9 @@
 import React from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { forgotPasswordCandidateApi } from "../../api/axios/auth/candidateAuth";
-import { toast } from "react-toastify";
+import { forgotPasswordCandidateApi } from "../../axios/api/auth/candidateAuth";
 import { useNavigate, useParams } from "react-router-dom";
+import { notify } from "../../utils/toastMessage";
 
 const ForgotPasswordPassword: React.FC = () => {
 	const navigate = useNavigate();
@@ -19,15 +19,7 @@ const ForgotPasswordPassword: React.FC = () => {
 			.required("Confirm Password is required"),
 	});
 
-	const notify = (msg: any, type: string) => {
-		type === "error"
-			? toast.error(msg, {
-					position: toast.POSITION.TOP_RIGHT,
-			  })
-			: toast.success(msg, {
-					position: toast.POSITION.TOP_RIGHT,
-			  });
-	};
+	
 
 	const formik = useFormik({
 		initialValues: {

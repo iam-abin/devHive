@@ -4,22 +4,14 @@ import { Link, useNavigate } from "react-router-dom";
 import {
 	initialSignupValues,
 	signUpSchema,
-} from "../common-form-validation/signup";
-import { recruiterSignupApi } from "../../../src/api/axios/auth/recruiterAuth";
-import { toast } from "react-toastify";
+} from "../../utils/signup-validation";
+import { recruiterSignupApi } from "../../axios/api/auth/recruiterAuth";
 import Swal from "sweetalert2";
+import { notify } from "../../utils/toastMessage";
 
 function RecruiterSignupForm() {
 	const navigate = useNavigate()
-	const notify = (msg: any, type: string) => {
-		type === "error"
-			? toast.error(msg, {
-					position: toast.POSITION.TOP_RIGHT,
-			  })
-			: toast.success(msg, {
-					position: toast.POSITION.TOP_RIGHT,
-			  });
-	};
+	
 
 	const handleSubmit = async (userData: any) => {
 		try {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { viewRecruiterProfileDetailsApi } from "../../api/axios/admin/recruiters";
+import { viewRecruiterProfileDetailsApi } from "../../axios/api/admin/recruiters";
 
 function ViewRecruiterProfileDetails() {
   const { userId } = useParams();

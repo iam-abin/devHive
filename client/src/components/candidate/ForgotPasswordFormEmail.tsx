@@ -3,9 +3,9 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { forgotPasswordEmailCandidateApi } from '../../api/axios/auth/candidateAuth';
-import { toast } from 'react-toastify';
+import { forgotPasswordEmailCandidateApi } from '../../axios/api/auth/candidateAuth';
 import { useNavigate } from 'react-router-dom';
+import { notify } from '../../utils/toastMessage';
 
 const ForgotPasswordFormEmail: React.FC = () => {
   const navigate = useNavigate()
@@ -13,18 +13,6 @@ const ForgotPasswordFormEmail: React.FC = () => {
     email: yup.string().email('Invalid email address').required('Email is required'),
   });
 
-  const notify = (msg: any, type: string) => {
-
-    // const dispatch = useDispatch();
-
-    type === 'error'
-      ? toast.error(msg, {
-          position: toast.POSITION.TOP_RIGHT,
-        })
-      : toast.success(msg, {
-          position: toast.POSITION.TOP_RIGHT,
-        });
-  };
 
   const formik = useFormik({
     initialValues: {

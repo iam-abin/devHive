@@ -2,11 +2,11 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/reducer/reducer';
-import { verifyResetPasswordOtpRecruiterApi } from '../../api/axios/auth/recruiterAuth';
+import { verifyResetPasswordOtpRecruiterApi } from '../../axios/api/auth/recruiterAuth';
+import { notify } from '../../utils/toastMessage';
 
 
 const otpSchema = yup.object().shape({
@@ -23,16 +23,6 @@ const PasswordResetOtpFrom: React.FC = () => {
   const recruiterData = useSelector(
 		(state: RootState) => state.recruiterData.recruiter
 	);
-
-  const notify = (msg: any, type: string) => {
-    type === 'error'
-      ? toast.error(msg, {
-          position: toast.POSITION.TOP_RIGHT,
-        })
-      : toast.success(msg, {
-          position: toast.POSITION.TOP_RIGHT,
-        });
-  };
 
   const formik = useFormik({
     initialValues: {

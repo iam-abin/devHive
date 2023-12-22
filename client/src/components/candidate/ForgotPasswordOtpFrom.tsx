@@ -3,9 +3,9 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { toast } from 'react-toastify';
 import { useNavigate, useParams } from 'react-router-dom';
-import { verifyForgotPasswordOtpCandidateApi } from '../../api/axios/auth/candidateAuth';
+import { verifyForgotPasswordOtpCandidateApi } from '../../axios/api/auth/candidateAuth';
+import { notify } from '../../utils/toastMessage';
 
 const ForgotPasswordOtpFrom: React.FC = () => {
 
@@ -16,16 +16,6 @@ const ForgotPasswordOtpFrom: React.FC = () => {
     otp: yup.string().length(6, 'OTP must be 6 digits').required('OTP is required'),
   });
 
-
-  const notify = (msg: any, type: string) => {
-    type === 'error'
-      ? toast.error(msg, {
-          position: toast.POSITION.TOP_RIGHT,
-        })
-      : toast.success(msg, {
-          position: toast.POSITION.TOP_RIGHT,
-        });
-  };
 
   const formik = useFormik({
     initialValues: {

@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { BadRequestError } from "@abijobportal/common";
 import { comparePassword } from "../../frameworks/utils/password";
-import { createJwtToken } from "../../frameworks/utils/jwtToken";
+import { createJwtAccessToken, createJwtRefreshToken } from "../../frameworks/utils/jwtToken";
 import { DependenciesData } from "../../frameworks/types/dependencyInterface";
 
 export = (dependencies: DependenciesData) => {
@@ -32,23 +32,33 @@ export = (dependencies: DependenciesData) => {
                 throw new BadRequestError("Invalid email or passwordd");
             }
 
+
+			if(!isExistingUser.isActive){
+                // return res.status(400).json({message:"Invalid email or passwordd"})
+
+                throw new BadRequestError("This is a blocked user");
+            }
+
 			// Generate Jwt
             const recruiterPayloadData = {
 				id: isExistingUser.id,
+				name:isExistingUser.name,
 				email: isExistingUser.email,
+				phone: isExistingUser.phone,
 				userType: isExistingUser.userType,
 			};
 			
             // Generate Jwt key
-			const recruiterJWT = createJwtToken(recruiterPayloadData);
+			const recruiterAccessToken = createJwtAccessToken(recruiterPayloadData);
+			const recruiterRefreshToken = createJwtRefreshToken(recruiterPayloadData);
 
-           // Store it on session object
-		   req.session!.recruiterToken = recruiterJWT;
+        //    // Store it on session object
+		//    req.session!.recruiterToken = recruiterJWT;
 
             // // Store it on cookie
             // res.cookie('recruiterToken', recruiterJWT, { httpOnly: true })
 
-            res.status(200).json({message: "Login successful", data: isExistingUser})
+            res.status(200).json({message: "Login successful", data: isExistingUser, recruiterAccessToken, recruiterRefreshToken})
 		
 	};
 };

@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 // import { BadRequestError } from "@abijobportal/common";
 
-import { createJwtToken } from "../../frameworks/utils/jwtToken";
+import { createJwtAccessToken } from "../../frameworks/utils/jwtToken";
 import { DependenciesData } from "../../frameworks/types/dependencyInterface";
 import { BadRequestError } from "@abijobportal/common";
 import { UserCreatedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/user-created-publisher";
@@ -63,7 +63,7 @@ export = (dependencies: DependenciesData) => {
 		};
 
 		// Generate Jwt key
-		const recruiterJWT = createJwtToken(recruiterPayloadData);
+		const recruiterJWT = createJwtAccessToken(recruiterPayloadData);
 
 		// Store it on session object
 		req.session = { recruiterToken: recruiterJWT };

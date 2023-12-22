@@ -3,10 +3,9 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { toast } from 'react-toastify';
 import { useNavigate, useParams } from 'react-router-dom';
-import { verifyForgotPasswordOtpCandidateApi } from '../../api/axios/auth/candidateAuth';
-import { verifyForgotPasswordOtpRecruiterApi } from '../../api/axios/auth/recruiterAuth';
+import { verifyForgotPasswordOtpRecruiterApi } from '../../axios/api/auth/recruiterAuth';
+import { notify } from '../../utils/toastMessage';
 
 const ForgotPasswordOtpFrom: React.FC = () => {
 
@@ -18,15 +17,6 @@ const ForgotPasswordOtpFrom: React.FC = () => {
   });
 
 
-  const notify = (msg: any, type: string) => {
-    type === 'error'
-      ? toast.error(msg, {
-          position: toast.POSITION.TOP_RIGHT,
-        })
-      : toast.success(msg, {
-          position: toast.POSITION.TOP_RIGHT,
-        });
-  };
 
   const formik = useFormik({
     initialValues: {

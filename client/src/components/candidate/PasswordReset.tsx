@@ -4,8 +4,8 @@ import * as yup from 'yup';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/reducer/reducer';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { resetPasswordCandidateApi } from '../../api/axios/auth/candidateAuth';
+import { resetPasswordCandidateApi } from '../../axios/api/auth/candidateAuth';
+import { notify } from '../../utils/toastMessage';
 
 const PasswordReset: React.FC = () => {
   const navigate = useNavigate();
@@ -13,16 +13,6 @@ const PasswordReset: React.FC = () => {
 		(state: RootState) => state.candidateData.candidate
 	);
   
-
-  const notify = (msg: any, type: string) => {
-    type === 'error'
-      ? toast.error(msg, {
-          position: toast.POSITION.TOP_RIGHT,
-        })
-      : toast.success(msg, {
-          position: toast.POSITION.TOP_RIGHT,
-        });
-  };
 
 
   const initialValues = {

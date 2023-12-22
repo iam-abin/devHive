@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 
 // import { useDispatch, useSelector } from "react-redux";
 // import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
-import { getAllJobsApi, blockUnblockJobApi, getAllJobsAdminApi } from "../../api/axios/admin/job";
+import { getAllJobsApi, blockUnblockJobApi, getAllJobsAdminApi } from "../../axios/api/admin/job";
 import { useDispatch } from "react-redux";
 import { adminSignout } from "../../redux/slice/adminSlice/adminAuthSlice";
+import { notify } from "../../utils/toastMessage";
 
 interface JobInterface {
 	id: string;
@@ -44,15 +44,7 @@ function JobsManagement() {
 
 	const navigate = useNavigate();
 
-	const notify = (msg: any, type: string) => {
-		type === "error"
-			? toast.error(msg, {
-					position: toast.POSITION.TOP_RIGHT,
-			  })
-			: toast.success(msg, {
-					position: toast.POSITION.TOP_RIGHT,
-			  });
-	};
+	
 
 	useEffect(() => {
 		(async () => {

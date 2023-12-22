@@ -3,25 +3,17 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import {
 	initialSignupValues,
 	signUpSchema,
-} from "../common-form-validation/signup";
+} from "../../utils/signup-validation";
 
 import googleIcon from "../../assets/google-icon.svg";
 import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import Swal from "sweetalert2";
-import { candidateSignupApi } from "../../api/axios/auth/candidateAuth";
+import { candidateSignupApi } from "../../axios/api/auth/candidateAuth";
+import { notify } from "../../utils/toastMessage";
 
 function CandidateSignupForm() {
 	const navigate = useNavigate()
-	const notify = (msg: any, type: string) => {
-		type === "error"
-			? toast.error(msg, {
-					position: toast.POSITION.TOP_RIGHT,
-			  })
-			: toast.success(msg, {
-					position: toast.POSITION.TOP_RIGHT,
-			  });
-	};
+	
 
 	const handleSubmit = async (userData: any) => {
 		try {

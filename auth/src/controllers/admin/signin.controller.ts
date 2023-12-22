@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { BadRequestError } from "@abijobportal/common";
 
-import { createJwtToken } from "../../frameworks/utils/jwtToken";
+import { createJwtAccessToken } from "../../frameworks/utils/jwtToken";
 import { DependenciesData } from "../../frameworks/types/dependencyInterface";
 
 export = (dependencies: DependenciesData) => {
@@ -38,16 +38,16 @@ export = (dependencies: DependenciesData) => {
 				email: isExistingUser.email,
 				userType: isExistingUser.userType,
 			};
-			
-            // Generate Jwt key
-			const adminJWT = createJwtToken(adminPayloadData);
 
-			// // Store it on session object
-			req.session!.adminToken = adminJWT;
+			// Generate a Jwt access token
+			const adminJWTAccessToken = createJwtAccessToken(adminPayloadData);
+
+			// // // Store it on session object
+			// req.session!.adminToken = adminJWT;
 
             // // Store it on cookie
             // res.cookie('adminToken', adminJWT, { httpOnly: true })
 
-            res.status(200).json({message: "Login successfull", data: isExistingUser});
+            res.status(200).json({message: "Login successfull", data: isExistingUser, adminJWTAccessToken});
 	};
 };

@@ -5,14 +5,14 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import {
 	initialSigninValues,
 	signInSchema,
-} from "../common-form-validation/signin";
-import { recruiterSigninApi } from "../../../src/api/axios/auth/recruiterAuth";
+} from "../../utils/signin-validation";
+import { recruiterSigninApi } from "../../axios/api/auth/recruiterAuth";
 import { recruiterSignin } from "../../redux/slice/recruiterSlice/recruiterAuthSlice";
 import { setRecruiter } from "../../redux/slice/recruiterSlice/recruiterDataSlice";
-import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { RootState } from "../../redux/reducer/reducer";
 import { useEffect } from "react";
+import { notify } from "../../utils/toastMessage";
 
 function RecruiterSigninForm() {
 	const dispatch = useDispatch();
@@ -32,15 +32,7 @@ function RecruiterSigninForm() {
 
 	console.log("hi recruiter signin");
 
-	const notify = (msg: any, type: string) => {
-		type === "error"
-			? toast.error(msg, {
-					position: toast.POSITION.TOP_RIGHT,
-			  })
-			: toast.success(msg, {
-					position: toast.POSITION.TOP_RIGHT,
-			  });
-	};
+	
 
 	// // const isLoggedIn =
 	const handleSubmit = async (userData: any) => {

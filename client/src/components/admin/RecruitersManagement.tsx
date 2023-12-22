@@ -2,15 +2,15 @@ import { useEffect, useState } from "react";
 import {
 	blockUnblockRecruiterApi,
 	getAllRecruitersApi,
-} from "../../api/axios/admin/recruiters";
+} from "../../axios/api/admin/recruiters";
 
 // import { useDispatch, useSelector } from "react-redux";
 // import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { adminSignout } from "../../redux/slice/adminSlice/adminAuthSlice";
+import { notify } from "../../utils/toastMessage";
 
 interface RecruiterInterface {
 	id: string;
@@ -36,15 +36,7 @@ function RecruitersManagement() {
 
 	const navigate = useNavigate();
 
-	const notify = (msg: any, type: string) => {
-		type === "error"
-			? toast.error(msg, {
-					position: toast.POSITION.TOP_RIGHT,
-			  })
-			: toast.success(msg, {
-					position: toast.POSITION.TOP_RIGHT,
-			  });
-	};
+	
 
 	useEffect(() => {
 		(async () => {

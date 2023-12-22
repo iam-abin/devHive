@@ -2,13 +2,13 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import { setCandidate } from '../../redux/slice/candidateSlice/candidateDataSlice';
 import { candidateSignin } from '../../redux/slice/candidateSlice/candidateAuthSlice';
-import { verifySignupOtpCandidateApi } from '../../api/axios/auth/candidateAuth';
+import { verifySignupOtpCandidateApi } from '../../axios/api/auth/candidateAuth';
+import { notify } from '../../utils/toastMessage';
 
 interface OtpFromSignupProps {
   email?: string;
@@ -22,15 +22,6 @@ const OtpFromSignup: React.FC<OtpFromSignupProps> = ({ email }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const notify = (msg: any, type: string) => {
-    type === 'error'
-      ? toast.error(msg, {
-          position: toast.POSITION.TOP_RIGHT,
-        })
-      : toast.success(msg, {
-          position: toast.POSITION.TOP_RIGHT,
-        });
-  };
 
   const formik = useFormik({
     initialValues: {
