@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { viewJobDetailsApi } from "../../axios/api/admin/job";
+import { viewJobDetailsApi } from "../../axios/apiMethods/admin-service/job";
 
 function ViewJobDetails() {
 	const { jobId } = useParams();

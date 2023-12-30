@@ -7,9 +7,8 @@ import finance from "../../assets/finance.svg";
 import companies from "../../assets/companies.svg";
 import candidates from "../../assets/candidates.svg";
 import membership from "../../assets/membership.svg";
-import { recruiterSignoutApi } from "../../axios/api/auth/recruiterAuth";
+import { recruiterSignoutApi } from "../../axios/apiMethods/auth-service/recruiterAuth";
 import { clearRecruiter } from "../../redux/slice/recruiterSlice/recruiterDataSlice";
-import { recruiterSignout } from "../../redux/slice/recruiterSlice/recruiterAuthSlice";
 import Swal from "sweetalert2";
 import { notify } from "../../utils/toastMessage";
 
@@ -17,13 +16,15 @@ function HeaderRecruiter() {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const isLoggedIn = useSelector((state: RootState) => {
-		return state.recruiterAuth.recruiterLoggedIn;
+		return state.recruiterData.data
 	});
 
-	const recruiter = useSelector((state: RootState) => {
-		return state.recruiterData.recruiter;
+	const recruiter: any = useSelector((state: RootState) => {
+		return state.recruiterData.data
 	});
 
+	console.log("isLoggedin Data", isLoggedIn);
+	
 	
 
 	const handleRecruiterLogout = async () => {
@@ -38,9 +39,9 @@ function HeaderRecruiter() {
 		}).then(async (result) => {
 			if (result.isConfirmed) {
 				const response = await recruiterSignoutApi(recruiter);
+				console.log("signout response", response);
 				if (response) {
 					dispatch(clearRecruiter());
-					dispatch(recruiterSignout());
 					notify("Logged out successfully", "success");
 					navigate("/recruiter/signin");
 				}
@@ -77,7 +78,7 @@ function HeaderRecruiter() {
 								className="btn btn-ghost mr-10 p-5"
 							>
 								<div className=" rounded-full">
-									{recruiter.name}
+									{recruiter?.name}
 								</div>
 							</div>
 							<ul

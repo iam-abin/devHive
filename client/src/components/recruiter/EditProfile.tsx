@@ -6,7 +6,8 @@ import { RootState } from "../../redux/reducer/reducer";
 
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useNavigate } from "react-router-dom";
-import { recruiterGetProfileApi, updateRecruiterProfileApi } from "../../axios/api/profile/recruiter";
+// import { recruiterGetProfileApi, updateRecruiterProfileApi } from "../../axios/admin2/profile/recruiter";
+import { recruiterGetProfileApi, updateRecruiterProfileApi } from "../../axios/apiMethods/profile-service/recruiter";
 import { notify } from "../../utils/toastMessage";
 
 interface ProfileFormData {

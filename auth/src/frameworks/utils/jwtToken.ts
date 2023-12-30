@@ -9,7 +9,7 @@ export const createJwtAccessToken = (payload: {
 	isActive?: boolean
 }) => {
 	const createdJwtToken = jwt.sign(payload, process.env.JWT_SECRET_KEY!, {
-		expiresIn: "3m",
+		expiresIn: "29d",
 	});
 
 	return createdJwtToken;

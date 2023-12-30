@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { viewCandidateProfileDetailsApi } from "../../axios/api/admin/candidates";
+import { viewCandidateProfileDetailsApi } from "../../axios/apiMethods/admin-service/candidates";
 
 function ViewProfileDetails() {
   const { userId } = useParams();

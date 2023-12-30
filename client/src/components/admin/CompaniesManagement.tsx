@@ -1,11 +1,11 @@
 
 import { useEffect, useState } from "react";
-import { blockUnblockCompanyApi, getAllCompaniesApi } from "../../axios/api/admin/company";
-
+// import { blockUnblockCompanyApi, getAllCompaniesApi } from "../../axios/admin2/admin/company";
+import { blockUnblockCompanyApi, getAllCompaniesApi } from "../../axios/apiMethods/admin-service/company";
 // import { useDispatch, useSelector } from "react-redux";
 // import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { adminSignout } from "../../redux/slice/adminSlice/adminAuthSlice";
+import { clearAdmin } from "../../redux/slice/adminSlice/adminDataSlice";
 import { useDispatch } from "react-redux";
 
 interface CompanyInterface {
@@ -50,9 +50,11 @@ function CompaniesManagement() {
 			setFilteredCompaniesData(formattedCompanies);
 			setOriginalIndexMap(indexMap);
 			} catch (error: any) {
-				if (error.request.status === 401) {
-					dispatch(adminSignout());
-				}
+				console.error(error);
+
+				// if (error.request.status === 401) {
+				// 	dispatch(clearAdmin());
+				// }
 			}
 		})();
 	}, []);

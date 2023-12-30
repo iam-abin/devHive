@@ -3,7 +3,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux/reducer/reducer";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useNavigate } from "react-router-dom";
-import { candidateGetProfileApi, updateCandidateProfileApi } from "../../axios/api/profile/candidate";
+// import { candidateGetProfileApi, updateCandidateProfileApi } from "../../axios/admin2/profile/candidate";
+import { candidateGetProfileApi, updateCandidateProfileApi } from "../../axios/apiMethods/profile-service/candidate";
 import { notify } from "../../utils/toastMessage";
 
 interface ProfileFormData {

@@ -9,8 +9,7 @@ import membership from "../../assets/membership.svg";
 import logout from "../../assets/logout.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { adminSignout } from "../../redux/slice/adminSlice/adminAuthSlice";
-import { adminSignoutApi } from "../../axios/api/auth/adminAuth";
+import { adminSignoutApi } from "../../axios/apiMethods/auth-service/adminAuth"; 
 import Swal from "sweetalert2";
 import { clearAdmin } from "../../redux/slice/adminSlice/adminDataSlice";
 import { notify } from "../../utils/toastMessage";
@@ -35,7 +34,6 @@ function AdminDashboard() {
 			if (result.isConfirmed) {
 				const response = await adminSignoutApi();
 				if (response) {
-					dispatch(adminSignout());
 					dispatch(clearAdmin())
 					notify("Logged out successfully", "success");
 					navigate("/admin");

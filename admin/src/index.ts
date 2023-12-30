@@ -20,6 +20,11 @@ const start = async () => {
 		throw new Error("JWT_SECRET_KEY must be defined");
 	}
 
+	// if we do not set JWT_REFRESH_SECRET_KEY
+	if (!process.env.JWT_REFRESH_SECRET_KEY) {
+		throw new Error("JWT_REFRESH_SECRET_KEY must be defined");
+	}
+
 	//if we do not set mongo_uri
 	if (!process.env.MONGO_URL_ADMIN) {
 		throw new Error("MONGO_URL_ADMIN must be defined");

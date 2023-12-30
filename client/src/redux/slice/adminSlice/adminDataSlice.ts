@@ -1,18 +1,24 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import {
+	adminAccessToken,
+	adminRefreshToken,
+} from "../../../config/localStorage";
 
 interface Admin {
-	id: string;
-	name: string;
-	email: string;
+	data: any;
+	adminAccessToken: string;
+	adminRefreshToken: string;
 }
 
-const loadAdminFromLocalStorage = () => {
-	const admin = localStorage.getItem("admin");
-	return admin ? JSON.parse(admin) : null;
-};
+// const loadAdminFromLocalStorage = () => {
+// 	const admin = localStorage.getItem("admin");
+// 	return admin ? JSON.parse(admin) : null;
+// };
 
 const initialState = {
-	admin: loadAdminFromLocalStorage(),
+	loading: false,
+	data: null as Admin | null,
+	error: false,
 };
 
 const adminDataSlice = createSlice({
@@ -20,16 +26,24 @@ const adminDataSlice = createSlice({
 	initialState,
 	reducers: {
 		setAdmin: (state, action: PayloadAction<Admin>) => {
-			state.admin = action.payload;
-			localStorage.setItem("admin", JSON.stringify(action.payload));
+			state.data = action.payload?.data;
+
+			localStorage.setItem(
+				adminAccessToken,
+				JSON.stringify(action.payload?.adminAccessToken)
+			);
+			localStorage.setItem(
+				adminRefreshToken,
+				JSON.stringify(action.payload?.adminRefreshToken)
+			);
 		},
-        clearAdmin: (state)=>{
-            state.admin = null;
-            localStorage.removeItem("admin")
-        }
+		clearAdmin: (state) => {
+			state.data = null;
+			localStorage.removeItem(adminAccessToken);
+			localStorage.removeItem(adminRefreshToken);
+		},
 	},
 });
-
 
 export const { setAdmin, clearAdmin } = adminDataSlice.actions; //we can use it in login page
 export default adminDataSlice.reducer;

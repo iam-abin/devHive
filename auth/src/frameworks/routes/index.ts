@@ -1,5 +1,6 @@
 import express from "express";
-import { currentUserAdminCheck, currentUserCandidateCheck, currentUserRecruiterCheck } from "@abijobportal/common";
+import { currentUserAdminCheck, currentUserRecruiterCheck } from "@abijobportal/common";
+import { currentUserCandidateCheck } from "../a-needtodelete/current-user-candidate";
 
 import { adminRouter } from "./admin";
 import { candidateRouter } from "./candidate";

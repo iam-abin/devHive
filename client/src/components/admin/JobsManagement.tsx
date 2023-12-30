@@ -4,9 +4,10 @@ import { useEffect, useState } from "react";
 // import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
-import { getAllJobsApi, blockUnblockJobApi, getAllJobsAdminApi } from "../../axios/api/admin/job";
+// import { getAllJobsApi, blockUnblockJobApi, getAllJobsAdminApi } from "../../axios/admin2/admin/job";
+import { blockUnblockJobApi, getAllJobsAdminApi } from "../../axios/apiMethods/admin-service/job";
 import { useDispatch } from "react-redux";
-import { adminSignout } from "../../redux/slice/adminSlice/adminAuthSlice";
+import { clearAdmin } from "../../redux/slice/adminSlice/adminDataSlice";
 import { notify } from "../../utils/toastMessage";
 
 interface JobInterface {
@@ -66,9 +67,11 @@ function JobsManagement() {
 			setFilteredAdminsJobData(formattedjobs);
 			setOriginalIndexMap(indexMap);
 			} catch (error: any) {
-				if (error.request.status === 401) {
-					dispatch(adminSignout());
-				}
+				console.error(error);
+
+				// if (error.request.status === 401) {
+				// 	dispatch(clearAdmin());
+				// }
 			}
 		})();
 	}, []);

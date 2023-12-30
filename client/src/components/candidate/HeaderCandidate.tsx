@@ -2,8 +2,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { RootState } from "../../redux/reducer/reducer";
 import { useDispatch, useSelector } from "react-redux";
 import { clearCandidate } from "../../redux/slice/candidateSlice/candidateDataSlice";
-import { candidateSignout } from "../../redux/slice/candidateSlice/candidateAuthSlice";
-import { candidateSignoutApi } from "../../axios/api/auth/candidateAuth";
+import { candidateSignoutApi } from "../../axios/apiMethods/auth-service/candidateAuth";
+// import { candidateSignoutApi } from "../../axios/admin2/auth/candidateAuth";
 import Swal from "sweetalert2";
 import { notify } from "../../utils/toastMessage";
 
@@ -11,13 +11,13 @@ function HeaderCandidate() {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
-	const isLoggedIn = useSelector((state: RootState) => {
-		return state.candidateAuth.candidateLoggedIn;
+	const candidate = useSelector((state: RootState) => {
+		return state.candidateData.data
 	});
 
-	const candidate = useSelector((state: RootState) => {
-		return state.candidateData.candidate;
-	});
+	// const candidate = useSelector((state: RootState) => {
+	// 	return state.candidateData.candidate;
+	// });
 
 	const handleCandidateLogout = async () => {
 		Swal.fire({
@@ -31,9 +31,10 @@ function HeaderCandidate() {
 		}).then(async (result) => {
 			if (result.isConfirmed) {
 				const response = await candidateSignoutApi(candidate);
+				console.log("signout response", response);
+				
 				if (response) {
 					dispatch(clearCandidate());
-					dispatch(candidateSignout());
 					notify("Logged out successfully", "success");
 					navigate("/candidate/signin");
 				}
@@ -50,7 +51,7 @@ function HeaderCandidate() {
 					<a className="btn btn-ghost text-xl" onClick={()=> navigate("/")}>DevHive</a>
 				</div>
 
-				{isLoggedIn ? (
+				{candidate ? (
 					<div className="flex-none">
 						<div className="dropdown dropdown-end">
 							<div

@@ -1,7 +1,7 @@
 import express from "express";
 import "express-async-errors";
 import morgan from "morgan";
-import cookieSession from "cookie-session";
+// import cookieSession from "cookie-session";
 // import cookieParser from "cookie-parser"
 
 import { routes } from "./frameworks/routes";
@@ -13,12 +13,12 @@ const app = express();
 const API_PREFIX = process.env.API_PREFIX || "/api/v1/auth";
 
 app.set("trust proxy", true); // trust first proxy
-app.use(
-	cookieSession({
-		signed: false,
-		secure: true,
-	})
-);
+// app.use(
+// 	cookieSession({
+// 		signed: false,
+// 		secure: true,
+// 	})
+// );
 
 
 // Middlewares

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { getAJobApi, updateJobApi } from "../../axios/api/jobs/jobs";
+// import { getAJobApi, updateJobApi } from "../../axios/admin2/jobs/jobs";
+import { getAJobApi, updateJobApi } from "../../axios/apiMethods/jobs-service/jobs";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/reducer/reducer";
 

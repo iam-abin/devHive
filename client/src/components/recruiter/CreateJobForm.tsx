@@ -1,6 +1,6 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import Swal from "sweetalert2";
-import { createJobApi } from "../../axios/api/jobs/jobs";
+import { createJobApi } from "../../axios/apiMethods/jobs-service/jobs";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/reducer/reducer";
 import { useNavigate } from "react-router-dom";

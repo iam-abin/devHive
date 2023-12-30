@@ -1,7 +1,7 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 
 import AdminHomePage from "../pages/admin/AdminHomePage";
-import AdminSigninPage from "../pages/admin/AdminSigninPage";
+import AdminSigninPage from "../pages/auth-pages/signin/AdminSigninPage";
 import CandidateManagementPage from "../pages/admin/CandidateManagementPage";
 import RecruiterManagementPage from "../pages/admin/RecruiterManagementPage";
 import { useSelector } from "react-redux";
@@ -13,7 +13,7 @@ import JobsManagement from "../components/admin/JobsManagement";
 
 function AdminRoutes() {
 	const isAdminLoggedIn = useSelector(
-		(state: RootState) => state.adminAuth.adminLoggedIn
+		(state: RootState) => state.adminData.data
 	);
 	return (
 		<>

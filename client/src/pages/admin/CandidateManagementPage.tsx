@@ -1,4 +1,4 @@
-import CandidatesManagement from "../../components/admin/CandidatesManagement"
+import CandidatesManagement from "../../components/admin/candidateManagement/CandidatesManagement"
 
 function CandidateManagementPage() {
   return (
