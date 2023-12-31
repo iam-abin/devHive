@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { getAllJobsApi, getAllRecruiterAddedJobsApi } from "../../api/axios/jobs/jobs";
+// import { getAllJobsApi, getAllRecruiterAddedJobsApi } from "../../axios/admin2/jobs/jobs";
+import { getAllRecruiterAddedJobsApi, getAllJobsApi } from "../../axios/apiMethods/jobs-service/jobs";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setRecruiterJobId } from "../../redux/slice/recruiterSlice/recruiterJobIdSlice";

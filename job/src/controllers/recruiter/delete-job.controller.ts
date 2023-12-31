@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { DependenciesData } from "../../frameworks/types/dependencyInterface";
 import { kafkaClient } from "../../config/kafka-connection";
 // import { JobUpdatedEventPublisher } from "../../frameworks/services/kafka-events/publishers/job-updated-publisher";
-import { JobDeletedEventPublisher } from "../../frameworks/services/kafka-events/publishers/job-deleted-publisher";
+import { JobDeletedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/job-deleted-publisher";
 // import { produceMessage } from "../../frameworks/services/kafka/producer";
 
 export = (dependencies: DependenciesData)=>{

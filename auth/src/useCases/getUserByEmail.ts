@@ -5,6 +5,7 @@ export = (dependencies: any) => {
 		throw new Error("usersRepository should exist in dependencies");
 	}
 
+
 	const execute = (email: string) => {
 		console.log("get user by email usecase");
 		

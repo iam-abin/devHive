@@ -1,19 +1,19 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import {
+	candidateAccessToken,
+	candidateRefreshToken,
+} from "../../../config/localStorage";
 
 interface Candidate {
-	id: string;
-	name: string;
-	email: string;
-	phone: string;
+	data: any
+	candidateAccessToken: string;
+	candidateRefreshToken: string;
 }
 
-const loadCandidateFromLocalStorage = () => {
-	const candidate = localStorage.getItem("candidate");
-	return candidate ? JSON.parse(candidate) : null;
-};
-
 const initialState = {
-	candidate: loadCandidateFromLocalStorage(),
+	loading: false,
+	data: null as Candidate | null,
+	error: false,
 };
 
 const candidateDataSlice = createSlice({
@@ -21,16 +21,25 @@ const candidateDataSlice = createSlice({
 	initialState,
 	reducers: {
 		setCandidate: (state, action: PayloadAction<Candidate>) => {
-			state.candidate = action.payload;
-			localStorage.setItem("candidate", JSON.stringify(action.payload));
+			state.data = action.payload?.data;
+			console.log("in setcandidate reducer payload", action.payload);
+
+			localStorage.setItem(
+				candidateAccessToken,
+				JSON.stringify(action.payload?.candidateAccessToken)
+			);
+			localStorage.setItem(
+				candidateRefreshToken,
+				JSON.stringify(action.payload?.candidateRefreshToken)
+			);
 		},
-        clearCandidate: (state)=>{
-            state.candidate = null;
-            localStorage.removeItem("candidate")
-        }
+		clearCandidate: (state) => {
+			state.data = null;
+			localStorage.removeItem(candidateAccessToken);
+			localStorage.removeItem(candidateRefreshToken);
+		},
 	},
 });
-
 
 export const { setCandidate, clearCandidate } = candidateDataSlice.actions; //we can use it in login page
 export default candidateDataSlice.reducer;

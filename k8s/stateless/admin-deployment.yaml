@@ -28,6 +28,11 @@ spec:
                 secretKeyRef:
                   name: jwt-secret
                   key: JWT_SECRET_KEY
+            - name: JWT_REFRESH_SECRET_KEY
+              valueFrom: 
+                secretKeyRef:
+                  name: jwt-refresh-secret
+                  key: JWT_REFRESH_SECRET_KEY
 ---
 apiVersion: v1
 kind: Service

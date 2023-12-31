@@ -14,11 +14,11 @@ import NotFound from "./components/Error/NotFound";
 
 export default function App() {
 	const isCandidateLoggedIn = useSelector(
-		(state: RootState) => state.candidateAuth.candidateLoggedIn
+		(state: RootState) => state.candidateData.data
 	);
 
 	const isRecruiterLoggedIn = useSelector(
-		(state: RootState) => state.recruiterAuth.recruiterLoggedIn
+		(state: RootState) => state.recruiterData.data
 	);
 
 	return (

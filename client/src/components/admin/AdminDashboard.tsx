@@ -9,25 +9,16 @@ import membership from "../../assets/membership.svg";
 import logout from "../../assets/logout.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { adminSignout } from "../../redux/slice/adminSlice/adminAuthSlice";
-import { adminSignoutApi } from "../../api/axios/auth/adminAuth";
+import { adminSignoutApi } from "../../axios/apiMethods/auth-service/adminAuth"; 
 import Swal from "sweetalert2";
-import { toast } from "react-toastify";
 import { clearAdmin } from "../../redux/slice/adminSlice/adminDataSlice";
+import { notify } from "../../utils/toastMessage";
 
 function AdminDashboard() {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
-	const notify = (msg: any, type: string) => {
-		type === "error"
-			? toast.error(msg, {
-					position: toast.POSITION.TOP_RIGHT,
-			  })
-			: toast.success(msg, {
-					position: toast.POSITION.TOP_RIGHT,
-			  });
-	};
+	
 
 
 	const handleLogout = async () => {
@@ -43,7 +34,6 @@ function AdminDashboard() {
 			if (result.isConfirmed) {
 				const response = await adminSignoutApi();
 				if (response) {
-					dispatch(adminSignout());
 					dispatch(clearAdmin())
 					notify("Logged out successfully", "success");
 					navigate("/admin");

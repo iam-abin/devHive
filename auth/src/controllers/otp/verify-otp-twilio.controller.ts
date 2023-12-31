@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { BadRequestError } from "@abijobportal/common";
 
 import { DependenciesData } from "../../frameworks/types/dependencyInterface";
-import { verifyOtp } from "../../frameworks/services/twilio";
+import { verifyOtp } from "../../frameworks/utils/twilio";
 
 export = (dependencies: DependenciesData) => {
 	const {

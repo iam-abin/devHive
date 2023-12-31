@@ -1,32 +1,37 @@
 import { combineReducers } from "@reduxjs/toolkit";
 
-import adminAuthSlice from "../slice/adminSlice/adminAuthSlice";
+import adminDataSlice from "../slice/adminSlice/adminDataSlice";
 
-import candidateAuthSlice from "../slice/candidateSlice/candidateAuthSlice";
 import candidateDataSlice from "../slice/candidateSlice/candidateDataSlice";
 
-import recruiterAuthSlice from "../slice/recruiterSlice/recruiterAuthSlice";
 import recruiterDataSlice from "../slice/recruiterSlice/recruiterDataSlice";
+
+import filteredJobsSlice from "../slice/job/filteredJobsSlice";
 
 import recruiterJobIdSlice from "../slice/recruiterSlice/recruiterJobIdSlice";
 import recruiterJobDetailsSlice from "../slice/recruiterSlice/recruiterJobIdSlice";
+
 import candidateJobIdSlice from "../slice/candidateSlice/candidateJobIdSlice";
 import candidateJobDetailsSlice from "../slice/candidateSlice/candidateJobDetailsSlice";
 
-const rootRedcucer = combineReducers({
-    adminAuth: adminAuthSlice,
+import apiCallLoadingSlice from "../slice/loaderSlice/isLoading"
 
-    candidateAuth: candidateAuthSlice,
+const rootRedcucer = combineReducers({
+    adminData: adminDataSlice,
+
     candidateData: candidateDataSlice,
 
-    recruiterAuth: recruiterAuthSlice,
     recruiterData: recruiterDataSlice,
+
+    filteredJobs: filteredJobsSlice,
 
     recruiterJobId: recruiterJobIdSlice,
     recruiterJobDetails: recruiterJobDetailsSlice,
 
     candidateJobId: candidateJobIdSlice,
     candidateJobDetails: candidateJobDetailsSlice,
+
+    loading: apiCallLoadingSlice,
 
 
 

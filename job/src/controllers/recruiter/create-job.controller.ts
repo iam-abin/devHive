@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { DependenciesData } from "../../frameworks/types/dependencyInterface";
 // import { BadRequestError } from "@abijobportal/common";
-import { JobCreatedEventPublisher } from "../../frameworks/services/kafka-events/publishers/job-created-publisher";
+import { JobCreatedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/job-created-publisher";
 import { kafkaClient } from "../../config/kafka-connection";
 
 export = (dependencies: DependenciesData)=>{

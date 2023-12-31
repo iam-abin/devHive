@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/reducer/reducer';
-import { recruiterGetProfileApi } from '../../api/axios/profile/recruiter';
+import { recruiterGetProfileApi } from '../../axios/apiMethods/profile-service/recruiter';
 import { useNavigate } from 'react-router-dom';
 
 const Profile: React.FC = () => {

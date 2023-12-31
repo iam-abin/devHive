@@ -1,10 +1,10 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { toast } from "react-toastify";
 import Swal from "sweetalert2";
-import { createJobApi } from "../../api/axios/jobs/jobs";
+import { createJobApi } from "../../axios/apiMethods/jobs-service/jobs";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/reducer/reducer";
 import { useNavigate } from "react-router-dom";
+import { notify } from "../../utils/toastMessage";
 
 interface JobFormData {
 	title: string;
@@ -28,15 +28,7 @@ function CreateJobForm() {
 	);
 
 	const navigate = useNavigate();
-	const notify = (msg: any, type: string) => {
-		type === "error"
-			? toast.error(msg, {
-					position: toast.POSITION.TOP_RIGHT,
-			  })
-			: toast.success(msg, {
-					position: toast.POSITION.TOP_RIGHT,
-			  });
-	};
+	
 
 	const handleSubmit = async (jobData: JobFormData) => {
 		try {

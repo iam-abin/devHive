@@ -5,7 +5,6 @@ import getUserByPhoneUseCase from "./getUserByPhone";
 import userSignupUseCase from "./userSignup";
 import updatePasswordUseCase from "./updatePassword";
 import setNodemailerOtpUseCase from "./setNodemailerOtp";
-
 export default {
 	checkEmailVerificationOtpUseCase,
 	getEmailVerifyOtpUseCase,

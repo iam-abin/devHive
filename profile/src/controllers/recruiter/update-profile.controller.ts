@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 import { DependenciesData } from "../../frameworks/types/dependencyInterface";
-import { RecruiterProfileUpdatedEventPublisher } from "../../frameworks/services/kafka-events/publishers/recruiter-profile-updated-publisher";
-import { CompanyProfileCreatedEventPublisher } from "../../frameworks/services/kafka-events/publishers/company-profile-created-publisher";
+import { RecruiterProfileUpdatedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/recruiter-profile-updated-publisher";
+import { CompanyProfileCreatedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/company-profile-created-publisher";
 import { kafkaClient } from "../../config/kafka-connection";
-import { UserUpdatedEventPublisher } from "../../frameworks/services/kafka-events/publishers/user-updated-publisher";
+import { UserUpdatedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/user-updated-publisher";
 
 export = (dependencies: DependenciesData)=>{
 
@@ -29,11 +29,11 @@ export = (dependencies: DependenciesData)=>{
             gender: updatedData?.gender,
             profile_image: updatedData?.profile_image,
             about: updatedData?.about,
-            // "company_name": "infotech",
-            // "company_location": "kottayam",
-            // "company_state": "kerala",
-            // "company_country": "india",
-            company_id: updatedData?.company_id,
+            // // "company_name": "infotech",
+            // // "company_location": "kottayam",
+            // // "company_state": "kerala",
+            // // "company_country": "india",
+            // company_id: updatedData?.company_id,
             userId: updatedData?.userId,
         })
 

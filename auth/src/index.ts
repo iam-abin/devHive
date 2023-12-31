@@ -1,6 +1,6 @@
 import { connectDB } from "./config/db"
 import { app } from "./app";
-import { UserUpdatedEventConsumer } from "./frameworks/services/kafka-events/consumers/user-updated-consumer";
+import { UserUpdatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/user-updated-consumer";
 import { kafkaClient } from "./config/kafka-connection";
 
 
@@ -10,6 +10,11 @@ const start = async () => {
 	// if we do not set JWT_SECRET_KEY
 	if(!process.env.JWT_SECRET_KEY){
 		throw new Error("JWT_SECRET_KEY must be defined")
+	}
+
+	// if we do not set JWT_REFRESH_SECRET_KEY
+	if(!process.env.JWT_REFRESH_SECRET_KEY){
+		throw new Error("JWT_REFRESH_SECRET_KEY must be defined")
 	}
 
 	// if we do not set mongo_uri

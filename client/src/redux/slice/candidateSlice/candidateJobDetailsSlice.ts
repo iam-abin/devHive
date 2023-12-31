@@ -1,10 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-// const loadRecruiterFromLocalStorage = () => {
-// 	const recruiter = localStorage.getItem("recruiter");
-// 	return recruiter ? JSON.parse(recruiter) : null;
-// };
-
 interface CandidateJobDetalsSlice {
 	candidateJob: any;
 	changeDeleteStatus: boolean;
