@@ -10,11 +10,6 @@ interface Admin {
 	adminRefreshToken: string;
 }
 
-// const loadAdminFromLocalStorage = () => {
-// 	const admin = localStorage.getItem("admin");
-// 	return admin ? JSON.parse(admin) : null;
-// };
-
 const initialState = {
 	loading: false,
 	data: null as Admin | null,

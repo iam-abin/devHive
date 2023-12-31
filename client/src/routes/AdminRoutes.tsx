@@ -1,15 +1,17 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 
-import AdminHomePage from "../pages/admin/AdminHomePage";
+import AdminHomePage from "../pages/home/AdminHomePage";
 import AdminSigninPage from "../pages/auth-pages/signin/AdminSigninPage";
-import CandidateManagementPage from "../pages/admin/CandidateManagementPage";
-import RecruiterManagementPage from "../pages/admin/RecruiterManagementPage";
+import CandidateManagementPage from "../pages/admin/candidteManagement/CandidatesListPage";
+import RecruiterManagementPage from "../pages/admin/recruiterManagement/RecruitersListPage";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/reducer/reducer";
-import ViewProfileDetails from "../components/admin/ViewProfileDetails";
-import ViewRecruiterProfileDetails from "../components/admin/ViewRecruiterProfileDetails";
 import ViewJobDetails from "../components/admin/ViewJobDetails";
-import JobsManagement from "../components/admin/JobsManagement";
+import JobsManagementPage from "../pages/job-pages/admin/JobsListPage";
+import ViewCandidateProfilePage from "../pages/profile/admin/ViewCandidateProfilePage";
+import ViewRecruiterProfilePage from "../pages/profile/admin/ViewRecruiterProfilePage";
+import ViewJobDetailsPage from "../pages/job-pages/admin/ViewJobDetailsPage";
+
 
 function AdminRoutes() {
 	const isAdminLoggedIn = useSelector(
@@ -53,7 +55,7 @@ function AdminRoutes() {
 					path="/candidate/viewProfileDetails/:userId"
 					element={
 						isAdminLoggedIn ? (
-							<ViewProfileDetails />
+							<ViewCandidateProfilePage />
 						) : (
 							<Navigate to="/admin" />
 						)
@@ -64,7 +66,7 @@ function AdminRoutes() {
 					path="/recruiter/viewProfileDetails/:userId"
 					element={
 						isAdminLoggedIn ? (
-							<ViewRecruiterProfileDetails />
+							<ViewRecruiterProfilePage />
 						) : (
 							<Navigate to="/admin" />
 						)
@@ -86,7 +88,7 @@ function AdminRoutes() {
 					path="/jobs"
 					element={
 						isAdminLoggedIn ? (
-							<JobsManagement />
+							<JobsManagementPage />
 						) : (
 							<Navigate to="/admin" />
 						)
@@ -97,7 +99,7 @@ function AdminRoutes() {
 					path="/job/viewJobDetails/:jobId"
 					element={
 						isAdminLoggedIn ? (
-							<ViewJobDetails />
+							<ViewJobDetailsPage />
 						) : (
 							<Navigate to="/admin" />
 						)

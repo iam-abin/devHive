@@ -1,0 +1,42 @@
+import React from "react";
+
+const RecruiterProfile: React.FC<{ data: any }> = ({ data }) => {
+	return (
+		<div className="container mx-auto mt-8">
+			<div className="bg-white p-8 rounded-lg shadow-md">
+				<h2 className="text-2xl font-bold mb-4">View Details Page</h2>
+
+				{data ? (
+					<div>
+						<p className="mb-2">
+							<span className="font-semibold">Name:</span>{" "}
+							{data?.name}
+						</p>
+						<p className="mb-2">
+							<span className="font-semibold">Email:</span>{" "}
+							{data?.email}
+						</p>
+						<p className="mb-2">
+							<span className="font-semibold">Phone:</span>{" "}
+							{data?.phone}
+						</p>
+						<p className="mb-2">
+							<span className="font-semibold">
+								Active Status:
+							</span>{" "}
+							{data?.isActive ? "Active" : "Inactive"}
+						</p>
+						<p>
+							<span className="font-semibold">User ID:</span>{" "}
+							{data?.userId}
+						</p>
+					</div>
+				) : (
+					<div className="text-red-500">No candidate data found</div>
+				)}
+			</div>
+		</div>
+	);
+};
+
+export default RecruiterProfile;

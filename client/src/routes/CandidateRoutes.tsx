@@ -6,11 +6,11 @@ import CandidateSignupPage from "../pages/auth-pages/signup/CandidateSignupPage"
 import { RootState } from "../redux/reducer/reducer";
 import { useSelector } from "react-redux";
 import LandingPage from "../pages/landing/LandingPage";
-import CandidateProfilePage from "../pages/candidate/CandidateProfilePage";
-import AllJobsPage from "../pages/candidate/AllJobsPage";
-import JobDetailsPage from "../pages/candidate/JobDetailsPage";
+import CandidateProfilePage from "../pages/profile/candidate/CandidateProfilePage";
+import AllJobsPage from "../pages/job-pages/candidate/AllJobsPage";
+import JobDetailsPage from "../pages/job-pages/candidate/JobDetailsPage";
 import OtpFormPageSignup from "../pages/auth-pages/otp/candidate/OtpFormPageSignup";
-import CandidateHomePage from "../pages/candidate/CandidateHomePage";
+import CandidateHomePage from "../pages/home/CandidateHomePage";
 import ResetPassword from "../pages/auth-pages/password/candidate/ResetPassword";
 import OtpFormResetPassword from "../pages/auth-pages/otp/candidate/OtpFormResetPassword";
 
@@ -19,7 +19,7 @@ import ForgotPassword from "../pages/auth-pages/password/candidate/ForgotPasswor
 import ResetPasswordMobileEnterPage from "../pages/auth-pages/emailOrMobileEnter/candidate/ResetPasswordMobileEnterPage"
 
 import OtpFormPageForgotPassword from "../pages/auth-pages/otp/candidate/OtpFormPageForgotPassword";
-import CandidateProfileEditPage from "../pages/candidate/CandidateProfileEditPage";
+import CandidateProfileEditPage from "../pages/profile/candidate/CandidateProfileEditPage";
 
 function CandidateRoutes() {
 	const isCandidateLoggedIn = useSelector(

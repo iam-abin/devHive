@@ -1,10 +1,10 @@
 // import { GiHamburgerMenu } from "react-icons/gi"
 import homeImage from "../../assets/landingPage/company-like.jpg";
-import FooterLanding from "../../components/landing/FooterLanding";
+import FooterLanding from "../../components/footer/FooterLanding";
 import { useEffect, useState } from "react";
-import NavBarLanding from "../../components/landing/NavBarLanding";
-import SearchBar from "../../components/landing/SearchBar";
-import JobCard from "../../components/landing/JobCard";
+import NavBarLanding from "../../components/navBar/NavBarLanding";
+import SearchBar from "../../components/searchBar/SearchBar";
+import JobCard from "../../components/jobCard/JobCard";
 import {
 	getAJobApi,
 	getAllJobsApi,

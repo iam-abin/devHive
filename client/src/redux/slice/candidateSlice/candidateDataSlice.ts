@@ -5,26 +5,16 @@ import {
 } from "../../../config/localStorage";
 
 interface Candidate {
-	// data: { id: string; name: string; email: string; phone: string };
 	data: any
 	candidateAccessToken: string;
 	candidateRefreshToken: string;
 }
-
-// const loadCandidateFromLocalStorage = () => {
-// 	const candidate = localStorage.getItem("candidate");
-// 	return candidate ? JSON.parse(candidate) : null;
-// };
 
 const initialState = {
 	loading: false,
 	data: null as Candidate | null,
 	error: false,
 };
-
-// const initialState = {
-// 	data: loadCandidateFromLocalStorage(),
-// };
 
 const candidateDataSlice = createSlice({
 	name: "candidate-data",

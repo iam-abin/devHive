@@ -18,13 +18,13 @@ export const candidateRouter = (dependencies: DependenciesData) => {
 	// router.use(requireAuthCandidate)
 
 	// // candidate
-	// router.get("/candidates", requireAuthAdmin, getAllCandidatesController);
-	// router.get("/viewProfile", requireAuthAdmin, getCandidateByIdController);
-	// router.put("/blockUnblock/:id", requireAuthAdmin, candidateBlockUnblockController);
+	// router.get("/candidates", getAllCandidatesController);
+	// router.get("/viewProfile/:userId", getCandidateByIdController);
+	// router.put("/blockUnblock/:userId", candidateBlockUnblockController);
 
-	router.get("/candidates", getAllCandidatesController);
-	router.get("/viewProfile/:userId", getCandidateByIdController);
-	router.put("/blockUnblock/:userId", candidateBlockUnblockController);
+	router.get("/candidates", requireAuthAdmin, getAllCandidatesController);
+	router.get("/viewProfile/:userId", requireAuthAdmin, getCandidateByIdController);
+	router.put("/blockUnblock/:userId", requireAuthAdmin, candidateBlockUnblockController);
 
 	return router;
 };

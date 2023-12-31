@@ -1,6 +1,6 @@
 
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../../reducer/reducer';
+import { createSlice, } from '@reduxjs/toolkit';
+// import { RootState } from '../../reducer/reducer';
 
 interface ApiState {
   isLoading: boolean;
