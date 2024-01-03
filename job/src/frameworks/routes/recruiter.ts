@@ -21,9 +21,12 @@ export const recruiterRouter = (dependencies: DependenciesData) => {
 		deleteJobController,
 		createdJobsByRecruiterController,
 		viewJobApplicationsController,
+		viewJobApplicationController,
+		changeJobApplicationStatusController,
 	} = recruiterJobControllers(dependencies);
 
-	router.get("/", viewAllJobsController);
+	router.get("/all-jobs/:page", viewAllJobsController);
+
 	router.get("/:id", viewJobByJobIdController);
 
 	router.post("/filter", filterJobsController);
@@ -38,9 +41,11 @@ export const recruiterRouter = (dependencies: DependenciesData) => {
 
 	router.get("/created-jobs/:recruiterId", createdJobsByRecruiterController);
 
-	router.get("/job-applications/:id", viewJobApplicationsController);
+	router.get("/job-applications/:recruiterId", viewJobApplicationsController);
 
-	// router.patch('/change-status/:id', requireAuthRecruiter, changeTheApplicationStatus);
+	router.get("/job-application/:jobApplicationId", viewJobApplicationController);
 
+	router.post("/change-application-status/:jobApplicationId", changeJobApplicationStatusController);
+	
 	return router;
 };

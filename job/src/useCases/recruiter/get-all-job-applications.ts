@@ -10,8 +10,8 @@ export = (dependencies: DependenciesData) => {
 		throw new Error("jobApplicationRepository should exist in dependencies");
 	}
 
-	const execute = (id: string) => {
-		return jobApplicationRepository.getAllJobApplicationsByRecruiterId(id);
+	const execute = (recruiterId: string) => {
+		return jobApplicationRepository.getAllJobApplicationsByRecruiterId(recruiterId);
 	};
 
 	return { execute };

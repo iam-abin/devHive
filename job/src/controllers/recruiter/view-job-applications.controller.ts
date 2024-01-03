@@ -6,11 +6,11 @@ export = (dependencies: DependenciesData)=>{
     const { useCases: { getAllJobApplicationsUseCase }} = dependencies 
 
     return async (req: Request, res: Response)=>{
-        const {id} = req.params;
-        console.log("in  apply job controller 1: ",id);
+        const {recruiterId} = req.params;
+        console.log("in  Job Applications controller 1: ",recruiterId);
 
-        const applications = await getAllJobApplicationsUseCase(dependencies).execute(id);
-        console.log("in  apply job controller 2: ",applications);
+        const applications = await getAllJobApplicationsUseCase(dependencies).execute(recruiterId);
+        console.log("in Job Applications controller 2: ",applications);
 
 
         res.status(200).json({message: "Job applications are ", data: applications })

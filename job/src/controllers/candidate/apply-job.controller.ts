@@ -6,10 +6,10 @@ export = (dependencies: DependenciesData)=>{
     const { useCases: { applyJobUseCase }} = dependencies
 
     return async (req: Request, res: Response)=>{
-        const data = req.body;
-        console.log("in  apply job controller 1: ",data);
+        const jobApplicationPayload = req.body;
+        console.log("in  apply job controller 1: ",jobApplicationPayload);
 
-        const applied = await applyJobUseCase(dependencies).execute(data);
+        const applied = await applyJobUseCase(dependencies).execute(jobApplicationPayload);
         console.log("in  apply job controller 2: ",applied);
 
 

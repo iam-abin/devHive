@@ -6,9 +6,8 @@ import RecruiterSignupPage from "../pages/auth-pages/signup/RecruiterSignupPage"
 import { useSelector } from "react-redux"
 import { RootState } from "../redux/reducer/reducer"
 import LandingPage from "../pages/landing/LandingPage"
-import AllJob from "../components/recruiter/AllJob"
+import AllJobsPage from "../pages/job-pages/recruiter/AllJobsPage"
 import CreateJobPage from "../pages/job-pages/recruiter/CreateJobPage"
-import JobDetails from "../components/recruiter/JobDetails"
 import EditJobPage from "../pages/job-pages/recruiter/EditJobPage"
 import OtpFormPageSignup from "../pages/auth-pages/otp/recruiter/OtpFormPageSignup"
 import RecruiterProfilePage from "../pages/profile/recruiter/RecruiterProfilePage"
@@ -16,10 +15,13 @@ import OtpFormResetPassword from "../pages/auth-pages/otp/recruiter/OtpFormReset
 import ResetPassword from "../pages/auth-pages/password/recruiter/ResetPassword"
 import OtpFormPageForgotPassword from "../pages/auth-pages/otp/recruiter/OtpFormPageForgotPassword"
 import ForgotPassword from "../pages/auth-pages/password/recruiter/ForgotPassword"
-import AllAddedJobs from "../components/recruiter/AllAddedJobs"
 import RecruiterProfileEditPage from "../pages/profile/recruiter/RecruiterProfileEditPage"
 import ResetPasswordMobileEnterPage from "../pages/auth-pages/emailOrMobileEnter/recruiter/ResetPasswordMobileEnterPage"
 import ForgotPasswordEmailEnterPage from "../pages/auth-pages/emailOrMobileEnter/recruiter/ForgotPasswordEmailEnterPage"
+import JobDetailsPage from "../pages/job-pages/recruiter/JobDetailsPage"
+import AllAddedJobs from "../pages/job-pages/recruiter/AllAddedJobs"
+import JobApplicationsPage from "../pages/job-pages/recruiter/JobApplicationsPage"
+import JobApplicationDetailsPage from "../pages/job-pages/recruiter/JobApplicationDetailsPage"
 
 function RecruiterRouters() {
 	const isRecruiterLoggedIn = useSelector(
@@ -46,11 +48,13 @@ function RecruiterRouters() {
 			<Route path="/signin" element={isRecruiterLoggedIn?<Navigate to={"/recruiter"} />:<RecruiterSigninPage /> } />
 			<Route path="/signup" element={isRecruiterLoggedIn? <Navigate to={"/recruiter"} />:<RecruiterSignupPage />} />
 			<Route path="/otpSignupRecruiter/:email" element={!isRecruiterLoggedIn? <OtpFormPageSignup /> :<Navigate to={"/recruiter"} />} />
-			<Route path="/all-jobs" element={isRecruiterLoggedIn?<AllJob />:<Navigate to={"/recruiter/signin"} />} />
+			<Route path="/all-jobs" element={isRecruiterLoggedIn?<AllJobsPage />:<Navigate to={"/recruiter/signin"} />} />
 			<Route path="/recruiter-added-jobs" element={isRecruiterLoggedIn?<AllAddedJobs />:<Navigate to={"/recruiter/signin"} />} />
 			<Route path="/create-job" element={isRecruiterLoggedIn?<CreateJobPage />:<Navigate to={"/recruiter/signin"} />} />
-			<Route path="/job-details" element={isRecruiterLoggedIn?<JobDetails />:<Navigate to={"/recruiter/signin"} />} />
-			<Route path="/edit-job-details" element={isRecruiterLoggedIn?<EditJobPage />:<Navigate to={"/recruiter/signin"} />} />
+			<Route path="/job-details/:jobId" element={isRecruiterLoggedIn?<JobDetailsPage />:<Navigate to={"/recruiter/signin"} />} />
+			<Route path="/edit-job-details/:jobId" element={isRecruiterLoggedIn?<EditJobPage />:<Navigate to={"/recruiter/signin"} />} />
+			<Route path="/applications" element={isRecruiterLoggedIn?<JobApplicationsPage />:<Navigate to={"/recruiter/signin"} />} />
+			<Route path="/application-details/:jobApplicationId" element={isRecruiterLoggedIn?<JobApplicationDetailsPage />:<Navigate to={"/recruiter/signin"} />} />
 			{/* <Route path="/:id/verifyEmail/:token" element={<EmailVerifyRecruiter/>}/> */}
 		</Routes>
     </>

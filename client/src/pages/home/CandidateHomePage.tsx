@@ -1,13 +1,13 @@
 // import { GiHamburgerMenu } from "react-icons/gi";
 import HomeCandidate from "../../components/candidate/HomeCandidate";
 import FooterCandidate from "../../components/candidate/FooterCandidate";
-import HeaderCandidate from "../../components/candidate/HeaderCandidate";
+import NavBarCandidate from "../../components/navBar/NavBarCandidate";
 
 function CandidateHomePage() {
 	return (
 		<div>
 			{/* <GiHamburgerMenu /> */}
-			<HeaderCandidate />
+			<NavBarCandidate />
 			<HomeCandidate />
       <FooterCandidate />
 		</div>

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { viewDataApi } from "../../axios/apiMethods/admin-service/job";
 
 const ViewJobDetails: React.FC<{ data: any; handleBlockUnblock: any }> = ({
 	data,

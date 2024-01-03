@@ -10,7 +10,7 @@ export = (dependencies: DependenciesData) => {
 	}
 
 	const execute =(data: object) => {
-        console.log(data);
+        console.log("in applyjob usecase",data);
         
 		return jobApplicationRepository.applyJob(data);
 	};

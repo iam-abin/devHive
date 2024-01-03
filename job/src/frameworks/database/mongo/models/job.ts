@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 interface JobAttributes {
 	title: string;
 	recruiterId: string;
+	company_name: string,
 	companyId: string;
 	job_descriptions?: string;
 	skills_required?:string | string[];
@@ -19,6 +20,11 @@ interface JobAttributes {
 interface JobDocument extends mongoose.Document {
 	title: string;
 	recruiterId: mongoose.Schema.Types.ObjectId;
+	// recruiterId: {
+	// 	type: mongoose.Schema.Types.ObjectId,
+	// 	ref: 'Users'
+	// }
+	company_name: string,
 	companyId: mongoose.Schema.Types.ObjectId;
 	job_descriptions?: string;
 	skills_required?: string | string[];
@@ -43,6 +49,7 @@ const jobSchema = new mongoose.Schema(
 	{
 		title: String,
 		recruiterId: mongoose.Schema.Types.ObjectId,
+		company_name:String,
 		companyId: mongoose.Schema.Types.ObjectId,
 		job_descriptions: String,
 		skills_required: Array,
@@ -52,7 +59,8 @@ const jobSchema = new mongoose.Schema(
 		location: String,
 		employment_type: {
 			type: String,
-			enum: ["full-time", "part-time"]
+			enum: ["full-time", "part-time", "internship", "contract"],
+			default: "full-time"
 		},
 		salary_min: Number,
 		salary_max: Number,

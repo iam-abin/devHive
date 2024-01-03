@@ -1,8 +1,10 @@
 
 import applyJobUseCase from "./apply-job";
-import getAllAppliedJobs from "./get-all-applied-jobs";
+import getAllAppliedJobsUseCase from "./get-all-applied-jobs";
+import getNumberofCandidateAppliedJobsUseCase from "./get-numberof-candidate-applied-jobs";
 
 export {
 	applyJobUseCase,
-	getAllAppliedJobs,
+	getAllAppliedJobsUseCase,
+	getNumberofCandidateAppliedJobsUseCase,
 };

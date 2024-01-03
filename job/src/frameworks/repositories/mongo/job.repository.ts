@@ -11,8 +11,8 @@ export = {
         return await newJob.save()
     },
 
-    deleteJob: async (id: string)=>{
-        const deletedJob = await JobModel.deleteOne({_id: id});
+    deleteJob: async (jobId: string)=>{
+        const deletedJob = await JobModel.deleteOne({_id: jobId});
         console.log("deletedJob: ",deletedJob);
         return deletedJob
     },
@@ -21,6 +21,7 @@ export = {
         console.log("in updateJob repository jobId", jobId, " data ", data);
         
         const updatedJob = await JobModel.findOneAndUpdate({ "_id": jobId }, { $set: data }, {new: true});
+        // const updatedJob = await JobModel.findOneAndUpdate({ "_id": jobId }, { $set: data }, {new: true});
         console.log("in updateJob repository after update", updatedJob);
 		return updatedJob;
     },
@@ -31,9 +32,9 @@ export = {
         return filteredJobs
     },
 
-	getAllJobs: async ():Promise<any[]> => {
+	getAllJobs: async (skip: number, limit: number):Promise<any[]> => {
 		// const jobs = await JobModel.aggregate([{ $sort: { createdAt: 1 } }]);
-        const jobs = await JobModel.find().sort({createdAt: -1})
+        const jobs = await JobModel.find().sort({createdAt: -1}).skip(skip).limit(limit);
         console.log(jobs);
         return jobs
 	},
@@ -42,6 +43,12 @@ export = {
 		const jobs = await JobModel.find({recruiterId: id}).sort({createdAt: -1})
         console.log(jobs);
         return jobs
+	},
+
+    getCountOfJobs: async (id: string): Promise<number> => {
+		const totalJobs: number = await JobModel.countDocuments()
+        console.log(totalJobs);
+        return totalJobs
 	},
 
 	getAJob: async (id: string) => {

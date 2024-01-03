@@ -1,6 +1,6 @@
 import React from 'react'
 import AllJob from '../../../components/candidate/AllJob'
-import HeaderCandidate from '../../../components/candidate/HeaderCandidate'
+import HeaderCandidate from '../../../components/navBar/NavBarCandidate'
 
 function AllJobsPage() {
   return (

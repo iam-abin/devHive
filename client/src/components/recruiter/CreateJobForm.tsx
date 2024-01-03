@@ -23,8 +23,8 @@ interface JobFormData {
 }
 
 function CreateJobForm() {
-	const recruiterData = useSelector(
-		(state: RootState) => state.recruiterData.recruiter
+	const recruiterData: any = useSelector(
+		(state: RootState) => state.recruiterData.data
 	);
 
 	const navigate = useNavigate();
@@ -66,7 +66,7 @@ function CreateJobForm() {
 			initialValues={initialJobValues}
 			// validationSchema={jobCreationSchema}
 			onSubmit={(values) => {
-				values.recruiterId = recruiterData.id;
+				values.recruiterId = recruiterData?.id;
 				console.log(values);
 				handleSubmit(values);
 			}}

@@ -7,6 +7,10 @@ export = (dependencies: DependenciesData)=>{
     const { useCases: { getRecruiterCreatedJobsUseCase }} = dependencies
 
     return async (req: Request, res: Response)=>{
+
+        console.log(req);
+        
+        // const recruiterId = req.currentUserRecruiter?.id
         const { recruiterId } = req.params;
         console.log("in recruiter created jobs controller 1: ",recruiterId);
 

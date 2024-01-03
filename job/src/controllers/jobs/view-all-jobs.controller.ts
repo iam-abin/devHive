@@ -1,18 +1,27 @@
 import { Request, Response } from "express";
 import { DependenciesData } from "../../frameworks/types/dependencyInterface";
 
-export = (dependencies: DependenciesData)=>{
+export = (dependencies: DependenciesData) => {
+	const {
+		useCases: { getAllJobsUseCase, getNumberofJobsUseCase },
+	} = dependencies;
 
-    const { useCases: { getAllJobsUseCase }} = dependencies
+	return async (req: Request, res: Response) => {
+		console.log("in getAll job controller 1: ");
 
-    return async (req: Request, res: Response)=>{
-        console.log("in getAll job controller 1: ");
+		// pagination
+		const page = Number(req.params.page) || 1;
+		const limit = Number(req.params.limit) || 2;
+		const skip = (page - 1) * limit;
 
-        const jobs = await getAllJobsUseCase(dependencies).execute();
-        console.log("in getAll job controller 2: ", jobs);
+		const jobs = await getAllJobsUseCase(dependencies).execute(skip, limit);
+
+        const totalJobs = await getNumberofJobsUseCase(dependencies).execute()
+		const numberOfPages = Math.ceil(totalJobs/limit);
 
 
-        res.status(200).json({message: "Jobs list", data: jobs })
-    };
+		console.log("in getAll job controller 2: ", jobs);
 
-}
+		res.status(200).json({ message: "Jobs list", data: jobs, totalNumberOfPages: numberOfPages });
+	};
+};

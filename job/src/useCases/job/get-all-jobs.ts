@@ -9,8 +9,8 @@ export = (dependencies: DependenciesData) => {
 		throw new Error("jobRepository should exist in dependencies");
 	}
 
-	const execute = () => {
-		return jobRepository.getAllJobs();
+	const execute = (skip: number, limit: number) => {
+		return jobRepository.getAllJobs(skip,limit);
 	};
 
 	return { execute };

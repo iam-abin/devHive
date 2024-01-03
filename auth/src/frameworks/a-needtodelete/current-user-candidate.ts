@@ -26,49 +26,53 @@ export const currentUserCandidateCheck = (
 	next: NextFunction
 ) => {
 	let token = null;
-	console.log("in currentUserCandidateCheck req.headers ",  req.headers);
-	
-    if (req.headers.authorization) {
-      const authHeader = req.headers.authorization;
-      if (authHeader.startsWith('Bearer ')) {
-        token = authHeader.substring('Bearer '.length);
-      }
-    }
+	console.log("in currentUserCandidateCheck req.headers ", req.headers);
+
+	if (req.headers.authorization) {
+		const authHeader = req.headers.authorization;
+		if (authHeader.startsWith("Bearer ")) {
+			token = authHeader.substring("Bearer ".length);
+		}
+	}
 	// if (!req.session?.candidateToken) {
 	// 	return next();  // it will be checked 'req.currentUser' in the next middleware 'requireAuth'
 	// }
-	console.log(token, "is abi tokkkkkkkkkkkkkkken");
+	console.log(token, "is jwt tokkkkkkkkkkkkkkken");
 	// const token = req.session?.candidateToken
 	// // const token = req.cookies?.candidateToken;
 	if (token == null) {
 		console.log(token, "nooo tokkkkkkkkkkkkkkken");
 		return next(); // it will check 'req.currentUser' in the next middleware 'requireAuth'
 	}
-	
+
 	console.log(token, "yesss tokkkkkkkkkkkkkkken");
 
 	try {
 		console.log("in try");
-		
+
 		const payload = jwt.verify(
 			token,
 			process.env.JWT_SECRET_KEY!
 		) as UserPayload;
-	
-		console.log(payload,"after jwt verify from common currentUserCandidate ");
+
+		console.log(
+			payload,
+			"after jwt verify from common currentUserCandidate "
+		);
 		if (payload && payload.email) {
-			if (payload.userType === 'candidate') {
-			  req.currentUserCandidate = payload;
+			if (payload.userType === "candidate") {
+				req.currentUserCandidate = payload;
 			}
-		  }
-		
+		}
+
 		// req.currentUserCandidate = payload;
 		console.log(req.currentUserCandidate, "req.currentUserCandidate");
-		
 	} catch (error) {
-		console.error(error,"currentUserCandidate middleware tocken verify error "); // Log the error for debugging purposes
+		console.error(
+			error,
+			"currentUserCandidate middleware tocken verify error "
+		); // Log the error for debugging purposes
 		// return res.status(401).json({ error: 'Unauthorized' });
 	}
 	next();
-
 };

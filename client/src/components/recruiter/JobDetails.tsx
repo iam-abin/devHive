@@ -1,39 +1,27 @@
-import { useEffect, useState } from "react";
-import { getAJobApi } from "../../axios/apiMethods/jobs-service/jobs";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 import { RootState } from "../../redux/reducer/reducer";
-import { useNavigate } from "react-router-dom";
-import { setRecruiterJobId } from "../../redux/slice/recruiterSlice/recruiterJobIdSlice";
 
-function JobDetails() {
-	const [jobDetails, setJobDetails] = useState<any>(null);
-	const dispatch = useDispatch();
-	const navigate = useNavigate();
+const JobDetails: React.FC<{
+	jobDetails: any;
+	handleEditJob?: any;
+	handleApplyJob?: any;
+	handleGoBack?: any;
+}> = ({ jobDetails, handleEditJob, handleApplyJob, handleGoBack }) => {
+	const location = useLocation();
 
-	const jobId = useSelector((state: RootState) => {
-		return state.recruiterJobId.jobId;
-	});
+	const isRecruiterPage = location.pathname.includes("recruiter");
+	const isCandidatePage = location.pathname.includes("candidate");
 
-	useEffect(() => {
-		const fetchJobDetails = async () => {
-			try {
-				const job = await getAJobApi(jobId);
-				setJobDetails(job.data.data);
-			} catch (error) {
-				// Handle error, e.g., log it or show an error message to the user
-				console.error("Error fetching job details:", error);
-			}
-		};
+	const candidateData: any = useSelector(
+		(state: RootState) => state.candidateData.data
+	);
 
-		fetchJobDetails();
-	}, [jobId]);
-
-	const handleEdit = async (id: string) => {
-		console.log("id handle edit ", id);
-		dispatch(setRecruiterJobId(id));
-		navigate("/recruiter/edit-job-details");
-	};
-
+	if (isRecruiterPage) {
+		// Do something specific for the "recruiter" page
+		console.log("This is a recruiter page");
+	}
 	console.log(jobDetails, "in job details component");
 
 	return (
@@ -101,45 +89,41 @@ function JobDetails() {
 						)}
 					</div>
 
-				
-
-          {jobDetails && jobDetails.education_required && (
+					{jobDetails && jobDetails.education_required && (
 						<div className="mb-4">
 							<h2 className="text-xl font-semibold mb-2">
-							Education Required
+								Education Required
 							</h2>
 							<p>{jobDetails.education_required}</p>
 						</div>
 					)}
 
-          {jobDetails && jobDetails.recruiter && (
+					{jobDetails && jobDetails.recruiterId && (
 						<div className="mb-4">
 							<h2 className="text-xl font-semibold mb-2">
-							Recruiter
+								recruiter
 							</h2>
-							<p>{jobDetails.recruiter}</p>
+							<p>{jobDetails.recruiterId}</p>
 						</div>
 					)}
 
-					
-          {jobDetails && jobDetails.experience_required && (
+					{jobDetails && jobDetails.experience_required && (
 						<div className="mb-4">
 							<h2 className="text-xl font-semibold mb-2">
-              Experience required
+								Experience required
 							</h2>
 							<p>{jobDetails.experience_required}</p>
 						</div>
 					)}
 
-          {jobDetails && jobDetails.deadline && (
+					{jobDetails && jobDetails.deadline && (
 						<div className="mb-4">
 							<h2 className="text-xl font-semibold mb-2">
-              Deadline
+								Deadline
 							</h2>
 							<p>{jobDetails.deadline}</p>
 						</div>
 					)}
-
 
 					{jobDetails && jobDetails.employment_type && (
 						<div className="mb-4">
@@ -153,7 +137,7 @@ function JobDetails() {
 					{jobDetails && jobDetails.available_position && (
 						<div className="mb-4">
 							<h2 className="text-xl font-semibold mb-2">
-							Available position
+								Available position
 							</h2>
 							<p>{jobDetails.available_position}</p>
 						</div>
@@ -171,24 +155,54 @@ function JobDetails() {
 					</div>
 
 					<div>
-						<button
-							className="bg-primary text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300"
-							onClick={() => {
-								console.log(
-									"onclick handle submit jobDetails ",
-									jobDetails.id
-								);
+						{isRecruiterPage ? (
+							<button
+								className="bg-primary text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300"
+								onClick={() => {
+									console.log(
+										"onclick handle submit jobDetails ",
+										jobDetails.id
+									);
 
-								return handleEdit(jobDetails?.id);
-							}}
-						>
-							Edit
-						</button>
+									return handleEditJob(jobDetails?.id);
+								}}
+							>
+								Edit
+							</button>
+						) : isCandidatePage ? (
+							<button
+								className="bg-primary text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300"
+								onClick={() => {
+									console.log(
+										"onclick handle apply ",
+										jobDetails.id
+									);
+
+									return handleApplyJob(jobDetails?.id, candidateData.id  , jobDetails?.recruiterId);
+								}}
+							>
+								Apply Now
+							</button>
+						) : (
+							<button
+								className="bg-primary text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300"
+								onClick={() => {
+									console.log(
+										"onclick handle apply ",
+										jobDetails.id
+									);
+
+									return handleGoBack(jobDetails?.id);
+								}}
+							>
+								Go back
+							</button>
+						)}
 					</div>
 				</div>
 			</div>
 		</div>
 	);
-}
+};
 
 export default JobDetails;

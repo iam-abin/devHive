@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux/reducer/reducer";
 
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { notify } from "../../utils/toastMessage";
 
 interface JobFormData {
@@ -29,15 +29,19 @@ function EditJob() {
 	// const [updatedJobDetails, setupdatedJobDetails] = useState("");
 	const [jobDetails, setJobDetails] = useState<any>(null);
 	const navigate = useNavigate();
-	const jobId = useSelector((state: RootState) => {
-		return state.recruiterJobId.jobId;
-	});
+	const {jobId} = useParams()
+	// const jobId = useSelector((state: RootState) => {
+	// 	return state.recruiterJobId.jobId;
+	// });
 
 	useEffect(() => {
 		const fetchJobDetails = async () => {
 			try {
-				const job = await getAJobApi(jobId);
-				setJobDetails(job.data.data);
+				if(jobId){
+					const job = await getAJobApi(jobId);
+					setJobDetails(job.data);
+				}
+
 			} catch (error) {
 				// Handle error, e.g., log it or show an error message to the user
 				console.error("Error fetching job details:", error);

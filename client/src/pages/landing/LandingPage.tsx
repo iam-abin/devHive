@@ -14,31 +14,71 @@ import JobCardShimmerLandingPage from "../../components/shimmer/job/JobCardShimm
 import { useDispatch, useSelector } from "react-redux";
 import { setLoaded, setLoading } from "../../redux/slice/loaderSlice/isLoading";
 import { RootState } from "../../redux/reducer/reducer";
+import { useLocation, useNavigate } from "react-router-dom";
+import Paginate from "../../components/pagination/Paginate";
+import NavBarCandidate from "../../components/navBar/NavBarCandidate";
+import NavBarRecruiter from "../../components/navBar/NavBarRecruiter";
 
 function LandingPage() {
+	const [currentPage, setCurrentPage] = useState(1);
+	const [pageCount, setpageCount] = useState(1);
 	const [jobs, setJobs] = useState([]);
 	const dispatch = useDispatch();
-	const isLoading = useSelector(
-		(state: RootState) => state.loading.isLoading
+	const navigate = useNavigate();
+	// const isLoading = useSelector(
+	// 	(state: RootState) => state.loading.isLoading
+	// );
+
+	const candidate = useSelector(
+		(state: RootState) => state.candidateData.data
+	);
+	const recruiter = useSelector(
+		(state: RootState) => state.recruiterData.data
 	);
 	useEffect(() => {
 		(async () => {
-			dispatch(setLoading());
-			const allJobs = await getAllJobsApi();
+			// dispatch(setLoading());
+			const allJobs = await getAllJobsApi(currentPage);
+			console.log("allJobs", allJobs);
 			setJobs(allJobs.data);
-			dispatch(setLoaded());
+			setpageCount(allJobs.totalNumberOfPages);
+			// dispatch(setLoaded());
 		})();
-	}, []);
+	}, [currentPage]);
+
+	const handlePageChange = async ({ selected }: { selected: number }) => {
+		setCurrentPage(selected + 1);
+	};
+
+	const location = useLocation();
+	const isRecruiterUrl = location.pathname.includes("recruiter");
+	const isCandidateUrl = location.pathname.includes("candidate");
+	// if (isRecruiterUrl) {
+	// 	console.log("This is a recruiter page");
+	// }
 
 	const handleViewJob = async (jobId: string) => {
-		const job = await getAJobApi(jobId);
-		return job;
+		console.log("id handle view ", jobId);
+		// dispatch(setRecruiterJobId(id))
+		if (isRecruiterUrl) {
+			navigate(`/recruiter/job-details/${jobId}`);
+		}
+
+		navigate(`/candidate/job-details/${jobId}`);
 	};
 
 	return (
 		<>
 			{/* <GiHamburgerMenu /> */}
-			<NavBarLanding />
+			
+			{candidate && isCandidateUrl ? (
+				<NavBarCandidate />
+			) : recruiter && isRecruiterUrl ? (
+				<NavBarRecruiter />
+			) : (
+				<NavBarLanding />
+			)}
+
 			<div>
 				<div>
 					<div
@@ -64,7 +104,11 @@ function LandingPage() {
 									offset={-60} // Adjust this value based on the height of your navigation bar
 									className="btn btn-primary"
 								>
-									Get Started
+									{candidate && isCandidateUrl
+										? "Start searching"
+										: recruiter && isRecruiterUrl
+										? "Start searching"
+										: "Get Started"}
 								</Link>
 							</div>
 						</div>
@@ -77,7 +121,7 @@ function LandingPage() {
 					<div className="py-10 ">
 						<SearchBar jobs={jobs} />
 					</div>
-					<div className="pb-20">
+					{/* <div className="pb-20">
 						{isLoading ? (
 							<JobCardShimmerLandingPage />
 						) : jobs.length > 0 ? (
@@ -97,7 +141,30 @@ function LandingPage() {
 								</div>
 							</div>
 						)}
+					</div> */}
+					<div className="pb-20">
+						{jobs.length > 0 ? (
+							jobs.map((job: any) => (
+								<JobCard
+									key={job?.id}
+									job={job}
+									handleViewJob={handleViewJob}
+								/>
+							))
+						) : (
+							<div className="mx-40 p-6 bg-transparent rounded-md shadow-md">
+								<div className="flex items-center justify-center mb-4">
+									<p className="text-white ml-4 text-2xl font-bold">
+										No jobs are listed yet
+									</p>
+								</div>
+							</div>
+						)}
 					</div>
+					<Paginate
+						pageCount={pageCount}
+						handlePageChange={handlePageChange}
+					/>
 				</div>
 			</div>
 			<div>

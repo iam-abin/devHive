@@ -1,5 +1,5 @@
 import EditProfile from "../../../components/candidate/EditProfile"
-import HeaderCandidate from "../../../components/candidate/HeaderCandidate"
+import HeaderCandidate from "../../../components/navBar/NavBarCandidate"
 
 function CandidateProfileEditPage() {
   return (

@@ -6,7 +6,7 @@ const RECRUITER_AUTH_URL = `/auth/recruiter`;
 const OTP_AUTH_URL = `/auth/otp`;
 
 const authApiUrlConfig = {
-
+	
     // Admin
 	signinAdminUrl: `${ADMIN_AUTH_URL}/signin`,
 	signoutAdminUrl: `${ADMIN_AUTH_URL}/signout`,

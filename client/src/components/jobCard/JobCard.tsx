@@ -1,9 +1,7 @@
-// landing job card
 import React from "react";
 import dayjs from "dayjs";
 
-function JobCard({ job, handleViewJob }: { job: any, handleViewJob: any }) {
-	// const props = { skills: ["js", "nodehs"] };
+const  JobCard: React.FC<{ job: any, handleViewJob: any }> = ({ job, handleViewJob }) => {
 	const date1 = dayjs(Date.now());
 	const diffInDays = date1.diff(job.createdAt, "day");
 	return (
@@ -33,7 +31,7 @@ function JobCard({ job, handleViewJob }: { job: any, handleViewJob: any }) {
 					</p>
 
 					<button
-						onClick={() => handleViewJob(job?.jobId)}
+						onClick={() => handleViewJob(job?.id)}
 						className="text-blue-500 border border-blue-500 px-10 py-2 rounded-md"
 					>
 						View

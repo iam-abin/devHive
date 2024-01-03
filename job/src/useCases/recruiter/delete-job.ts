@@ -11,8 +11,8 @@ export = (dependencies: DependenciesData) => {
 		throw new Error("jobRepository should exist in dependencies");
 	}
 
-	const execute = (id: string) => {
-		return jobRepository.deleteJob(id);
+	const execute = (jobId: string) => {
+		return jobRepository.deleteJob(jobId);
 	};
 
 	return { execute };

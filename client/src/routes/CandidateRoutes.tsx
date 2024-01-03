@@ -20,6 +20,7 @@ import ResetPasswordMobileEnterPage from "../pages/auth-pages/emailOrMobileEnter
 
 import OtpFormPageForgotPassword from "../pages/auth-pages/otp/candidate/OtpFormPageForgotPassword";
 import CandidateProfileEditPage from "../pages/profile/candidate/CandidateProfileEditPage";
+import AppliedJobsPage from "../pages/job-pages/candidate/AppliedJobsPage";
 
 function CandidateRoutes() {
 	const isCandidateLoggedIn = useSelector(
@@ -29,7 +30,7 @@ function CandidateRoutes() {
 		<>
 			<Routes>
 				{/* <Route path="/" element={isCandidateLoggedIn? <CandidateHomePage />: <Navigate to={"/candidate/landing"} />} /> */}
-				<Route path="/" element={isCandidateLoggedIn? <CandidateHomePage />: <Navigate to={"/candidate/landing"} />} />
+				<Route path="/" element={isCandidateLoggedIn? <LandingPage />: <Navigate to={"/candidate/landing"} />} />
 				<Route path="/profile" element={isCandidateLoggedIn? <CandidateProfilePage />: <Navigate to={"/candidate/landing"} />} />
 				<Route path="/edit-profile/" element={isCandidateLoggedIn? <CandidateProfileEditPage />: <Navigate to={"/candidate/landing"} />} />
 
@@ -47,7 +48,10 @@ function CandidateRoutes() {
 				<Route path="/otpSignupCandidate/:email" element={!isCandidateLoggedIn? <OtpFormPageSignup /> :<Navigate to={"/candidate"} />} />
 
 				<Route path="/all-jobs" element={isCandidateLoggedIn?<AllJobsPage />:<Navigate to={"/candidate/signin"} />} />
-				<Route path="/job-details" element={isCandidateLoggedIn?<JobDetailsPage />:<Navigate to={"/candidate/signin"} />} />
+				{/* <Route path="/job-details" element={isCandidateLoggedIn?<JobDetailsPage />:<Navigate to={"/candidate/signin"} />} /> */}
+				<Route path="/job-details/:jobId" element={isCandidateLoggedIn?<JobDetailsPage />:<Navigate to={"/candidate/signin"} />} />
+				<Route path="/applied-jobs" element={isCandidateLoggedIn?<AppliedJobsPage />:<Navigate to={"/candidate/signin"} />} />
+				{/* <Route path="/applied-jobs-details/:jobId" element={isCandidateLoggedIn?<JobDetailsPage />:<Navigate to={"/candidate/signin"} />} /> */}
 			</Routes>
 		</>
 	);

@@ -1,4 +1,4 @@
-import HeaderCandidate from "../../../components/candidate/HeaderCandidate"
+import HeaderCandidate from "../../../components/navBar/NavBarCandidate"
 import Profile from "../../../components/candidate/Profile"
 
 function CandidateProfilePage() {

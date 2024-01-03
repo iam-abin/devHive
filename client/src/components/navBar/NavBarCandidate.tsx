@@ -7,7 +7,7 @@ import { candidateSignoutApi } from "../../axios/apiMethods/auth-service/candida
 import Swal from "sweetalert2";
 import { notify } from "../../utils/toastMessage";
 
-function HeaderCandidate() {
+function NavBarCandidate() {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
@@ -73,7 +73,7 @@ function HeaderCandidate() {
 								<li onClick={()=> navigate("/candidate/all-jobs")}>
 									<a>Jobs</a>
 								</li>
-								<li>
+								<li onClick={()=> navigate("/candidate/applied-jobs")}>
 									<a>Applied Jobs</a>
 								</li>
 								<li onClick={()=> navigate("/candidate/profile")}>
@@ -101,4 +101,4 @@ function HeaderCandidate() {
 	);
 }
 
-export default HeaderCandidate;
+export default NavBarCandidate;

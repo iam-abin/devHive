@@ -27,6 +27,9 @@ export = (dependencies: DependenciesData) => {
 			throw new BadRequestError("Invalid email or password");
 		}
 
+
+	
+
 		// check password is correct
 		const isSamePassword = await comparePassword(
 			password,
@@ -37,6 +40,12 @@ export = (dependencies: DependenciesData) => {
 			// return res.status(400).json({message:"Invalid email or passwordd"})
 
 			throw new BadRequestError("Invalid email or passwordd");
+		}
+
+		if (isExistingUser.userType !== "candidate") {
+			// return res.status(400).json({message:"Invalid email or password"})
+
+			throw new BadRequestError("Invalid Candidate");
 		}
 
 		if (!isExistingUser.isActive) {
