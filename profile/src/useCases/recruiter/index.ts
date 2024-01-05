@@ -5,6 +5,8 @@ import getRecruiterProfileByEmailUseCase from "./get-profile-by-email";
 import uploadRecruiterProfilePicUseCase from "./upload-profile-pic";
 import getCompanyProfileByRecruiterUseCase from "./get-company-profile";
 import updateCompanyProfileByRecruiterUseCase from "./update-company-profile";
+import getAllCandidatesProfilesUseCase from "./get-all-candidates-profiles";
+import getNumberofCandidatesProfilesUseCase from "./get-numberof-candidates-profiles";
 
 export {
 	createRecruiterProfileUseCase,
@@ -14,4 +16,6 @@ export {
 	uploadRecruiterProfilePicUseCase,
 	getCompanyProfileByRecruiterUseCase,
 	updateCompanyProfileByRecruiterUseCase,
+	getAllCandidatesProfilesUseCase,
+	getNumberofCandidatesProfilesUseCase,
 };

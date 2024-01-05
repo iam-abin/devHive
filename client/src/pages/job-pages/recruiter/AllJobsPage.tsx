@@ -4,8 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import HeaderCandidate from "../../../components/navBar/NavBarCandidate";
 import { getAllJobsApi } from "../../../axios/apiMethods/jobs-service/jobs";
-import JobCard from "../../../components/jobCard/JobCard";
+import JobCard from "../../../components/cards/JobCard";
 import Paginate from "../../../components/pagination/Paginate";
+import TopNavBarRecruiter from "../../../components/navBar/TopNavBarRecruiter";
 
 function AllJobsPage() {
 	const dispatch = useDispatch();
@@ -46,7 +47,7 @@ function AllJobsPage() {
 
 	return (
 		<div>
-			<HeaderCandidate />
+			<TopNavBarRecruiter />
 			<div>
 				<div className="navbar bg-base-100">
 					<div className="flex-1">

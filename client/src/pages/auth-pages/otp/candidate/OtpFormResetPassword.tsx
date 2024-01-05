@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
 	setLoaded,
 	setLoading,
@@ -13,10 +13,6 @@ import OtpEnterForm from "../../../../components/auth-components/otp/otpEnterFor
 function OtpFormResetPassword() {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const { email } = useParams();
-
-	// Provide a default value (empty string) if email is undefined
-	const userEmail = email || "";
 
 	const isLoading = useSelector(
 		(state: RootState) => state.loading.isLoading
@@ -38,10 +34,14 @@ function OtpFormResetPassword() {
 			);
 			console.log("hiiii", response);
 			console.log("hiiii", response.data);
-			// if(response.data.data == "pending") {
-			//     notify(response.data.message, 'error');
-			//     return
-			//   }
+			if (response.data === "pending") {
+				notify(
+					response.message ||
+						"An error occurred during OTP submission",
+					"error"
+				);
+				return;
+			}
 			notify(response?.message, "success");
 			navigate("/candidate/passwordReset");
 		} catch (error: any) {
@@ -63,7 +63,7 @@ function OtpFormResetPassword() {
 	return (
 		<div>
 			{/* Pass email and handleSubmit as props to OtpEnterForm */}
-			<OtpEnterForm email={userEmail} handleSubmit={handleSubmit} />
+			<OtpEnterForm email={candidateData.phone} handleSubmit={handleSubmit} />
 		</div>
 	);
 }

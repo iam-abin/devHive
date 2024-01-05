@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import JobApplicationDetails from "../../../components/recruiter/JobApplicationDetails";
 import TopNavBarRecruiter from "../../../components/navBar/TopNavBarRecruiter";
+import NavBarCandidate from "../../../components/navBar/NavBarCandidate";
 
 function JobApplicationDetailsPage() {
 	const [jobApplicationDetails, setJobApplicationDetails] =
@@ -37,14 +38,9 @@ function JobApplicationDetailsPage() {
 
 		fetchJobDetails();
 	}, [jobApplicationId]);
-
-	const handleEditJob = async (id: string) => {
-		console.log("id handle edit ", id);
-		navigate(`/recruiter/edit-job-details/${id}`);
-	};
 	return (
 		<div>
-			<TopNavBarRecruiter />
+			<NavBarCandidate />
 			<JobApplicationDetails
 				jobApplicationDetails={jobApplicationDetails}
 				handleChangeApplicationStatus={undefined}

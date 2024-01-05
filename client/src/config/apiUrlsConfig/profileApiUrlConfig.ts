@@ -14,7 +14,11 @@ const profileApiUrlConfig = {
 	// Recruiter
 	getgetRecruiterProfileUrl: (userId: string) => `${RECRUITER_PROFILE_URL}/viewProfile/${userId}`,
 	updategetRecruiterProfileUrl: `${RECRUITER_PROFILE_URL}/updateProfile`,
+	//:id
+	getAllCandidatesProfilesUrl: (page: number) => `${RECRUITER_PROFILE_URL}/viewAllCandidatesProfiles/${page}`,
+	getACandidateProfileUrl: (userId: string) => `${RECRUITER_PROFILE_URL}/viewCandidateProfile/${userId}`,
 
+	
 
 };
 

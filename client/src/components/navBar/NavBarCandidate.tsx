@@ -11,8 +11,8 @@ function NavBarCandidate() {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
-	const candidate = useSelector((state: RootState) => {
-		return state.candidateData.data
+	const candidate: any = useSelector((state: RootState) => {
+		return state.candidateData.data;
 	});
 
 	// const candidate = useSelector((state: RootState) => {
@@ -32,7 +32,7 @@ function NavBarCandidate() {
 			if (result.isConfirmed) {
 				const response = await candidateSignoutApi(candidate);
 				console.log("signout response", response);
-				
+
 				if (response) {
 					dispatch(clearCandidate());
 					notify("Logged out successfully", "success");
@@ -42,15 +42,18 @@ function NavBarCandidate() {
 		});
 	};
 
-	
-
 	return (
 		<>
-			<nav className="navbar bg-base-100 bg-primary">
+			<nav className="navbar sticky top-0 z-50 bg-base-100 bg-primary">
 				<div className="flex-1">
-					<a className="btn btn-ghost text-xl" onClick={()=> navigate("/")}>DevHive</a>
+					<a
+						className="btn btn-ghost text-xl"
+						onClick={() => navigate("/")}
+					>
+						DevHive
+					</a>
 				</div>
-
+				{candidate && candidate?.name}
 				{candidate ? (
 					<div className="flex-none">
 						<div className="dropdown dropdown-end">
@@ -70,19 +73,37 @@ function NavBarCandidate() {
 								tabIndex={0}
 								className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
 							>
-								<li onClick={()=> navigate("/candidate/all-jobs")}>
+								<li
+									onClick={() =>
+										navigate("/candidate/all-jobs")
+									}
+								>
 									<a>Jobs</a>
 								</li>
-								<li onClick={()=> navigate("/candidate/applied-jobs")}>
+								<li
+									onClick={() =>
+										navigate("/candidate/applied-jobs")
+									}
+								>
 									<a>Applied Jobs</a>
 								</li>
-								<li onClick={()=> navigate("/candidate/profile")}>
+								<li
+									onClick={() =>
+										navigate("/candidate/profile")
+									}
+								>
 									<a>Profile</a>
 								</li>
 								<li>
 									<a>Chat</a>
 								</li>
-								<li onClick={()=> navigate("/candidate/passwordResetMobile")}>
+								<li
+									onClick={() =>
+										navigate(
+											"/candidate/passwordResetMobile"
+										)
+									}
+								>
 									<a>Reset Password</a>
 								</li>
 								<li onClick={handleCandidateLogout}>

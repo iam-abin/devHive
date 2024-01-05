@@ -36,7 +36,7 @@ function CreateJobForm() {
 
 			console.log("Hello");
 
-			notify(response.data.message, "success");
+			notify(response.message, "success");
 			navigate("/recruiter/all-jobs");
 		} catch (error: any) {
 			notify(error.response.data.errors[0].message, "error");

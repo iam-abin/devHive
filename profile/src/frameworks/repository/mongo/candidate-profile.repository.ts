@@ -44,7 +44,26 @@ export = {
 	uploadResume: async (id: string, url: string): Promise<any>=>{
 		const candidate = await CandidateProfileModel.updateOne({ "_id": id }, { $set:{ profile_image: url }});
 		return candidate;
-	}
+	},
+
+	getAllCandidatesProfiles: async (
+		skip: number,
+		limit: number
+	): Promise<any[]> => {
+		// const jobs = await JobModel.aggregate([{ $sort: { createdAt: 1 } }]);
+		const jobs = await CandidateProfileModel.find()
+			.sort({ createdAt: -1 })
+			.skip(skip)
+			.limit(limit);
+		console.log(jobs);
+		return jobs;
+	},
+
+	getCountOfCandidatesProfiles: async (): Promise<number> => {
+		const totalJobs: number = await CandidateProfileModel.countDocuments();
+		console.log(totalJobs);
+		return totalJobs;
+	},
 
 	
 };

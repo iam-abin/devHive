@@ -1,29 +1,38 @@
-// Profile.tsx
+// CandidateProfileDetailsPage.tsx
 
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "../../redux/reducer/reducer";
-import { candidateGetProfileApi } from "../../axios/apiMethods/profile-service/candidate";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { getACandidateProfileApi } from "../../../axios/apiMethods/profile-service/recruiter";
+import TopNavBarRecruiter from "../../../components/navBar/TopNavBarRecruiter";
 
-const Profile: React.FC = () => {
+const CandidateProfileDetailsPage: React.FC = () => {
 	const navigate = useNavigate();
-	const candidateData = useSelector(
-		(state: RootState) => state.candidateData.candidate
-	);
+
+	const { candidateId } = useParams();
+	const location = useLocation();
+
+	// Check if the pathname of the URL includes the term "recruiter"
+	const isRecruiterUrl = location.pathname.includes("recruiter");
 
 	const [candidateProfileData, setCandidateProfileData] = useState<any>([]);
 
 	useEffect(() => {
 		(async () => {
-			const { id } = candidateData;
-			const candidateProfile = await candidateGetProfileApi(id);
-			setCandidateProfileData(candidateProfile);
+			if (candidateId) {
+				const candidateProfile = await getACandidateProfileApi(
+					candidateId
+				);
+				console.log("candidateProfile", candidateProfile);
+				console.log("candidateProfile", candidateProfile.data.name);
+
+				setCandidateProfileData(candidateProfile.data);
+			}
 		})();
-	}, [candidateData]);
+	}, [candidateId]);
 
 	return (
-		<div className="bg-gray-200 md:w-9/12 p-8 mt-60">
+		<>
+			<TopNavBarRecruiter />
 			<div className="w-md mx-auto bg-white p-8 rounded shadow-md">
 				<div className="hero h-56 bg-base-200 relative">
 					<div className="hero-content flex-col lg:flex-row-reverse">
@@ -35,22 +44,23 @@ const Profile: React.FC = () => {
 						<div className="flex flex-col items-start lg:items-end">
 							<h1 className="text-5xl font-bold">
 								I'm{" "}
-								{candidateProfileData?.data?.data?.name ??
-									candidateData.name}
+								{candidateProfileData?.name &&
+									candidateProfileData.name}
 							</h1>
 							<p className="py-6">
-								{candidateProfileData?.data?.data?.about}
+								{candidateProfileData.about &&
+									candidateProfileData.about}
 							</p>
-							<button
-								onClick={() =>
-									navigate(
-										`/candidate/edit-profile`
-									)
-								}
-								className="btn btn-primary absolute top-0 right-0 m-4"
-							>
-								Edit
-							</button>
+							{!isRecruiterUrl ? (
+								<button
+									onClick={() =>
+										navigate(`/candidate/edit-profile`)
+									}
+									className="btn btn-primary absolute top-0 right-0 m-4"
+								>
+									Edit
+								</button>
+							) : null}
 						</div>
 					</div>
 				</div>
@@ -64,8 +74,7 @@ const Profile: React.FC = () => {
 						<div className="grid h-12 pl-5 card bg-base-300 rounded-box items-center">
 							<div className="text-left">
 								Name:{" "}
-								{candidateProfileData?.data?.data?.name ??
-									candidateData.name}
+								{candidateProfileData.name ?? "Not specified"}
 							</div>
 						</div>
 					</div>
@@ -74,8 +83,7 @@ const Profile: React.FC = () => {
 						<div className="grid h-12 pl-5 card bg-base-300 rounded-box items-center">
 							<div className="text-left">
 								Email:{" "}
-								{candidateProfileData?.data?.data?.email ??
-									candidateData.email}
+								{candidateProfileData.email ?? "Not specified"}
 							</div>
 						</div>
 					</div>
@@ -84,8 +92,7 @@ const Profile: React.FC = () => {
 						<div className="grid h-12 pl-5 card bg-base-300 rounded-box items-center">
 							<div className="text-left">
 								Phone:{" "}
-								{candidateProfileData?.data?.data?.phone ??
-									candidateData.phone}
+								{candidateProfileData.phone ?? "Not specified"}
 							</div>
 						</div>
 					</div>
@@ -94,8 +101,7 @@ const Profile: React.FC = () => {
 						<div className="grid h-12 pl-5 card bg-base-300 rounded-box items-center">
 							<div className="text-left">
 								About:{" "}
-								{candidateProfileData?.data?.data?.about ??
-									"Not specified"}
+								{candidateProfileData.about ?? "Not specified"}
 							</div>
 						</div>
 					</div>
@@ -104,8 +110,7 @@ const Profile: React.FC = () => {
 						<div className="grid h-12 pl-5 card bg-base-300 rounded-box items-center">
 							<div className="text-left">
 								Gender:{" "}
-								{candidateProfileData?.data?.data?.gender ??
-									"Not specified"}
+								{candidateProfileData.gender ?? "Not specified"}
 							</div>
 						</div>
 					</div>
@@ -114,8 +119,8 @@ const Profile: React.FC = () => {
 						<div className="grid h-12 pl-5 card bg-base-300 rounded-box items-center">
 							<div className="text-left">
 								Current Location:{" "}
-								{candidateProfileData?.data?.data
-									?.currentLocation ?? "Not specified"}
+								{candidateProfileData?.currentLocation ??
+									"Not specified"}
 							</div>
 						</div>
 					</div>
@@ -124,7 +129,7 @@ const Profile: React.FC = () => {
 						<div className="grid h-12 pl-5 card bg-base-300 rounded-box items-center">
 							<div className="text-left">
 								Experience:{" "}
-								{candidateProfileData?.data?.data?.experience ??
+								{candidateProfileData.experience ??
 									"Not specified"}
 							</div>
 						</div>
@@ -134,7 +139,7 @@ const Profile: React.FC = () => {
 						<div className="grid h-12 pl-5 card bg-base-300 rounded-box items-center">
 							<div className="text-left">
 								Address:{" "}
-								{candidateProfileData?.data?.data?.address ??
+								{candidateProfileData.address ??
 									"Not specified"}
 							</div>
 						</div>
@@ -149,8 +154,8 @@ const Profile: React.FC = () => {
 					<h2 className="text-xl font-bold mb-2">Skills</h2>
 					<ul className="list-disc pl-4">
 						{/* Add more skills based on your data */}
-						{candidateProfileData?.data?.data?.keySkills &&
-							candidateProfileData.data.data.keySkills.map(
+						{candidateProfileData.keySkills &&
+							candidateProfileData.keySkills.map(
 								(skill: string, index: number) => (
 									<div className="badge badge-info gap-2">
 										<svg
@@ -173,8 +178,8 @@ const Profile: React.FC = () => {
 					</ul>
 				</div>
 			</div>
-		</div>
+		</>
 	);
 };
 
-export default Profile;
+export default CandidateProfileDetailsPage;

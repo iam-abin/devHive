@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
 	setLoaded,
 	setLoading,
@@ -13,10 +13,7 @@ import { verifyResetPasswordOtpRecruiterApi } from "../../../../axios/apiMethods
 function OtpFormResetPassword() {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const { email } = useParams();
-
-	// Provide a default value (empty string) if email is undefined
-	const userEmail = email || "";
+	
 
 	const isLoading = useSelector(
 		(state: RootState) => state.loading.isLoading
@@ -42,13 +39,21 @@ function OtpFormResetPassword() {
 			//     notify(response.data.message, 'error');
 			//     return
 			//   }
+			if (response.data === "pending") {
+				notify(
+					response.message ||
+						"An error occurred during OTP submission",
+					"error"
+				);
+				return;
+			}
 			notify(response?.message, "success");
 			navigate("/recruiter/passwordReset");
 		} catch (error: any) {
 			console.error("Error during OTP submission:", error);
 
 			notify(
-				error.errors[0].message || "An error occurred during OTP submission",
+				error.message || "An error occurred during OTP submission",
 				"error"
 			);
 		} finally {
@@ -63,7 +68,7 @@ function OtpFormResetPassword() {
 	return (
 		<div>
 			{/* Pass email and handleSubmit as props to OtpEnterForm */}
-			<OtpEnterForm email={userEmail} handleSubmit={handleSubmit} />
+			<OtpEnterForm phone={recruiterData?.phone} handleSubmit={handleSubmit} />
 		</div>
 	);
 }

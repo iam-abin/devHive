@@ -9,6 +9,7 @@ import {
 } from "../../../axios/apiMethods/jobs-service/jobs";
 import { RootState } from "../../../redux/reducer/reducer";
 import { useSelector } from "react-redux";
+import TopNavBarRecruiter from "../../../components/navBar/TopNavBarRecruiter";
 
 interface JobInterface {
 	id: string;
@@ -169,6 +170,7 @@ function AllAddedJobs() {
 
 	return (
 		<div>
+			<TopNavBarRecruiter />
 			<div className="flex items-center justify-center">
 				<h1 className="text-3xl font-bold">My Jobs</h1>
 			</div>

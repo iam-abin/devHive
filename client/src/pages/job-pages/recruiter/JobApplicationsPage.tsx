@@ -8,6 +8,7 @@ import {
 } from "../../../axios/apiMethods/jobs-service/jobs";
 import { RootState } from "../../../redux/reducer/reducer";
 import { useSelector } from "react-redux";
+import TopNavBarRecruiter from "../../../components/navBar/TopNavBarRecruiter";
 
 interface JobInterface {
 	id: string;
@@ -108,15 +109,16 @@ function JobApplicationsPage() {
 
 	return (
 		<div>
+			<TopNavBarRecruiter />
 			<div className="flex items-center justify-center">
-				<h1 className="text-3xl font-bold">My Jobs</h1>
+				<h1 className="text-3xl font-bold">Job Applications</h1>
 			</div>
 			
 			{jobsApplicationsData.length > 0 ? (
 				<TableComponent columns={columns} data={jobsApplicationsData} />
 			) : (
 				<div className="text-center text-7xl my-60 font-bold text-orange-800">
-					You haven't added any jobs yet
+					You haven't got any job applications yet
 				</div>
 			)}
 		</div>

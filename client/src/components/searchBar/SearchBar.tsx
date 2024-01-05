@@ -1,41 +1,71 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/reducer/reducer";
+import { filterJobsApi, getJobFieldsValuesApi } from "../../axios/apiMethods/jobs-service/jobs";
 import { setFilteredJobs } from "../../redux/slice/job/filteredJobsSlice";
 
 interface SearchBarProps {
-	data: any[];
+	// jobs: any[];
+	handleGetAllJobs: any;
 }
-const SearchBar: React.FC<SearchBarProps> = ({ jobs }) => {
+const SearchBar: React.FC<SearchBarProps> = ({ handleGetAllJobs }) => {
 	const dispatch = useDispatch();
+	const [jobFieldsValues, setJobFieldsValues] = useState({
+		title: [],
+		location: [],
+		employment_type: [],
+		experience: [],
+	});
 
-	const filteredJobs = useSelector(
-		(state: RootState) => state.filteredJobs.data
-	);
+	// const filterDropdownJobs = useSelector(
+	// 	(state: RootState) => state.filteredJobs.searchDropdownData
+	// );
+
+	useEffect(() => {
+		(async () => {
+			const jobFieldsValues = await getJobFieldsValuesApi(["title", "location", "employment_type"]);
+			console.log("jobFieldsValues ", jobFieldsValues.data);
+			
+			setJobFieldsValues(jobFieldsValues.data)
+		})();
+	}, []);
 
 	const [jobCriteria, setJobCriteria] = useState({
 		title: "",
-		locaion: "",
-		type: "",
+		location: "",
+		employment_type: "",
 		experience: "",
 	});
-	useEffect(() => {
-		const jobsData: SearchBarProps = { data: jobs };
-		dispatch(setFilteredJobs(jobs));
-	}, []);
 
 	const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		setJobCriteria((prevState) => ({
 			...prevState,
 			[e.target.name]: e.target.value,
 		}));
+
+		console.log("filter jobCriteria", jobCriteria);
 	};
 
-	const search = async () => {
-		const filteredJobs = await filterJobs(jobCriteria);
-		setFilteredJobs(filteredJobs);
-	};
 
+
+
+	const handleJobFilter = async () => {
+		console.log("in handleJobFilter jobCriteria", jobCriteria);
+		if (
+			jobCriteria.title === "" &&
+			jobCriteria.location === "" &&
+			jobCriteria.employment_type === ""
+		) {
+			console.log("ret");
+			return;
+		}
+
+		const filteredJobs = await filterJobsApi(jobCriteria);
+		console.log("filteredJobs are ", filteredJobs);
+		
+		dispatch(setFilteredJobs({data: filteredJobs.data}));
+	};
+	console.log("filter jobCriteria", jobCriteria);
 	return (
 		<div className="flex justify-center gap-10 px-10">
 			{/* <DropDownSelect firstItem={"Job Role"} jobs={undefined} /> */}
@@ -50,40 +80,47 @@ const SearchBar: React.FC<SearchBarProps> = ({ jobs }) => {
 				<option value="" disabled hidden>
 					Job Role
 				</option>
-				{filteredJobs?.map((job: any) => (
-					<option key={job.id} value={job.title}>
-						{job.title}
+				{jobFieldsValues?.title?.map((title: any, index: number) => (
+					<option key={index} value={title}>
+						{title}
 					</option>
 				))}
 			</select>
 
 			<select
 				onChange={handleChange}
-				name="locaion"
+				name="location"
 				// default value or title value of the select box is selecting based on the value in 'jobCriteria'
-				value={jobCriteria.locaion}
+				value={jobCriteria.location}
 				className="select select-primary text-center font-semibold rounded-md py-3 max-w-sm"
 			>
 				<option value="" disabled hidden>
 					Location
 				</option>
-				<option value="Banglore">Banglore</option>
+				{jobFieldsValues?.location?.map((location: any, index: number) => (
+					<option key={index} value={location}>
+						{location}
+					</option>
+				))}
 			</select>
 
 			<select
 				onChange={handleChange}
-				name="type"
+				name="employment_type"
 				// default value or title value of the select box is selecting based on the value in 'jobCriteria'
-				value={jobCriteria.type}
+				value={jobCriteria.employment_type}
 				className="select select-primary text-center font-semibold rounded-md py-3 max-w-sm"
 			>
 				<option value="" disabled hidden>
 					Job Type
 				</option>
-				<option value="Part Time">Part Time</option>
-				<option value="Full Time">Full Time</option>
+				{jobFieldsValues?.employment_type?.map((employment_type: any, index: number) => (
+					<option key={index} value={employment_type}>
+						{employment_type}
+					</option>
+				))}
 			</select>
-
+			{/* 
 			<select
 				onChange={handleChange}
 				name="experience"
@@ -97,9 +134,12 @@ const SearchBar: React.FC<SearchBarProps> = ({ jobs }) => {
 
 				<option value="Fresher">Fresher</option>
 				<option value="Junier Level">Junier Level</option>
-			</select>
+			</select> */}
 
-			<button className="btn btn-primary rounded-md w-64 font-bold py-3 text-black">
+			<button
+				onClick={handleJobFilter}
+				className="btn btn-primary rounded-md w-64 font-bold py-3 text-black"
+			>
 				Search
 			</button>
 		</div>

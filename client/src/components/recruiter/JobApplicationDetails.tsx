@@ -10,7 +10,7 @@ import Swal from "sweetalert2";
 const JobApplicationDetails: React.FC<{
 	jobApplicationDetails: any;
 	handleChangeApplicationStatus: any;
-}> = ({ jobApplicationDetails, handleChangeApplicationStatus }) => {
+}> = ({ jobApplicationDetails }) => {
 	const location = useLocation();
 
 	const isRecruiterPage = location.pathname.includes("recruiter");
@@ -24,7 +24,7 @@ const JobApplicationDetails: React.FC<{
 		// Do something specific for the "recruiter" page
 		console.log("This is a recruiter page");
 	}
-	console.log(jobApplicationDetails, "in job application details component");
+	console.log(jobApplicationDetails, "in job --recruiter --application details component");
 
 	const handleChangeStatus = async (applicationStatus: string) => {
 		console.log("handleChangeapplicationStatus ", applicationStatus);
@@ -235,7 +235,23 @@ const JobApplicationDetails: React.FC<{
 							<StatusChangeForm
 								handleChangeStatus={handleChangeStatus}
 							/>
-						) : null}
+						) : (
+							<div>
+								{jobApplicationDetails && (
+									<div
+										className={`badge ${
+											jobApplicationDetails.applicationStatus ==
+											"Applied"
+												? "badge badge-accent  gap-2 w-24"
+												: jobApplicationDetails.applicationStatus ==
+												  "Shortlisted"
+												? "badge badge-success gap-2 w-24"
+												: "badge badge-error gap-2 w-24"
+										} `}
+									>{jobApplicationDetails.applicationStatus}</div>
+								) }
+							</div>
+						)}
 					</div>
 				</div>
 			</div>

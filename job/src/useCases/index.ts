@@ -1,6 +1,6 @@
-import { applyJobUseCase, getAllAppliedJobsUseCase, getNumberofCandidateAppliedJobsUseCase } from "./candidate";
+import { applyJobUseCase, getAllAppliedJobsUseCase, getNumberofCandidateAppliedJobsUseCase, getAnAppliedJobUseCase } from "./candidate";
 
-import { filterJobUseCase, getAllJobsUseCase, getJobByIdUseCase, getNumberofJobsUseCase } from "./job";
+import { filterJobUseCase, getAllJobsUseCase, getJobByIdUseCase, getNumberofJobsUseCase, getAllJobFieldsDistinctValuesUseCase } from "./job";
 
 import {
 	createJobUseCase,
@@ -17,11 +17,13 @@ export default {
 	applyJobUseCase,
 	getAllAppliedJobsUseCase,
 	getNumberofCandidateAppliedJobsUseCase,
+	getAnAppliedJobUseCase,
 
 	filterJobUseCase,
 	getAllJobsUseCase,
 	getJobByIdUseCase,
 	getNumberofJobsUseCase,
+	getAllJobFieldsDistinctValuesUseCase,
 
 	createJobUseCase,
 	updateJobUseCase,

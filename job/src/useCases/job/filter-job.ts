@@ -10,7 +10,20 @@ export = (dependencies: DependenciesData) => {
 	}
 
 	const execute = (jobFilterData: string) => {
-		return jobRepository.filterJob(jobFilterData);
+		console.log("in filter jobs usecase 1 ", jobFilterData);
+
+		const filterCriteria: any = {};
+
+		Object.entries(jobFilterData).forEach(([key, value]) => {
+			if (value !== "") {
+				filterCriteria[key] = value;
+			}
+		});
+
+		console.log("in filter jobs usecase 2 ", filterCriteria);
+		
+
+		return jobRepository.filterJob(filterCriteria);
 	};
 
 	return { execute };

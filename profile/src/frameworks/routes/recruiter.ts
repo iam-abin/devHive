@@ -8,7 +8,7 @@ import { requireAuthRecruiter } from "@abijobportal/common";
 export const recruiterRouter = (dependencies: DependenciesData)=>{
     const router = express.Router();
 
-    const {  viewRecruiterProfileController, updateRecruiterProfileController,  } = recruiterProfileControllers(dependencies)
+    const {  viewRecruiterProfileController, updateRecruiterProfileController, viewAllCandidatesProfilesController } = recruiterProfileControllers(dependencies)
     const { viewCandidateProfileController} = candidateProfileControllers(dependencies);
 
     // recruiter
@@ -18,7 +18,8 @@ export const recruiterRouter = (dependencies: DependenciesData)=>{
 	router.get("/viewProfile/:id", viewRecruiterProfileController);
 	router.patch("/updateProfile", updateRecruiterProfileController);
     router.put("/uploadProfilePic", updateRecruiterProfileController);
-	router.get("/viewCandidateProfile/:id",viewCandidateProfileController);
+	router.get("/viewCandidateProfile/:userId",viewCandidateProfileController);
+	router.get("/viewAllCandidatesProfiles/:page",viewAllCandidatesProfilesController);
 
     return router
 }

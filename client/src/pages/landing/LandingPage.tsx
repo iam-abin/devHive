@@ -4,30 +4,23 @@ import FooterLanding from "../../components/footer/FooterLanding";
 import { useEffect, useState } from "react";
 import NavBarLanding from "../../components/navBar/NavBarLanding";
 import SearchBar from "../../components/searchBar/SearchBar";
-import JobCard from "../../components/jobCard/JobCard";
-import {
-	getAJobApi,
-	getAllJobsApi,
-} from "../../axios/apiMethods/jobs-service/jobs";
+import JobCard from "../../components/cards/JobCard";
+import { getAllJobsApi } from "../../axios/apiMethods/jobs-service/jobs";
+
 import { Link } from "react-scroll";
-import JobCardShimmerLandingPage from "../../components/shimmer/job/JobCardShimmerLandingPage";
 import { useDispatch, useSelector } from "react-redux";
-import { setLoaded, setLoading } from "../../redux/slice/loaderSlice/isLoading";
 import { RootState } from "../../redux/reducer/reducer";
 import { useLocation, useNavigate } from "react-router-dom";
 import Paginate from "../../components/pagination/Paginate";
 import NavBarCandidate from "../../components/navBar/NavBarCandidate";
-import NavBarRecruiter from "../../components/navBar/NavBarRecruiter";
+import TopNavBarRecruiter from "../../components/navBar/TopNavBarRecruiter";
+import { setFilteredJobs } from "../../redux/slice/job/filteredJobsSlice";
+import { setTotalNumberOfPages } from "../../redux/slice/job/filteredJobsSlice";
+import { setCurrentPage } from "../../redux/slice/job/filteredJobsSlice";
 
 function LandingPage() {
-	const [currentPage, setCurrentPage] = useState(1);
-	const [pageCount, setpageCount] = useState(1);
-	const [jobs, setJobs] = useState([]);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	// const isLoading = useSelector(
-	// 	(state: RootState) => state.loading.isLoading
-	// );
 
 	const candidate = useSelector(
 		(state: RootState) => state.candidateData.data
@@ -35,27 +28,55 @@ function LandingPage() {
 	const recruiter = useSelector(
 		(state: RootState) => state.recruiterData.data
 	);
+
+	const pageCount: any = useSelector(
+		(state: RootState) => state.filteredJobs.totalNumberOfPages
+	);
+	console.log("pageCount", pageCount);
+
+	const currentPage: any = useSelector(
+		(state: RootState) => state.filteredJobs.currentPage
+	);
+	console.log("currentPage", currentPage);
+
+	const handleGetAllJobs = async (page: number) => {
+		// dispatch(setLoading());
+		const allJobs = await getAllJobsApi(page);
+		console.log("API Response:", allJobs);
+		// dispatch(setLoaded());
+		return allJobs;
+	};
+
 	useEffect(() => {
 		(async () => {
-			// dispatch(setLoading());
-			const allJobs = await getAllJobsApi(currentPage);
-			console.log("allJobs", allJobs);
-			setJobs(allJobs.data);
-			setpageCount(allJobs.totalNumberOfPages);
-			// dispatch(setLoaded());
+			const allJobs = await handleGetAllJobs(currentPage);
+			console.log(
+				"landing page before handleGetAllJobs dispatch",
+				allJobs
+			);
+
+			dispatch(setFilteredJobs({ data: allJobs.data }));
+			dispatch(
+				setTotalNumberOfPages({
+					totalNumberOfPages: allJobs.totalNumberOfPages,
+				})
+			);
 		})();
 	}, [currentPage]);
 
+	const jobs: any = useSelector(
+		(state: RootState) => state.filteredJobs.data
+	);
+	console.log("jobs -----------------------------", jobs);
+
 	const handlePageChange = async ({ selected }: { selected: number }) => {
-		setCurrentPage(selected + 1);
+		console.log("selected+1 : ", selected + 1);
+		dispatch(setCurrentPage({ currentPage: selected + 1 }));
 	};
 
 	const location = useLocation();
 	const isRecruiterUrl = location.pathname.includes("recruiter");
 	const isCandidateUrl = location.pathname.includes("candidate");
-	// if (isRecruiterUrl) {
-	// 	console.log("This is a recruiter page");
-	// }
 
 	const handleViewJob = async (jobId: string) => {
 		console.log("id handle view ", jobId);
@@ -70,11 +91,11 @@ function LandingPage() {
 	return (
 		<>
 			{/* <GiHamburgerMenu /> */}
-			
+
 			{candidate && isCandidateUrl ? (
 				<NavBarCandidate />
 			) : recruiter && isRecruiterUrl ? (
-				<NavBarRecruiter />
+				<TopNavBarRecruiter />
 			) : (
 				<NavBarLanding />
 			)}
@@ -119,8 +140,9 @@ function LandingPage() {
 					className=" bg-gradient-to-r from-slate-900 via-purple-900 to-slate-900"
 				>
 					<div className="py-10 ">
-						<SearchBar jobs={jobs} />
+						<SearchBar handleGetAllJobs={handleGetAllJobs} />
 					</div>
+
 					{/* <div className="pb-20">
 						{isLoading ? (
 							<JobCardShimmerLandingPage />

@@ -75,7 +75,7 @@ const candidateSchema = new mongoose.Schema(
 
 		gender: {
 			type: String,
-			enum: ["Male", "Female", "Other"],
+			enum: ["male", "female", "other"],
 		},
 		currentLocation: String,
 		address: {

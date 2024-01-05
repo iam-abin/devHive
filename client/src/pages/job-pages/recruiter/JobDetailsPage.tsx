@@ -3,6 +3,7 @@ import { getAJobApi } from "../../../axios/apiMethods/jobs-service/jobs";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import JobDetails from '../../../components/recruiter/JobDetails'
+import TopNavBarRecruiter from "../../../components/navBar/TopNavBarRecruiter";
 
 function JobDetailsPage() {
   const [jobDetails, setJobDetails] = useState<any>(null);
@@ -32,6 +33,7 @@ function JobDetailsPage() {
 	};
   return (
     <div>
+		<TopNavBarRecruiter />
       <JobDetails jobDetails={jobDetails} handleEditJob={handleEditJob} />
     </div>
   )

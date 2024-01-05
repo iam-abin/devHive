@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { getAllCandidateAppliedJobsApi } from "../../../axios/apiMethods/jobs-service/jobs";
 import { RootState } from "../../../redux/reducer/reducer";
 import { useSelector } from "react-redux";
-import JobCard from "../../../components/jobCard/JobCard";
-import JobAppliedCard from "../../../components/jobCard/JobAppliedCard";
+import JobCard from "../../../components/cards/JobCard";
+import JobAppliedCard from "../../../components/cards/JobAppliedCard";
 import NavBarCandidate from "../../../components/navBar/NavBarCandidate";
 import FooterCandidate from "../../../components/candidate/FooterCandidate";
 import Paginate from "../../../components/pagination/Paginate";
@@ -30,7 +30,7 @@ interface JobInterface {
 }
 
 function AppliedJobsPage() {
-  const [currentPage, setCurrentPage] = useState(1);
+	const [currentPage, setCurrentPage] = useState(1);
 	const [pageCount, setpageCount] = useState(1);
 
 	const navigate = useNavigate();
@@ -40,19 +40,22 @@ function AppliedJobsPage() {
 		(state: RootState) => state.candidateData.data
 	);
 
-  const handlePageChange = async ({ selected }: { selected: number }) => {
+	const handlePageChange = async ({ selected }: { selected: number }) => {
 		setCurrentPage(selected + 1);
 	};
 
-  useEffect(() => {
+	useEffect(() => {
 		(async () => {
 			// dispatch(setLoading());
-			const response = await getAllCandidateAppliedJobsApi(candidateData?.id, currentPage );
+			const response = await getAllCandidateAppliedJobsApi(
+				candidateData?.id,
+				currentPage
+			);
 			console.log(
-        "in useEffect getAllCandidateAppliedJobsApi jobs",
-        response
-      );
-      setAppliedJobsData(response.data);
+				"in useEffect getAllCandidateAppliedJobsApi jobs",
+				response
+			);
+			setAppliedJobsData(response.data);
 			setpageCount(response.totalNumberOfPages);
 			// dispatch(setLoaded());
 		})();
@@ -89,28 +92,31 @@ function AppliedJobsPage() {
 			</div>
 			<div className="pb-20">
 				{appliedJobsData.length > 0 ? (
-					appliedJobsData.map((job: any) => (
-						<JobAppliedCard
-							key={job?.id}
-							job={job}
-							handleViewJob={viewApplicationDetails}
+					<>
+						{appliedJobsData.map((job: any) => (
+							<JobAppliedCard
+								key={job?.id}
+								job={job}
+								handleViewJob={viewApplicationDetails}
+							/>
+						))}
+
+						<Paginate
+							pageCount={pageCount}
+							handlePageChange={handlePageChange}
 						/>
-					))
+					</>
 				) : (
 					<div className="mx-40 p-6 bg-transparent rounded-md shadow-md">
 						<div className="flex items-center justify-center mb-4">
-							<p className="text-white ml-4 text-2xl font-bold">
+							<p className="text-black ml-4 text-2xl font-bold">
 								No jobs are Applied Yet yet
 							</p>
 						</div>
 					</div>
 				)}
 			</div>
-      <Paginate
-						pageCount={pageCount}
-						handlePageChange={handlePageChange}
-					/>
-      <FooterCandidate />
+			<FooterCandidate />
 		</div>
 	);
 }

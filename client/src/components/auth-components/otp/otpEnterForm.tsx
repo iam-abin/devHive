@@ -4,7 +4,8 @@ import * as yup from 'yup';
 import { notify } from '../../../utils/toastMessage';
 
 interface OtpFromSignupProps {
-    email: string;
+    email?: string;
+    phone?: string;
     handleSubmit?: any;
   }
   
@@ -13,7 +14,7 @@ const otpSchema = yup.object().shape({
   otp: yup.string().length(6, 'OTP must be 6 digits').required('OTP is required'),
 });
 
-const OtpEnterForm: React.FC<OtpFromSignupProps> = ({ email, handleSubmit }) => {
+const OtpEnterForm: React.FC<OtpFromSignupProps> = ({ email, phone, handleSubmit }) => {
 
   const formik = useFormik({
     initialValues: {
@@ -63,7 +64,7 @@ const OtpEnterForm: React.FC<OtpFromSignupProps> = ({ email, handleSubmit }) => 
                 formik.errors.otp && formik.touched.otp ? 'input-error' : null
               }`}
             />
-            <p>an email is send to : {email}</p>
+            <p>an otp is send to : {email ?? phone}</p>
           </div>
           <label className="label mb-3">
             <span className="label-text-alt text-red-500">

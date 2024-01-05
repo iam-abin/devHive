@@ -15,6 +15,8 @@ import {
 	uploadRecruiterProfilePicUseCase,
 	getCompanyProfileByRecruiterUseCase,
 	updateCompanyProfileByRecruiterUseCase,
+	getAllCandidatesProfilesUseCase,
+	getNumberofCandidatesProfilesUseCase,
 } from "./recruiter";
 
 
@@ -33,4 +35,6 @@ export default {
 	uploadRecruiterProfilePicUseCase,
 	getCompanyProfileByRecruiterUseCase,
 	updateCompanyProfileByRecruiterUseCase,
+	getAllCandidatesProfilesUseCase,
+	getNumberofCandidatesProfilesUseCase,
 };

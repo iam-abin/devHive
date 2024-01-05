@@ -5,6 +5,8 @@ const { JobModel, jobApplicationModel } = schemas;
 export = {
 	applyJob: async (data: object) => {
 		const newApplication = await jobApplicationModel.create(data);
+		console.log("in applyJob repository");
+		
 		return newApplication;
 	},
 
@@ -65,6 +67,19 @@ export = {
 		console.log("in getAllJobApplicationsByRecruiterId", jobApplications);
 
 		return jobApplications;
+	},
+
+	getAnAppliedJobByCandidate: async ( candidateId: string, jobApplicationId: string) => {
+		// use populate
+		console.log("in getAnAppliedJobByCandidate1 jobApplicationId", jobApplicationId);
+		console.log("in getAnAppliedJobByCandidate1 candidateId", candidateId);
+
+		const jobApplication = await jobApplicationModel
+			.findOne({ jobId: jobApplicationId, candidateId })
+			.populate({ path: "jobId", model: JobModel });
+		console.log("in getAnAppliedJobByCandidate2", jobApplication);
+
+		return jobApplication;
 	},
 
 	changeJobApplicationStatus: async (

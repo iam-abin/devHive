@@ -28,27 +28,29 @@ export const getAllJobsApi = async (page: number): Promise<any> => {
     // return response;
 };
 
+export const filterJobsApi = async (filterData: any): Promise<any> => {
+		const response: any = await candidateApiCalls("post", jobApiUrlConfig.filterJobsUrl, filterData);
+		console.log("response is",response.data);
+	
+		return response.data;
+};
+
 
 
 export const getAllRecruiterAddedJobsApi = async (recruiterId: string): Promise<any> => {
-    // try {
 		const response: any = await recruiterApiCalls("get", jobApiUrlConfig.getAllRecruiterAddedJobsUrl(recruiterId));
 		console.log("response is",response.data);
 	
 		return response.data;
-	// } catch (error) {
-	// 	console.log(error);
-		
-	// }
+};
 
-    // const response = await axios({
-    //     method: "get",
-    //     url: `${BASE_URL_RECRUITER}/created-jobs/${recruiterId}`,
-    // });
-    // console.log(response);
+export const getJobFieldsValuesApi = async (fields: any): Promise<any> => {
+    console.log("in getJObFields api");
     
-    // console.log(response.data);
-    // return response;
+    const response: any = await recruiterApiCalls("get", jobApiUrlConfig.getJobFieldsDistinctValuesUrl, fields);
+    console.log("response is",response.data);
+
+    return response.data;
 };
 
 

@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 // import { getAJobApi, updateJobApi } from "../../axios/admin2/jobs/jobs";
 import { getAJobApi, updateJobApi } from "../../axios/apiMethods/jobs-service/jobs";
-import { useSelector } from "react-redux";
-import { RootState } from "../../redux/reducer/reducer";
 
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useNavigate, useParams } from "react-router-dom";
@@ -59,11 +57,9 @@ function EditJob() {
 	
 	const handleSubmit = async (jobData: JobFormData) => {
 		try {
-			console.log("------------------------");
+
 			console.log("jobData ", jobData);
 			console.log("jobDetails.jobId ", jobDetails.jobId);
-
-			console.log("------------------------");
 
 			const data = await updateJobApi(jobData);
 
@@ -90,7 +86,7 @@ function EditJob() {
 		experience_required: jobDetails?.experience_required ?? "",
 		education_required: jobDetails?.education_required ?? "",
 		location: jobDetails?.location ?? "",
-		employment_type: jobDetails?.employment_type ?? "full-time",
+		employment_type: jobDetails?.employment_type,
 		salary_min: jobDetails?.salary_min ?? 0,
 		salary_max: jobDetails?.salary_max ?? 0,
 		deadline: new Date(jobDetails?.deadline).toLocaleDateString() ?? "",
@@ -103,7 +99,7 @@ function EditJob() {
 			initialValues={initialJobValues}
 			// validationSchema={jobCreationSchema}
 			onSubmit={(values) => {
-				console.log(values);
+				console.log("on submit edit job formik",values);
 				values.jobId = jobDetails.id;
 				handleSubmit(values);
 			}}

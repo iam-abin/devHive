@@ -33,7 +33,7 @@ const  JobAppliedCard: React.FC<{ job: any, handleViewJob: any }> = ({ job, hand
 					</p>
 
 					<button
-						onClick={() => handleViewJob(job?.jobId.id)}
+						onClick={() => handleViewJob(job?.id)}
 						className="text-blue-500 border border-blue-500 px-10 py-2 rounded-md"
 					>
 						View

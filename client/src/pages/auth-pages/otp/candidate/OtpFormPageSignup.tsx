@@ -32,9 +32,9 @@ function OtpFormPageSignup() {
 			notify(response.message, "success");
 			navigate("/candidate");
 		} catch (error: any) {
-			console.error("Error during OTP submission:", error);
+			console.error("Error during OTP submission: mm", error);
 
-			notify(error.errors[0].message || "An error occurred during OTP submission", "error");
+			notify(error.message || "An error occurred during OTP submission", "error");
 		} finally {
 			dispatch(setLoaded());
 		}
