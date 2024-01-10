@@ -11,7 +11,7 @@ const initialState = {
 	loading: false,
 	searchDropdownData: [],
 	data: null as Jobs[] | null,
-	totalNumberOfPages: 1,
+	totalNumberOfPages: 0,
 	currentPage: 1,
 	error: false,
 };
@@ -33,14 +33,18 @@ const filteredJobsSlice = createSlice({
 			console.log("in setFilteredJobs reducer payload", action.payload);
 		},
 		clearFilteredJobs: (state) => {
-			state.data = null;
+			state.data = [];
 		},
 
-		// clearPaginationPage: (state) => {
-		// 	state.totalNumberOfPages = null;
-		// },
+		clearTotalNumberOfPages: (state) => {
+			state.totalNumberOfPages = 0;
+		},
+
+		clearCurrentPage: (state) => {
+			state.currentPage = 1;
+		},
 	},
 });
 
-export const {  setFilteredJobs, setTotalNumberOfPages, setCurrentPage, clearFilteredJobs } = filteredJobsSlice.actions; //we can use it in login page
+export const {  setFilteredJobs, setTotalNumberOfPages, setCurrentPage, clearFilteredJobs, clearTotalNumberOfPages, clearCurrentPage } = filteredJobsSlice.actions; //we can use it in login page
 export default filteredJobsSlice.reducer;

@@ -45,7 +45,7 @@ console.log("existing data", existingData);
             userId: updatedData?.userId,
         })
 
-        res.status(200).json({message: "candidate data after update", data: candidate })
+        res.status(200).json({message: "candidate updated successfully", data: candidate })
     };
 
 }

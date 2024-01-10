@@ -65,12 +65,12 @@ function JobApplicationsPage() {
 	const columns = [
 		{
 			name: "Candidate",
-			selector: (row: {candidateId: string} ) => row.candidateId,
+			selector: (row?: {candidateId: string} ) => row?.candidateId,
 			sortable: true,
 		},
 		{
 			name: "Job Title",
-			selector: (row: {jobId:{title: string} }) => row.jobId.title,
+			selector: (row?: {jobId?:{title: string} }) => row?.jobId?.title,
 			sortable: true,
 		},
 		{
@@ -78,18 +78,18 @@ function JobApplicationsPage() {
 			cell: (row: { applicationStatus: string }) => (
 				<div
 					className={`badge ${
-						row.applicationStatus == "Applied"
+						row?.applicationStatus == "Applied"
 							? "badge badge-accent  gap-2 w-24"
 							:row.applicationStatus == "Shortlisted"? "badge badge-success gap-2 w-24" :   "badge badge-error gap-2 w-24"
 					} `}
 				>
-					{row.applicationStatus}
+					{row?.applicationStatus}
 				</div>
 			),
 		},
 		{
 			name: "Applied on",
-			selector: (row: { createdAt: string }) => row.createdAt,
+			selector: (row?: { createdAt: string }) => row?.createdAt,
 			sortable: true,
 		},
 		{

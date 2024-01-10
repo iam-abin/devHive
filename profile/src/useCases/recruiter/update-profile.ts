@@ -12,6 +12,8 @@ export = (dependencies: any) => {
 	}
 
 	const execute = async (existingData: any, updatedData: any) => {
+		console.log("updatedData", updatedData);
+		
 		console.log("hgftd");
 
 		// //  function to find the changes fields to update

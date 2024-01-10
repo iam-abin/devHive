@@ -1,5 +1,8 @@
 export = (dependencies: any) => {
-	const { repositories:{usersRepository} } = dependencies;
+	const {
+		repositories: { usersRepository },
+	} = dependencies;
+
 
 	if (!usersRepository) {
 		throw new Error("usersRepository should exist in dependencies");
@@ -7,7 +10,9 @@ export = (dependencies: any) => {
 
 
 	const execute = (email: string) => {
-		console.log("get user by email usecase");
+		console.log("in usersRepository usersRepository ",usersRepository);
+		
+		console.log("get user by email usecase", email);
 
 		// 
 		

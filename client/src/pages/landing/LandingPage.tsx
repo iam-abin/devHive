@@ -14,7 +14,12 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Paginate from "../../components/pagination/Paginate";
 import NavBarCandidate from "../../components/navBar/NavBarCandidate";
 import TopNavBarRecruiter from "../../components/navBar/TopNavBarRecruiter";
-import { setFilteredJobs } from "../../redux/slice/job/filteredJobsSlice";
+import {
+	clearCurrentPage,
+	clearFilteredJobs,
+	clearTotalNumberOfPages,
+	setFilteredJobs,
+} from "../../redux/slice/job/filteredJobsSlice";
 import { setTotalNumberOfPages } from "../../redux/slice/job/filteredJobsSlice";
 import { setCurrentPage } from "../../redux/slice/job/filteredJobsSlice";
 
@@ -55,12 +60,25 @@ function LandingPage() {
 				allJobs
 			);
 
-			dispatch(setFilteredJobs({ data: allJobs.data }));
-			dispatch(
-				setTotalNumberOfPages({
-					totalNumberOfPages: allJobs.totalNumberOfPages,
-				})
-			);
+			try {
+				const allJobs = await handleGetAllJobs(currentPage);
+		  
+				// Check if allJobs.data exists before accessing its properties
+				if (allJobs && allJobs.data) {
+				  console.log("landing page before handleGetAllJobs dispatch", allJobs);
+		  
+				  dispatch(setFilteredJobs({ data: allJobs.data }));
+				  dispatch(setTotalNumberOfPages({ totalNumberOfPages: allJobs.totalNumberOfPages }));
+				}
+			  } catch (error) {
+				console.error("Error fetching jobs:", error);
+			  }
+			return () => {
+				// This cleanup function will be called when the component is unmounted
+				dispatch(clearFilteredJobs());
+				dispatch(clearTotalNumberOfPages());
+				dispatch(clearCurrentPage());
+			};
 		})();
 	}, [currentPage]);
 
@@ -165,7 +183,7 @@ function LandingPage() {
 						)}
 					</div> */}
 					<div className="pb-20">
-						{jobs.length > 0 ? (
+						{jobs && jobs.length > 0 ? (
 							jobs.map((job: any) => (
 								<JobCard
 									key={job?.id}

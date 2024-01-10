@@ -11,6 +11,7 @@ import {
 } from "../../../axios/apiMethods/profile-service/candidate";
 import { notify } from "../../../utils/toastMessage";
 import FooterCandidate from "../../../components/candidate/FooterCandidate";
+import { updateRecruiterProfileApi } from "../../../axios/apiMethods/profile-service/recruiter";
 
 interface ProfileFormData {
 	name: string;
@@ -60,7 +61,7 @@ function CandidateProfileEditPage() {
 			const data = await updateCandidateProfileApi(profileData);
 
 			if (data.data) {
-				notify("Profile updated successfully", "success");
+				notify(data.message, "success");
 				navigate("/candidate/profile");
 			} else {
 				notify("Profile not updated", "error");

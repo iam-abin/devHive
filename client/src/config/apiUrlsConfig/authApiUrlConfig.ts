@@ -6,12 +6,9 @@ const RECRUITER_AUTH_URL = `/auth/recruiter`;
 const OTP_AUTH_URL = `/auth/otp`;
 
 const authApiUrlConfig = {
-	
-    // Admin
+	// Admin
 	signinAdminUrl: `${ADMIN_AUTH_URL}/signin`,
 	signoutAdminUrl: `${ADMIN_AUTH_URL}/signout`,
-
-
 
 	// Candidate
 	signinCandidateUrl: `${CANDIDATE_AUTH_URL}/signin`,
@@ -28,8 +25,6 @@ const authApiUrlConfig = {
 
 	signoutCandidateUrl: `${CANDIDATE_AUTH_URL}/signout`,
 
-
-    
 	// Recruiter
 	signinRecruiterUrl: `${RECRUITER_AUTH_URL}/signin`,
 	signupRecruiterUrl: `${RECRUITER_AUTH_URL}/signup`,
@@ -44,7 +39,6 @@ const authApiUrlConfig = {
 	forgotPasswordRecruiterUrl: `${RECRUITER_AUTH_URL}/forgotPassword`,
 
 	signoutRecruiterUrl: `${RECRUITER_AUTH_URL}/signout`,
-
 };
 
 export default authApiUrlConfig;

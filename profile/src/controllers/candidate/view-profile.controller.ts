@@ -8,9 +8,10 @@ export = (dependencies: DependenciesData)=>{
     return async (req: Request, res: Response)=>{
         const { userId } = req.params;
         console.log("in candidate view profile controller id: ",userId);
+        console.log("in candidate view profile controller id: ",req.file);
         
 
-        const candidate = await getCandidateProfileByUserIdUseCase(dependencies).execute(userId);
+        const candidate = await getCandidateProfileByUserIdUseCase(dependencies).execute(userId, req.file);
         console.log("in canidiare view profile controller candidate: ",candidate);
 
 

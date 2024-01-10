@@ -60,7 +60,8 @@ function RecruiterProfileEditPage() {
         notify("Profile not updated", "error");
       }
     } catch (error: any) {
-      notify(error.response.data.errors[0].message, "error");
+      // notify(error.response.data.errors[0].message, "error");
+      notify("somthing went wrong", "error");
     }
   };
 

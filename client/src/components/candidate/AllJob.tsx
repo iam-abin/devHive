@@ -2,14 +2,13 @@ import { useEffect, useState } from "react";
 import { getAllJobsApi } from "../../axios/apiMethods/jobs-service/jobs";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setCandidateJobId } from "../../redux/slice/candidateSlice/candidateJobIdSlice";
 import Paginate from "../pagination/Paginate";
 
 function AllJob() {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
-	const [currentPage, setCurrentPage] = useState(1);
+	const [currentPage, setCurrentPage] = useState(0);
 	const [pageCount, setpageCount] = useState(1);
 	const [jobs, setJobs] = useState([]);
 

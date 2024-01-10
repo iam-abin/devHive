@@ -63,19 +63,19 @@ const JobApplicationDetails: React.FC<{
 							<div>
 								<h1 className="text-3xl font-bold mb-4">
 									{jobApplicationDetails
-										? jobApplicationDetails.jobId.title
+										? jobApplicationDetails?.jobId?.title
 										: "Loading..."}
 								</h1>
 								<p className="text-gray-600 mb-4">
 									Company:{" "}
 									{jobApplicationDetails
-										? jobApplicationDetails.jobId.company
+										? jobApplicationDetails?.jobId?.company
 										: "Loading..."}
 								</p>
 								<p className="text-gray-600 mb-4">
 									Location:{" "}
 									{jobApplicationDetails
-										? jobApplicationDetails.jobId.location
+										? jobApplicationDetails?.jobId?.location
 										: "Loading..."}
 								</p>
 							</div>
@@ -85,7 +85,7 @@ const JobApplicationDetails: React.FC<{
 								<p>
 									{jobApplicationDetails
 										? new Date(
-												jobApplicationDetails.jobId.createdAt
+												jobApplicationDetails?.jobId?.createdAt
 										  ).toLocaleDateString()
 										: "Loading..."}
 								</p>
@@ -98,8 +98,7 @@ const JobApplicationDetails: React.FC<{
 							</h2>
 							<p>
 								{jobApplicationDetails
-									? jobApplicationDetails.jobId
-											.job_descriptions
+									? jobApplicationDetails?.jobId?.job_descriptions
 									: "Loading..."}
 							</p>
 						</div>
@@ -111,9 +110,8 @@ const JobApplicationDetails: React.FC<{
 										Skills Required
 									</h2>
 									<ul className="list-disc pl-5">
-										{jobApplicationDetails.jobId
-											.skills_required ? (
-											jobApplicationDetails.jobId.skills_required.map(
+										{jobApplicationDetails?.jobId?.skills_required ? (
+											jobApplicationDetails?.jobId?.skills_required.map(
 												(
 													skill: string,
 													index: number
@@ -130,87 +128,82 @@ const JobApplicationDetails: React.FC<{
 						</div>
 
 						{jobApplicationDetails &&
-							jobApplicationDetails.jobId.education_required && (
+							jobApplicationDetails?.jobId?.education_required && (
 								<div className="mb-4">
 									<h2 className="text-xl font-semibold mb-2">
 										Education Required
 									</h2>
 									<p>
 										{
-											jobApplicationDetails.jobId
-												.education_required
+											jobApplicationDetails?.jobId?.education_required
 										}
 									</p>
 								</div>
 							)}
 
 						{jobApplicationDetails &&
-							jobApplicationDetails.jobId.recruiterId && (
+							jobApplicationDetails?.jobId?.recruiterId && (
 								<div className="mb-4">
 									<h2 className="text-xl font-semibold mb-2">
 										recruiter
 									</h2>
 									<p>
 										{
-											jobApplicationDetails.jobId
-												.recruiterId
+											jobApplicationDetails?.jobId?.recruiterId
 										}
 									</p>
 								</div>
 							)}
 
 						{jobApplicationDetails &&
-							jobApplicationDetails.jobId.experience_required && (
+							jobApplicationDetails?.jobId?.experience_required && (
 								<div className="mb-4">
 									<h2 className="text-xl font-semibold mb-2">
 										Experience required
 									</h2>
 									<p>
 										{
-											jobApplicationDetails.jobId
-												.experience_required
+											jobApplicationDetails?.jobId?.experience_required
 										}
 									</p>
 								</div>
 							)}
 
 						{jobApplicationDetails &&
-							jobApplicationDetails.jobId.deadline && (
+							jobApplicationDetails?.jobId?.deadline && (
 								<div className="mb-4">
 									<h2 className="text-xl font-semibold mb-2">
 										Deadline
 									</h2>
 									<p>
-										{jobApplicationDetails.jobId.deadline}
+										{jobApplicationDetails?.jobId?.deadline}
 									</p>
 								</div>
 							)}
 
 						{jobApplicationDetails &&
-							jobApplicationDetails.jobId.employment_type && (
+							jobApplicationDetails?.jobId?.employment_type && (
 								<div className="mb-4">
 									<h2 className="text-xl font-semibold mb-2">
 										Employment type
 									</h2>
 									<p>
 										{
-											jobApplicationDetails.jobId
-												.employment_type
+											jobApplicationDetails?.jobId?.employment_type
 										}
 									</p>
 								</div>
 							)}
 
 						{jobApplicationDetails &&
-							jobApplicationDetails.jobId.available_position && (
+							jobApplicationDetails?.jobId?.available_position && (
 								<div className="mb-4">
 									<h2 className="text-xl font-semibold mb-2">
 										Available position
 									</h2>
 									<p>
 										{
-											jobApplicationDetails.jobId
-												.available_position
+											jobApplicationDetails?.jobId?.available_position
 										}
 									</p>
 								</div>
@@ -223,11 +216,11 @@ const JobApplicationDetails: React.FC<{
 							<p>
 								₹
 								{jobApplicationDetails
-									? jobApplicationDetails.jobId.salary_min
+									? jobApplicationDetails?.jobId?.salary_min
 									: "Loading..."}{" "}
 								- ₹
 								{jobApplicationDetails
-									? jobApplicationDetails.jobId.salary_max
+									? jobApplicationDetails?.jobId?.salary_max
 									: "Loading..."}
 							</p>
 						</div>
@@ -240,15 +233,15 @@ const JobApplicationDetails: React.FC<{
 								{jobApplicationDetails && (
 									<div
 										className={`badge ${
-											jobApplicationDetails.applicationStatus ==
+											jobApplicationDetails?.applicationStatus ==
 											"Applied"
 												? "badge badge-accent  gap-2 w-24"
-												: jobApplicationDetails.applicationStatus ==
+												: jobApplicationDetails?.applicationStatus ==
 												  "Shortlisted"
 												? "badge badge-success gap-2 w-24"
 												: "badge badge-error gap-2 w-24"
 										} `}
-									>{jobApplicationDetails.applicationStatus}</div>
+									>{jobApplicationDetails?.applicationStatus}</div>
 								) }
 							</div>
 						)}

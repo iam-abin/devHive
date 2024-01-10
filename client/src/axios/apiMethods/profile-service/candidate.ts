@@ -28,27 +28,19 @@ export const candidateGetProfileApi = async (userId: string): Promise<any> => {
 
 
 export const updateCandidateProfileApi = async (candidateProfileData: any): Promise<any> => {
-    // try {
 		const response: any = await candidateApiCalls("patch", profileApiUrlConfig.updateCandidateProfileUrl, candidateProfileData);
 
         console.log(candidateProfileData.userId);
 		console.log("response is ", response.data);
 	
 		return response.data;
-	// } catch (error) {
-	// 	console.log(error);
-		
-	// }
+};
 
-    // const response = await axios({
-    //     method: "patch",
-    //     url: `${BASE_URL_CANDIDATE}/updateProfile`,
-    //     data: recruiterProfileData
-    // });
+export const uploadCandidateResumeProfileApi = async (resumeData: any, headers: any): Promise<any> => {
+    const response: any = await candidateApiCalls("put", profileApiUrlConfig.uploadCandidateResumeUrl, {resumeData});
 
-    // console.log(recruiterProfileData.userId);
-    
-    // console.log(response.data);
-    
-    // return response;
+    console.log(resumeData);
+    console.log("response is ", response.data);
+
+    return response.data;
 };

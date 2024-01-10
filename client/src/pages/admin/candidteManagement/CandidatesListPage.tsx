@@ -49,7 +49,9 @@ function CandidateManagementPage() {
 			showCancelButton: true,
 			confirmButtonColor: "#3085d6",
 			cancelButtonColor: "#d33",
-			confirmButtonText: "Yes, Block",
+			confirmButtonText: `Yes, ${
+				isActive ? "block" : "unblock"
+			}`,
 		}).then(async (result) => {
 			if (result.isConfirmed) {
 				const updatedCandidate = await blockUnblockCandidateApi(userId);

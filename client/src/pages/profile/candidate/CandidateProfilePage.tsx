@@ -2,8 +2,12 @@ import HeaderCandidate from "../../../components/navBar/NavBarCandidate";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/reducer/reducer";
-import { candidateGetProfileApi } from "../../../axios/apiMethods/profile-service/candidate";
+import { candidateGetProfileApi, uploadCandidateResumeProfileApi } from "../../../axios/apiMethods/profile-service/candidate";
 import { useNavigate } from "react-router-dom";
+import FileUpload from "../../../components/upload/FileUpload";
+import { notify } from "../../../utils/toastMessage";
+import profileApiUrlConfig from "../../../config/apiUrlsConfig/profileApiUrlConfig";
+import axios from "axios";
 
 const CandidateProfilePage: React.FC = () => {
 	const navigate = useNavigate();
@@ -20,6 +24,33 @@ const CandidateProfilePage: React.FC = () => {
 			setCandidateProfileData(candidateProfile);
 		})();
 	}, [candidateData]);
+
+	const handleResumeUpload = async (selectedFile: File) => {
+		try {
+		  const formData = new FormData();
+		  formData.append("file", selectedFile);
+	  
+		//   const headers = {
+		// 	'Content-Type': 'multipart/form-data',
+		//   };
+	  
+		  console.log("File uploaded:", selectedFile);
+		//   const data = await uploadCandidateResumeProfileApi(formData, headers);
+		  const response: any = await axios.post(profileApiUrlConfig.uploadCandidateResumeUrl, formData, {
+			headers: {
+			  'Content-Type': 'multipart/form-data',
+			},
+		  });
+		  if (response.data) {
+			notify(response.message, "success");
+			navigate("/candidate/profile");
+		  } else {
+			notify("resume not uploaded", "error");
+		  }
+		} catch (error: any) {
+		  notify(error.response.data.errors[0].message, "error");
+		}
+	  };
 
 	return (
 		<div>
@@ -41,8 +72,8 @@ const CandidateProfilePage: React.FC = () => {
 									<div className="flex flex-col items-start lg:items-end">
 										<h1 className="text-5xl font-bold">
 											I'm{" "}
-											{candidateProfileData?.data?.data
-												?.name ?? candidateData.name}
+											{candidateProfileData?.data?.name ??
+												candidateData.name}
 										</h1>
 										<p className="py-6">
 											{
@@ -78,7 +109,6 @@ const CandidateProfilePage: React.FC = () => {
 										</div>
 									</div>
 								</div>
-
 								<div className="flex flex-col w-full border-opacity-50 mt-3">
 									<div className="grid h-12 pl-5 card bg-base-300 rounded-box items-center">
 										<div className="text-left">
@@ -88,7 +118,6 @@ const CandidateProfilePage: React.FC = () => {
 										</div>
 									</div>
 								</div>
-
 								<div className="flex flex-col w-full border-opacity-50 mt-3">
 									<div className="grid h-12 pl-5 card bg-base-300 rounded-box items-center">
 										<div className="text-left">
@@ -98,58 +127,57 @@ const CandidateProfilePage: React.FC = () => {
 										</div>
 									</div>
 								</div>
-
 								<div className="flex flex-col w-full border-opacity-50 mt-3">
 									<div className="grid h-12 pl-5 card bg-base-300 rounded-box items-center">
 										<div className="text-left">
 											About:{" "}
-											{candidateProfileData?.data?.data
+											{candidateProfileData?.data
 												?.about ?? "Not specified"}
 										</div>
 									</div>
 								</div>
-
 								<div className="flex flex-col w-full border-opacity-50 mt-3">
 									<div className="grid h-12 pl-5 card bg-base-300 rounded-box items-center">
 										<div className="text-left">
 											Gender:{" "}
-											{candidateProfileData?.data?.data
+											{candidateProfileData?.data
 												?.gender ?? "Not specified"}
 										</div>
 									</div>
 								</div>
-
 								<div className="flex flex-col w-full border-opacity-50 mt-3">
 									<div className="grid h-12 pl-5 card bg-base-300 rounded-box items-center">
 										<div className="text-left">
 											Current Location:{" "}
-											{candidateProfileData?.data?.data
+											{candidateProfileData?.data
 												?.currentLocation ??
 												"Not specified"}
 										</div>
 									</div>
 								</div>
-
 								<div className="flex flex-col w-full border-opacity-50 mt-3">
 									<div className="grid h-12 pl-5 card bg-base-300 rounded-box items-center">
 										<div className="text-left">
 											Experience:{" "}
-											{candidateProfileData?.data?.data
+											{candidateProfileData?.data
 												?.experience ?? "Not specified"}
 										</div>
 									</div>
 								</div>
 
+								{/* ahsefjjkds */}
+								<FileUpload onUpload={handleResumeUpload} />
+								{/* dfadfas */}
+
 								<div className="flex flex-col w-full border-opacity-50 mt-3">
 									<div className="grid h-12 pl-5 card bg-base-300 rounded-box items-center">
 										<div className="text-left">
 											Address:{" "}
-											{candidateProfileData?.data?.data
+											{candidateProfileData?.data
 												?.address ?? "Not specified"}
 										</div>
 									</div>
 								</div>
-
 								{/* Add more fields as needed */}
 								{/* ... */}
 							</div>
@@ -159,27 +187,28 @@ const CandidateProfilePage: React.FC = () => {
 								<h2 className="text-xl font-bold mb-2">
 									Skills
 								</h2>
-								<ul className="list-disc pl-4">
+								<ul className="list-none pl-4 ">
 									{/* Add more skills based on your data */}
-									{candidateProfileData?.data?.data
-										?.keySkills &&
-										candidateProfileData.data.data.keySkills.map(
+									{candidateProfileData?.data?.keySkills &&
+										candidateProfileData.data.keySkills.map(
 											(skill: string, index: number) => (
-												<div className="badge badge-info gap-2">
-													<svg
-														xmlns="http://www.w3.org/2000/svg"
-														fill="none"
-														viewBox="0 0 24 24"
-														className="inline-block w-4 h-4 stroke-current"
-													>
-														<path
-															strokeLinecap="round"
-															strokeLinejoin="round"
-															strokeWidth="2"
-															d="M6 18L18 6M6 6l12 12"
-														></path>
-													</svg>
+												<div className="badge badge-info mr-2 h-8">
 													<li key={index}>{skill}</li>
+													<p>
+														<svg
+															xmlns="http://www.w3.org/2000/svg"
+															fill="none"
+															viewBox="0 0 24 24"
+															className="inline-block w-4 h-4 stroke-current"
+														>
+															<path
+																strokeLinecap="round"
+																strokeLinejoin="round"
+																strokeWidth="2"
+																d="M6 18L18 6M6 6l12 12"
+															></path>
+														</svg>
+													</p>
 												</div>
 											)
 										)}

@@ -152,26 +152,20 @@ const CandidateProfileDetailsPage: React.FC = () => {
 				{/* Skills */}
 				<div className="mt-8">
 					<h2 className="text-xl font-bold mb-2">Skills</h2>
-					<ul className="list-disc pl-4">
+					<ul className="list-none pl-4">
 						{/* Add more skills based on your data */}
 						{candidateProfileData.keySkills &&
 							candidateProfileData.keySkills.map(
 								(skill: string, index: number) => (
-									<div className="badge badge-info gap-2">
-										<svg
-											xmlns="http://www.w3.org/2000/svg"
-											fill="none"
-											viewBox="0 0 24 24"
-											className="inline-block w-4 h-4 stroke-current"
-										>
-											<path
-												strokeLinecap="round"
-												strokeLinejoin="round"
-												strokeWidth="2"
-												d="M6 18L18 6M6 6l12 12"
-											></path>
-										</svg>
-										<li key={index}>{skill}</li>
+									<div
+										className="badge badge-info mr-2 h-8"
+										key={index}
+									>
+										<li className="flex items-center">
+											{" "}
+											{/* Use flex to align items horizontally */}
+											{skill}
+										</li>
 									</div>
 								)
 							)}

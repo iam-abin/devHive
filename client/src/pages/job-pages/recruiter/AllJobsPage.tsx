@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
-// import {  getAllJobsApi } from "../../axios/admin2/jobs/jobs";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import HeaderCandidate from "../../../components/navBar/NavBarCandidate";
 import { getAllJobsApi } from "../../../axios/apiMethods/jobs-service/jobs";
 import JobCard from "../../../components/cards/JobCard";
 import Paginate from "../../../components/pagination/Paginate";
@@ -19,6 +17,8 @@ function AllJobsPage() {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [pageCount, setpageCount] = useState(1);
 	const [jobs, setJobs] = useState([]);
+
+	const [searchTerm, setSearchTerm] = useState("");
 
 	// const handleEdit = async (id: string) => {
 	// 	console.log("id handle edit ", id);
@@ -45,6 +45,15 @@ function AllJobsPage() {
 		})();
 	}, [currentPage]);
 
+	const filteredJobs = jobs.filter(
+		(job: any) =>
+			job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+			job.employment_type
+				.toLowerCase()
+				.includes(searchTerm.toLowerCase()) ||
+			job.location.toLowerCase().includes(searchTerm.toLowerCase())
+	);
+
 	return (
 		<div>
 			<TopNavBarRecruiter />
@@ -64,6 +73,7 @@ function AllJobsPage() {
 							<input
 								type="text"
 								placeholder="Search"
+								onChange={(e) => setSearchTerm(e.target.value)}
 								className="input input-bordered w-24 md:w-auto"
 							/>
 						</div>
@@ -71,7 +81,7 @@ function AllJobsPage() {
 				</div>
 
 				<div className="flex flex-col w-full">
-					{jobs.map((job: any) => {
+					{filteredJobs.map((job: any) => {
 						return (
 							job.isActive && (
 								<JobCard

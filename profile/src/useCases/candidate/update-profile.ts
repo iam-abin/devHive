@@ -15,7 +15,12 @@ export  = (dependencies: any) => {
 		// 	modifiedFields[field] = updatedData[field];
 		//   }
 		// }
-		
+		if(updatedData.keySkills[1]){
+
+			if(!updatedData.keySkills[1]){
+				updatedData.keySkills = updatedData.keySkills[0].split(',')
+			}
+		}
 
 
         return await candidateProfileRepository.updateCandidateProfile(existingData.userId,updatedData);

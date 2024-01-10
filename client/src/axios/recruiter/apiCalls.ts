@@ -94,7 +94,8 @@ const refreshAccessToken = async (error: any) => {
 								reject(err);
 							});
 						if (response) {
-							const newAccessToken = response.data.newAccessoken;
+							const newAccessToken = response.data.accessToken;
+
 							localStorage.setItem(
 								recruiterAccessToken,
 								newAccessToken
