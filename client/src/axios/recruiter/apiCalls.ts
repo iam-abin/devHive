@@ -134,7 +134,7 @@ const refreshAccessToken = async (error: any) => {
 export const clearRecruiterFromLocal = () => {
 	localStorage.removeItem(recruiterAccessToken);
 	localStorage.removeItem(recruiterRefreshToken);
-	window.location.reload();
+	// window.location.reload();
 };
 
 export default recruiterApiCalls;

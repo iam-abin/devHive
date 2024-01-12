@@ -36,10 +36,10 @@ export const updateCandidateProfileApi = async (candidateProfileData: any): Prom
 		return response.data;
 };
 
-export const uploadCandidateResumeProfileApi = async (resumeData: any, headers: any): Promise<any> => {
-    const response: any = await candidateApiCalls("put", profileApiUrlConfig.uploadCandidateResumeUrl, {resumeData});
+export const uploadCandidateResumeProfileApi = async (userId: string,resumeData: any): Promise<any> => {
+    console.log("uploadCandidateResumeProfileApi resumeData is    ..//////", resumeData);
+    const response: any = await candidateApiCalls("put", profileApiUrlConfig.uploadCandidateResumeUrl, resumeData, true);
 
-    console.log(resumeData);
     console.log("response is ", response.data);
 
     return response.data;

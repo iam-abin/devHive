@@ -33,6 +33,21 @@ spec:
                 secretKeyRef:
                   name: jwt-refresh-secret
                   key: JWT_REFRESH_SECRET_KEY
+            - name: CLOUDINARY_API_KEY
+              valueFrom: 
+                secretKeyRef:
+                  name: cloudinary-api-key
+                  key: CLOUDINARY_API_KEY
+            - name: CLOUDINARY_API_SECRET
+              valueFrom: 
+                secretKeyRef:
+                  name: cloudinary-api-secret
+                  key: CLOUDINARY_API_SECRET
+            - name: CLOUDINARY_CLOUD_NAME
+              valueFrom: 
+                secretKeyRef:
+                  name: cloudinary-cloud-name
+                  key: CLOUDINARY_CLOUD_NAME
 ---
 apiVersion: v1
 kind: Service

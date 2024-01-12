@@ -34,8 +34,9 @@ const FileUpload: React.FC<FileUploadUploadProps> = ({ onUpload }) => {
       <div className="flex items-center space-x-2">
         <input
           type="file"
-        //   name='file'
-          accept=".pdf, .doc, .docx"
+          name='file'
+        // accept=".pdf, .doc, .docx"
+          accept=".jpg , .jgeg, .png"
           className="border-2 border-gray-300 p-2 w-64"
           onChange={handleFileChange}
         />

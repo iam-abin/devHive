@@ -1,13 +1,13 @@
 import HeaderCandidate from "../../../components/navBar/NavBarCandidate";
-import React, { useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/reducer/reducer";
-import { candidateGetProfileApi, uploadCandidateResumeProfileApi } from "../../../axios/apiMethods/profile-service/candidate";
+import {
+	candidateGetProfileApi,
+	uploadCandidateResumeProfileApi,
+} from "../../../axios/apiMethods/profile-service/candidate";
 import { useNavigate } from "react-router-dom";
-import FileUpload from "../../../components/upload/FileUpload";
 import { notify } from "../../../utils/toastMessage";
-import profileApiUrlConfig from "../../../config/apiUrlsConfig/profileApiUrlConfig";
-import axios from "axios";
 
 const CandidateProfilePage: React.FC = () => {
 	const navigate = useNavigate();
@@ -16,6 +16,8 @@ const CandidateProfilePage: React.FC = () => {
 	);
 
 	const [candidateProfileData, setCandidateProfileData] = useState<any>([]);
+
+	const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
 	useEffect(() => {
 		(async () => {
@@ -26,31 +28,74 @@ const CandidateProfilePage: React.FC = () => {
 	}, [candidateData]);
 
 	const handleResumeUpload = async (selectedFile: File) => {
+		// const fileChunkSize = 1024 * 1024; // 1 MB chunks (adjust as needed)
+		// const fileSize = selectedFile.size;
+		// const chunks = Math.ceil(fileSize / fileChunkSize);
+
+		// for (let i = 0; i < chunks; i++) {
+		// 	const start = i * fileChunkSize;
+		// 	const end = Math.min((i + 1) * fileChunkSize, fileSize);
+
+		// 	const chunk = selectedFile.slice(start, end);
+		// 	const formData = new FormData();
+		// 	formData.append("file", chunk);
+
+		// 	try {
+		// 		const response = await uploadCandidateResumeProfileApi(
+		// 			formData
+		// 		);
+		// 		console.log("resume image upload response", response);
+		// 		if (response.data) {
+		// 			// notify(response.data.message, "success");
+		// 			notify(response.message, "success");
+		// 			navigate("/candidate/profile");
+		// 		} else {
+		// 			notify("resume not uploaded", "error");
+		// 		}
+		// 	} catch (error) {
+		// 		console.error("Chunked upload error:", error);
+		// 	}
+		// }
 		try {
-		  const formData = new FormData();
-		  formData.append("file", selectedFile);
-	  
-		//   const headers = {
-		// 	'Content-Type': 'multipart/form-data',
-		//   };
-	  
-		  console.log("File uploaded:", selectedFile);
-		//   const data = await uploadCandidateResumeProfileApi(formData, headers);
-		  const response: any = await axios.post(profileApiUrlConfig.uploadCandidateResumeUrl, formData, {
-			headers: {
-			  'Content-Type': 'multipart/form-data',
-			},
-		  });
-		  if (response.data) {
-			notify(response.message, "success");
-			navigate("/candidate/profile");
-		  } else {
-			notify("resume not uploaded", "error");
-		  }
+			const formData = new FormData();
+			formData.append("file", selectedFile);
+
+			console.log("File uploaded:", selectedFile);
+			const response = await uploadCandidateResumeProfileApi(candidateData.id,formData)
+			console.log("resume image upload response", response);
+			if (response.data) {
+				// notify(response.data.message, "success");
+				notify(response.message, "success");
+				navigate("/candidate/profile");
+			} else {
+				notify("resume not uploaded", "error");
+			}
 		} catch (error: any) {
-		  notify(error.response.data.errors[0].message, "error");
+			// console.log("drrer",error);
+			// notify("file is size is > 1mb", "error");
+			notify(error.response.data.errors[0].message, "error");
 		}
-	  };
+	};
+
+	const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+		const files = event.target.files;
+
+		console.log("in file upload event.target.files ", files);
+
+		if (files && files.length > 0) {
+			const selected = files[0];
+			setSelectedFile(selected);
+		}
+	};
+
+	const handleUpload = () => {
+		if (selectedFile) {
+			// Perform the upload action here
+			console.log("in handleUpload selectedFile", selectedFile);
+
+			handleResumeUpload(selectedFile);
+		}
+	};
 
 	return (
 		<div>
@@ -166,8 +211,36 @@ const CandidateProfilePage: React.FC = () => {
 								</div>
 
 								{/* ahsefjjkds */}
-								<FileUpload onUpload={handleResumeUpload} />
+								{/* <FileUpload onUpload={handleResumeUpload} /> */}
 								{/* dfadfas */}
+
+								<div className="bg-gray-100 p-6 my-6 rounded-lg shadow-md">
+									<label className="block mb-4 text-lg font-semibold">
+										Upload Your Resume
+									</label>
+									<div className="flex items-center space-x-2">
+										<input
+											type="file"
+											name="image"
+											// accept=".pdf, .doc, .docx"
+											accept=".jpg , .jgeg, .png"
+											className="border-2 border-gray-300 p-2 w-64"
+											onChange={handleFileChange}
+										/>
+										<button
+											type="button"
+											onClick={handleUpload}
+											className="bg-blue-500 text-white p-2  rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue"
+										>
+											Upload
+										</button>
+									</div>
+									{selectedFile && (
+										<p className="mt-4">
+											Selected File: {selectedFile.name}
+										</p>
+									)}
+								</div>
 
 								<div className="flex flex-col w-full border-opacity-50 mt-3">
 									<div className="grid h-12 pl-5 card bg-base-300 rounded-box items-center">

@@ -19,9 +19,23 @@ const start = async () => {
 	}
 
 	//if we do not set mongo_uri
+
 	if (!process.env.MONGO_URL_PROFILE) {
 		throw new Error("MONGO_URL_PROFILE must be defined");
 	}
+	
+	if (!process.env.CLOUDINARY_API_KEY) {
+		throw new Error("CLOUDINARY_API_KEY must be defined");
+	}
+
+	if (!process.env.CLOUDINARY_API_SECRET) {
+		throw new Error("CLOUDINARY_API_SECRET must be defined");
+	}
+
+	if (!process.env.CLOUDINARY_CLOUD_NAME) {
+		throw new Error("CLOUDINARY_CLOUD_NAME must be defined");
+	}
+
 
 	// to connect to mongodb
 	await connectDB();
