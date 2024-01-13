@@ -1,0 +1,48 @@
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata: 
+#   name: chat-depl
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels: 
+#       app: chat
+#   template: 
+#     metadata: 
+#       labels: 
+#         app: chat
+#     spec: 
+#       containers: 
+#         - name: chat
+#           image: abinv/chat
+#           env:
+#             - name: MONGO_URI
+#               value: 'mongodb://chat-mongo-srv:27017/chat'
+#             - name: MONGO_URL_CHAT
+#               valueFrom: 
+#                 secretKeyRef:
+#                   name: devhive-mongo-url-chat
+#                   key: MONGO_URL_CHATDB_DEVHIVE
+#             - name: JWT_SECRET_KEY
+#               valueFrom: 
+#                 secretKeyRef:
+#                   name: jwt-secret
+#                   key: JWT_SECRET_KEY
+#             - name: JWT_REFRESH_SECRET_KEY
+#               valueFrom: 
+#                 secretKeyRef:
+#                   name: jwt-refresh-secret
+#                   key: JWT_REFRESH_SECRET_KEY
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata: 
+#   name: chat-srv
+# spec: 
+#   selector: 
+#     app: chat
+#   ports: 
+#     - name: chat
+#       protocol: TCP
+#       port: 3000
+#       targetPort: 3000
