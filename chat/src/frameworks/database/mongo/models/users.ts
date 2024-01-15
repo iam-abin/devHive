@@ -3,24 +3,16 @@ import mongoose from "mongoose";
 interface UserAttributes {
 	name: string;
 	email: string;
-	phone: number;
-	password: string;
+	profileImgUrl: number;
 	userType: string;
-	otp: number
-	// expiry: Date
-	// isActive: boolean;
-	// userId: string;
 }
 // 2. An interface that describes the properties ,that a User Document has
 interface UserDocument extends mongoose.Document {
 	name: string;
 	email: string;
-	phone: number;
-	password: string;
+	profileImgUrl: number;
 	userType: string;
-	isVarified:boolean;
 	isActive: boolean;
-	otp?: number
 	createdAt: string;
 	updatedAt: string;
 }
@@ -28,41 +20,18 @@ interface UserDocument extends mongoose.Document {
 // 3.
 const userSchema = new mongoose.Schema(
 	{
-		name: {
-			type: String,
-			required: true,
-		},
-		email: {
-			type: String,
-			required: true,
-			unique: true,
-			trim: true,
-			lowercase: true,
-		},
-		phone: {
-			type: Number,
-			required: true,
-			trim: true,
-		},
-		password: {
-			type: String,
-			required: true,
-			trim: true,
-		},
+		name: String,
+		email: String,
+		profileImgUrl: String,
 		userType: {
 			type: String,
 			required: true,
-			enum: ["admin", "candidate", "recruiter"],
-		},
-		isVarified: {  // field for signup email verificetion
-			type: Boolean,
-			default: false,
+			enum: ["candidate", "recruiter"],
 		},
 		isActive: {
 			type: Boolean,
 			default: true,
 		},
-		otp: Number,
 	},
 	{
 		// to reformat id and remove password,__v from response when converting to json (we can also use other approaches)
@@ -70,7 +39,6 @@ const userSchema = new mongoose.Schema(
 			transform(doc, ret) {
 				ret.id = ret._id;
 				delete ret._id;
-				delete ret.password;
 				delete ret.__v;
 			},
 		},
@@ -89,13 +57,11 @@ interface UserModel extends mongoose.Model<UserDocument> {
 userSchema.statics.buildUser = (attributes: UserAttributes) => {
 	return new UserModel({
 		// to create a new user document
-		// _id: attributes.userId,
+		
 		name: attributes.name,
 		email: attributes.email,
-		phone: attributes.phone,
-		password: attributes.password,
+		profileImgUrl: attributes.profileImgUrl,
 		userType: attributes.userType,
-		otp: attributes.otp,
 	});
 };
 
