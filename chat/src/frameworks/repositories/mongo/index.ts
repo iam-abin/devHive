@@ -1,7 +1,7 @@
 import userRepository from "./user.repository";
-import chatRepository from "./chat.repository";
+import messageRepository from "./message.repository";
 
 export = {
 	userRepository,
-	chatRepository,
+	messageRepository,
 };

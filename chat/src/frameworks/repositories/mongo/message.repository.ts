@@ -1,6 +1,6 @@
 import schemas from "../../database/mongo/models";
 
-const { JobModel, jobApplicationModel } = schemas;
+const { MessageModel, ChatRoomModel } = schemas;
 
 export = {
 	applyJob: async (data: object) => {

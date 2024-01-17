@@ -8,10 +8,8 @@ import { routes } from './routes';
 import dependencies from '../../config/dependencies';
 
 
-
-
 const app: Express = express()
-export const httpServer = http.createServer(app);
+const httpServer = http.createServer(app);
 
 const API_PREFIX = process.env.API_PREFIX || "/api/v1/chat";
 
@@ -30,4 +28,4 @@ app.all("*", async () => {
 
 app.use(errorHandler);
 
-export { app };
+export { app, httpServer };

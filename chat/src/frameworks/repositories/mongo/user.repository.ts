@@ -29,7 +29,16 @@ export = {
 	// 	console.log("in updateJob repository after update", updatedJob);
 	// 	return updatedJob;
 	// },
-
+	// findUserById(sender)
+	findUserById: async (userId: string) => {
+		console.log("inside get user by userId repo ", userId , typeof userId);
+		
+		const user = await UserModel.findOne({userId: userId});
+		console.log("User found is ", user);
+		
+		return user;
+	},
+	
 	filterJob: async (searchText: string,currentUserId: string) => {
 		const filteredUsers = await UserModel.find({"name": {$regex: searchText, $options: 'i'} }).find({_id: {$ne: currentUserId}});
 		return filteredUsers;
