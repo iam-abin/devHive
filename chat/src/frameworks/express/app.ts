@@ -6,12 +6,12 @@ import http from 'http'
 
 import { routes } from './routes';
 import dependencies from '../../config/dependencies';
-import { setupSocketIO } from '../webSocket/socket';
+// import { setupSocketIO } from '../webSocket/socket';
 
 
 const app: Express = express()
 const httpServer = http.createServer(app);
-setupSocketIO(httpServer)
+// setupSocketIO(httpServer)
 
 const API_PREFIX = process.env.API_PREFIX || "/api/v1/chat";
 

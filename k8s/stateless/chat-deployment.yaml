@@ -46,3 +46,19 @@ spec:
       protocol: TCP
       port: 3000
       targetPort: 3000
+  type: LoadBalancer
+
+    
+  # /api/v1/admin/
+#   apiVersion: v1
+# kind: Service
+# metadata:
+#   name: chat-srv
+# spec:
+#   selector:
+#     app: chat-app
+#   ports:
+#     - protocol: TCP
+#       port: 3000
+#       targetPort: 3000
+#   type: LoadBalancer

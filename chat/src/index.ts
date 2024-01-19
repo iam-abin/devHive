@@ -3,7 +3,7 @@ import { kafkaClient } from "./config/kafka-connection";
 import { app, httpServer } from "./frameworks/express/app";
 import { UserCreatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/user-created-consumer";
 import { UserUpdatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/user-updated-consumer";
-// import { setupSocketIO } from "./frameworks/webSocket/socket";
+import { setupSocketIO } from "./frameworks/webSocket/socket";
 
 const start = async () => {
 	console.log("chat service Starting up....");
@@ -26,7 +26,7 @@ const start = async () => {
 
 	
 	console.log("before socket instance");
-	// setupSocketIO(httpServer);
+	setupSocketIO(httpServer);
 	console.log("after socket instance");
 
 	await connectDB();
