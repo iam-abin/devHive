@@ -1,6 +1,6 @@
 import express from "express";
 
-import { userControllers } from "../../../controllers";
+import { chatControllers, userControllers } from "../../../controllers";
 import { DependenciesData } from "../../types/dependencyInterface";
 import {
 	requireAuthAdmin,
@@ -11,26 +11,30 @@ import {
 export const chatRouter = (dependencies: DependenciesData) => {
 	const router = express.Router();
 
+	// const {
+	// 	// getAllChatRoomsByUserIDController,
+	// 	// getChatRoomWithRoomIdController,
+	// 	// sendNewMessageController,
+	// 	// createChatRoomController,
+	// } = userControllers(dependencies);
+
 	const {
-		getAllChatRoomswithUserIDController,
-		getChatRoomWithRoomIdController,
-		sendNewMessageController,
-		createChatRoomController,
-	} = userControllers(dependencies);
+		getAllChatRoomsByUserIDController,
+	} = chatControllers(dependencies);
 
 	router.get(
-		"/get-all-chat-rooms/:userId",
-		getAllChatRoomswithUserIDController
+		"/chat-rooms/:userId",
+		getAllChatRoomsByUserIDController  
 	);
 
-	router.get("/get-a-chat-room/:chatRoomId", getChatRoomWithRoomIdController);
+	// router.get("/get-a-chat-room/:chatRoomId", getChatRoomWithRoomIdController);
 
-	router.post("/new-message/:roomId", sendNewMessageController);
+	// router.post("/new-message/:roomId", sendNewMessageController);
 
-	router.post(
-		"/create-chat-room/:currentUserId/:secondPersonId",
-		createChatRoomController
-	);
+	// router.post(
+	// 	"/create-chat-room/:currentUserId/:secondPersonId",
+	// 	createChatRoomController
+	// );
 
 	return router;
 };

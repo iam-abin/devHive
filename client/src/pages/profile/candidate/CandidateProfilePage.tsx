@@ -8,6 +8,7 @@ import {
 } from "../../../axios/apiMethods/profile-service/candidate";
 import { useNavigate } from "react-router-dom";
 import { notify } from "../../../utils/toastMessage";
+import { FaFacebookMessenger } from "react-icons/fa";
 
 const CandidateProfilePage: React.FC = () => {
 	const navigate = useNavigate();
@@ -61,7 +62,10 @@ const CandidateProfilePage: React.FC = () => {
 			formData.append("file", selectedFile);
 
 			console.log("File uploaded:", selectedFile);
-			const response = await uploadCandidateResumeProfileApi(candidateData.id,formData)
+			const response = await uploadCandidateResumeProfileApi(
+				candidateData.id,
+				formData
+			);
 			console.log("resume image upload response", response);
 			if (response.data) {
 				// notify(response.data.message, "success");
@@ -108,13 +112,13 @@ const CandidateProfilePage: React.FC = () => {
 					<div className="bg-gray-200 md:w-9/12 p-8 mt-60">
 						<div className="w-md mx-auto bg-white p-8 rounded shadow-md">
 							<div className="hero h-56 bg-base-200 relative">
-								<div className="hero-content flex-col lg:flex-row-reverse">
+								<div className="hero-content flex-col  lg:flex-row-reverse">
 									<img
 										src="https://daisyui.com/images/stock/photo-1635805737707-575885ab0820.jpg"
 										className="w-1/6 max-w-sm rounded-lg shadow-2xl"
 										alt="CandidateProfilePage"
 									/>
-									<div className="flex flex-col items-start lg:items-end">
+									<div className="flex flex-col items-start  lg:items-end">
 										<h1 className="text-5xl font-bold">
 											I'm{" "}
 											{candidateProfileData?.data?.name ??
@@ -136,6 +140,17 @@ const CandidateProfilePage: React.FC = () => {
 										>
 											Edit
 										</button>
+										<div>
+
+									<FaFacebookMessenger
+										onClick={() =>
+											navigate(
+												`/candidate/chat` // Add the path to your chat page
+											)
+										}
+										className="text-5xl cursor-pointer absolute top-0 right-0 mr-6 mt-20"
+									/>
+										</div>
 									</div>
 								</div>
 							</div>

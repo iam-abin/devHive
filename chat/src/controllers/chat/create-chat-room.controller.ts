@@ -7,9 +7,9 @@ export = (dependencies: DependenciesData)=>{
 
     return async (req: Request, res: Response)=>{
         const keyword = req.query.search
-        console.log("in  Job Applications controller 1: ",recruiterId);
+        // console.log("in  Job Applications controller 1: ",recruiterId);
 
-        const applications = await getUsersUseCase(dependencies).execute(recruiterId);
+        const applications = await getUsersUseCase(dependencies).execute();
         console.log("in Job Applications controller 2: ",applications);
 
 

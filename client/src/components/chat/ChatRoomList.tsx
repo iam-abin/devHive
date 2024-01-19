@@ -1,6 +1,6 @@
 import React from "react";
 
-const CartListItemItem: React.FC<{ user: any }> = ({ user }) => {
+const ChatRoomList: React.FC<{ user: any }> = ({ user }) => {
 	return (
 		<div className="card max-w-96 bg-base-100 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] mb-1 hover:bg-gray-200">
 			<div className="flex flex-row p-4 gap-3 items-center ">
@@ -25,4 +25,4 @@ const CartListItemItem: React.FC<{ user: any }> = ({ user }) => {
 	);
 };
 
-export default CartListItemItem;
+export default ChatRoomList;

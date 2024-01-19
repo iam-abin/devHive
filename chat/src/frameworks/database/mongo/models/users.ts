@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 // 1. An interface that describes the properties ,that are requried to create a new User
 interface UserAttributes {
+	userId: string;
 	name: string;
 	email: string;
 	profileImgUrl: number;
@@ -8,6 +9,7 @@ interface UserAttributes {
 }
 // 2. An interface that describes the properties ,that a User Document has
 interface UserDocument extends mongoose.Document {
+	userId: string;
 	name: string;
 	email: string;
 	profileImgUrl: number;
@@ -20,6 +22,7 @@ interface UserDocument extends mongoose.Document {
 // 3.
 const userSchema = new mongoose.Schema(
 	{
+		userId: String,
 		name: String,
 		email: String,
 		profileImgUrl: String,
@@ -46,8 +49,6 @@ const userSchema = new mongoose.Schema(
 	}
 );
 
-
-
 // 4. An interface that describes the properties ,that a user model has
 interface UserModel extends mongoose.Model<UserDocument> {
 	buildUser(attributes: UserAttributes): UserDocument;
@@ -57,7 +58,7 @@ interface UserModel extends mongoose.Model<UserDocument> {
 userSchema.statics.buildUser = (attributes: UserAttributes) => {
 	return new UserModel({
 		// to create a new user document
-		
+		userId: attributes.userId,
 		name: attributes.name,
 		email: attributes.email,
 		profileImgUrl: attributes.profileImgUrl,

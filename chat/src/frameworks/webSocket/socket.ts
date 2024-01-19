@@ -1,6 +1,6 @@
 import { Server, Socket } from "socket.io";
 import http from "http";
-import { Server as SockerIo } from "socket.io";
+import { Server as SocketIo } from "socket.io";
 import { BadRequestError } from "@abijobportal/common";
 import userRepository from "../repositories/mongo/user.repository";
 import messageRepository from "../repositories/mongo/message.repository";
@@ -26,22 +26,38 @@ const removeUser = (socketId: string) => {
 };
 
 export const setupSocketIO = (Server: http.Server) => {
-	const io = new SockerIo(Server, {
+	console.log("------------------------");
+	console.log("inside socket config");
+
+	// const io = new SocketIo(Server, {
+	// 	cors: {
+	// 	  origin: '*',
+	// 	  credentials: true
+	// 	},
+	// 	transports: ["websocket"]
+	//   });
+
+	const io = new SocketIo(Server, {
 		// pingTimeout:60000,
+		path: "/api/v1/chat",
 		cors: {
-			// origin: 'https://devhive.dev/api/v1/chat',
 			origin: "*",
-			methods: ["GET", "POST"],
+			allowedHeaders: ["Authentication"],
+			credentials: true,
+			// methods: ["GET", "POST"],
 		},
 	});
 
-	io.on("connection", (socket: Socket) => {
+	io.on("connection", (socket: any) => {
+		// io.on("connection", (socket: Socket) => {
+		console.log("io.on connection ",socket.id);
+		
 		onSocketConnection(io, socket);
 	});
 };
 
 export const onSocketConnection = (io: Server, socket: Socket) => {
-	console.log("a user connected to socket...");
+	console.log("||||||a user connected to socket... ", socket.id, " ||||||");
 
 	// adding a user to active list
 	socket.on("addAUser", (userId: string) => {
@@ -52,17 +68,37 @@ export const onSocketConnection = (io: Server, socket: Socket) => {
 
 	// send and get message
 	socket.on("sendMessage", async (data: any) => {
-		const { sender, recipient, text } = data;
+		try {
+			const { sender, recipient, text } = data;
 		if (!text) throw new BadRequestError("please provide message");
 
 		const senderData = await userRepository.findUserById(sender);
 		const recipientData = await userRepository.findUserById(recipient);
 
-		if (!senderData) throw new BadRequestError("sender is not in out db");
-		if (!recipientData) throw new BadRequestError("recipient is not in out db");
+		if (!senderData) throw new BadRequestError("sender is not in user db");
+		if (!recipientData)
+			throw new BadRequestError("recipient is not in user db");
 
+			const result = await messageRepository.createMessage({sender, recipient, text});
+
+			const user1 = getUser(sender);
+            const user2 = getUser(recipient);
+
+			const message = { result, currentUserId: sender, participantId: recipient };
+            
+            if (user1?.socketId) {
+                io.to(user1.socketId).emit('receiveMessage', message);
+            }
+
+            if (user2?.socketId) {
+                io.to(user2.socketId).emit('receiveMessage', message);
+            }
+		} catch (error) {
+			console.error('Error processing message:', error);
+		}
 
 	});
+	console.log("------------------------");
 
 	// when a user disconnect
 	socket.on("disconnect", () => {

@@ -6,10 +6,10 @@ export = (dependencies: DependenciesData)=>{
     const { useCases: { getUsersUseCase }} = dependencies 
 
     return async (req: Request, res: Response)=>{
-        const keyword = req.query.search
-        console.log("in  Job Applications controller 1: ",recruiterId);
+        const {message} = req.body
+        console.log("in  Job Applications controller 1: ",message);
 
-        const applications = await getUsersUseCase(dependencies).execute(recruiterId);
+        const applications = await getUsersUseCase(dependencies).execute(message);
         console.log("in Job Applications controller 2: ",applications);
 
 

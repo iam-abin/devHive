@@ -3,14 +3,18 @@ import schemas from "../../database/mongo/models";
 const { UserModel } = schemas;
 
 export = {
-	// createJob: async (jobData: any) => {
-	// 	console.log("job repository jobData", jobData);
+	createUser: async (userData: any) => {
+		console.log("user repository userData", userData);
 
-	// 	const newJob = JobModel.buildJob(jobData);
-	// 	console.log(newJob);
-	// 	return await newJob.save();
-	// },
+		const newUser = UserModel.buildUser(userData);
+		console.log(newUser);
+		return await newUser.save();
+	},
 
+	updateUser: async (userId: string, data: any): Promise<any> => {
+		const user = await UserModel.findOneAndUpdate({ "userId": userId }, { $set: data }, {new: true});
+		return user;
+	},
 	// deleteJob: async (jobId: string) => {
 	// 	const deletedJob = await JobModel.deleteOne({ _id: jobId });
 	// 	console.log("deletedJob: ", deletedJob);

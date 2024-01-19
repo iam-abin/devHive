@@ -9,11 +9,12 @@ import { currentUserCandidateCheck, currentUserRecruiterCheck } from "@abijobpor
 export const routes = (dependencies: DependenciesData) =>{
     const router = express.Router();
 
-    const candidate = userRouter(dependencies)
-    const recruiter = chatRouter(dependencies)
+    const user = userRouter(dependencies)
+    const chat = chatRouter(dependencies)
 
-    router.use("/candidate",currentUserCandidateCheck, candidate)
-    router.use("/recruiter",currentUserRecruiterCheck, recruiter)
+
+    router.use("/candidate",currentUserCandidateCheck, chat)
+    router.use("/recruiter",currentUserRecruiterCheck, chat)
 
     return router
 }
