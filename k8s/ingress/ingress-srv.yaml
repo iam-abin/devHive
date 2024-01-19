@@ -39,6 +39,13 @@ spec:
                 name: profile-srv
                 port:
                   number: 3000
+          - path: /api/v1/chat/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: chat-srv
+                port:
+                  number: 3000
           - path: /?(.*)
             pathType: Prefix
             backend:

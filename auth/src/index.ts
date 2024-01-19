@@ -1,5 +1,5 @@
 import { connectDB } from "./config/db"
-import { app } from "./app";
+import { app } from "./frameworks/express/app";
 import { UserUpdatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/user-updated-consumer";
 import { kafkaClient } from "./config/kafka-connection";
 

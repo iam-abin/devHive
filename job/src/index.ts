@@ -1,10 +1,10 @@
 import { connectDB } from "./config/db";
-import { app } from "./app";
+import { app } from "./frameworks/express/app";
 import { kafkaClient } from "./config/kafka-connection";
 import { jobUpdatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/job-updated-consumer";
 
 const start = async () => {
-	console.log("Job Starting up....");
+	console.log("Job service Starting up....");
 
 	// if we do not set JWT_SECRET_KEY
 	if (!process.env.JWT_SECRET_KEY) {
@@ -29,7 +29,7 @@ const start = async () => {
 	await jobUpdatedEvent.subscribe();
 
 	app.listen(3000, () => {
-		console.log("job Listening on port 3000....");
+		console.log("job service Listening on port 3000....");
 	})
 		.on("error", async () => {
 			await jobUpdatedEvent.disconnect();
