@@ -25,26 +25,17 @@ const removeUser = (socketId: string) => {
 	activeUsers = activeUsers.filter((user) => user.socketId !== socketId);
 };
 
-export const setupSocketIO = (Server: http.Server) => {
+export const setupSocketIO = (httpServer: http.Server) => {
 	console.log("------------------------");
 	console.log("inside socket config");
 
-	// const io = new SocketIo(Server, {
-	// 	cors: {
-	// 	  origin: '*',
-	// 	  credentials: true
-	// 	},
-	// 	transports: ["websocket"]
-	//   });
-
-	const io = new SocketIo(Server, {
-		// pingTimeout:60000,
+	const io = new Server(httpServer, {
 		path: "/api/v1/chat",
 		cors: {
 			origin: "*",
 			allowedHeaders: ["Authentication"],
 			credentials: true,
-			// methods: ["GET", "POST"],
+			methods: ["GET", "POST"],
 		},
 	});
 
@@ -68,6 +59,7 @@ export const onSocketConnection = (io: Server, socket: Socket) => {
 
 	// send and get message
 	socket.on("sendMessage", async (data: any) => {
+		console.log('Message received');
 		try {
 			const { sender, recipient, text } = data;
 		if (!text) throw new BadRequestError("please provide message");
