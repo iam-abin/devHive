@@ -2,13 +2,19 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/reducer/reducer";
 import { recruiterGetProfileApi } from "../../../axios/apiMethods/profile-service/recruiter";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import TopNavBarRecruiter from "../../../components/navBar/TopNavBarRecruiter";
+import NavBarCandidate from "../../../components/navBar/NavBarCandidate";
+import { FaFacebookMessenger } from "react-icons/fa";
 
 const RecruiterProfilePage: React.FC = () => {
 	const recruiterData: any = useSelector(
 		(state: RootState) => state.recruiterData.data
 	);
+
+	const location = useLocation();
+
+	const isCandidate = location.pathname.includes("candidate");
 
 	const [recruiterProfileData, setRecruiterProfileData] = useState<any>([]);
 	// const [updateCandidateProfileData, setUpdateCandidateProfileData] = useState<
@@ -22,8 +28,7 @@ const RecruiterProfilePage: React.FC = () => {
 			console.log("before", recruiterData);
 
 			const { id } = recruiterData;
-    
-      
+
 			const candidateProfile = await recruiterGetProfileApi(id);
 			console.log("candidateGetProfileApi", candidateProfile);
 
@@ -33,13 +38,21 @@ const RecruiterProfilePage: React.FC = () => {
 	return (
 		<div>
 			<div>
-				<TopNavBarRecruiter />
+				{isCandidate ? <NavBarCandidate /> : <TopNavBarRecruiter />}
 				<main className="h-screen flex items-center justify-center">
 					<div className="bg-gray-100 min-h-screen flex">
 						{/* Main Content */}
 						<div className="flex-1 p-8">
 							<div className="bg-white p-8 shadow-md rounded-md">
-								<div className="flex items-center justify-between mb-6">
+								{isCandidate ? (
+									<div className="text-center font-bold text-3xl">
+										{" "}
+										<h2>Recruiter Profile</h2>
+									</div>
+								) : (
+									""
+								)}
+								<div className="flex items-center justify-between mb-6 ">
 									<div>
 										<img
 											src="https://via.placeholder.com/150"
@@ -48,7 +61,8 @@ const RecruiterProfilePage: React.FC = () => {
 										/>
 										<div>
 											<h1 className="text-2xl font-bold text-gray-800">
-												{recruiterProfileData?.dat?.name ??
+												{recruiterProfileData?.data
+													?.name ??
 													recruiterData.name}
 											</h1>
 											<p className="text-gray-600">
@@ -56,14 +70,27 @@ const RecruiterProfilePage: React.FC = () => {
 											</p>
 										</div>
 									</div>
-									<button
+									{isCandidate ? (
+										<FaFacebookMessenger
 										onClick={() =>
-											navigate("/recruiter/edit-profile")
+											navigate(
+												`/candidate/chat/${recruiterProfileData?.data?.userId}` // Add the path to your chat page
+											)
 										}
-										className="bg-blue-500 text-white px-4 py-2 rounded-md"
-									>
-										Edit
-									</button>
+										className="text-3xl cursor-pointer"
+									/>
+									) : (
+										<button
+											onClick={() =>
+												navigate(
+													"/recruiter/edit-profile"
+												)
+											}
+											className="bg-blue-500 text-white px-4 py-2 rounded-md"
+										>
+											Edit
+										</button>
+									)}
 								</div>
 								<div>
 									<h2 className="text-lg font-semibold text-gray-800 mb-2">
@@ -81,8 +108,8 @@ const RecruiterProfilePage: React.FC = () => {
 										Email
 									</h2>
 									<p className="text-gray-600">
-										{recruiterProfileData
-											?.email ?? recruiterData.email}
+										{recruiterProfileData?.email ??
+											recruiterData.email}
 									</p>
 								</div>
 
@@ -91,8 +118,8 @@ const RecruiterProfilePage: React.FC = () => {
 										Phone
 									</h2>
 									<p className="text-gray-600">
-										{recruiterProfileData
-											?.phone ?? recruiterData.phone}
+										{recruiterProfileData?.phone ??
+											recruiterData.phone}
 									</p>
 								</div>
 
@@ -101,8 +128,8 @@ const RecruiterProfilePage: React.FC = () => {
 										About
 									</h2>
 									<p className="text-gray-600">
-										{recruiterProfileData
-											?.about ?? "Not specified"}
+										{recruiterProfileData?.about ??
+											"Not specified"}
 									</p>
 								</div>
 

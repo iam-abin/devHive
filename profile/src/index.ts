@@ -46,7 +46,7 @@ const start = async () => {
 	const companyProfileUpdatedEvent = new CompanyProfileUpdatedEventConsumer(
 		kafkaClient
 	);
-
+	
 	await userCreatedEvent.subscribe();
 	await userUpdatedEvent.subscribe();
 	await companyProfileUpdatedEvent.subscribe();

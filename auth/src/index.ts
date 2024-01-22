@@ -44,7 +44,6 @@ const start = async () => {
 	const userUpdatedEvent = new UserUpdatedEventConsumer(kafkaClient)
 	await userUpdatedEvent.subscribe()
 
-
 	app.listen(3000, () => {
 		console.log("auth Listening on port 3000....");
 	})

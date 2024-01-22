@@ -1,42 +1,374 @@
-apiVersion: apps/v1
-kind: Deployment
+---
+apiVersion: v1
+kind: ServiceAccount
 metadata:
-  name: kafka-depl
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: kafka
-  template:
-    metadata:
-      labels:
-        app: kafka
-    spec:
-      containers:
-        - name: kafka
-          image: bitnami/kafka
-          ports:
-            - containerPort: 9092
-          env:
-            - name: KAFKA_ZOOKEEPER_CONNECT
-              value: "zookeeper-srv:2181"
-            - name: KAFKA_ADVERTISED_LISTENERS
-              value: "PLAINTEXT://kafka-srv:9092"
-            - name: ALLOW_ANONYMOUS_LOGIN
-              value: "yes"
-            - name: ALLOW_PLAINTEXT_LISTENER
-              value: "yes"
-              
+  name: devhive-kafka
+  namespace: "default"
+  labels:
+    app.kubernetes.io/name: kafka
+    helm.sh/chart: kafka-23.0.1
+    app.kubernetes.io/instance: devhive
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: kafka
+  annotations:
+automountServiceAccountToken: true
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: devhive-kafka-scripts
+  namespace: "default"
+  labels:
+    app.kubernetes.io/name: kafka
+    helm.sh/chart: kafka-23.0.1
+    app.kubernetes.io/instance: devhive
+    app.kubernetes.io/managed-by: Helm
+data:
+  setup.sh: |-
+    #!/bin/bash
+
+    ID="${MY_POD_NAME#"devhive-kafka-"}"
+    # If process.roles is not set at all, it is assumed to be in ZooKeeper mode.
+    # https://kafka.apache.org/documentation/#kraft_role
+
+    if [[ -f "/bitnami/kafka/data/meta.properties" ]]; then
+        if [[ $KAFKA_CFG_PROCESS_ROLES == "" ]]; then
+            export KAFKA_CFG_BROKER_ID="$(grep "broker.id" "/bitnami/kafka/data/meta.properties" | awk -F '=' '{print $2}')"
+        else
+            export KAFKA_CFG_NODE_ID="$(grep "node.id" "/bitnami/kafka/data/meta.properties" | awk -F '=' '{print $2}')"
+        fi
+    else
+        if [[ $KAFKA_CFG_PROCESS_ROLES == "" ]]; then
+            export KAFKA_CFG_BROKER_ID="$((ID + 0))"
+        else
+            export KAFKA_CFG_NODE_ID="$((ID + 0))"
+        fi
+    fi
+
+    if [[ $KAFKA_CFG_PROCESS_ROLES == *"controller"* && -z $KAFKA_CFG_CONTROLLER_QUORUM_VOTERS ]]; then
+        node_id=0
+        pod_id=0
+        while :
+        do
+            VOTERS="${VOTERS}$node_id@devhive-kafka-$pod_id.devhive-kafka-headless.default.svc.cluster.local:9093"
+            node_id=$(( $node_id + 1 ))
+            pod_id=$(( $pod_id + 1 ))
+            if [[ $pod_id -ge 1 ]]; then
+                break
+            else
+                VOTERS="$VOTERS,"
+            fi
+        done
+        export KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=$VOTERS
+    fi
+
+    # Configure zookeeper client
+
+    exec /entrypoint.sh /run.sh
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: kafka-srv
+  name: devhive-kafka-headless
+  namespace: "default"
+  labels:
+    app.kubernetes.io/name: kafka
+    helm.sh/chart: kafka-23.0.1
+    app.kubernetes.io/instance: devhive
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: kafka
 spec:
-  selector:
-    app: kafka
+  type: ClusterIP
+  clusterIP: None
+  publishNotReadyAddresses: false
   ports:
-    - name: kafka
-      protocol: TCP
+    - name: tcp-client
       port: 9092
-      targetPort: 9092
+      protocol: TCP
+      targetPort: kafka-client
+    - name: tcp-internal
+      port: 9094
+      protocol: TCP
+      targetPort: kafka-internal
+    - name: tcp-controller
+      protocol: TCP
+      port: 9093
+      targetPort: kafka-ctlr
+  selector:
+    app.kubernetes.io/name: kafka
+    app.kubernetes.io/instance: devhive
+    app.kubernetes.io/component: kafka
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: devhive-kafka
+  namespace: "default"
+  labels:
+    app.kubernetes.io/name: kafka
+    helm.sh/chart: kafka-23.0.1
+    app.kubernetes.io/instance: devhive
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: kafka
+spec:
+  type: ClusterIP
+  sessionAffinity: None
+  ports:
+    - name: tcp-client
+      port: 9092
+      protocol: TCP
+      targetPort: kafka-client
+      nodePort: null
+  selector:
+    app.kubernetes.io/name: kafka
+    app.kubernetes.io/instance: devhive
+    app.kubernetes.io/component: kafka
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: devhive-kafka
+  namespace: "default"
+  labels:
+    app.kubernetes.io/name: kafka
+    helm.sh/chart: kafka-23.0.1
+    app.kubernetes.io/instance: devhive
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: kafka
+spec:
+  podManagementPolicy: Parallel
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: kafka
+      app.kubernetes.io/instance: devhive
+      app.kubernetes.io/component: kafka
+  serviceName: devhive-kafka-headless
+  updateStrategy:
+    rollingUpdate: {}
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: kafka
+        helm.sh/chart: kafka-23.0.1
+        app.kubernetes.io/instance: devhive
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/component: kafka
+      annotations:
+    spec:
+      
+      hostNetwork: false
+      hostIPC: false
+      affinity:
+        podAffinity:
+          
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app.kubernetes.io/name: kafka
+                    app.kubernetes.io/instance: devhive
+                    app.kubernetes.io/component: kafka
+                topologyKey: kubernetes.io/hostname
+              weight: 1
+        nodeAffinity:
+          
+      securityContext:
+        fsGroup: 1001
+      serviceAccountName: devhive-kafka
+      containers:
+        - name: kafka
+          image: docker.io/bitnami/kafka:3.5.0-debian-11-r1
+          imagePullPolicy: "IfNotPresent"
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsNonRoot: true
+            runAsUser: 1001
+          command:
+            - /scripts/setup.sh
+          env:
+            - name: BITNAMI_DEBUG
+              value: "false"
+            - name: MY_POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: MY_POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: KAFKA_CFG_ZOOKEEPER_CONNECT
+              value: 
+            - name: KAFKA_INTER_BROKER_LISTENER_NAME
+              value: "INTERNAL"
+            - name: KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP
+              value: "INTERNAL:PLAINTEXT,CLIENT:PLAINTEXT,CONTROLLER:PLAINTEXT"
+            - name: KAFKA_CFG_LISTENERS
+              value: "INTERNAL://:9094,CLIENT://:9092,CONTROLLER://:9093"
+            - name: KAFKA_CFG_ADVERTISED_LISTENERS
+              value: "INTERNAL://$(MY_POD_NAME).devhive-kafka-headless.default.svc.cluster.local:9094,CLIENT://$(MY_POD_NAME).devhive-kafka-headless.default.svc.cluster.local:9092"
+            - name: ALLOW_PLAINTEXT_LISTENER
+              value: "yes"
+            - name: KAFKA_ZOOKEEPER_PROTOCOL
+              value: PLAINTEXT
+            - name: KAFKA_VOLUME_DIR
+              value: "/bitnami/kafka"
+            - name: KAFKA_LOG_DIR
+              value: "/opt/bitnami/kafka/logs"
+            - name: KAFKA_CFG_DELETE_TOPIC_ENABLE
+              value: "false"
+            - name: KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE
+              value: "true"
+            - name: KAFKA_HEAP_OPTS
+              value: "-Xmx1024m -Xms1024m"
+            - name: KAFKA_CFG_LOG_FLUSH_INTERVAL_MESSAGES
+              value: "10000"
+            - name: KAFKA_CFG_LOG_FLUSH_INTERVAL_MS
+              value: "1000"
+            - name: KAFKA_CFG_LOG_RETENTION_BYTES
+              value: "1073741824"
+            - name: KAFKA_CFG_LOG_RETENTION_CHECK_INTERVAL_MS
+              value: "300000"
+            - name: KAFKA_CFG_LOG_RETENTION_HOURS
+              value: "168"
+            - name: KAFKA_CFG_MESSAGE_MAX_BYTES
+              value: "1000012"
+            - name: KAFKA_CFG_LOG_SEGMENT_BYTES
+              value: "1073741824"
+            - name: KAFKA_CFG_LOG_DIRS
+              value: "/bitnami/kafka/data"
+            - name: KAFKA_CFG_DEFAULT_REPLICATION_FACTOR
+              value: "1"
+            - name: KAFKA_CFG_OFFSETS_TOPIC_REPLICATION_FACTOR
+              value: "1"
+            - name: KAFKA_CFG_TRANSACTION_STATE_LOG_REPLICATION_FACTOR
+              value: "1"
+            - name: KAFKA_CFG_TRANSACTION_STATE_LOG_MIN_ISR
+              value: "1"
+            - name: KAFKA_CFG_NUM_IO_THREADS
+              value: "8"
+            - name: KAFKA_CFG_NUM_NETWORK_THREADS
+              value: "3"
+            - name: KAFKA_CFG_NUM_PARTITIONS
+              value: "1"
+            - name: KAFKA_CFG_NUM_RECOVERY_THREADS_PER_DATA_DIR
+              value: "1"
+            - name: KAFKA_CFG_SOCKET_RECEIVE_BUFFER_BYTES
+              value: "102400"
+            - name: KAFKA_CFG_SOCKET_REQUEST_MAX_BYTES
+              value: "104857600"
+            - name: KAFKA_CFG_SOCKET_SEND_BUFFER_BYTES
+              value: "102400"
+            - name: KAFKA_CFG_ZOOKEEPER_CONNECTION_TIMEOUT_MS
+              value: "6000"
+            - name: KAFKA_CFG_AUTHORIZER_CLASS_NAME
+              value: ""
+            - name: KAFKA_CFG_ALLOW_EVERYONE_IF_NO_ACL_FOUND
+              value: "true"
+            - name: KAFKA_CFG_SUPER_USERS
+              value: "User:admin"
+            - name: KAFKA_ENABLE_KRAFT
+              value: "true"
+            - name: KAFKA_KRAFT_CLUSTER_ID
+              value: "kafka_cluster_id_test1"
+            - name: KAFKA_CFG_PROCESS_ROLES
+              value: "broker,controller"
+            - name: KAFKA_CFG_CONTROLLER_LISTENER_NAMES
+              value: "CONTROLLER"
+          ports:
+            - name: kafka-client
+              containerPort: 9092
+            - name: kafka-internal
+              containerPort: 9094
+            - name: kafka-ctlr
+              containerPort: 9093
+          livenessProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+            tcpSocket:
+              port: kafka-client
+          readinessProbe:
+            failureThreshold: 6
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+            tcpSocket:
+              port: kafka-client
+          resources:
+            limits: {}
+            requests: {}
+          volumeMounts:
+            - name: data
+              mountPath: /bitnami/kafka
+            - name: logs
+              mountPath: /opt/bitnami/kafka/logs
+            - name: scripts
+              mountPath: /scripts/setup.sh
+              subPath: setup.sh
+      volumes:
+        - name: scripts
+          configMap:
+            name: devhive-kafka-scripts
+            defaultMode: 0755
+        - name: logs
+          emptyDir: {}
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes:
+          - "ReadWriteOnce"
+        resources:
+          requests:
+            storage: "1Gi"
+
+# ------------------------------------------------------------------------
+
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: kafka-depl
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       app: kafka
+#   template:
+#     metadata:
+#       labels:
+#         app: kafka
+#     spec:
+#       containers:
+#         - name: kafka
+#           image: bitnami/kafka
+#           ports:
+#             - containerPort: 9092
+#           env:
+#             - name: KAFKA_ZOOKEEPER_CONNECT
+#               value: "zookeeper-srv:2181"
+#             - name: KAFKA_ADVERTISED_LISTENERS
+#               value: "PLAINTEXT://kafka-srv:9092"
+#             - name: ALLOW_ANONYMOUS_LOGIN
+#               value: "yes"
+#             - name: ALLOW_PLAINTEXT_LISTENER
+#               value: "yes"
+              
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: kafka-srv
+# spec:
+#   selector:
+#     app: kafka
+#   ports:
+#     - name: kafka
+#       protocol: TCP
+#       port: 9092
+#       targetPort: 9092

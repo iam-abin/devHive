@@ -1,15 +1,15 @@
 import mongoose from "mongoose";
 // 1. An interface that describes the properties ,that are requried to create a new Chat
 interface ChatRoomAttributes {
-	users: mongoose.Types.ObjectId[];
-	lastMessage: string;
-	lastMessageTime: boolean;
+	users: string[];
+	// lastMessage?: string;
+	// lastMessageTime?: boolean;
 }
 // 2. An interface that describes the properties ,that a Chat Document has
 interface ChatRoomDocument extends mongoose.Document {
 	users: mongoose.Types.ObjectId[];
-	lastMessage: string;
-	lastMessageTime: boolean;
+	// lastMessage?: string;
+	// lastMessageTime?: boolean;
 	createdAt: Date;
 	updatedAt: Date;
 }
@@ -37,15 +37,15 @@ const chatRoomSchema = new mongoose.Schema(
 
 // 4. An interface that describes the properties ,that a user model has
 interface ChatRoomModel extends mongoose.Model<ChatRoomDocument> {
-	buildChatRoom(attributes: ChatRoomAttributes): ChatRoomDocument;
+	buildChatRoom(attributes: string[]): ChatRoomDocument;
 }
 
 // 5.In Mongoose, you can also add custom functions to a model using statics.
-chatRoomSchema.statics.buildChatRoom = (attributes: ChatRoomAttributes) => {
+chatRoomSchema.statics.buildChatRoom = (attributes: string[]) => {
 	return new ChatRoomModel({
-	  users: attributes.users,
-	  lastMessage: attributes.lastMessage,
-	  lastMessageTime: attributes.lastMessageTime,
+	  users: attributes,
+	//   lastMessage: attributes.lastMessage,
+	//   lastMessageTime: attributes.lastMessageTime,
 	});
   };
 // 6. // 6.hover on 'ChatRoom' ,we can see that 'ChatRoom' is getting 'ChatRoomModel', ie,a Second arg indicate returning type

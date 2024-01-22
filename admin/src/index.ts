@@ -62,9 +62,11 @@ const start = async () => {
 	await userUpdatedEvent.subscribe();
 	await userCreatedEvent.subscribe();
 
+	
 	app.listen(3000, () => {
 		console.log("admin Listening on port 3000....");
 	})
+	
 		.on("error", async () => {
 			await companyProfileCreatedEvent.disconnect();
 			await companyProfileUpdatedEvent.disconnect();
