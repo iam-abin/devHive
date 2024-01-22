@@ -25,7 +25,7 @@ import { useSelector } from "react-redux";
 
 import { lazy, Suspense } from "react";
 import Loading from "../components/loading/Loading";
-import ChatPage from "../pages/chat/ChatPage";
+
 
 // import LandingPage from "../pages/landing/LandingPage";
 const CandidateSigninPage = lazy(()=> import("../pages/auth-pages/signin/CandidateSigninPage"))
@@ -44,6 +44,10 @@ const OtpFormPageForgotPassword = lazy(()=> import("../pages/auth-pages/otp/cand
 const CandidateProfileEditPage = lazy(()=> import("../pages/profile/candidate/CandidateProfileEditPage"))
 const AppliedJobsPage = lazy(()=> import("../pages/job-pages/candidate/AppliedJobsPage"))
 const JobApplicationDetailsPage = lazy(()=> import("../pages/job-pages/candidate/JobApplicationDetailsPage"));
+
+const RecruiterProfilePage = lazy(()=> import("../pages/profile/recruiter/RecruiterProfilePage"))
+const ChatPage = lazy(()=> import("../pages/chat/ChatPage"))
+
 
 function CandidateRoutes() {
 	const isCandidateLoggedIn = useSelector(
@@ -78,7 +82,8 @@ function CandidateRoutes() {
 					<Route path="/application-details/:jobApplicationId" element={isCandidateLoggedIn?<JobApplicationDetailsPage />:<Navigate to={"/candidate/signin"} />} />
 				
 					{/* <Route path="/applied-jobs-details/:jobId" element={isCandidateLoggedIn?<JobDetailsPage />:<Navigate to={"/candidate/signin"} />} /> */}
-					<Route path="/chat" element={isCandidateLoggedIn?<ChatPage />:<Navigate to={"/candidate/signin"} />} />
+					<Route path="/recruiter-profile" element={isCandidateLoggedIn? <RecruiterProfilePage />: <Navigate to={"/candidate/signin"} />} />
+					<Route path="/chat/:recepientId" element={isCandidateLoggedIn?<ChatPage />:<Navigate to={"/candidate/signin"} />} />
 				</Routes>
 				
 			</Suspense>

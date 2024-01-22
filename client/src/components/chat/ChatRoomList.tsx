@@ -1,6 +1,8 @@
 import React from "react";
 
-const ChatRoomList: React.FC<{ user: any }> = ({ user }) => {
+const ChatRoomList: React.FC<{user: any, isOnline: any}> = ({user, isOnline} ) => {
+	console.log("inside chatRoomList", isOnline);
+	
 	return (
 		<div className="card max-w-96 bg-base-100 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] mb-1 hover:bg-gray-200">
 			<div className="flex flex-row p-4 gap-3 items-center ">
@@ -16,9 +18,10 @@ const ChatRoomList: React.FC<{ user: any }> = ({ user }) => {
 						/>
 					</div>
 				</div>
-				<div className="flex flex-row w-full justify-between">
-					<h5>{user.name}</h5>
-					<p>{user.ofline ? "ofline" : "online"}</p>
+				{/* <div className="flex flex-row w-full justify-between"> */}
+				<div className="flex flex-col w-full justify-between">
+					<h5>{user}</h5>
+					<p>{isOnline ? "online" :"ofline" }</p>
 				</div>
 			</div>
 		</div>

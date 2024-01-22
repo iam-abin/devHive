@@ -13,6 +13,7 @@ const start = async () => {
 		throw new Error("MONGO_URL_CHAT must be defined");
 	}
 
+
     //if we do not set JWT_SECRET_KEY
 	if (!process.env.JWT_SECRET_KEY) {
 		throw new Error("JWT_SECRET_KEY must be defined");
@@ -22,8 +23,6 @@ const start = async () => {
 	if (!process.env.JWT_REFRESH_SECRET_KEY) {
 		throw new Error("JWT_REFRESH_SECRET_KEY must be defined");
 	}
-
-
 	
 	console.log("before socket instance");
 	setupSocketIO(httpServer);
@@ -34,11 +33,10 @@ const start = async () => {
 	const userCreatedEvent = new UserCreatedEventConsumer(kafkaClient);
 	const userUpdatedEvent = new UserUpdatedEventConsumer(kafkaClient);
 
-	await userUpdatedEvent.subscribe();
-	await userCreatedEvent.subscribe();
+	// await userUpdatedEvent.subscribe();
+	// await userCreatedEvent.subscribe();
 
-    
-	app.listen(3000, () => {
+	httpServer.listen(3000, () => {
 		console.log("chat service Listening on port 3000....");
 	})
 		.on("error", async () => {
@@ -52,3 +50,21 @@ const start = async () => {
 };
 
 start();
+
+// io.on("connection", (socket) => {
+//     console.log("New user connected ,id is: ", socket.id);
+//     console.log("Socket is active and connected.");
+
+//     socket.on("chat", (payload) => {
+//         console.log("Received chat message: ", payload);
+//         io.emit("chat", payload);
+//     });
+// });
+
+// io.on("disconnect", (socket) => {
+//     console.log("a user disconnected");
+
+//     // removeUser(socket.id);
+//     // io.emit("getActiveUsers", activeUsers);
+// });
+

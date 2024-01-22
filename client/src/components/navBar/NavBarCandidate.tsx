@@ -94,7 +94,11 @@ function NavBarCandidate() {
 								>
 									<a>Profile</a>
 								</li>
-								<li>
+								<li onClick={() =>
+											navigate(
+												`/candidate/chat` // Add the path to your chat page
+											)
+										}>
 									<a>Chat</a>
 								</li>
 								<li

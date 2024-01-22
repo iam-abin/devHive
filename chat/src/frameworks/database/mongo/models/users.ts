@@ -9,7 +9,7 @@ interface UserAttributes {
 }
 // 2. An interface that describes the properties ,that a User Document has
 interface UserDocument extends mongoose.Document {
-	userId: string;
+	userId: mongoose.Schema.Types.ObjectId;
 	name: string;
 	email: string;
 	profileImgUrl: number;
@@ -22,7 +22,7 @@ interface UserDocument extends mongoose.Document {
 // 3.
 const userSchema = new mongoose.Schema(
 	{
-		userId: String,
+		userId: mongoose.Schema.Types.ObjectId,
 		name: String,
 		email: String,
 		profileImgUrl: String,

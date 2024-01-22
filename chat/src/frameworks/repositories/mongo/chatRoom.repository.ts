@@ -3,16 +3,31 @@ import schemas from "../../database/mongo/models";
 const { MessageModel, ChatRoomModel } = schemas;
 
 export = {
-	createMessage: async (message: any)=>{
-		
-		return 
+	createChatRoom: async (sender: string, recipient: string) => {
+		let arr = [];
+		arr.push(sender);
+		arr.push(recipient);
+		const chatRoom = ChatRoomModel.buildChatRoom(arr);
+		console.log("in applyJob repository");
+
+		return await chatRoom.save();
 	},
 
-	getChatMessages: async (roomId: string) => {
-		const chatMessages = await MessageModel.findOne({
-			roomId: roomId,
-		});
-		return chatMessages;
+    getAChatRoom: async (sender: string, recipient: string) => {
+        const chatRooms = await ChatRoomModel.find({
+          users: { $all: [sender, recipient] },
+        });
+        return chatRooms;
+      },
+
+	getAllChatRoomsByUserId: async (userId: string) => {
+		const chatRooms = await ChatRoomModel.find({
+			users: { $elemMatch: { $eq: userId } }
+		})
+		// .populate('users');
+		console.log("in getAllChatRoomsByUserId repository ", chatRooms);
+		
+		return chatRooms;
 	},
 
 	// getAllAppliedJobsByCandidateId: async (

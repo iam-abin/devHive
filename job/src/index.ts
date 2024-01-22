@@ -29,6 +29,7 @@ const start = async () => {
 	await jobUpdatedEvent.subscribe();
 
 	app.listen(3000, () => {
+		
 		console.log("job service Listening on port 3000....");
 	})
 		.on("error", async () => {
