@@ -20,6 +20,7 @@ export const chatRouter = (dependencies: DependenciesData) => {
 
 	const {
 		getAllChatRoomsByUserIDController,
+		getConversationController
 	} = chatControllers(dependencies);
 
 	router.get(
@@ -27,7 +28,7 @@ export const chatRouter = (dependencies: DependenciesData) => {
 		getAllChatRoomsByUserIDController  
 	);
 
-	// router.get("/get-a-chat-room/:chatRoomId", getChatRoomWithRoomIdController);
+	router.get("/room-conversation/:chatRoomId", getConversationController);
 
 	// router.post("/new-message/:roomId", sendNewMessageController);
 

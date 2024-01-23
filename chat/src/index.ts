@@ -50,21 +50,3 @@ const start = async () => {
 };
 
 start();
-
-// io.on("connection", (socket) => {
-//     console.log("New user connected ,id is: ", socket.id);
-//     console.log("Socket is active and connected.");
-
-//     socket.on("chat", (payload) => {
-//         console.log("Received chat message: ", payload);
-//         io.emit("chat", payload);
-//     });
-// });
-
-// io.on("disconnect", (socket) => {
-//     console.log("a user disconnected");
-
-//     // removeUser(socket.id);
-//     // io.emit("getActiveUsers", activeUsers);
-// });
-

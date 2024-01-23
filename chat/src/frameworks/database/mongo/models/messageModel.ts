@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 // 1. An interface that describes the properties ,that are requried to create a new Message
 interface MessageAttributes {
-	senderId: mongoose.Schema.Types.ObjectId;
-	roomId: mongoose.Schema.Types.ObjectId;
+	senderId: string;
+	roomId: string;
 	textMessage: string;
 }
 
@@ -58,7 +58,7 @@ interface MessageModel extends mongoose.Model<MessageDocument> {
 messageSchema.statics.buildMessage = (attributes: MessageAttributes) => {
 	return new MessageModel({
 		// to create a new Message document
-		sender: attributes.senderId,
+		senderId: attributes.senderId,
 		roomId: attributes.roomId,
 		textMessage: attributes.textMessage
 	});

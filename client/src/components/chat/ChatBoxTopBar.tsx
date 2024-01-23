@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ChatBoxTopBar: React.FC<{ user: any }> = ({ user })=> {
+const ChatBoxTopBar: React.FC<{ chatRoom: any }> = ({ chatRoom })=> {
   return (
     <div>
       	<div className="card w-full bg-base-100 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] mb-1">
@@ -18,8 +18,8 @@ const ChatBoxTopBar: React.FC<{ user: any }> = ({ user })=> {
 					</div>
 				</div>
 				<div className="flex flex-row w-full justify-between">
-					<h5>{user.name}</h5>
-					<p>{user.ofline ? "ofline" : "online"}</p>
+					<h5>{chatRoom}</h5>
+					<p>{true ? "ofline" : "online"}</p>
 				</div>
 			</div>
 		</div>
