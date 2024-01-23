@@ -1,27 +1,7 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 
-// import CandidateHomePage from "../pages/candidate/CandidateHomePage";
 import { RootState } from "../redux/reducer/reducer";
 import { useSelector } from "react-redux";
-
-
-// import CandidateSigninPage from "../pages/auth-pages/signin/CandidateSigninPage";
-// import CandidateSignupPage from "../pages/auth-pages/signup/CandidateSignupPage";
-// import LandingPage from "../pages/landing/LandingPage";
-// import CandidateProfilePage from "../pages/profile/candidate/CandidateProfilePage";
-// import AllJobsPage from "../pages/job-pages/candidate/AllJobsPage";
-// import JobDetailsPage from "../pages/job-pages/candidate/JobDetailsPage";
-// import OtpFormPageSignup from "../pages/auth-pages/otp/candidate/OtpFormPageSignup";
-// import ResetPassword from "../pages/auth-pages/password/candidate/ResetPassword";
-// import OtpFormResetPassword from "../pages/auth-pages/otp/candidate/OtpFormResetPassword";
-
-// import ForgotPasswordEmailEnterPage from "../pages/auth-pages/emailOrMobileEnter/candidate/ForgotPasswordEmailEnterPage"
-// import ForgotPassword from "../pages/auth-pages/password/candidate/ForgotPassword";
-// import ResetPasswordMobileEnterPage from "../pages/auth-pages/emailOrMobileEnter/candidate/ResetPasswordMobileEnterPage"
-
-// import OtpFormPageForgotPassword from "../pages/auth-pages/otp/candidate/OtpFormPageForgotPassword";
-// import CandidateProfileEditPage from "../pages/profile/candidate/CandidateProfileEditPage";
-// import AppliedJobsPage from "../pages/job-pages/candidate/AppliedJobsPage";
 
 import { lazy, Suspense } from "react";
 import Loading from "../components/loading/Loading";
@@ -46,7 +26,7 @@ const AppliedJobsPage = lazy(()=> import("../pages/job-pages/candidate/AppliedJo
 const JobApplicationDetailsPage = lazy(()=> import("../pages/job-pages/candidate/JobApplicationDetailsPage"));
 
 const RecruiterProfilePage = lazy(()=> import("../pages/profile/recruiter/RecruiterProfilePage"))
-const ChatPage = lazy(()=> import("../pages/chat/ChatPage"))
+const ChatPageCandidate = lazy(()=> import("../pages/chat/ChatPageCandidate"))
 
 
 function CandidateRoutes() {
@@ -83,7 +63,7 @@ function CandidateRoutes() {
 				
 					{/* <Route path="/applied-jobs-details/:jobId" element={isCandidateLoggedIn?<JobDetailsPage />:<Navigate to={"/candidate/signin"} />} /> */}
 					<Route path="/recruiter-profile" element={isCandidateLoggedIn? <RecruiterProfilePage />: <Navigate to={"/candidate/signin"} />} />
-					<Route path="/chat/:recepientId" element={isCandidateLoggedIn?<ChatPage />:<Navigate to={"/candidate/signin"} />} />
+					<Route path="/chat/:recepientId" element={isCandidateLoggedIn?<ChatPageCandidate />:<Navigate to={"/candidate/signin"} />} />
 				</Routes>
 				
 			</Suspense>

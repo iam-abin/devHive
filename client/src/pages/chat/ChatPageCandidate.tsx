@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import ChatImage from "../../assets/chat/double-chat-bubble-icon.svg";
 import { FaSearch } from "react-icons/fa";
+import NavBarCandidate from "../../components/navBar/NavBarCandidate";
 import ChatRoomList from "../../components/chat/ChatRoomList";
 import Message from "../../components/chat/Message";
 import ChatBoxTopBar from "../../components/chat/ChatBoxTopBar";
@@ -11,11 +12,10 @@ import { RootState } from "../../redux/reducer/reducer";
 
 import socket from "../../config/socket";
 import { useParams } from "react-router-dom";
-import TopNavBarRecruiter from "../../components/navBar/TopNavBarRecruiter";
 
-const ChatPageRecruiter = () => {
-	const recruiterData: any = useSelector(
-		(state: RootState) => state.recruiterData.data
+const ChatPageCandidate = () => {
+	const candidateData: any = useSelector(
+		(state: RootState) => state.candidateData.data
 	);
 	const { recepientId } = useParams();
 
@@ -48,16 +48,16 @@ const ChatPageRecruiter = () => {
 
 	useEffect(() => {
 		console.log("=========in socket io addActiveUser useEffect");
-		socket.emit("addActiveUser", recruiterData.id);
+		socket.emit("addActiveUser", candidateData.id);
 		socket.on("getActiveUsers", (users) => {
 			setOnlineUsers(users);
 		});
 		console.log(socket); // Ensure that the socket is created here
-	}, [recruiterData?._id]);
+	}, [candidateData?._id]);
 
 	useEffect(() => {
 		console.log("//////////in socket io addRoomeUser useEffect");
-		socket.emit("createChatRoom", recruiterData.id, recepientId);
+		socket.emit("createChatRoom", candidateData.id, recepientId);
 		socket.on("getAllChatRooms", (rooms) => {
 			setchatRooms(rooms);
 		});
@@ -88,7 +88,7 @@ const ChatPageRecruiter = () => {
 
 	useEffect(() => {
 		console.log("//////////get conversation useEffect");
-		socket.emit("createChatRoom", recruiterData.id, recepientId);
+		socket.emit("createChatRoom", candidateData.id, recepientId);
 		// socket.on("getAllChatRooms", (rooms) => {
 		// 	setchatRooms(rooms);
 		// });
@@ -96,7 +96,7 @@ const ChatPageRecruiter = () => {
 
 	const sendMessage = (message: string) => {
 		const messageToSend = {
-			senderId: recruiterData.id,
+			senderId: candidateData.id,
 			roomId: selectedChatRoom,
 			textMessage: message,
 		};
@@ -105,7 +105,7 @@ const ChatPageRecruiter = () => {
 		socket.emit("sendMessage", messageToSend);
 		console.log("--------sending message to socket---------");
 	};
-
+	
 	const handleChatRoomClick = async (room: any) => {
 		console.log("??????????????inside handleChatRoomClick room ", room);
 		setSelectedChatRoom(room);
@@ -119,8 +119,11 @@ const ChatPageRecruiter = () => {
 	console.log("selected chatRoom is --->>>", selectedChatRoom);
 
 	const isUserOnline = (chatRoom: any) => {
+		// console.log("isUserOnline ", chatRoom.users);
+		// console.log("candidate ", candidateData.id);
+
 		const otherValue = chatRoom.users.filter(
-			(value: string) => value !== recruiterData.id
+			(value: string) => value !== candidateData.id
 		);
 		console.log("otherValue", otherValue);
 
@@ -129,10 +132,10 @@ const ChatPageRecruiter = () => {
 
 	const getReceiver = (chatRoom: any) => {
 		console.log(" getReceiver  ", chatRoom.users);
-		console.log("recruiter ", recruiterData.id);
+		console.log("candidate ", candidateData.id);
 
 		const otherUser = chatRoom.users.filter(
-			(value: string) => value !== recruiterData.id
+			(value: string) => value !== candidateData.id
 		);
 		console.log("otherValue", otherUser);
 
@@ -141,7 +144,7 @@ const ChatPageRecruiter = () => {
 
 	return (
 		<>
-			<TopNavBarRecruiter />
+			<NavBarCandidate />
 			<div className="bg-white  h-[92vh] flex justify-center items-center">
 				<div className="bg-slate-200 h-max-[88vh] w-[90vw] flex rounded-md">
 					{/* Left */}
@@ -190,6 +193,7 @@ const ChatPageRecruiter = () => {
 							<div className="flex flex-col gap-3">
 								<div>
 									<ChatBoxTopBar
+										// chatRoom={selectedChatRoom}
 										receiver={getReceiver(selectedChatRoom)}
 									/>
 								</div>
@@ -208,7 +212,7 @@ const ChatPageRecruiter = () => {
 													key={index}
 													message={message}
 													currentUserId={
-														recruiterData.id
+														candidateData.id
 													}
 												/>
 											)
@@ -228,4 +232,4 @@ const ChatPageRecruiter = () => {
 	);
 };
 
-export default ChatPageRecruiter;
+export default ChatPageCandidate;

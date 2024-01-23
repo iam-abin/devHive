@@ -13,80 +13,27 @@ export = {
 		return await chatRoom.save();
 	},
 
-    getAChatRoom: async (sender: string, recipient: string) => {
-        const chatRooms = await ChatRoomModel.find({
-          users: { $all: [sender, recipient] },
-        });
-        return chatRooms;
-      },
+	getAChatRoomById: async (chatRoomId: string) => {
+		const chatRoom = await ChatRoomModel.findById({ _id: chatRoomId });
+		console.log("inside getAChatRoomById chatRoom ", chatRoom);
 
-	getAllChatRoomsByUserId: async (userId: string) => {
+		return chatRoom;
+	},
+
+	getAChatRoom: async (sender: string, recipient: string) => {
 		const chatRooms = await ChatRoomModel.find({
-			users: { $elemMatch: { $eq: userId } }
-		})
-		// .populate('users');
-		console.log("in getAllChatRoomsByUserId repository ", chatRooms);
-		
+			users: { $all: [sender, recipient] },
+		});
 		return chatRooms;
 	},
 
-	// getAllAppliedJobsByCandidateId: async (
-	// 	id: string,
-	// 	skip: number,
-	// 	limit: number
-	// ) => {
-	// 	// use populate
-	// 	const appliedJobs = await jobApplicationModel
-	// 		.find({ candidateId: id })
-	// 		.populate({ path: "jobId", model: JobModel })
-	// 		.sort({ createdAt: -1 })
-	// 		.skip(skip)
-	// 		.limit(limit);
-	// 	console.log(appliedJobs);
-	// 	return appliedJobs;
-	// },
+	getAllChatRoomsByUserId: async (userId: string) => {
+		const chatRooms = await ChatRoomModel.find({
+			users: { $elemMatch: { $eq: userId } },
+		});
+		// .populate('users');
+		console.log("in getAllChatRoomsByUserId repository ", chatRooms);
 
-	// getCountOfCandidateAppliedJobs: async (id: string): Promise<number> => {
-	// 	const totalJobs: number = await jobApplicationModel.countDocuments({candidateId: id})
-	//     console.log(totalJobs);
-	//     return totalJobs
-	// },
-
-	// updateJobApplicationStatus: async (id: string, status: object) => {
-	// 	const updatedJob = await jobApplicationModel.findOneAndUpdate(
-	// 		{ _id: id },
-	// 		{ $set: status },
-	// 		{ new: true }
-	// 	);
-	// 	return updatedJob;
-	// },
-
-	// getAJobApplicationByRecruiter: async (jobApplicationId: string) => {
-	// 	// use populate
-	// 	const jobApplications = await jobApplicationModel
-	// 		.findOne({ _id: jobApplicationId })
-	// 		.populate({ path: "jobId", model: JobModel });
-	// 	console.log("in getAllJobApplicationsByRecruiterId", jobApplications);
-
-	// 	return jobApplications;
-	// },
-
-	// getAnAppliedJobByCandidate: async (
-	// 	candidateId: string,
-	// 	jobApplicationId: string
-	// ) => {
-	// 	// use populate
-	// 	console.log(
-	// 		"in getAnAppliedJobByCandidate1 jobApplicationId",
-	// 		jobApplicationId
-	// 	);
-	// 	console.log("in getAnAppliedJobByCandidate1 candidateId", candidateId);
-
-	// 	const jobApplication = await jobApplicationModel
-	// 		.findOne({ jobId: jobApplicationId, candidateId })
-	// 		.populate({ path: "jobId", model: JobModel });
-	// 	console.log("in getAnAppliedJobByCandidate2", jobApplication);
-
-	// 	return jobApplication;
-	// },
+		return chatRooms;
+	},
 };

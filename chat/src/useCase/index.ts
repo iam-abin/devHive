@@ -1,6 +1,6 @@
 import { searchUserUseCase, getAllUsersUseCase } from "./user";
 
-import { getChatUseCase, postChatUseCase, getChatRoomsUseCase } from "./chat";
+import { getChatUseCase, postChatUseCase, getChatRoomsUseCase, getConversationUseCase } from "./chat";
 
 
 export default {
@@ -10,4 +10,5 @@ export default {
 	getChatUseCase,
 	postChatUseCase,
 	getChatRoomsUseCase,
+	getConversationUseCase,
 };

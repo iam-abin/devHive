@@ -3,30 +3,10 @@ import { Navigate, Route, Routes } from "react-router-dom"
 import { useSelector } from "react-redux"
 import { RootState } from "../redux/reducer/reducer"
 
-// import RecruiterHomePage from "../pages/home/RecruiterHomePage"
-// import RecruiterSigninPage from "../pages/auth-pages/signin/RecruiterSigninPage"
-// import RecruiterSignupPage from "../pages/auth-pages/signup/RecruiterSignupPage"
-// import LandingPage from "../pages/landing/LandingPage"
-// import AllJobsPage from "../pages/job-pages/recruiter/AllJobsPage"
-// import CreateJobPage from "../pages/job-pages/recruiter/CreateJobPage"
-// import EditJobPage from "../pages/job-pages/recruiter/EditJobPage"
-// import OtpFormPageSignup from "../pages/auth-pages/otp/recruiter/OtpFormPageSignup"
-// import RecruiterProfilePage from "../pages/profile/recruiter/RecruiterProfilePage"
-// import OtpFormResetPassword from "../pages/auth-pages/otp/recruiter/OtpFormResetPassword"
-// import ResetPassword from "../pages/auth-pages/password/recruiter/ResetPassword"
-// import OtpFormPageForgotPassword from "../pages/auth-pages/otp/recruiter/OtpFormPageForgotPassword"
-// import ForgotPassword from "../pages/auth-pages/password/recruiter/ForgotPassword"
-// import RecruiterProfileEditPage from "../pages/profile/recruiter/RecruiterProfileEditPage"
-// import ResetPasswordMobileEnterPage from "../pages/auth-pages/emailOrMobileEnter/recruiter/ResetPasswordMobileEnterPage"
-// import ForgotPasswordEmailEnterPage from "../pages/auth-pages/emailOrMobileEnter/recruiter/ForgotPasswordEmailEnterPage"
-// import JobDetailsPage from "../pages/job-pages/recruiter/JobDetailsPage"
-// import AllAddedJobs from "../pages/job-pages/recruiter/AllAddedJobs"
-// import JobApplicationsPage from "../pages/job-pages/recruiter/JobApplicationsPage"
-// import JobApplicationDetailsPage from "../pages/job-pages/recruiter/JobApplicationDetailsPage"
-
 
 import { lazy, Suspense } from "react";
 import Loading from "../components/loading/Loading";
+
 
 const RecruiterHomePage = lazy(()=> import("../pages/home/RecruiterHomePage"))
 const RecruiterSignupPage = lazy(()=> import("../pages/auth-pages/signup/RecruiterSignupPage"))
@@ -49,7 +29,7 @@ const AllAddedJobs = lazy(()=> import("../pages/job-pages/recruiter/AllAddedJobs
 const JobApplicationsPage = lazy(()=> import("../pages/job-pages/recruiter/JobApplicationsPage"))
 const JobApplicationDetailsPage = lazy(()=> import("../pages/job-pages/recruiter/JobApplicationDetailsPage"))
 const CandidateProfileDetailsPage = lazy(()=> import("../pages/profile/recruiter/CandidateProfileDetailsPage"))
-
+const ChatPageRecruiter = lazy(()=> import("../pages/chat/ChatPageRecruiter"))
 
 function RecruiterRouters() {
 	const isRecruiterLoggedIn = useSelector(
@@ -85,6 +65,7 @@ function RecruiterRouters() {
 				<Route path="/applications" element={isRecruiterLoggedIn?<JobApplicationsPage />:<Navigate to={"/recruiter/signin"} />} />
 				<Route path="/application-details/:jobApplicationId" element={isRecruiterLoggedIn?<JobApplicationDetailsPage />:<Navigate to={"/recruiter/signin"} />} />
 				<Route path="viewCandidateProfileDetails/:candidateId" element={isRecruiterLoggedIn?<CandidateProfileDetailsPage />:<Navigate to={"/recruiter/signin"} />} />
+				<Route path="/chat/:recepientId" element={isRecruiterLoggedIn?<ChatPageRecruiter />:<Navigate to={"/recruiter/signin"} />} />
 				{/* <Route path="/:id/verifyEmail/:token" element={<EmailVerifyRecruiter/>}/> */}
 			</Routes>
 		</Suspense>

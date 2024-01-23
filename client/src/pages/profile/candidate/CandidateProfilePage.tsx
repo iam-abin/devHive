@@ -140,17 +140,16 @@ const CandidateProfilePage: React.FC = () => {
 										>
 											Edit
 										</button>
-										<div>
-
-									<FaFacebookMessenger
-										onClick={() =>
-											navigate(
-												`/candidate/chat` // Add the path to your chat page
-											)
-										}
-										className="text-5xl cursor-pointer absolute top-0 right-0 mr-6 mt-20"
-									/>
-										</div>
+										{/* <div>
+											<FaFacebookMessenger
+												onClick={() =>
+													navigate(
+														`/recruiter/chat` // Add the path to your chat page
+													)
+												}
+												className="text-5xl cursor-pointer absolute top-0 right-0 mr-6 mt-20"
+											/>
+										</div> */}
 									</div>
 								</div>
 							</div>
