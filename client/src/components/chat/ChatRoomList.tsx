@@ -1,19 +1,18 @@
 import React from "react";
 
 interface ChatRoomListProps {
-	user: any;
+	receiver: any;
 	isOnline: boolean;
 	onClick: () => void;
 	selected: boolean;
 }
 
 const ChatRoomList: React.FC<ChatRoomListProps> = ({
-	user,
+	receiver,
 	isOnline,
 	onClick,
 	selected,
 }) => {
-	console.log("inside chatRoomList", selected);
 	console.log("inside chatRoomList", selected);
 	console.log("inside chatRoomList", selected);
 
@@ -36,7 +35,7 @@ const ChatRoomList: React.FC<ChatRoomListProps> = ({
 				</div>
 				{/* <div className="flex flex-row w-full justify-between"> */}
 				<div className="flex flex-col w-full justify-between">
-					<h5>{user}</h5>
+					<h5>{receiver}</h5>
 					<p>{isOnline ? "online" : "ofline"}</p>
 				</div>
 			</div>

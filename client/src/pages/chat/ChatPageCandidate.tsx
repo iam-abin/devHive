@@ -6,17 +6,14 @@ import ChatRoomList from "../../components/chat/ChatRoomList";
 import Message from "../../components/chat/Message";
 import ChatBoxTopBar from "../../components/chat/ChatBoxTopBar";
 import ChatInputBox from "../../components/chat/ChatInputBox";
-import {
-	getAConversationApi,
-	getAllChatRoomsApi,
-} from "../../axios/apiMethods/chat-service/chat";
+import { getAConversationApi } from "../../axios/apiMethods/chat-service/chat";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/reducer/reducer";
 
 import socket from "../../config/socket";
 import { useParams } from "react-router-dom";
 
-const ChatPage = () => {
+const ChatPageCandidate = () => {
 	const candidateData: any = useSelector(
 		(state: RootState) => state.candidateData.data
 	);
@@ -30,14 +27,14 @@ const ChatPage = () => {
 	const chatAreaRef = useRef<HTMLDivElement>(null);
 
 	const scrollToBottom = () => {
-    if (chatAreaRef.current) {
-      chatAreaRef.current.scrollTop = chatAreaRef.current.scrollHeight;
-    }
-  };
+		if (chatAreaRef.current) {
+			chatAreaRef.current.scrollTop = chatAreaRef.current.scrollHeight;
+		}
+	};
 
-  useEffect(() => {
-    scrollToBottom();
-  }, [selectedChatRoomMessages]);
+	useEffect(() => {
+		scrollToBottom();
+	}, [selectedChatRoomMessages]);
 
 	useEffect(() => {
 		// Establish the connection when the component mounts
@@ -69,17 +66,17 @@ const ChatPage = () => {
 	useEffect(() => {
 		// Listen for "selectedChatRoomMessages" events and update the selectedChatRoomMessages state
 		socket.on("receiveMessage", (message) => {
-			if(message.result.roomId.toString() === selectedChatRoom ){
-
-				setSelectedChatRoomMessages([...selectedChatRoomMessages, message.result]);
+			if (message.result.roomId.toString() === selectedChatRoom) {
+				setSelectedChatRoomMessages([
+					...selectedChatRoomMessages,
+					message.result,
+				]);
 			}
-
 		});
 
 		socket.on("connect_error", (error) => {
 			console.error("Socket.IO connection error:", error);
 		});
-
 
 		// Clean up the event listener when the component unmounts
 		return () => {
@@ -108,10 +105,10 @@ const ChatPage = () => {
 		socket.emit("sendMessage", messageToSend);
 		console.log("--------sending message to socket---------");
 	};
-
+	
 	const handleChatRoomClick = async (room: any) => {
 		console.log("??????????????inside handleChatRoomClick room ", room);
-		setSelectedChatRoom(room.id);
+		setSelectedChatRoom(room);
 		const conversations = await getAConversationApi(room.id);
 		console.log("ccccccccccccccccccconversation", conversations);
 		setSelectedChatRoomMessages(conversations.data);
@@ -170,7 +167,7 @@ const ChatPage = () => {
 									(chatRoom: any, index: number) => (
 										<ChatRoomList
 											key={index}
-											user={getReceiver(chatRoom)}
+											receiver={getReceiver(chatRoom)}
 											isOnline={isUserOnline(chatRoom)}
 											onClick={() =>
 												handleChatRoomClick(chatRoom)
@@ -196,10 +193,14 @@ const ChatPage = () => {
 							<div className="flex flex-col gap-3">
 								<div>
 									<ChatBoxTopBar
-										chatRoom={selectedChatRoom}
+										// chatRoom={selectedChatRoom}
+										receiver={getReceiver(selectedChatRoom)}
 									/>
 								</div>
-								<div className="bg-red-300 min-h-[58vh] max-h-[58vh] p-5 overflow-x-scroll "  ref={chatAreaRef}>
+								<div
+									className="bg-red-300 min-h-[58vh] max-h-[58vh] p-5 overflow-x-scroll "
+									ref={chatAreaRef}
+								>
 									{selectedChatRoomMessages.length == 0 ? (
 										<div className="text-center">
 											no messages send yet
@@ -231,4 +232,4 @@ const ChatPage = () => {
 	);
 };
 
-export default ChatPage;
+export default ChatPageCandidate;
