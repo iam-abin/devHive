@@ -61,7 +61,6 @@ const start = async () => {
 	await jobDeletedEvent.subscribe();
 	await userUpdatedEvent.subscribe();
 	await userCreatedEvent.subscribe();
-
 	
 	app.listen(3000, () => {
 		console.log("admin Listening on port 3000....");

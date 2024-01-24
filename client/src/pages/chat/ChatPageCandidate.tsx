@@ -66,7 +66,16 @@ const ChatPageCandidate = () => {
 	useEffect(() => {
 		// Listen for "selectedChatRoomMessages" events and update the selectedChatRoomMessages state
 		socket.on("receiveMessage", (message) => {
-			if (message.result.roomId.toString() === selectedChatRoom) {
+			console.log("inside receiveMessage");
+			console.log(
+				"message.result.roomId.toString()",
+				message.result.roomId.toString()
+			);
+			console.log("selectedChatRoom", selectedChatRoom);
+
+			if (message.result.roomId.toString() === selectedChatRoom?.id) {
+				console.log("setting setSelectedChatRoomMessages");
+
 				setSelectedChatRoomMessages([
 					...selectedChatRoomMessages,
 					message.result,
@@ -97,7 +106,7 @@ const ChatPageCandidate = () => {
 	const sendMessage = (message: string) => {
 		const messageToSend = {
 			senderId: candidateData.id,
-			roomId: selectedChatRoom,
+			roomId: selectedChatRoom.id,
 			textMessage: message,
 		};
 		console.log("--------sending message to socket---------");
@@ -105,7 +114,7 @@ const ChatPageCandidate = () => {
 		socket.emit("sendMessage", messageToSend);
 		console.log("--------sending message to socket---------");
 	};
-	
+
 	const handleChatRoomClick = async (room: any) => {
 		console.log("??????????????inside handleChatRoomClick room ", room);
 		setSelectedChatRoom(room);
@@ -173,7 +182,7 @@ const ChatPageCandidate = () => {
 												handleChatRoomClick(chatRoom)
 											} // Update the onClick handler
 											selected={
-												selectedChatRoom ===
+												selectedChatRoom.id ===
 												chatRoom?.id
 											} // Highlight the selected chat room
 										/>

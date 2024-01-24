@@ -33,6 +33,7 @@ const start = async () => {
 	const userCreatedEvent = new UserCreatedEventConsumer(kafkaClient);
 	const userUpdatedEvent = new UserUpdatedEventConsumer(kafkaClient);
 
+	
 	// await userUpdatedEvent.subscribe();
 	// await userCreatedEvent.subscribe();
 
