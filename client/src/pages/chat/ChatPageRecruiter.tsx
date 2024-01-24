@@ -66,7 +66,7 @@ const ChatPageRecruiter = () => {
 	useEffect(() => {
 		// Listen for "selectedChatRoomMessages" events and update the selectedChatRoomMessages state
 		socket.on("receiveMessage", (message) => {
-			if (message.result.roomId.toString() === selectedChatRoom) {
+			if (message.result.roomId.toString() === selectedChatRoom?.id) {
 				setSelectedChatRoomMessages([
 					...selectedChatRoomMessages,
 					message.result,
@@ -97,7 +97,7 @@ const ChatPageRecruiter = () => {
 	const sendMessage = (message: string) => {
 		const messageToSend = {
 			senderId: recruiterData.id,
-			roomId: selectedChatRoom,
+			roomId: selectedChatRoom.id,
 			textMessage: message,
 		};
 		console.log("--------sending message to socket---------");
@@ -170,7 +170,7 @@ const ChatPageRecruiter = () => {
 												handleChatRoomClick(chatRoom)
 											} // Update the onClick handler
 											selected={
-												selectedChatRoom ===
+												selectedChatRoom.id ===
 												chatRoom?.id
 											} // Highlight the selected chat room
 										/>

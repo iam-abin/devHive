@@ -134,6 +134,7 @@ export const onSocketConnection = (io: Server, socket: Socket) => {
 			const recipient: any = room?.users.filter(
 				(user) => user.toString() !== senderId
 			);
+			
 			const recipientData = await userRepository.findUserById(
 				recipient[0].toString()
 			);
@@ -142,6 +143,7 @@ export const onSocketConnection = (io: Server, socket: Socket) => {
 			console.log("recepeint from room ", recipient);
 
 			const user2: any = getUser(recipient[0].toString());
+			
 
 			const message = {
 				result,
@@ -151,11 +153,16 @@ export const onSocketConnection = (io: Server, socket: Socket) => {
 
 			console.log("after recepeint from room ", message);
 
+
 			if (user1?.socketId) {
+				console.log("inside user1 emit receiveMessage");
+				
 				io.to(user1.socketId).emit("receiveMessage", message);
 			}
 
 			if (user2?.socketId) {
+				console.log("inside user2 emit receiveMessage");
+
 				io.to(user2.socketId).emit("receiveMessage", message);
 			}
 		} catch (error) {
