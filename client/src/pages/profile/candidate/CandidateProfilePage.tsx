@@ -4,11 +4,13 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/reducer/reducer";
 import {
 	candidateGetProfileApi,
+	uploadCandidateImageProfileApi,
 	uploadCandidateResumeProfileApi,
 } from "../../../axios/apiMethods/profile-service/candidate";
 import { useNavigate } from "react-router-dom";
 import { notify } from "../../../utils/toastMessage";
 import { FaFacebookMessenger } from "react-icons/fa";
+import ImageFileUpload from "../../../components/upload/ImageFileUpload";
 
 const CandidateProfilePage: React.FC = () => {
 	const navigate = useNavigate();
@@ -26,37 +28,9 @@ const CandidateProfilePage: React.FC = () => {
 			const candidateProfile = await candidateGetProfileApi(id);
 			setCandidateProfileData(candidateProfile);
 		})();
-	}, [candidateData]);
+	}, []);
 
 	const handleResumeUpload = async (selectedFile: File) => {
-		// const fileChunkSize = 1024 * 1024; // 1 MB chunks (adjust as needed)
-		// const fileSize = selectedFile.size;
-		// const chunks = Math.ceil(fileSize / fileChunkSize);
-
-		// for (let i = 0; i < chunks; i++) {
-		// 	const start = i * fileChunkSize;
-		// 	const end = Math.min((i + 1) * fileChunkSize, fileSize);
-
-		// 	const chunk = selectedFile.slice(start, end);
-		// 	const formData = new FormData();
-		// 	formData.append("file", chunk);
-
-		// 	try {
-		// 		const response = await uploadCandidateResumeProfileApi(
-		// 			formData
-		// 		);
-		// 		console.log("resume image upload response", response);
-		// 		if (response.data) {
-		// 			// notify(response.data.message, "success");
-		// 			notify(response.message, "success");
-		// 			navigate("/candidate/profile");
-		// 		} else {
-		// 			notify("resume not uploaded", "error");
-		// 		}
-		// 	} catch (error) {
-		// 		console.error("Chunked upload error:", error);
-		// 	}
-		// }
 		try {
 			const formData = new FormData();
 			formData.append("file", selectedFile);
@@ -68,15 +42,37 @@ const CandidateProfilePage: React.FC = () => {
 			);
 			console.log("resume image upload response", response);
 			if (response.data) {
-				// notify(response.data.message, "success");
 				notify(response.message, "success");
-				navigate("/candidate/profile");
+				return response.data;
 			} else {
 				notify("resume not uploaded", "error");
 			}
 		} catch (error: any) {
 			// console.log("drrer",error);
 			// notify("file is size is > 1mb", "error");
+			notify(error.response.data.errors[0].message, "error");
+		}
+	};
+
+	const handleImageUpload = async (selectedFile: File) => {
+		try {
+			const formData = new FormData();
+			formData.append("file", selectedFile);
+
+			console.log("File uploaded:", selectedFile);
+			const response = await uploadCandidateImageProfileApi(
+				candidateData.id,
+				formData
+			);
+			console.log("resume image upload response", response);
+			if (response.data) {
+				notify(response.message, "success");
+				navigate("/candidate/profile");
+				return response.data;
+			} else {
+				notify("resume not uploaded", "error");
+			}
+		} catch (error: any) {
 			notify(error.response.data.errors[0].message, "error");
 		}
 	};
@@ -101,6 +97,9 @@ const CandidateProfilePage: React.FC = () => {
 		}
 	};
 
+	console.log("7777777777777777777777",candidateProfileData);
+	
+
 	return (
 		<div>
 			<div>
@@ -113,9 +112,14 @@ const CandidateProfilePage: React.FC = () => {
 						<div className="w-md mx-auto bg-white p-8 rounded shadow-md">
 							<div className="hero h-56 bg-base-200 relative">
 								<div className="hero-content flex-col  lg:flex-row-reverse">
+									{/* <div className="container mx-auto mt-8"> */}
+									<ImageFileUpload uploadImage = {handleImageUpload}/>
+									{/* </div> */}
+									
 									<img
-										src="https://daisyui.com/images/stock/photo-1635805737707-575885ab0820.jpg"
-										className="w-1/6 max-w-sm rounded-lg shadow-2xl"
+										src={candidateProfileData?.data
+											?.profile_image}
+										className="w-1/6 max-w-sm rounded-full shadow-2xl"
 										alt="CandidateProfilePage"
 									/>
 									<div className="flex flex-col items-start  lg:items-end">
@@ -130,16 +134,7 @@ const CandidateProfilePage: React.FC = () => {
 													?.about
 											}
 										</p>
-										<button
-											onClick={() =>
-												navigate(
-													`/candidate/edit-profile`
-												)
-											}
-											className="btn btn-primary absolute top-0 right-0 m-4"
-										>
-											Edit
-										</button>
+
 										{/* <div>
 											<FaFacebookMessenger
 												onClick={() =>
@@ -155,11 +150,21 @@ const CandidateProfilePage: React.FC = () => {
 							</div>
 
 							{/* Profile information */}
-							<div className="mt-8">
-								<h2 className="text-xl font-bold mb-2">
-									Profile Information
-								</h2>
-								<div className="flex flex-col w-full border-opacity-50 mt-3">
+							<div className="">
+								<div className="flex justify-between  items-center">
+									<h2 className="text-xl font-bold">
+										Profile Information
+									</h2>
+									<button
+										onClick={() =>
+											navigate(`/candidate/edit-profile`)
+										}
+										className="btn btn-primary  m-4"
+									>
+										Edit
+									</button>
+								</div>
+								<div className="flex flex-col w-full border-opacity-50 ">
 									<div className="grid h-12 pl-5 card bg-base-300 rounded-box items-center">
 										<div className="text-left">
 											Name:{" "}

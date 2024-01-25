@@ -7,6 +7,7 @@ const profileApiUrlConfig = {
 		`${CANDIDATE_PROFILE_URL}/viewProfile/${userId}`,
 	updateCandidateProfileUrl: `${CANDIDATE_PROFILE_URL}/updateProfile`,
 	uploadCandidateResumeUrl: `${CANDIDATE_PROFILE_URL}/uploadResume`,
+	uploadCandidateImageUrl: `${CANDIDATE_PROFILE_URL}/uploadProfilePic`,
 
 	// Recruiter
 	getgetRecruiterProfileUrl: (userId: string) =>

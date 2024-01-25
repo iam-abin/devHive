@@ -24,9 +24,15 @@ export = (dependencies: any)=>{
     };
 
 
-    const execute = (file: any)=>{
+    const execute = async (file: any)=>{
         const response: any = cloudinaryUpload(file)
-        return candidateProfileRepository.uploadResume(response?.secure_url)
+        let resumeUploaded = await candidateProfileRepository.uploadResume(response?.secure_url)
+        // if(resumeUploaded){
+            return response?.secure_url
+        // } else{
+            // return resumeUploaded
+        // }
+       
     }
 
     return { execute }

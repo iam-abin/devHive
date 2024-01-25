@@ -5,16 +5,14 @@ import { kafkaClient } from "../../config/kafka-connection";
 
 export = (dependencies: DependenciesData)=>{
 
-    const { useCases: { uploadProfilePicUseCase }} = dependencies
+    const { useCases: { uploadCandidateProfilePicUseCase }} = dependencies
 
     return async (req: Request, res: Response)=>{
-        const {userId, profile_image} = req.body;
-        console.log("in candidate upload profile pic controller data 1: ",profile_image);
+        const user = req.currentUserCandidate;
+        console.log("----------------------------------------------------------------------",req.currentUserCandidate);
         
-
-        const candidate = await uploadProfilePicUseCase(dependencies).execute({
-           userId, profile_image
-        });
+        console.log("in candidate upload resume controller data 1: req.file",req.file);
+        const candidate = await uploadCandidateProfilePicUseCase(dependencies).execute(user?.id ,req.file);
         console.log("in candidate upload profile pic controller data 2: ",candidate);
 
         const candidateProfileUpdatedEvent = new CandidateProfileUpdatedEventPublisher(kafkaClient)
@@ -34,7 +32,7 @@ export = (dependencies: DependenciesData)=>{
             userId: candidate?.userId,
         })
 
-
+        
 
         res.status(201).json({message: "profile image uploaded", data: candidate })
     };
