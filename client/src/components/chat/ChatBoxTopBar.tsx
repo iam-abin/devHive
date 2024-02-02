@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ChatBoxTopBar: React.FC<{ receiver: any }> = ({ receiver })=> {
+const ChatBoxTopBar: React.FC<{ receiver: any, isOnline: any }> = ({ receiver, isOnline })=> {
   return (
     <div>
       	<div className="card w-full bg-base-100 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] mb-1">
@@ -19,7 +19,7 @@ const ChatBoxTopBar: React.FC<{ receiver: any }> = ({ receiver })=> {
 				</div>
 				<div className="flex flex-row w-full justify-between">
 					<h5>{receiver}</h5>
-					<p>{true ? "ofline" : "online"}</p>
+					<p>{isOnline ? "online" : "offline"}</p>
 				</div>
 			</div>
 		</div>

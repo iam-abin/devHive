@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { notify } from "../../../utils/toastMessage";
 import { FaFacebookMessenger } from "react-icons/fa";
 import ImageFileUpload from "../../../components/upload/ImageFileUpload";
+import ProfileResumeDisplay from "../../../components/upload/ProfileResumeDisplay";
 
 const CandidateProfilePage: React.FC = () => {
 	const navigate = useNavigate();
@@ -97,8 +98,12 @@ const CandidateProfilePage: React.FC = () => {
 		}
 	};
 
-	console.log("7777777777777777777777",candidateProfileData);
-	
+	console.log("7777777777777777777777", candidateProfileData);
+
+	const hi = ()=>{
+
+		return ""
+	}
 
 	return (
 		<div>
@@ -113,12 +118,16 @@ const CandidateProfilePage: React.FC = () => {
 							<div className="hero h-56 bg-base-200 relative">
 								<div className="hero-content flex-col  lg:flex-row-reverse">
 									{/* <div className="container mx-auto mt-8"> */}
-									<ImageFileUpload uploadImage = {handleImageUpload}/>
+									<ImageFileUpload
+										uploadImage={handleImageUpload}
+									/>
 									{/* </div> */}
-									
+
 									<img
-										src={candidateProfileData?.data
-											?.profile_image}
+										src={
+											candidateProfileData?.data
+												?.profile_image
+										}
 										className="w-1/6 max-w-sm rounded-full shadow-2xl"
 										alt="CandidateProfilePage"
 									/>
@@ -241,8 +250,7 @@ const CandidateProfilePage: React.FC = () => {
 										<input
 											type="file"
 											name="image"
-											// accept=".pdf, .doc, .docx"
-											accept=".jpg , .jgeg, .png"
+											accept=".pdf, .doc, .docx"
 											className="border-2 border-gray-300 p-2 w-64"
 											onChange={handleFileChange}
 										/>
@@ -272,6 +280,10 @@ const CandidateProfilePage: React.FC = () => {
 								</div>
 								{/* Add more fields as needed */}
 								{/* ... */}
+							</div>
+
+							<div>
+							<ProfileResumeDisplay  resumeFile ={hi} onEditResume ={hi} onDeleteResume ={hi}  />
 							</div>
 
 							{/* Skills */}

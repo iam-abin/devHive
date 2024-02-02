@@ -19,7 +19,7 @@ export = (dependencies: any) => {
 
 			const uploadResult: { public_id: string, url: string} = await new Promise((resolve, reject) => {
 				const cloudinary_upload_stream = cloudinary.uploader.upload_stream(
-					{ folder: "devHive_files" },
+					{ folder: "devHive_Profile_Pics" },
 					(error, result: any) => {
 						if (error) {
 							console.error(error);

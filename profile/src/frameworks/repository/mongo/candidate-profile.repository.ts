@@ -46,7 +46,11 @@ export = {
 
 
 	uploadResume: async (id: string, url: string): Promise<any>=>{
-		const candidate = await CandidateProfileModel.findOneAndUpdate({ "_id": id }, { $set:{ resume: url }},  {new: true});
+		console.log("inside uploadResume repository id", id);
+		console.log("inside uploadResume repository url", url);
+		
+		const candidate = await CandidateProfileModel.findOneAndUpdate({ "userId": id }, { $set:{ profile_image: url }} ,  {new: true});
+		console.log("inside uploadResume repository after upload", candidate);
 		return candidate;
 	},
 
