@@ -17,9 +17,9 @@ export = (dependencies: any) => {
 				return; // Return or handle accordingly
 			}
 
-			const uploadResult = await new Promise((resolve, reject) => {
+			const uploadResult: { public_id: string, url: string} = await new Promise((resolve, reject) => {
 				const cloudinary_upload_stream = cloudinary.uploader.upload_stream(
-					{ folder: "devHive_files" },
+					{ folder: "devHive_Profile_Pics" },
 					(error, result: any) => {
 						if (error) {
 							console.error(error);
@@ -38,7 +38,10 @@ export = (dependencies: any) => {
 			});
 
 			// Call your repository method with the result
-			await candidateProfileRepository.uploadProfilePic(id, uploadResult);
+
+			console.log("inside upload profile pic usecase uploadresult ", uploadResult);
+			
+			return await candidateProfileRepository.uploadProfilePic(id, uploadResult?.url);
 		} catch (error) {
 			console.error(error);
 			// Handle the error appropriately

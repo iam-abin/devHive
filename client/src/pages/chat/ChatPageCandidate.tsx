@@ -66,12 +66,6 @@ const ChatPageCandidate = () => {
 	useEffect(() => {
 		// Listen for "selectedChatRoomMessages" events and update the selectedChatRoomMessages state
 		socket.on("receiveMessage", (message) => {
-			console.log("inside receiveMessage");
-			console.log(
-				"message.result.roomId.toString()",
-				message.result.roomId.toString()
-			);
-			console.log("selectedChatRoom", selectedChatRoom);
 
 			if (message.result.roomId.toString() === selectedChatRoom?.id) {
 				console.log("setting setSelectedChatRoomMessages");
@@ -95,31 +89,23 @@ const ChatPageCandidate = () => {
 		// 'selectedChatRoomMessages' changes
 	}, [selectedChatRoomMessages]);
 
-	useEffect(() => {
-		console.log("//////////get conversation useEffect");
-		socket.emit("createChatRoom", candidateData.id, recepientId);
-		// socket.on("getAllChatRooms", (rooms) => {
-		// 	setchatRooms(rooms);
-		// });
-	}, [selectedChatRoom]);
-
 	const sendMessage = (message: string) => {
 		const messageToSend = {
 			senderId: candidateData.id,
 			roomId: selectedChatRoom.id,
 			textMessage: message,
 		};
-		console.log("--------sending message to socket---------");
-		console.log(messageToSend);
+		// console.log("--------sending message to socket---------");
+		// console.log(messageToSend);
 		socket.emit("sendMessage", messageToSend);
-		console.log("--------sending message to socket---------");
+		// console.log("--------sending message to socket---------");
 	};
 
 	const handleChatRoomClick = async (room: any) => {
-		console.log("??????????????inside handleChatRoomClick room ", room);
+		// console.log("??????????????inside handleChatRoomClick room ", room);
 		setSelectedChatRoom(room);
 		const conversations = await getAConversationApi(room.id);
-		console.log("ccccccccccccccccccconversation", conversations);
+		// console.log("ccccccccccccccccccconversation", conversations);
 		setSelectedChatRoomMessages(conversations.data);
 	};
 
@@ -128,15 +114,19 @@ const ChatPageCandidate = () => {
 	console.log("selected chatRoom is --->>>", selectedChatRoom);
 
 	const isUserOnline = (chatRoom: any) => {
-		// console.log("isUserOnline ", chatRoom.users);
-		// console.log("candidate ", candidateData.id);
+		console.log("isUserOnline ", chatRoom.users);
+		console.log("candidate ", candidateData.id);
 
 		const otherValue = chatRoom.users.filter(
 			(value: string) => value !== candidateData.id
 		);
-		console.log("otherValue", otherValue);
 
-		return otherValue.length > 0;
+		for (let i = 0; i < onlineUsers.length; i++) {
+			if(onlineUsers[i].userId == otherValue){
+				return true
+			}
+		}
+		return false
 	};
 
 	const getReceiver = (chatRoom: any) => {
@@ -146,7 +136,6 @@ const ChatPageCandidate = () => {
 		const otherUser = chatRoom.users.filter(
 			(value: string) => value !== candidateData.id
 		);
-		console.log("otherValue", otherUser);
 
 		return otherUser;
 	};
@@ -182,7 +171,7 @@ const ChatPageCandidate = () => {
 												handleChatRoomClick(chatRoom)
 											} // Update the onClick handler
 											selected={
-												selectedChatRoom.id ===
+												selectedChatRoom?.id ===
 												chatRoom?.id
 											} // Highlight the selected chat room
 										/>
@@ -203,6 +192,7 @@ const ChatPageCandidate = () => {
 								<div>
 									<ChatBoxTopBar
 										// chatRoom={selectedChatRoom}
+										isOnline={isUserOnline(selectedChatRoom)}
 										receiver={getReceiver(selectedChatRoom)}
 									/>
 								</div>

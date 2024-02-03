@@ -11,7 +11,6 @@ import {
 } from "../../../axios/apiMethods/profile-service/candidate";
 import { notify } from "../../../utils/toastMessage";
 import FooterCandidate from "../../../components/candidate/FooterCandidate";
-import { updateRecruiterProfileApi } from "../../../axios/apiMethods/profile-service/recruiter";
 
 interface ProfileFormData {
 	name: string;

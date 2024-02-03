@@ -36,13 +36,21 @@ export = {
 	},
 
 	uploadProfilePic : async (id: string, url: string): Promise<any>=>{
-		const candidate = await CandidateProfileModel.updateOne({ "_id": id }, { $set:{ resume: url }});
+		console.log("inside uploadProfilePic repository id", id);
+		console.log("inside uploadProfilePic repository url", url);
+		
+		const candidate = await CandidateProfileModel.findOneAndUpdate({ "userId": id }, { $set:{ profile_image: url }} ,  {new: true});
+		console.log("inside uploadProfilePic repository after upload", candidate);
 		return candidate;
 	},
 
 
 	uploadResume: async (id: string, url: string): Promise<any>=>{
-		const candidate = await CandidateProfileModel.updateOne({ "_id": id }, { $set:{ profile_image: url }});
+		console.log("inside uploadResume repository id", id);
+		console.log("inside uploadResume repository url", url);
+		
+		const candidate = await CandidateProfileModel.findOneAndUpdate({ "userId": id }, { $set:{ profile_image: url }} ,  {new: true});
+		console.log("inside uploadResume repository after upload", candidate);
 		return candidate;
 	},
 

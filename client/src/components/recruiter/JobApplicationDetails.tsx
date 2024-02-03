@@ -6,6 +6,8 @@ import StatusChangeForm from "../dropDown/StatusChangeForm";
 import { changeJobApplicationStatusApi } from "../../axios/apiMethods/jobs-service/jobs";
 import { notify } from "../../utils/toastMessage";
 import Swal from "sweetalert2";
+import { formatDate } from "../../utils/date-format";
+import { formatCurrency } from "../../utils/currency-format";
 
 const JobApplicationDetails: React.FC<{
 	jobApplicationDetails: any;
@@ -24,14 +26,17 @@ const JobApplicationDetails: React.FC<{
 		// Do something specific for the "recruiter" page
 		console.log("This is a recruiter page");
 	}
-	console.log(jobApplicationDetails, "in job --recruiter --application details component");
+	console.log(
+		jobApplicationDetails,
+		"in job --recruiter --application details component"
+	);
 
-	const navigate = useNavigate()
-	const handleViewRecruiter = ()=>{
+	const navigate = useNavigate();
+	const handleViewRecruiter = () => {
 		console.log("clicked ha");
-		
-		navigate('/candidate/recruiter-profile')
-	}
+
+		navigate("/candidate/recruiter-profile");
+	};
 
 	const handleChangeStatus = async (applicationStatus: string) => {
 		console.log("handleChangeapplicationStatus ", applicationStatus);
@@ -91,9 +96,10 @@ const JobApplicationDetails: React.FC<{
 								Posted on :
 								<p>
 									{jobApplicationDetails
-										? new Date(
-												jobApplicationDetails?.jobId?.createdAt
-										  ).toLocaleDateString()
+										? formatDate(
+												jobApplicationDetails?.jobId
+													?.createdAt
+										  )
 										: "Loading..."}
 								</p>
 							</div>
@@ -105,7 +111,8 @@ const JobApplicationDetails: React.FC<{
 							</h2>
 							<p>
 								{jobApplicationDetails
-									? jobApplicationDetails?.jobId?.job_descriptions
+									? jobApplicationDetails?.jobId
+											?.job_descriptions
 									: "Loading..."}
 							</p>
 						</div>
@@ -117,7 +124,8 @@ const JobApplicationDetails: React.FC<{
 										Skills Required
 									</h2>
 									<ul className="list-disc pl-5">
-										{jobApplicationDetails?.jobId?.skills_required ? (
+										{jobApplicationDetails?.jobId
+											?.skills_required ? (
 											jobApplicationDetails?.jobId?.skills_required.map(
 												(
 													skill: string,
@@ -135,14 +143,16 @@ const JobApplicationDetails: React.FC<{
 						</div>
 
 						{jobApplicationDetails &&
-							jobApplicationDetails?.jobId?.education_required && (
+							jobApplicationDetails?.jobId
+								?.education_required && (
 								<div className="mb-4">
 									<h2 className="text-xl font-semibold mb-2">
 										Education Required
 									</h2>
 									<p>
 										{
-											jobApplicationDetails?.jobId?.education_required
+											jobApplicationDetails?.jobId
+												?.education_required
 										}
 									</p>
 								</div>
@@ -156,23 +166,34 @@ const JobApplicationDetails: React.FC<{
 									</h2>
 									<p>
 										{
-											jobApplicationDetails?.jobId?.recruiterId
+											jobApplicationDetails?.jobId
+												?.recruiterId
 										}
 									</p>
-									{isCandidatePage?<button className="btn bg-yellow-200" onClick={handleViewRecruiter}>view recruiter</button>:""}
-									
+									{isCandidatePage ? (
+										<button
+											className="btn bg-yellow-200"
+											onClick={handleViewRecruiter}
+										>
+											view recruiter
+										</button>
+									) : (
+										""
+									)}
 								</div>
 							)}
 
 						{jobApplicationDetails &&
-							jobApplicationDetails?.jobId?.experience_required && (
+							jobApplicationDetails?.jobId
+								?.experience_required && (
 								<div className="mb-4">
 									<h2 className="text-xl font-semibold mb-2">
 										Experience required
 									</h2>
 									<p>
 										{
-											jobApplicationDetails?.jobId?.experience_required
+											jobApplicationDetails?.jobId
+												?.experience_required
 										}
 									</p>
 								</div>
@@ -185,7 +206,11 @@ const JobApplicationDetails: React.FC<{
 										Deadline
 									</h2>
 									<p>
-										{jobApplicationDetails?.jobId?.deadline}
+										{formatDate(
+											jobApplicationDetails?.jobId
+												?.deadline
+										)}
+										{/* {formatDate(jobApplicationDetails?.jobId?.deadline)} */}
 									</p>
 								</div>
 							)}
@@ -198,21 +223,24 @@ const JobApplicationDetails: React.FC<{
 									</h2>
 									<p>
 										{
-											jobApplicationDetails?.jobId?.employment_type
+											jobApplicationDetails?.jobId
+												?.employment_type
 										}
 									</p>
 								</div>
 							)}
 
 						{jobApplicationDetails &&
-							jobApplicationDetails?.jobId?.available_position && (
+							jobApplicationDetails?.jobId
+								?.available_position && (
 								<div className="mb-4">
 									<h2 className="text-xl font-semibold mb-2">
 										Available position
 									</h2>
 									<p>
 										{
-											jobApplicationDetails?.jobId?.available_position
+											jobApplicationDetails?.jobId
+												?.available_position
 										}
 									</p>
 								</div>
@@ -223,13 +251,12 @@ const JobApplicationDetails: React.FC<{
 								Salary Range
 							</h2>
 							<p>
-								₹
 								{jobApplicationDetails
-									? jobApplicationDetails?.jobId?.salary_min
+									? formatCurrency(jobApplicationDetails?.jobId?.salary_min)
 									: "Loading..."}{" "}
-								- ₹
+								- 
 								{jobApplicationDetails
-									? jobApplicationDetails?.jobId?.salary_max
+									? formatCurrency(jobApplicationDetails?.jobId?.salary_max)
 									: "Loading..."}
 							</p>
 						</div>
@@ -250,8 +277,12 @@ const JobApplicationDetails: React.FC<{
 												? "badge badge-success gap-2 w-24"
 												: "badge badge-error gap-2 w-24"
 										} `}
-									>{jobApplicationDetails?.applicationStatus}</div>
-								) }
+									>
+										{
+											jobApplicationDetails?.applicationStatus
+										}
+									</div>
+								)}
 							</div>
 						)}
 					</div>

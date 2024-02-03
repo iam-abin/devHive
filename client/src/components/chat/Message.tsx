@@ -1,4 +1,5 @@
 import React from "react";
+import { formatDateWithTime } from "../../utils/date-format-with-time";
 
 const Message: React.FC<{ message: any; currentUserId: string }> = ({
 	message,
@@ -17,7 +18,7 @@ const Message: React.FC<{ message: any; currentUserId: string }> = ({
 						</div>
 					</div>
 					<div className="chat-header">
-						<time className="text-xs opacity-50">{message.createdAt}</time>
+						<time className="text-xs opacity-50">{formatDateWithTime(message.createdAt)}</time>
 					</div>
 					<div className="chat-bubble shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px]">
 						{message.textMessage}
@@ -36,7 +37,7 @@ const Message: React.FC<{ message: any; currentUserId: string }> = ({
 					</div>
 					<div className="chat-header">
 						<time className="text-xs opacity-50">
-							{message.createdAt}
+							{formatDateWithTime(message.createdAt)}
 						</time>
 					</div>
 					<div className="chat-bubble shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] whitespace-normal">

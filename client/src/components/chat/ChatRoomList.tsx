@@ -17,9 +17,14 @@ const ChatRoomList: React.FC<ChatRoomListProps> = ({
 	console.log("inside chatRoomList", selected);
 
 	return (
-		<div onClick={onClick} className={`card max-w-96  ${
-			selected ===true ? 'bg-green-300  hover:bg-green-400' : 'bg-base-100 '
-		  } shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] mb-1 hover:bg-gray-200`}>
+		<div
+			onClick={onClick}
+			className={`card max-w-96  ${
+				selected === true
+					? "bg-green-300  hover:bg-green-400"
+					: "bg-base-100 "
+			} shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] mb-1 hover:bg-gray-200`}
+		>
 			<div className="flex flex-row p-4 gap-3 items-center ">
 				<div
 					tabIndex={0}
@@ -36,7 +41,14 @@ const ChatRoomList: React.FC<ChatRoomListProps> = ({
 				{/* <div className="flex flex-row w-full justify-between"> */}
 				<div className="flex flex-col w-full justify-between">
 					<h5>{receiver}</h5>
-					<p>{isOnline ? "online" : "ofline"}</p>
+					<span className="flex flex-row items-center">
+						<span
+							className={`${
+								isOnline ? "bg-green-500" : "bg-red-500"
+							} w-4 h-4 rounded-full mr-2`}
+						></span>
+						<p>{isOnline ? "online" : "ofline"}</p>
+					</span>
 				</div>
 			</div>
 		</div>
