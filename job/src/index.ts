@@ -2,6 +2,8 @@ import { connectDB } from "./config/db";
 import { app } from "./frameworks/express/app";
 import { kafkaClient } from "./config/kafka-connection";
 import { jobUpdatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/job-updated-consumer";
+import { UserCreatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/user-created-consumer";
+import { UserUpdatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/user-updated-consumer";
 
 const start = async () => {
 	console.log("Job service Starting up....");
@@ -25,6 +27,9 @@ const start = async () => {
 	await connectDB();
 
 	// it is used to listen to incomming message from kafka topics
+	const userCreatedEvent = new UserCreatedEventConsumer(kafkaClient);
+	const userUpdatedEvent = new UserUpdatedEventConsumer(kafkaClient);
+
 	const jobUpdatedEvent = new jobUpdatedEventConsumer(kafkaClient);
 	await jobUpdatedEvent.subscribe();
 
@@ -33,9 +38,13 @@ const start = async () => {
 	})
 		.on("error", async () => {
 			await jobUpdatedEvent.disconnect();
+			await userCreatedEvent.disconnect();
+			await userUpdatedEvent.disconnect();
 		})
 		.on("close", async () => {
 			await jobUpdatedEvent.disconnect();
+			await userCreatedEvent.disconnect();
+			await userUpdatedEvent.disconnect();
 		});
 };
 

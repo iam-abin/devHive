@@ -1,10 +1,4 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import Swal from "sweetalert2";
-import { createJobApi } from "../../axios/apiMethods/jobs-service/jobs";
-import { useSelector } from "react-redux";
-import { RootState } from "../../redux/reducer/reducer";
-import { useNavigate } from "react-router-dom";
-import { notify } from "../../utils/toastMessage";
 
 interface JobFormData {
 	title: string;
@@ -22,45 +16,11 @@ interface JobFormData {
 	deadline: string;
 }
 
-function CreateJobForm() {
-	const recruiterData: any = useSelector(
-		(state: RootState) => state.recruiterData.data
-	);
-
-	const navigate = useNavigate();
-	
-
-	const handleSubmit = async (jobData: JobFormData) => {
-		try {
-			const response = await createJobApi(jobData);
-
-			console.log("Hello");
-
-			notify(response.message, "success");
-			navigate("/recruiter/all-jobs");
-		} catch (error: any) {
-			notify(error.response.data.errors[0].message, "error");
-		}
-	};
-
-	const initialJobValues: JobFormData = {
-		title: "",
-		recruiterId: "",
-		// companyId: "",
-		job_descriptions: "",
-		skills_required: [],
-		available_position: 0,
-		experience_required: "",
-		education_required: "",
-		location: "",
-		employment_type: "full-time",
-		salary_min: 0,
-		salary_max: 0,
-		deadline: "",
-	};
-
-	//   const jobCreationSchema: /* Define your validation schema here */ = /* ... */;
-
+const CreateJobForm: React.FC<{
+	initialJobValues: JobFormData;
+	handleSubmit: any;
+	recruiterData: any;
+}> = ({ initialJobValues, handleSubmit, recruiterData }) => {
 	return (
 		<Formik
 			initialValues={initialJobValues}
@@ -429,6 +389,6 @@ function CreateJobForm() {
 			}}
 		</Formik>
 	);
-}
+};
 
 export default CreateJobForm;
