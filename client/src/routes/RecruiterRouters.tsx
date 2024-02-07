@@ -1,11 +1,12 @@
 import { Navigate, Route, Routes } from "react-router-dom"
 
-import { useSelector } from "react-redux"
-import { RootState } from "../redux/reducer/reducer"
-
-
 import { lazy, Suspense } from "react";
+import { useSelector } from "react-redux"
+
+import { RootState } from "../redux/reducer/reducer"
 import Loading from "../components/loading/Loading";
+import NotFound from "../pages/Error/NotFound";
+
 
 
 const RecruiterHomePage = lazy(()=> import("../pages/home/RecruiterHomePage"))
@@ -66,7 +67,7 @@ function RecruiterRouters() {
 				<Route path="/application-details/:jobApplicationId" element={isRecruiterLoggedIn?<JobApplicationDetailsPage />:<Navigate to={"/recruiter/signin"} />} />
 				<Route path="viewCandidateProfileDetails/:candidateId" element={isRecruiterLoggedIn?<CandidateProfileDetailsPage />:<Navigate to={"/recruiter/signin"} />} />
 				<Route path="/chat/:recepientId" element={isRecruiterLoggedIn?<ChatPageRecruiter />:<Navigate to={"/recruiter/signin"} />} />
-				{/* <Route path="/:id/verifyEmail/:token" element={<EmailVerifyRecruiter/>}/> */}
+				<Route path="*" element={<NotFound url="/recruiter" />} />
 			</Routes>
 		</Suspense>
     </>

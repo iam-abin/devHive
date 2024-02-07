@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-// import SideNavBar from "../../components/admin/SideNavBar";
 import TableComponent from "../../../components/table/TableComponent";
 import {
 	blockUnblockRecruiterApi,
@@ -8,6 +7,7 @@ import {
 import { notify } from "../../../utils/toastMessage";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+
 interface RecruiterInterface {
 	id: string;
 	name: string;
@@ -142,7 +142,7 @@ function RecruiterManagementPage() {
 
 
 	return (
-		<div className="text-center mx-24">
+		<div className="text-center mx-10">
 			{/* <SideNavBar /> */}
 			<h1 className="font-semibold text-5xl mt-4 mb-10">
 				Recruiters Management

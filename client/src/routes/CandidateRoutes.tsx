@@ -1,13 +1,13 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 
-import { RootState } from "../redux/reducer/reducer";
+import { lazy, Suspense } from "react";
 import { useSelector } from "react-redux";
 
-import { lazy, Suspense } from "react";
+import { RootState } from "../redux/reducer/reducer";
 import Loading from "../components/loading/Loading";
+import NotFound from "../pages/Error/NotFound";
 
 
-// import LandingPage from "../pages/landing/LandingPage";
 const CandidateSigninPage = lazy(()=> import("../pages/auth-pages/signin/CandidateSigninPage"))
 const CandidateSignupPage = lazy(()=> import("../pages/auth-pages/signup/CandidateSignupPage"))
 const LandingPage = lazy(()=> import("../pages/landing/LandingPage"))
@@ -64,6 +64,7 @@ function CandidateRoutes() {
 					{/* <Route path="/applied-jobs-details/:jobId" element={isCandidateLoggedIn?<JobDetailsPage />:<Navigate to={"/candidate/signin"} />} /> */}
 					<Route path="/recruiter-profile" element={isCandidateLoggedIn? <RecruiterProfilePage />: <Navigate to={"/candidate/signin"} />} />
 					<Route path="/chat/:recepientId" element={isCandidateLoggedIn?<ChatPageCandidate />:<Navigate to={"/candidate/signin"} />} />
+					<Route path="*" element={<NotFound url="/candidate" />} />
 				</Routes>
 				
 			</Suspense>

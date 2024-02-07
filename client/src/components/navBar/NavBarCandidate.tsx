@@ -3,7 +3,6 @@ import { RootState } from "../../redux/reducer/reducer";
 import { useDispatch, useSelector } from "react-redux";
 import { clearCandidate } from "../../redux/slice/candidateSlice/candidateDataSlice";
 import { candidateSignoutApi } from "../../axios/apiMethods/auth-service/candidateAuth";
-// import { candidateSignoutApi } from "../../axios/admin2/auth/candidateAuth";
 import Swal from "sweetalert2";
 import { notify } from "../../utils/toastMessage";
 

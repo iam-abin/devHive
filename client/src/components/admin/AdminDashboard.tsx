@@ -7,7 +7,7 @@ import companies from "../../assets/companies.svg";
 import candidates from "../../assets/candidates.svg";
 import membership from "../../assets/membership.svg";
 import logout from "../../assets/logout.svg";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { adminSignoutApi } from "../../axios/apiMethods/auth-service/adminAuth"; 
 import Swal from "sweetalert2";
@@ -107,8 +107,9 @@ function AdminDashboard() {
 					})}
 				</ul>
 			</div>
+			{/* right side */}
 			<div className="p-7 text-2xl flex-1 font-semibold bg-red-300 h-screen">
-				<h1>Home page</h1>
+				{<Outlet />}
 			</div>
 		</div>
 	);
