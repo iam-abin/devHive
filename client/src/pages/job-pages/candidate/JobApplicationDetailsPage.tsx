@@ -5,7 +5,7 @@ import {
 } from "../../../axios/apiMethods/jobs-service/jobs";
 import { useNavigate, useParams } from "react-router-dom";
 import JobApplicationDetails from "../../../components/recruiter/JobApplicationDetails";
-import NavBarCandidate from "../../../components/navBar/NavBarCandidate";
+import TopNavBarCandidate from "../../../components/navBar/TopNavBarCandidate";
 
 function JobApplicationDetailsPage() {
 	const [jobApplicationDetails, setJobApplicationDetails] =
@@ -38,7 +38,7 @@ function JobApplicationDetailsPage() {
 	}, [jobApplicationId]);
 	return (
 		<div>
-			<NavBarCandidate />
+			<TopNavBarCandidate />
 			<JobApplicationDetails
 				jobApplicationDetails={jobApplicationDetails}
 				handleChangeApplicationStatus={undefined}

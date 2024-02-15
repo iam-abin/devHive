@@ -1,7 +1,7 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { notify } from '../../../utils/toastMessage';
+import { notify } from '../../utils/toastMessage';
 
 interface OtpFromSignupProps {
     email?: string;

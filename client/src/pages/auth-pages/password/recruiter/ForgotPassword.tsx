@@ -3,7 +3,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { notify } from "../../../../utils/toastMessage";
-import ForgotResetPasswordForm from "../../../../components/auth-components/password/ForgotResetPasswordForm";
+import ForgotResetPasswordForm from "../../../../components/form/ForgotResetPasswordForm";
 import {
 	setLoaded,
 	setLoading,

@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { notify } from "../../../../utils/toastMessage";
 import { RootState } from "../../../../redux/reducer/reducer";
 import Loading from "../../../../components/loading/Loading";
-import OtpEnterForm from "../../../../components/auth-components/otp/otpEnterForm";
+import OtpEnterForm from "../../../../components/form/otpEnterForm";
 import { verifyResetPasswordOtpRecruiterApi } from "../../../../axios/apiMethods/auth-service/recruiterAuth";
 
 function OtpFormResetPassword() {

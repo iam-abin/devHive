@@ -12,7 +12,7 @@ const NotFound: React.FC<{ url: string }> = ({ url }) => {
 						</h5>
 						<p className="w-96 text-center">
 							The page you are been looking for might have been
-							removed had its name changed or is temporarily
+							removed or its name changed or is temporarily
 							unavailable
 						</p>
 						<Link

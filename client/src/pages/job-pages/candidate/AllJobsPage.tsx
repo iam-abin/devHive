@@ -1,6 +1,6 @@
 import React from "react";
-import HeaderCandidate from "../../../components/navBar/NavBarCandidate";
-import FooterCandidate from "../../../components/candidate/FooterCandidate";
+import TopNavBarCandidate from "../../../components/navBar/TopNavBarCandidate";
+// import FooterCandidate from "../../../components/candidate/FooterCandidate";
 
 import { useEffect, useState } from "react";
 import { getAllJobsApi } from "../../../axios/apiMethods/jobs-service/jobs";
@@ -50,7 +50,6 @@ function AllJobsPage() {
 
 	return (
 		<div>
-			<HeaderCandidate />
 			<div className="container mx-auto my-8">
 				<div className="mb-4 flex justify-end">
 					<input
@@ -61,17 +60,17 @@ function AllJobsPage() {
 					/>
 				</div>
 				<div className="mx-28">
-        {filteredJobs.map(
-					(job: any) =>
-						job.isActive && (
-							<JobCardAllJobs
-								job={job}
-								handleView={handleView}
-								formatDateFn={formatDate}
-							/>
-						)
-				)}
-        </div>
+					{filteredJobs.map(
+						(job: any) =>
+							job.isActive && (
+								<JobCardAllJobs
+									job={job}
+									handleView={handleView}
+									formatDateFn={formatDate}
+								/>
+							)
+					)}
+				</div>
 				<div>
 					<Paginate
 						pageCount={pageCount}
@@ -79,7 +78,6 @@ function AllJobsPage() {
 					/>
 				</div>
 			</div>
-			<FooterCandidate />
 		</div>
 	);
 }

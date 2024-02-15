@@ -34,20 +34,20 @@ const start = async () => {
 	const userUpdatedEvent = new UserUpdatedEventConsumer(kafkaClient);
 
 	
-	await userUpdatedEvent.subscribe();
-	await userCreatedEvent.subscribe();
+	// await userUpdatedEvent.subscribe();
+	// await userCreatedEvent.subscribe();
 
 	httpServer.listen(3000, () => {
 		console.log("chat service Listening on port 3000....");
 	})
-		.on("error", async () => {
-			await userUpdatedEvent.disconnect();
-			await userCreatedEvent.disconnect();
-		})
-		.on("close", async () => {
-			await userUpdatedEvent.disconnect();
-			await userCreatedEvent.disconnect();
-		});
+		// .on("error", async () => {
+		// 	await userUpdatedEvent.disconnect();
+		// 	await userCreatedEvent.disconnect();
+		// })
+		// .on("close", async () => {
+		// 	await userUpdatedEvent.disconnect();
+		// 	await userCreatedEvent.disconnect();
+		// });
 };
 
 start();

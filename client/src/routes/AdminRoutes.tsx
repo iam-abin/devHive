@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 import { RootState } from "../redux/reducer/reducer";
 import Loading from "../components/loading/Loading";
 
-
 import AdminLayout from "../pages/layout/AdminLayout";
 import NotFound from "../pages/Error/NotFound";
 
@@ -13,10 +12,10 @@ const AdminSigninPage = lazy(
 	() => import("../pages/auth-pages/signin/AdminSigninPage")
 );
 const CandidateManagementPage = lazy(
-	() => import("../pages/admin/candidteManagement/CandidatesListPage")
+	() => import("../pages/admin/CandidatesListPage")
 );
 const RecruiterManagementPage = lazy(
-	() => import("../pages/admin/recruiterManagement/RecruitersListPage")
+	() => import("../pages/admin/RecruitersListPage")
 );
 const JobsManagementPage = lazy(
 	() => import("../pages/job-pages/admin/JobsListPage")
@@ -125,7 +124,7 @@ function AdminRoutes() {
 							}
 						/>
 					</Route>
-					<Route path="*" element={<NotFound url="/admin" />} />
+					<Route path="*" element={<NotFound url={"/admin"} />} />
 				</Routes>
 			</Suspense>
 		</>

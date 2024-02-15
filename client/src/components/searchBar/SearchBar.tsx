@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/reducer/reducer";
+import { useDispatch } from "react-redux";
 import { filterJobsApi, getJobFieldsValuesApi } from "../../axios/apiMethods/jobs-service/jobs";
 import { setFilteredJobs } from "../../redux/slice/job/filteredJobsSlice";
 

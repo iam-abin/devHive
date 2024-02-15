@@ -23,14 +23,12 @@ app.use(morgan("dev"));
 
 // app.use(express.json({ limit: '500mb' })); // Set the maximum allowed request body size
 // app.use(express.urlencoded({ extended: true }));
-console.log("before body parser");
 
 
 // Set a higher limit for file uploads
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 
-console.log("After body parser");
 
 
 // Routes

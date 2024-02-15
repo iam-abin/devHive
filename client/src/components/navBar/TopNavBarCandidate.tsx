@@ -1,3 +1,4 @@
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { RootState } from "../../redux/reducer/reducer";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,17 +7,13 @@ import { candidateSignoutApi } from "../../axios/apiMethods/auth-service/candida
 import Swal from "sweetalert2";
 import { notify } from "../../utils/toastMessage";
 
-function NavBarCandidate() {
+const TopNavBarCandidate: React.FC<{ menus?: any }> = ({ menus }) => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
 	const candidate: any = useSelector((state: RootState) => {
 		return state.candidateData.data;
 	});
-
-	// const candidate = useSelector((state: RootState) => {
-	// 	return state.candidateData.candidate;
-	// });
 
 	const handleCandidateLogout = async () => {
 		Swal.fire({
@@ -53,7 +50,7 @@ function NavBarCandidate() {
 					</a>
 				</div>
 				{candidate && candidate?.name}
-				{candidate ? (
+				{candidate && menus ? (
 					<div className="flex-none ">
 						<div className="dropdown dropdown-end">
 							<div
@@ -72,7 +69,8 @@ function NavBarCandidate() {
 								tabIndex={0}
 								className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
 							>
-								<li
+								{/* --------------- */}
+								{/* <li
 									onClick={() =>
 										navigate("/candidate/all-jobs")
 									}
@@ -93,11 +91,13 @@ function NavBarCandidate() {
 								>
 									<a>Profile</a>
 								</li>
-								<li onClick={() =>
-											navigate(
-												`/candidate/chat` // Add the path to your chat page
-											)
-										}>
+								<li
+									onClick={() =>
+										navigate(
+											`/candidate/chat` // Add the path to your chat page
+										)
+									}
+								>
 									<a>Chat</a>
 								</li>
 								<li
@@ -108,7 +108,21 @@ function NavBarCandidate() {
 									}
 								>
 									<a>Reset Password</a>
-								</li>
+								</li> */}
+								{/* --------- */}
+								{/* +++++++++ */}
+								{menus.map((menu: any, index: number) => {
+									return (
+										<li
+											key={index}
+										>
+											<Link to={menu.to}>
+												{menu.title}
+											</Link>
+										</li>
+									);
+								})}
+								{/* +++++++++ */}
 								<li onClick={handleCandidateLogout}>
 									<a>Logout</a>
 								</li>
@@ -123,6 +137,6 @@ function NavBarCandidate() {
 			</nav>
 		</>
 	);
-}
+};
 
-export default NavBarCandidate;
+export default TopNavBarCandidate;

@@ -6,7 +6,7 @@ import { setCandidate } from "../../../../redux/slice/candidateSlice/candidateDa
 import { notify } from "../../../../utils/toastMessage";
 import { RootState } from "../../../../redux/reducer/reducer";
 import Loading from "../../../../components/loading/Loading";
-import OtpEnterForm from "../../../../components/auth-components/otp/otpEnterForm";
+import OtpEnterForm from "../../../../components/form/otpEnterForm";
 
 function OtpFormPageSignup() {
 	const dispatch = useDispatch();

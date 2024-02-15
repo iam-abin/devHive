@@ -1,18 +1,18 @@
+import Swal from "sweetalert2";
+import { Outlet } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+
 import dashboard from "../../assets/dashboard.svg";
 import finance from "../../assets/finance.svg";
 import companies from "../../assets/companies.svg";
 import candidates from "../../assets/candidates.svg";
 import membership from "../../assets/membership.svg";
 import logout from "../../assets/logout.svg";
-import LeftNavBarAdmin from "../../components/navBar/LeftNavBarAdmin";
-import { adminSignoutApi } from "../../axios/apiMethods/auth-service/adminAuth";
-import Swal from "sweetalert2";
 import { clearAdmin } from "../../redux/slice/adminSlice/adminDataSlice";
+import { adminSignoutApi } from "../../axios/apiMethods/auth-service/adminAuth";
 import { notify } from "../../utils/toastMessage";
-import { Outlet } from "react-router-dom";
-
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import LeftNavBarAdmin from "../../components/navBar/LeftNavBarAdmin";
 
 const AdminLayout = () => {
 	const dispatch = useDispatch();
@@ -50,10 +50,10 @@ const AdminLayout = () => {
 	];
 	return (
 		<div className="flex">
-			{/* left side */}
+			{/* left-side */}
 			<LeftNavBarAdmin menus={menus} />
 
-			{/* right side */}
+			{/* right-side */}
 			<div className="p-4 text-2xl overflow-auto flex-1 font-semibold bg-red-300 h-screen">
 				{<Outlet />}
 			</div>

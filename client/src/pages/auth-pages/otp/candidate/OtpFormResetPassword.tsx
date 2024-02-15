@@ -8,7 +8,7 @@ import { verifyResetPasswordOtpCandidateApi } from "../../../../axios/apiMethods
 import { notify } from "../../../../utils/toastMessage";
 import { RootState } from "../../../../redux/reducer/reducer";
 import Loading from "../../../../components/loading/Loading";
-import OtpEnterForm from "../../../../components/auth-components/otp/otpEnterForm";
+import OtpEnterForm from "../../../../components/form/otpEnterForm";
 
 function OtpFormResetPassword() {
 	const dispatch = useDispatch();

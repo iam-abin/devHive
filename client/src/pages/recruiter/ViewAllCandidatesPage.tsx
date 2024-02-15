@@ -16,7 +16,6 @@ interface CandidateInterface {
 function AllCandidatesPage() {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [pageCount, setpageCount] = useState(1);
-	const [jobs, setJobs] = useState([]);
 
 	const navigate = useNavigate();
 	const [candidatesData, setCandidatesData] = useState<CandidateInterface[]>(
@@ -32,63 +31,38 @@ function AllCandidatesPage() {
 			// dispatch(setLoading());
 			const candidates = await getAllCandidatesProfilesApi(currentPage);
 			console.log("candidates", candidates);
-			setJobs(candidates.data);
+			setCandidatesData(candidates.data);
 			setpageCount(candidates.totalNumberOfPages);
 			// dispatch(setLoaded());
 		})();
 	}, [currentPage]);
 
-	const viewProfileDetails = async (userId: string) => {
-		console.log("in viewProfileDetails fn ", userId);
-		navigate(`/admin/candidate/viewProfileDetails/${userId}`);
+	const viewProfileDetails = async (candidateId: string) => {
+		console.log(
+			"in view candidate profile details candidate id is:",
+			candidateId
+		);
+
+		// console.log("in viewProfileDetails fn ", candidateId);
+		navigate(`/recruiter/viewCandidateProfileDetails/${candidateId}`);
 	};
-
-	// const handleBlockUnblock = async (userId: string, isActive: boolean) => {
-	// 	Swal.fire({
-	// 		title: `Do you want to ${
-	// 			isActive ? "block" : "unblock"
-	// 		} this Candidate?`,
-	// 		text: "Are you sure!",
-	// 		icon: "warning",
-	// 		showCancelButton: true,
-	// 		confirmButtonColor: "#3085d6",
-	// 		cancelButtonColor: "#d33",
-	// 		confirmButtonText: "Yes, Block",
-	// 	}).then(async (result) => {
-	// 		if (result.isConfirmed) {
-	// 			const updatedCandidate = await blockUnblockCandidateApi(userId);
-	// 			if (updatedCandidate) {
-	// 				notify(updatedCandidate.message, "success");
-	// 			}
-
-	// 			const candidates = candidatesData.map((candidate) => {
-	// 				if (candidate.userId === userId) {
-	// 					return {
-	// 						...candidate,
-	// 						isActive: updatedCandidate.data.isActive,
-	// 					};
-	// 				}
-
-	// 				return candidate;
-	// 			});
-
-	// 			setCandidatesData(candidates);
-	// 		}
-	// 	});
-	// };
 
 	return (
 		<div>
 			<div className="text-center mx-24">
 				{/* <SideNavBar /> */}
-				<h1 className="font-semibold text-5xl mt-4 mb-10">
-					Candidates Management
-				</h1>
 				{/* <TableComponent columns={columns} data={candidatesData} /> */}
-				<CandidateCard
-					candidate={candidatesData}
-					handleViewCandidate={viewProfileDetails}
-				/>
+				{candidatesData.length <= 0 ? (
+					<div>No Candidates are registered yet</div>
+				) : (
+					candidatesData.map((candidate) => (
+						<CandidateCard
+							key={candidate.id}
+							candidate={candidate}
+							handleViewCandidate={viewProfileDetails}
+						/>
+					))
+				)}
 			</div>
 			<Paginate
 				pageCount={pageCount}

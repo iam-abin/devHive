@@ -1,9 +1,6 @@
 import React from "react";
 
-function DropDownSelect({ firstItem, jobs }: { firstItem: string; jobs: any }) {
-	console.log(firstItem);
-	console.log(typeof firstItem);
-
+const DropDownSelect: React.FC<{ firstItem: string; jobs: any }> = ({ firstItem, jobs }) => {
 	return (
 		<>
 			<select className="select select-primary text-center font-semibold rounded-md py-3 max-w-sm">
@@ -18,6 +15,6 @@ function DropDownSelect({ firstItem, jobs }: { firstItem: string; jobs: any }) {
 			</select>
 		</>
 	);
-}
+};
 
 export default DropDownSelect;

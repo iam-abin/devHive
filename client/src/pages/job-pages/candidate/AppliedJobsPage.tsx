@@ -6,8 +6,8 @@ import { RootState } from "../../../redux/reducer/reducer";
 import { useSelector } from "react-redux";
 import JobCard from "../../../components/cards/JobCard";
 import JobAppliedCard from "../../../components/cards/JobAppliedCard";
-import NavBarCandidate from "../../../components/navBar/NavBarCandidate";
-import FooterCandidate from "../../../components/candidate/FooterCandidate";
+import TopNavBarCandidate from "../../../components/navBar/TopNavBarCandidate";
+// import FooterCandidate from "../../../components/candidate/FooterCandidate";
 import Paginate from "../../../components/pagination/Paginate";
 
 interface JobInterface {
@@ -86,7 +86,6 @@ function AppliedJobsPage() {
 
 	return (
 		<div>
-			<NavBarCandidate />
 			<div className="flex items-center justify-center mt-5 mb-10">
 				<h1 className="text-3xl font-bold">My Applied Jobs</h1>
 			</div>
@@ -116,7 +115,6 @@ function AppliedJobsPage() {
 					</div>
 				)}
 			</div>
-			<FooterCandidate />
 		</div>
 	);
 }

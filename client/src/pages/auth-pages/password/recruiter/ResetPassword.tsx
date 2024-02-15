@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../../redux/reducer/reducer';
 import { useNavigate } from 'react-router-dom';
 import { notify } from '../../../../utils/toastMessage';
-import ForgotResetPasswordForm from '../../../../components/auth-components/password/ForgotResetPasswordForm';
+import ForgotResetPasswordForm from '../../../../components/form/ForgotResetPasswordForm';
 import { setLoaded, setLoading } from '../../../../redux/slice/loaderSlice/isLoading';
 import { resetPasswordRecruiterApi } from '../../../../axios/apiMethods/auth-service/recruiterAuth';
 

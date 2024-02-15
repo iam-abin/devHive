@@ -170,11 +170,10 @@ function AllAddedJobs() {
 
 	return (
 		<div>
-			<TopNavBarRecruiter />
 			<div className="flex items-center justify-center">
 				<h1 className="text-3xl font-bold">My Jobs</h1>
 			</div>
-			<div className="navbar bg-base-100">
+			<div className="navbar">
 				<div className="flex-1">
 					<button
 						className="btn btn-accent"
@@ -186,7 +185,9 @@ function AllAddedJobs() {
 				</div>
 			</div>
 			{jobsData.length > 0 ? (
-				<TableComponent columns={columns} data={jobsData} />
+				<div className="mx-14">
+					<TableComponent columns={columns} data={jobsData} />
+				</div>
 			) : (
 				<div className="text-center text-7xl my-60 font-bold text-orange-800">
 					You haven't added any jobs yet

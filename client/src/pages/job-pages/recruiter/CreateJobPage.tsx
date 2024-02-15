@@ -6,7 +6,7 @@ import { RootState } from "../../../redux/reducer/reducer";
 import { useNavigate } from "react-router-dom";
 import { notify } from "../../../utils/toastMessage";
 import { JobFormData } from "../../../types/JobCreationFormData";
-import CreateJobForm from "../../../components/recruiter/CreateJobForm";
+import CreateJobForm from "../../../components/form/CreateJobForm";
 
 const initialJobValues: JobFormData = {
 	title: "",

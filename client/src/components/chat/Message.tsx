@@ -43,7 +43,6 @@ const Message: React.FC<{ message: any; currentUserId: string }> = ({
 					<div className="chat-bubble shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] whitespace-normal">
 						{message.textMessage}
 					</div>
-					{/* <div className="chat-footer opacity-50">Delivered</div> */}
 				</div>
 			)}
 		</>

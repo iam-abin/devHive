@@ -17,9 +17,9 @@ const LeftNavBarAdmin: React.FC<{ menus: any }> = ({ menus }) => {
 				<img
 					src={arrow}
 					alt=""
-					className={`absolute cursor-pointer -right-3 top-9 w-7 h-7 border-4 border-primary-focus rounded-full ${
+					className={` absolute cursor-pointer -right-3 top-9 w-7 h-7 border-4 border-primary-focus rounded-full ${
 						!open && "rotate-180"
-					}`}
+					} `}
 					onClick={() => setOpen(!open)}
 				/>
 				<div className="flex gap-x-4 items-center">

@@ -8,8 +8,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import JobDetails from "../../../components/recruiter/JobDetails";
 import Swal from "sweetalert2";
 import { notify } from "../../../utils/toastMessage";
-import NavBarCandidate from "../../../components/navBar/NavBarCandidate";
-import FooterCandidate from "../../../components/candidate/FooterCandidate";
+import TopNavBarCandidate from "../../../components/navBar/TopNavBarCandidate";
+// import FooterCandidate from "../../../components/candidate/FooterCandidate";
 
 function JobDetailsPage() {
 	const [jobDetails, setJobDetails] = useState<any>(null);
@@ -81,12 +81,12 @@ function JobDetailsPage() {
 	};
 	return (
 		<div>
-			<NavBarCandidate />
+			<TopNavBarCandidate />
 			<JobDetails
 				jobDetails={jobDetails}
 				handleApplyJob={handleApplyJob}
 			/>
-			<FooterCandidate />
+			{/* <FooterCandidate /> */}
 		</div>
 	);
 }
