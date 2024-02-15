@@ -43,7 +43,6 @@ function CreateJobPage() {
 
 	return (
 		<>
-			<TopNavBarRecruiter />
 			<div className="flex items-center justify-center h-full bg-fuchsia-50">
 				<CreateJobForm
 					initialJobValues={initialJobValues}

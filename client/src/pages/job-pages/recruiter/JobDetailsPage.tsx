@@ -33,7 +33,6 @@ function JobDetailsPage() {
 	};
   return (
     <div>
-		<TopNavBarRecruiter />
       <JobDetails jobDetails={jobDetails} handleEditJob={handleEditJob} />
     </div>
   )

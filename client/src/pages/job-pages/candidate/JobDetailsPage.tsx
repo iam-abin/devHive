@@ -3,17 +3,18 @@ import {
 	candidateApplyJobApi,
 	getAJobApi,
 } from "../../../axios/apiMethods/jobs-service/jobs";
-import { useDispatch } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+// import { useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
 import JobDetails from "../../../components/recruiter/JobDetails";
 import Swal from "sweetalert2";
 import { notify } from "../../../utils/toastMessage";
 import TopNavBarCandidate from "../../../components/navBar/TopNavBarCandidate";
+import Footer from "../../../components/footer/Footer";
 // import FooterCandidate from "../../../components/candidate/FooterCandidate";
 
 function JobDetailsPage() {
 	const [jobDetails, setJobDetails] = useState<any>(null);
-	const navigate = useNavigate();
+	// const navigate = useNavigate();
 	const { jobId } = useParams();
 	useEffect(() => {
 		const fetchJobDetails = async () => {
@@ -86,7 +87,7 @@ function JobDetailsPage() {
 				jobDetails={jobDetails}
 				handleApplyJob={handleApplyJob}
 			/>
-			{/* <FooterCandidate /> */}
+			<Footer />
 		</div>
 	);
 }

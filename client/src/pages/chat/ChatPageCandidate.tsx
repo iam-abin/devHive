@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import ChatImage from "../../assets/chat/double-chat-bubble-icon.svg";
 import { FaSearch } from "react-icons/fa";
-import NavBarCandidate from "../../components/navBar/NavBarCandidate";
+import TopNavBarCandidate from "../../components/navBar/TopNavBarCandidate";
 import ChatRoomList from "../../components/chat/ChatRoomList";
 import Message from "../../components/chat/Message";
 import ChatBoxTopBar from "../../components/chat/ChatBoxTopBar";
@@ -142,7 +142,7 @@ const ChatPageCandidate = () => {
 
 	return (
 		<>
-			<NavBarCandidate />
+			<TopNavBarCandidate />
 			<div className="bg-white  h-[92vh] flex justify-center items-center">
 				<div className="bg-slate-200 h-max-[88vh] w-[90vw] flex rounded-md">
 					{/* Left */}

@@ -47,23 +47,23 @@ const start = async () => {
 		kafkaClient
 	);
 	
-	// await userCreatedEvent.subscribe();
-	// await userUpdatedEvent.subscribe();
-	// await companyProfileUpdatedEvent.subscribe();
+	await userCreatedEvent.subscribe();
+	await userUpdatedEvent.subscribe();
+	await companyProfileUpdatedEvent.subscribe();
 
 	app.listen(3000, () => {
 		console.log("profile Listening on port 3000....");
 	})
-		// .on("error", async () => {
-		// 	await userCreatedEvent.disconnect();
-		// 	await userUpdatedEvent.disconnect();
-		// 	await companyProfileUpdatedEvent.disconnect();
-		// })
-		// .on("close", async () => {
-		// 	await userCreatedEvent.disconnect();
-		// 	await userUpdatedEvent.disconnect();
-		// 	await companyProfileUpdatedEvent.disconnect();
-		// });
+		.on("error", async () => {
+			await userCreatedEvent.disconnect();
+			await userUpdatedEvent.disconnect();
+			await companyProfileUpdatedEvent.disconnect();
+		})
+		.on("close", async () => {
+			await userCreatedEvent.disconnect();
+			await userUpdatedEvent.disconnect();
+			await companyProfileUpdatedEvent.disconnect();
+		});
 };
 
 start();

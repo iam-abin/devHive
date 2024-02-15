@@ -36,7 +36,7 @@ const RecruiterLayout = () => {
 				<LeftNavBarRecruiter menus={menus} />
 				
 				{/* right-side */}
-				<div className=" text-2xl flex-1 font-semibold bg-slate-400 h-screen">
+				<div className=" text-2xl flex-1 font-semibold bg-slate-400 h-full">
 					{<Outlet />}
 				</div>
 			</div>

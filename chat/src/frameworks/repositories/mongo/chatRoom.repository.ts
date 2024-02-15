@@ -30,8 +30,12 @@ export = {
 	getAllChatRoomsByUserId: async (userId: string) => {
 		const chatRooms = await ChatRoomModel.find({
 			users: { $elemMatch: { $eq: userId } },
-		});
-		// .populate('users');
+		}).populate('users').exec();
+
+		// for(let i in chatRooms){
+		// 	console.log(i.users[0]);
+			
+		// }
 		console.log("in getAllChatRoomsByUserId repository ", chatRooms);
 
 		return chatRooms;

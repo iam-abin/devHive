@@ -48,6 +48,11 @@ function RecruiterRouters() {
 				<Route path="/signin" element={isRecruiterLoggedIn?<Navigate to={"/recruiter"} />:<RecruiterSigninPage /> } />
 				<Route path="/signup" element={isRecruiterLoggedIn? <Navigate to={"/recruiter"} />:<RecruiterSignupPage />} />
 				
+				<Route path="/otpSignupRecruiter/:email" element={!isRecruiterLoggedIn? <OtpFormPageSignup /> :<Navigate to={"/recruiter"} />} />
+				<Route path="/forgotPasswordEmail" element={!isRecruiterLoggedIn? <ForgotPasswordEmailEnterPage />: <Navigate to={"/recruiter/landing"} />} />
+				<Route path="/forgotPasswordOtp/:email" element={!isRecruiterLoggedIn? <OtpFormPageForgotPassword />: <Navigate to={"/recruiter/landing"} />} />
+				<Route path="/forgotPassword/:userId" element={!isRecruiterLoggedIn? <ForgotPassword />: <Navigate to={"/recruiter/landing"} />} />
+				
 				<Route path="/" element={isRecruiterLoggedIn? <RecruiterLayout />: <Navigate to={"/recruiter/landing"} />} >
 				<Route index={true} element={isRecruiterLoggedIn? <RecruiterDashBoard />: <Navigate to={"/candidate/landing"} />} />
 					<Route path="/profile" element={isRecruiterLoggedIn? <RecruiterProfilePage />: <Navigate to={"/recruiter/landing"} />} />
@@ -57,12 +62,8 @@ function RecruiterRouters() {
 					<Route path="/passwordResetOtp" element={isRecruiterLoggedIn? <OtpFormResetPassword />: <Navigate to={"/recruiter/landing"} />} />
 					<Route path="/passwordReset" element={isRecruiterLoggedIn? <ResetPassword />: <Navigate to={"/recruiter/landing"} />} />
 
-					<Route path="/forgotPasswordEmail" element={!isRecruiterLoggedIn? <ForgotPasswordEmailEnterPage />: <Navigate to={"/recruiter/landing"} />} />
-					<Route path="/forgotPasswordOtp/:email" element={!isRecruiterLoggedIn? <OtpFormPageForgotPassword />: <Navigate to={"/recruiter/landing"} />} />
-					<Route path="/forgotPassword/:userId" element={!isRecruiterLoggedIn? <ForgotPassword />: <Navigate to={"/recruiter/landing"} />} />
 
 				
-					<Route path="/otpSignupRecruiter/:email" element={!isRecruiterLoggedIn? <OtpFormPageSignup /> :<Navigate to={"/recruiter"} />} />
 					<Route path="/all-jobs" element={isRecruiterLoggedIn?<AllJobsPage />:<Navigate to={"/recruiter/signin"} />} />
 					<Route path="/recruiter-added-jobs" element={isRecruiterLoggedIn?<AllAddedJobs />:<Navigate to={"/recruiter/signin"} />} />
 					<Route path="/create-job" element={isRecruiterLoggedIn?<CreateJobPage />:<Navigate to={"/recruiter/signin"} />} />

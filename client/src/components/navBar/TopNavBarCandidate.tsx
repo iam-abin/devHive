@@ -84,48 +84,6 @@ const TopNavBarCandidate = () => {
 								tabIndex={0}
 								className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
 							>
-								{/* --------------- */}
-								{/* <li
-									onClick={() =>
-										navigate("/candidate/all-jobs")
-									}
-								>
-									<a>Jobs</a>
-								</li>
-								<li
-									onClick={() =>
-										navigate("/candidate/applied-jobs")
-									}
-								>
-									<a>Applied Jobs</a>
-								</li>
-								<li
-									onClick={() =>
-										navigate("/candidate/profile")
-									}
-								>
-									<a>Profile</a>
-								</li>
-								<li
-									onClick={() =>
-										navigate(
-											`/candidate/chat` // Add the path to your chat page
-										)
-									}
-								>
-									<a>Chat</a>
-								</li>
-								<li
-									onClick={() =>
-										navigate(
-											"/candidate/passwordResetMobile"
-										)
-									}
-								>
-									<a>Reset Password</a>
-								</li> */}
-								{/* --------- */}
-								{/* +++++++++ */}
 								{menus.map((menu: any, index: number) => {
 									return (
 										<li

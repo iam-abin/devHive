@@ -4,7 +4,7 @@ import { RootState } from "../../../redux/reducer/reducer";
 import { recruiterGetProfileApi } from "../../../axios/apiMethods/profile-service/recruiter";
 import { useLocation, useNavigate } from "react-router-dom";
 import TopNavBarRecruiter from "../../../components/navBar/TopNavBarRecruiter";
-import NavBarCandidate from "../../../components/navBar/NavBarCandidate";
+import TopNavBarCandidate from "../../../components/navBar/TopNavBarCandidate";
 import { FaFacebookMessenger } from "react-icons/fa";
 
 const RecruiterProfilePage: React.FC = () => {
@@ -38,7 +38,7 @@ const RecruiterProfilePage: React.FC = () => {
 	return (
 		<div>
 			<div>
-				{isCandidate ? <NavBarCandidate /> : <TopNavBarRecruiter />}
+				{isCandidate && <TopNavBarCandidate /> }
 				<main className="h-screen flex items-center justify-center">
 					<div className="bg-gray-100 min-h-screen flex">
 						{/* Main Content */}
