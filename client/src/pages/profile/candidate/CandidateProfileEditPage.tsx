@@ -1,5 +1,3 @@
-import HeaderCandidate from "../../../components/navBar/NavBarCandidate";
-
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/reducer/reducer";
@@ -10,7 +8,8 @@ import {
 	updateCandidateProfileApi,
 } from "../../../axios/apiMethods/profile-service/candidate";
 import { notify } from "../../../utils/toastMessage";
-import FooterCandidate from "../../../components/candidate/FooterCandidate";
+import Footer from "../../../components/footer/Footer";
+import TopNavBarCandidate from "../../../components/navBar/TopNavBarCandidate";
 
 interface ProfileFormData {
 	name: string;
@@ -90,7 +89,7 @@ function CandidateProfileEditPage() {
 		<div>
 			<div>
 				<div>
-					<HeaderCandidate />
+					<TopNavBarCandidate />
 				</div>
 				<main className="mx-14 flex items-center justify-center">
 					<Formik
@@ -420,7 +419,7 @@ function CandidateProfileEditPage() {
 					</Formik>
 				</main>
 				<div>
-					<FooterCandidate />
+				<Footer />
 				</div>
 			</div>
 		</div>

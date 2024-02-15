@@ -8,6 +8,7 @@ import Loading from "../components/loading/Loading";
 import NotFound from "../pages/Error/NotFound";
 
 import RecruiterLayout from "../pages/layout/RecruiterLayout";
+import RecruiterDashBoard from "../pages/dashboard/RecruiterDashBoard";
 
 
 
@@ -41,13 +42,14 @@ function RecruiterRouters() {
   return (
     <>
 		<Suspense fallback={<Loading />}>
-			<Routes>
 				
+			<Routes>
 				<Route path="/landing" element={isRecruiterLoggedIn?<Navigate to={"/recruiter"} />: <LandingPage /> } />
 				<Route path="/signin" element={isRecruiterLoggedIn?<Navigate to={"/recruiter"} />:<RecruiterSigninPage /> } />
 				<Route path="/signup" element={isRecruiterLoggedIn? <Navigate to={"/recruiter"} />:<RecruiterSignupPage />} />
 				
 				<Route path="/" element={isRecruiterLoggedIn? <RecruiterLayout />: <Navigate to={"/recruiter/landing"} />} >
+				<Route index={true} element={isRecruiterLoggedIn? <RecruiterDashBoard />: <Navigate to={"/candidate/landing"} />} />
 					<Route path="/profile" element={isRecruiterLoggedIn? <RecruiterProfilePage />: <Navigate to={"/recruiter/landing"} />} />
 					<Route path="/edit-profile" element={isRecruiterLoggedIn? <RecruiterProfileEditPage />: <Navigate to={"/recruiter/landing"} />} />
 
@@ -74,6 +76,7 @@ function RecruiterRouters() {
 
 				<Route path="*" element={<NotFound url={"/recruiter"} />} />
 			</Routes>
+			
 		</Suspense>
     </>
   )

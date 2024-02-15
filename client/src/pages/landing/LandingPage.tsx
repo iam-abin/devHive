@@ -1,6 +1,6 @@
 // import { GiHamburgerMenu } from "react-icons/gi"
 import homeImage from "../../assets/landingPage/company-like.jpg";
-import Footer from "../../components/footer/Footer";
+// import FooterLanding from "../../components/footer/FooterLanding";
 import { useEffect } from "react";
 import NavBarLanding from "../../components/navBar/NavBarLanding";
 import SearchBar from "../../components/searchBar/SearchBar";
@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/reducer/reducer";
 import { useLocation, useNavigate } from "react-router-dom";
 import Paginate from "../../components/pagination/Paginate";
+import TopNavBarRecruiter from "../../components/navBar/TopNavBarRecruiter";
 import {
 	clearCurrentPage,
 	clearFilteredJobs,
@@ -20,14 +21,12 @@ import {
 } from "../../redux/slice/job/filteredJobsSlice";
 import { setTotalNumberOfPages } from "../../redux/slice/job/filteredJobsSlice";
 import { setCurrentPage } from "../../redux/slice/job/filteredJobsSlice";
+import TopNavBarCandidate from "../../components/navBar/TopNavBarCandidate";
+import Footer from "../../components/footer/Footer";
 
 function LandingPage() {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const location = useLocation();
-
-	const isRecruiterUrl = location.pathname.includes("recruiter");
-	const isCandidateUrl = location.pathname.includes("candidate");
 
 	const candidate = useSelector(
 		(state: RootState) => state.candidateData.data
@@ -95,8 +94,9 @@ function LandingPage() {
 		dispatch(setCurrentPage({ currentPage: selected + 1 }));
 	};
 
-
-	
+	const location = useLocation();
+	const isRecruiterUrl = location.pathname.includes("recruiter");
+	const isCandidateUrl = location.pathname.includes("candidate");
 
 	const handleViewJob = async (jobId: string) => {
 		console.log("id handle view ", jobId);
@@ -111,7 +111,17 @@ function LandingPage() {
 	return (
 		<>
 			{/* <GiHamburgerMenu /> */}
-			<NavBarLanding />
+
+			{candidate && isCandidateUrl ? (
+				<TopNavBarCandidate />
+			) : recruiter && isRecruiterUrl ? (
+				<TopNavBarRecruiter />
+			) : (
+				<NavBarLanding />
+			)}
+
+			
+
 			<div>
 				<div>
 					<div
