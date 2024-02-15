@@ -1,12 +1,12 @@
 import React from "react";
 // import SideNavBar from "../../components/admin/SideNavBar";
-import TableComponent from "../../../components/table/TableComponent";
+import TableComponent from "../../components/table/TableComponent";
 
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { blockUnblockCompanyApi, getAllCompaniesApi } from "../../../axios/apiMethods/admin-service/company";
+import { blockUnblockCompanyApi, getAllCompaniesApi } from "../../axios/apiMethods/admin-service/company";
 import Swal from "sweetalert2";
-import { notify } from "../../../utils/toastMessage";
+import { notify } from "../../utils/toastMessage";
 
 interface CompanyInterface {
 	id: string;
@@ -153,7 +153,7 @@ const CompaniesListPage: React.FC = () => {
 
 
 	return (
-		<div className="text-center mx-24">
+		<div className="text-center mx-10">
 			{/* <SideNavBar /> */}
 			<h1 className="font-semibold text-5xl mt-4 mb-10">
 				Company Management

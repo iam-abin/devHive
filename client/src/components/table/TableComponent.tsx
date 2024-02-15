@@ -72,12 +72,15 @@ const TableComponent: React.FC<TablePropsInterface> = ({ columns, data }) => {
 				responsive
 				subHeader
 				subHeaderComponent={
+					//  md:my-2 md:p-1 md:text-sm lg:text-base
 					<input
 						type="text"
-						className="search-box my-3 p-2 border rounded-xl border-slate-800"
+						className="search-box my-3 p-2 md:my-2 md:p-1 md:text-sm lg:text-base border rounded-xl border-slate-800"
 						placeholder="Search by name, email, or phone..."
 						value={searchText}
-						onChange={(e) => setSearchText(e.target.value)}
+						onChange={(e) =>
+							setSearchText(e.target.value.toLowerCase())
+						}
 					/>
 				}
 				customStyles={customStyles} // Apply custom styles

@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
-import TableComponent from "../../../components/table/TableComponent";
-import { notify } from "../../../utils/toastMessage";
+import TableComponent from "../../components/table/TableComponent";
+import {
+	blockUnblockRecruiterApi,
+	getAllRecruitersApi,
+} from "../../axios/apiMethods/admin-service/recruiters";
+import { notify } from "../../utils/toastMessage";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
-import {
-	blockUnblockCandidateApi,
-	getAllCandidatesApi,
-} from "../../../axios/apiMethods/admin-service/candidates";
-interface CandidateInterface {
+
+interface RecruiterInterface {
 	id: string;
 	name: string;
 	email: string;
@@ -16,18 +17,18 @@ interface CandidateInterface {
 	userId: string;
 }
 
-function CandidateManagementPage() {
+function RecruiterManagementPage() {
 	const navigate = useNavigate();
-	const [candidatesData, setCandidatesData] = useState<CandidateInterface[]>(
+	const [recruitersData, setRecruitersData] = useState<RecruiterInterface[]>(
 		[]
 	);
 
 	useEffect(() => {
 		(async () => {
 			try {
-				const candidates = await getAllCandidatesApi();
-				console.log("in useEffect", candidates);
-				setCandidatesData(candidates.data);
+				const recruiters = await getAllRecruitersApi();
+				console.log("in useEffect", recruiters.data);
+				setRecruitersData(recruiters.data);
 			} catch (error: any) {
 				console.error(error);
 			}
@@ -36,14 +37,14 @@ function CandidateManagementPage() {
 
 	const viewProfileDetails = async (userId: string) => {
 		console.log("in viewProfileDetails fn ", userId);
-		navigate(`/admin/candidate/viewProfileDetails/${userId}`);
+		navigate(`/admin/recruiter/viewProfileDetails/${userId}`);
 	};
 
 	const handleBlockUnblock = async (userId: string, isActive: boolean) => {
 		Swal.fire({
 			title: `Do you want to ${
 				isActive ? "block" : "unblock"
-			} this Candidate?`,
+			} this Recruiter?`,
 			text: "Are you sure!",
 			icon: "warning",
 			showCancelButton: true,
@@ -54,23 +55,23 @@ function CandidateManagementPage() {
 			}`,
 		}).then(async (result) => {
 			if (result.isConfirmed) {
-				const updatedCandidate = await blockUnblockCandidateApi(userId);
-				if (updatedCandidate) {
-					notify(updatedCandidate.message, "success");
+				const updatedRecruiter = await blockUnblockRecruiterApi(userId);
+				if (updatedRecruiter) {
+					notify(updatedRecruiter.message, "success");
 				}
 
-				const candidates = candidatesData.map((candidate) => {
-					if (candidate.userId === userId) {
+				const recruiters = recruitersData.map((recruiter) => {
+					if (recruiter.userId === userId) {
 						return {
-							...candidate,
-							isActive: updatedCandidate.data.isActive,
+							...recruiter,
+							isActive: updatedRecruiter.data.isActive,
 						};
 					}
 
-					return candidate;
+					return recruiter;
 				});
 
-				setCandidatesData(candidates);
+				setRecruitersData(recruiters);
 			}
 		});
 	};
@@ -139,17 +140,16 @@ function CandidateManagementPage() {
 		},
 	];
 
-	// const data = []
 
 	return (
-		<div className="text-center mx-24">
+		<div className="text-center mx-10">
 			{/* <SideNavBar /> */}
 			<h1 className="font-semibold text-5xl mt-4 mb-10">
-				Candidates Management
+				Recruiters Management
 			</h1>
-			<TableComponent columns={columns} data={candidatesData} />
+			<TableComponent columns={columns} data={recruitersData} />
 		</div>
 	);
 }
 
-export default CandidateManagementPage;
+export default RecruiterManagementPage;

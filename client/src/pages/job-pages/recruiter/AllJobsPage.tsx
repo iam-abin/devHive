@@ -4,7 +4,6 @@ import { useDispatch } from "react-redux";
 import { getAllJobsApi } from "../../../axios/apiMethods/jobs-service/jobs";
 import JobCard from "../../../components/cards/JobCard";
 import Paginate from "../../../components/pagination/Paginate";
-import TopNavBarRecruiter from "../../../components/navBar/TopNavBarRecruiter";
 
 function AllJobsPage() {
 	const dispatch = useDispatch();
@@ -56,9 +55,8 @@ function AllJobsPage() {
 
 	return (
 		<div>
-			<TopNavBarRecruiter />
 			<div>
-				<div className="navbar bg-base-100">
+				<div className="navbar">
 					<div className="flex-1">
 						<button
 							className="btn btn-accent"
@@ -68,7 +66,7 @@ function AllJobsPage() {
 							+ Create Job
 						</button>
 					</div>
-					<div className="flex-none gap-2">
+					<div className="flex-none gap-2 mb-5">
 						<div className="form-control">
 							<input
 								type="text"

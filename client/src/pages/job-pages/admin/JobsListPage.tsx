@@ -145,7 +145,7 @@ function JobsManagementPage() {
 	// const data = []
 
 	return (
-		<div className="text-center mx-24">
+		<div className="text-center mx-10">
 			{/* <SideNavBar /> */}
 			<h1 className="font-semibold text-5xl mt-4 mb-10">
             Jobs Management

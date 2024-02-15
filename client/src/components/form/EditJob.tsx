@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
 // import { getAJobApi, updateJobApi } from "../../axios/admin2/jobs/jobs";
 import { getAJobApi, updateJobApi } from "../../axios/apiMethods/jobs-service/jobs";
-
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useNavigate, useParams } from "react-router-dom";
 import { notify } from "../../utils/toastMessage";
-
 interface JobFormData {
 	jobId: string;
 	title: string;

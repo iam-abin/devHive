@@ -1,7 +1,7 @@
 // import { GiHamburgerMenu } from "react-icons/gi"
 import homeImage from "../../assets/landingPage/company-like.jpg";
-import FooterLanding from "../../components/footer/FooterLanding";
-import { useEffect, useState } from "react";
+import Footer from "../../components/footer/Footer";
+import { useEffect } from "react";
 import NavBarLanding from "../../components/navBar/NavBarLanding";
 import SearchBar from "../../components/searchBar/SearchBar";
 import JobCard from "../../components/cards/JobCard";
@@ -12,8 +12,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/reducer/reducer";
 import { useLocation, useNavigate } from "react-router-dom";
 import Paginate from "../../components/pagination/Paginate";
-import NavBarCandidate from "../../components/navBar/NavBarCandidate";
-import TopNavBarRecruiter from "../../components/navBar/TopNavBarRecruiter";
 import {
 	clearCurrentPage,
 	clearFilteredJobs,
@@ -26,6 +24,10 @@ import { setCurrentPage } from "../../redux/slice/job/filteredJobsSlice";
 function LandingPage() {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+	const location = useLocation();
+
+	const isRecruiterUrl = location.pathname.includes("recruiter");
+	const isCandidateUrl = location.pathname.includes("candidate");
 
 	const candidate = useSelector(
 		(state: RootState) => state.candidateData.data
@@ -54,25 +56,26 @@ function LandingPage() {
 
 	useEffect(() => {
 		(async () => {
-			const allJobs = await handleGetAllJobs(currentPage);
-			console.log(
-				"landing page before handleGetAllJobs dispatch",
-				allJobs
-			);
-
 			try {
 				const allJobs = await handleGetAllJobs(currentPage);
-		  
+
 				// Check if allJobs.data exists before accessing its properties
 				if (allJobs && allJobs.data) {
-				  console.log("landing page before handleGetAllJobs dispatch", allJobs);
-		  
-				  dispatch(setFilteredJobs({ data: allJobs.data }));
-				  dispatch(setTotalNumberOfPages({ totalNumberOfPages: allJobs.totalNumberOfPages }));
+					console.log(
+						"landing page before handleGetAllJobs dispatch",
+						allJobs
+					);
+
+					dispatch(setFilteredJobs({ data: allJobs.data }));
+					dispatch(
+						setTotalNumberOfPages({
+							totalNumberOfPages: allJobs.totalNumberOfPages,
+						})
+					);
 				}
-			  } catch (error) {
+			} catch (error) {
 				console.error("Error fetching jobs:", error);
-			  }
+			}
 			return () => {
 				// This cleanup function will be called when the component is unmounted
 				dispatch(clearFilteredJobs());
@@ -92,9 +95,8 @@ function LandingPage() {
 		dispatch(setCurrentPage({ currentPage: selected + 1 }));
 	};
 
-	const location = useLocation();
-	const isRecruiterUrl = location.pathname.includes("recruiter");
-	const isCandidateUrl = location.pathname.includes("candidate");
+
+	
 
 	const handleViewJob = async (jobId: string) => {
 		console.log("id handle view ", jobId);
@@ -109,15 +111,7 @@ function LandingPage() {
 	return (
 		<>
 			{/* <GiHamburgerMenu /> */}
-
-			{candidate && isCandidateUrl ? (
-				<NavBarCandidate />
-			) : recruiter && isRecruiterUrl ? (
-				<TopNavBarRecruiter />
-			) : (
-				<NavBarLanding />
-			)}
-
+			<NavBarLanding />
 			<div>
 				<div>
 					<div
@@ -160,28 +154,6 @@ function LandingPage() {
 					<div className="py-10 ">
 						<SearchBar handleGetAllJobs={handleGetAllJobs} />
 					</div>
-
-					{/* <div className="pb-20">
-						{isLoading ? (
-							<JobCardShimmerLandingPage />
-						) : jobs.length > 0 ? (
-							jobs.map((job: any) => (
-								<JobCard
-									key={job?.id}
-									job={job}
-									handleViewJob={handleViewJob}
-								/>
-							))
-						) : (
-							<div className="mx-40 p-6 bg-transparent rounded-md shadow-md">
-								<div className="flex items-center justify-center mb-4">
-									<p className="text-white ml-4 text-2xl font-bold">
-										No jobs are listed yet
-									</p>
-								</div>
-							</div>
-						)}
-					</div> */}
 					<div className="pb-20">
 						{jobs && jobs.length > 0 ? (
 							jobs.map((job: any) => (
@@ -208,7 +180,7 @@ function LandingPage() {
 				</div>
 			</div>
 			<div>
-				<FooterLanding />
+				<Footer />
 			</div>
 		</>
 	);

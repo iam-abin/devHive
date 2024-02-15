@@ -31,21 +31,23 @@ const start = async () => {
 	const userUpdatedEvent = new UserUpdatedEventConsumer(kafkaClient);
 
 	const jobUpdatedEvent = new jobUpdatedEventConsumer(kafkaClient);
-	await jobUpdatedEvent.subscribe();
+	// // await userUpdatedEvent.subscribe();
+	// // await userCreatedEvent.subscribe();
+	// await jobUpdatedEvent.subscribe();
 
 	app.listen(3000, () => {
 		console.log("job service Listening on port 3000....");
-	})
-		.on("error", async () => {
-			await jobUpdatedEvent.disconnect();
-			await userCreatedEvent.disconnect();
-			await userUpdatedEvent.disconnect();
-		})
-		.on("close", async () => {
-			await jobUpdatedEvent.disconnect();
-			await userCreatedEvent.disconnect();
-			await userUpdatedEvent.disconnect();
-		});
+	});
+	// .on("error", async () => {
+	// 	await jobUpdatedEvent.disconnect();
+	// 	await userCreatedEvent.disconnect();
+	// 	await userUpdatedEvent.disconnect();
+	// })
+	// .on("close", async () => {
+	// 	await jobUpdatedEvent.disconnect();
+	// 	await userCreatedEvent.disconnect();
+	// 	await userUpdatedEvent.disconnect();
+	// });
 };
 
 start();

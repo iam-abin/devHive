@@ -7,7 +7,7 @@ import {
 	setLoading,
 } from "../../../../redux/slice/loaderSlice/isLoading";
 import { forgotPasswordEmailRecruiterApi } from "../../../../axios/apiMethods/auth-service/recruiterAuth";
-import EmailOrMobile from "../../../../components/auth-components/emailOrMobile/EmailOrMobile";
+import EmailOrMobile from "../../../../components/form/EmailOrMobile";
 import Swal from "sweetalert2";
 import { RootState } from "../../../../redux/reducer/reducer";
 import Loading from "../../../../components/loading/Loading";

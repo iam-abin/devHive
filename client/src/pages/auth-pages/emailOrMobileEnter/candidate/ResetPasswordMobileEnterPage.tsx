@@ -6,7 +6,7 @@ import {
 	setLoading,
 	setLoaded,
 } from "../../../../redux/slice/loaderSlice/isLoading";
-import EmailOrMobile from "../../../../components/auth-components/emailOrMobile/EmailOrMobile";
+import EmailOrMobile from "../../../../components/form/EmailOrMobile";
 import { passwordResetMobileCandidateApi } from "../../../../axios/apiMethods/auth-service/candidateAuth";
 import Swal from "sweetalert2";
 import { RootState } from "../../../../redux/reducer/reducer";
