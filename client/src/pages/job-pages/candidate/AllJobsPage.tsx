@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import Paginate from "../../../components/pagination/Paginate";
 import JobCardAllJobs from "../../../components/cards/JobCardAllJobs";
 import { formatDate } from "../../../utils/date-format";
+import Footer from "../../../components/footer/Footer";
 
 function AllJobsPage() {
 	const dispatch = useDispatch();
@@ -50,6 +51,7 @@ function AllJobsPage() {
 
 	return (
 		<div>
+			<TopNavBarCandidate />
 			<div className="container mx-auto my-8">
 				<div className="mb-4 flex justify-end">
 					<input
@@ -78,6 +80,7 @@ function AllJobsPage() {
 					/>
 				</div>
 			</div>
+			<Footer />
 		</div>
 	);
 }

@@ -1,4 +1,4 @@
-import React from "react";
+// import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { RootState } from "../../redux/reducer/reducer";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,7 +7,7 @@ import { candidateSignoutApi } from "../../axios/apiMethods/auth-service/candida
 import Swal from "sweetalert2";
 import { notify } from "../../utils/toastMessage";
 
-const TopNavBarCandidate: React.FC<{ menus?: any }> = ({ menus }) => {
+const TopNavBarCandidate = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
@@ -37,6 +37,21 @@ const TopNavBarCandidate: React.FC<{ menus?: any }> = ({ menus }) => {
 			}
 		});
 	};
+
+    const menus = [
+		{ title: "Jobs", to: "/candidate/all-jobs" },
+
+		{
+			title: "Applied Jobs",
+			to: "/candidate/applied-jobs",
+		},
+		{
+			title: "Profile",
+			to: "/candidate/profile",
+		},
+		{ title: "Chat", to: "/candidate/chat" },
+		{ title: "Reset Password", to: "/candidate/passwordResetMobile" },
+	];
 
 	return (
 		<>

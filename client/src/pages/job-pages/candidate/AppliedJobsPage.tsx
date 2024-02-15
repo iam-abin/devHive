@@ -9,6 +9,7 @@ import JobAppliedCard from "../../../components/cards/JobAppliedCard";
 import TopNavBarCandidate from "../../../components/navBar/TopNavBarCandidate";
 // import FooterCandidate from "../../../components/candidate/FooterCandidate";
 import Paginate from "../../../components/pagination/Paginate";
+import Footer from "../../../components/footer/Footer";
 
 interface JobInterface {
 	id: string;
@@ -86,6 +87,7 @@ function AppliedJobsPage() {
 
 	return (
 		<div>
+			<TopNavBarCandidate />
 			<div className="flex items-center justify-center mt-5 mb-10">
 				<h1 className="text-3xl font-bold">My Applied Jobs</h1>
 			</div>
@@ -115,6 +117,7 @@ function AppliedJobsPage() {
 					</div>
 				)}
 			</div>
+			<Footer />
 		</div>
 	);
 }

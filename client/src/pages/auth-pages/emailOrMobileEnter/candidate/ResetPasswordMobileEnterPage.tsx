@@ -11,6 +11,8 @@ import { passwordResetMobileCandidateApi } from "../../../../axios/apiMethods/au
 import Swal from "sweetalert2";
 import { RootState } from "../../../../redux/reducer/reducer";
 import Loading from "../../../../components/loading/Loading";
+import TopNavBarCandidate from "../../../../components/navBar/TopNavBarCandidate";
+import Footer from "../../../../components/footer/Footer";
 
 function ResetPasswordMobileEnterPage() {
 	const navigate = useNavigate();
@@ -75,11 +77,15 @@ function ResetPasswordMobileEnterPage() {
 	}
 
 	return (
+		<>
+		<TopNavBarCandidate />
 		<EmailOrMobile
 			handleSubmit={handleSubmit}
 			initialValues={initialValues}
 			validationSchema={mobileSchema}
 		/>
+		<Footer />
+		</>
 	);
 }
 

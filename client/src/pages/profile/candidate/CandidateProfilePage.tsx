@@ -1,4 +1,4 @@
-import HeaderCandidate from "../../../components/navBar/NavBarCandidate";
+
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/reducer/reducer";
@@ -12,6 +12,8 @@ import { notify } from "../../../utils/toastMessage";
 import { FaFacebookMessenger } from "react-icons/fa";
 import ImageFileUpload from "../../../components/upload/ImageFileUpload";
 import ProfileResumeDisplay from "../../../components/upload/ProfileResumeDisplay";
+import TopNavBarCandidate from "../../../components/navBar/TopNavBarCandidate";
+import Footer from "../../../components/footer/Footer";
 
 const CandidateProfilePage: React.FC = () => {
 	const navigate = useNavigate();
@@ -111,7 +113,7 @@ const CandidateProfilePage: React.FC = () => {
 				{/* <header className="bg-blue-500 p-4 text-white">
       <h1 className="text-2xl font-bold">Job Portal</h1>
     </header> */}
-				<HeaderCandidate />
+				<TopNavBarCandidate />
 				<main className="h-screen flex items-center justify-center">
 					<div className="bg-gray-200 md:w-9/12 p-8 mt-60">
 						<div className="w-md mx-auto bg-white p-8 rounded shadow-md">
@@ -321,6 +323,7 @@ const CandidateProfilePage: React.FC = () => {
 						</div>
 					</div>
 				</main>
+				<Footer />
 			</div>
 		</div>
 	);

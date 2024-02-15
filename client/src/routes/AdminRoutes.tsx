@@ -37,6 +37,7 @@ function AdminRoutes() {
 	return (
 		<>
 			<Suspense fallback={<Loading />}>
+				
 				<Routes>
 					<Route
 						path="/signin"
@@ -126,6 +127,7 @@ function AdminRoutes() {
 					</Route>
 					<Route path="*" element={<NotFound url={"/admin"} />} />
 				</Routes>
+
 			</Suspense>
 		</>
 	);
