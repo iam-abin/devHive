@@ -34,6 +34,7 @@ const JobApplicationsPage = lazy(()=> import("../pages/job-pages/recruiter/JobAp
 const JobApplicationDetailsPage = lazy(()=> import("../pages/job-pages/recruiter/JobApplicationDetailsPage"))
 const CandidateProfileDetailsPage = lazy(()=> import("../pages/profile/recruiter/CandidateProfileDetailsPage"))
 const ChatPageRecruiter = lazy(()=> import("../pages/chat/ChatPageRecruiter"))
+const ViewAllCandidatesPage = lazy(()=> import("../pages/recruiter/ViewAllCandidatesPage"))
 
 function RecruiterRouters() {
 	const isRecruiterLoggedIn = useSelector(
@@ -63,6 +64,7 @@ function RecruiterRouters() {
 					<Route path="/passwordReset" element={isRecruiterLoggedIn? <ResetPassword />: <Navigate to={"/recruiter/landing"} />} />
 
 
+					<Route path="/all-candidates" element={isRecruiterLoggedIn?<ViewAllCandidatesPage />:<Navigate to={"/recruiter/signin"} />} />
 				
 					<Route path="/all-jobs" element={isRecruiterLoggedIn?<AllJobsPage />:<Navigate to={"/recruiter/signin"} />} />
 					<Route path="/recruiter-added-jobs" element={isRecruiterLoggedIn?<AllAddedJobs />:<Navigate to={"/recruiter/signin"} />} />

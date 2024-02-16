@@ -28,8 +28,6 @@ const CandidateProfileDetailsPage: React.FC = () => {
 	}, [candidateId]);
 
 	return (
-		<>
-			<TopNavBarRecruiter />
 			<main className="h-screen flex items-center justify-center">
 				<div className="bg-gray-200 md:w-9/12 p-8 mt-60">
 					<div className="w-md mx-auto bg-white p-8 rounded shadow-md">
@@ -178,7 +176,6 @@ const CandidateProfileDetailsPage: React.FC = () => {
 					</div>
 				</div>
 			</main>
-		</>
 	);
 };
 

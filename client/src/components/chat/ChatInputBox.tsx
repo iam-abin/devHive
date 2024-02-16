@@ -3,7 +3,7 @@ import { FaRegPaperPlane } from 'react-icons/fa';
 
 const ChatInputBox: React.FC<{ onSend: (message: string) => void }> = ({ onSend }) => {
   const [message, setMessage] = useState('');
-
+  
   const handleSend = () => {
     if (message.trim() !== '') {
       onSend(message);

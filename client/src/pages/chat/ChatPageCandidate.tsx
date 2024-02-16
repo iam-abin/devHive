@@ -1,17 +1,18 @@
 import { useEffect, useRef, useState } from "react";
-import ChatImage from "../../assets/chat/double-chat-bubble-icon.svg";
+import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { FaSearch } from "react-icons/fa";
+
+import ChatImage from "../../assets/chat/double-chat-bubble-icon.svg";
 import TopNavBarCandidate from "../../components/navBar/TopNavBarCandidate";
 import ChatRoomList from "../../components/chat/ChatRoomList";
 import Message from "../../components/chat/Message";
 import ChatBoxTopBar from "../../components/chat/ChatBoxTopBar";
 import ChatInputBox from "../../components/chat/ChatInputBox";
 import { getAConversationApi } from "../../axios/apiMethods/chat-service/chat";
-import { useSelector } from "react-redux";
 import { RootState } from "../../redux/reducer/reducer";
-
 import socket from "../../config/socket";
-import { useParams } from "react-router-dom";
+
 
 const ChatPageCandidate = () => {
 	const candidateData: any = useSelector(
@@ -66,8 +67,8 @@ const ChatPageCandidate = () => {
 	useEffect(() => {
 		// Listen for "selectedChatRoomMessages" events and update the selectedChatRoomMessages state
 		socket.on("receiveMessage", (message) => {
-
-			if (message.result.roomId.toString() === selectedChatRoom?.id) {
+			console.log(message.result.roomId.toString() === selectedChatRoom?._id);
+			if (message.result.roomId.toString() === selectedChatRoom?._id) {
 				console.log("setting setSelectedChatRoomMessages");
 
 				setSelectedChatRoomMessages([
@@ -92,20 +93,15 @@ const ChatPageCandidate = () => {
 	const sendMessage = (message: string) => {
 		const messageToSend = {
 			senderId: candidateData.id,
-			roomId: selectedChatRoom.id,
+			roomId: selectedChatRoom._id,
 			textMessage: message,
 		};
-		// console.log("--------sending message to socket---------");
-		// console.log(messageToSend);
 		socket.emit("sendMessage", messageToSend);
-		// console.log("--------sending message to socket---------");
 	};
 
 	const handleChatRoomClick = async (room: any) => {
-		// console.log("??????????????inside handleChatRoomClick room ", room);
 		setSelectedChatRoom(room);
-		const conversations = await getAConversationApi(room.id);
-		// console.log("ccccccccccccccccccconversation", conversations);
+		const conversations = await getAConversationApi(room._id);
 		setSelectedChatRoomMessages(conversations.data);
 	};
 
@@ -118,11 +114,17 @@ const ChatPageCandidate = () => {
 		console.log("candidate ", candidateData.id);
 
 		const otherValue = chatRoom.users.filter(
-			(value: string) => value !== candidateData.id
+			(value: any) => value._id !== candidateData.id
 		);
 
+		console.log("/////////////", otherValue);
+		
+
 		for (let i = 0; i < onlineUsers.length; i++) {
-			if(onlineUsers[i].userId == otherValue){
+			console.log("oooooooooooooooo onlineUsers[i].userId == otherValue",onlineUsers[i].userId == otherValue[0]._id," oooooooooooo");
+			console.log("oooooooooooooooo onlineUsers[i].userId ",onlineUsers[i].userId," oooooooooooo");
+			console.log("oooooooooooooooo otherValue ",otherValue[0]._id," oooooooooooo");
+			if(onlineUsers[i].userId == otherValue[0]._id){
 				return true
 			}
 		}
@@ -134,10 +136,12 @@ const ChatPageCandidate = () => {
 		console.log("candidate ", candidateData.id);
 
 		const otherUser = chatRoom.users.filter(
-			(value: string) => value !== candidateData.id
+			(value: any) => value._id !== candidateData.id
 		);
 
-		return otherUser;
+		console.log("otherUser",otherUser);
+		
+		return otherUser
 	};
 
 	return (

@@ -39,6 +39,8 @@ export = {
 		
 		const user = await UserModel.findById(userId);
 		console.log("User found is ", user);
+		console.log("-------");
+		
 		
 		return user;
 	},

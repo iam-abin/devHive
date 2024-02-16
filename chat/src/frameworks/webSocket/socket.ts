@@ -52,11 +52,14 @@ export const onSocketConnection = (io: Server, socket: Socket) => {
 	socket.on(
 		"createChatRoom",
 		async (senderId: string, recepientId: string) => {
+			
 			try {
 				const senderData = await userRepository.findUserById(senderId);
+				
 				const recipientData = await userRepository.findUserById(
 					recepientId
 				);
+
 				if (!senderData)
 					throw new BadRequestError("sender is not in user db");
 				if (!recipientData)
@@ -104,6 +107,8 @@ export const onSocketConnection = (io: Server, socket: Socket) => {
 
 		try {
 			const { senderId, roomId, textMessage } = data;
+			console.log("/////",data,"///////");
+			
 			console.log("senderId", senderId);
 			console.log("roomId", roomId);
 			console.log("textMessage", textMessage);
@@ -111,6 +116,9 @@ export const onSocketConnection = (io: Server, socket: Socket) => {
 			if (!textMessage)
 				throw new BadRequestError("please provide message");
 
+			// 	console.log("----senderId ", senderId);
+			
+			// console.log("----recepientId ", recepientId);
 			const senderData = await userRepository.findUserById(senderId);
 
 			if (!senderData)
@@ -155,7 +163,8 @@ export const onSocketConnection = (io: Server, socket: Socket) => {
 
 
 			if (user1?.socketId) {
-				console.log("inside user1 emit receiveMessage");
+				console.log("inside user1 emit user1?.socketId", user1?.socketId);
+				console.log("inside user1 emit receiveMessage", message.result);
 				
 				io.to(user1.socketId).emit("receiveMessage", message);
 			}

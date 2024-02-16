@@ -13,7 +13,7 @@ interface CandidateInterface {
 	userId: string;
 }
 
-function AllCandidatesPage() {
+function ViewAllCandidatesPage() {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [pageCount, setpageCount] = useState(1);
 
@@ -72,4 +72,4 @@ function AllCandidatesPage() {
 	);
 }
 
-export default AllCandidatesPage;
+export default ViewAllCandidatesPage;
