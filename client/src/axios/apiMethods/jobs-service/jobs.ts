@@ -120,6 +120,15 @@ export const getAJobApplicationApi = async (jobApplicationId: string): Promise<a
     return response.data;
 };
 
+export const getAnAppliedJobApi = async (jobApplicationId: string): Promise<any> => {
+    console.log("in getAJobApplication api", jobApplicationId);
+    
+    const response: any = await candidateApiCalls("get", jobApiUrlConfig.getAnAppliedJobUrl(jobApplicationId));
+    console.log("response is",response.data);
+
+    return response.data;
+};
+
 export const getAllCandidateAppliedJobsApi = async (candidateId: string, currentPage: number): Promise<any> => {
     console.log("in getAllAppliedJobs api", candidateId);
     

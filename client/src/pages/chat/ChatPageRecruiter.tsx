@@ -51,7 +51,7 @@ const ChatPageRecruiter = () => {
 		socket.on("getActiveUsers", (users) => {
 			setOnlineUsers(users);
 		});
-		console.log(socket); // Ensure that the socket is created here
+		// console.log(socket); // Ensure that the socket is created here
 	}, [recruiterData?._id]);
 
 	useEffect(() => {
@@ -65,8 +65,6 @@ const ChatPageRecruiter = () => {
 	useEffect(() => {
 		// Listen for "selectedChatRoomMessages" events and update the selectedChatRoomMessages state
 		socket.on("receiveMessage", (message) => {
-			console.log(message.result.roomId.toString() === selectedChatRoom?._id);
-
 			if (message.result.roomId.toString() === selectedChatRoom?._id) {
 				setSelectedChatRoomMessages([
 					...selectedChatRoomMessages,
@@ -107,19 +105,13 @@ const ChatPageRecruiter = () => {
 	console.log("selected chatRoom is --->>>", selectedChatRoom);
 
 	const isUserOnline = (chatRoom: any) => {
-		console.log("daaaaaa?????? ",chatRoom);
-		
-		// const otherValue = chatRoom.users.filter(
-		// 	(value: any) => value?._id !== recruiterData.id
-		// );
-
 		const otherValue = chatRoom.users.filter(
 			(value: any) => value?._id !== recruiterData.id
 		);
 		for (let i = 0; i < onlineUsers.length; i++) {
-			console.log("oooooooooooooooo onlineUsers[i].userId == otherValue",onlineUsers[i].userId == otherValue[0]._id," oooooooooooo");
-			console.log("oooooooooooooooo onlineUsers[i].userId ",onlineUsers[i].userId," oooooooooooo");
-			console.log("oooooooooooooooo otherValue ",otherValue[0]._id," oooooooooooo");
+			// console.log("oooooooooooooooo onlineUsers[i].userId == otherValue",onlineUsers[i].userId == otherValue[0]._id," oooooooooooo");
+			// console.log("oooooooooooooooo onlineUsers[i].userId ",onlineUsers[i].userId," oooooooooooo");
+			// console.log("oooooooooooooooo otherValue ",otherValue[0]._id," oooooooooooo");
 			if(onlineUsers[i].userId == otherValue[0]._id){
 				return true
 			}
@@ -131,14 +123,9 @@ const ChatPageRecruiter = () => {
 	};
 
 	const getReceiver = (chatRoom: any) => {
-		console.log(" getReceiver  ", chatRoom.users);
-		console.log("recruiter ", recruiterData.id);
-
 		const otherUser = chatRoom.users.filter(
-			(value: any) => value._id !== recruiterData.id
+			(value: any) => value?._id !== recruiterData?.id
 		);
-		console.log("otherValue", otherUser);
-
 		return otherUser;
 	};
 

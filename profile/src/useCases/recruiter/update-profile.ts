@@ -12,6 +12,7 @@ export = (dependencies: any) => {
 	}
 
 	const execute = async (existingData: any, updatedData: any) => {
+		console.log("existingData", existingData);
 		console.log("updatedData", updatedData);
 		
 		console.log("hgftd");
@@ -25,7 +26,7 @@ export = (dependencies: any) => {
 		// }
 
 
-		return await recruiterProfileRepository.updateRecruiterProfile(existingData.userId,updatedData);
+		return await recruiterProfileRepository.updateRecruiterProfile(existingData._id,updatedData);
 	};
 
 	return { execute };

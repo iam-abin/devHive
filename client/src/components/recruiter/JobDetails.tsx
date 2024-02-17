@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { RootState } from "../../redux/reducer/reducer";
+import { formatDate } from "../../utils/date-format";
 
 const JobDetails: React.FC<{
 	jobDetails: any;
@@ -9,6 +10,7 @@ const JobDetails: React.FC<{
 	handleApplyJob?: any;
 	handleGoBack?: any;
 }> = ({ jobDetails, handleEditJob, handleApplyJob, handleGoBack }) => {
+	console.log("jobDetails in JobDetails component:", jobDetails);
 	const location = useLocation();
 
 	const isRecruiterPage = location.pathname.includes("recruiter");
@@ -49,9 +51,7 @@ const JobDetails: React.FC<{
 							Posted on :
 							<p>
 								{jobDetails
-									? new Date(
-											jobDetails.createdAt
-									  ).toLocaleDateString()
+									? formatDate(jobDetails.createdAt) 
 									: "Loading..."}
 							</p>
 						</div>
@@ -98,12 +98,20 @@ const JobDetails: React.FC<{
 						</div>
 					)}
 
-					{jobDetails && jobDetails.recruiterId && (
+					{/* {jobDetails && jobDetails.recruiterId && (
 						<div className="mb-4">
 							<h2 className="text-xl font-semibold mb-2">
 								recruiter
 							</h2>
 							<p>{jobDetails.recruiterId}</p>
+						</div>
+					)} */}
+					{jobDetails && jobDetails.recruiterId && (
+						<div className="mb-4">
+							<h2 className="text-xl font-semibold mb-2">
+								Recruiter
+							</h2>
+							<p>{jobDetails.recruiterId.name}</p>{" "}
 						</div>
 					)}
 
@@ -121,7 +129,7 @@ const JobDetails: React.FC<{
 							<h2 className="text-xl font-semibold mb-2">
 								Deadline
 							</h2>
-							<p>{jobDetails.deadline}</p>
+							<p>{formatDate(jobDetails.deadline) }</p>
 						</div>
 					)}
 
@@ -178,7 +186,11 @@ const JobDetails: React.FC<{
 										jobDetails.id
 									);
 
-									return handleApplyJob(jobDetails?.id, candidateData.id  , jobDetails?.recruiterId);
+									return handleApplyJob(
+										jobDetails?.id,
+										candidateData.id,
+										jobDetails?.recruiterId
+									);
 								}}
 							>
 								Apply Now

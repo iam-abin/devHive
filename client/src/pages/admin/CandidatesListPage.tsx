@@ -40,6 +40,9 @@ function CandidateManagementPage() {
 	};
 
 	const handleBlockUnblock = async (userId: string, isActive: boolean) => {
+		console.log("userId", userId);
+		console.log("isActive", isActive);
+		
 		Swal.fire({
 			title: `Do you want to ${
 				isActive ? "block" : "unblock"
@@ -60,7 +63,7 @@ function CandidateManagementPage() {
 				}
 
 				const candidates = candidatesData.map((candidate) => {
-					if (candidate.userId === userId) {
+					if (candidate.id === userId) {
 						return {
 							...candidate,
 							isActive: updatedCandidate.data.isActive,
@@ -94,10 +97,10 @@ function CandidateManagementPage() {
 
 		{
 			name: "View",
-			cell: (row: { userId: string }) => (
+			cell: (row: { id: string }) => (
 				<button
 					onClick={() => {
-						viewProfileDetails(row.userId);
+						viewProfileDetails(row.id);
 					}}
 					className="btn btn-info btn-sm w-24"
 				>
@@ -122,10 +125,10 @@ function CandidateManagementPage() {
 		},
 		{
 			name: "Action",
-			cell: (row: { userId: string; isActive: boolean }) => (
+			cell: (row: { id: string; isActive: boolean }) => (
 				<button
 					onClick={() => {
-						handleBlockUnblock(row.userId, row.isActive);
+						handleBlockUnblock(row.id, row.isActive);
 					}}
 					className={`btn ${
 						row.isActive

@@ -8,7 +8,7 @@ import {
 } from "../../../utils/signin-validation";
 import { notify } from "../../../utils/toastMessage";
 import { candidateSigninApi } from "../../../axios/apiMethods/auth-service/candidateAuth";
-import { setLoaded, setLoading } from "../../../redux/slice/loaderSlice/isLoading";
+// import { setLoaded, setLoading } from "../../../redux/slice/loaderSlice/isLoading";
 import { setCandidate } from "../../../redux/slice/candidateSlice/candidateDataSlice";
 import { RootState } from "../../../redux/reducer/reducer";
 import Loading from "../../../components/loading/Loading";
@@ -26,7 +26,7 @@ function CandidateSigninPage() {
 
 	const handleSubmit = async (userData: any) => {
 		try {
-			dispatch(setLoading());
+			// dispatch(setLoading());
 			const response = await candidateSigninApi(userData);
 			console.log("hiiii", response);
 			console.log("hiiii", response.data);
@@ -38,7 +38,7 @@ function CandidateSigninPage() {
 
 			notify(error.errors[0].message, "error");
 		} finally {
-			dispatch(setLoaded());
+			// dispatch(setLoaded());
 		}
 	};
 

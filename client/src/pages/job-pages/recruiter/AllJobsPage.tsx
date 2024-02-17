@@ -18,13 +18,7 @@ function AllJobsPage() {
 	const [jobs, setJobs] = useState([]);
 
 	const [searchTerm, setSearchTerm] = useState("");
-
-	// const handleEdit = async (id: string) => {
-	// 	console.log("id handle edit ", id);
-	// 	// dispatch(setRecruiterJobId(id))
-	// 	navigate("/recruiter/edit-job-details");
-	// };
-
+	
 	const handlePageChange = async ({ selected }: { selected: number }) => {
 		setCurrentPage(selected + 1);
 	};
@@ -66,17 +60,28 @@ function AllJobsPage() {
 							+ Create Job
 						</button>
 					</div>
-					<div className="flex-none gap-2 mb-5">
-						<div className="form-control">
-							<input
-								type="text"
-								placeholder="Search"
-								onChange={(e) => setSearchTerm(e.target.value)}
-								className="input input-bordered w-24 md:w-auto"
-							/>
+					
+						<div className="flex-none gap-2 mb-5">
+							<div className="form-control">
+								<input
+									type="text"
+									placeholder="Search"
+									onChange={(e) =>
+										setSearchTerm(e.target.value)
+									}
+									className="input input-bordered w-24 md:w-auto"
+								/>
+							</div>
 						</div>
-					</div>
+					
 				</div>
+				{filteredJobs.length <= 0 && (
+					<div className="flex justify-center items-center h-[39.7vh]">
+						<h1 className="font-bold text-3xl">
+							No jobs are listed yet
+						</h1>
+					</div>
+				)}
 
 				<div className="flex flex-col w-full">
 					{filteredJobs.map((job: any) => {
@@ -92,10 +97,12 @@ function AllJobsPage() {
 					})}
 				</div>
 			</div>
-			<Paginate
-				pageCount={pageCount}
-				handlePageChange={handlePageChange}
-			/>
+			{filteredJobs.length > 0 && (
+				<Paginate
+					pageCount={pageCount}
+					handlePageChange={handlePageChange}
+				/>
+			)}
 		</div>
 	);
 }

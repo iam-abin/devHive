@@ -61,24 +61,34 @@ function AllJobsPage() {
 						onChange={(e) => setSearchTerm(e.target.value)}
 					/>
 				</div>
-				<div className="mx-28">
-					{filteredJobs.map(
-						(job: any) =>
-							job.isActive && (
-								<JobCardAllJobs
-									job={job}
-									handleView={handleView}
-									formatDateFn={formatDate}
-								/>
-							)
-					)}
-				</div>
-				<div>
-					<Paginate
-						pageCount={pageCount}
-						handlePageChange={handlePageChange}
-					/>
-				</div>
+				{filteredJobs.length > 0 ? (
+					<>
+						<div className="mx-28">
+							{filteredJobs.map(
+								(job: any) =>
+									job.isActive && (
+										<JobCardAllJobs
+											job={job}
+											handleView={handleView}
+											formatDateFn={formatDate}
+										/>
+									)
+							)}
+						</div>
+						<div>
+							<Paginate
+								pageCount={pageCount}
+								handlePageChange={handlePageChange}
+							/>
+						</div>
+					</>
+				) : (
+					<>
+						<div className="flex justify-center items-center h-[39.7vh]">
+							<h1 className="font-bold text-3xl">No jobs are listed yet</h1>
+						</div>
+					</>
+				)}
 			</div>
 			<Footer />
 		</div>

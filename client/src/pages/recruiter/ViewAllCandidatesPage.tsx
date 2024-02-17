@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAllCandidatesApi } from "../../axios/apiMethods/admin-service/candidates";
 import CandidateCard from "../../components/cards/CandidateCard";
 import { getAllCandidatesProfilesApi } from "../../axios/apiMethods/profile-service/recruiter";
 import Paginate from "../../components/pagination/Paginate";
@@ -49,7 +48,7 @@ function ViewAllCandidatesPage() {
 
 	return (
 		<div>
-			<div className="text-center mx-24">
+			<div className="text-center mt-24">
 				{/* <SideNavBar /> */}
 				{/* <TableComponent columns={columns} data={candidatesData} /> */}
 				{candidatesData.length <= 0 ? (

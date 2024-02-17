@@ -1,44 +1,61 @@
+import { FaFacebookMessenger } from "react-icons/fa";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+
 import { RootState } from "../../../redux/reducer/reducer";
 import { recruiterGetProfileApi } from "../../../axios/apiMethods/profile-service/recruiter";
-import { useLocation, useNavigate } from "react-router-dom";
-import TopNavBarRecruiter from "../../../components/navBar/TopNavBarRecruiter";
 import TopNavBarCandidate from "../../../components/navBar/TopNavBarCandidate";
-import { FaFacebookMessenger } from "react-icons/fa";
+import Footer from "../../../components/footer/Footer";
+import { recruiterGetProfileByCandidateApi } from "../../../axios/apiMethods/profile-service/candidate";
 
 const RecruiterProfilePage: React.FC = () => {
 	const recruiterData: any = useSelector(
 		(state: RootState) => state.recruiterData.data
 	);
 
+	const { id } = useParams();
+	console.log("99999999999", id);
+	console.log("iam abbbbbbbbbbbbi");
+	
+
 	const location = useLocation();
 
 	const isCandidate = location.pathname.includes("candidate");
 
 	const [recruiterProfileData, setRecruiterProfileData] = useState<any>([]);
-	// const [updateCandidateProfileData, setUpdateCandidateProfileData] = useState<
-	// 	any
-	// >([]);
 
 	const navigate = useNavigate();
+	console.log("recruiterProfileData", recruiterProfileData);
+	console.log("isCandidate", isCandidate);
 
 	useEffect(() => {
 		(async () => {
-			console.log("before", recruiterData);
+			console.log("Entering useEffect");
+			console.log("Before", recruiterData);
+		 
+		 
+			try {
+				let recruiterProfile = null
+				if(isCandidate){
+					recruiterProfile = await recruiterGetProfileByCandidateApi(id!);
 
-			const { id } = recruiterData;
+				}else{
+					recruiterProfile = await recruiterGetProfileApi(recruiterData.id);
 
-			const candidateProfile = await recruiterGetProfileApi(id);
-			console.log("candidateGetProfileApi", candidateProfile);
-
-			setRecruiterProfileData(candidateProfile);
+				}
+			   console.log("recruiterProfile", recruiterProfile);
+		 
+			   setRecruiterProfileData(recruiterProfile);
+			} catch (error) {
+			   console.error("Error fetching recruiter profile:", error);
+			}
 		})();
-	}, []);
+	 },  []);
 	return (
 		<div>
 			<div>
-				{isCandidate && <TopNavBarCandidate /> }
+				{isCandidate && <TopNavBarCandidate />}
 				<main className="h-screen flex items-center justify-center">
 					<div className="bg-gray-100 min-h-screen flex">
 						{/* Main Content */}
@@ -63,7 +80,7 @@ const RecruiterProfilePage: React.FC = () => {
 											<h1 className="text-2xl font-bold text-gray-800">
 												{recruiterProfileData?.data
 													?.name ??
-													recruiterData.name}
+													"recruiterData.name"}
 											</h1>
 											<p className="text-gray-600">
 												Recruiter at ABC Company
@@ -72,13 +89,13 @@ const RecruiterProfilePage: React.FC = () => {
 									</div>
 									{isCandidate ? (
 										<FaFacebookMessenger
-										onClick={() =>
-											navigate(
-												`/candidate/chat/${recruiterProfileData?.data?.userId}` // Add the path to your chat page
-											)
-										}
-										className="text-3xl cursor-pointer"
-									/>
+											onClick={() =>
+												navigate(
+													`/candidate/chat/${recruiterProfileData?.data?.id}` // Add the path to your chat page
+												)
+											}
+											className="text-3xl cursor-pointer"
+										/>
 									) : (
 										<button
 											onClick={() =>
@@ -109,26 +126,40 @@ const RecruiterProfilePage: React.FC = () => {
 									</h2>
 									<p className="text-gray-600">
 										{recruiterProfileData?.email ??
-											recruiterData.email}
+											recruiterData?.email}
 									</p>
 								</div>
 
-								<div>
-									<h2 className="text-lg font-semibold text-gray-800 mb-2">
-										Phone
-									</h2>
-									<p className="text-gray-600">
-										{recruiterProfileData?.phone ??
-											recruiterData.phone}
-									</p>
-								</div>
+								{recruiterProfileData && (
+									<div>
+										<h2 className="text-lg font-semibold text-gray-800 mb-2">
+											Phone
+										</h2>
+										<p className="text-gray-600">
+											{recruiterProfileData?.phone ??
+												recruiterData?.phone}
+										</p>
+									</div>
+								)}
+
+								{!isCandidate && (
+									<div>
+										<h2 className="text-lg font-semibold text-gray-800 mb-2">
+											About
+										</h2>
+										<p className="text-gray-600">
+											{recruiterProfileData.data
+												?.gender ?? "Not specified"}
+										</p>
+									</div>
+								)}
 
 								<div>
 									<h2 className="text-lg font-semibold text-gray-800 mb-2">
 										About
 									</h2>
 									<p className="text-gray-600">
-										{recruiterProfileData?.about ??
+										{recruiterProfileData.data?.about ??
 											"Not specified"}
 									</p>
 								</div>
@@ -153,6 +184,7 @@ const RecruiterProfilePage: React.FC = () => {
 						</div>
 					</div>
 				</main>
+				{isCandidate && <Footer />}
 			</div>
 		</div>
 	);

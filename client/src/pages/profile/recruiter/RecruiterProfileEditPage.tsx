@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../redux/reducer/reducer";
-
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useNavigate } from "react-router-dom";
+
+import { RootState } from "../../../redux/reducer/reducer";
 import {
 	recruiterGetProfileApi,
 	updateRecruiterProfileApi,
 } from "../../../axios/apiMethods/profile-service/recruiter";
 import { notify } from "../../../utils/toastMessage";
-import TopNavBarRecruiter from "../../../components/navBar/TopNavBarRecruiter";
 
 interface ProfileFormData {
 	name: string;
@@ -57,7 +56,7 @@ function RecruiterProfileEditPage() {
 
 			if (data.data) {
 				notify("Profile updated successfully", "success");
-				navigate("/dashboard");
+				navigate("/recruiter/profile");
 			} else {
 				notify("Profile not updated", "error");
 			}
@@ -68,16 +67,16 @@ function RecruiterProfileEditPage() {
 	};
 
 	const initialProfileValues: ProfileFormData = {
-		name: profileDetails?.name ?? "",
-		email: profileDetails?.email ?? "",
+		name: profileDetails?.name ?? undefined,
+		email: profileDetails?.email ?? undefined,
 		phone: profileDetails?.phone ?? 0,
 		isVerified: profileDetails?.isVerified ?? false,
 		isActive: profileDetails?.isActive ?? false,
-		gender: profileDetails?.gender ?? "",
-		company_id: profileDetails?.company_id ?? "",
-		profile_image: profileDetails?.profile_image ?? "",
-		about: profileDetails?.about ?? "",
-		userId: profileDetails?.userId ?? "",
+		gender: profileDetails?.gender ?? undefined,
+		company_id: profileDetails?.company_id ?? undefined,
+		profile_image: profileDetails?.profile_image ?? undefined,
+		about: profileDetails?.about ?? undefined,
+		userId: profileDetails?.id ?? undefined,
 	};
 
 	return (

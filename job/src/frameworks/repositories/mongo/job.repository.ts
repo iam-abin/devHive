@@ -25,7 +25,7 @@ export = {
 			{ $set: data },
 			{ new: true }
 		);
-		// const updatedJob = await JobModel.findOneAndUpdate({ "_id": jobId }, { $set: data }, {new: true});
+		
 		console.log("in updateJob repository after update", updatedJob);
 		return updatedJob;
 	},
@@ -77,7 +77,18 @@ export = {
 	getAJob: async (id: string) => {
 		console.log(id, "in job repository");
 
-		const job = await JobModel.findById(id);
+		// const job = await JobModel.findById(id)
+		// const job = await JobModel.findById(id).populate('users')
+		const job = await JobModel.findById(id).populate({
+			path: 'recruiterId',
+			model: 'User', // Assuming your User model is named 'User'
+			// select: 'name email profileImgUrl userType', // Select the fields you want to populate
+		});
+
+		console.log("inside get A job  ============");
+		console.log(job);
+		console.log("inside get A job ============");
+
 		return job;
 	},
 };

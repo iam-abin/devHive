@@ -17,7 +17,7 @@ export const candidateRouter = (dependencies: DependenciesData) => {
 		viewAllJobFieldsDistinctValuesController,
 	} = jobsController(dependencies);
 
-	const { applyJobController, appliedJobsController } =
+	const { applyJobController, appliedJobsController, viewPliedJobApplicationController } =
 		candidateJobControllers(dependencies);
 
 	router.get("/all-jobs/:page", viewAllJobsController);
@@ -33,6 +33,8 @@ export const candidateRouter = (dependencies: DependenciesData) => {
 	router.post("/apply", applyJobController);
 
 	router.get("/applied-jobs/:candidateId/:page", appliedJobsController);
+
+	router.get("/job-application/:jobApplicationId", viewPliedJobApplicationController);
 
 	return router;
 };

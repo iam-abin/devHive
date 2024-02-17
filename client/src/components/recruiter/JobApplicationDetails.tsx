@@ -18,9 +18,9 @@ const JobApplicationDetails: React.FC<{
 	const isRecruiterPage = location.pathname.includes("recruiter");
 	const isCandidatePage = location.pathname.includes("candidate");
 
-	const candidateData: any = useSelector(
-		(state: RootState) => state.candidateData.data
-	);
+	// const candidateData: any = useSelector(
+	// 	(state: RootState) => state.candidateData.data
+	// );
 
 	if (isRecruiterPage) {
 		// Do something specific for the "recruiter" page
@@ -35,7 +35,7 @@ const JobApplicationDetails: React.FC<{
 	const handleViewRecruiter = () => {
 		console.log("clicked ha");
 
-		navigate("/candidate/recruiter-profile");
+		navigate(`/candidate/recruiter-profile/${jobApplicationDetails?.jobId?.recruiterId}`);
 	};
 
 	const handleChangeStatus = async (applicationStatus: string) => {
@@ -263,6 +263,7 @@ const JobApplicationDetails: React.FC<{
 						{isRecruiterPage ? (
 							<StatusChangeForm
 								handleChangeStatus={handleChangeStatus}
+								jobApplicationDetails={jobApplicationDetails}
 							/>
 						) : (
 							<div>

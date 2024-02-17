@@ -18,7 +18,7 @@ export = {
 	getProfileByUserId: async (userId: string): Promise<any> => {
 		console.log("in getProfileByuserId repository userId is " , userId);
 		
-		const candidate = await CandidateProfileModel.findOne({userId});
+		const candidate = await CandidateProfileModel.findById(userId);
 		return candidate;
 	},
 
@@ -39,7 +39,7 @@ export = {
 		console.log("inside uploadProfilePic repository id", id);
 		console.log("inside uploadProfilePic repository url", url);
 		
-		const candidate = await CandidateProfileModel.findOneAndUpdate({ "userId": id }, { $set:{ profile_image: url }} ,  {new: true});
+		const candidate = await CandidateProfileModel.findOneAndUpdate({ "_id": id }, { $set:{ profile_image: url }} ,  {new: true});
 		console.log("inside uploadProfilePic repository after upload", candidate);
 		return candidate;
 	},
@@ -49,7 +49,7 @@ export = {
 		console.log("inside uploadResume repository id", id);
 		console.log("inside uploadResume repository url", url);
 		
-		const candidate = await CandidateProfileModel.findOneAndUpdate({ "userId": id }, { $set:{ profile_image: url }} ,  {new: true});
+		const candidate = await CandidateProfileModel.findOneAndUpdate({ "_id": id }, { $set:{ resume: url }} ,  {new: true});
 		console.log("inside uploadResume repository after upload", candidate);
 		return candidate;
 	},

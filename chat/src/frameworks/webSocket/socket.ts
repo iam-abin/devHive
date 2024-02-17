@@ -55,6 +55,7 @@ export const onSocketConnection = (io: Server, socket: Socket) => {
 			
 			try {
 				const senderData = await userRepository.findUserById(senderId);
+				console.log("recepientId ",recepientId);
 				
 				const recipientData = await userRepository.findUserById(
 					recepientId

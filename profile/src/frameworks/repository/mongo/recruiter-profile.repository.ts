@@ -19,7 +19,10 @@ export = {
 	},
 
 	getProfileByUserId: async (userId: string): Promise<any> => {
-		const recruiter = await RecruiterProfileModel.findOne({ userId });
+		console.log("get getRecruiterProfileByUserId repo userId ",userId);
+		const recruiter = await RecruiterProfileModel.findById(userId);
+		console.log("get getRecruiterProfileByUserId repo ",recruiter);
+		
 		return recruiter;
 	},
 
@@ -30,8 +33,10 @@ export = {
 
 	// updating and block unblocking is also doing here
 	updateRecruiterProfile: async (id: string, data: any): Promise<any> => {
+		console.log(" in updateRecruiterProfile repo ", id);
+		
 		const recruiter = await RecruiterProfileModel.findOneAndUpdate(
-			{ userId: id },
+			{ _id: id },
 			{ $set: data },
 			{ new: true }
 		);
@@ -40,20 +45,16 @@ export = {
 
 	uploadProfilePic: async (id: string, data: any): Promise<any> => {
 		const recruiter = await RecruiterProfileModel.updateOne(
-			{ userId: id },
+			{ _id: id },
 			{ $set: { resume: data } }
 		);
 		return recruiter;
 	},
 
 	getCandidateResume: async (id: string): Promise<any> => {
-		const candidate = await RecruiterProfileModel.findOne({ userId: id });
+		const candidate = await RecruiterProfileModel.findById(id);
 		return candidate;
-	},
-
-
-
-	
+	},	
 };
 
 // export default repository();

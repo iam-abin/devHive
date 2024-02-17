@@ -29,7 +29,7 @@ export = (dependencies: DependenciesData)=>{
             about: candidate?.about,
             resume: candidate?.resume,
             experience: candidate?.experience,
-            userId: candidate?.userId,
+            userId: candidate?._id,
         })
 
         

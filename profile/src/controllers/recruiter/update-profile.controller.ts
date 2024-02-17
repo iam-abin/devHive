@@ -13,6 +13,8 @@ export = (dependencies: DependenciesData)=>{
         const updatedData = req.body;
         console.log("in recruiter update profile controller data: ",updatedData);
         const { userId } = req.body
+        console.log("in recruiter update profile controller recruiterId: ",userId);
+        
         const existingData = await getRecruiterProfileByUserIdUseCase(dependencies).execute(userId);
         
     console.log("existing data", existingData);

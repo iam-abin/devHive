@@ -1,4 +1,5 @@
 import schemas from "../../database/mongo/models";
+import { UserModel } from "../../database/mongo/models/users";
 
 const { JobModel, jobApplicationModel } = schemas;
 
@@ -14,6 +15,12 @@ export = {
 		const applicationExists = await jobApplicationModel.findOne({
 			_id: id,
 		});
+
+		// console.log("inside get A JobApplication ============");
+		// console.log(applicationExists);
+		
+		// console.log("inside get A JobApplication ============");
+		
 		return applicationExists;
 	},
 
@@ -76,7 +83,8 @@ export = {
 
 		const jobApplication = await jobApplicationModel
 			.findOne({ jobId: jobApplicationId, candidateId })
-			.populate({ path: "jobId", model: JobModel });
+			.populate({ path: "jobId", model: JobModel })
+			.populate({ path: "recruiterId", model: UserModel });
 		console.log("in getAnAppliedJobByCandidate2", jobApplication);
 
 		return jobApplication;

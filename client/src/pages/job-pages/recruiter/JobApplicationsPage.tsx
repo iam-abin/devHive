@@ -8,7 +8,7 @@ import {
 } from "../../../axios/apiMethods/jobs-service/jobs";
 import { RootState } from "../../../redux/reducer/reducer";
 import { useSelector } from "react-redux";
-import TopNavBarRecruiter from "../../../components/navBar/TopNavBarRecruiter";
+import { formatDate } from "../../../utils/date-format";
 
 interface JobInterface {
 	id: string;
@@ -89,7 +89,7 @@ function JobApplicationsPage() {
 		},
 		{
 			name: "Applied on",
-			selector: (row?: { createdAt: string }) => row?.createdAt,
+			selector: (row?: { createdAt: string }) => formatDate(row?.createdAt!) ,
 			sortable: true,
 		},
 		{
@@ -114,7 +114,9 @@ function JobApplicationsPage() {
 			</div>
 			
 			{jobsApplicationsData.length > 0 ? (
-				<TableComponent columns={columns} data={jobsApplicationsData} />
+				<div className="mx-14">
+					<TableComponent columns={columns} data={jobsApplicationsData} />
+				</div>
 			) : (
 				<div className="text-center text-7xl my-60 font-bold text-orange-800">
 					You haven't got any job applications yet

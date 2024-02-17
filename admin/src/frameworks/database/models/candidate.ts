@@ -2,13 +2,13 @@ import mongoose from "mongoose";
 
 // 1. An interface that describes the properties ,that are requried to create a new Candidate
 interface CandidateAttributes {
+	userId: string;
 	name: string;
 	email: string;
 	phone: number;
     profile_pic?: string;
 	isActive: boolean;
 	userType: string;
-	userId: string;
 
 	gender?: string;
 	currentLocation?: string;
@@ -22,13 +22,13 @@ interface CandidateAttributes {
 
 // 2. An interface that describes the properties ,that a Candidate Document has
 interface CandidateDocument extends mongoose.Document {
+	// userId: mongoose.Schema.Types.ObjectId;
 	name: string;
 	email: string;
 	phone: number;
     profile_pic?: string;
 	userType: string;
 	isActive: boolean;
-	userId: mongoose.Schema.Types.ObjectId;
 
 	gender?: string;
 	currentLocation?: string;
@@ -71,7 +71,7 @@ const candidateSchema = new mongoose.Schema(
 			type: Boolean,
 			required: true
 		},
-		userId: mongoose.Schema.Types.ObjectId,
+		// userId: mongoose.Schema.Types.ObjectId,
 
 		gender: {
 			type: String,
@@ -118,6 +118,7 @@ interface CandidateModel extends mongoose.Model<CandidateDocument> {
 candidateSchema.statics.buildCandidate = (attributes: CandidateAttributes) => {
 	return new CandidateModel({
 		// to create a new candidate document
+		_id: attributes.userId,
 		name: attributes.name,
 		email: attributes.email,
 		profile_pic: attributes.profile_pic,
@@ -125,7 +126,7 @@ candidateSchema.statics.buildCandidate = (attributes: CandidateAttributes) => {
 		phone: attributes.phone,
 		userType: attributes.userType,
 		isActive: attributes.isActive,
-		userId: new mongoose.Types.ObjectId(attributes.userId),
+		// userId: new mongoose.Types.ObjectId(attributes.userId),
 	});
 };
 

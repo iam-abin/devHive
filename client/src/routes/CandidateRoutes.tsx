@@ -62,7 +62,7 @@ function CandidateRoutes() {
 					<Route path="/application-details/:jobApplicationId" element={isCandidateLoggedIn?<JobApplicationDetailsPage />:<Navigate to={"/candidate/signin"} />} />
 				
 					{/* <Route path="/applied-jobs-details/:jobId" element={isCandidateLoggedIn?<JobDetailsPage />:<Navigate to={"/candidate/signin"} />} /> */}
-					<Route path="/recruiter-profile" element={isCandidateLoggedIn? <RecruiterProfilePage />: <Navigate to={"/candidate/signin"} />} />
+					<Route path="/recruiter-profile/:id" element={isCandidateLoggedIn? <RecruiterProfilePage />: <Navigate to={"/candidate/signin"} />} />
 					<Route path="/chat/:recepientId" element={isCandidateLoggedIn?<ChatPageCandidate />:<Navigate to={"/candidate/signin"} />} />
 					<Route path="*" element={<NotFound url={"/candidate"} />} />
 				</Routes>

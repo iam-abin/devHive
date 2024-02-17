@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 // 1. An interface that describes the properties ,that are requried to create a new Candidate
 interface CandidateAttributes {
+	userId?: string;
 	name: string;
 	email: string;
 	phone: number;
@@ -15,7 +16,6 @@ interface CandidateAttributes {
 	about: string;
 	resume: string;
 	experience: object;
-	userId: string;
 }
 // 2. An interface that describes the properties ,that a Candidate Document has
 interface CandidateDocument extends mongoose.Document {
@@ -33,7 +33,7 @@ interface CandidateDocument extends mongoose.Document {
 	about: string;
 	resume: string;
 	experience: object;
-	userId: mongoose.Schema.Types.ObjectId;
+	// userId: mongoose.Schema.Types.ObjectId;
 	createdAt: string;
 	updatedAt: string;
 }
@@ -93,7 +93,7 @@ const candidateSchema = new mongoose.Schema(
 		about: String,
 		resume: String,
 		experience: Object,
-		userId: mongoose.Schema.Types.ObjectId
+		// userId: mongoose.Schema.Types.ObjectId
 	},
 	{
 		// to reformat id and remove password,__v from response when converting to json (we can also use other approaches)
@@ -108,16 +108,6 @@ const candidateSchema = new mongoose.Schema(
 	}
 );
 
-// candidateSchema.pre("save", async function (next) {
-// 	try {
-// 		// Convert the string ID to a Mongoose ObjectId
-// 		this.userId = new mongoose.Types.ObjectId(this.userId as string);
-// 		next();
-// 	} catch (error) {
-// 		console.log(error);
-// 	}
-// });
-
 // 4. An interface that describes the properties ,that a candidate model has
 interface CandidateProfileModel extends mongoose.Model<CandidateDocument> {
 	buildCandidate(attributes: CandidateAttributes): CandidateDocument;
@@ -126,9 +116,11 @@ interface CandidateProfileModel extends mongoose.Model<CandidateDocument> {
 // 5.In Mongoose, you can also add custom functions to a model using statics.
 candidateSchema.statics.buildCandidate = (attributes: CandidateAttributes) => {
 	console.log("inside build candidate ", attributes);
-	const userId =  new mongoose.Types.ObjectId(attributes.userId);
-4
-	return new CandidateProfileModel({...attributes, userId});
+	// const userId =  new mongoose.Types.ObjectId(attributes.userId);
+	let userId: String | undefined = attributes.userId;
+	delete attributes.userId;
+
+	return new CandidateProfileModel({ _id: userId, ...attributes });
 };
 
 // 6. // 6.hover on 'Candidate' ,we can see that 'Candidate' is getting 'CandidateMdel', ie,a Second arg indicate returning type

@@ -11,7 +11,11 @@ import LeftNavBarRecruiter from "../../components/navBar/LeftNavBarRecruiter";
 const RecruiterLayout = () => {
 	const menus = [
 		{ title: "Dashboard", src: dashboard, to: "/recruiter" },
-		{ title: "Candidates", src: dashboard, to: "/recruiter/all-candidates" },
+		{
+			title: "Candidates",
+			src: dashboard,
+			to: "/recruiter/all-candidates",
+		},
 		{ title: "Jobs", src: finance, to: "/recruiter/all-jobs" },
 		{
 			title: "Added Jobs",
@@ -34,10 +38,12 @@ const RecruiterLayout = () => {
 
 			<div className="flex">
 				{/*left-nav-bar */}
-				<LeftNavBarRecruiter menus={menus} />
-				
+				<div className="sticky top-0 h-screen overflow-y-auto">
+					<LeftNavBarRecruiter menus={menus} />
+				</div>
+
 				{/* right-side */}
-				<div className="flex-1 bg-slate-400 h-full">
+				<div className="flex-1 overflow-y-auto bg-slate-400 h-screen">
 					{<Outlet />}
 				</div>
 			</div>

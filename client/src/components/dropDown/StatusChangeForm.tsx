@@ -7,6 +7,9 @@ const StatusChangeForm: React.FC<{
 	handleChangeStatus: (status: string) => void;
 	jobApplicationDetails?: any; // Add the prop for jobApplicationDetails
 }> = ({ handleChangeStatus, jobApplicationDetails }) => {
+
+	
+	
   
 	const [defaultStatus, setDefaultStatus] = useState("Reject");
 

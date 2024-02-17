@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import {
 	getAJobApi,
 	getAJobApplicationApi,
+	getAnAppliedJobApi,
 } from "../../../axios/apiMethods/jobs-service/jobs";
 import { useNavigate, useParams } from "react-router-dom";
 import JobApplicationDetails from "../../../components/recruiter/JobApplicationDetails";
 import TopNavBarCandidate from "../../../components/navBar/TopNavBarCandidate";
+import Footer from "../../../components/footer/Footer";
 
 function JobApplicationDetailsPage() {
 	const [jobApplicationDetails, setJobApplicationDetails] =
@@ -18,7 +20,7 @@ function JobApplicationDetailsPage() {
 				console.log("job application details useEffect jobApplicationId");
 				
 				if (jobApplicationId) {
-					const jobApplication = await getAJobApplicationApi(
+					const jobApplication = await getAnAppliedJobApi(
 						jobApplicationId
 					);
 					console.log(
@@ -43,6 +45,7 @@ function JobApplicationDetailsPage() {
 				jobApplicationDetails={jobApplicationDetails}
 				handleChangeApplicationStatus={undefined}
 			/>
+			<Footer />
 		</div>
 	);
 }

@@ -46,7 +46,7 @@ const AdminLayout = () => {
 		{ title: "Recruiters", src: finance, to: "/admin/recruiters" },
 		{ title: "jobs", src: finance, to: "/admin/jobs" },
 		{ title: "MemberShip", src: membership, to: "/admin/memberships" },
-		{ title: "Logout", src: logout, onClick: handleLogout, to: "/admin" },
+		{ title: "Logout", src: logout, onClick: handleLogout },
 	];
 	return (
 		<div className="flex">
@@ -54,7 +54,7 @@ const AdminLayout = () => {
 			<LeftNavBarAdmin menus={menus} />
 
 			{/* right-side */}
-			<div className="p-4 text-2xl overflow-auto flex-1 font-semibold bg-red-300 h-screen">
+			<div className="p-4 overflow-auto flex-1 font-semibold bg-red-300 h-screen">
 				{<Outlet />}
 			</div>
 		</div>
