@@ -1,21 +1,20 @@
 import { useEffect, useState } from "react";
-import { getAJobApi } from "../../../axios/apiMethods/jobs-service/jobs"; 
+import { getAJobApi } from "../../../axios/apiMethods/jobs-service/jobs";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import JobDetails from '../../../components/recruiter/JobDetails'
-import TopNavBarRecruiter from "../../../components/navBar/TopNavBarRecruiter";
+import JobDetails from "../../../components/recruiter/JobDetails";
 
 function JobDetailsPage() {
-  const [jobDetails, setJobDetails] = useState<any>(null);
+	const [jobDetails, setJobDetails] = useState<any>(null);
 	const navigate = useNavigate();
-	const { jobId } = useParams()
+	const { jobId } = useParams();
 	useEffect(() => {
 		const fetchJobDetails = async () => {
 			try {
-				if(jobId){
+				if (jobId) {
 					const job = await getAJobApi(jobId);
-          console.log("in job details page job is: ", job);
-          
+					console.log("in job details page job is: ", job);
+
 					setJobDetails(job.data);
 				}
 			} catch (error) {
@@ -31,12 +30,11 @@ function JobDetailsPage() {
 		console.log("id handle edit ", id);
 		navigate(`/recruiter/edit-job-details/${id}`);
 	};
-  return (
-    <div>
-		<TopNavBarRecruiter />
-      <JobDetails jobDetails={jobDetails} handleEditJob={handleEditJob} />
-    </div>
-  )
+	return (
+		<div>
+			<JobDetails jobDetails={jobDetails} handleEditJob={handleEditJob} />
+		</div>
+	);
 }
 
-export default JobDetailsPage
+export default JobDetailsPage;

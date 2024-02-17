@@ -56,8 +56,10 @@ function CandidateProfileEditPage() {
 
 	const handleSubmit = async (profileData: ProfileFormData) => {
 		try {
+			console.log("handleSubmit profiledata------------>", profileData);
 			const data = await updateCandidateProfileApi(profileData);
-
+			console.log("handleSubmit------------>", data);
+			
 			if (data.data) {
 				notify(data.message, "success");
 				navigate("/candidate/profile");
@@ -82,7 +84,7 @@ function CandidateProfileEditPage() {
 		about: profileDetails?.about ?? "",
 		resume: profileDetails?.resume ?? "",
 		experience: profileDetails?.experience ?? "",
-		userId: profileDetails?.userId ?? "",
+		userId: profileDetails?.id ?? "",
 	};
 
 	return (
@@ -300,32 +302,6 @@ function CandidateProfileEditPage() {
 											/>
 										</div>
 
-										{/* profile_image field */}
-										<div className="form-control w-6/6">
-											<label
-												htmlFor="profile_image"
-												className="label"
-											>
-												Profile Image URL
-											</label>
-											<Field
-												type="text"
-												id="profile_image"
-												name="profile_image"
-												className={`input input-primary w-full rounded-xl ${
-													errors.profile_image &&
-													touched.profile_image
-														? "input-error"
-														: ""
-												}`}
-											/>
-											<ErrorMessage
-												name="profile_image"
-												component="div"
-												className="error label-text-alt"
-											/>
-										</div>
-
 										{/* about field */}
 										<div className="form-control w-6/6">
 											<label
@@ -352,31 +328,6 @@ function CandidateProfileEditPage() {
 											/>
 										</div>
 
-										{/* resume field */}
-										<div className="form-control w-6/6">
-											<label
-												htmlFor="resume"
-												className="label"
-											>
-												Resume
-											</label>
-											<Field
-												type="text"
-												id="resume"
-												name="resume"
-												className={`input input-primary w-full rounded-xl ${
-													errors.resume &&
-													touched.resume
-														? "input-error"
-														: ""
-												}`}
-											/>
-											<ErrorMessage
-												name="resume"
-												component="div"
-												className="error label-text-alt"
-											/>
-										</div>
 
 										{/* experience field */}
 										<div className="form-control w-6/6">

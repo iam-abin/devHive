@@ -18,7 +18,7 @@ const ChatBoxTopBar: React.FC<{ receiver: any, isOnline: any }> = ({ receiver, i
 					</div>
 				</div>
 				<div className="flex flex-row w-full justify-between">
-					<h5>{receiver}</h5>
+					<h5>{receiver[0]?.name}</h5>
 					<p>{isOnline ? "online" : "offline"}</p>
 				</div>
 			</div>

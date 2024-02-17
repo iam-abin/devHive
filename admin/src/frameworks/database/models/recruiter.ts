@@ -97,6 +97,8 @@ recruiterSchema.statics.buildRecruiter = (attributes: RecruiterAttributes) => {
 	
 	return new RecruiterModel({
 		// to create a new recruiter document
+		// userId: new mongoose.Types.ObjectId(attributes.userId),
+		_id: attributes.userId,
 		name: attributes.name,
 		email: attributes.email,
 		phone: attributes.phone,
@@ -106,7 +108,6 @@ recruiterSchema.statics.buildRecruiter = (attributes: RecruiterAttributes) => {
         company: attributes.company,
         bio: attributes.bio,
         membership: attributes.membership,
-		userId: new mongoose.Types.ObjectId(attributes.userId),
         
 	});
 };

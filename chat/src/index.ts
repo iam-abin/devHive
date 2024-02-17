@@ -13,7 +13,6 @@ const start = async () => {
 		throw new Error("MONGO_URL_CHAT must be defined");
 	}
 
-
     //if we do not set JWT_SECRET_KEY
 	if (!process.env.JWT_SECRET_KEY) {
 		throw new Error("JWT_SECRET_KEY must be defined");
@@ -32,22 +31,21 @@ const start = async () => {
 
 	const userCreatedEvent = new UserCreatedEventConsumer(kafkaClient);
 	const userUpdatedEvent = new UserUpdatedEventConsumer(kafkaClient);
-
 	
-	// await userUpdatedEvent.subscribe();
-	// await userCreatedEvent.subscribe();
+	await userUpdatedEvent.subscribe();
+	await userCreatedEvent.subscribe();
 
 	httpServer.listen(3000, () => {
 		console.log("chat service Listening on port 3000....");
 	})
-		// .on("error", async () => {
-		// 	await userUpdatedEvent.disconnect();
-		// 	await userCreatedEvent.disconnect();
-		// })
-		// .on("close", async () => {
-		// 	await userUpdatedEvent.disconnect();
-		// 	await userCreatedEvent.disconnect();
-		// });
+		.on("error", async () => {
+			await userUpdatedEvent.disconnect();
+			await userCreatedEvent.disconnect();
+		})
+		.on("close", async () => {
+			await userUpdatedEvent.disconnect();
+			await userCreatedEvent.disconnect();
+		});
 };
 
 start();

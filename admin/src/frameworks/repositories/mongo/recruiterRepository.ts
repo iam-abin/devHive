@@ -17,14 +17,14 @@ export = {
 
 	// updating and block unblocking is also doing here
 	updateRecruiterProfile: async (userId: string, data: any): Promise<any> => {
-		const recruiter = await RecruiterModel.findOneAndUpdate({ "userId": userId }, { $set: data }, {new: true});
+		const recruiter = await RecruiterModel.findOneAndUpdate({ "_id": userId }, { $set: data }, {new: true});
 		return recruiter;
 	},
 
 	blockUnblock: async (userId: string) => {
 		console.log("blockUnblock repo recruiter userId", userId);
 
-		const recruiter = await RecruiterModel.findOne({userId});
+		const recruiter = await RecruiterModel.findById(userId)
 		if (!recruiter) {
 			throw new Error("recruiter not found");
 		}
@@ -36,7 +36,8 @@ export = {
 
 	getById: async (userId: string) => {
 		console.log(" in getRecruiterById useCase", userId);
-		const recruiter = await RecruiterModel.findOne({userId})
+		const recruiter = await RecruiterModel.findById(userId)
+		console.log("recruiter found is ", recruiter);
 		return recruiter;
 	},
 

@@ -39,3 +39,18 @@ export const uploadCandidateResumeProfileApi = async (userId: string,resumeData:
 
     return response.data;
 };
+
+
+export const recruiterGetProfileByCandidateApi = async (userId: string): Promise<any> => {
+    console.log(userId);
+
+    try {
+		const response: any = await candidateApiCalls("get", profileApiUrlConfig.getRecruiterProfileUrl(userId), userId);
+		console.log("response is ", response.data);
+	
+		return response.data;
+	} catch (error) {
+		console.log(error);
+		
+	}
+};

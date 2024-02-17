@@ -71,7 +71,7 @@ jobApplicationSchema.statics.buildJob = (attributes: jobApplicationAttributes) =
         ...attributes,
         jobId,
         candidateId,
-        recruiterId,
+        recruiterId
     });
 
     return jobApplication;

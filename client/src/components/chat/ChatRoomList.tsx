@@ -15,6 +15,8 @@ const ChatRoomList: React.FC<ChatRoomListProps> = ({
 }) => {
 	console.log("inside chatRoomList", selected);
 	console.log("inside chatRoomList", selected);
+	console.log("inside chatRoomList receiver ", receiver);
+	console.log("inside chatRoomList receiver?.name isOnline ", receiver[0]?.name, isOnline);
 
 	return (
 		<div
@@ -40,7 +42,7 @@ const ChatRoomList: React.FC<ChatRoomListProps> = ({
 				</div>
 				{/* <div className="flex flex-row w-full justify-between"> */}
 				<div className="flex flex-col w-full justify-between">
-					<h5>{receiver}</h5>
+					<h5>{receiver[0].name}</h5>
 					<span className="flex flex-row items-center">
 						<span
 							className={`${

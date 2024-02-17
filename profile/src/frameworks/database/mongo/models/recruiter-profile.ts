@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 // 1. An interface that describes the properties ,that are requried to create a new Candidate
 interface RecruiterAttributes {
+	userId?: string;
 	name: string;
 	email: string;
 	phone: number;
@@ -11,7 +12,6 @@ interface RecruiterAttributes {
 	company_id?: string;
 	profile_image?: string;
 	about?: string;
-	userId: string;
 	// isActive: boolean;
 }
 // 2. An interface that describes the properties ,that a Candidate Document has
@@ -26,7 +26,7 @@ interface RecruiterDocument extends mongoose.Document {
 	company_id?: mongoose.Schema.Types.ObjectId;
 	profile_image: string;
 	about: string;
-	userId: mongoose.Schema.Types.ObjectId;
+	// userId: mongoose.Schema.Types.ObjectId;
 	createdAt: string;
 	updatedAt: string;
 	// "membership": "no"
@@ -79,7 +79,7 @@ const recruiterSchema = new mongoose.Schema(
 		},
 		about: String,
 		company_id: mongoose.Schema.Types.ObjectId,
-		userId: mongoose.Schema.Types.ObjectId
+		// userId: mongoose.Schema.Types.ObjectId
 	},
 	{
 		// to reformat id and remove password,__v from response when converting to json (we can also use other approaches)
@@ -102,8 +102,16 @@ interface RecruiterProfileModel extends mongoose.Model<RecruiterDocument> {
 // 5.In Mongoose, you can also add custom functions to a model using statics.
 recruiterSchema.statics.buildRecruiter = (attributes: RecruiterAttributes) => {
 	console.log("inside build candidate ", attributes);
-	const userId =  new mongoose.Types.ObjectId(attributes.userId);
-	return new RecruiterProfileModel({...attributes, userId});
+	// const userId =  new mongoose.Types.ObjectId(attributes.userId);
+	let userId: String | undefined = attributes.userId;
+	delete attributes.userId;
+
+	console.log("--------------------------");
+	console.log("inside recruiter model attributes ", attributes);
+	console.log("--------------------------");
+	
+
+	return new RecruiterProfileModel({ _id: userId, ...attributes });
 };
 
 // 6. // 6.hover on 'Recruiter' ,we can see that 'Recruiter' is getting 'RecruiterProfileModel', ie,a Second arg indicate returning type

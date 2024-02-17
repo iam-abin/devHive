@@ -42,7 +42,6 @@ function JobApplicationDetailsPage() {
 	};
 	return (
 		<div>
-			<TopNavBarRecruiter />
 			<JobApplicationDetails
 				jobApplicationDetails={jobApplicationDetails}
 				handleChangeApplicationStatus={undefined}

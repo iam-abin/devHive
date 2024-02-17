@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const LeftNavBarRecruiter: React.FC<{ menus: any }> = ({ menus }) => {
 	return (
-		<div className="w-56 duration-200 h-screen p-5 pt-8 bg-primary relative">
+		<div className="w-56 duration-200 h-[89vh] p-5 bg-primary relative">
 			<ul>
 				{menus.map((menu: any, index: number) => {
 					return (

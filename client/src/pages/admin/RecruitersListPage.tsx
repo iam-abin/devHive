@@ -61,7 +61,7 @@ function RecruiterManagementPage() {
 				}
 
 				const recruiters = recruitersData.map((recruiter) => {
-					if (recruiter.userId === userId) {
+					if (recruiter.id === userId) {
 						return {
 							...recruiter,
 							isActive: updatedRecruiter.data.isActive,
@@ -95,10 +95,10 @@ function RecruiterManagementPage() {
 
 		{
 			name: "View",
-			cell: (row: { userId: string }) => (
+			cell: (row: { id: string }) => (
 				<button
 					onClick={() => {
-						viewProfileDetails(row.userId);
+						viewProfileDetails(row.id);
 					}}
 					className="btn btn-info btn-sm w-24"
 				>
@@ -123,10 +123,10 @@ function RecruiterManagementPage() {
 		},
 		{
 			name: "Action",
-			cell: (row: { userId: string; isActive: boolean }) => (
+			cell: (row: { id: string; isActive: boolean }) => (
 				<button
 					onClick={() => {
-						handleBlockUnblock(row.userId, row.isActive);
+						handleBlockUnblock(row.id, row.isActive);
 					}}
 					className={`btn ${
 						row.isActive

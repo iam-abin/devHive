@@ -24,6 +24,8 @@ const jobApiUrlConfig = {
 		`${RECRUITER_JOB_URL}/job-applications/${recruiterId}`,
 	getAJobApplicationUrl: (jobApplicationId: string) =>
 		`${RECRUITER_JOB_URL}/job-application/${jobApplicationId}`,
+	getAnAppliedJobUrl: (jobApplicationId: string) =>
+	`${CANDIDATE_JOB_URL}/job-application/${jobApplicationId}`,
 	changeJobApplicationStatusUrl: (jobApplicationId: string) =>
 		`${RECRUITER_JOB_URL}/change-application-status/${jobApplicationId}`,
 };

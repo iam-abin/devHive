@@ -88,12 +88,15 @@ function AppliedJobsPage() {
 	return (
 		<div>
 			<TopNavBarCandidate />
-			<div className="flex items-center justify-center mt-5 mb-10">
-				<h1 className="text-3xl font-bold">My Applied Jobs</h1>
-			</div>
-			<div className="pb-20">
+			{/* <div className="pb-20"> */}
 				{appliedJobsData.length > 0 ? (
 					<>
+						<div className="flex items-center justify-center mt-5 mb-10">
+							<h1 className="text-3xl font-bold">
+								My Applied Jobs
+							</h1>
+						</div>
+						<div className="justify-center h-[70vh]">
 						{appliedJobsData.map((job: any) => (
 							<JobAppliedCard
 								key={job?.id}
@@ -101,6 +104,7 @@ function AppliedJobsPage() {
 								handleViewJob={viewApplicationDetails}
 							/>
 						))}
+						</div>
 
 						<Paginate
 							pageCount={pageCount}
@@ -108,15 +112,13 @@ function AppliedJobsPage() {
 						/>
 					</>
 				) : (
-					<div className="mx-40 p-6 bg-transparent rounded-md shadow-md">
-						<div className="flex items-center justify-center mb-4">
-							<p className="text-black ml-4 text-2xl font-bold">
+						<div className="flex justify-center items-center h-[55.7vh]">
+							<h1 className="font-bold text-3xl">
 								No jobs are Applied Yet yet
-							</p>
+							</h1>
 						</div>
-					</div>
 				)}
-			</div>
+			{/* </div> */}
 			<Footer />
 		</div>
 	);

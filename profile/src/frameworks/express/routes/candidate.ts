@@ -13,6 +13,7 @@ export const candidateRouter = (dependencies: DependenciesData) => {
 		updateCandidateProfileController,
 		uploadResumeController,
 		uploadCandidateProfilePicController,
+		viewRecruiterProfileByCandidateController,
 	} = candidateProfileControllers(dependencies);
 
 	// candidate authentication
@@ -32,7 +33,7 @@ export const candidateRouter = (dependencies: DependenciesData) => {
 		multerConfig.single("file"),
 		uploadResumeController
 	);
-	// router.put("/uploadResume", uploadResumeController);
+	router.get("/viewRecruiterProfile/:id", viewRecruiterProfileByCandidateController);
 
 	return router;
 };

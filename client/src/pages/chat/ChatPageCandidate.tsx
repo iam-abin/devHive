@@ -1,17 +1,18 @@
 import { useEffect, useRef, useState } from "react";
-import ChatImage from "../../assets/chat/double-chat-bubble-icon.svg";
+import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { FaSearch } from "react-icons/fa";
-import NavBarCandidate from "../../components/navBar/NavBarCandidate";
+
+import ChatImage from "../../assets/chat/double-chat-bubble-icon.svg";
+import TopNavBarCandidate from "../../components/navBar/TopNavBarCandidate";
 import ChatRoomList from "../../components/chat/ChatRoomList";
 import Message from "../../components/chat/Message";
 import ChatBoxTopBar from "../../components/chat/ChatBoxTopBar";
 import ChatInputBox from "../../components/chat/ChatInputBox";
 import { getAConversationApi } from "../../axios/apiMethods/chat-service/chat";
-import { useSelector } from "react-redux";
 import { RootState } from "../../redux/reducer/reducer";
-
 import socket from "../../config/socket";
-import { useParams } from "react-router-dom";
+
 
 const ChatPageCandidate = () => {
 	const candidateData: any = useSelector(
@@ -52,11 +53,10 @@ const ChatPageCandidate = () => {
 		socket.on("getActiveUsers", (users) => {
 			setOnlineUsers(users);
 		});
-		console.log(socket); // Ensure that the socket is created here
+		// console.log(socket); // Ensure that the socket is created here
 	}, [candidateData?._id]);
 
 	useEffect(() => {
-		console.log("//////////in socket io addRoomeUser useEffect");
 		socket.emit("createChatRoom", candidateData.id, recepientId);
 		socket.on("getAllChatRooms", (rooms) => {
 			setchatRooms(rooms);
@@ -66,10 +66,7 @@ const ChatPageCandidate = () => {
 	useEffect(() => {
 		// Listen for "selectedChatRoomMessages" events and update the selectedChatRoomMessages state
 		socket.on("receiveMessage", (message) => {
-
-			if (message.result.roomId.toString() === selectedChatRoom?.id) {
-				console.log("setting setSelectedChatRoomMessages");
-
+			if (message.result.roomId.toString() === selectedChatRoom?._id) {
 				setSelectedChatRoomMessages([
 					...selectedChatRoomMessages,
 					message.result,
@@ -92,20 +89,15 @@ const ChatPageCandidate = () => {
 	const sendMessage = (message: string) => {
 		const messageToSend = {
 			senderId: candidateData.id,
-			roomId: selectedChatRoom.id,
+			roomId: selectedChatRoom._id,
 			textMessage: message,
 		};
-		// console.log("--------sending message to socket---------");
-		// console.log(messageToSend);
 		socket.emit("sendMessage", messageToSend);
-		// console.log("--------sending message to socket---------");
 	};
 
 	const handleChatRoomClick = async (room: any) => {
-		// console.log("??????????????inside handleChatRoomClick room ", room);
 		setSelectedChatRoom(room);
-		const conversations = await getAConversationApi(room.id);
-		// console.log("ccccccccccccccccccconversation", conversations);
+		const conversations = await getAConversationApi(room._id);
 		setSelectedChatRoomMessages(conversations.data);
 	};
 
@@ -114,15 +106,12 @@ const ChatPageCandidate = () => {
 	console.log("selected chatRoom is --->>>", selectedChatRoom);
 
 	const isUserOnline = (chatRoom: any) => {
-		console.log("isUserOnline ", chatRoom.users);
-		console.log("candidate ", candidateData.id);
-
 		const otherValue = chatRoom.users.filter(
-			(value: string) => value !== candidateData.id
+			(value: any) => value._id !== candidateData.id
 		);
 
 		for (let i = 0; i < onlineUsers.length; i++) {
-			if(onlineUsers[i].userId == otherValue){
+			if(onlineUsers[i]?.userId == otherValue[0]?._id){
 				return true
 			}
 		}
@@ -130,19 +119,16 @@ const ChatPageCandidate = () => {
 	};
 
 	const getReceiver = (chatRoom: any) => {
-		console.log(" getReceiver  ", chatRoom.users);
-		console.log("candidate ", candidateData.id);
-
 		const otherUser = chatRoom.users.filter(
-			(value: string) => value !== candidateData.id
+			(value: any) => value._id !== candidateData.id
 		);
-
-		return otherUser;
+		
+		return otherUser
 	};
 
 	return (
 		<>
-			<NavBarCandidate />
+			<TopNavBarCandidate />
 			<div className="bg-white  h-[92vh] flex justify-center items-center">
 				<div className="bg-slate-200 h-max-[88vh] w-[90vw] flex rounded-md">
 					{/* Left */}

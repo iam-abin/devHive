@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAllCandidatesApi } from "../../axios/apiMethods/admin-service/candidates";
 import CandidateCard from "../../components/cards/CandidateCard";
 import { getAllCandidatesProfilesApi } from "../../axios/apiMethods/profile-service/recruiter";
 import Paginate from "../../components/pagination/Paginate";
@@ -13,7 +12,7 @@ interface CandidateInterface {
 	userId: string;
 }
 
-function AllCandidatesPage() {
+function ViewAllCandidatesPage() {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [pageCount, setpageCount] = useState(1);
 
@@ -49,7 +48,7 @@ function AllCandidatesPage() {
 
 	return (
 		<div>
-			<div className="text-center mx-24">
+			<div className="text-center mt-24">
 				{/* <SideNavBar /> */}
 				{/* <TableComponent columns={columns} data={candidatesData} /> */}
 				{candidatesData.length <= 0 ? (
@@ -72,4 +71,4 @@ function AllCandidatesPage() {
 	);
 }
 
-export default AllCandidatesPage;
+export default ViewAllCandidatesPage;

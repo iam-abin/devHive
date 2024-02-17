@@ -12,14 +12,14 @@ export = {
 	},
 
 	updateUser: async (userId: string, data: any): Promise<any> => {
-		const user = await UserModel.findOneAndUpdate({ "userId": userId }, { $set: data }, {new: true});
+		const user = await UserModel.findOneAndUpdate({ "_id": userId }, { $set: data }, {new: true});
 		return user;
 	},
 
 	findUserById: async (userId: string) => {
 		console.log("inside get user by userId repo ", userId , typeof userId);
 		
-		const user = await UserModel.findOne({userId: userId});
+		const user = await UserModel.findById(userId);
 		console.log("User found is ", user);
 		
 		return user;

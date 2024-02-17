@@ -120,8 +120,6 @@ function LandingPage() {
 				<NavBarLanding />
 			)}
 
-			
-
 			<div>
 				<div>
 					<div
@@ -183,10 +181,10 @@ function LandingPage() {
 							</div>
 						)}
 					</div>
-					<Paginate
+					{jobs?.length > 0 && <Paginate
 						pageCount={pageCount}
 						handlePageChange={handlePageChange}
-					/>
+					/>}
 				</div>
 			</div>
 			<div>

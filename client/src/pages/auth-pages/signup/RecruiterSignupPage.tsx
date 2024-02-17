@@ -33,6 +33,9 @@ function RecruiterSignupPage() {
 			dispatch(setLoading());
 			const response = await recruiterSignupApi(userData);
 
+			console.log("in handle submit recruiter signup data", userData);
+			
+
 			console.log("Hello", response);
 			Swal.fire({
 				text: response?.message || "Email sendedddd",

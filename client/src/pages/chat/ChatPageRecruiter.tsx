@@ -1,17 +1,16 @@
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
-import ChatImage from "../../assets/chat/double-chat-bubble-icon.svg";
 import { FaSearch } from "react-icons/fa";
+
+import ChatImage from "../../assets/chat/double-chat-bubble-icon.svg";
 import ChatRoomList from "../../components/chat/ChatRoomList";
 import Message from "../../components/chat/Message";
 import ChatBoxTopBar from "../../components/chat/ChatBoxTopBar";
 import ChatInputBox from "../../components/chat/ChatInputBox";
 import { getAConversationApi } from "../../axios/apiMethods/chat-service/chat";
-import { useSelector } from "react-redux";
 import { RootState } from "../../redux/reducer/reducer";
-
 import socket from "../../config/socket";
-import { useParams } from "react-router-dom";
-import TopNavBarRecruiter from "../../components/navBar/TopNavBarRecruiter";
 
 const ChatPageRecruiter = () => {
 	const recruiterData: any = useSelector(
@@ -52,7 +51,7 @@ const ChatPageRecruiter = () => {
 		socket.on("getActiveUsers", (users) => {
 			setOnlineUsers(users);
 		});
-		console.log(socket); // Ensure that the socket is created here
+		// console.log(socket); // Ensure that the socket is created here
 	}, [recruiterData?._id]);
 
 	useEffect(() => {
@@ -66,7 +65,7 @@ const ChatPageRecruiter = () => {
 	useEffect(() => {
 		// Listen for "selectedChatRoomMessages" events and update the selectedChatRoomMessages state
 		socket.on("receiveMessage", (message) => {
-			if (message.result.roomId.toString() === selectedChatRoom?.id) {
+			if (message.result.roomId.toString() === selectedChatRoom?._id) {
 				setSelectedChatRoomMessages([
 					...selectedChatRoomMessages,
 					message.result,
@@ -86,31 +85,18 @@ const ChatPageRecruiter = () => {
 		// 'selectedChatRoomMessages' changes
 	}, [selectedChatRoomMessages]);
 
-	// useEffect(() => {
-	// 	console.log("//////////get conversation useEffect");
-	// 	socket.emit("createChatRoom", recruiterData.id, recepientId);
-	// 	// socket.on("getAllChatRooms", (rooms) => {
-	// 	// 	setchatRooms(rooms);
-	// 	// });
-	// }, [selectedChatRoom]);
-
 	const sendMessage = (message: string) => {
 		const messageToSend = {
 			senderId: recruiterData.id,
-			roomId: selectedChatRoom.id,
+			roomId: selectedChatRoom._id,
 			textMessage: message,
 		};
-		// console.log("--------sending message to socket---------");
-		// console.log(messageToSend);
 		socket.emit("sendMessage", messageToSend);
-		// console.log("--------sending message to socket---------");
 	};
 
 	const handleChatRoomClick = async (room: any) => {
-		// console.log("??????????????inside handleChatRoomClick room ", room);
 		setSelectedChatRoom(room);
-		const conversations = await getAConversationApi(room.id);
-		// console.log("ccccccccccccccccccconversation", conversations);
+		const conversations = await getAConversationApi(room._id);
 		setSelectedChatRoomMessages(conversations.data);
 	};
 
@@ -120,9 +106,15 @@ const ChatPageRecruiter = () => {
 
 	const isUserOnline = (chatRoom: any) => {
 		const otherValue = chatRoom.users.filter(
-			(value: string) => value !== recruiterData.id
+			(value: any) => value?._id !== recruiterData.id
 		);
 		for (let i = 0; i < onlineUsers.length; i++) {
+			// console.log("oooooooooooooooo onlineUsers[i].userId == otherValue",onlineUsers[i].userId == otherValue[0]._id," oooooooooooo");
+			// console.log("oooooooooooooooo onlineUsers[i].userId ",onlineUsers[i].userId," oooooooooooo");
+			// console.log("oooooooooooooooo otherValue ",otherValue[0]._id," oooooooooooo");
+			if(onlineUsers[i].userId == otherValue[0]._id){
+				return true
+			}
 			if (onlineUsers[i].userId == otherValue) {
 				return true;
 			}
@@ -131,22 +123,16 @@ const ChatPageRecruiter = () => {
 	};
 
 	const getReceiver = (chatRoom: any) => {
-		console.log(" getReceiver  ", chatRoom.users);
-		console.log("recruiter ", recruiterData.id);
-
 		const otherUser = chatRoom.users.filter(
-			(value: string) => value !== recruiterData.id
+			(value: any) => value?._id !== recruiterData?.id
 		);
-		console.log("otherValue", otherUser);
-
 		return otherUser;
 	};
 
 	return (
 		<>
-			<TopNavBarRecruiter />
 			<div className="bg-white  h-[92vh] flex justify-center items-center">
-				<div className="bg-slate-200 h-max-[88vh] w-[90vw] flex rounded-md">
+				<div className="bg-slate-200 h-max-[88vh] w-[80vw] flex rounded-md">
 					{/* Left */}
 					<div className=" bg-slate-50 w-2/6 flex-col rounded-l-lg p-4 flex gap-2 ">
 						<div className="rounded-3xl gap-2 bg-white p-3 flex items-center shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px]">
