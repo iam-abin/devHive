@@ -159,15 +159,14 @@ const JobApplicationDetails: React.FC<{
 							)}
 
 						{jobApplicationDetails &&
-							jobApplicationDetails?.jobId?.recruiterId && (
+							jobApplicationDetails?.recruiterId && (
 								<div className="mb-4">
 									<h2 className="text-xl font-semibold mb-2">
 										recruiter
 									</h2>
 									<p>
 										{
-											jobApplicationDetails?.jobId
-												?.recruiterId
+											jobApplicationDetails?.recruiterId?.name
 										}
 									</p>
 									{isCandidatePage ? (

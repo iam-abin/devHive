@@ -1,5 +1,5 @@
 // import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useMatch, useNavigate } from "react-router-dom";
 import { RootState } from "../../redux/reducer/reducer";
 import { useDispatch, useSelector } from "react-redux";
 import { clearCandidate } from "../../redux/slice/candidateSlice/candidateDataSlice";
@@ -38,7 +38,7 @@ const TopNavBarCandidate = () => {
 		});
 	};
 
-    const menus = [
+	const menus = [
 		{ title: "Jobs", to: "/candidate/all-jobs" },
 
 		{
@@ -85,11 +85,17 @@ const TopNavBarCandidate = () => {
 								className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
 							>
 								{menus.map((menu: any, index: number) => {
+									const isActive = useMatch(menu.to);
 									return (
-										<li
-											key={index}
-										>
-											<Link to={menu.to}>
+										<li key={index}>
+											<Link
+												className={`${
+													isActive
+														? "font-bold bg-base-300"
+														: ""
+												}`}
+												to={menu.to}
+											>
 												{menu.title}
 											</Link>
 										</li>

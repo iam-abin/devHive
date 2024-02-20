@@ -159,10 +159,10 @@ function LandingPage() {
 					id="search-div"
 					className=" bg-gradient-to-r from-slate-900 via-purple-900 to-slate-900"
 				>
-					<div className="py-10 ">
+					<div className="py-5">
 						<SearchBar handleGetAllJobs={handleGetAllJobs} />
 					</div>
-					<div className="pb-20">
+					<div >
 						{jobs && jobs.length > 0 ? (
 							jobs.map((job: any) => (
 								<JobCard

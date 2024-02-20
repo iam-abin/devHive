@@ -13,7 +13,7 @@ export = (dependencies: DependenciesData) => {
 
 		// pagination
 		const page = Number(req.params.page) || 1;
-		const limit = Number(req.params.limit) || 2;
+		const limit = Number(req.params.limit) || 4;
 		const skip = (page - 1) * limit;
 
 		const jobs = await getAllJobsUseCase(dependencies).execute(skip, limit);

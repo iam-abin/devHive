@@ -50,6 +50,8 @@ function JobsManagementPage() {
 	};
 
 	const handleBlockUnblock = async (jobId: string, isActive: boolean) => {
+		console.log("isActive ",isActive);
+		
 		Swal.fire({
 			title: `Do you want to ${
 				isActive ? "block" : "unblock"
@@ -59,7 +61,9 @@ function JobsManagementPage() {
 			showCancelButton: true,
 			confirmButtonColor: "#3085d6",
 			cancelButtonColor: "#d33",
-			confirmButtonText: "Yes, Block",
+			confirmButtonText: `Yes, ${
+				isActive ? "block" : "unblock"
+			}`,
 		}).then(async (result) => {
 			if (result.isConfirmed) {
 				const updatedJob = await blockUnblockJobApi(jobId);

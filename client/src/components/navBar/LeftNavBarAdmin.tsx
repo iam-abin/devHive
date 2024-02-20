@@ -2,10 +2,11 @@ import { useState } from "react";
 import arrow from "../../assets/left-arrow.svg";
 import logo from "../../assets/favicon-32x32.png";
 
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const LeftNavBarAdmin: React.FC<{ menus: any }> = ({ menus }) => {
 	const [open, setOpen] = useState(true);
+	const location = useLocation();
 
 	return (
 		<>
@@ -38,10 +39,13 @@ const LeftNavBarAdmin: React.FC<{ menus: any }> = ({ menus }) => {
 				</div>
 				<ul className="pt-6">
 					{menus.map((menu: any, index: number) => {
+						const isActive = location.pathname === menu.to;
 						return (
 							<li
 								key={index}
-								className={`text-white text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-slate-400 rounded-md gap-5 mt-7`}
+								className={`text-white text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-sky-800 rounded-md gap-5 mt-7 ${
+									isActive ? "font-bold text-blue-500 bg-sky-800" : ""
+								  }`}
 								onClick={menu.onClick} // Add onClick event
 							>
 								<img src={menu.src} className="w-5" alt="" />

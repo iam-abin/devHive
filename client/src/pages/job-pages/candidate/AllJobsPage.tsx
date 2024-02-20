@@ -8,8 +8,8 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import Paginate from "../../../components/pagination/Paginate";
 import JobCardAllJobs from "../../../components/cards/JobCardAllJobs";
-import { formatDate } from "../../../utils/date-format";
 import Footer from "../../../components/footer/Footer";
+import JobCard from "../../../components/cards/JobCard";
 
 function AllJobsPage() {
 	const dispatch = useDispatch();
@@ -67,11 +67,13 @@ function AllJobsPage() {
 							{filteredJobs.map(
 								(job: any) =>
 									job.isActive && (
-										<JobCardAllJobs
-											job={job}
-											handleView={handleView}
-											formatDateFn={formatDate}
-										/>
+										// <JobCardAllJobs
+										// 	job={job}
+										// 	handleView={handleView}
+										// 	formatDateFn={formatDate}
+										// />
+										<JobCard 	job={job}
+											handleViewJob={handleView} />
 									)
 							)}
 						</div>

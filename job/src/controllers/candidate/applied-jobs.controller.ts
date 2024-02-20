@@ -10,7 +10,7 @@ export = (dependencies: DependenciesData)=>{
 
         // pagination
 		const page = Number(req.params.page) || 1;
-		const limit = Number(req.params.limit) || 1;
+		const limit = Number(req.params.limit) || 3;
 		const skip = (page - 1) * limit;
         console.log("in  appled jobs controller 1: ",candidateId);
 

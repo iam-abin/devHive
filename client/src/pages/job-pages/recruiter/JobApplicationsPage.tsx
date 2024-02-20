@@ -44,7 +44,7 @@ function JobApplicationsPage() {
 					recruiterData?.id
 				);
 				console.log(
-					"in useEffect getAllRecruiterAddedJobsApi jobs",
+					"in useEffect getAllJobsApplicationsForRecruiterApi",
 					response
 				);
 				setJobApplicationsData(response.data);
@@ -65,7 +65,7 @@ function JobApplicationsPage() {
 	const columns = [
 		{
 			name: "Candidate",
-			selector: (row?: {candidateId: string} ) => row?.candidateId,
+			selector: (row?: {candidateId?: {name: string}} ) => row?.candidateId?.name,
 			sortable: true,
 		},
 		{

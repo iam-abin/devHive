@@ -1,8 +1,9 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { RootState } from "../../redux/reducer/reducer";
 import { formatDate } from "../../utils/date-format";
+import { FaFacebookMessenger } from "react-icons/fa";
 
 const JobDetails: React.FC<{
 	jobDetails: any;
@@ -12,6 +13,7 @@ const JobDetails: React.FC<{
 }> = ({ jobDetails, handleEditJob, handleApplyJob, handleGoBack }) => {
 	console.log("jobDetails in JobDetails component:", jobDetails);
 	const location = useLocation();
+	const navigate = useNavigate();
 
 	const isRecruiterPage = location.pathname.includes("recruiter");
 	const isCandidatePage = location.pathname.includes("candidate");
@@ -51,7 +53,7 @@ const JobDetails: React.FC<{
 							Posted on :
 							<p>
 								{jobDetails
-									? formatDate(jobDetails.createdAt) 
+									? formatDate(jobDetails.createdAt)
 									: "Loading..."}
 							</p>
 						</div>
@@ -106,14 +108,31 @@ const JobDetails: React.FC<{
 							<p>{jobDetails.recruiterId}</p>
 						</div>
 					)} */}
-					{jobDetails && jobDetails.recruiterId && (
-						<div className="mb-4">
-							<h2 className="text-xl font-semibold mb-2">
-								Recruiter
-							</h2>
-							<p>{jobDetails.recruiterId.name}</p>{" "}
-						</div>
-					)}
+					<div className="flex flex-col">
+						{jobDetails && jobDetails.recruiterId && (
+							<>
+								<h2 className="text-xl font-semibold mb-2">
+									Recruiter
+								</h2>
+								<div className="mb-4">
+									<p>{jobDetails.recruiterId.name}</p>{" "}
+								</div>
+							</>
+						)}
+						{isCandidatePage && (
+							<div className="flex gap-4">
+								<p>Message: </p>{" "}
+								<FaFacebookMessenger
+									onClick={() =>
+										navigate(
+											`/candidate/chat/${jobDetails?.recruiterId?.id}` // Add the path to your chat page
+										)
+						 			}
+									className="text-3xl cursor-pointer"
+								/>
+							</div>
+						)}
+					</div>
 
 					{jobDetails && jobDetails.experience_required && (
 						<div className="mb-4">
@@ -129,7 +148,7 @@ const JobDetails: React.FC<{
 							<h2 className="text-xl font-semibold mb-2">
 								Deadline
 							</h2>
-							<p>{formatDate(jobDetails.deadline) }</p>
+							<p>{formatDate(jobDetails.deadline)}</p>
 						</div>
 					)}
 

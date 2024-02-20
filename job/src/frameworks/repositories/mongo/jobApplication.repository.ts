@@ -1,26 +1,29 @@
 import schemas from "../../database/mongo/models";
-import { UserModel } from "../../database/mongo/models/users";
 
-const { JobModel, jobApplicationModel } = schemas;
+const { JobModel, jobApplicationModel, UserModel } = schemas;
 
 export = {
 	applyJob: async (data: object) => {
 		const newApplication = await jobApplicationModel.create(data);
 		console.log("in applyJob repository");
-		
+
 		return newApplication;
 	},
 
 	getAJobApplication: async (id: string, data: object) => {
+		console.log(
+			".................................................................."
+		);
+
 		const applicationExists = await jobApplicationModel.findOne({
 			_id: id,
 		});
 
 		// console.log("inside get A JobApplication ============");
 		// console.log(applicationExists);
-		
+
 		// console.log("inside get A JobApplication ============");
-		
+
 		return applicationExists;
 	},
 
@@ -41,9 +44,11 @@ export = {
 	},
 
 	getCountOfCandidateAppliedJobs: async (id: string): Promise<number> => {
-		const totalJobs: number = await jobApplicationModel.countDocuments({candidateId: id})
-        console.log(totalJobs);
-        return totalJobs
+		const totalJobs: number = await jobApplicationModel.countDocuments({
+			candidateId: id,
+		});
+		console.log(totalJobs);
+		return totalJobs;
 	},
 
 	getAllJobApplicationsByRecruiterId: async (id: string) => {
@@ -51,7 +56,8 @@ export = {
 		// const jobApplications = await jobApplicationModel.find({},{recruiterId:id});
 		const jobApplications = await jobApplicationModel
 			.find({ recruiterId: id })
-			.populate({ path: "jobId", model: JobModel });
+			.populate({ path: "jobId", model: JobModel })
+			.populate({ path: "candidateId", model: UserModel });
 		console.log("in getAllJobApplicationsByRecruiterId", jobApplications);
 
 		return jobApplications;
@@ -70,15 +76,23 @@ export = {
 		// use populate
 		const jobApplications = await jobApplicationModel
 			.findOne({ _id: jobApplicationId })
-			.populate({ path: "jobId", model: JobModel });
+			.populate({ path: "jobId", model: JobModel })
+			.populate({ path: "candidateId", model: UserModel })
+			.populate({ path: "recruiterId", model: UserModel });
 		console.log("in getAllJobApplicationsByRecruiterId", jobApplications);
 
 		return jobApplications;
 	},
 
-	getAnAppliedJobByCandidate: async ( candidateId: string, jobApplicationId: string) => {
+	getAnAppliedJobByCandidate: async (
+		candidateId: string,
+		jobApplicationId: string
+	) => {
 		// use populate
-		console.log("in getAnAppliedJobByCandidate1 jobApplicationId", jobApplicationId);
+		console.log(
+			"in getAnAppliedJobByCandidate1 jobApplicationId",
+			jobApplicationId
+		);
 		console.log("in getAnAppliedJobByCandidate1 candidateId", candidateId);
 
 		const jobApplication = await jobApplicationModel
