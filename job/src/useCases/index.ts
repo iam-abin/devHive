@@ -1,6 +1,19 @@
-import { applyJobUseCase, getAllAppliedJobsUseCase, getNumberofCandidateAppliedJobsUseCase, getAnAppliedJobUseCase } from "./candidate";
+import {
+	applyJobUseCase,
+	getAllAppliedJobsUseCase,
+	getNumberofCandidateAppliedJobsUseCase,
+	getAnAppliedJobUseCase,
+} from "./candidate";
 
-import { filterJobUseCase, getAllJobsUseCase, getJobByIdUseCase, getNumberofJobsUseCase, getAllJobFieldsDistinctValuesUseCase } from "./job";
+import {
+	filterJobUseCase,
+	getAllJobsUseCase,
+	getJobByIdUseCase,
+	getNumberofJobsUseCase,
+	getAllJobFieldsDistinctValuesUseCase,
+	getSearchResultUseCase,
+	getSearchResultCountUseCase,
+} from "./job";
 
 import {
 	createJobUseCase,
@@ -10,7 +23,7 @@ import {
 	updateJobApplicationStatusUseCase,
 	getRecruiterCreatedJobsUseCase,
 	getAJobApplicationUseCase,
-	changeJobApplicationStatusUseCase
+	changeJobApplicationStatusUseCase,
 } from "./recruiter";
 
 export default {
@@ -24,6 +37,8 @@ export default {
 	getJobByIdUseCase,
 	getNumberofJobsUseCase,
 	getAllJobFieldsDistinctValuesUseCase,
+	getSearchResultUseCase,
+	getSearchResultCountUseCase,
 
 	createJobUseCase,
 	updateJobUseCase,
@@ -32,5 +47,5 @@ export default {
 	updateJobApplicationStatusUseCase,
 	getRecruiterCreatedJobsUseCase,
 	getAJobApplicationUseCase,
-	changeJobApplicationStatusUseCase
+	changeJobApplicationStatusUseCase,
 };

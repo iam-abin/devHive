@@ -74,6 +74,18 @@ export = {
 		return totalJobs;
 	},
 
+	getSearchResults: async (searchKey: string): Promise<number> => {
+		const searchedJobs: any = await JobModel.find({ jobTitle: { $regex: new RegExp(searchKey, 'i') } })
+		console.log("searchedJobs ",searchedJobs);
+		return searchedJobs;
+	},
+
+	getCountOfSearchResults : async (searchKey: string): Promise<number> => {
+		const searchedJobsCount: number = await JobModel.find({ jobTitle: { $regex: new RegExp(searchKey, 'i') } }).countDocuments();
+		console.log("searchedJobsCount ",searchedJobsCount);
+		return searchedJobsCount;
+	},
+
 	getAJob: async (id: string) => {
 		console.log(id, "in job repository");
 

@@ -8,7 +8,7 @@ export = (dependencies: DependenciesData) => {
 
 	return async (req: Request, res: Response) => {
 		console.log("in getAll job controller 1: ");
-		console.log("abin ",req.params.page);
+		console.log("req.params.page ",req.params.page);
 		
 
 		// pagination

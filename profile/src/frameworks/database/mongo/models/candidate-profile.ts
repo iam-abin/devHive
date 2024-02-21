@@ -14,7 +14,10 @@ interface CandidateAttributes {
 	keySkills: object;
 	profile_image: string;
 	about: string;
-	resume: string;
+	resume: {
+		filename: string,
+		url: string,
+	  };
 	experience: object;
 }
 // 2. An interface that describes the properties ,that a Candidate Document has
@@ -91,7 +94,10 @@ const candidateSchema = new mongoose.Schema(
 			// 	"https://res.cloudinary.com/dprxebwil/image/upload/v1679341215/Recruiter/recruiter-images.jpeg.jpg",
 		},
 		about: String,
-		resume: String,
+		resume: {
+			filename: String,
+			url: String,
+		  },
 		experience: Object,
 		// userId: mongoose.Schema.Types.ObjectId
 	},

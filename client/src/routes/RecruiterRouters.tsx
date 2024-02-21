@@ -9,6 +9,7 @@ import NotFound from "../pages/Error/NotFound";
 
 import RecruiterLayout from "../pages/layout/RecruiterLayout";
 import RecruiterDashBoard from "../pages/dashboard/RecruiterDashBoard";
+import CandidateProfilePage from "../pages/profile/candidate/CandidateProfilePage";
 
 
 
@@ -75,6 +76,10 @@ function RecruiterRouters() {
 					<Route path="/application-details/:jobApplicationId" element={isRecruiterLoggedIn?<JobApplicationDetailsPage />:<Navigate to={"/recruiter/signin"} />} />
 					<Route path="viewCandidateProfileDetails/:candidateId" element={isRecruiterLoggedIn?<CandidateProfileDetailsPage />:<Navigate to={"/recruiter/signin"} />} />
 					<Route path="/chat/:recepientId" element={isRecruiterLoggedIn?<ChatPageRecruiter />:<Navigate to={"/recruiter/signin"} />} />
+					<Route path="/candidate-profile/:candidateId" element={isRecruiterLoggedIn? <CandidateProfilePage />: <Navigate to={"/recruiter/landing"} />} />
+
+
+					
 				</Route>
 
 				<Route path="*" element={<NotFound url={"/recruiter"} />} />

@@ -33,9 +33,19 @@ const JobApplicationDetails: React.FC<{
 
 	const navigate = useNavigate();
 	const handleViewRecruiter = () => {
-		console.log("clicked ha");
+		console.log("clicked handleViewRecruiter");
 
-		navigate(`/candidate/recruiter-profile/${jobApplicationDetails?.jobId?.recruiterId}`);
+		navigate(
+			`/candidate/recruiter-profile/${jobApplicationDetails?.jobId?.recruiterId}`
+		);
+	};
+
+	const handleViewCandidate = () => {
+		console.log("clicked handleViewCandidate");
+
+		navigate(
+			`/recruiter/candidate-profile/${jobApplicationDetails?.candidateId?.id}`
+		);
 	};
 
 	const handleChangeStatus = async (applicationStatus: string) => {
@@ -105,6 +115,32 @@ const JobApplicationDetails: React.FC<{
 							</div>
 						</div>
 
+						{isRecruiterPage && (
+							<div className="mb-4">
+								<h2 className="text-xl font-semibold mb-2">
+									Candidate Details
+								</h2>
+								<p>
+									{jobApplicationDetails
+										? jobApplicationDetails?.candidateId
+												?.name
+										: "Loading..."}
+									<br />
+									{jobApplicationDetails
+										? jobApplicationDetails?.candidateId
+												?.email
+										: "Loading..."}
+									<br />
+									<button
+										className="btn bg-yellow-200"
+										onClick={handleViewCandidate}
+									>
+										view Candidate
+									</button>
+								</p>
+							</div>
+						)}
+
 						<div className="mb-4">
 							<h2 className="text-xl font-semibold mb-2">
 								Job Description
@@ -166,7 +202,8 @@ const JobApplicationDetails: React.FC<{
 									</h2>
 									<p>
 										{
-											jobApplicationDetails?.recruiterId?.name
+											jobApplicationDetails?.recruiterId
+												?.name
 										}
 									</p>
 									{isCandidatePage ? (
@@ -251,11 +288,17 @@ const JobApplicationDetails: React.FC<{
 							</h2>
 							<p>
 								{jobApplicationDetails
-									? formatCurrency(jobApplicationDetails?.jobId?.salary_min)
+									? formatCurrency(
+											jobApplicationDetails?.jobId
+												?.salary_min
+									  )
 									: "Loading..."}{" "}
-								- 
+								-
 								{jobApplicationDetails
-									? formatCurrency(jobApplicationDetails?.jobId?.salary_max)
+									? formatCurrency(
+											jobApplicationDetails?.jobId
+												?.salary_max
+									  )
 									: "Loading..."}
 							</p>
 						</div>

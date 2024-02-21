@@ -8,33 +8,6 @@ export = (dependencies: any)=>{
 		throw new Error("candidateProfileRepository should exist in dependencies");
 	}
 
-    // const cloudinaryUpload = (file: any) => {
-    //     const result = cloudinary.uploader.upload_stream(
-    //         { folder: 'devHiveImages' },
-    //         (error: any, result: any) => {
-    //             if (error) {
-    //                 console.error('Cloudinary upload error:', error);
-                    
-    //             } else {
-    //                 console.log('Cloudinary upload result:', result);
-    //             }
-    //         }
-    //     ).end(file.buffer);
-
-    //     return result;
-    // };
-
-
-    
-
-    // const execute = async (id: string, file: any)=>{
-    //     // const response: any = cloudinaryUpload(file)
-    //     console.log("inside upload resume usecase uploadresult ", response);
-    //     return await candidateProfileRepository.uploadResume(id, response?.secure_url);
-    // }
-
-    // return { execute }
-
     const execute = async (id: string, file: any) => {
 		try {
 			if (!file) {
@@ -42,7 +15,11 @@ export = (dependencies: any)=>{
 				return; // Return or handle accordingly
 			}
 
+			console.log("inside usecase resume file", file);
+			
+
 			const uploadResult: { public_id: string, url: string} = await new Promise((resolve, reject) => {
+			// const uploadResult: any = await new Promise((resolve, reject) => {
 				const cloudinary_upload_stream = cloudinary.uploader.upload_stream(
 					{ folder: "devHive_Resumes" },
 					(error, result: any) => {
@@ -55,18 +32,16 @@ export = (dependencies: any)=>{
 								public_id: result.public_id,
 								url: result.secure_url,
 							});
+							// resolve(result);
 						}
 					}
 				);
 
 				streamifier.createReadStream(file.buffer).pipe(cloudinary_upload_stream);
 			});
-
-			// Call your repository method with the result
-
+			
 			console.log("inside upload resume usecase uploadresult ", uploadResult);
-			// return await candidateProfileRepository.uploadProfilePic(id, uploadResult?.url);
-            return await candidateProfileRepository.uploadResume(id, uploadResult?.url);
+            return await candidateProfileRepository.uploadResume(id, uploadResult?.url, file.originalname );
 		} catch (error) {
 			console.error(error);
 			// Handle the error appropriately

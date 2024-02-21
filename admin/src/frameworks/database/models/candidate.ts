@@ -16,7 +16,10 @@ interface CandidateAttributes {
 	keySkills?: string[];
 	profile_image?: string;
 	about?: string;
-	resume?: string;
+	resume?: {
+		filename: string,
+		url: string,
+	  },
 	experience?: string;
 }
 
@@ -36,7 +39,10 @@ interface CandidateDocument extends mongoose.Document {
 	keySkills?: string[];
 	profile_image?: string;
 	about?: string;
-	resume?: string;
+	resume: {
+		filename: string,
+		url: string,
+	  },
 	experience?: string;
 
 	createdAt: string;
@@ -93,7 +99,10 @@ const candidateSchema = new mongoose.Schema(
 			// 	"https://res.cloudinary.com/dprxebwil/image/upload/v1679341215/Recruiter/recruiter-images.jpeg.jpg",
 		},
 		about: String,
-		resume: String,
+		resume: {
+			filename: String,
+			url: String,
+		  },
 		experience: String,
 	},
 	{
