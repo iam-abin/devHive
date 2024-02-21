@@ -104,7 +104,7 @@ function CandidateProfileEditPage() {
 							const { errors, touched } = formik;
 							return (
 								<div className="w-6/12 p-6">
-									<div className="mb-16">
+									<div className="mb-6">
 										<h1 className="text-center text-5xl font-bold">
 											Edit Profile
 										</h1>
@@ -271,32 +271,6 @@ function CandidateProfileEditPage() {
 											/>
 											<ErrorMessage
 												name="address"
-												component="div"
-												className="error label-text-alt"
-											/>
-										</div>
-
-										{/* keySkills field */}
-										<div className="form-control w-6/6">
-											<label
-												htmlFor="keySkills"
-												className="label"
-											>
-												Key Skills (comma-separated)
-											</label>
-											<Field
-												type="text"
-												id="keySkills"
-												name="keySkills"
-												className={`input input-primary w-full rounded-xl ${
-													errors.keySkills &&
-													touched.keySkills
-														? "input-error"
-														: ""
-												}`}
-											/>
-											<ErrorMessage
-												name="keySkills"
 												component="div"
 												className="error label-text-alt"
 											/>
