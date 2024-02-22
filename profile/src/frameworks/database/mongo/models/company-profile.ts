@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 interface CompanyAttributes {
 	company_name: string;
 	email?: string;
-	logo?: string;
+	// logo?: string;
 	website?: string;
 	company_location: string;
 	company_state?: string;
@@ -17,7 +17,7 @@ interface CompanyAttributes {
 interface CompanyDocument extends mongoose.Document {
 	company_name: string;
 	email: string;
-	logo: string;
+	// logo: string;
 	website: string;
 	company_location: string;
 	company_state: string;
@@ -37,7 +37,7 @@ const companySchema = new mongoose.Schema(
 			required: true
 		},
 		email: String,
-		logo: String,
+		// logo: String,
 		website: String,
 		company_location: {
 			type: String,

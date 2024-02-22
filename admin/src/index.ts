@@ -34,12 +34,12 @@ const start = async () => {
 	await connectDB();
 
 	// it is used to listen to incomming message from kafka topics
-	const companyProfileCreatedEvent = new CompanyProfileCreatedEventConsumer(
-		kafkaClient
-	);
-	const companyProfileUpdatedEvent = new CompanyProfileUpdatedEventConsumer(
-		kafkaClient
-	);
+	// const companyProfileCreatedEvent = new CompanyProfileCreatedEventConsumer(
+	// 	kafkaClient
+	// );
+	// const companyProfileUpdatedEvent = new CompanyProfileUpdatedEventConsumer(
+	// 	kafkaClient
+	// );
 
 	const candidateProfileUpdatedEvent =
 		new CandidateProfileUpdatedEventConsumer(kafkaClient);
@@ -52,8 +52,8 @@ const start = async () => {
 	const userUpdatedEvent = new UserUpdatedEventConsumer(kafkaClient);
 	const jobDeletedEvent = new JobDeletedEventConsumer(kafkaClient);
 
-	await companyProfileCreatedEvent.subscribe();
-	await companyProfileUpdatedEvent.subscribe();
+	// await companyProfileCreatedEvent.subscribe();
+	// await companyProfileUpdatedEvent.subscribe();
 	await candidateProfileUpdatedEvent.subscribe();
 	await recruiterProfileUpdatedEvent.subscribe();
 	await jobCreatedEvent.subscribe();
@@ -67,8 +67,8 @@ const start = async () => {
 	})
 	
 		.on("error", async () => {
-			await companyProfileCreatedEvent.disconnect();
-			await companyProfileUpdatedEvent.disconnect();
+			// await companyProfileCreatedEvent.disconnect();
+			// await companyProfileUpdatedEvent.disconnect();
 			await candidateProfileUpdatedEvent.disconnect();
 			await recruiterProfileUpdatedEvent.disconnect();
 			await jobCreatedEvent.disconnect();
@@ -78,8 +78,8 @@ const start = async () => {
 			await userCreatedEvent.disconnect();
 		})
 		.on("close", async () => {
-			await companyProfileCreatedEvent.disconnect();
-			await companyProfileUpdatedEvent.disconnect();
+			// await companyProfileCreatedEvent.disconnect();
+			// await companyProfileUpdatedEvent.disconnect();
 			await candidateProfileUpdatedEvent.disconnect();
 			await recruiterProfileUpdatedEvent.disconnect();
 			await jobCreatedEvent.disconnect();

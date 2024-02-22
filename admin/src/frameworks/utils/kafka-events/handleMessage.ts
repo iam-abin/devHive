@@ -46,7 +46,6 @@ export const handleMessage = (data: any, topic: string, message: any) => {
 		case "CANDIDATE-PROFILE-CREATED-TOPIC":
 			console.log("admin handleMessage companyProfileCreatedTopic", data);
 			candidateRepository.createCandidate(data);
-
 			break;
 
 		case "CANDIDATE-PROFILE-UPDATED-TOPIC":
@@ -57,13 +56,13 @@ export const handleMessage = (data: any, topic: string, message: any) => {
 
 		case "RECRUITER-PROFILE-CREATED-TOPIC":
 			console.log("admin handleMessage companyProfileCreatedTopic", data);
-			candidateRepository.createCandidate(data);
+			recruiterRepository.createRecruiter(data);
 
 			break;
 
 		case "RECRUITER-PROFILE-UPDATED-TOPIC":
 			console.log("admin handleMessage RecruiterProfileUpdatedTopic", data);
-			candidateRepository.createCandidate(data);
+			recruiterRepository.updateRecruiterProfile(data.userId, data);
 
 			break;
 

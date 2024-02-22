@@ -43,13 +43,13 @@ const start = async () => {
 	// it is used to listen to incomming message from kafka topics
 	const userCreatedEvent = new UserCreatedEventConsumer(kafkaClient);
 	const userUpdatedEvent = new UserUpdatedEventConsumer(kafkaClient);
-	const companyProfileUpdatedEvent = new CompanyProfileUpdatedEventConsumer(
-		kafkaClient
-	);
+	// const companyProfileUpdatedEvent = new CompanyProfileUpdatedEventConsumer(
+	// 	kafkaClient
+	// );
 	
 	await userCreatedEvent.subscribe();
 	await userUpdatedEvent.subscribe();
-	await companyProfileUpdatedEvent.subscribe();
+	// await companyProfileUpdatedEvent.subscribe();
 
 	app.listen(3000, () => {
 		console.log("profile Listening on port 3000....");
@@ -57,12 +57,12 @@ const start = async () => {
 		.on("error", async () => {
 			await userCreatedEvent.disconnect();
 			await userUpdatedEvent.disconnect();
-			await companyProfileUpdatedEvent.disconnect();
+			// await companyProfileUpdatedEvent.disconnect();
 		})
 		.on("close", async () => {
 			await userCreatedEvent.disconnect();
 			await userUpdatedEvent.disconnect();
-			await companyProfileUpdatedEvent.disconnect();
+			// await companyProfileUpdatedEvent.disconnect();
 		});
 };
 

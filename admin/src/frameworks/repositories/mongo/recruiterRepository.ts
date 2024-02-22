@@ -12,12 +12,18 @@ export = {
 		
 		const {name, email, phone, userType, isActive, userId} = userData
 		const userObject = RecruiterModel.buildRecruiter({name, email, phone, userType, isActive, userId});
+		console.log("in create Recruiter in admin>><<><><><", userObject);
+
 		return await userObject.save();
 	},
 
 	// updating and block unblocking is also doing here
 	updateRecruiterProfile: async (userId: string, data: any): Promise<any> => {
+		console.log("in update Recruiter Profile before update in admin>><<><><><", userId);
+		console.log("in update Recruiter Profile before update in admin>><<><><><", data);
 		const recruiter = await RecruiterModel.findOneAndUpdate({ "_id": userId }, { $set: data }, {new: true});
+		console.log("in update Recruiter Profile in admin>><<><><><", recruiter);
+		
 		return recruiter;
 	},
 

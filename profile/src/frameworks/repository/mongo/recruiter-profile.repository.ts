@@ -33,7 +33,9 @@ export = {
 
 	// updating and block unblocking is also doing here
 	updateRecruiterProfile: async (id: string, data: any): Promise<any> => {
-		console.log(" in updateRecruiterProfile repo ", id);
+		console.log(" in updateRecruiterProfile repo id ", id);
+		console.log(" in updateRecruiterProfile repo data ", data);
+		
 		
 		const recruiter = await RecruiterProfileModel.findOneAndUpdate(
 			{ _id: id },

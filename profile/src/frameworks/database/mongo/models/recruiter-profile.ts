@@ -8,11 +8,16 @@ interface RecruiterAttributes {
 	phone: number;
 	isVarified: boolean;
 	isActive: boolean;
-	gender?: string;
-	company_id?: string;
-	profile_image?: string;
-	about?: string;
-	// isActive: boolean;
+	// gender?: string;
+	// profile_image?: string;
+	// about?: string;
+	// // company_id?: string;
+	// company_name: string;
+	// company_website?: string;
+	// company_location: string;
+	// company_state?: string;
+	// company_country?: string;
+	// // isActive: boolean;
 }
 // 2. An interface that describes the properties ,that a Candidate Document has
 interface RecruiterDocument extends mongoose.Document {
@@ -23,10 +28,17 @@ interface RecruiterDocument extends mongoose.Document {
 	isVarified: boolean;
 	isActive: boolean;
 	gender: string;
-	company_id?: mongoose.Schema.Types.ObjectId;
 	profile_image: string;
 	about: string;
-	// userId: mongoose.Schema.Types.ObjectId;
+
+	// company_id?: mongoose.Schema.Types.ObjectId;
+	company_name: string;
+	// logo: string;
+	company_website: string;
+	company_location: string;
+	company_state: string;
+	company_country: string;
+
 	createdAt: string;
 	updatedAt: string;
 	// "membership": "no"
@@ -78,8 +90,23 @@ const recruiterSchema = new mongoose.Schema(
 			// 	"https://res.cloudinary.com/dprxebwil/image/upload/v1679341215/Recruiter/recruiter-images.jpeg.jpg",
 		},
 		about: String,
-		company_id: mongoose.Schema.Types.ObjectId,
+		// company_id: mongoose.Schema.Types.ObjectId,
 		// userId: mongoose.Schema.Types.ObjectId
+		company_name:{
+			type: String,
+			required: true
+		},
+		// logo: String,
+		company_website: {
+			type: String,
+			required: false
+		},
+		company_location: {
+			type: String,
+			required: true
+		},
+		company_state: String,
+		company_country: String,
 	},
 	{
 		// to reformat id and remove password,__v from response when converting to json (we can also use other approaches)

@@ -21,6 +21,11 @@ interface ProfileFormData {
 	profile_image?: string;
 	about?: string;
 	userId: string;
+	company_name: string;
+	company_website: string;
+	company_location: string;
+	company_state: string;
+	company_country: string;
 }
 
 function RecruiterProfileEditPage() {
@@ -77,11 +82,16 @@ function RecruiterProfileEditPage() {
 		profile_image: profileDetails?.profile_image ?? undefined,
 		about: profileDetails?.about ?? undefined,
 		userId: profileDetails?.id ?? undefined,
+		company_name: profileDetails?.company_name ?? undefined,
+		company_website: profileDetails?.company_website ?? undefined,
+		company_location: profileDetails?.company_location ?? undefined,
+		company_state: profileDetails?.company_state ?? undefined,
+		company_country: profileDetails?.company_country ?? undefined,
 	};
 
 	return (
 		<div>
-			<main className="h-screen flex items-center justify-center">
+			<main className="h-full flex items-center justify-center">
 				<Formik
 					initialValues={initialProfileValues}
 					onSubmit={(values) => {
@@ -92,7 +102,7 @@ function RecruiterProfileEditPage() {
 						const { errors, touched } = formik;
 						return (
 							<div className="w-6/12 p-6">
-								<div className="mb-16">
+								<div className="mb-5">
 									<h1 className="text-center text-5xl font-bold">
 										Edit Profile
 									</h1>
@@ -221,6 +231,138 @@ function RecruiterProfileEditPage() {
 											className="error label-text-alt"
 										/>
 									</div>
+									<div className="h-1 w-full bg-black my-5"></div>
+									{/* ======================== */}
+									{/* Company Name field */}
+									<div className="form-control w-6/6">
+										<label
+											htmlFor="company_name"
+											className="label"
+										>
+											Company Name
+										</label>
+										<Field
+											type="text"
+											id="company_name"
+											name="company_name"
+											className={`input input-primary w-full rounded-xl ${
+												errors.company_name &&
+												touched.company_name
+													? "input-error"
+													: ""
+											}`}
+										/>
+										<ErrorMessage
+											name="company_name"
+											component="div"
+											className="error label-text-alt"
+										/>
+									</div>
+
+									{/* Website field */}
+									<div className="form-control w-6/6">
+										<label
+											htmlFor="company_website"
+											className="label"
+										>
+											Company Website
+										</label>
+										<Field
+											type="text"
+											id="company_website"
+											name="company_website"
+											className={`input input-primary w-full rounded-xl ${
+												errors.company_website &&
+												touched.company_website
+													? "input-error"
+													: ""
+											}`}
+										/>
+										<ErrorMessage
+											name="company_website"
+											component="div"
+											className="error label-text-alt"
+										/>
+									</div>
+
+									{/* Company Location field */}
+									<div className="form-control w-6/6">
+										<label
+											htmlFor="company_location"
+											className="label"
+										>
+											Company Location
+										</label>
+										<Field
+											type="text"
+											id="company_location"
+											name="company_location"
+											className={`input input-primary w-full rounded-xl ${
+												errors.company_location &&
+												touched.company_location
+													? "input-error"
+													: ""
+											}`}
+										/>
+										<ErrorMessage
+											name="company_location"
+											component="div"
+											className="error label-text-alt"
+										/>
+									</div>
+
+									{/* Company State field */}
+									<div className="form-control w-6/6">
+										<label
+											htmlFor="company_state"
+											className="label"
+										>
+											Company State
+										</label>
+										<Field
+											type="text"
+											id="company_state"
+											name="company_state"
+											className={`input input-primary w-full rounded-xl ${
+												errors.company_state &&
+												touched.company_state
+													? "input-error"
+													: ""
+											}`}
+										/>
+										<ErrorMessage
+											name="company_state"
+											component="div"
+											className="error label-text-alt"
+										/>
+									</div>
+
+									{/* Company Country field */}
+									<div className="form-control w-6/6">
+										<label
+											htmlFor="company_country"
+											className="label"
+										>
+											Company Country
+										</label>
+										<Field
+											type="text"
+											id="company_country"
+											name="company_country"
+											className={`input input-primary w-full rounded-xl ${
+												errors.company_country &&
+												touched.company_country
+													? "input-error"
+													: ""
+											}`}
+										/>
+										<ErrorMessage
+											name="company_country"
+											component="div"
+											className="error label-text-alt"
+										/>
+									</div>
+									{/* ======================== */}
 
 									<div className="flex items-center justify-center mt-3 mb-3">
 										<button

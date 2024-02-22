@@ -17,7 +17,6 @@ const RecruiterProfilePage: React.FC = () => {
 	const { id } = useParams();
 	console.log("99999999999", id);
 	console.log("iam abbbbbbbbbbbbi");
-	
 
 	const location = useLocation();
 
@@ -33,31 +32,32 @@ const RecruiterProfilePage: React.FC = () => {
 		(async () => {
 			console.log("Entering useEffect");
 			console.log("Before", recruiterData);
-		 
-		 
+
 			try {
-				let recruiterProfile = null
-				if(isCandidate){
-					recruiterProfile = await recruiterGetProfileByCandidateApi(id!);
-
-				}else{
-					recruiterProfile = await recruiterGetProfileApi(recruiterData.id);
-
+				let recruiterProfile = null;
+				if (isCandidate) {
+					recruiterProfile = await recruiterGetProfileByCandidateApi(
+						id!
+					);
+				} else {
+					recruiterProfile = await recruiterGetProfileApi(
+						recruiterData.id
+					);
 				}
-			   console.log("recruiterProfile", recruiterProfile);
-		 
-			   setRecruiterProfileData(recruiterProfile);
+				console.log("recruiterProfile", recruiterProfile);
+
+				setRecruiterProfileData(recruiterProfile);
 			} catch (error) {
-			   console.error("Error fetching recruiter profile:", error);
+				console.error("Error fetching recruiter profile:", error);
 			}
 		})();
-	 },  []);
+	}, []);
 	return (
 		<div>
 			<div>
 				{isCandidate && <TopNavBarCandidate />}
 				<main className="h-screen flex items-center justify-center">
-					<div className="bg-gray-100 min-h-screen flex">
+					<div className="bg-gray-100 min-h-screen w-3/5 flex">
 						{/* Main Content */}
 						<div className="flex-1 p-8">
 							<div className="bg-white p-8 shadow-md rounded-md">
@@ -69,7 +69,7 @@ const RecruiterProfilePage: React.FC = () => {
 								) : (
 									""
 								)}
-								<div className="flex items-center justify-between mb-6 ">
+								<div className="flex items-center bg-emerald-100 rounded-3xl justify-between mb-6 shadow-xl p-5">
 									<div>
 										<img
 											src="https://via.placeholder.com/150"
@@ -82,9 +82,6 @@ const RecruiterProfilePage: React.FC = () => {
 													?.name ??
 													"recruiterData.name"}
 											</h1>
-											<p className="text-gray-600">
-												Recruiter at ABC Company
-											</p>
 										</div>
 									</div>
 									{isCandidate ? (
@@ -113,11 +110,7 @@ const RecruiterProfilePage: React.FC = () => {
 									<h2 className="text-lg font-semibold text-gray-800 mb-2">
 										About Me
 									</h2>
-									<p className="text-gray-600">
-										I am a seasoned recruiter with expertise
-										in technical hiring and talent
-										acquisition.
-									</p>
+									<p className="text-gray-600"></p>
 								</div>
 
 								<div>
@@ -145,7 +138,7 @@ const RecruiterProfilePage: React.FC = () => {
 								{!isCandidate && (
 									<div>
 										<h2 className="text-lg font-semibold text-gray-800 mb-2">
-											About
+											Gender
 										</h2>
 										<p className="text-gray-600">
 											{recruiterProfileData.data
@@ -154,27 +147,36 @@ const RecruiterProfilePage: React.FC = () => {
 									</div>
 								)}
 
-								<div>
-									<h2 className="text-lg font-semibold text-gray-800 mb-2">
-										About
-									</h2>
-									<p className="text-gray-600">
-										{recruiterProfileData.data?.about ??
-											"Not specified"}
-									</p>
-								</div>
-
 								<div className="mt-6">
 									<h2 className="text-lg font-semibold text-gray-800 mb-2">
-										Recent Job Postings
+										Company details
 									</h2>
 									<ul>
 										<li className="mb-4">
 											<h3 className="text-blue-500 font-semibold">
-												Software Engineer
+												{recruiterProfileData.data
+													?.company_name ??
+													"Not specified"}
 											</h3>
 											<p className="text-gray-600">
-												ABC Company - Full-time - Remote
+												{recruiterProfileData.data
+													?.company_location ??
+													"Not specified"}
+											</p>
+											<p className="text-gray-600">
+												{recruiterProfileData.data
+													?.company_state ??
+													"Not specified"}
+											</p>
+											<p className="text-gray-600">
+												{recruiterProfileData.data
+													?.company_country ??
+													"Not specified"}
+											</p>
+											<p className="text-gray-600">
+												{recruiterProfileData.data
+													?.company_website ??
+													"Not specified"}
 											</p>
 										</li>
 										{/* Add more job postings */}

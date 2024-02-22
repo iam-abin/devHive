@@ -11,7 +11,10 @@ export = {
 		console.log("inside createCandidate fn in admin service", userData);
 		
 		const {name, email, phone, userType, isActive, userId} = userData
+		
 		const userObject = CandidateModel.buildCandidate({name, email, phone, userType, isActive, userId});
+		console.log("in create Candidate in admin>><<><><><", userObject);
+
 		return await userObject.save();
 	},
 
@@ -20,7 +23,7 @@ export = {
 		console.log("updateCandidateProfile before",userId, "vvvvvvv", data);
 		
 		const candidate = await CandidateModel.findOneAndUpdate({ "_id": userId }, { $set: data }, {new: true});
-		console.log("updateCandidateProfile after ",candidate);
+		console.log("in update candidate Profile in admin>><<><><><", candidate);
 
 		return candidate;
 	},

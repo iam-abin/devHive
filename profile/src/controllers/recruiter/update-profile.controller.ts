@@ -5,52 +5,69 @@ import { CompanyProfileCreatedEventPublisher } from "../../frameworks/utils/kafk
 import { kafkaClient } from "../../config/kafka-connection";
 import { UserUpdatedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/user-updated-publisher";
 
-export = (dependencies: DependenciesData)=>{
+export = (dependencies: DependenciesData) => {
+	const {
+		useCases: {
+			getRecruiterProfileByUserIdUseCase,
+			updateRecruiterProfileUseCase,
+		},
+	} = dependencies;
 
-    const { useCases: {  getRecruiterProfileByUserIdUseCase ,updateRecruiterProfileUseCase }} = dependencies
+	return async (req: Request, res: Response) => {
+		const updatedData = req.body;
+		console.log(
+			"in recruiter update profile controller data: ",
+			updatedData
+		);
+		const { userId } = req.body;
+		console.log(
+			"in recruiter update profile controller recruiterId: ",
+			userId
+		);
 
-    return async (req: Request, res: Response)=>{
-        const updatedData = req.body;
-        console.log("in recruiter update profile controller data: ",updatedData);
-        const { userId } = req.body
-        console.log("in recruiter update profile controller recruiterId: ",userId);
-        
-        const existingData = await getRecruiterProfileByUserIdUseCase(dependencies).execute(userId);
-        
-    console.log("existing data", existingData);
+		const existingData = await getRecruiterProfileByUserIdUseCase(
+			dependencies
+		).execute(userId);
 
-        const recruiter = await updateRecruiterProfileUseCase(dependencies).execute(existingData, updatedData);
-        console.log("in recruiter update profile controller recruiter: ",recruiter);
+		console.log("existing data", existingData);
 
-        const recruiterProfileUpdatedEvent = new RecruiterProfileUpdatedEventPublisher(kafkaClient)
-        await recruiterProfileUpdatedEvent.publish({
-            name: updatedData?.name,
-            email: updatedData?.email,
-            phone: updatedData?.phone,
-            isActive: updatedData?.isActive,
-            gender: updatedData?.gender,
-            profile_image: updatedData?.profile_image,
-            about: updatedData?.about,
-            // // "company_name": "infotech",
-            // // "company_location": "kottayam",
-            // // "company_state": "kerala",
-            // // "company_country": "india",
-            // company_id: updatedData?.company_id,
-            userId: updatedData?.userId,
-        })
+		const recruiter = await updateRecruiterProfileUseCase(
+			dependencies
+		).execute(existingData, updatedData);
+		console.log(
+			"in recruiter update profile controller recruiter: ",
+			recruiter
+		);
 
-        await new UserUpdatedEventPublisher(kafkaClient).publish({
-            name: updatedData?.name,
-            email: updatedData?.email,
-            phone: updatedData?.phone,
-            isActive: updatedData?.isActive,
-            userType: "recruiter",
-            userId: updatedData?.userId,
-        })
+		const recruiterProfileUpdatedEvent =
+			new RecruiterProfileUpdatedEventPublisher(kafkaClient);
+		await recruiterProfileUpdatedEvent.publish({
+			name: updatedData?.name,
+			email: updatedData?.email,
+			phone: updatedData?.phone,
+			isActive: updatedData?.isActive,
+			gender: updatedData?.gender,
+			profile_image: updatedData?.profile_image,
+			about: updatedData?.about,
+			company_name: updatedData.company_name,
+			company_location: updatedData.company_location,
+			company_website: updatedData.company_website,
+			company_state: updatedData.company_state,
+			company_country: updatedData.company_country,
+			// company_id: updatedData?.company_id,
+			userId: updatedData?.userId,
+            
+		});
 
+		await new UserUpdatedEventPublisher(kafkaClient).publish({
+			name: updatedData?.name,
+			email: updatedData?.email,
+			phone: updatedData?.phone,
+			isActive: updatedData?.isActive,
+			userType: "recruiter",
+			userId: updatedData?.userId,
+		});
 
-
-        res.status(200).json({message: "recruiter data", data: recruiter })
-    };
-
-}
+		res.status(200).json({ message: "recruiter data", data: recruiter });
+	};
+};
