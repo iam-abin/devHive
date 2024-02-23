@@ -82,11 +82,19 @@ const JobDetails: React.FC<{
 								<h2 className=" font-extrabold mb-2  w-3/5">
 									Skills Required
 								</h2>
-								<ul className="list-disc pl-5  w-3/5">
+								<ul className="w-3/5">
 									{jobDetails.skills_required ? (
 										jobDetails.skills_required.map(
 											(skill: string, index: number) => (
-												<li key={index}>{skill}</li>
+												<div
+													key={skill}
+													className="badge text-white bg-sky-700 p-4 flex flex-row gap-2"
+												>
+													<li>{skill}</li>
+													
+												</div>
+
+												// ===============
 											)
 										)
 									) : (
