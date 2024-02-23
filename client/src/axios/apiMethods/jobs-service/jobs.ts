@@ -45,9 +45,9 @@ export const getAllRecruiterAddedJobsApi = async (recruiterId: string): Promise<
 };
 
 export const getJobFieldsValuesApi = async (fields: any): Promise<any> => {
-    console.log("in getJObFields api");
+    console.log("in getJObFields api ----", fields);
     
-    const response: any = await recruiterApiCalls("get", jobApiUrlConfig.getJobFieldsDistinctValuesUrl, fields);
+    const response: any = await recruiterApiCalls("post", jobApiUrlConfig.getJobFieldsDistinctValuesUrl, fields);
     console.log("response is",response.data);
 
     return response.data;

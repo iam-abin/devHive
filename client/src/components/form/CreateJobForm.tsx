@@ -3,17 +3,18 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 interface JobFormData {
 	title: string;
 	recruiterId: string;
-	companyId?: string;
+	// companyId?: string;
 	job_descriptions: string;
 	skills_required: string[];
 	available_position: number;
 	experience_required: string;
 	education_required: string;
-	location: string;
 	employment_type: string;
 	salary_min: number;
 	salary_max: number;
 	deadline: string;
+	company_name: string;
+	company_location: string;
 }
 
 const CreateJobForm: React.FC<{
@@ -21,6 +22,8 @@ const CreateJobForm: React.FC<{
 	handleSubmit: any;
 	recruiterData: any;
 }> = ({ initialJobValues, handleSubmit, recruiterData }) => {
+console.log(":::::::::::::: initialJobValues ", initialJobValues);
+
 	return (
 		<Formik
 			initialValues={initialJobValues}
@@ -64,50 +67,6 @@ const CreateJobForm: React.FC<{
 									className="error label-text-alt"
 								/>
 							</div>
-
-							{/* Recruiter field
-							<div className="form-control w-6/6">
-								<label htmlFor="recruiter" className="label">
-									Recruiter
-								</label>
-								<Field
-									type="text"
-									id="recruiter"
-									name="recruiter"
-									className={`input input-primary w-full rounded-xl ${
-										errors.recruiter && touched.recruiter
-											? "input-error"
-											: ""
-									}`}
-								/>
-								<ErrorMessage
-									name="recruiter"
-									component="div"
-									className="error label-text-alt"
-								/>
-							</div> */}
-
-							{/* Company field
-							<div className="form-control w-6/6">
-								<label htmlFor="company" className="label">
-									Company
-								</label>
-								<Field
-									type="text"
-									id="company"
-									name="company"
-									className={`input input-primary w-full rounded-xl ${
-										errors.company && touched.company
-											? "input-error"
-											: ""
-									}`}
-								/>
-								<ErrorMessage
-									name="company"
-									component="div"
-									className="error label-text-alt"
-								/>
-							</div> */}
 
 							{/* Job Descriptions field */}
 							<div className="form-control w-6/6">
@@ -188,7 +147,7 @@ const CreateJobForm: React.FC<{
 							</div>
 
 							{/* Location field */}
-							<div className="form-control w-6/6">
+							{/* <div className="form-control w-6/6">
 								<label htmlFor="location" className="label">
 									Location
 								</label>
@@ -207,7 +166,7 @@ const CreateJobForm: React.FC<{
 									component="div"
 									className="error label-text-alt"
 								/>
-							</div>
+							</div> */}
 
 							<div className="flex justify-between">
 								{/* Experience Required field */}

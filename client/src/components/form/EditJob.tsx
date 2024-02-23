@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 // import { getAJobApi, updateJobApi } from "../../axios/admin2/jobs/jobs";
-import { getAJobApi, updateJobApi } from "../../axios/apiMethods/jobs-service/jobs";
+import {
+	getAJobApi,
+	updateJobApi,
+} from "../../axios/apiMethods/jobs-service/jobs";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useNavigate, useParams } from "react-router-dom";
 import { notify } from "../../utils/toastMessage";
@@ -9,12 +12,14 @@ interface JobFormData {
 	title: string;
 	recruiter: string;
 	// company: string;
+	company_name: string;
+	company_location: string;
 	job_descriptions: string;
 	skills_required: string[];
 	available_position: number;
 	experience_required: string;
 	education_required: string;
-	location: string;
+	// location: string;
 	employment_type: string;
 	salary_min: number;
 	salary_max: number;
@@ -25,7 +30,7 @@ function EditJob() {
 	// const [updatedJobDetails, setupdatedJobDetails] = useState("");
 	const [jobDetails, setJobDetails] = useState<any>(null);
 	const navigate = useNavigate();
-	const {jobId} = useParams()
+	const { jobId } = useParams();
 	// const jobId = useSelector((state: RootState) => {
 	// 	return state.recruiterJobId.jobId;
 	// });
@@ -33,11 +38,10 @@ function EditJob() {
 	useEffect(() => {
 		const fetchJobDetails = async () => {
 			try {
-				if(jobId){
+				if (jobId) {
 					const job = await getAJobApi(jobId);
 					setJobDetails(job.data);
 				}
-
 			} catch (error) {
 				// Handle error, e.g., log it or show an error message to the user
 				console.error("Error fetching job details:", error);
@@ -52,10 +56,8 @@ function EditJob() {
 
 	console.log(jobDetails, "in edit job details component");
 
-	
 	const handleSubmit = async (jobData: JobFormData) => {
 		try {
-
 			console.log("jobData ", jobData);
 			console.log("jobDetails.jobId ", jobDetails.jobId);
 
@@ -83,7 +85,9 @@ function EditJob() {
 		available_position: jobDetails?.available_position ?? 0,
 		experience_required: jobDetails?.experience_required ?? "",
 		education_required: jobDetails?.education_required ?? "",
-		location: jobDetails?.location ?? "",
+		// location: jobDetails?.location ?? "",
+		company_name: jobDetails?.company_name ?? "",
+		company_location: jobDetails?.company_location ?? "",
 		employment_type: jobDetails?.employment_type,
 		salary_min: jobDetails?.salary_min ?? 0,
 		salary_max: jobDetails?.salary_max ?? 0,
@@ -97,7 +101,7 @@ function EditJob() {
 			initialValues={initialJobValues}
 			// validationSchema={jobCreationSchema}
 			onSubmit={(values) => {
-				console.log("on submit edit job formik",values);
+				console.log("on submit edit job formik", values);
 				values.jobId = jobDetails.id;
 				handleSubmit(values);
 			}}
@@ -259,7 +263,7 @@ function EditJob() {
 							</div>
 
 							{/* Location field */}
-							<div className="form-control w-6/6">
+							{/* <div className="form-control w-6/6">
 								<label htmlFor="location" className="label">
 									Location
 								</label>
@@ -278,7 +282,7 @@ function EditJob() {
 									component="div"
 									className="error label-text-alt"
 								/>
-							</div>
+							</div> */}
 
 							<div className="flex justify-between">
 								{/* Experience Required field */}

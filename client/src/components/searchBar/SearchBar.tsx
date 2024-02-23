@@ -11,7 +11,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ handleGetAllJobs }) => {
 	const dispatch = useDispatch();
 	const [jobFieldsValues, setJobFieldsValues] = useState({
 		title: [],
-		location: [],
+		company_location: [],
 		employment_type: [],
 		experience: [],
 	});
@@ -22,7 +22,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ handleGetAllJobs }) => {
 
 	useEffect(() => {
 		(async () => {
-			const jobFieldsValues = await getJobFieldsValuesApi(["title", "location", "employment_type"]);
+			const jobFieldsValues = await getJobFieldsValuesApi(["title", "company_location", "employment_type"]);
 			console.log("jobFieldsValues ", jobFieldsValues.data);
 			
 			setJobFieldsValues(jobFieldsValues.data)
@@ -88,7 +88,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ handleGetAllJobs }) => {
 
 			<select
 				onChange={handleChange}
-				name="location"
+				name="company_location"
 				// default value or title value of the select box is selecting based on the value in 'jobCriteria'
 				value={jobCriteria.location}
 				className="select select-primary text-center font-semibold rounded-md py-3 max-w-sm"
@@ -96,7 +96,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ handleGetAllJobs }) => {
 				<option value="" disabled hidden>
 					Location
 				</option>
-				{jobFieldsValues?.location?.map((location: any, index: number) => (
+				{jobFieldsValues?.company_location?.map((location: any, index: number) => (
 					<option key={index} value={location}>
 						{location}
 					</option>

@@ -23,7 +23,7 @@ export const candidateRouter = (dependencies: DependenciesData) => {
 
 	router.get("/all-jobs/:page", viewAllJobsController);
 
-	router.get("/all-job-fields-distinct-values", viewAllJobFieldsDistinctValuesController);
+	router.post("/all-job-fields-distinct-values", viewAllJobFieldsDistinctValuesController);
 
 	router.get("/:id", viewJobByJobIdController);
 

@@ -37,15 +37,17 @@ const JobDetails: React.FC<{
 							<h1 className="text-3xl font-bold mb-4">
 								{jobDetails ? jobDetails.title : "Loading..."}
 							</h1>
-							<p className="text-gray-600 mb-4">
+							<p className="text-gray-600 mb-4 ">
 								Company:{" "}
-								{jobDetails ? jobDetails.company : "Loading..."}
+								<span className="font-extrabold">{jobDetails ? jobDetails.company_name : "Loading..."}</span>
+								
 							</p>
 							<p className="text-gray-600 mb-4">
 								Location:{" "}
-								{jobDetails
-									? jobDetails.location
-									: "Loading..."}
+								<span className="font-extrabold">{jobDetails
+									? jobDetails.company_location
+									: "Loading..."}</span>
+								
 							</p>
 						</div>
 

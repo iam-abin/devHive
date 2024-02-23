@@ -3,14 +3,17 @@ import mongoose from "mongoose";
 interface JobAttributes {
 	title: string;
 	recruiterId: string;
-	company_name: string,
-	companyId: string;
+	// company_name: string,
+	// companyId: string;
+	company_name: string;
+	company_location: string;
+
 	job_descriptions?: string;
 	skills_required?:string | string[];
 	available_position?: string;
 	experience_required?: string;
 	education_required?: string;
-	location?: string;
+	// location?: string;
 	employment_type?: string;
 	salary_min?: number;
 	salary_max?: number;
@@ -24,14 +27,15 @@ interface JobDocument extends mongoose.Document {
 	// 	type: mongoose.Schema.Types.ObjectId,
 	// 	ref: 'Users'
 	// }
-	company_name: string,
-	companyId: mongoose.Schema.Types.ObjectId;
+	company_name: string;
+	company_location: string;
+	// companyId: mongoose.Schema.Types.ObjectId;
 	job_descriptions?: string;
 	skills_required?: string | string[];
 	available_position?: string;
 	experience_required?: string;
 	education_required?: string;
-	location?: string;
+	// location?: string;
 	employment_type?: string;
 	salary_min?: number;
 	salary_max?: number;
@@ -50,13 +54,14 @@ const jobSchema = new mongoose.Schema(
 		title: String,
 		recruiterId: mongoose.Schema.Types.ObjectId,
 		company_name:String,
-		companyId: mongoose.Schema.Types.ObjectId,
+		company_location: String,
+		// companyId: mongoose.Schema.Types.ObjectId,
 		job_descriptions: String,
 		skills_required: Array,
 		available_position: String,
 		experience_required: String,
 		education_required: String,
-		location: String,
+		// location: String,
 		employment_type: {
 			type: String,
 			enum: ["full-time", "part-time", "internship", "contract"],

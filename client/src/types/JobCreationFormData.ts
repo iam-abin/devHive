@@ -8,9 +8,10 @@ export interface JobFormData {
 	available_position: number;
 	experience_required: string;
 	education_required: string;
-	location: string;
 	employment_type: string;
 	salary_min: number;
 	salary_max: number;
 	deadline: string;
+	company_name: string;
+	company_location: string;
 }

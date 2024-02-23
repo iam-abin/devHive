@@ -1,26 +1,20 @@
-import schemas from "../../database/models"
+import schemas from "../../database/models";
 
 const { JobModel } = schemas;
 
 // we want to export some closure
 export = {
+	// these fn's are returning a promise as async so we can defile return type as Promise<CandidateDataInterface>
 
-	 // these fn's are returning a promise as async so we can defile return type as Promise<CandidateDataInterface>
-
-	 createJob: async (jobData: any) => {
+	createJob: async (jobData: any): Promise<any> => {
 		console.log("inside createJob fn in admin service", jobData);
-		
-		// const {name, email, phone, userType, isActive} = jobData
-		// const userObject = new JobModel({name, email, phone, userType, isActive});
-		// const userObject = new JobModel(jobData);
-		// return await userObject.save();
 
 		const jobObject = JobModel.buildJob(jobData);
 		return await jobObject.save();
 	},
 
 	blockUnblock: async (jobId: string) => {
-		const job = await JobModel.findOne({jobId});
+		const job = await JobModel.findOne({ jobId });
 		if (!job) {
 			throw new Error("job not found");
 		}
@@ -30,16 +24,20 @@ export = {
 		return await job.save();
 	},
 
-	updateJob: async (jobId: string, data: object)=>{
-        console.log("in updateJob repository jobId", jobId, " data ", data);
-        
-        const updatedJob = await JobModel.findOneAndUpdate({ "jobId": jobId }, { $set: data }, {new: true});
-        console.log("in updateJob repository after update", updatedJob);
+	updateJob: async (jobId: string, data: object) => {
+		console.log("in updateJob repository jobId", jobId, " data ", data);
+
+		const updatedJob = await JobModel.findOneAndUpdate(
+			{ jobId: jobId },
+			{ $set: data },
+			{ new: true }
+		);
+		console.log("in updateJob repository after update", updatedJob);
 		return updatedJob;
-    },
+	},
 
 	getById: async (jobId: string) => {
-		const job = await JobModel.findOne({jobId});
+		const job = await JobModel.findOne({ jobId });
 		return job;
 	},
 
@@ -48,13 +46,13 @@ export = {
 		return jobs;
 	},
 
-	deleteJob: async (jobId: string)=>{
+	deleteJob: async (jobId: string) => {
 		console.log("in delete job admin");
-		
-        const deletedJob = await JobModel.deleteOne({jobId: jobId});
-        console.log("deletedJob: ",deletedJob);
-        return deletedJob
-    },
+
+		const deletedJob = await JobModel.deleteOne({ jobId: jobId });
+		console.log("deletedJob: ", deletedJob);
+		return deletedJob;
+	},
 };
 
 // export default repository();

@@ -1,5 +1,3 @@
-import TopNavBarRecruiter from "../../../components/navBar/TopNavBarRecruiter";
-
 import { createJobApi } from "../../../axios/apiMethods/jobs-service/jobs";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/reducer/reducer";
@@ -7,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { notify } from "../../../utils/toastMessage";
 import { JobFormData } from "../../../types/JobCreationFormData";
 import CreateJobForm from "../../../components/form/CreateJobForm";
+import { useEffect, useState } from "react";
+import { recruiterGetProfileApi } from "../../../axios/apiMethods/profile-service/recruiter";
 
 const initialJobValues: JobFormData = {
 	title: "",
@@ -17,11 +17,13 @@ const initialJobValues: JobFormData = {
 	available_position: 0,
 	experience_required: "",
 	education_required: "",
-	location: "",
+	// location: "",
 	employment_type: "full-time",
 	salary_min: 0,
 	salary_max: 0,
 	deadline: "",
+	company_name: "",
+	company_location: "",
 };
 
 function CreateJobPage() {
@@ -29,10 +31,32 @@ function CreateJobPage() {
 		(state: RootState) => state.recruiterData.data
 	);
 
+	const [recruiterProfileData, setecruiterProfileData] = useState<any>({});
+
+	useEffect(() => {
+		(async () => {
+			const recruiterProfile = await recruiterGetProfileApi(
+				recruiterData.id
+			);
+			setecruiterProfileData(recruiterProfile.data);
+			initialJobValues.company_name = recruiterProfile.data.company_name;
+			initialJobValues.company_location = recruiterProfile.data.company_location;
+		})();
+	}, []);
+
 	const navigate = useNavigate();
 
 	const handleSubmit = async (jobData: JobFormData) => {
 		try {
+			console.log("jobData ", jobData);
+
+			if (!recruiterProfileData?.company_name) {
+				notify(
+					"Please provide company details in your profile before creating a job!!!",
+					"warning"
+				);
+				return;
+			}
 			const response = await createJobApi(jobData);
 			notify(response.message, "success");
 			navigate("/recruiter/all-jobs");
@@ -47,7 +71,7 @@ function CreateJobPage() {
 				<CreateJobForm
 					initialJobValues={initialJobValues}
 					handleSubmit={handleSubmit}
-					recruiterData={recruiterData}
+					recruiterData={recruiterProfileData}
 				/>
 			</div>
 		</>

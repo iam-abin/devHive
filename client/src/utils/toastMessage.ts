@@ -1,11 +1,26 @@
 import { toast } from "react-toastify";
 
 export const notify = (msg: any, type: string) => {
-    type === "error"
-        ? toast.error(msg, {
-                position: toast.POSITION.TOP_RIGHT,
-          })
-        : toast.success(msg, {
-                position: toast.POSITION.TOP_RIGHT,
-          });
+    let options = {
+        position: toast.POSITION.TOP_RIGHT,
+    };
+
+    switch (type) {
+        case "success":
+            toast.success(msg, options);
+            break;
+
+        case "error":
+            toast.error(msg, options);
+            break;
+
+        case "warning":
+            toast.warning(msg, options);
+            break;
+
+        default:
+            // Default to success for unknown types
+            toast.success(msg, options);
+            break;
+    }
 };

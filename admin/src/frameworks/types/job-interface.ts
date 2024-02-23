@@ -1,7 +1,8 @@
 export interface JobInterface {
 	title: string;
 	recruiter: string;
-	company: string;
+	company_name?: string;
+	company_location?: string;
 	job_descriptions?: string;
 	skills_required?: string | string[];
 	available_position?: string;

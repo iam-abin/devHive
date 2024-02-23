@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getAJobApi } from "../../../axios/apiMethods/jobs-service/jobs";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import JobDetails from "../../../components/recruiter/JobDetails";
 

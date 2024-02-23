@@ -25,7 +25,7 @@ const JobCard: React.FC<{ job: any; handleViewJob: any }> = ({
 						</span>
 						<span className="flex items-center gap-1">
 							<IoLocationSharp />
-							{job?.location}
+							{job?.company_location}
 						</span>
 						<span className="flex items-center gap-1">
 							<HiMiniCurrencyRupee />

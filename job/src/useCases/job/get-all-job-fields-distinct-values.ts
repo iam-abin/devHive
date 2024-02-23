@@ -12,7 +12,7 @@ export = (dependencies: DependenciesData) => {
 	const execute = async(fields: []) => {
 		console.log("getAllJobFieldsDistinctValuesUseCase fields 1 ",fields);
 		
-		return jobRepository.getAllJobsDistinctValues();
+		return jobRepository.getAllJobsDistinctValues(fields);
 	};
 
 	return { execute };

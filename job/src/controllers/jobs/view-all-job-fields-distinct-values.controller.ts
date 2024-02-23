@@ -7,7 +7,7 @@ export = (dependencies: DependenciesData) => {
 	} = dependencies;
 
 	return async (req: Request, res: Response) => {
-		console.log("in viewAllJobFieldsDistinctValuesController controller 1: ", req.body);
+		console.log("=========in viewAllJobFieldsDistinctValuesController controller 1: ", req.body);
 
 		const jobFields: any = await getAllJobFieldsDistinctValuesUseCase(dependencies).execute(req.body);
 		
