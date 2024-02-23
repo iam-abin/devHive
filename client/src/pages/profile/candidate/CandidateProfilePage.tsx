@@ -15,6 +15,9 @@ import TopNavBarCandidate from "../../../components/navBar/TopNavBarCandidate";
 import Footer from "../../../components/footer/Footer";
 import { FaEdit, FaEye } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
+import { myFirebaseStorage } from "../../../config/firebase";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { v4 as uuidv4 } from "uuid";
 
 const CandidateProfilePage: React.FC = () => {
 	const navigate = useNavigate();
@@ -38,7 +41,7 @@ const CandidateProfilePage: React.FC = () => {
 	};
 
 	const handleSetSkills = async () => {
-		if(!skill) return
+		if (!skill) return;
 		setSkills([...skills, skill]);
 		setSkill("");
 	};
@@ -64,15 +67,30 @@ const CandidateProfilePage: React.FC = () => {
 
 	const handleResumeUpload = async (selectedFile: File) => {
 		try {
-			const formData = new FormData();
-			formData.append("file", selectedFile);
+			// const formData = new FormData();
+			// formData.append("file", selectedFile);
 
 			console.log("File uploaded:", selectedFile);
+			console.log("File uploaded:", selectedFile.name);
+			// console.log("File uploaded fortData:", formData);
+			const resumeRef = ref(
+				myFirebaseStorage,
+				`devHiveResume/${uuidv4()}`
+			);
+			const uploadResume = await uploadBytesResumable(
+				resumeRef,
+				selectedFile
+			);
+			const downloadURL = await getDownloadURL(uploadResume.ref);
+
+			console.log("After upload //// ", uploadResume);
+			console.log("//// Download URL: //// ", downloadURL);
+
 			const response = await uploadCandidateResumeProfileApi(
 				candidateData.id,
-				formData
+				{ filename: selectedFile.name, url: downloadURL }
 			);
-			console.log("resume image upload response", response);
+			console.log("resume upload response", response);
 			if (response.data) {
 				notify(response.message, "success");
 				return response.data;
@@ -95,7 +113,7 @@ const CandidateProfilePage: React.FC = () => {
 			console.log("resume skills update response", response);
 			if (response.data) {
 				notify(response.message, "success");
-				setAddSkillRerender(addSkillRerender+1)
+				setAddSkillRerender(addSkillRerender + 1);
 				return response.data;
 			} else {
 				notify("skills not uploaded", "error");
@@ -168,9 +186,10 @@ const CandidateProfilePage: React.FC = () => {
 					<div className="w-md mx-auto bg-white p-8 rounded shadow-md">
 						<div className="hero h-56 bg-base-200 relative">
 							<div className="hero-content flex-col  lg:flex-row-reverse">
-								<ImageFileUpload
+								{!isRecruiterUrl && <ImageFileUpload
 									uploadImage={handleImageUpload}
-								/>
+								/>}
+								
 								<img
 									src={
 										candidateProfileData?.data
@@ -285,30 +304,40 @@ const CandidateProfilePage: React.FC = () => {
 							</div>
 
 							<div className="bg-gray-100 p-6 my-6 rounded-lg shadow-md">
-								<div className="bg-yellow-300 max-w-fit p-2 flex items-center gap-3">
+							<label className="block mb-4 text-lg font-semibold">Resume
+								</label>
+								<div className=" max-w-fit p-2 my-5 flex items-center gap-3 border border-gray-400">
 									{
 										candidateProfileData?.data?.resume
 											.filename
 									}
-									<div
-										className="tooltip tooltip-top"
-										data-tip="delete resume"
-									>
-										<MdDelete />
-									</div>
+									{!isRecruiterUrl && (
+										<div
+											className="tooltip tooltip-top"
+											data-tip="delete resume"
+										>
+											<MdDelete />
+										</div>
+									)}
+
 									<div
 										className="tooltip tooltip-top"
 										data-tip="view resume"
 									>
-										<FaEye />
+										<Link
+											to={
+												candidateProfileData?.data
+													?.resume.url
+											}
+										>
+											<FaEye />
+										</Link>
 									</div>
 								</div>
 								<label className="block mb-4 text-lg font-semibold">
-									{isRecruiterUrl
-										? "Candidate Resume"
-										: candidateProfileData?.data?.resume
+									{!isRecruiterUrl &&( candidateProfileData?.data?.resume
 										? "Change Your Resume"
-										: "Upload Your Resume"}
+										: "Upload Your Resume")}
 								</label>
 								<div className="flex items-center justify-between space-x-2">
 									{!isRecruiterUrl && (
@@ -331,18 +360,6 @@ const CandidateProfilePage: React.FC = () => {
 											</button>
 										</div>
 									)}
-
-									<Link
-										className="text-blue-500 hover:underline"
-										to={
-											candidateProfileData?.data?.resume
-												.url
-										}
-										target="_blank"
-										rel="noopener noreferrer"
-									>
-										View Resume
-									</Link>
 								</div>
 								{selectedFile && (
 									<p className="mt-4">
@@ -354,14 +371,15 @@ const CandidateProfilePage: React.FC = () => {
 
 						{/* ====modal start ==== */}
 						{/* Put this part before </body> tag */}
+						
 						<input
 							type="checkbox"
 							id="my_modal_6"
 							className="modal-toggle"
 						/>
- 
+
 						<div className="modal " role="dialog">
-							<div className="modal-box" >
+							<div className="modal-box">
 								<h3 className="font-bold text-lg">
 									Add yout key skills
 								</h3>
@@ -458,9 +476,10 @@ const CandidateProfilePage: React.FC = () => {
 										className="tooltip tooltip-top"
 										data-tip="add or edit skills"
 									>
-										<label htmlFor="my_modal_6">
+										{!isRecruiterUrl && <label htmlFor="my_modal_6">
 											<FaEdit />
-										</label>
+										</label>}
+										
 									</div>
 								</p>
 

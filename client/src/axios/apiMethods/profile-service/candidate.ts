@@ -25,6 +25,7 @@ export const updateCandidateProfileApi = async (candidateProfileData: any): Prom
 export const uploadCandidateImageProfileApi = async (userId: string,profileImageData: any): Promise<any> => {
     console.log("uploadCandidateResumeProfileApi profileImageData is    ..//////", profileImageData);
     const response: any = await candidateApiCalls("put", profileApiUrlConfig.uploadCandidateImageUrl, profileImageData, true);
+    // isFileUpload is giving 'true' because we are sending a file to the backend.
 
     console.log("response is ", response.data);
 
@@ -33,7 +34,8 @@ export const uploadCandidateImageProfileApi = async (userId: string,profileImage
 
 export const uploadCandidateResumeProfileApi = async (userId: string,resumeData: any): Promise<any> => {
     console.log("uploadCandidateResumeProfileApi resumeData is    ..//////", resumeData);
-    const response: any = await candidateApiCalls("put", profileApiUrlConfig.uploadCandidateResumeUrl, resumeData, true);
+    const response: any = await candidateApiCalls("put", profileApiUrlConfig.uploadCandidateResumeUrl, resumeData, false); 
+    // isFileUpload is giving 'false' because we are sending filename and url of uploaded resume in the client side using firebase.
 
     console.log("response is ", response.data);
 

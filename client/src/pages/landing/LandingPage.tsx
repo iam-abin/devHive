@@ -160,7 +160,7 @@ function LandingPage() {
 					className=" bg-gradient-to-r from-slate-900 via-purple-900 to-slate-900"
 				>
 					<div className="py-5">
-						<SearchBar handleGetAllJobs={handleGetAllJobs} />
+						<SearchBar />
 					</div>
 					<div >
 						{jobs && jobs.length > 0 ? (

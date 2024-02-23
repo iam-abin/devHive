@@ -3,11 +3,11 @@ import { useDispatch } from "react-redux";
 import { filterJobsApi, getJobFieldsValuesApi } from "../../axios/apiMethods/jobs-service/jobs";
 import { setFilteredJobs } from "../../redux/slice/job/filteredJobsSlice";
 
-interface SearchBarProps {
-	// jobs: any[];
-	handleGetAllJobs: any;
-}
-const SearchBar: React.FC<SearchBarProps> = ({ handleGetAllJobs }) => {
+// interface SearchBarProps {
+// 	// jobs: any[];
+// 	handleGetAllJobs: any;
+// }
+const SearchBar = () => {
 	const dispatch = useDispatch();
 	const [jobFieldsValues, setJobFieldsValues] = useState({
 		title: [],

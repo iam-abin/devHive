@@ -5,7 +5,7 @@ import { CiCalendarDate } from "react-icons/ci";
 import { RootState } from "../../redux/reducer/reducer";
 import { formatDate } from "../../utils/date-format";
 import { FaFacebookMessenger } from "react-icons/fa";
-import { BsFillBagDashFill, BsFillBagFill } from "react-icons/bs";
+import { BsFillBagDashFill } from "react-icons/bs";
 
 const JobDetails: React.FC<{
 	jobDetails: any;
@@ -85,7 +85,7 @@ const JobDetails: React.FC<{
 								<ul className="w-3/5">
 									{jobDetails.skills_required ? (
 										jobDetails.skills_required.map(
-											(skill: string, index: number) => (
+											(skill: string) => (
 												<div
 													key={skill}
 													className="badge text-white bg-sky-700 p-4 flex flex-row gap-2"

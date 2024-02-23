@@ -10,10 +10,10 @@ export = (dependencies: DependenciesData)=>{
     return async (req: Request, res: Response)=>{
         const user = req.currentUserCandidate;
         console.log("----------------------------------------------------------------------",req.currentUserCandidate);
-        console.log("in candidate upload resume controller data 1: req.file",req.file);
+        console.log("in candidate upload resume controller data 1: req.file",req.body);
         
 
-        const candidate = await uploadResumeUseCase(dependencies).execute(user?.id , req.file);
+        const candidate = await uploadResumeUseCase(dependencies).execute(user?.id , req.body);
         console.log("in candidate upload resume controller data 2: ",candidate);
 
         const candidateProfileUpdatedEvent = new CandidateProfileUpdatedEventPublisher(kafkaClient)

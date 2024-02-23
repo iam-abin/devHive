@@ -17,31 +17,7 @@ export = (dependencies: any)=>{
 
 			console.log("inside usecase resume file", file);
 			
-
-			const uploadResult: { public_id: string, url: string} = await new Promise((resolve, reject) => {
-			// const uploadResult: any = await new Promise((resolve, reject) => {
-				const cloudinary_upload_stream = cloudinary.uploader.upload_stream(
-					{ folder: "devHive_Resumes" },
-					(error, result: any) => {
-						if (error) {
-							console.error(error);
-							reject(error);
-						} else {
-							console.log(result);
-							resolve({
-								public_id: result.public_id,
-								url: result.secure_url,
-							});
-							// resolve(result);
-						}
-					}
-				);
-
-				streamifier.createReadStream(file.buffer).pipe(cloudinary_upload_stream);
-			});
-			
-			console.log("inside upload resume usecase uploadresult ", uploadResult);
-            return await candidateProfileRepository.uploadResume(id, uploadResult?.url, file.originalname );
+            return await candidateProfileRepository.uploadResume(id, file?.url, file?.filename );
 		} catch (error) {
 			console.error(error);
 			// Handle the error appropriately

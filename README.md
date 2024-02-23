@@ -13,6 +13,8 @@ This is a Job Finding Application For software developers.
 kubectl create secret generic NAME_OF_THE_SECRET_KEY --from-literal=KEY=VALUE_FOR_THE_KEY
 ```
 
+eg:- kubectl create secret generic auth-api-key --from-literal=AUTH_API_KEY=1234567890
+
 #### api prefix
 
 API_PREFIX = 'api prifix' eg:- /api/v1
