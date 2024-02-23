@@ -1,9 +1,11 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
+import { CiCalendarDate } from "react-icons/ci";
 import { RootState } from "../../redux/reducer/reducer";
 import { formatDate } from "../../utils/date-format";
 import { FaFacebookMessenger } from "react-icons/fa";
+import { BsFillBagDashFill, BsFillBagFill } from "react-icons/bs";
 
 const JobDetails: React.FC<{
 	jobDetails: any;
@@ -32,27 +34,13 @@ const JobDetails: React.FC<{
 		<div>
 			<div className="container mx-auto my-8">
 				<div className="max-w-2xl mx-auto bg-white p-8 rounded shadow-md">
-					<div className="flex justify-between items-center mb-4">
-						<div>
-							<h1 className="text-3xl font-bold mb-4">
-								{jobDetails ? jobDetails.title : "Loading..."}
-							</h1>
-							<p className="text-gray-600 mb-4 ">
-								Company:{" "}
-								<span className="font-extrabold">{jobDetails ? jobDetails.company_name : "Loading..."}</span>
-								
-							</p>
-							<p className="text-gray-600 mb-4">
-								Location:{" "}
-								<span className="font-extrabold">{jobDetails
-									? jobDetails.company_location
-									: "Loading..."}</span>
-								
-							</p>
-						</div>
-
-						<div className="mb-4">
-							Posted on :
+					<div className="flex justify-between items-center my-8  mb-4">
+						<h1 className="text-3xl font-bold mb-4 flex gap-2">
+							<BsFillBagDashFill />
+							{jobDetails ? jobDetails.title : "Loading..."}
+						</h1>
+						<div className="mb-4 flex gap-2 items-center my-8 ">
+							<CiCalendarDate /> <p>Posted on:</p>
 							<p>
 								{jobDetails
 									? formatDate(jobDetails.createdAt)
@@ -60,25 +48,41 @@ const JobDetails: React.FC<{
 							</p>
 						</div>
 					</div>
+					<div className=" mb-4 flex items-center my-8 ">
+						<p className="w-3/5 font-extrabold">Company: </p>
+						<span className=" w-3/5">
+							{jobDetails
+								? jobDetails.company_name
+								: "Loading..."}
+						</span>
+					</div>
+					<div className=" mb-4 flex items-center my-8 ">
+						<p className="w-3/5 font-extrabold">Location: </p>
+						<span className=" w-3/5">
+							{jobDetails
+								? jobDetails.company_location
+								: "Loading..."}
+						</span>
+					</div>
 
-					<div className="mb-4">
-						<h2 className="text-xl font-semibold mb-2">
+					<div className="mb-4 flex items-center my-8   ">
+						<h2 className=" font-extrabold w-3/5  mb-2">
 							Job Description
 						</h2>
-						<p>
+						<p className="w-3/5">
 							{jobDetails
 								? jobDetails.job_descriptions
 								: "Loading..."}
 						</p>
 					</div>
 
-					<div className="mb-4">
+					<div className="mb-4 flex items-center my-8  ">
 						{jobDetails && (
 							<>
-								<h2 className="text-xl font-semibold mb-2">
+								<h2 className=" font-extrabold mb-2  w-3/5">
 									Skills Required
 								</h2>
-								<ul className="list-disc pl-5">
+								<ul className="list-disc pl-5  w-3/5">
 									{jobDetails.skills_required ? (
 										jobDetails.skills_required.map(
 											(skill: string, index: number) => (
@@ -94,89 +98,104 @@ const JobDetails: React.FC<{
 					</div>
 
 					{jobDetails && jobDetails.education_required && (
-						<div className="mb-4">
-							<h2 className="text-xl font-semibold mb-2">
+						<div className="mb-4 flex items-center my-8 ">
+							<h2 className=" font-extrabold mb-2  w-3/5">
 								Education Required
 							</h2>
-							<p>{jobDetails.education_required}</p>
+							<p className=" w-3/5">
+								{jobDetails.education_required}
+							</p>
 						</div>
 					)}
 
 					{/* {jobDetails && jobDetails.recruiterId && (
 						<div className="mb-4">
-							<h2 className="text-xl font-semibold mb-2">
+							<h2 className=" font-extrabold mb-2">
 								recruiter
 							</h2>
 							<p>{jobDetails.recruiterId}</p>
 						</div>
 					)} */}
-					<div className="flex flex-col">
-						{jobDetails && jobDetails.recruiterId && (
-							<>
-								<h2 className="text-xl font-semibold mb-2">
-									Recruiter
-								</h2>
-								<div className="mb-4">
-									<p>{jobDetails.recruiterId.name}</p>{" "}
-								</div>
-							</>
-						)}
-						{isCandidatePage && (
-							<div className="flex gap-4">
-								<p>Message: </p>{" "}
+					{/* <div className="my-3 "> */}
+					{jobDetails && jobDetails.recruiterId && (
+						<div className="flex items-center my-8 ">
+							<h2 className=" font-extrabold mb-2  w-3/5">
+								Recruiter
+							</h2>
+							<div className="mb-3  w-3/5">
+								<p>{jobDetails.recruiterId.name}</p>{" "}
+							</div>
+						</div>
+					)}
+
+					{isCandidatePage && (
+						<div className="flex items-center my-8 ">
+							<p className="  w-3/5 my-4 font-extrabold">
+								Send Message:{" "}
+							</p>{" "}
+							<span className="text-3xl items-start   w-3/5">
 								<FaFacebookMessenger
 									onClick={() =>
 										navigate(
 											`/candidate/chat/${jobDetails?.recruiterId?.id}` // Add the path to your chat page
 										)
-						 			}
-									className="text-3xl cursor-pointer"
+									}
+									className=" cursor-pointer"
 								/>
-							</div>
-						)}
-					</div>
+							</span>
+						</div>
+					)}
+					{/* </div> */}
 
 					{jobDetails && jobDetails.experience_required && (
-						<div className="mb-4">
-							<h2 className="text-xl font-semibold mb-2">
+						<div className="mb-4 flex items-center my-8 ">
+							<h2 className="  w-3/5 font-extrabold mb-2">
 								Experience required
 							</h2>
-							<p>{jobDetails.experience_required}</p>
+							<p className=" w-3/5">
+								{jobDetails.experience_required}
+							</p>
 						</div>
 					)}
 
 					{jobDetails && jobDetails.deadline && (
-						<div className="mb-4">
-							<h2 className="text-xl font-semibold mb-2">
+						<div className="mb-4 flex items-center my-8 ">
+							<h2 className=" font-extrabold mb-2  w-3/5">
 								Deadline
 							</h2>
-							<p>{formatDate(jobDetails.deadline)}</p>
+							<p className=" w-3/5">
+								{formatDate(jobDetails.deadline)}
+							</p>
 						</div>
 					)}
 
 					{jobDetails && jobDetails.employment_type && (
-						<div className="mb-4">
-							<h2 className="text-xl font-semibold mb-2">
+						<div className="mb-4 flex items-center my-8 ">
+							<h2 className=" font-extrabold mb-2  w-3/5">
 								Employment type
 							</h2>
-							<p>{jobDetails.employment_type}</p>
+							<p className=" w-3/5">
+								{jobDetails.employment_type}
+							</p>
 						</div>
 					)}
 
 					{jobDetails && jobDetails.available_position && (
-						<div className="mb-4">
-							<h2 className="text-xl font-semibold mb-2">
+						<div className="mb-4 flex items-center my-8 ">
+							<h2 className=" font-extrabold mb-2  w-3/5">
 								Available position
 							</h2>
-							<p>{jobDetails.available_position}</p>
+							<p className=" w-3/5">
+								{jobDetails.available_position}
+							</p>
 						</div>
 					)}
 
-					<div className="mb-4">
-						<h2 className="text-xl font-semibold mb-2">
+					<div className="mb-4 flex items-center my-8 ">
+						<h2 className=" font-extrabold mb-2  w-3/5">
 							Salary Range
 						</h2>
-						<p>
+						<p className=" w-3/5">
 							₹{jobDetails ? jobDetails.salary_min : "Loading..."}{" "}
 							- ₹
 							{jobDetails ? jobDetails.salary_max : "Loading..."}
