@@ -8,6 +8,10 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-body-size: '50m' # Set the maximum allowed request body size
     nginx.ingress.kubernetes.io/websocket-services: "chat-srv"
 spec:
+  tls:
+  - hosts:
+    - devhive.dev
+    secretName: devhive-dev-tls
   rules:
     - host: devhive.dev
       http:

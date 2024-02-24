@@ -24,6 +24,8 @@ import { setCurrentPage } from "../../redux/slice/job/filteredJobsSlice";
 import TopNavBarCandidate from "../../components/navBar/TopNavBarCandidate";
 import Footer from "../../components/footer/Footer";
 
+import { myFirebaseMessaging } from "../../config/firebase";
+
 function LandingPage() {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
@@ -52,6 +54,8 @@ function LandingPage() {
 		// dispatch(setLoaded());
 		return allJobs;
 	};
+
+	
 
 	useEffect(() => {
 		(async () => {
@@ -162,7 +166,7 @@ function LandingPage() {
 					<div className="py-5">
 						<SearchBar />
 					</div>
-					<div >
+					<div>
 						{jobs && jobs.length > 0 ? (
 							jobs.map((job: any) => (
 								<JobCard
@@ -181,10 +185,12 @@ function LandingPage() {
 							</div>
 						)}
 					</div>
-					{jobs?.length > 0 && <Paginate
-						pageCount={pageCount}
-						handlePageChange={handlePageChange}
-					/>}
+					{jobs?.length > 0 && (
+						<Paginate
+							pageCount={pageCount}
+							handlePageChange={handlePageChange}
+						/>
+					)}
 				</div>
 			</div>
 			<div>
