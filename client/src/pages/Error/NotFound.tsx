@@ -1,6 +1,7 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const NotFound: React.FC<{ url: string }> = ({ url }) => {
+	const navigate = useNavigate();
 	return (
 		<div>
 			<main className="grid min-h-screen place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
@@ -15,12 +16,18 @@ const NotFound: React.FC<{ url: string }> = ({ url }) => {
 							removed or its name changed or is temporarily
 							unavailable
 						</p>
-						<Link
+						{/* <Link
 							to={url}
 							className="uppercase border-2 border-gray-900 hover:bg-white hover:text-gray-900 bg-gray-900 px-5 py-1 rounded-xl font-semibold text-gray-50"
 						>
 							Go to homepage
-						</Link>
+						</Link> */}
+						<button
+							className="uppercase border-2 border-gray-900 hover:bg-white hover:text-gray-900 bg-gray-900 px-5 py-1 rounded-xl font-semibold text-gray-50"
+							onClick={() => navigate(-1)}
+						>
+							Go Back
+						</button>
 					</div>
 				</div>
 			</main>

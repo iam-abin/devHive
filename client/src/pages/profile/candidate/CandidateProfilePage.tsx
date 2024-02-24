@@ -18,6 +18,7 @@ import { MdDelete } from "react-icons/md";
 import { myFirebaseStorage } from "../../../config/firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
+import { getACandidateProfileApi } from "../../../axios/apiMethods/profile-service/recruiter";
 
 const CandidateProfilePage: React.FC = () => {
 	const navigate = useNavigate();
@@ -51,10 +52,19 @@ const CandidateProfilePage: React.FC = () => {
 	const { candidateId } = useParams(); // and used when recruiter view user profile
 	useEffect(() => {
 		(async () => {
-			const { id } = candidateData; // used when candidate see his profile
-			const candidateProfile = await candidateGetProfileApi(
-				candidateId ?? id
-			);
+			let candidateDataId = candidateData ?? null; // used when candidate see his profile
+			let id = candidateDataId?.id;
+			let candidateProfile;
+			if (isRecruiterUrl) {
+				candidateProfile = await getACandidateProfileApi(
+					candidateId ?? id
+				);
+			} else {
+				candidateProfile = await candidateGetProfileApi(
+					candidateId ?? id
+				);
+			}
+
 			console.log(
 				"/////////////////////candidateProfile ",
 				candidateProfile
@@ -204,7 +214,7 @@ const CandidateProfilePage: React.FC = () => {
 									<h1 className="text-5xl font-bold">
 										I'm{" "}
 										{candidateProfileData?.data?.name ??
-											candidateData.name}
+											candidateData?.name}
 									</h1>
 									<p className="py-6">
 										{candidateProfileData?.data?.about}
@@ -235,7 +245,7 @@ const CandidateProfilePage: React.FC = () => {
 									<div className="text-left">
 										Name:{" "}
 										{candidateProfileData?.data?.name ??
-											candidateData.name}
+											candidateData?.name}
 									</div>
 								</div>
 							</div>
@@ -244,7 +254,7 @@ const CandidateProfilePage: React.FC = () => {
 									<div className="text-left">
 										Email:{" "}
 										{candidateProfileData?.data?.email ??
-											candidateData.email}
+											candidateData?.email}
 									</div>
 								</div>
 							</div>
@@ -253,7 +263,7 @@ const CandidateProfilePage: React.FC = () => {
 									<div className="text-left">
 										Phone:{" "}
 										{candidateProfileData?.data?.phone ??
-											candidateData.phone}
+											candidateData?.phone}
 									</div>
 								</div>
 							</div>
