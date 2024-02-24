@@ -18,7 +18,8 @@ function AllJobsPage() {
 	const [jobs, setJobs] = useState([]);
 
 	const [searchTerm, setSearchTerm] = useState("");
-	
+	console.log("searchTerm ",searchTerm)
+
 	const handlePageChange = async ({ selected }: { selected: number }) => {
 		setCurrentPage(selected + 1);
 	};
@@ -44,7 +45,7 @@ function AllJobsPage() {
 			job.employment_type
 				.toLowerCase()
 				.includes(searchTerm.toLowerCase()) ||
-			job.location.toLowerCase().includes(searchTerm.toLowerCase())
+			job.company_location.toLowerCase().includes(searchTerm.toLowerCase())
 	);
 
 	return (
@@ -60,20 +61,17 @@ function AllJobsPage() {
 							+ Create Job
 						</button>
 					</div>
-					
-						<div className="flex-none gap-2 mb-5">
-							<div className="form-control">
-								<input
-									type="text"
-									placeholder="Search"
-									onChange={(e) =>
-										setSearchTerm(e.target.value)
-									}
-									className="input input-bordered w-24 md:w-auto"
-								/>
-							</div>
+
+					<div className="flex-none gap-2 mb-5">
+						<div className="form-control">
+							<input
+								type="text"
+								placeholder="Search"
+								onChange={(e) => setSearchTerm(e.target.value)}
+								className="input input-bordered w-24 md:w-auto"
+							/>
 						</div>
-					
+					</div>
 				</div>
 				{filteredJobs.length <= 0 && (
 					<div className="flex justify-center items-center h-[39.7vh]">
@@ -85,6 +83,8 @@ function AllJobsPage() {
 
 				<div className="flex flex-col w-full">
 					{filteredJobs.map((job: any) => {
+						console.log("--->",job);
+						
 						return (
 							job.isActive && (
 								<JobCard

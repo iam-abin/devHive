@@ -12,6 +12,10 @@ export = (dependencies: DependenciesData)=>{
         const data = req.body;
         console.log("in recruiter create job controller 1: ",data);
 
+        if(!data.company_name || !data.company_location ){
+            throw new Error("All company details should be added before creating a job!!")
+        }
+
         const newJob = await createJobUseCase(dependencies).execute(data);
         console.log("in recruiter create job controller 2: ",newJob);
 

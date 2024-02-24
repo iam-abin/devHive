@@ -4,7 +4,6 @@ import {
 } from "../../../axios/apiMethods/jobs-service/jobs";
 import { useNavigate, useParams } from "react-router-dom";
 import JobApplicationDetails from "../../../components/recruiter/JobApplicationDetails";
-import TopNavBarRecruiter from "../../../components/navBar/TopNavBarRecruiter";
 
 function JobApplicationDetailsPage() {
 	const [jobApplicationDetails, setJobApplicationDetails] =

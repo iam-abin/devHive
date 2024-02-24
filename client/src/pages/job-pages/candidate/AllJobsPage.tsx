@@ -46,7 +46,9 @@ function AllJobsPage() {
 			job.employment_type
 				.toLowerCase()
 				.includes(searchTerm.toLowerCase()) ||
-			job.location.toLowerCase().includes(searchTerm.toLowerCase())
+			job.company_location
+				.toLowerCase()
+				.includes(searchTerm.toLowerCase())
 	);
 
 	return (
@@ -67,13 +69,11 @@ function AllJobsPage() {
 							{filteredJobs.map(
 								(job: any) =>
 									job.isActive && (
-										// <JobCardAllJobs
-										// 	job={job}
-										// 	handleView={handleView}
-										// 	formatDateFn={formatDate}
-										// />
-										<JobCard 	job={job}
-											handleViewJob={handleView} />
+										<JobCard
+											job={job}
+											key={job.id}
+											handleViewJob={handleView}
+										/>
 									)
 							)}
 						</div>
@@ -87,7 +87,9 @@ function AllJobsPage() {
 				) : (
 					<>
 						<div className="flex justify-center items-center h-[39.7vh]">
-							<h1 className="font-bold text-3xl">No jobs are listed yet</h1>
+							<h1 className="font-bold text-3xl">
+								No jobs are listed yet
+							</h1>
 						</div>
 					</>
 				)}

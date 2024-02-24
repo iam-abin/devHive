@@ -53,7 +53,7 @@ const CandidateProfilePage: React.FC = () => {
 		(async () => {
 			const { id } = candidateData; // used when candidate see his profile
 			const candidateProfile = await candidateGetProfileApi(
-				id ?? candidateId
+				candidateId ?? id
 			);
 			console.log(
 				"/////////////////////candidateProfile ",
@@ -186,10 +186,12 @@ const CandidateProfilePage: React.FC = () => {
 					<div className="w-md mx-auto bg-white p-8 rounded shadow-md">
 						<div className="hero h-56 bg-base-200 relative">
 							<div className="hero-content flex-col  lg:flex-row-reverse">
-								{!isRecruiterUrl && <ImageFileUpload
-									uploadImage={handleImageUpload}
-								/>}
-								
+								{!isRecruiterUrl && (
+									<ImageFileUpload
+										uploadImage={handleImageUpload}
+									/>
+								)}
+
 								<img
 									src={
 										candidateProfileData?.data
@@ -304,40 +306,47 @@ const CandidateProfilePage: React.FC = () => {
 							</div>
 
 							<div className="bg-gray-100 p-6 my-6 rounded-lg shadow-md">
-							<label className="block mb-4 text-lg font-semibold">Resume
-								</label>
-								<div className=" max-w-fit p-2 my-5 flex items-center gap-3 border border-gray-400">
-									{
-										candidateProfileData?.data?.resume
-											.filename
-									}
-									{!isRecruiterUrl && (
-										<div
-											className="tooltip tooltip-top"
-											data-tip="delete resume"
-										>
-											<MdDelete />
-										</div>
-									)}
-
-									<div
-										className="tooltip tooltip-top"
-										data-tip="view resume"
-									>
-										<Link
-											to={
+								{candidateProfileData?.data?.resume && (
+									<>
+										<label className="block mb-4 text-lg font-semibold">
+											Resume
+										</label>
+										<div className=" max-w-fit p-2 my-5 flex items-center gap-3 border border-gray-400">
+											{
 												candidateProfileData?.data
-													?.resume.url
+													?.resume?.filename
 											}
-										>
-											<FaEye />
-										</Link>
-									</div>
-								</div>
+											{!isRecruiterUrl && (
+												<div
+													className="tooltip tooltip-top"
+													data-tip="delete resume"
+												>
+													<MdDelete />
+												</div>
+											)}
+
+											<div
+												className="tooltip tooltip-top"
+												data-tip="view resume"
+											>
+												<Link
+													to={
+														candidateProfileData
+															?.data?.resume?.url
+													}
+												>
+													<FaEye />
+												</Link>
+											</div>
+										</div>
+									</>
+								)}
+
 								<label className="block mb-4 text-lg font-semibold">
-									{!isRecruiterUrl &&( candidateProfileData?.data?.resume
-										? "Change Your Resume"
-										: "Upload Your Resume")}
+									{!isRecruiterUrl &&
+										(candidateProfileData?.data?.resume
+											? "Change Your Resume"
+											: "Upload Your Resume")}
 								</label>
 								<div className="flex items-center justify-between space-x-2">
 									{!isRecruiterUrl && (
@@ -363,7 +372,7 @@ const CandidateProfilePage: React.FC = () => {
 								</div>
 								{selectedFile && (
 									<p className="mt-4">
-										Selected File: {selectedFile.name}
+										Selected File: {selectedFile?.name}
 									</p>
 								)}
 							</div>
@@ -371,7 +380,7 @@ const CandidateProfilePage: React.FC = () => {
 
 						{/* ====modal start ==== */}
 						{/* Put this part before </body> tag */}
-						
+
 						<input
 							type="checkbox"
 							id="my_modal_6"
@@ -472,15 +481,16 @@ const CandidateProfilePage: React.FC = () => {
 										Skills{" "}
 									</span>
 									{/* The button to open modal */}
-									<div
+									<span
 										className="tooltip tooltip-top"
 										data-tip="add or edit skills"
 									>
-										{!isRecruiterUrl && <label htmlFor="my_modal_6">
-											<FaEdit />
-										</label>}
-										
-									</div>
+										{!isRecruiterUrl && (
+											<label htmlFor="my_modal_6">
+												<FaEdit />
+											</label>
+										)}
+									</span>
 								</p>
 
 								<ul className="list-none flex flex-wrap gap-2">

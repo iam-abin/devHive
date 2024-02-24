@@ -8,7 +8,9 @@ export class RecruiterProfile {
 	gender?: string;
 	profile_image?: string;
 	about?: string;
-	company_id?: string;
+	// company_id?: string;
+	company_name?: string;
+	company_location?: string;
 	recruiterId?: string;
 	// membership?: string;
 	// company_size?: number;
@@ -20,7 +22,9 @@ export class RecruiterProfile {
 		gender,
 		profile_image,
 		about,
-		company_id,
+		// company_id,
+		company_name,
+		company_location,
 		recruiterId,
 	}: RecruiterDataProfile) {
 		(this.name = name),
@@ -30,7 +34,9 @@ export class RecruiterProfile {
 			(this.gender = gender),
 			(this.profile_image = profile_image),
 			(this.about = about),
-			(this.company_id = company_id),
+			// (this.company_id = company_id),
+			(this.company_name = company_name),
+			(this.company_location = company_location),
 			(this.recruiterId = recruiterId);
 	}
 }

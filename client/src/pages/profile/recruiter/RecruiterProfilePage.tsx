@@ -110,7 +110,11 @@ const RecruiterProfilePage: React.FC = () => {
 									<h2 className="text-lg font-semibold text-gray-800 mb-2">
 										About Me
 									</h2>
-									<p className="text-gray-600"></p>
+									<p className="text-gray-600">
+									{recruiterProfileData?.data
+													?.about ??
+													"Not specified"}
+									</p>
 								</div>
 
 								<div>
@@ -118,8 +122,8 @@ const RecruiterProfilePage: React.FC = () => {
 										Email
 									</h2>
 									<p className="text-gray-600">
-										{recruiterProfileData?.email ??
-											recruiterData?.email}
+									{recruiterProfileData?.data
+													?.email ??recruiterData?.email}
 									</p>
 								</div>
 
@@ -129,8 +133,8 @@ const RecruiterProfilePage: React.FC = () => {
 											Phone
 										</h2>
 										<p className="text-gray-600">
-											{recruiterProfileData?.phone ??
-												recruiterData?.phone}
+										{recruiterProfileData?.data
+													?.phone ??recruiterData?.phone}
 										</p>
 									</div>
 								)}
@@ -141,7 +145,7 @@ const RecruiterProfilePage: React.FC = () => {
 											Gender
 										</h2>
 										<p className="text-gray-600">
-											{recruiterProfileData.data
+											{recruiterProfileData?.data
 												?.gender ?? "Not specified"}
 										</p>
 									</div>
@@ -154,27 +158,27 @@ const RecruiterProfilePage: React.FC = () => {
 									<ul>
 										<li className="mb-4">
 											<h3 className="text-blue-500 font-semibold">
-												{recruiterProfileData.data
+												{recruiterProfileData?.data
 													?.company_name ??
 													"Not specified"}
 											</h3>
 											<p className="text-gray-600">
-												{recruiterProfileData.data
+												{recruiterProfileData?.data
 													?.company_location ??
 													"Not specified"}
 											</p>
 											<p className="text-gray-600">
-												{recruiterProfileData.data
+												{recruiterProfileData?.data
 													?.company_state ??
 													"Not specified"}
 											</p>
 											<p className="text-gray-600">
-												{recruiterProfileData.data
+												{recruiterProfileData?.data
 													?.company_country ??
 													"Not specified"}
 											</p>
 											<p className="text-gray-600">
-												{recruiterProfileData.data
+												{recruiterProfileData?.data
 													?.company_website ??
 													"Not specified"}
 											</p>

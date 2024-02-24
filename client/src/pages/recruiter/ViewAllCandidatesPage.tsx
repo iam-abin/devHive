@@ -15,6 +15,7 @@ interface CandidateInterface {
 function ViewAllCandidatesPage() {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [pageCount, setpageCount] = useState(1);
+	const [searchTerm, setSearchTerm] = useState("");
 
 	const navigate = useNavigate();
 	const [candidatesData, setCandidatesData] = useState<CandidateInterface[]>(
@@ -36,25 +37,48 @@ function ViewAllCandidatesPage() {
 		})();
 	}, [currentPage]);
 
+	const filteredCandidated = candidatesData.filter(
+		(candidate: any) =>
+			candidate.name.toLowerCase().includes(searchTerm.toLowerCase())
+		//  ||
+		// candidate.employment_type
+		// 	.toLowerCase()
+		// 	.includes(searchTerm.toLowerCase()) ||
+		// candidate.company_location.toLowerCase().includes(searchTerm.toLowerCase())
+	);
+
 	const viewProfileDetails = async (candidateId: string) => {
 		console.log(
 			"in view candidate profile details candidate id is:",
 			candidateId
 		);
 
-		// console.log("in viewProfileDetails fn ", candidateId);
+		console.log("))))))))))in viewProfileDetails fn ", candidateId);
 		navigate(`/recruiter/viewCandidateProfileDetails/${candidateId}`);
 	};
 
 	return (
 		<div>
-			<div className="text-center mt-24">
+			<div className="text-center mt-5">
+				<div className="navbar flex justify-end">
+					<div className="flex-none gap-2 mb-5">
+						<div className="form-control">
+							<input
+								type="text"
+								placeholder="Search"
+								onChange={(e) => setSearchTerm(e.target.value)}
+								className="input input-bordered w-24 md:w-auto"
+							/>
+						</div>
+					</div>
+				</div>
 				{/* <SideNavBar /> */}
 				{/* <TableComponent columns={columns} data={candidatesData} /> */}
-				{candidatesData.length <= 0 ? (
+
+				{filteredCandidated.length <= 0 ? (
 					<div>No Candidates are registered yet</div>
 				) : (
-					candidatesData.map((candidate) => (
+					filteredCandidated.map((candidate) => (
 						<CandidateCard
 							key={candidate.id}
 							candidate={candidate}

@@ -30,9 +30,13 @@ function JobDetailsPage() {
 		console.log("id handle edit ", id);
 		navigate(`/recruiter/edit-job-details/${id}`);
 	};
+
+	const handleGoBack = ()=>{
+		navigate(-1)
+	}
 	return (
 		<div>
-			<JobDetails jobDetails={jobDetails} handleEditJob={handleEditJob} />
+			<JobDetails jobDetails={jobDetails} handleEditJob={handleEditJob} handleGoBack={handleGoBack} />
 		</div>
 	);
 }

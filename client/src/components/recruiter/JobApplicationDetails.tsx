@@ -1,7 +1,5 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import { RootState } from "../../redux/reducer/reducer";
 import StatusChangeForm from "../dropDown/StatusChangeForm";
 import { changeJobApplicationStatusApi } from "../../axios/apiMethods/jobs-service/jobs";
 import { notify } from "../../utils/toastMessage";
@@ -91,13 +89,13 @@ const JobApplicationDetails: React.FC<{
 								<p className="text-gray-600 mb-4">
 									Company:{" "}
 									{jobApplicationDetails
-										? jobApplicationDetails?.jobId?.company
+										? jobApplicationDetails?.jobId?.company_name
 										: "Loading..."}
 								</p>
 								<p className="text-gray-600 mb-4">
 									Location:{" "}
 									{jobApplicationDetails
-										? jobApplicationDetails?.jobId?.location
+										? jobApplicationDetails?.jobId?.company_location
 										: "Loading..."}
 								</p>
 							</div>

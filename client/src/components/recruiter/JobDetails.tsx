@@ -24,6 +24,10 @@ const JobDetails: React.FC<{
 		(state: RootState) => state.candidateData.data
 	);
 
+	const recruiterData: any = useSelector(
+		(state: RootState) => state.recruiterData.data
+	);
+
 	if (isRecruiterPage) {
 		// Do something specific for the "recruiter" page
 		console.log("This is a recruiter page");
@@ -211,7 +215,7 @@ const JobDetails: React.FC<{
 					</div>
 
 					<div>
-						{isRecruiterPage ? (
+						{(isRecruiterPage && (jobDetails?.recruiterId?.id === recruiterData.id)) ? (
 							<button
 								className="bg-primary text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300"
 								onClick={() => {

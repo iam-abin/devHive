@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import ViewJobDetails from "../../../components/admin/ViewJobDetails";
+import AdminViewJobDetailsCard from "../../../components/cards/AdminViewJobDetailsCard";
 import { useParams } from "react-router-dom";
 import {
 	blockUnblockJobApi,
@@ -67,7 +67,7 @@ const ViewJobDetailsPage: React.FC = () => {
 	};
 
 	return (
-		<ViewJobDetails
+		<AdminViewJobDetailsCard
 			data={jobDetails}
 			handleBlockUnblock={handleBlockUnblock}
 		/>

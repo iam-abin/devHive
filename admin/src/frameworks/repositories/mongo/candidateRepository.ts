@@ -11,6 +11,8 @@ export = {
 		console.log("inside createCandidate fn in admin service", userData);
 		
 		const {name, email, phone, userType, isActive, userId} = userData
+		console.log("userIddddddddddd",userId);
+		
 		
 		const userObject = CandidateModel.buildCandidate({name, email, phone, userType, isActive, userId});
 		console.log("in create Candidate in admin>><<><><><", userObject);

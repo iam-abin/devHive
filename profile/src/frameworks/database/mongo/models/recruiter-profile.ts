@@ -94,16 +94,16 @@ const recruiterSchema = new mongoose.Schema(
 		// userId: mongoose.Schema.Types.ObjectId
 		company_name:{
 			type: String,
-			required: true
+			// required: true
 		},
 		// logo: String,
 		company_website: {
 			type: String,
-			required: false
+			// required: false
 		},
 		company_location: {
 			type: String,
-			required: true
+			// required: true
 		},
 		company_state: String,
 		company_country: String,
