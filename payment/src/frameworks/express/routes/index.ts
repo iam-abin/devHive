@@ -1,20 +1,20 @@
 import express from "express"
 
 import { DependenciesData } from "../../types/dependencyInterface";
-import { userRouter } from "./user";
-import { chatRouter } from "./payment";
+// import { userRouter } from "./user";
+import { paymentRouter } from "./payment";
 
-import { currentUserCandidateCheck, currentUserRecruiterCheck } from "@abijobportal/common";
+import { currentUserCandidateCheck } from "@abijobportal/common";
 
 export const routes = (dependencies: DependenciesData) =>{
     const router = express.Router();
 
-    const user = userRouter(dependencies)
-    const chat = chatRouter(dependencies)
+    // const user = userRouter(dependencies)
+    const payment = paymentRouter(dependencies)
 
 
-    router.use("/candidate",currentUserCandidateCheck, chat)
-    router.use("/recruiter",currentUserRecruiterCheck, chat)
+    // router.use("/recruiter",currentUserCandidateCheck, user)
+    router.use("/candidate",currentUserCandidateCheck, payment)
 
     return router
 }

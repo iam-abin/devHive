@@ -8,27 +8,22 @@ import {
 	requireAuthRecruiter,
 } from "@abijobportal/common";
 
-export const chatRouter = (dependencies: DependenciesData) => {
+export const paymentRouter = (dependencies: DependenciesData) => {
 	const router = express.Router();
 
-	// const {
-	// 	// getAllChatRoomsByUserIDController,
-	// 	// getChatRoomWithRoomIdController,
-	// 	// sendNewMessageController,
-	// 	// createChatRoomController,
-	// } = userControllers(dependencies);
-
 	const {
-		getAllChatRoomsByUserIDController,
-		getConversationController
+		// getAllChatRoomsByUserIDController,
+		cratePaymentController
 	} = chatControllers(dependencies);
 
-	router.get(
-		"/chat-rooms/:userId",
-		getAllChatRoomsByUserIDController  
+	router.use(requireAuthCandidate)
+
+	router.post(
+		"/create-payment",
+		cratePaymentController  
 	);
 
-	router.get("/room-conversation/:chatRoomId", getConversationController);
+	// router.get("/room-conversation/:chatRoomId", getConversationController);
 
 	// router.post("/new-message/:roomId", sendNewMessageController);
 

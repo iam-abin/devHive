@@ -1,7 +1,7 @@
 import { Kafka } from "kafkajs";
 
 const kafkaClient = new Kafka({
-    clientId: 'chat-client',
+    clientId: 'payment-client',
     brokers: ['devhive-kafka-headless:9092'],
 })
 

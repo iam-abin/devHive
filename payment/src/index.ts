@@ -1,18 +1,14 @@
 import { connectDB } from "./config/db";
-import { kafkaClient } from "./config/kafka-connection";
-import { app, httpServer } from "./frameworks/express/app";
+import { app } from "./frameworks/express/app";
 import { UserCreatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/user-created-consumer";
 import { UserUpdatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/user-updated-consumer";
+// import { CompanyProfileUpdatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/company-profile-updated-consumer";
+import { kafkaClient } from "./config/kafka-connection";
 
 const start = async () => {
-	console.log("chat service Starting up....");
+	console.log("Starting up profile....");
 
-    //if we do not set MONGO_URL_CHAT
-	if (!process.env.MONGO_URL_CHAT) {
-		throw new Error("MONGO_URL_CHAT must be defined");
-	}
-
-    //if we do not set JWT_SECRET_KEY
+	//if we do not set JWT_SECRET_KEY
 	if (!process.env.JWT_SECRET_KEY) {
 		throw new Error("JWT_SECRET_KEY must be defined");
 	}
@@ -21,26 +17,47 @@ const start = async () => {
 	if (!process.env.JWT_REFRESH_SECRET_KEY) {
 		throw new Error("JWT_REFRESH_SECRET_KEY must be defined");
 	}
-	
 
+	//if we do not set mongo_uri
+
+	if (!process.env.MONGO_URL_PAYMENT) {
+		throw new Error("MONGO_URL_PROFILE must be defined");
+	}
+	
+	if (!process.env.STRIPE_SECRET_KEY) {
+		throw new Error("STRIPE_SECRET_KEY must be defined");
+	}
+
+	// if (!process.env.VITE_STRIPE_PUBLISHABLE_KEY) {
+	// 	throw new Error("VITE_STRIPE_PUBLISHABLE_KEY must be defined");
+	// }
+
+	// to connect to mongodb
 	await connectDB();
 
-	const userCreatedEvent = new UserCreatedEventConsumer(kafkaClient);
-	const userUpdatedEvent = new UserUpdatedEventConsumer(kafkaClient);
+	// it is used to listen to incomming message from kafka topics
+	// const userCreatedEvent = new UserCreatedEventConsumer(kafkaClient);
+	// const userUpdatedEvent = new UserUpdatedEventConsumer(kafkaClient);
+	// const companyProfileUpdatedEvent = new CompanyProfileUpdatedEventConsumer(
+	// 	kafkaClient
+	// );
 	
-	await userUpdatedEvent.subscribe();
-	await userCreatedEvent.subscribe();
+	// await userCreatedEvent.subscribe();
+	// await userUpdatedEvent.subscribe();
+	// await companyProfileUpdatedEvent.subscribe();
 
-	httpServer.listen(3000, () => {
-		console.log("chat service Listening on port 3000....");
+	app.listen(3000, () => {
+		console.log("payment Listening on port 3000....");
 	})
 		.on("error", async () => {
-			await userUpdatedEvent.disconnect();
-			await userCreatedEvent.disconnect();
+			// await userCreatedEvent.disconnect();
+			// await userUpdatedEvent.disconnect();
+			// await companyProfileUpdatedEvent.disconnect();
 		})
 		.on("close", async () => {
-			await userUpdatedEvent.disconnect();
-			await userCreatedEvent.disconnect();
+			// await userCreatedEvent.disconnect();
+			// await userUpdatedEvent.disconnect();
+			// await companyProfileUpdatedEvent.disconnect();
 		});
 };
 

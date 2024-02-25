@@ -1,5 +1,4 @@
 import { UserModel } from "./users";
-import { ChatRoomModel } from "./chatRoomModel";
-import { MessageModel } from "./messageModel";
+import { PaymentModel } from "./payments";
 
-export default { UserModel, ChatRoomModel, MessageModel}
+export default { UserModel, PaymentModel}

@@ -1,26 +1,22 @@
 import mongoose from "mongoose";
 // 1. An interface that describes the properties ,that are requried to create a new Chat
-interface ChatRoomAttributes {
-	users: string[];
-	// lastMessage?: string;
-	// lastMessageTime?: boolean;
+interface PaymentAttributes {
+	candidateId: string;
+	stripeId: string
 }
 // 2. An interface that describes the properties ,that a Chat Document has
-interface ChatRoomDocument extends mongoose.Document {
-	users: mongoose.Types.ObjectId[];
-	// lastMessage?: string;
-	// lastMessageTime?: boolean;
+interface PaymentDocument extends mongoose.Document {
+	candidateId: string,
+	stripeId: string
 	createdAt: Date;
 	updatedAt: Date;
 }
 
 // 3.
-const chatRoomSchema = new mongoose.Schema(
+const paymentSchema = new mongoose.Schema(
 	{
-
-		users: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-		lastMessage: String,
-		lastMessageTime: String,
+		candidateId: String,
+		stripeId: String,
 	},
 	{
 		// to reformat id and remove password,__v from response when converting to json (we can also use other approaches)
@@ -36,19 +32,18 @@ const chatRoomSchema = new mongoose.Schema(
 );
 
 // 4. An interface that describes the properties ,that a user model has
-interface ChatRoomModel extends mongoose.Model<ChatRoomDocument> {
-	buildChatRoom(attributes: string[]): ChatRoomDocument;
+interface PaymentModel extends mongoose.Model<PaymentDocument> {
+	buildPayment(attributes: PaymentAttributes): PaymentDocument;
 }
 
 // 5.In Mongoose, you can also add custom functions to a model using statics.
-chatRoomSchema.statics.buildChatRoom = (attributes: string[]) => {
-	return new ChatRoomModel({
-	  users: attributes,
-	//   lastMessage: attributes.lastMessage,
-	//   lastMessageTime: attributes.lastMessageTime,
+paymentSchema.statics.buildPayment = (attributes: PaymentAttributes) => {
+	return new PaymentModel({
+		candidateId: attributes.candidateId,
+		stripeId: attributes.stripeId
 	});
   };
-// 6. // 6.hover on 'ChatRoom' ,we can see that 'ChatRoom' is getting 'ChatRoomModel', ie,a Second arg indicate returning type
-const ChatRoomModel = mongoose.model<ChatRoomDocument, ChatRoomModel>("ChatRoom", chatRoomSchema);
+// 6. // 6.hover on 'Payment' ,we can see that 'Payment' is getting 'PaymentModel', ie,a Second arg indicate returning type
+const PaymentModel = mongoose.model<PaymentDocument, PaymentModel>("Payment", paymentSchema);
 
-export { ChatRoomModel };
+export { PaymentModel };

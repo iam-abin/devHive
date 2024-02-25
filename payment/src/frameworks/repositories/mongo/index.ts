@@ -1,9 +1,7 @@
 import userRepository from "./user.repository";
-import messageRepository from "./message.repository";
-import chatRoomRepository from "./chatRoom.repository";
+import paymentRepository from "./payment.repository"
 
 export = {
 	userRepository,
-	messageRepository,
-	chatRoomRepository,
+	paymentRepository,
 };

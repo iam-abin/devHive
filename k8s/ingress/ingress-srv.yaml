@@ -51,6 +51,13 @@ spec:
                 name: chat-srv
                 port:
                   number: 3000
+          - path: /api/v1/payment/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: payment-srv
+                port:
+                  number: 3000
           - path: /?(.*)
             pathType: Prefix
             backend:

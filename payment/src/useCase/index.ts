@@ -1,14 +1,6 @@
-import { searchUserUseCase, getAllUsersUseCase } from "./user";
-
-import { getChatUseCase, postChatUseCase, getChatRoomsUseCase, getConversationUseCase } from "./chat";
+import { createPaymentUseCase } from "./payment";
 
 
 export default {
-	searchUserUseCase,
-	getAllUsersUseCase,
-
-	getChatUseCase,
-	postChatUseCase,
-	getChatRoomsUseCase,
-	getConversationUseCase,
+	createPaymentUseCase,
 };

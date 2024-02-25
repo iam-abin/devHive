@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 
 import { RootState } from "../redux/reducer/reducer";
 import Loading from "../components/loading/Loading";
+import PaymentFailed from "../pages/payment/PaymentFailed";
 
 
 const CandidateSigninPage = lazy(()=> import("../pages/auth-pages/signin/CandidateSigninPage"))
@@ -42,9 +43,10 @@ function CandidateRoutes() {
 				
 				<Routes>
 					<Route path="/" element={isCandidateLoggedIn? <LandingPage />: <Navigate to={"/candidate/landing"} />} />
+					<Route path="/profile" element={isCandidateLoggedIn? <CandidateProfilePage />: <Navigate to={"/candidate/landing"} />} />
 					<Route path="/payment-plans" element={isCandidateLoggedIn? <PaymentPlans />: <Navigate to={"/candidate/landing"} />} />
 					<Route path="/payment-success" element={isCandidateLoggedIn? <PaymentSuccessFul />: <Navigate to={"/candidate/landing"} />} />
-					<Route path="/profile" element={isCandidateLoggedIn? <CandidateProfilePage />: <Navigate to={"/candidate/landing"} />} />
+					<Route path="/payment-failed" element={isCandidateLoggedIn? <PaymentFailed />: <Navigate to={"/candidate/landing"} />} />
 					<Route path="/edit-profile/" element={isCandidateLoggedIn? <CandidateProfileEditPage />: <Navigate to={"/candidate/landing"} />} />
 
 					<Route path="/passwordResetMobile" element={isCandidateLoggedIn? <ResetPasswordMobileEnterPage />: <Navigate to={"/candidate/landing"} />} />
