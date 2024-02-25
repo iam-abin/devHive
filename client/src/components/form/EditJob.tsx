@@ -91,10 +91,12 @@ function EditJob() {
 		employment_type: jobDetails?.employment_type,
 		salary_min: jobDetails?.salary_min ?? 0,
 		salary_max: jobDetails?.salary_max ?? 0,
-		deadline: new Date(jobDetails?.deadline).toLocaleDateString() ?? "",
+		deadline:
+			new Date(jobDetails?.deadline).toLocaleDateString("en-CA") ?? "",
 	};
 
 	//   const jobCreationSchema: /* Define your validation schema here */ = /* ... */;
+	const today = new Date().toISOString().split("T")[0];
 
 	return (
 		<Formik
@@ -420,11 +422,13 @@ function EditJob() {
 												: ""
 										}`}
 									/>
-									<ErrorMessage
-										name="available_position"
-										component="div"
-										className="error label-text-alt"
-									/>
+									<span className="label-text-alt text-red-500">
+										<ErrorMessage
+											name="available_position"
+											component="div"
+											className="error label-text-alt"
+										/>
+									</span>
 								</div>
 
 								{/* Deadline field */}
@@ -433,7 +437,8 @@ function EditJob() {
 										Deadline
 									</label>
 									<Field
-										type="text"
+										type="date"
+										min={today}
 										id="deadline"
 										name="deadline"
 										className={`input input-primary w-full rounded-xl ${

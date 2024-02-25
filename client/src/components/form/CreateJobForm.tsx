@@ -1,4 +1,5 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
+import * as yup from "yup";
 
 interface JobFormData {
 	title: string;
@@ -22,12 +23,19 @@ const CreateJobForm: React.FC<{
 	handleSubmit: any;
 	recruiterData: any;
 }> = ({ initialJobValues, handleSubmit, recruiterData }) => {
-console.log(":::::::::::::: initialJobValues ", initialJobValues);
+	console.log(":::::::::::::: initialJobValues ", initialJobValues);
+	const today = new Date().toISOString().split("T")[0];
 
+	const jobCreationSchema = yup.object().shape({
+		available_position: yup
+			.number()
+			.min(1, "Available positions must be atleast 1")
+			.required("Available positions is required"),
+	});
 	return (
 		<Formik
 			initialValues={initialJobValues}
-			// validationSchema={jobCreationSchema}
+			validationSchema={jobCreationSchema}
 			onSubmit={(values) => {
 				values.recruiterId = recruiterData?.id;
 				console.log(values);
@@ -317,7 +325,8 @@ console.log(":::::::::::::: initialJobValues ", initialJobValues);
 										Deadline
 									</label>
 									<Field
-										type="text"
+										type="date"
+										min={today}
 										id="deadline"
 										name="deadline"
 										className={`input input-primary w-full rounded-xl ${
@@ -326,11 +335,14 @@ console.log(":::::::::::::: initialJobValues ", initialJobValues);
 												: ""
 										}`}
 									/>
-									<ErrorMessage
-										name="deadline"
-										component="div"
-										className="error label-text-alt"
-									/>
+
+									<span className="label-text-alt text-red-500">
+										<ErrorMessage
+											name="deadline"
+											component="div"
+											className="error label-text-alt "
+										/>
+									</span>
 								</div>
 							</div>
 

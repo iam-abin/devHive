@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 
 import { RootState } from "../redux/reducer/reducer";
 import Loading from "../components/loading/Loading";
-import NotFound from "../pages/Error/NotFound";
 
 
 const CandidateSigninPage = lazy(()=> import("../pages/auth-pages/signin/CandidateSigninPage"))
@@ -28,6 +27,10 @@ const JobApplicationDetailsPage = lazy(()=> import("../pages/job-pages/candidate
 const RecruiterProfilePage = lazy(()=> import("../pages/profile/recruiter/RecruiterProfilePage"))
 const ChatPageCandidate = lazy(()=> import("../pages/chat/ChatPageCandidate"))
 
+const PaymentPlans = lazy(()=> import("../pages/payment/PaymentPlans"))
+const PaymentSuccessFul = lazy(()=> import("../pages/payment/PaymentSuccessFul"))
+const NotFound = lazy(()=> import("../pages/Error/NotFound"))
+
 
 function CandidateRoutes() {
 	const isCandidateLoggedIn = useSelector(
@@ -39,6 +42,8 @@ function CandidateRoutes() {
 				
 				<Routes>
 					<Route path="/" element={isCandidateLoggedIn? <LandingPage />: <Navigate to={"/candidate/landing"} />} />
+					<Route path="/payment-plans" element={isCandidateLoggedIn? <PaymentPlans />: <Navigate to={"/candidate/landing"} />} />
+					<Route path="/payment-success" element={isCandidateLoggedIn? <PaymentSuccessFul />: <Navigate to={"/candidate/landing"} />} />
 					<Route path="/profile" element={isCandidateLoggedIn? <CandidateProfilePage />: <Navigate to={"/candidate/landing"} />} />
 					<Route path="/edit-profile/" element={isCandidateLoggedIn? <CandidateProfileEditPage />: <Navigate to={"/candidate/landing"} />} />
 

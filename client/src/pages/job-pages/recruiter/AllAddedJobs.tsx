@@ -9,7 +9,6 @@ import {
 } from "../../../axios/apiMethods/jobs-service/jobs";
 import { RootState } from "../../../redux/reducer/reducer";
 import { useSelector } from "react-redux";
-import TopNavBarRecruiter from "../../../components/navBar/TopNavBarRecruiter";
 
 interface JobInterface {
 	id: string;
@@ -21,7 +20,7 @@ interface JobInterface {
 	available_position?: string;
 	experience_required?: string;
 	education_required?: string;
-	location?: string;
+	company_location?: string;
 	employment_type?: string;
 	salary_min?: number;
 	salary_max?: number;
@@ -106,7 +105,7 @@ function AllAddedJobs() {
 		},
 		{
 			name: "Location",
-			selector: (row: { location: string }) => row.location,
+			selector: (row: { company_location: string }) => row.company_location,
 			sortable: true,
 		},
 

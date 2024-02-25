@@ -19,6 +19,7 @@ import { myFirebaseStorage } from "../../../config/firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
 import { getACandidateProfileApi } from "../../../axios/apiMethods/profile-service/recruiter";
+import { FaFacebookMessenger } from "react-icons/fa";
 
 const CandidateProfilePage: React.FC = () => {
 	const navigate = useNavigate();
@@ -219,6 +220,18 @@ const CandidateProfilePage: React.FC = () => {
 									<p className="py-6">
 										{candidateProfileData?.data?.about}
 									</p>
+									{isRecruiterUrl && (
+										<div>
+											<FaFacebookMessenger
+												onClick={() =>
+													navigate(
+														`/recruiter/chat/${candidateProfileData?.data?.id}` // Add the path to your chat page
+													)
+												}
+												className="text-5xl cursor-pointer absolute top-0 right-0 mr-6 mt-20"
+											/>
+										</div>
+									)}
 								</div>
 							</div>
 						</div>
