@@ -36,7 +36,16 @@ export const uploadCandidateResumeProfileApi = async (userId: string,resumeData:
     console.log("uploadCandidateResumeProfileApi resumeData is    ..//////", resumeData);
     const response: any = await candidateApiCalls("put", profileApiUrlConfig.uploadCandidateResumeUrl, resumeData, false); 
     // isFileUpload is giving 'false' because we are sending filename and url of uploaded resume in the client side using firebase.
+    // by default it is false
 
+    console.log("response is ", response.data);
+
+    return response.data;
+};
+
+export const deleteResumeApi = async (candidateId: string): Promise<any> => {
+    console.log("deleteResumeApi candidateId is    ..//////", candidateId);
+    const response: any = await candidateApiCalls("patch", profileApiUrlConfig.deleteResumeUrl(candidateId)); 
     console.log("response is ", response.data);
 
     return response.data;

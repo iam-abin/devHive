@@ -95,7 +95,7 @@ function JobsManagementPage() {
 		},
 		{
 			name: "Location",
-			selector: (row: { location: string }) => row.location,
+			selector: (row: { company_location: string }) => row.company_location,
 			sortable: true,
 		},
 

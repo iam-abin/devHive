@@ -30,6 +30,10 @@ const ViewJobDetailsPage = lazy(
 	() => import("../pages/job-pages/admin/ViewJobDetailsPage")
 );
 
+const PremiumMembershipPage = lazy(
+	() => import("../pages/payment/PremiumMembershipPage")
+);
+
 function AdminRoutes() {
 	const isAdminLoggedIn = useSelector(
 		(state: RootState) => state.adminData.data
@@ -37,7 +41,6 @@ function AdminRoutes() {
 	return (
 		<>
 			<Suspense fallback={<Loading />}>
-				
 				<Routes>
 					<Route
 						path="/signin"
@@ -124,10 +127,20 @@ function AdminRoutes() {
 								)
 							}
 						/>
+
+						<Route
+							path="/memberships"
+							element={
+								isAdminLoggedIn ? (
+									<PremiumMembershipPage />
+								) : (
+									<Navigate to="/admin" />
+								)
+							}
+						/>
 					</Route>
 					<Route path="*" element={<NotFound url={"/admin"} />} />
 				</Routes>
-
 			</Suspense>
 		</>
 	);

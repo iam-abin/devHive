@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import Footer from "../../components/footer/Footer";
 import TopNavBarCandidate from "../../components/navBar/TopNavBarCandidate";
 
-const PaymentFailed = () => {
+const PaymentFailed: React.FC = () => {
 	const location = useLocation();
 	const candidateUrl = location.pathname.includes("candidate");
 	return (

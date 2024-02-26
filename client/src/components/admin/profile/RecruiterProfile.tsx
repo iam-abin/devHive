@@ -8,27 +8,31 @@ const RecruiterProfile: React.FC<{ data: any }> = ({ data }) => {
 
 				{data ? (
 					<div>
-						<p className="mb-2">
+						<p className="my-7">
 							<span className="font-semibold">Name:</span>{" "}
 							{data?.name}
 						</p>
-						<p className="mb-2">
+						<p className="my-7">
 							<span className="font-semibold">Email:</span>{" "}
 							{data?.email}
 						</p>
-						<p className="mb-2">
+						<p className="my-7">
 							<span className="font-semibold">Phone:</span>{" "}
 							{data?.phone}
 						</p>
-						<p className="mb-2">
+						<p className="my-7">
 							<span className="font-semibold">
 								Active Status:
 							</span>{" "}
 							{data?.isActive ? "Active" : "Inactive"}
 						</p>
-						<p>
-							<span className="font-semibold">User ID:</span>{" "}
-							{data?.userId}
+						<p className="my-7">
+							<span className="font-semibold">Company name:</span>{" "}
+							{data?.company_name}
+						</p>
+						<p className="my-7">
+							<span className="font-semibold">Company location:</span>{" "}
+							{data?.company_location}
 						</p>
 					</div>
 				) : (

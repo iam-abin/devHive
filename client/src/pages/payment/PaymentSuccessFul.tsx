@@ -4,7 +4,7 @@ import Footer from "../../components/footer/Footer";
 import { Link, useLocation } from "react-router-dom";
 import CheckmarkSvg from "../../assets/payment/wired-flat-37-approve-checked-simple (3).gif";
 
-const PaymentSuccessFul = () => {
+const PaymentSuccessFul: React.FC = () => {
 	const location = useLocation();
 	const candidateUrl = location.pathname.includes("candidate");
 	return (

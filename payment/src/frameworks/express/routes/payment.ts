@@ -1,36 +1,26 @@
 import express from "express";
 
-import { chatControllers, userControllers } from "../../../controllers";
+import { paymentControllers } from "../../../controllers";
 import { DependenciesData } from "../../types/dependencyInterface";
 import {
-	requireAuthAdmin,
-	requireAuthCandidate,
-	requireAuthRecruiter,
+	currentUserAdminCheck,
+	currentUserCandidateCheck,
 } from "@abijobportal/common";
+import { requireAuthAdmin, requireAuthCandidate } from "@abijobportal/common";
 
 export const paymentRouter = (dependencies: DependenciesData) => {
 	const router = express.Router();
 
 	const {
-		// getAllChatRoomsByUserIDController,
-		cratePaymentController
-	} = chatControllers(dependencies);
+		cratePaymentController,
+		getAllPaymentsController,
+	} = paymentControllers(dependencies);
+	
+	router.post("/create-payment", currentUserCandidateCheck, requireAuthCandidate, cratePaymentController);
 
-	router.use(requireAuthCandidate)
-
-	router.post(
-		"/create-payment",
-		cratePaymentController  
-	);
-
-	// router.get("/room-conversation/:chatRoomId", getConversationController);
-
-	// router.post("/new-message/:roomId", sendNewMessageController);
-
-	// router.post(
-	// 	"/create-chat-room/:currentUserId/:secondPersonId",
-	// 	createChatRoomController
-	// );
-
+	// router.use(currentUserAdminCheck);
+	// router.use(requireAuthAdmin);
+	router.post("/get-all-payments", currentUserAdminCheck, requireAuthAdmin, getAllPaymentsController);
+	
 	return router;
 };

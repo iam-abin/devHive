@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { DependenciesData } from "../../frameworks/types/dependencyInterface";
-// import { BadRequestError } from "@abijobportal/common";
+import { BadRequestError, RequestValidationError } from "@abijobportal/common";
 import { JobCreatedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/job-created-publisher";
 import { kafkaClient } from "../../config/kafka-connection";
 
@@ -13,7 +13,8 @@ export = (dependencies: DependenciesData)=>{
         console.log("in recruiter create job controller 1: ",data);
 
         if(!data.company_name || !data.company_location ){
-            throw new Error("All company details should be added before creating a job!!")
+            // throw new Error("All company details should be added before creating a job!!")
+            throw new BadRequestError('Add company details in the profile before creating a job!!')
         }
 
         const newJob = await createJobUseCase(dependencies).execute(data);

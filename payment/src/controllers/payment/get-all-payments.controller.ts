@@ -3,13 +3,13 @@ import { DependenciesData } from "../../frameworks/types/dependencyInterface";
 
 export = (dependencies: DependenciesData)=>{
 
-    const { useCases: { createPaymentUseCase }} = dependencies 
+    const { useCases: { getAllPaymentsUseCase }} = dependencies 
 
     return async (req: Request, res: Response)=>{
         const {userId} = req.params
         console.log("in  get all chatroom controller 1: ",userId);
 
-        const payment = await createPaymentUseCase(dependencies).execute(userId);
+        const payment = await getAllPaymentsUseCase(dependencies).execute(userId);
         console.log("in  get all chatroom controller 2: ",payment);
 
 

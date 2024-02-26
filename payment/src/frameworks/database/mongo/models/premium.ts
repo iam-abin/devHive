@@ -1,26 +1,46 @@
 import mongoose from "mongoose";
 // 1. An interface that describes the properties ,that are requried to create a new Chat
-interface ChatRoomAttributes {
-	users: string[];
-	// lastMessage?: string;
-	// lastMessageTime?: boolean;
+interface PremiumAttributes {
+	name: String;
+	features: [string];
+	description: string;
+	price: number;
+	isActive: boolean;
 }
 // 2. An interface that describes the properties ,that a Chat Document has
-interface ChatRoomDocument extends mongoose.Document {
-	users: mongoose.Types.ObjectId[];
-	// lastMessage?: string;
-	// lastMessageTime?: boolean;
+interface PremiumDocument extends mongoose.Document {
+	name: string;
+	features: [string];
+	description: string;
+	price: number;
+	isActive: boolean;
 	createdAt: Date;
 	updatedAt: Date;
 }
 
 // 3.
-const chatRoomSchema = new mongoose.Schema(
+const premiumSchema = new mongoose.Schema(
 	{
-
-		users: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-		lastMessage: String,
-		lastMessageTime: String,
+		name: {
+			type: String,
+			required: true,
+		},
+		features: {
+			type: Array<String>,
+			required: true,
+		},
+		description: {
+			type: String,
+			required: true,
+		},
+		price: {
+			type: Number,
+			required: true,
+		},
+		isActive: {
+			type: Boolean,
+			default: true,
+		},
 	},
 	{
 		// to reformat id and remove password,__v from response when converting to json (we can also use other approaches)
@@ -36,19 +56,23 @@ const chatRoomSchema = new mongoose.Schema(
 );
 
 // 4. An interface that describes the properties ,that a user model has
-interface ChatRoomModel extends mongoose.Model<ChatRoomDocument> {
-	buildChatRoom(attributes: string[]): ChatRoomDocument;
+interface PremiumModel extends mongoose.Model<PremiumDocument> {
+	buildPremium(attributes: PremiumAttributes): PremiumDocument;
 }
 
 // 5.In Mongoose, you can also add custom functions to a model using statics.
-chatRoomSchema.statics.buildChatRoom = (attributes: string[]) => {
-	return new ChatRoomModel({
-	  users: attributes,
-	//   lastMessage: attributes.lastMessage,
-	//   lastMessageTime: attributes.lastMessageTime,
+premiumSchema.statics.buildPremium = (attributes: PremiumAttributes) => {
+	return new PremiumModel({
+		name: attributes.name,
+		features: attributes.features,
+		description: attributes.description,
+		price: attributes.price,
 	});
-  };
-// 6. // 6.hover on 'ChatRoom' ,we can see that 'ChatRoom' is getting 'ChatRoomModel', ie,a Second arg indicate returning type
-const ChatRoomModel = mongoose.model<ChatRoomDocument, ChatRoomModel>("ChatRoom", chatRoomSchema);
+};
+// 6. // 6.hover on 'Premium' ,we can see that 'Premium' is getting 'PremiumModel', ie,a Second arg indicate returning type
+const PremiumModel = mongoose.model<PremiumDocument, PremiumModel>(
+	"Premium",
+	premiumSchema
+);
 
-export { ChatRoomModel };
+export { PremiumModel };

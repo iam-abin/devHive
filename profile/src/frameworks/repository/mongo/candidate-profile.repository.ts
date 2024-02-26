@@ -30,7 +30,7 @@ export = {
 		console.log("user update candidate repo----");
 
 		const candidate = await CandidateProfileModel.findOneAndUpdate(
-			{ userId: id },
+			{ _id: id },
 			{ $set: data },
 			{ new: true }
 		);
@@ -68,6 +68,17 @@ export = {
 			{ new: true }
 		);
 		console.log("inside uploadResume repository after upload", candidate);
+		return candidate;
+	},
+
+	deleteResumeByCandidateId: async (userId: string): Promise<any> => {
+		console.log("delete resume candidate repo----", userId);
+
+		const candidate = await CandidateProfileModel.findOneAndUpdate(
+			{ _id: userId},
+			{ $unset: {resume: null} },
+			{ new: true }
+		);
 		return candidate;
 	},
 

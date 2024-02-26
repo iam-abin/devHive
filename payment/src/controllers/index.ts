@@ -1,4 +1,4 @@
-import userControllers from "./user";
-import chatControllers from "./payment";
+import premiumControllers from "./premium";
+import paymentControllers from "./payment";
 
-export { userControllers, chatControllers };
+export { premiumControllers, paymentControllers };

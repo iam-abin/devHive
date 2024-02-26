@@ -3,13 +3,13 @@ import { DependenciesData } from "../../frameworks/types/dependencyInterface";
 
 export = (dependencies: DependenciesData)=>{
 
-    const { useCases: { getUsersUseCase }} = dependencies 
+    const { useCases: { getAllPremiumPlansAdminUseCase }} = dependencies 
 
     return async (req: Request, res: Response)=>{
         const keyword = req.query.search
         console.log("in  Job Applications controller 1: ",keyword);
 
-        const applications = await getUsersUseCase(dependencies).execute(keyword);
+        const applications = await getAllPremiumPlansAdminUseCase(dependencies).execute(keyword);
         console.log("in Job Applications controller 2: ",applications);
 
 

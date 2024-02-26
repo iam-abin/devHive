@@ -22,7 +22,7 @@ export = (dependencies: DependenciesData)=>{
         }
 
 
-        if( job.recruiterId.toString() !== req.currentUserRecruiter?.id){
+        if( job.recruiterId.id.toString() !== req.currentUserRecruiter?.id){
             console.log("invalid recruiter for this job edit");
             
             throw new NotAuthorizedError()

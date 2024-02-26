@@ -12,6 +12,7 @@ export const candidateRouter = (dependencies: DependenciesData) => {
 		viewCandidateProfileController,
 		updateCandidateProfileController,
 		uploadResumeController,
+		deleteResumeController,
 		uploadCandidateProfilePicController,
 		viewRecruiterProfileByCandidateController,
 		updateSkillsController,
@@ -25,7 +26,7 @@ export const candidateRouter = (dependencies: DependenciesData) => {
 	router.get("/viewProfile/:userId", viewCandidateProfileController);
 	router.patch("/updateProfile", updateCandidateProfileController);
 	router.patch("/updateSkills", updateSkillsController);
-	// router.delete("/deleteSkills", deleteSkillsFromCandidateProfileController);
+
 	router.put(
 		"/uploadProfilePic",
 		multerConfig.single("file"),
@@ -36,7 +37,11 @@ export const candidateRouter = (dependencies: DependenciesData) => {
 		multerConfig.single("file"),
 		uploadResumeController
 	);
-	router.get("/viewRecruiterProfile/:id", viewRecruiterProfileByCandidateController);
+	router.patch("/delete-resume/:userId", deleteResumeController);
+	router.get(
+		"/viewRecruiterProfile/:id",
+		viewRecruiterProfileByCandidateController
+	);
 
 	return router;
 };

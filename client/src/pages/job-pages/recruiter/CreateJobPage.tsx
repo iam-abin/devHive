@@ -61,7 +61,9 @@ function CreateJobPage() {
 			notify(response.message, "success");
 			navigate("/recruiter/all-jobs");
 		} catch (error: any) {
-			notify(error.response.data.errors[0].message, "error");
+			console.log("fdsf",error);
+			
+			notify(error.errors[0].message, "warning");
 		}
 	};
 

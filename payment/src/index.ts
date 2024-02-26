@@ -1,7 +1,5 @@
 import { connectDB } from "./config/db";
 import { app } from "./frameworks/express/app";
-import { UserCreatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/user-created-consumer";
-import { UserUpdatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/user-updated-consumer";
 // import { CompanyProfileUpdatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/company-profile-updated-consumer";
 import { kafkaClient } from "./config/kafka-connection";
 
@@ -28,36 +26,15 @@ const start = async () => {
 		throw new Error("STRIPE_SECRET_KEY must be defined");
 	}
 
-	// if (!process.env.VITE_STRIPE_PUBLISHABLE_KEY) {
-	// 	throw new Error("VITE_STRIPE_PUBLISHABLE_KEY must be defined");
-	// }
-
 	// to connect to mongodb
 	await connectDB();
-
-	// it is used to listen to incomming message from kafka topics
-	// const userCreatedEvent = new UserCreatedEventConsumer(kafkaClient);
-	// const userUpdatedEvent = new UserUpdatedEventConsumer(kafkaClient);
-	// const companyProfileUpdatedEvent = new CompanyProfileUpdatedEventConsumer(
-	// 	kafkaClient
-	// );
-	
-	// await userCreatedEvent.subscribe();
-	// await userUpdatedEvent.subscribe();
-	// await companyProfileUpdatedEvent.subscribe();
 
 	app.listen(3000, () => {
 		console.log("payment Listening on port 3000....");
 	})
 		.on("error", async () => {
-			// await userCreatedEvent.disconnect();
-			// await userUpdatedEvent.disconnect();
-			// await companyProfileUpdatedEvent.disconnect();
 		})
 		.on("close", async () => {
-			// await userCreatedEvent.disconnect();
-			// await userUpdatedEvent.disconnect();
-			// await companyProfileUpdatedEvent.disconnect();
 		});
 };
 

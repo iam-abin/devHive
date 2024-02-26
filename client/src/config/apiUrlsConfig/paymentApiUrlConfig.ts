@@ -1,4 +1,4 @@
-const CANDIDATE_PAYMENT_URL = `payment/candidate`;
+const CANDIDATE_PAYMENT_URL = `payment/payment-route`;
 
 
 const paymentApiUrlConfig = {

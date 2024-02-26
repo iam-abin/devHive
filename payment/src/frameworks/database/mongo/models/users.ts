@@ -22,7 +22,7 @@ interface UserDocument extends mongoose.Document {
 // 3.
 const userSchema = new mongoose.Schema(
 	{
-		// userId: mongoose.Schema.Types.ObjectId,
+		// userId: String,
 		name: String,
 		email: String,
 		profileImgUrl: String,
