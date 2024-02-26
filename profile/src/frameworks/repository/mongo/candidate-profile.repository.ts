@@ -28,12 +28,16 @@ export = {
 	// updating and block unblocking is also doing here
 	updateCandidateProfile: async (id: string, data: any): Promise<any> => {
 		console.log("user update candidate repo----");
-
+		console.log(id);
+		console.log("data",data);
+		
 		const candidate = await CandidateProfileModel.findOneAndUpdate(
 			{ _id: id },
 			{ $set: data },
 			{ new: true }
 		);
+		console.log(candidate);
+		
 		return candidate;
 	},
 

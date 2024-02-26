@@ -133,14 +133,14 @@ const ChatPageCandidate = () => {
 				<div className="bg-slate-200 h-max-[88vh] w-[90vw] flex rounded-md">
 					{/* Left */}
 					<div className=" bg-slate-50 w-2/6 flex-col rounded-l-lg p-4 flex gap-2 ">
-						<div className="rounded-3xl gap-2 bg-white p-3 flex items-center shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px]">
+						{/* <div className="rounded-3xl gap-2 bg-white p-3 flex items-center shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px]">
 							<FaSearch />
 							<input
 								type="text"
 								placeholder="search"
 								className="h-6 border-transparent w-full focus:outline-none"
 							/>
-						</div>
+						</div> */}
 						<div className="rounded-3xl gap-2 bg-white p-3 flex-grow items-center">
 							{chatRooms.length === 0 ? (
 								<div className="text-center">

@@ -16,6 +16,11 @@ export = {
 		return user;
 	},
 
+	premiumPaymentDone: async (userId: string, data: any): Promise<any> => {
+		const user = await UserModel.findOneAndUpdate({ "_id": userId }, { $set: {isPremiumUser: true} }, {new: true});
+		return user;
+	},
+
 	findUserById: async (userId: string) => {
 		console.log("inside get user by userId repo ", userId , typeof userId);
 		

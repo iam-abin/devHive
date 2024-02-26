@@ -6,6 +6,7 @@ export class User {
 	phone: number;
 	password: string;
 	userType: string;
+	// isPremiumUser: boolean
 	otp: number;
 
 	constructor({ name, email, phone, password, userType, otp }: UserDataSignup) {

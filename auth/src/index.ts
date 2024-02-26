@@ -2,6 +2,7 @@ import { connectDB } from "./config/db"
 import { app } from "./frameworks/express/app";
 import { UserUpdatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/user-updated-consumer";
 import { kafkaClient } from "./config/kafka-connection";
+import { paymentCreatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/payment-created-consumer";
 
 
 const start = async () => {
@@ -42,17 +43,22 @@ const start = async () => {
 
 	// it is used to listen to incomming message from kafka topics
 	const userUpdatedEvent = new UserUpdatedEventConsumer(kafkaClient)
+	const paymentCreatedEvent = new paymentCreatedEventConsumer(kafkaClient)
 	await userUpdatedEvent.subscribe()
+	await paymentCreatedEvent.subscribe()
 
 	app.listen(3000, () => {
 		console.log("auth Listening on port 3000....");
 	})
 	.on("error", async () => {
 		await userUpdatedEvent.disconnect();
+		await paymentCreatedEvent.disconnect()
 	})
 	.on("close", async () => {
 		await userUpdatedEvent.disconnect();
+		await paymentCreatedEvent.disconnect()
 	});
 };
+
 
 start();

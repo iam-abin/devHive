@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import { DependenciesData } from "../../frameworks/types/dependencyInterface";
 import { stripeInstance } from "../../config/stripe";
+import { PremiumPaymentDonePublisher } from "../../frameworks/utils/kafka-events/publishers/payment-done-publisher";
+import { kafkaClient } from "../../config/kafka-connection";
 
 export = (dependencies: DependenciesData) => {
 	const {
@@ -20,6 +22,11 @@ export = (dependencies: DependenciesData) => {
 			amount,
 		);
 		console.log("in  paymentCreated controller 2: ", paymentCreated);
+
+		const paymentCreatedEvent = new PremiumPaymentDonePublisher(kafkaClient);
+		await paymentCreatedEvent.publish({
+			candidateId
+		})
 
 		res.status(200).json({
 			message: "Payment successFull",

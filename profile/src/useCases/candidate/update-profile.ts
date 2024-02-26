@@ -23,7 +23,7 @@ export  = (dependencies: any) => {
 		}
 
 
-        return await candidateProfileRepository.updateCandidateProfile(existingData.userId,updatedData);
+        return await candidateProfileRepository.updateCandidateProfile(existingData._id,updatedData);
 	};
 
     return { execute }

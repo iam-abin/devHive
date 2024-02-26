@@ -4,36 +4,68 @@ import Footer from "../../components/footer/Footer";
 import { createPaymentApi } from "../../axios/apiMethods/payment-service/candidate";
 import { RootState } from "../../redux/reducer/reducer";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { loadStripe } from "@stripe/stripe-js";
+import { setCandidate } from "../../redux/slice/candidateSlice/candidateDataSlice";
+import {
+	candidateAccessToken,
+	candidateRefreshToken,
+} from "../../config/localStorage";
 
 const PaymentPlans = () => {
 	const candidateData: any = useSelector(
 		(state: RootState) => state.candidateData.data
 	);
+	const dispatch = useDispatch();
 	const amount: number = 299; // Set your desired amount here or get it dynamically
 
 	// payment integration
 	const makePayment = async (event: React.MouseEvent<HTMLButtonElement>) => {
-		event.preventDefault()
-		console.log("payment clicked publish key",import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
-		
+		event.preventDefault();
+		console.log(
+			"payment clicked publish key",
+			import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY
+		);
+
 		try {
 			const stripePromise = await loadStripe(
 				import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY
 			);
-	
+
 			console.log("payment stripe", stripePromise);
 			const paymentData = {
 				userId: candidateData?.id,
 				amount,
 			};
 			console.log("payment data", paymentData);
-	
+			// 	const candidateAccessTokenn =
+			// 	localStorage.getItem(candidateAccessToken);
+			// const candidateRefreshTokenn = localStorage.getItem(
+			// 	candidateRefreshToken
+			// );
 			const payment = await createPaymentApi(paymentData);
 			console.log("payment done ", payment);
-	
-			const result = stripePromise?.redirectToCheckout({ sessionId: payment?.data?.stripeId });
+			// maybe remove 222222222
+
+			// const candidateAccessTokenn =
+			// 	localStorage.getItem(candidateAccessToken);
+			// const candidateRefreshTokenn = localStorage.getItem(
+			// 	candidateRefreshToken
+			// );
+			// let response: any = {
+			// 	data: {
+			// 		...candidateData,
+			// 		isPremiumUser: true,
+			// 		candidateAccessToken: candidateAccessTokenn,
+			// 		candidateRefreshToken: candidateRefreshTokenn,
+			// 	},
+			// };
+
+			// dispatch(setCandidate(response));
+			// maybe remove 222222222
+			const result = stripePromise?.redirectToCheckout({
+				sessionId: payment?.data?.stripeId,
+			});
 			console.log("payment result", result);
 		} catch (error) {
 			console.log(error);

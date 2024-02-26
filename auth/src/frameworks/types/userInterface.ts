@@ -4,6 +4,7 @@ export interface UserDataSignup {
 	phone: number;
 	password: string;
 	userType: string;
+	// isPremiumUser: boolean
 	otp: number
 }
 

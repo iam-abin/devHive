@@ -6,6 +6,9 @@ import { notify } from "../../utils/toastMessage";
 import Swal from "sweetalert2";
 import { formatDate } from "../../utils/date-format";
 import { formatCurrency } from "../../utils/currency-format";
+import { FaFacebookMessenger, FaLock } from "react-icons/fa";
+import { RootState } from "../../redux/reducer/reducer";
+import { useSelector } from "react-redux";
 
 const JobApplicationDetails: React.FC<{
 	jobApplicationDetails: any;
@@ -16,9 +19,9 @@ const JobApplicationDetails: React.FC<{
 	const isRecruiterPage = location.pathname.includes("recruiter");
 	const isCandidatePage = location.pathname.includes("candidate");
 
-	// const candidateData: any = useSelector(
-	// 	(state: RootState) => state.candidateData.data
-	// );
+	const candidateData: any = useSelector(
+		(state: RootState) => state.candidateData.data
+	);
 
 	if (isRecruiterPage) {
 		// Do something specific for the "recruiter" page
@@ -31,6 +34,11 @@ const JobApplicationDetails: React.FC<{
 
 	const navigate = useNavigate();
 	const handleViewRecruiter = () => {
+		// let isPremiumUser = false;
+		if (!candidateData?.isPremiumUser) {
+			notify("only premium users can view recruiter profile", "success");
+			return;
+		}
 		console.log("clicked handleViewRecruiter");
 
 		navigate(
@@ -89,13 +97,15 @@ const JobApplicationDetails: React.FC<{
 								<p className="text-gray-600 mb-4">
 									Company:{" "}
 									{jobApplicationDetails
-										? jobApplicationDetails?.jobId?.company_name
+										? jobApplicationDetails?.jobId
+												?.company_name
 										: "Loading..."}
 								</p>
 								<p className="text-gray-600 mb-4">
 									Location:{" "}
 									{jobApplicationDetails
-										? jobApplicationDetails?.jobId?.company_location
+										? jobApplicationDetails?.jobId
+												?.company_location
 										: "Loading..."}
 								</p>
 							</div>
@@ -205,12 +215,28 @@ const JobApplicationDetails: React.FC<{
 										}
 									</p>
 									{isCandidatePage ? (
-										<button
-											className="btn bg-yellow-200"
-											onClick={handleViewRecruiter}
-										>
-											view recruiter
-										</button>
+										<div className="flex gap-4 items-center">
+											<button
+												className="btn bg-yellow-200"
+												onClick={handleViewRecruiter}
+											>
+												view recruiter
+												{!candidateData?.isPremiumUser && (
+													<FaLock />
+												)}
+											</button>
+
+											<span className="text-3xl items-start   w-3/5">
+												<FaFacebookMessenger
+													onClick={() =>
+														navigate(
+															`/candidate/chat/${jobApplicationDetails?.recruiterId?.id}` // Add the path to your chat page
+														)
+													}
+													className=" cursor-pointer"
+												/>
+											</span>
+										</div>
 									) : (
 										""
 									)}

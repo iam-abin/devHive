@@ -12,6 +12,16 @@ export const handleMessage = (data: any, topic: string, message: any) => {
 			usersRepository.updateUser(data.userId, data);
 
 			break;
+			// case "USER-UPDATED-TOPIC":
+			// 	console.log("admin handleMessage userUpdatedTopic", data);
+			// 	usersRepository.updateUser(data.userId, data);
+	
+			// 	break;
+			case "PREMIUM-PAYMENT-TOPIC":
+				console.log("handleMessage payment premium topic data", data);
+				usersRepository.premiumPaymentDone(data.candidateId, data);
+	
+				break;
 		default:
 			break;
 	}

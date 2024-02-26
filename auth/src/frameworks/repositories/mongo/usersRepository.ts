@@ -81,6 +81,11 @@ const repository = () => {
 			const user = await UserModel.findOneAndUpdate({ "_id": userId }, { $set: data }, {new: true});
 			return user;
 		},
+
+		premiumPaymentDone: async (userId: string, data: any): Promise<any> => {
+			const user = await UserModel.findOneAndUpdate({ "_id": userId }, { $set: {isPremiumUser: true} }, {new: true});
+			return user;
+		},
 		
 
 		// updateStatus: async ({ email, isActive }: any) => {
