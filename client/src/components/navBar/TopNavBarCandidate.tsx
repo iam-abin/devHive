@@ -7,7 +7,9 @@ import { candidateSignoutApi } from "../../axios/apiMethods/auth-service/candida
 import Swal from "sweetalert2";
 import { notify } from "../../utils/toastMessage";
 import { IoMdNotifications } from "react-icons/io";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { clearCandidateProfileDetails, setCandidateProfileDetails } from "../../redux/slice/candidateSlice/candidateProfileSlice";
+import { candidateGetProfileApi } from "../../axios/apiMethods/profile-service/candidate";
 
 const TopNavBarCandidate = () => {
 	const dispatch = useDispatch();
@@ -16,6 +18,12 @@ const TopNavBarCandidate = () => {
 	const candidate: any = useSelector((state: RootState) => {
 		return state.candidateData.data;
 	});
+
+	const candidateProfile: any = useSelector((state: RootState) => {
+		return state.candidateProfile.candidateProfile;
+	});
+
+	const isCandidateUrl = location.pathname.includes("candidate");
 
 	const handleCandidateLogout = async () => {
 		Swal.fire({
@@ -33,12 +41,29 @@ const TopNavBarCandidate = () => {
 
 				if (response) {
 					dispatch(clearCandidate());
+					dispatch(clearCandidateProfileDetails());
 					notify("Logged out successfully", "success");
 					navigate("/candidate/signin");
 				}
 			}
 		});
 	};
+
+	useEffect(() => {
+		(async () => {
+		  try {
+			if (isCandidateUrl && candidate) {
+			  let candidateProfileData = await candidateGetProfileApi(candidate?.id);
+	  
+			  console.log("candidateProfileData", candidateProfileData);
+	  
+			  dispatch(setCandidateProfileDetails(candidateProfileData?.data));
+			}
+		  } catch (error) {
+			console.error("Error fetching candidate profile:", error);
+		  }
+		})();
+	  }, [candidate]);
 
 	const menus = [
 		{ title: "Jobs", to: "/candidate/all-jobs" },
@@ -58,7 +83,7 @@ const TopNavBarCandidate = () => {
 		{ title: "Chat", to: "/candidate/chat" },
 		{ title: "Reset Password", to: "/candidate/passwordResetMobile" },
 	];
-	
+
 	const [showNotifications, setShowNotifications] = useState(false);
 
 	const notifications = [
@@ -85,38 +110,38 @@ const TopNavBarCandidate = () => {
 					</a>
 				</div>
 				<div
-				className="relative mr-3 cursor-pointer"
-				onClick={() => setShowNotifications(!showNotifications)}
-			>
-				<IoMdNotifications className="text-2xl mr-3" />
-				<div className="badge absolute top-0 right-0 bg-green-600 text-white rounded-full p-1 text-xs">
-					{notifications.length}
-				</div>
-
-				{showNotifications && (
-					<div className="absolute top-full right-0 w-56 bg-white border border-gray-300 rounded shadow-md p-4">
-						<div className="mb-2 font-bold">
-							chat notifications are
-						</div>
-						<ul>
-							{notifications.map((notification) => (
-								<li className="my-4" key={notification.id}>
-									{notification.message}
-								</li>
-							))}
-						</ul>
-						<div className="flex justify-end">
-							<button
-								className="bg-green-600 text-white rounded-full p-1  text-xs mt-2"
-								onClick={clearNotifications}
-							>
-								Clear Notifications
-							</button>
-						</div>
+					className="relative mr-3 cursor-pointer"
+					onClick={() => setShowNotifications(!showNotifications)}
+				>
+					<IoMdNotifications className="text-2xl mr-3" />
+					<div className="badge absolute top-0 right-0 bg-green-600 text-white rounded-full p-1 text-xs">
+						{notifications.length}
 					</div>
-				)}
-			</div>
-				{candidate && candidate?.name}
+
+					{showNotifications && (
+						<div className="absolute top-full right-0 w-56 bg-white border border-gray-300 rounded shadow-md p-4">
+							<div className="mb-2 font-bold">
+								chat notifications are
+							</div>
+							<ul>
+								{notifications.map((notification) => (
+									<li className="my-4" key={notification.id}>
+										{notification.message}
+									</li>
+								))}
+							</ul>
+							<div className="flex justify-end">
+								<button
+									className="bg-green-600 text-white rounded-full p-1  text-xs mt-2"
+									onClick={clearNotifications}
+								>
+									Clear Notifications
+								</button>
+							</div>
+						</div>
+					)}
+				</div>
+				{candidateProfile && candidateProfile?.name}
 				{candidate && menus ? (
 					<div className="flex-none ">
 						<div className="dropdown dropdown-end">
@@ -128,7 +153,11 @@ const TopNavBarCandidate = () => {
 								<div className="w-10 rounded-full ">
 									<img
 										alt="Tailwind CSS Navbar component"
-										src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+										src={`${
+											candidateProfile
+												? candidateProfile.profile_image
+												: "https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+										}`}
 									/>
 								</div>
 							</div>

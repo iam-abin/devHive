@@ -1,4 +1,4 @@
-import { UpdatePasswordInput } from "../frameworks/types/userInterface";
+import { UpdatePasswordInput } from "../../frameworks/types/userInterface";
 
 export = (dependencies: any)=>{
     const { repositories:{usersRepository} } = dependencies;

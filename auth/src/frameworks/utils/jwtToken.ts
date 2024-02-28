@@ -8,8 +8,10 @@ export const createJwtAccessToken = (payload: {
 	userType: string;
 	isActive?: boolean
 }) => {
+	console.log("inside createdJwtToken payload", payload);
+
 	const createdJwtToken = jwt.sign(payload, process.env.JWT_SECRET_KEY!, {
-		expiresIn: "30d",
+		expiresIn: "20s",
 	});
 
 	return createdJwtToken;
@@ -23,6 +25,8 @@ export const createJwtRefreshToken = (payload: {
 	userType: string;
 	isActive?: boolean
 }) => {
+	console.log("inside createJwtRefreshToken payload", payload);
+	
 	const createdJwtToken = jwt.sign(payload, process.env.JWT_REFRESH_SECRET_KEY!, {
 		expiresIn: "30d",
 	});

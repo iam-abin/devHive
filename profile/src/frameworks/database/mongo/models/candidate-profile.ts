@@ -36,6 +36,7 @@ interface CandidateDocument extends mongoose.Document {
 	about: string;
 	resume: string;
 	experience: object;
+	isPremiumUser: boolean
 	// userId: mongoose.Schema.Types.ObjectId;
 	createdAt: string;
 	updatedAt: string;
@@ -99,6 +100,10 @@ const candidateSchema = new mongoose.Schema(
 			url: String,
 		  },
 		experience: Object,
+		isPremiumUser: {
+			type: Boolean,
+			default: false
+		},
 		// userId: mongoose.Schema.Types.ObjectId
 	},
 	{

@@ -6,7 +6,8 @@ import {
 import { recruiterApi } from "./api";
 import { BASE_URL } from "../../config/baseUrl";
 
-const recruiterApiCalls = async (method: string, url: string, data?: any) => {
+const recruiterApiCalls = async (method: string, url: string, data?: any,
+	isFileUpload?: boolean) => {
 	return new Promise(async (resolve, reject) => {
 		try {
 			let response: any, error: any;
@@ -24,9 +25,14 @@ const recruiterApiCalls = async (method: string, url: string, data?: any) => {
 					error = err;
 				});
 			} else if (method === "put") {
-				response = await recruiterApi.put(url, data).catch((err) => {
-					error = err;
-				});
+				// response = await recruiterApi.put(url, data).catch((err) => {
+				// 	error = err;
+				// });
+				response = isFileUpload
+					? await recruiterApi.put(url, data, {
+							headers: { "Content-Type": "multipart/form-data" },
+					 })
+					: await recruiterApi.put(url, data);
 			} else if (method === "delete") {
 				response = await recruiterApi.delete(url, data).catch((err) => {
 					error = err;

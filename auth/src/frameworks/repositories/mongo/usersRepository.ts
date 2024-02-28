@@ -4,120 +4,114 @@ import { UpdatePasswordInput, UserDataSignup } from "../../types/userInterface";
 const { UserModel } = schemas;
 
 // we want to export some closure
-const repository = () => {
-	return {
+// const repository = () => {
+// 	return {
+export = {
+	// these fn's are returning a promise as async so we can defile return type as Promise<CandidateDataInterface>
 
-		 // these fn's are returning a promise as async so we can defile return type as Promise<CandidateDataInterface>
+	register: async (userData: UserDataSignup) => {
+		const userObject = UserModel.buildUser(userData);
+		return await userObject.save();
+	},
 
-		register: async (userData: UserDataSignup) => {
-			const userObject = UserModel.buildUser(userData);
-			return await userObject.save();
-		},
+	updatePassword: async ({ id, password }: UpdatePasswordInput) => {
+		const user = await UserModel.findById(id);
+		if (!user) {
+			throw new Error("User not found");
+		}
 
-		updatePassword: async ({ id, password }: UpdatePasswordInput) => {
+		user.password = password;
 
-			const user = await UserModel.findById(id);
-			if (!user) {
-				throw new Error("User not found");
-			}
+		return await user.save();
+	},
 
-			user.password = password;
+	getByEmail: async (email: string) => {
+		const user = await UserModel.findOne({ email });
+		return user;
+	},
 
-			return await user.save();
-			
-		},
-		
-		getByEmail: async (email: string) => {
+	getByPhone: async (phone: number) => {
+		const user = await UserModel.findOne({ phone });
+		return user;
+	},
 
-			const user = await UserModel.findOne({ email: email });
-			return user;
-			
-		},
+	// "setOtp" using only in forgot password email otp
+	setOtp: async (email: string, otp: any) => {
+		console.log("in set otp");
 
-		getByPhone: async (phone: number) => {
+		const result = await UserModel.findOneAndUpdate(
+			{ email },
+			{ $set: { otp: otp } },
+			{ new: true }
+		);
+		console.log("set result: ", result);
+		return result;
+	},
 
-			const user = await UserModel.findOne({ phone: phone });
-			return user;
-			
-		},
+	deleteOtp: async (email: string) => {
+		console.log("in delete otp");
 
-		// "setOtp" using only in forgot password email otp 
-		setOtp: async (email: string, otp: any) => {
+		const result = await UserModel.findOneAndUpdate(
+			{ email },
+			{ $unset: { otp: "" } },
+			{ new: true }
+		);
+		console.log("delete result: ", result);
 
-			console.log("in set otp",);
+		if (!result) {
+			throw new Error("User not found");
+		}
 
-			const result = await UserModel.findOneAndUpdate(
-				{ email },
-				{ $set: { otp: otp } },
-				{ new: true }
-			);
-			console.log("set result: ", result);
-			return result
+		return result;
+	},
 
-		},
+	// user status is updated only by 'admin'
+	updateUser: async (userId: string, data: any): Promise<any> => {
+		const user = await UserModel.findOneAndUpdate(
+			{ _id: userId },
+			{ $set: data },
+			{ new: true }
+		);
+		return user;
+	},
 
+	premiumPaymentDone: async (userId: string, data: any): Promise<any> => {
+		const user = await UserModel.findOneAndUpdate(
+			{ _id: userId },
+			{ $set: { isPremiumUser: true } },
+			{ new: true }
+		);
+		return user;
+	},
 
-		deleteOtp: async (email: string) => {
+	// updateStatus: async ({ email, isActive }: any) => {
 
-			console.log("in delete otp",);
+	// 	console.log("in update status",);
 
-			const result = await UserModel.findOneAndUpdate(
-				{ email },
-				{ $unset: { otp: "" } },
-				{ new: true }
-			);
-			console.log("delete result: ", result);
-			
-			if (!result) {
-				throw new Error("User not found");
-			}
+	// 	const user = await UserModel.findOne({email});
+	// 	if (!user) {
+	// 		throw new Error("User not found");
+	// 	}
 
-			return result
+	// 	user.isActive = isActive;
 
-		},
+	// 	return await user.save();
 
-		// user status is updated only by 'admin'
-		updateUser: async (userId: string, data: any): Promise<any> => {
-			const user = await UserModel.findOneAndUpdate({ "_id": userId }, { $set: data }, {new: true});
-			return user;
-		},
+	// },
 
-		premiumPaymentDone: async (userId: string, data: any): Promise<any> => {
-			const user = await UserModel.findOneAndUpdate({ "_id": userId }, { $set: {isPremiumUser: true} }, {new: true});
-			return user;
-		},
-		
+	updateVerification: async (email: string) => {
+		console.log("in update status", email);
 
-		// updateStatus: async ({ email, isActive }: any) => {
+		const user = await UserModel.findOne({ email });
+		if (!user) {
+			throw new Error("User not found");
+		}
 
-		// 	console.log("in update status",);
+		user.isVarified = !user.isVarified;
 
-		// 	const user = await UserModel.findOne({email});
-		// 	if (!user) {
-		// 		throw new Error("User not found");
-		// 	}
-
-		// 	user.isActive = isActive;
-
-		// 	return await user.save();
-
-		// },
-
-		updateVerification: async (email: string) => {
-
-			console.log("in update status",email);
-
-			const user = await UserModel.findOne({email});
-			if (!user) {
-				throw new Error("User not found");
-			}
-
-			user.isVarified = !user.isVarified;
-
-			return await user.save();
-
-		},
-	};
+		return await user.save();
+	},
 };
+// };
 
-export default repository();
+// export default repository();

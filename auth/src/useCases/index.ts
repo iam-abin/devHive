@@ -1,10 +1,13 @@
-import checkEmailVerificationOtpUseCase from "./checkEmailVerificationOtp";
-import getEmailVerifyOtpUseCase from "./getEmailVerifyOtp";
-import getUserByEmailUseCase from "./getUserByEmail";
-import getUserByPhoneUseCase from "./getUserByPhone";
-import userSignupUseCase from "./userSignup";
-import updatePasswordUseCase from "./updatePassword";
-import setNodemailerOtpUseCase from "./setNodemailerOtp";
+import {
+	checkEmailVerificationOtpUseCase,
+	getEmailVerifyOtpUseCase,
+	getUserByEmailUseCase,
+	getUserByPhoneUseCase,
+	userSignupUseCase,
+	updatePasswordUseCase,
+	setNodemailerOtpUseCase,
+} from "./authusecases";
+
 export default {
 	checkEmailVerificationOtpUseCase,
 	getEmailVerifyOtpUseCase,
@@ -12,5 +15,5 @@ export default {
 	getUserByPhoneUseCase,
 	userSignupUseCase,
 	updatePasswordUseCase,
-	setNodemailerOtpUseCase
+	setNodemailerOtpUseCase,
 };

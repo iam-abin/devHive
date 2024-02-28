@@ -1,9 +1,10 @@
 import React from "react";
 import { formatDateWithTime } from "../../utils/date-format-with-time";
 
-const Message: React.FC<{ message: any; currentUserId: string }> = ({
+const Message: React.FC<{ message: any; currentUserId: string, candidateImage:string }> = ({
 	message,
 	currentUserId,
+	candidateImage
 }) => {
 	return (
 		<>
@@ -13,7 +14,7 @@ const Message: React.FC<{ message: any; currentUserId: string }> = ({
 						<div className="w-10 rounded-full">
 							<img
 								alt="Tailwind CSS chat bubble component"
-								src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+								src={`${candidateImage?candidateImage:"https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"}`}
 							/>
 						</div>
 					</div>

@@ -36,7 +36,6 @@ export = {
 	},
 
 	getAllJobs: async (skip: number, limit: number): Promise<any[]> => {
-		// const jobs = await JobModel.aggregate([{ $sort: { createdAt: 1 } }]);
 		const jobs = await JobModel.find()
 			.sort({ createdAt: -1 })
 			.skip(skip)

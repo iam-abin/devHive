@@ -10,31 +10,39 @@ kubectl create secret generic NAME_OF_THE_SECRET_KEY --from-literal=KEY=VALUE_FO
 
 API_PREFIX = 'api prifix' eg:- /api/v1
 
-# jwt secret
+# jwt
 
-JWT_SECRET_KEY = "your jwt secret"
+JWT_SECRET_KEY = your_jwt_secret_key
+JWT_REFRESH_SECRET_KEY = your_jwt_refresh_secret_key
 
 # twilio otp sending and verification
 
-TWILIO_ACCOUNT_SID = 'your_twilio_sid' <br>
-TWILIO_AUTH_TOKEN = 'your_twilio_auth_token' <br>
-TWILIO_SERVICE_SID = 'your_twilio_service_sid'
+TWILIO_ACCOUNT_SID = your_twilio_sid 
+TWILIO_AUTH_TOKEN = your_twilio_auth_token 
+TWILIO_SERVICE_SID = your_twilio_service_sid
+
+# cloudinary image  upload
+
+CLOUDINARY_API_KEY = your_cloudinary_api_key 
+CLOUDINARY_API_SECRET = your_cloudinary_api_secret
+CLOUDINARY_CLOUD_NAME = your_cloudinary_cloud_name
 
 # mongo atlas utls(Not necessary)
 
-MONGO_URL_AUTH = "authentication db url"
-MONGO_URL_ADMIN = "admin db url"
-MONGO_URL_PROFILE = "profile db url"
-MONGO_URL_CHAT = "chat db url"
-MONGO_URL_JOB = "job db url"
+MONGO_URL_AUTH = authentication_db_url
+MONGO_URL_ADMIN = admin_db_url
+MONGO_URL_PROFILE = profile_db_url
+MONGO_URL_CHAT = chat_db_url
+MONGO_URL_JOB = job_db_url
+MONGO_URL_PAYMENT = payment_db_url
 
 # firebase for client
-VITE_FIREBASE_API_KEY = "your_firebase_auth_key"
-VITE_FIREBASE_AUTH_DOMAIN = "your_firebase_auth_domain"
-VITE_FIREBASE_PROJECT_ID = "your_firebase_project_id"
+VITE_FIREBASE_API_KEY = your_firebase_api_key
+VITE_FIREBASE_AUTH_DOMAIN = your_firebase_auth_domain
+VITE_FIREBASE_PROJECT_ID = your_firebase_project_id
 
 # STRIPE  client side (not necessary)
-VITE_STRIPE_PUBLISHABLE_KEY = "your_stripe_publishable_key"
+VITE_STRIPE_PUBLISHABLE_KEY = your_stripe_publishable_key
 
 # STRIPE server side
-STRIPE_SECRET_KEY = "your_stripe_secret_key"
+STRIPE_SECRET_KEY = your_stripe_secret_key

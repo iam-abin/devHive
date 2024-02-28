@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { FaSearch } from "react-icons/fa";
+// import { FaSearch } from "react-icons/fa";
 
 import ChatImage from "../../assets/chat/double-chat-bubble-icon.svg";
 import TopNavBarCandidate from "../../components/navBar/TopNavBarCandidate";
@@ -46,6 +46,10 @@ const ChatPageCandidate = () => {
 			socket.disconnect();
 		};
 	}, []);
+
+	const candidateProfile: any = useSelector((state: RootState) => {
+		return state.candidateProfile.candidateProfile;
+	});
 
 	useEffect(() => {
 		console.log("=========in socket io addActiveUser useEffect");
@@ -193,7 +197,8 @@ const ChatPageCandidate = () => {
 									) : (
 										selectedChatRoomMessages.map(
 											(message: any, index: number) => (
-												<Message
+												<Message 
+												candidateImage = {candidateProfile.profile_image}
 													key={index}
 													message={message}
 													currentUserId={

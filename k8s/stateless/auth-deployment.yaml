@@ -22,7 +22,7 @@ spec:
               valueFrom: 
                 secretKeyRef:
                   name: devhive-mongo-url-auth
-                  key: MONGO_URL_AUTH
+                  key: MONGO_URL_AUTHDB_DEVHIVE
             - name: JWT_SECRET_KEY
               valueFrom: 
                 secretKeyRef:

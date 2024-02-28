@@ -23,14 +23,15 @@ import { setTotalNumberOfPages } from "../../redux/slice/job/filteredJobsSlice";
 import { setCurrentPage } from "../../redux/slice/job/filteredJobsSlice";
 import TopNavBarCandidate from "../../components/navBar/TopNavBarCandidate";
 import Footer from "../../components/footer/Footer";
-
-import { myFirebaseMessaging } from "../../config/firebase";
+// import { getACandidateProfileApi } from "../../axios/apiMethods/profile-service/recruiter";
+import { candidateGetProfileApi } from "../../axios/apiMethods/profile-service/candidate";
+import { setCandidateProfileDetails } from "../../redux/slice/candidateSlice/candidateProfileSlice";
 
 function LandingPage() {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
-	const candidate = useSelector(
+	const candidate: any = useSelector(
 		(state: RootState) => state.candidateData.data
 	);
 	const recruiter = useSelector(
@@ -54,8 +55,6 @@ function LandingPage() {
 		// dispatch(setLoaded());
 		return allJobs;
 	};
-
-	
 
 	useEffect(() => {
 		(async () => {
@@ -87,6 +86,24 @@ function LandingPage() {
 			};
 		})();
 	}, [currentPage]);
+
+	// useEffect(() => {
+	// 	(async () => {
+	// 		// let candidateDataId = candidate ?? null; // used when candidate see his profile
+	// 		// let id = candidateDataId?.id;
+	// 		let candidateProfile;
+	// 		if (isCandidateUrl && candidate) {
+	// 			candidateProfile = await candidateGetProfileApi(candidate?.id);
+
+	// 			console.log(
+	// 				"/////////////////////candidateProfile ",
+	// 				candidateProfile
+	// 			);
+
+	// 			dispatch(setCandidateProfileDetails(candidateProfile?.data))
+	// 		}
+	// 	})();
+	// }, []);
 
 	const jobs: any = useSelector(
 		(state: RootState) => state.filteredJobs.data

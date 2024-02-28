@@ -2,6 +2,8 @@ import { combineReducers } from "@reduxjs/toolkit";
 
 import adminDataSlice from "../slice/adminSlice/adminDataSlice";
 
+import candidateProfileSlice from "../slice/candidateSlice/candidateProfileSlice";
+
 import candidateDataSlice from "../slice/candidateSlice/candidateDataSlice";
 
 import recruiterDataSlice from "../slice/recruiterSlice/recruiterDataSlice";
@@ -14,12 +16,15 @@ import recruiterJobDetailsSlice from "../slice/recruiterSlice/recruiterJobIdSlic
 import candidateJobIdSlice from "../slice/candidateSlice/candidateJobIdSlice";
 import candidateJobDetailsSlice from "../slice/candidateSlice/candidateJobDetailsSlice";
 
+
 import apiCallLoadingSlice from "../slice/loaderSlice/isLoading"
 
 const rootRedcucer = combineReducers({
     adminData: adminDataSlice,
 
     candidateData: candidateDataSlice,
+
+    candidateProfile: candidateProfileSlice,
 
     recruiterData: recruiterDataSlice,
 

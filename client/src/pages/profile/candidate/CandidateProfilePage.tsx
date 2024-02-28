@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/reducer/reducer";
 import {
 	candidateGetProfileApi,
@@ -23,10 +23,12 @@ import { getACandidateProfileApi } from "../../../axios/apiMethods/profile-servi
 import { FaFacebookMessenger } from "react-icons/fa";
 import Swal from "sweetalert2";
 import CircleLoading from "../../../components/loading/CircleLoading";
+import { setCandidateProfileDetails } from "../../../redux/slice/candidateSlice/candidateProfileSlice";
 
 const CandidateProfilePage: React.FC = () => {
 	const navigate = useNavigate();
 	const location = useLocation();
+	const dispatch = useDispatch()
 
 	const candidateData: any = useSelector(
 		(state: RootState) => state.candidateData.data
@@ -78,6 +80,7 @@ const CandidateProfilePage: React.FC = () => {
 			);
 
 			setCandidateProfileData(candidateProfile.data);
+			dispatch(setCandidateProfileDetails(candidateProfile?.data))
 			setSkills([...candidateProfile?.data.keySkills]);
 		})();
 	}, [addSkillRerender]);
@@ -127,6 +130,10 @@ const CandidateProfilePage: React.FC = () => {
 						...candidateProfileData,
 							resume: response.data.resume
 					});
+
+					dispatch(setCandidateProfileDetails(response?.data))
+
+
 					notify(response.message, "success");
 					return response.data;
 				} else {
@@ -226,6 +233,7 @@ const CandidateProfilePage: React.FC = () => {
 					...candidateProfileData,
 						profile_image: response.data.profile_image,
 				});
+				dispatch(setCandidateProfileDetails(response?.data))
 				navigate("/candidate/profile");
 				return response.data;
 			} else {

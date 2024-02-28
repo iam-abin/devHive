@@ -31,11 +31,11 @@ spec:
                 secretKeyRef:
                   name: firebase-project-id
                   key: VITE_FIREBASE_PROJECT_ID
-            - name: VITE_STRIPE_PUBLISHABLE_KEY
-              valueFrom: 
-                secretKeyRef:
-                  name: stripe-publishable-key
-                  key: VITE_STRIPE_PUBLISHABLE_KEY
+            # - name: VITE_STRIPE_PUBLISHABLE_KEY
+            #   valueFrom: 
+            #     secretKeyRef:
+            #       name: stripe-publishable-key
+            #       key: VITE_STRIPE_PUBLISHABLE_KEY
 ---
 apiVersion: v1
 kind: Service

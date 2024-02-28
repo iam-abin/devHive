@@ -1,5 +1,5 @@
-import { User } from "../entities";
-import { UserDataSignup } from "../frameworks/types/userInterface";
+import { User } from "../../entities";
+import { UserDataSignup } from "../../frameworks/types/userInterface";
 
 export  = (dependencies: any) => {
 	const { repositories:{usersRepository} } = dependencies;
