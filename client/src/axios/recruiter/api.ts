@@ -9,10 +9,11 @@ export const recruiterApi: AxiosInstance = axios.create({
 // Request interceptor
 recruiterApi.interceptors.request.use(
 	async (config: any) => {
-		// Check if the access token is available in local storage
-		console.log("inside axios interceptor request.use");
 		let tokenString = localStorage.getItem(recruiterAccessToken);
-		console.log("in request interceptot  localStorage.getItem(recruiterAccessToken) is ", tokenString);
+		console.log(
+			"in axios request interceptor localStorage.getItem(recruiterAccessToken) is ",
+			tokenString
+		  );
 		if(tokenString){
 			const token = JSON.parse(tokenString)
 			config.headers["Authorization"] = `Bearer ${token}`
