@@ -13,14 +13,16 @@ recruiterApi.interceptors.request.use(
 		console.log(
 			"in axios request interceptor localStorage.getItem(recruiterAccessToken) is ",
 			tokenString
-		  );
-		if(tokenString){
-			const token = JSON.parse(tokenString)
-			config.headers["Authorization"] = `Bearer ${token}`
+		);
+		if (tokenString) {
+			// const token = JSON.parse(tokenString)
+			// No need to parse if the token is already a string
+			const token = tokenString;
+			config.headers["Authorization"] = `Bearer ${token}`;
 		}
 		return config;
 	},
 	(error: AxiosError) => {
-        return Promise.reject(error);
-      }
+		return Promise.reject(error);
+	}
 );

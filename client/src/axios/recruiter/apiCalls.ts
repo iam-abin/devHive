@@ -6,141 +6,109 @@ import {
 import { recruiterApi } from "./api";
 import { BASE_URL } from "../../config/baseUrl";
 
-const recruiterApiCalls = async (method: string, url: string, data?: any,
-	isFileUpload?: boolean) => {
-	return new Promise(async (resolve, reject) => {
-		try {
-			let response: any, error: any;
+const recruiterApiCalls = async (
+	method: string,
+	url: string,
+	data?: any,
+	isFileUpload?: boolean
+) => {
+	try {
+		let response;
+		switch (method.toLowerCase()) {
+			case "get":
+				response = await recruiterApi.get(url, data);
+				break;
 
-			if (method === "post") {
-				response = await recruiterApi.post(url, data).catch((err) => {
-					error = err;
-				});
-			} else if (method === "get") {
-				response = await recruiterApi.get(url, data).catch((err) => {
-					error = err;
-				});
-			} else if (method === "patch") {
-				response = await recruiterApi.patch(url, data).catch((err) => {
-					error = err;
-				});
-			} else if (method === "put") {
-				// response = await recruiterApi.put(url, data).catch((err) => {
-				// 	error = err;
-				// });
+			case "post":
+				response = await recruiterApi.post(url, data);
+				console.log("inside post response", response);
+				break;
+
+			case "put":
 				response = isFileUpload
 					? await recruiterApi.put(url, data, {
 							headers: { "Content-Type": "multipart/form-data" },
-					 })
+					  })
 					: await recruiterApi.put(url, data);
-			} else if (method === "delete") {
-				response = await recruiterApi.delete(url, data).catch((err) => {
-					error = err;
-				});
-			}
+				break;
 
-			if (response) {
-				console.log("in apiCalls response.data ", response.data);
+			case "patch":
+				response = await recruiterApi.patch(url, data);
+				break;
 
-				resolve(response);
-			} else if (error) {
-				console.log("in apiCalls error ", error);
-				if (error.response?.status === 401) {
-					refreshAccessToken(error)
-						.then((response: any) => {
-							resolve(response.data);
-						})
-						.catch((error: any) => {
-							if (error?.response?.status === 401) {
-								clearRecruiterFromLocal();
-							} else {
-								reject(error);
-							}
-						});
-				} else {
-					reject(error?.response?.data);
-				}
-			}
-		} catch (err) {
-			reject(err);
+			case "delete":
+				response = await recruiterApi.delete(url, data);
+				break;
+
+			default:
+				throw new Error(`Invalid method: ${method}`);
 		}
-	});
-};
 
-const refreshAccessToken = async (error: any) => {
-	const originalRequest = error.config;
-	try {
-		// if the error is due to an expired access token
-		if (error.response?.status === 401) {
-			
-			
-			const refreshTokenString = localStorage.getItem(recruiterRefreshToken);
-			console.log("in refreshAccessToken refreshTokenString", refreshTokenString);
-		
-			
-			if (refreshTokenString) {
-				const refreshToken = JSON.parse(refreshTokenString)
-				
-				originalRequest._retry = true;
-
-				return new Promise(async (resolve, reject) => {
-					try {
-						//refreshing the access token
-						const response = await axios
-							.post(
-								`${BASE_URL}/auth/jwt-refresh/refreshToken`,
-								null,
-								{
-									headers: {
-										Authorization: `Bearer ${refreshToken}`,
-									},
-								}
-							)
-							.catch((err) => {
-								reject(err);
-							});
-						if (response) {
-							const newAccessToken = response.data.accessToken;
-
-							localStorage.setItem(
-								recruiterAccessToken,
-								newAccessToken
-							);
-
-							originalRequest.headers["Authorization"] =
-								newAccessToken;
-
-							// Retry the original request with the new access token
-                            console.log("originalRequest or error.config", originalRequest);
-                            
-							axios(originalRequest)
-								.then((response) => {
-									resolve(response);
-								})
-								.catch((error) => {
-									reject(error);
-								});
-						}
-					} catch (refreshError) {
-						// If refresh token fails, redirect to login or handle as needed
-						console.error("Refresh token failed:", refreshError);
-						clearRecruiterFromLocal();
-					}
-				});
-			} else {
-				// No refresh token available
-				clearRecruiterFromLocal();
-			}
-		}
+		console.log("in apiCalls response ", response);
+		return response;
 	} catch (error) {
-		clearRecruiterFromLocal();
+		console.error("API call failed:", error);
+		throw error;
 	}
 };
 
-export const clearRecruiterFromLocal = () => {
+
+// Axios response interceptor
+recruiterApi.interceptors.response.use(
+	(response) => response,
+	async (error) => {
+		const originalRequest = error.config;
+		console.log("error =======", error);
+
+		if (error?.response?.status === 401 && !originalRequest._retry) {
+			originalRequest._retry = true;
+			try {
+				const newAccessToken = await refreshToken();
+
+				if (newAccessToken) {
+					originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+					return recruiterApi(originalRequest);
+				}
+			} catch (refreshError) {
+				console.error("Refresh token failed:", refreshError);
+				clearRecruiterFromLocal();
+			}
+		}
+		return Promise.reject(error);
+	}
+);
+
+const refreshToken = async () => {
+	const refreshTokenString: any = localStorage.getItem(recruiterRefreshToken);
+	try {
+		const refreshTokenObject = JSON.parse(refreshTokenString);
+
+		const response = await axios.post(
+			`${BASE_URL}/auth/jwt-refresh/refreshToken`,
+			null,
+			{
+				headers: {
+					Authorization: `Bearer ${refreshTokenObject}`,
+				},
+			}
+		);
+
+		if (response.data.accessToken) {
+			const newAccessToken = response.data.accessToken;
+			localStorage.setItem(recruiterAccessToken, newAccessToken);
+			return response.data.accessToken;
+		}
+	} catch (error) {
+		console.error("Failed to refresh token", error);
+		clearRecruiterFromLocal();
+	}
+	return null;
+};
+
+
+function clearRecruiterFromLocal() {
 	localStorage.removeItem(recruiterAccessToken);
 	localStorage.removeItem(recruiterRefreshToken);
-	// window.location.reload();
-};
+}
 
 export default recruiterApiCalls;

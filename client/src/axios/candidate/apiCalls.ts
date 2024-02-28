@@ -45,7 +45,6 @@ const candidateApiCalls = async (
 		}
 
 		console.log("in apiCalls response ", response);
-		console.log("in apiCalls response.data ", response.data);
 		return response;
 	} catch (error) {
 		console.error("API call failed:", error);
@@ -105,10 +104,10 @@ const refreshToken = async () => {
 	return null;
 };
 
-export default candidateApiCalls;
-
 
 function clearCandidateFromLocal() {
 	localStorage.removeItem(candidateAccessToken);
 	localStorage.removeItem(candidateRefreshToken);
 }
+
+export default candidateApiCalls;

@@ -9,15 +9,15 @@ export const adminApi: AxiosInstance = axios.create({
 // Request interceptor
 adminApi.interceptors.request.use(
 	async (config: any) => {
-		// Check if the access token is available in local storage
-		console.log("inside axios interceptor request.use");
 		let tokenString = localStorage.getItem(adminAccessToken);
 		console.log(
 			"in request interceptot  localStorage.getItem(adminAccessToken) is ",
 			tokenString
 		);
 		if (tokenString) {
-			const token = JSON.parse(tokenString);
+			// const token = JSON.parse(tokenString);
+			// No need to parse if the token is already a string
+		const token = tokenString;
 			config.headers["Authorization"] = `Bearer ${token}`;
 		}
 		return config;

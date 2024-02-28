@@ -1,136 +1,100 @@
 import axios from "axios";
-import {
-	adminAccessToken,
-	adminRefreshToken,
-} from "../../config/localStorage";
+import { adminAccessToken, adminRefreshToken } from "../../config/localStorage";
 import { adminApi } from "./api";
 import { BASE_URL } from "../../config/baseUrl";
 
 const adminApiCalls = async (method: string, url: string, data?: any) => {
-	return new Promise(async (resolve, reject) => {
-		try {
-			let response: any, error: any;
-
-			if (method === "post") {
-				response = await adminApi.post(url, data).catch((err) => {
-					error = err;
-				});
-			} else if (method === "get") {
-				response = await adminApi.get(url, data).catch((err) => {
-					error = err;
-				});
-			} else if (method === "patch") {
-				response = await adminApi.patch(url, data).catch((err) => {
-					error = err;
-				});
-			} else if (method === "put") {
-				response = await adminApi.put(url, data).catch((err) => {
-					error = err;
-				});
-			} else if (method === "delete") {
-				response = await adminApi.delete(url, data).catch((err) => {
-					error = err;
-				});
-			}
-
-			if (response) {
-				console.log("in apiCalls response.data ", response.data);
-
-				resolve(response);
-			} else if (error) {
-				console.log("in apiCalls error ", error);
-				if (error.response?.status === 401) {
-					refreshAccessToken(error)
-						.then((response: any) => {
-							resolve(response.data);
-						})
-						.catch((error: any) => {
-							if (error?.response?.status === 401) {
-								clearAdminFromLocal();
-							} else {
-								reject(error);
-							}
-						});
-				} else {
-					reject(error?.response?.data);
-				}
-			}
-		} catch (err) {
-			reject(err);
-		}
-	});
-};
-
-const refreshAccessToken = async (error: any) => {
-	const originalRequest = error.config;
 	try {
-		// if the error is due to an expired access token
-		if (error.response?.status === 401) {
-			const refreshTokenString = localStorage.getItem(adminRefreshToken);
-			console.log("in refreshAccessToken refreshTokenString", refreshTokenString);
-		
-			
-			if (refreshTokenString) {
-				const refreshToken = JSON.parse(refreshTokenString)
-				originalRequest._retry = true;
+		let response;
+		switch (method.toLowerCase()) {
+			case "get":
+				response = await adminApi.get(url, data);
+				break;
 
-				return new Promise(async (resolve, reject) => {
-					try {
-						//refreshing the access token
-						const response = await axios
-							.post(
-								`${BASE_URL}/auth/jwt-refresh/refreshToken`,
-								null,
-								{
-									headers: {
-										Authorization: `Bearer ${refreshToken}`,
-									},
-								}
-							)
-							.catch((err) => {
-								reject(err);
-							});
-						if (response) {
-							const newAccessToken = response.data.accessToken;
-							localStorage.setItem(
-								adminAccessToken,
-								newAccessToken
-							);
+			case "post":
+				response = await adminApi.post(url, data);
+				console.log("inside post response", response);
+				break;
 
-							originalRequest.headers["Authorization"] =
-								newAccessToken;
+			case "put":
+				response = await adminApi.put(url, data);
+				break;
 
-							// Retry the original request with the new access token
-                            console.log("originalRequest or error.config", originalRequest);
-                            
-							axios(originalRequest)
-								.then((response) => {
-									resolve(response);
-								})
-								.catch((error) => {
-									reject(error);
-								});
-						}
-					} catch (refreshError) {
-						// If refresh token fails, redirect to login or handle as needed
-						console.error("Refresh token failed:", refreshError);
-						clearAdminFromLocal();
-					}
-				});
-			} else {
-				// No refresh token available
-				clearAdminFromLocal();
-			}
+			case "patch":
+				response = await adminApi.patch(url, data);
+				break;
+
+			case "delete":
+				response = await adminApi.delete(url, data);
+				break;
+
+			default:
+				throw new Error(`Invalid method: ${method}`);
 		}
+
+		console.log("in apiCalls response ", response);
+		return response;
 	} catch (error) {
-		clearAdminFromLocal();
+		console.error("API call failed:", error);
+		throw error;
 	}
 };
 
-export const clearAdminFromLocal = () => {
+// Axios response interceptor
+adminApi.interceptors.response.use(
+	(response) => response,
+	async (error) => {
+		const originalRequest = error.config;
+		console.log("error =======", error);
+
+		if (error?.response?.status === 401 && !originalRequest._retry) {
+			originalRequest._retry = true;
+			try {
+				const newAccessToken = await refreshToken();
+
+				if (newAccessToken) {
+					originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+					return adminApi(originalRequest);
+				}
+			} catch (refreshError) {
+				console.error("Refresh token failed:", refreshError);
+				clearCandidateFromLocal();
+			}
+		}
+		return Promise.reject(error);
+	}
+);
+
+const refreshToken = async () => {
+	const refreshTokenString: any = localStorage.getItem(adminRefreshToken);
+	try {
+		const refreshTokenObject = JSON.parse(refreshTokenString);
+
+		const response = await axios.post(
+			`${BASE_URL}/auth/jwt-refresh/refreshToken`,
+			null,
+			{
+				headers: {
+					Authorization: `Bearer ${refreshTokenObject}`,
+				},
+			}
+		);
+
+		if (response.data.accessToken) {
+			const newAccessToken = response.data.accessToken;
+			localStorage.setItem(adminAccessToken, newAccessToken);
+			return response.data.accessToken;
+		}
+	} catch (error) {
+		console.error("Failed to refresh token", error);
+		clearCandidateFromLocal();
+	}
+	return null;
+};
+
+function clearCandidateFromLocal() {
 	localStorage.removeItem(adminAccessToken);
 	localStorage.removeItem(adminRefreshToken);
-	window.location.reload();
-};
+}
 
 export default adminApiCalls;
