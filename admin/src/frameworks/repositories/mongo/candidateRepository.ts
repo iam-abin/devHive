@@ -58,6 +58,12 @@ export = {
 		const candidates = await CandidateModel.find({});
 		return candidates;
 	},
+
+	numberOfCandidates: async ()=>{
+		const totalCandidates = await CandidateModel.countDocuments()
+		return totalCandidates
+	}
 };
+
 
 // export default repository();

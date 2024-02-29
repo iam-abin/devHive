@@ -38,20 +38,6 @@ export const getAllJobsAdminApi = async (): Promise<any> => { // for admin from 
 		console.log("response is",response);
 	
 		return response.data;
-	// } catch (error) {
-	// 	console.log(error);
-		
-	// }
-
-    // console.log("in all jobs admin api");
-
-	// 	const response = await axios({
-	// 		method: "get",
-	// 		url: `${BASE_URL_ADMIN}/jobs`
-	// 	});
-    //     // console.log(response);
-        
-	// 	return response;
 };
 
 export const blockUnblockJobApi = async (jobId: string): Promise<any> => {

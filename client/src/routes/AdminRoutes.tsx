@@ -7,6 +7,7 @@ import Loading from "../components/loading/Loading";
 
 import AdminLayout from "../pages/layout/AdminLayout";
 import NotFound from "../pages/Error/NotFound";
+import AdminDashBoard from "../pages/dashboard/AdminDashBoard";
 
 const AdminSigninPage = lazy(
 	() => import("../pages/auth-pages/signin/AdminSigninPage")
@@ -62,6 +63,16 @@ function AdminRoutes() {
 							)
 						}
 					>
+						<Route
+							path="/"
+							element={
+								isAdminLoggedIn ? (
+									<AdminDashBoard />
+								) : (
+									<Navigate to="/admin" />
+								)
+							}
+						/>
 						<Route
 							path="/candidates"
 							element={

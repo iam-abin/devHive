@@ -44,19 +44,19 @@ const start = async () => {
 	// it is used to listen to incomming message from kafka topics
 	const userUpdatedEvent = new UserUpdatedEventConsumer(kafkaClient)
 	const paymentCreatedEvent = new paymentCreatedEventConsumer(kafkaClient)
-	// await userUpdatedEvent.subscribe()
-	// await paymentCreatedEvent.subscribe()
+	await userUpdatedEvent.subscribe()
+	await paymentCreatedEvent.subscribe()
 
 	app.listen(3000, () => {
 		console.log("auth Listening on port 3000....");
 	})
 	.on("error", async () => {
-		// await userUpdatedEvent.disconnect();
-		// await paymentCreatedEvent.disconnect()
+		await userUpdatedEvent.disconnect();
+		await paymentCreatedEvent.disconnect()
 	})
 	.on("close", async () => {
-		// await userUpdatedEvent.disconnect();
-		// await paymentCreatedEvent.disconnect()
+		await userUpdatedEvent.disconnect();
+		await paymentCreatedEvent.disconnect()
 	});
 };
 

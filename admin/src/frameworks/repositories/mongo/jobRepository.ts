@@ -53,6 +53,11 @@ export = {
 		console.log("deletedJob: ", deletedJob);
 		return deletedJob;
 	},
+
+	numberOfJobs: async ()=>{
+		const totalJobs = await JobModel.countDocuments()
+		return totalJobs
+	},
 };
 
 // export default repository();

@@ -1,11 +1,9 @@
 import { DependenciesData } from "../../frameworks/types/dependencyInterface";
 
-// import adminSigninController from "./signin.controller";
-// import adminSignoutController from "./signout.controller";
+import dashboardController from "./dashboard.controller";
 
 export = (dependencies: DependenciesData) => {
 	return {
-		// adminSigninController: adminSigninController(dependencies),
-		// adminSignoutController: adminSignoutController(dependencies)
+		dashboardController: dashboardController(dependencies),
 	};
 };

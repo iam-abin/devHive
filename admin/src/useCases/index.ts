@@ -22,6 +22,8 @@ import {
 	getCompanyByIdUseCase,
 } from "./company";
 
+import { getAllDashboardCardsDetailsUseCase } from "./dashboard";
+
 export default {
 	blockUnblockCandidateUseCase,
 	getAllCandidatesUseCase,
@@ -38,4 +40,6 @@ export default {
 	blockUnblockCompanyUseCase,
 	getAllCompaniesUseCase,
 	getCompanyByIdUseCase,
+
+	getAllDashboardCardsDetailsUseCase,
 };

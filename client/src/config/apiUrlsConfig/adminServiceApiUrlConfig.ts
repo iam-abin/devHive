@@ -2,6 +2,7 @@ const JOB_ADMIN_URL = `admin/job`; // job management in admin service
 const RECRUITER_ADMIN_URL = `admin/recruiter`; // recruiter management in admin service
 const CANDIDATE_ADMIN_URL = `admin/candidate`;
 const COMPANY_ADMIN_URL = `admin/company`;
+const DASHBOARD_ADMIN_URL = `admin/dashboard`;
 
 const adminApiUrlConfig = {
 	// jobs
@@ -29,6 +30,9 @@ const adminApiUrlConfig = {
 	blockUnblockCompanyUrl: (companyId: string) =>
 		`${COMPANY_ADMIN_URL}/company/blockUnblock/${companyId}`,
 	// viewCompanyProfileDetailsUrl: (companyId: string) => `${COMPANY_ADMIN_URL}/viewProfile/${companyId}`,
+
+	// dashboard
+	getAllCardsDetailsUrl: `${DASHBOARD_ADMIN_URL}/data`,
 };
 
 export default adminApiUrlConfig;
