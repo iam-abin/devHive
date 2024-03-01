@@ -83,6 +83,15 @@ export const updateJobApi = async (data: any): Promise<any> => {
 		return response.data;
 };
 
+export const changeJobCloseStatusApi = async (jobId: any): Promise<any> => {
+    console.log("changeJobCloseStatusApi jobId ",jobId);
+		const response: any = await recruiterApiCalls("patch", jobApiUrlConfig.changeJobCloseStatusUrl(jobId));
+        console.log("response is",response);
+		console.log("response data is",response.data);
+	
+		return response.data;
+};
+
 
 export const deleteAJobApi = async (id: string): Promise<any> => {
     console.log("in deleteAJob Api ", id);

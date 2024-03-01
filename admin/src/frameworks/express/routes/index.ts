@@ -4,7 +4,7 @@ import { currentUserAdminCheck, requireAuthAdmin } from "@abijobportal/common";
 import { dashboardRouter } from "./dashboard";
 import { candidateRouter } from "./candidate";
 import { recruiterRouter } from "./recruiter";
-import { membershipRouter } from "./membership";
+import { membershipPlanRouter } from "./membership-plan";
 import { companyRouter } from "./company";
 import { jobRouter } from "./job";
 
@@ -16,7 +16,7 @@ export const routes = (dependencies: DependenciesData) => {
 	const dashboard = dashboardRouter(dependencies);
 	const candidate = candidateRouter(dependencies);
 	const recruiter = recruiterRouter(dependencies);
-	const membership = membershipRouter(dependencies);
+	const membershipPlan = membershipPlanRouter(dependencies);
 	const company = companyRouter(dependencies);
 	const job = jobRouter(dependencies);
 
@@ -33,7 +33,7 @@ export const routes = (dependencies: DependenciesData) => {
 	// router.use("/candidate",requireAuthAdmin, candidate);
 	router.use("/candidate", candidate);
 	router.use("/recruiter", recruiter);
-	router.use("/membership", membership);
+	router.use("/membership", membershipPlan);
 	router.use("/company", company);
 	router.use("/job", job);
 

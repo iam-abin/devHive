@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getAllJobsApi } from "../../../axios/apiMethods/jobs-service/jobs";
 import JobCard from "../../../components/cards/JobCard";
 import Paginate from "../../../components/pagination/Paginate";
+import { RootState } from "../../../redux/reducer/reducer";
 
 function AllJobsPage() {
 	const dispatch = useDispatch();
@@ -11,6 +12,10 @@ function AllJobsPage() {
 	// const candidateData = useSelector(
 	// 	(state: RootState) => state.candidateData.candidate
 	// );
+
+	const recruiterData: any = useSelector(
+		(state: RootState) => state.recruiterData.data
+	);
 
 	const navigate = useNavigate();
 	const [currentPage, setCurrentPage] = useState(1);
@@ -84,16 +89,17 @@ function AllJobsPage() {
 				<div className="flex flex-col w-full">
 					{filteredJobs.map((job: any) => {
 						console.log("--->",job);
-						
+						// return jobs that are active, not closed, and belong to the current recruiter (matching recruiterId)
 						return (
-							job.isActive && (
-								<JobCard
-									job={job}
-									key={job.id}
-									handleViewJob={handleViewJob}
-								/>
+							job.isActive && 
+							((job.isClosed && job.recruiterId === recruiterData.id) || !job.isClosed) && (
+							  <JobCard
+								job={job}
+								key={job.id}
+								handleViewJob={handleViewJob}
+							  />
 							)
-						);
+						  );
 					})}
 				</div>
 			</div>

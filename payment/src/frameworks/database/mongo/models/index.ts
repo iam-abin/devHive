@@ -1,5 +1,4 @@
-import { PremiumModel } from "./premium";
+import { MembershipPlansModel } from "./membership-plans";
 import { PaymentModel } from "./payments";
-import { UserModel } from "./users";
 
-export default { PremiumModel, PaymentModel, UserModel }
+export default { MembershipPlansModel, PaymentModel }

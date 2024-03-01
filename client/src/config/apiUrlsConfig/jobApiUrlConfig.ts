@@ -8,14 +8,15 @@ const jobApiUrlConfig = {
 	filterJobsUrl: `${CANDIDATE_JOB_URL}/filter`,
 	getJobFieldsDistinctValuesUrl: `${CANDIDATE_JOB_URL}/all-job-fields-distinct-values`,
 	getAJobUrl: (id: string) => `${RECRUITER_JOB_URL}/${id}`,
-
+	
 	// Candidate
 	candidateApplyJobUrl: `${CANDIDATE_JOB_URL}/apply`,
 	getAllCandidateAppliedJobsUrl: (candidateId: string, currentPage: number) =>
-		`${CANDIDATE_JOB_URL}/applied-jobs/${candidateId}/${currentPage}`,
-
+	`${CANDIDATE_JOB_URL}/applied-jobs/${candidateId}/${currentPage}`,
+	
 	// Recruiter
 	createJobUrl: `${RECRUITER_JOB_URL}/create`,
+	changeJobCloseStatusUrl: (id: string) => `${RECRUITER_JOB_URL}/change-close-status/${id}`,
 	updateJobUrl: `${RECRUITER_JOB_URL}/update-job`,
 	deleteAJobUrl: (id: string) => `${RECRUITER_JOB_URL}/${id}`,
 	getAllRecruiterAddedJobsUrl: (recruiterId: string) =>

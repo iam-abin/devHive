@@ -3,28 +3,28 @@ import { DependenciesData } from "../../frameworks/types/dependencyInterface";
 
 export = (dependencies: DependenciesData) => {
 	const {
-		useCases: { changeJobApplicationStatusUseCase },
+		useCases: { changeClosejobStatusUseCase },
 	} = dependencies;
 
 	return async (req: Request, res: Response) => {
-		const { jobApplicationId } = req.params;
-		const { jobApplicationStatus } = req.body;
-		console.log("req.body", req.body);
+		const { jobId } = req.params;
+		// const { jobApplicationStatus } = req.body;
+		console.log("in changeJobCloseStatusController 1 jobId", jobId);
 
 		// console.log("in  change-job-application-status.controllercontroller  1 jobApplicationId: ",jobApplicationId);
 		// console.log("in  change-job-application-status.controllercontroller 1 jobApplicationStatus: ",jobApplicationStatus);
 
-		const application = await changeJobApplicationStatusUseCase(
+		const job = await changeClosejobStatusUseCase(
 			dependencies
-		).execute(jobApplicationId, jobApplicationStatus);
+		).execute(jobId);
 		console.log(
-			"in change-job-application-status.controller 2: ",
-			application
+			"in changeJobCloseStatusController.controller 2: ",
+			job
 		);
 
 		res.status(200).json({
-			message: `status updated to ${jobApplicationStatus}`,
-			data: application,
+			message: `close status updated to ${job?.isClosed? "Close": "Open"}`,
+			data: job,
 		});
 	};
 };

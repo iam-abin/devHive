@@ -23,6 +23,10 @@ const JobApplicationDetails: React.FC<{
 		(state: RootState) => state.candidateData.data
 	);
 
+	const candidateProfileData: any = useSelector(
+		(state: RootState) => state.candidateProfile.candidateProfile
+	);
+
 	if (isRecruiterPage) {
 		// Do something specific for the "recruiter" page
 		console.log("This is a recruiter page");
@@ -35,7 +39,7 @@ const JobApplicationDetails: React.FC<{
 	const navigate = useNavigate();
 	const handleViewRecruiter = () => {
 		// let isPremiumUser = false;
-		if (!candidateData?.isPremiumUser) {
+		if (!candidateProfileData?.isPremiumUser) {
 			notify("only premium users can view recruiter profile", "success");
 			return;
 		}
@@ -160,7 +164,27 @@ const JobApplicationDetails: React.FC<{
 									: "Loading..."}
 							</p>
 						</div>
-
+						{jobApplicationDetails &&
+							jobApplicationDetails?.jobId
+								?.experience_required && (
+								<div className="mb-4">
+									<h2 className="text-xl font-semibold mb-2">
+										Job Status
+									</h2>
+									<p
+										className={`${
+											jobApplicationDetails?.jobId
+												?.isClosed
+												? "text-red-600"
+												: "text-green-600"
+										}`}
+									>
+										{jobApplicationDetails?.jobId?.isClosed
+											? "No longer accepting applications"
+											: "this job is open"}
+									</p>
+								</div>
+							)}
 						<div className="mb-4">
 							{jobApplicationDetails && (
 								<>
@@ -221,7 +245,7 @@ const JobApplicationDetails: React.FC<{
 												onClick={handleViewRecruiter}
 											>
 												view recruiter
-												{!candidateData?.isPremiumUser && (
+												{!candidateProfileData?.isPremiumUser && (
 													<FaLock />
 												)}
 											</button>
@@ -352,6 +376,8 @@ const JobApplicationDetails: React.FC<{
 								)}
 							</div>
 						)}
+
+						
 					</div>
 				</div>
 			</div>

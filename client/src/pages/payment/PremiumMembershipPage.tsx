@@ -1,7 +1,6 @@
 import { Modal } from "react-responsive-modal";
 import "react-responsive-modal/styles.css";
 
-
 import { useEffect, useState } from "react";
 import TableComponent from "../../components/table/TableComponent";
 import {
@@ -153,119 +152,136 @@ function PremiumMembershipPage() {
 		handleModalClose();
 	};
 
-    // Formik initialValues
-    const initialValues = {
-      name: "",
-      price: "",
-      description: "",
-      features: "",
-    };
-  
-    // Formik validation schema using Yup
-    const validationSchema = Yup.object({
-      name: Yup.string().required("Name is required"),
-      price: Yup.string().required("Price is required"),
-      description: Yup.string().required("Description is required"),
-      features: Yup.string().required("Features are required"),
-    });
-  
+	// Formik initialValues
+	const initialValues = {
+		name: "",
+		price: "",
+		description: "",
+		features: "",
+	};
+
+	// Formik validation schema using Yup
+	const validationSchema = Yup.object({
+		name: Yup.string().required("Name is required"),
+		price: Yup.string().required("Price is required"),
+		description: Yup.string().required("Description is required"),
+		features: Yup.string().required("Features are required"),
+	});
 
 	return (
 		<div className="text-center mx-10">
 			{/* <SideNavBar /> */}
-			<h1 className="font-semibold text-5xl mt-4 mb-10">
+			<div className="font-semibold text-5xl mt-4 mb-10">
 				Premium Membership Plans
-			</h1>
-			<button
-				onClick={handleModalOpen}
-				className="bg-blue-500 text-white p-2 rounded"
-			>
-				Create Premium
-			</button>
+			</div>
+			<div className="w-full flex flex-row mb-3 justify-end">
+				<button
+					onClick={handleModalOpen}
+					className="bg-blue-500 text-white p-2 rounded"
+				>
+					Create Premium
+				</button>
+			</div>
 			{/* ReactModal */}
-      {/* ReactModal */}
-      <Modal open={modalIsOpen} onClose={handleModalClose} center>
-        <div className="p-6 bg-white rounded-lg shadow-md">
-          <h2 className="text-2xl font-semibold mb-4">Create Premium Membership</h2>
-          <Formik
-            initialValues={initialValues}
-            validationSchema={validationSchema}
-            onSubmit={(values) => {
-              console.log(values);
-              handleCreatePremium();
-            }}
-          >
-            <Form>
-              {/* Form fields */}
-              <div className="mb-4">
-                <label htmlFor="name">Name:</label>
-                <Field
-                  type="text"
-                  id="name"
-                  name="name"
-                  className="p-2 border border-gray-300 w-full rounded"
-                />
-                <ErrorMessage name="name" component="div" className="text-red-500" />
-              </div>
+			{/* ReactModal */}
+			<Modal open={modalIsOpen} onClose={handleModalClose} center>
+				<div className="p-6 bg-white rounded-lg shadow-md">
+					<h2 className="text-2xl font-semibold mb-4">
+						Create Premium Membership
+					</h2>
+					<Formik
+						initialValues={initialValues}
+						validationSchema={validationSchema}
+						onSubmit={(values) => {
+							console.log(values);
+							handleCreatePremium();
+						}}
+					>
+						<Form>
+							{/* Form fields */}
+							<div className="mb-4">
+								<label htmlFor="name">Name:</label>
+								<Field
+									type="text"
+									id="name"
+									name="name"
+									className="p-2 border border-gray-300 w-full rounded"
+								/>
+								<ErrorMessage
+									name="name"
+									component="div"
+									className="text-red-500"
+								/>
+							</div>
 
-              <div className="mb-4">
-                <label htmlFor="price">Price:</label>
-                <Field
-                  type="text"
-                  id="price"
-                  name="price"
-                  className="p-2 border border-gray-300 w-full rounded"
-                />
-                <ErrorMessage name="price" component="div" className="text-red-500" />
-              </div>
+							<div className="mb-4">
+								<label htmlFor="price">Price:</label>
+								<Field
+									type="text"
+									id="price"
+									name="price"
+									className="p-2 border border-gray-300 w-full rounded"
+								/>
+								<ErrorMessage
+									name="price"
+									component="div"
+									className="text-red-500"
+								/>
+							</div>
 
-              <div className="mb-4">
-                <label htmlFor="description">Description:</label>
-                <Field
-                  as="textarea"
-                  id="description"
-                  name="description"
-                  className="p-2 border border-gray-300 w-full rounded"
-                />
-                <ErrorMessage
-                  name="description"
-                  component="div"
-                  className="text-red-500"
-                />
-              </div>
+							<div className="mb-4">
+								<label htmlFor="description">
+									Description:
+								</label>
+								<Field
+									as="textarea"
+									id="description"
+									name="description"
+									className="p-2 border border-gray-300 w-full rounded"
+								/>
+								<ErrorMessage
+									name="description"
+									component="div"
+									className="text-red-500"
+								/>
+							</div>
 
-              <div className="mb-4">
-                <label htmlFor="features">Features:</label>
-                <Field
-                  as="textarea"
-                  id="features"
-                  name="features"
-                  className="p-2 border border-gray-300 w-full rounded"
-                />
-                <ErrorMessage name="features" component="div" className="text-red-500" />
-              </div>
+							<div className="mb-4">
+								<label htmlFor="features">Features:</label>
+								<Field
+									as="textarea"
+									id="features"
+									name="features"
+									className="p-2 border border-gray-300 w-full rounded"
+								/>
+								<ErrorMessage
+									name="features"
+									component="div"
+									className="text-red-500"
+								/>
+							</div>
 
-              {/* Buttons */}
-              <div className="flex justify-end">
-                <button
-                  type="submit"
-                  className="bg-green-500 text-white p-2 rounded mr-2"
-                >
-                  Create
-                </button>
-                <button
-                  type="button"
-                  onClick={handleModalClose}
-                  className="bg-red-500 text-white p-2 rounded"
-                >
-                  Cancel
-                </button>
-              </div>
-            </Form>
-          </Formik>
-        </div>
-      </Modal>
-      <TableComponent columns={columns} data={recruitersData} />
+							{/* Buttons */}
+							<div className="flex justify-end">
+								<button
+									type="submit"
+									className="bg-green-500 text-white p-2 rounded mr-2"
+								>
+									Create
+								</button>
+								<button
+									type="button"
+									onClick={handleModalClose}
+									className="bg-red-500 text-white p-2 rounded"
+								>
+									Cancel
+								</button>
+							</div>
+						</Form>
+					</Formik>
+				</div>
+			</Modal>
+			<TableComponent columns={columns} data={recruitersData} />
 		</div>
 	);
 }

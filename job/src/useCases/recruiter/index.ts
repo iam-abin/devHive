@@ -7,6 +7,7 @@ import getRecruiterCreatedJobsUseCase from "./get-recruiter-created-jobs";
 import getAllJobApplicationsUseCase from "./get-all-job-applications";
 import getAJobApplicationUseCase from "./get-a-job-application";
 import changeJobApplicationStatusUseCase from "./change-job-application-status";
+import changeClosejobStatusUseCase from "./change-closejob-status";
 
 export {
 	createJobUseCase,
@@ -17,4 +18,5 @@ export {
 	getRecruiterCreatedJobsUseCase,
 	getAJobApplicationUseCase,
 	changeJobApplicationStatusUseCase,
+	changeClosejobStatusUseCase,
 };

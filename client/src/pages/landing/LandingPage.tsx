@@ -182,7 +182,7 @@ function LandingPage() {
 					<div>
 						{jobs && jobs.length > 0 ? (
 							jobs.map((job: any) => (
-								<JobCard
+								job.isActive && !job.isClosed && <JobCard
 									key={job?.id}
 									job={job}
 									handleViewJob={handleViewJob}

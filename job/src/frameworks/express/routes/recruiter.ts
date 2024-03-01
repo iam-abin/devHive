@@ -48,7 +48,7 @@ export const recruiterRouter = (dependencies: DependenciesData) => {
 
 	router.post("/change-application-status/:jobApplicationId", changeJobApplicationStatusController);
 	
-	router.post("/change-close-status/:jobId", changeJobCloseStatusController);
+	router.patch("/change-close-status/:jobId", changeJobCloseStatusController);
 	
 	return router;
 };

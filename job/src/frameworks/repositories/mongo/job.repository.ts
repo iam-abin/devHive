@@ -30,6 +30,23 @@ export = {
 		return updatedJob;
 	},
 
+
+	changeClosejobStatus: async (jobId: string) => {
+		console.log("in updateJob repository changeClosejobStatus jobId", jobId, " data ");
+
+		const job: any = await JobModel.findById(jobId)
+		if(job){
+			job.isClosed = !job?.isClosed // Toggle the boolean field
+			const updatedJob = await job.save();
+			console.log("in updateJob repository after changeClosejobStatus", updatedJob);
+			return updatedJob
+		}
+		
+		console.log("in job not fount", job);
+
+		return job;
+	},
+
 	filterJob: async (jobFilterData: object) => {
 		const filteredJobs = await JobModel.find(jobFilterData);
 		return filteredJobs;

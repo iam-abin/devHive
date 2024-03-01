@@ -68,7 +68,7 @@ function AllJobsPage() {
 						<div className="mx-28">
 							{filteredJobs.map(
 								(job: any) =>
-									job.isActive && (
+									job.isActive && !job.isClosed && (
 										<JobCard
 											job={job}
 											key={job.id}

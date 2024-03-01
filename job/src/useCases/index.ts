@@ -24,6 +24,7 @@ import {
 	getRecruiterCreatedJobsUseCase,
 	getAJobApplicationUseCase,
 	changeJobApplicationStatusUseCase,
+	changeClosejobStatusUseCase,
 } from "./recruiter";
 
 export default {
@@ -48,4 +49,5 @@ export default {
 	getRecruiterCreatedJobsUseCase,
 	getAJobApplicationUseCase,
 	changeJobApplicationStatusUseCase,
+	changeClosejobStatusUseCase,
 };

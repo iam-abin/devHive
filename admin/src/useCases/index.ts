@@ -22,6 +22,16 @@ import {
 	getCompanyByIdUseCase,
 } from "./company";
 
+import { getAllPaymentsUseCase } from "./payment";
+
+import {
+	updateMembershipPlanUseCase,
+	blockUnblockMembershipPlanUseCase,
+	createMembershipPlanUseCase,
+	getAllMembershipPlanUseCase,
+	getMembershipPlanByIdUseCase,
+} from "./membership";
+
 import { getAllDashboardCardsDetailsUseCase } from "./dashboard";
 
 export default {
@@ -40,6 +50,14 @@ export default {
 	blockUnblockCompanyUseCase,
 	getAllCompaniesUseCase,
 	getCompanyByIdUseCase,
+
+	updateMembershipPlanUseCase,
+	blockUnblockMembershipPlanUseCase,
+	createMembershipPlanUseCase,
+	getAllMembershipPlanUseCase,
+	getMembershipPlanByIdUseCase,
+
+	getAllPaymentsUseCase,
 
 	getAllDashboardCardsDetailsUseCase,
 };

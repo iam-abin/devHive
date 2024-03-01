@@ -1,11 +1,17 @@
 import { DependenciesData } from "../../frameworks/types/dependencyInterface";
 
-// import adminSigninController from "./signin.controller";
-// import adminSignoutController from "./signout.controller";
+import createMembershipController from "./create-membership.controller";
+import updateMembershipController from "./update-membership.controller";
+import blockUnblockMembershipController from "./block-unblock-membership.controller";
+import viewAllMembershipsController from "./view-all-memberships.controller";
+import viewMembershipController from "./view-membership.controller";
 
 export = (dependencies: DependenciesData) => {
 	return {
-		// adminSigninController: adminSigninController(dependencies),
-		// adminSignoutController: adminSignoutController(dependencies)
+		createMembershipController: createMembershipController(dependencies),
+		updateMembershipController: updateMembershipController(dependencies),
+		blockUnblockMembershipController: blockUnblockMembershipController(dependencies),
+		viewAllMembershipsController: viewAllMembershipsController(dependencies),
+		viewMembershipController: viewMembershipController(dependencies),
 	};
 };

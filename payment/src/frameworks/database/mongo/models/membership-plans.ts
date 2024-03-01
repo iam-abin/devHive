@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 // 1. An interface that describes the properties ,that are requried to create a new Chat
-interface PremiumAttributes {
+interface MembershipPlansAttributes {
 	name: String;
 	features: [string];
 	description: string;
@@ -8,7 +8,7 @@ interface PremiumAttributes {
 	isActive: boolean;
 }
 // 2. An interface that describes the properties ,that a Chat Document has
-interface PremiumDocument extends mongoose.Document {
+interface MembershipPlansDocument extends mongoose.Document {
 	name: string;
 	features: [string];
 	description: string;
@@ -19,7 +19,7 @@ interface PremiumDocument extends mongoose.Document {
 }
 
 // 3.
-const premiumSchema = new mongoose.Schema(
+const membershipPlansSchema = new mongoose.Schema(
 	{
 		name: {
 			type: String,
@@ -56,23 +56,23 @@ const premiumSchema = new mongoose.Schema(
 );
 
 // 4. An interface that describes the properties ,that a user model has
-interface PremiumModel extends mongoose.Model<PremiumDocument> {
-	buildPremium(attributes: PremiumAttributes): PremiumDocument;
+interface MembershipPlansModel extends mongoose.Model<MembershipPlansDocument> {
+	buildPremium(attributes: MembershipPlansAttributes): MembershipPlansDocument;
 }
 
 // 5.In Mongoose, you can also add custom functions to a model using statics.
-premiumSchema.statics.buildPremium = (attributes: PremiumAttributes) => {
-	return new PremiumModel({
+membershipPlansSchema.statics.buildPremium = (attributes: MembershipPlansAttributes) => {
+	return new MembershipPlansModel({
 		name: attributes.name,
 		features: attributes.features,
 		description: attributes.description,
 		price: attributes.price,
 	});
 };
-// 6. // 6.hover on 'Premium' ,we can see that 'Premium' is getting 'PremiumModel', ie,a Second arg indicate returning type
-const PremiumModel = mongoose.model<PremiumDocument, PremiumModel>(
-	"Premium",
-	premiumSchema
+// 6. // 6.hover on 'Premium' ,we can see that 'Premium' is getting 'MembershipPlansModel', ie,a Second arg indicate returning type
+const MembershipPlansModel = mongoose.model<MembershipPlansDocument, MembershipPlansModel>(
+	"membershipPlan",
+	membershipPlansSchema
 );
 
-export { PremiumModel };
+export { MembershipPlansModel };

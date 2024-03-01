@@ -13,6 +13,7 @@ import NotFound from "./pages/Error/NotFound";
 import { useEffect } from "react";
 import { myFirebaseMessaging } from "./config/firebase";
 import { getToken } from "firebase/messaging";
+// import { ToastBar } from "react-hot-toast";
 
 export default function App() {
 	const isCandidateLoggedIn = useSelector(
@@ -46,6 +47,12 @@ export default function App() {
 	return (
 		<>
 			<ToastContainer className="mt-10" />
+			{/* <ToastContainer className="mt-10" /> */}
+			{/* <ToastBar
+  toast={t}
+  style={{}} // Overwrite styles
+  position="top-center" // Used to adapt the animation
+/> */}
 			<Routes>
 				<Route
 					path="/"

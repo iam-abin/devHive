@@ -10,9 +10,16 @@ import { BsFillBagDashFill } from "react-icons/bs";
 const JobDetails: React.FC<{
 	jobDetails: any;
 	handleEditJob?: any;
+	handleChangeJobCloseStatus?: any;
 	handleApplyJob?: any;
 	handleGoBack?: any;
-}> = ({ jobDetails, handleEditJob, handleApplyJob, handleGoBack }) => {
+}> = ({
+	jobDetails,
+	handleEditJob,
+	handleChangeJobCloseStatus,
+	handleApplyJob,
+	handleGoBack,
+}) => {
 	console.log("jobDetails in JobDetails component:", jobDetails);
 	const location = useLocation();
 	const navigate = useNavigate();
@@ -95,7 +102,6 @@ const JobDetails: React.FC<{
 													className="badge text-white bg-sky-700 p-4 flex flex-row gap-2"
 												>
 													<li>{skill}</li>
-													
 												</div>
 
 												// ===============
@@ -214,8 +220,40 @@ const JobDetails: React.FC<{
 						</p>
 					</div>
 
+					{isRecruiterPage &&
+						jobDetails?.recruiterId?.id === recruiterData.id && (
+							<div className="mb-4 flex items-center my-8 ">
+								<h2 className=" font-extrabold mb-2  w-3/5">
+									Change Job Opening Status
+								</h2>
+
+								<button
+									className={`${
+										jobDetails?.isClosed
+											? "bg-green-600"
+											: "bg-red-600"
+									} text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300`}
+									onClick={() => {
+										console.log(
+											"onclick handle submit jobDetails ",
+											jobDetails.id
+										);
+
+										return handleChangeJobCloseStatus(
+											jobDetails?.id
+										);
+									}}
+								>
+									{jobDetails?.isClosed
+										? "Open Jobe"
+										: "Close Jobe"}
+								</button>
+							</div>
+						)}
+
 					<div>
-						{(isRecruiterPage && (jobDetails?.recruiterId?.id === recruiterData.id)) ? (
+						{isRecruiterPage &&
+						jobDetails?.recruiterId?.id === recruiterData.id ? (
 							<button
 								className="bg-primary text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300"
 								onClick={() => {
