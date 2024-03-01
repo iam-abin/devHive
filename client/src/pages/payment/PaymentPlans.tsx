@@ -4,19 +4,26 @@ import Footer from "../../components/footer/Footer";
 import { createPaymentApi } from "../../axios/apiMethods/payment-service/candidate";
 import { RootState } from "../../redux/reducer/reducer";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { loadStripe } from "@stripe/stripe-js";
-import { setCandidate } from "../../redux/slice/candidateSlice/candidateDataSlice";
-import {
-	candidateAccessToken,
-	candidateRefreshToken,
-} from "../../config/localStorage";
 
 const PaymentPlans = () => {
 	const candidateData: any = useSelector(
 		(state: RootState) => state.candidateData.data
 	);
-	const dispatch = useDispatch();
+
+	const candidateProfileData: any = useSelector(
+		(state: RootState) => state.candidateProfile.candidateProfile
+	);
+	console.log(
+		"candidateProfileData?.isPremiumUser",
+		candidateProfileData?.isPremiumUser
+	);
+
+	if (!import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY) {
+		throw new Error("VITE_STRIPE_PUBLISHABLE_KEY must be defined");
+	}
+
 	const amount: number = 299; // Set your desired amount here or get it dynamically
 
 	// payment integration
@@ -38,40 +45,14 @@ const PaymentPlans = () => {
 				amount,
 			};
 			console.log("payment data", paymentData);
-			// 	const candidateAccessTokenn =
-			// 	localStorage.getItem(candidateAccessToken);
-			// const candidateRefreshTokenn = localStorage.getItem(
-			// 	candidateRefreshToken
-			// );
 			const payment = await createPaymentApi(paymentData);
 			console.log("payment done ", payment);
-			// maybe remove 222222222
-
-			// const candidateAccessTokenn =
-			// 	localStorage.getItem(candidateAccessToken);
-			// const candidateRefreshTokenn = localStorage.getItem(
-			// 	candidateRefreshToken
-			// );
-			// let response: any = {
-			// 	data: {
-			// 		...candidateData,
-			// 		isPremiumUser: true,
-			// 		candidateAccessToken: candidateAccessTokenn,
-			// 		candidateRefreshToken: candidateRefreshTokenn,
-			// 	},
-			// };
-
-			// dispatch(setCandidate(response));
-			// maybe remove 222222222
-			const result = stripePromise?.redirectToCheckout({
+			await stripePromise?.redirectToCheckout({
 				sessionId: payment?.data?.stripeId,
 			});
-			console.log("payment result", result);
 		} catch (error) {
 			console.log(error);
 		}
-
-		// return;
 	};
 
 	return (
@@ -132,11 +113,15 @@ const PaymentPlans = () => {
 								{/* ... (other list items) ... */}
 							</ul>
 							{/* ... (remaining content) ... */}
+							
 							<button
 								onClick={makePayment}
-								className="text-white  hover:bg-yellow-900 shadow-2xl shadow-cyan-500/50 bg-purple-900 focus:ring-4 focus:ring-primary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:text-white  dark:focus:ring-primary-900"
+								className="text-white hover:bg-yellow-900 shadow-2xl shadow-cyan-500/50 bg-purple-900 focus:ring-4 focus:ring-primary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:text-white dark:focus:ring-primary-900"
+								disabled={candidateProfileData?.isPremiumUser}
 							>
-								Get started
+								{candidateProfileData?.isPremiumUser
+									? "You already purchased"
+									: "Get started"}
 							</button>
 						</div>
 					</div>

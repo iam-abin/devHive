@@ -71,6 +71,19 @@ const ChatPageRecruiter = () => {
 					message.result,
 				]);
 			}
+
+			selectedChatRoomMessages.forEach((message: any) => {
+				console.log("???????????????? message.read", message.read);
+				console.log(
+					"???????????????? message.senderId!= recruiterData.id",
+					message.senderId != recruiterData.id
+				);
+				console.log(message);
+
+				if (!message.read && message.senderId != recruiterData.id) {
+					socket.emit("markAsRead", message.id);
+				}
+			});
 		});
 
 		socket.on("connect_error", (error) => {
@@ -98,6 +111,19 @@ const ChatPageRecruiter = () => {
 		setSelectedChatRoom(room);
 		const conversations = await getAConversationApi(room._id);
 		setSelectedChatRoomMessages(conversations.data);
+		selectedChatRoomMessages.forEach((message: any) => {
+			console.log("???????????????? message.read", message.read);
+			console.log(
+				"???????????????? message.senderId!= candidateData.id",
+				message.senderId != recruiterData.id
+			);
+			console.log(message);
+			
+			if (!message.read && message.senderId != recruiterData.id) {
+				console.log("////////////////////////////////////////////////////////");
+				socket.emit("markAsRead", message.id);
+			}
+		});
 	};
 
 	console.log("onlineUsers are --->>>", onlineUsers);
@@ -202,6 +228,7 @@ const ChatPageRecruiter = () => {
 													currentUserId={
 														recruiterData.id
 													}
+													// is={message.senderId === recruiterData.id}
 												/>
 											)
 										)

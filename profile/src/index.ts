@@ -4,6 +4,7 @@ import { UserCreatedEventConsumer } from "./frameworks/utils/kafka-events/consum
 import { UserUpdatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/user-updated-consumer";
 import { CompanyProfileUpdatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/company-profile-updated-consumer";
 import { kafkaClient } from "./config/kafka-connection";
+import { paymentCreatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/payment-created-consumer";
 
 const start = async () => {
 	console.log("Starting up profile....");
@@ -43,12 +44,14 @@ const start = async () => {
 	// it is used to listen to incomming message from kafka topics
 	const userCreatedEvent = new UserCreatedEventConsumer(kafkaClient);
 	const userUpdatedEvent = new UserUpdatedEventConsumer(kafkaClient);
+	const paymentCreatedEvent = new paymentCreatedEventConsumer(kafkaClient)
 	// const companyProfileUpdatedEvent = new CompanyProfileUpdatedEventConsumer(
 	// 	kafkaClient
 	// );
 	
 	await userCreatedEvent.subscribe();
 	await userUpdatedEvent.subscribe();
+	await paymentCreatedEvent.subscribe()
 	// await companyProfileUpdatedEvent.subscribe();
 
 	app.listen(3000, () => {
@@ -57,11 +60,13 @@ const start = async () => {
 		.on("error", async () => {
 			await userCreatedEvent.disconnect();
 			await userUpdatedEvent.disconnect();
+			await paymentCreatedEvent.disconnect()
 			// await companyProfileUpdatedEvent.disconnect();
 		})
 		.on("close", async () => {
 			await userCreatedEvent.disconnect();
 			await userUpdatedEvent.disconnect();
+			await paymentCreatedEvent.disconnect()
 			// await companyProfileUpdatedEvent.disconnect();
 		});
 };

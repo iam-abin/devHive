@@ -180,6 +180,16 @@ export const onSocketConnection = (io: Server, socket: Socket) => {
 		}
 	});
 
+	socket.on('markAsRead', async (messageId: string) => {
+		console.log("in socket read messageId ", messageId);
+
+		const result = await messageRepository.setReadMessage(messageId);
+		// await Message.updateOne({ _id: messageId }, { read: true });
+		console.log("in socket read result ", result);
+		
+		io.emit('messageRead', messageId);
+	 });
+
 	// when a user disconnect
 	socket.on("disconnect", () => {
 		console.log("a user disconnected");

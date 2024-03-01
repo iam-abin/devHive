@@ -99,6 +99,15 @@ export = {
 		return profile;
 	},
 
+	premiumPaymentDone: async (userId: string, data: any): Promise<any> => {
+		const user = await CandidateProfileModel.findOneAndUpdate(
+			{ _id: userId },
+			{ $set: { isPremiumUser: true } },
+			{ new: true }
+		);
+		return user;
+	},
+
 	// deleteSkills: async (id: string, skills: [string]): Promise<any> => {
 	// 	console.log("inside deleteSkills repository id", id);
 	// 	console.log("inside deleteSkills repository url", skills);

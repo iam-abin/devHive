@@ -5,7 +5,7 @@ import { handleMessage } from "../handleMessage";
 export class paymentCreatedEventConsumer extends KafkaConsumer<PREMIUM_PAYMENT_DONE_EVENT>{
     topic: TOPICS.PREMIUM_PAYMENT_TOPIC = TOPICS.PREMIUM_PAYMENT_TOPIC;
 
-    groupId: string = "auth-2";
+    groupId: string = "profile-4";
 
     constructor(client: Kafka){
         super(client);

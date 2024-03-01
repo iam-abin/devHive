@@ -19,20 +19,36 @@ export const handleMessage = (data: any, topic: string, message: any) => {
 			}
 
 			break;
-		
-			case "USER-UPDATED-TOPIC":
-				console.log("admin handleMessage UpdateUserTopic", data);
-	
-				if (data.userType === "candidate") {
-					candidateProfileRepository.updateCandidateProfile(data.userId,data);
-				} else if (data.userType === "recruiter") {
-					recruiterProfileRepository.updateRecruiterProfile(data.userId,data);
-				}
-				//  else {
-				// 	companyProfileRepository.createCompanyProfile(data);
-				// }
-	
-				break;
+
+		case "USER-UPDATED-TOPIC":
+			console.log("admin handleMessage UpdateUserTopic", data);
+
+			if (data.userType === "candidate") {
+				candidateProfileRepository.updateCandidateProfile(
+					data.userId,
+					data
+				);
+			} else if (data.userType === "recruiter") {
+				recruiterProfileRepository.updateRecruiterProfile(
+					data.userId,
+					data
+				);
+			}
+			//  else {
+			// 	companyProfileRepository.createCompanyProfile(data);
+			// }
+
+			break;
+
+		case "PREMIUM-PAYMENT-TOPIC":
+			console.log("handleMessage payment premium topic data", data);
+			candidateProfileRepository.premiumPaymentDone(
+				data.candidateId,
+				data
+			);
+
+			break;
+			
 		default:
 			break;
 	}

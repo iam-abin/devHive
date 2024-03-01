@@ -1,12 +1,32 @@
-import React from "react";
+import React, { useEffect } from "react";
 import TopNavBarCandidate from "../../components/navBar/TopNavBarCandidate";
 import Footer from "../../components/footer/Footer";
 import { Link, useLocation } from "react-router-dom";
 import CheckmarkSvg from "../../assets/payment/wired-flat-37-approve-checked-simple (3).gif";
+import { candidateGetProfileApi } from "../../axios/apiMethods/profile-service/candidate";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../redux/reducer/reducer";
+import { setCandidateProfileDetails } from "../../redux/slice/candidateSlice/candidateProfileSlice";
 
 const PaymentSuccessFul: React.FC = () => {
 	const location = useLocation();
+	const dispatch = useDispatch();
+	const candidateData: any = useSelector(
+		(state: RootState) => state.candidateData.data
+	);
 	const candidateUrl = location.pathname.includes("candidate");
+	useEffect(() => {
+		(async () => {
+			let candidateProfileData = await candidateGetProfileApi(
+				candidateData?.id
+			);
+			console.log(
+				"candidateProfileData to store to redux ",
+				candidateProfileData.data
+			);
+			dispatch(setCandidateProfileDetails(candidateProfileData?.data));
+		})();
+	}, []);
 	return (
 		<>
 			{candidateUrl && <TopNavBarCandidate />}

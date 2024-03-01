@@ -8,7 +8,6 @@ interface UserAttributes {
 	phone: number;
 	password: string;
 	userType: string;
-	// isPremiumUser: boolean
 	otp: number
 	// expiry: Date
 	// isActive: boolean;
@@ -21,7 +20,7 @@ interface UserDocument extends mongoose.Document {
 	phone: number;
 	password: string;
 	userType: string;
-	isPremiumUser: boolean
+	
 	isVarified:boolean;
 	isActive: boolean;
 	otp?: number

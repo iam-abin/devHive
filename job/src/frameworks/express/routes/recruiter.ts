@@ -23,6 +23,7 @@ export const recruiterRouter = (dependencies: DependenciesData) => {
 		viewJobApplicationsController,
 		viewJobApplicationController,
 		changeJobApplicationStatusController,
+		changeJobCloseStatusController,
 	} = recruiterJobControllers(dependencies);
 
 	router.get("/all-jobs/:page", viewAllJobsController);
@@ -46,6 +47,8 @@ export const recruiterRouter = (dependencies: DependenciesData) => {
 	router.get("/job-application/:jobApplicationId", viewJobApplicationController);
 
 	router.post("/change-application-status/:jobApplicationId", changeJobApplicationStatusController);
+	
+	router.post("/change-close-status/:jobId", changeJobCloseStatusController);
 	
 	return router;
 };

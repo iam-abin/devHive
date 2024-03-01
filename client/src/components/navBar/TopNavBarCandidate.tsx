@@ -10,6 +10,8 @@ import { IoMdNotifications } from "react-icons/io";
 import { useEffect, useState } from "react";
 import { clearCandidateProfileDetails, setCandidateProfileDetails } from "../../redux/slice/candidateSlice/candidateProfileSlice";
 import { candidateGetProfileApi } from "../../axios/apiMethods/profile-service/candidate";
+import { FaCrown } from "react-icons/fa";
+
 
 const TopNavBarCandidate = () => {
 	const dispatch = useDispatch();
@@ -108,6 +110,8 @@ const TopNavBarCandidate = () => {
 					>
 						DevHive
 					</a>
+					{candidateProfile?.isPremiumUser&& <FaCrown className="text-yellow-600"/>}
+					
 				</div>
 				<div
 					className="relative mr-3 cursor-pointer"

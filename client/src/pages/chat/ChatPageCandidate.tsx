@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 // import { FaSearch } from "react-icons/fa";
+import { TiTick } from "react-icons/ti";
 
 import ChatImage from "../../assets/chat/double-chat-bubble-icon.svg";
 import TopNavBarCandidate from "../../components/navBar/TopNavBarCandidate";
@@ -12,7 +13,6 @@ import ChatInputBox from "../../components/chat/ChatInputBox";
 import { getAConversationApi } from "../../axios/apiMethods/chat-service/chat";
 import { RootState } from "../../redux/reducer/reducer";
 import socket from "../../config/socket";
-
 
 const ChatPageCandidate = () => {
 	const candidateData: any = useSelector(
@@ -75,6 +75,21 @@ const ChatPageCandidate = () => {
 					...selectedChatRoomMessages,
 					message.result,
 				]);
+
+				console.log("/////////////");
+
+				selectedChatRoomMessages.forEach((message: any) => {
+					console.log("???????????????? message.read", message.read);
+					console.log(
+						"???????????????? message.senderId!= candidateData.id",
+						message.senderId != candidateData.id
+					);
+					console.log(message);
+
+					if (!message.read && message.senderId != candidateData.id) {
+						socket.emit("markAsRead", message.id);
+					}
+				});
 			}
 		});
 
@@ -103,6 +118,20 @@ const ChatPageCandidate = () => {
 		setSelectedChatRoom(room);
 		const conversations = await getAConversationApi(room._id);
 		setSelectedChatRoomMessages(conversations.data);
+		selectedChatRoomMessages.forEach((message: any) => {
+			console.log("???????????????? message.read", message.read);
+			console.log(
+				"???????????????? message.senderId!= candidateData.id",
+				message.senderId != candidateData.id
+			);
+			console.log(message);
+
+			if (!message.read && message.senderId != candidateData.id) {
+				console.log("////////////////////////////////////////////////////////");
+
+				socket.emit("markAsRead", message.id);
+			}
+		});
 	};
 
 	console.log("onlineUsers are --->>>", onlineUsers);
@@ -115,19 +144,19 @@ const ChatPageCandidate = () => {
 		);
 
 		for (let i = 0; i < onlineUsers.length; i++) {
-			if(onlineUsers[i]?.userId == otherValue[0]?._id){
-				return true
+			if (onlineUsers[i]?.userId == otherValue[0]?._id) {
+				return true;
 			}
 		}
-		return false
+		return false;
 	};
 
 	const getReceiver = (chatRoom: any) => {
 		const otherUser = chatRoom.users.filter(
 			(value: any) => value._id !== candidateData.id
 		);
-		
-		return otherUser
+
+		return otherUser;
 	};
 
 	return (
@@ -182,7 +211,9 @@ const ChatPageCandidate = () => {
 								<div>
 									<ChatBoxTopBar
 										// chatRoom={selectedChatRoom}
-										isOnline={isUserOnline(selectedChatRoom)}
+										isOnline={isUserOnline(
+											selectedChatRoom
+										)}
 										receiver={getReceiver(selectedChatRoom)}
 									/>
 								</div>
@@ -197,8 +228,10 @@ const ChatPageCandidate = () => {
 									) : (
 										selectedChatRoomMessages.map(
 											(message: any, index: number) => (
-												<Message 
-												candidateImage = {candidateProfile.profile_image}
+												<Message
+													candidateImage={
+														candidateProfile.profile_image
+													}
 													key={index}
 													message={message}
 													currentUserId={

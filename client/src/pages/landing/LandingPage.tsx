@@ -23,10 +23,17 @@ import { setTotalNumberOfPages } from "../../redux/slice/job/filteredJobsSlice";
 import { setCurrentPage } from "../../redux/slice/job/filteredJobsSlice";
 import TopNavBarCandidate from "../../components/navBar/TopNavBarCandidate";
 import Footer from "../../components/footer/Footer";
+import { getACandidateProfileApi } from "../../axios/apiMethods/profile-service/recruiter";
+import { candidateGetProfileApi } from "../../axios/apiMethods/profile-service/candidate";
+import { setCandidateProfileDetails } from "../../redux/slice/candidateSlice/candidateProfileSlice";
 
 function LandingPage() {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+
+	const location = useLocation();
+	const isRecruiterUrl = location.pathname.includes("recruiter");
+	const isCandidateUrl = location.pathname.includes("candidate");
 
 	const candidate: any = useSelector(
 		(state: RootState) => state.candidateData.data
@@ -52,6 +59,18 @@ function LandingPage() {
 		// dispatch(setLoaded());
 		return allJobs;
 	};
+
+	useEffect(() => {
+		(async () => {
+			
+			let id = candidate?.id;
+			let candidateProfile;
+			if (isCandidateUrl && candidate) {
+				candidateProfile = await candidateGetProfileApi( id );
+				dispatch(setCandidateProfileDetails(candidateProfile?.data))
+			}
+		})();
+	}, []);
 
 	useEffect(() => {
 		(async () => {
@@ -94,9 +113,7 @@ function LandingPage() {
 		dispatch(setCurrentPage({ currentPage: selected + 1 }));
 	};
 
-	const location = useLocation();
-	const isRecruiterUrl = location.pathname.includes("recruiter");
-	const isCandidateUrl = location.pathname.includes("candidate");
+	
 
 	const handleViewJob = async (jobId: string) => {
 		console.log("id handle view ", jobId);

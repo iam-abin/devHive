@@ -34,6 +34,12 @@ function CandidateProfileEditPage() {
 	const candidateData: any = useSelector(
 		(state: RootState) => state.candidateData.data
 	);
+	const candidateProfileData: any = useSelector(
+		(state: RootState) => state.candidateProfile.candidateProfile
+	);
+
+	console.log("candidateProfileData >>>>>>>>",candidateProfileData);
+	
 	const { id } = candidateData;
 
 	useEffect(() => {
@@ -72,19 +78,19 @@ function CandidateProfileEditPage() {
 	};
 
 	const initialProfileValues: ProfileFormData = {
-		name: profileDetails?.name ?? "",
-		email: profileDetails?.email ?? "",
-		phone: profileDetails?.phone ?? 0,
-		isActive: profileDetails?.isActive ?? false,
-		gender: profileDetails?.gender ?? "",
-		currentLocation: profileDetails?.currentLocation ?? "",
-		address: profileDetails?.address ?? "",
-		keySkills: profileDetails?.keySkills ?? [],
-		profile_image: profileDetails?.profile_image ?? "",
-		about: profileDetails?.about ?? "",
-		resume: profileDetails?.resume ?? "",
-		experience: profileDetails?.experience ?? "",
-		userId: profileDetails?.id ?? "",
+		name: candidateProfileData?.name ?? "",
+		email: candidateProfileData?.email ?? "",
+		phone: candidateProfileData?.phone ?? 0,
+		isActive: candidateProfileData?.isActive ?? false,
+		gender: candidateProfileData?.gender ?? "",
+		currentLocation: candidateProfileData?.currentLocation ?? "",
+		address: candidateProfileData?.address ?? "",
+		keySkills: candidateProfileData?.keySkills ?? [],
+		profile_image: candidateProfileData?.profile_image ?? "",
+		about: candidateProfileData?.about ?? "",
+		resume: candidateProfileData?.resume ?? "",
+		experience: candidateProfileData?.experience ?? "",
+		userId: candidateProfileData?.id ?? "",
 	};
 
 	return (

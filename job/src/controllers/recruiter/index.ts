@@ -5,6 +5,7 @@ import createdJobsByRecruiterController from "./created-jobs-by-recruiter.contro
 import viewJobApplicationsController from "./view-job-applications.controller";
 import viewJobApplicationController from "./view-job-application.controller";
 import changeJobApplicationStatusController from "./change-job-application-status.controller";
+import changeJobCloseStatusController from "./change-job-close-status.controller";
 
 import { DependenciesData } from "../../frameworks/types/dependencyInterface";
 
@@ -17,6 +18,7 @@ export = (dependencies: DependenciesData) => {
 		viewJobApplicationsController: viewJobApplicationsController(dependencies),
 		viewJobApplicationController: viewJobApplicationController(dependencies),
 		changeJobApplicationStatusController: changeJobApplicationStatusController(dependencies),
+		changeJobCloseStatusController: changeJobCloseStatusController(dependencies),
 
 	};
 };

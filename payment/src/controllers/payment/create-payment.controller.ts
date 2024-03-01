@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { DependenciesData } from "../../frameworks/types/dependencyInterface";
-import { stripeInstance } from "../../config/stripe";
 import { PremiumPaymentDonePublisher } from "../../frameworks/utils/kafka-events/publishers/payment-done-publisher";
 import { kafkaClient } from "../../config/kafka-connection";
 
@@ -10,7 +9,6 @@ export = (dependencies: DependenciesData) => {
 	} = dependencies;
 
 	return async (req: Request, res: Response) => {
-		// const {chatRoomId} = req.body
 		const { amount } = req.body;
 		let candidateId = req.currentUserCandidate!.id;
 

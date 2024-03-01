@@ -11,6 +11,11 @@ interface MessageDocument extends mongoose.Document {
 	senderId: mongoose.Schema.Types.ObjectId;
 	roomId: mongoose.Schema.Types.ObjectId;
 	textMessage: string;
+	read: boolean
+	// image: {
+    //     type: String,
+    //     trim: true,
+    // }
 	createdAt: string;
 	updatedAt: string;
 }
@@ -35,6 +40,7 @@ const messageSchema = new mongoose.Schema(
 			type: String,
 			trim: true,
 		},
+		read: { type: Boolean, default: false }
 	},
 	{
 		// to reformat id and remove password,__v from response when converting to json (we can also use other approaches)
