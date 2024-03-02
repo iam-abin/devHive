@@ -1,6 +1,11 @@
-import { createPaymentUseCase } from "./payment";
+import { createPaymentUseCase, getAllPaymentsUseCase } from "./payment";
+
+import { getAllPremiumPlansCandidateUseCase } from "./premium";
 
 
 export default {
 	createPaymentUseCase,
+	getAllPaymentsUseCase,
+
+	getAllPremiumPlansCandidateUseCase,
 };

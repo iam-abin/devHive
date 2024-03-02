@@ -1,7 +1,7 @@
-import premiumRepository from "./premium.repository";
+import membershipRepository from "./premium.repository";
 import paymentRepository from "./payment.repository"
 
 export = {
 	paymentRepository,
-	premiumRepository,
+	membershipRepository,
 };

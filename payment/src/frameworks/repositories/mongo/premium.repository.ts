@@ -1,24 +1,29 @@
 import schemas from "../../database/mongo/models";
 
-const { PremiumModel } = schemas;
+const { MembershipPlansModel } = schemas;
 
 export = {
 
-	createPremium: async (data: any)=>{
+	createMembershipPlan: async (data: any)=>{
 		console.log("premium inside create premium ",data);
-		const premium =  PremiumModel.buildPremium(data);
+		const premium =  MembershipPlansModel.buildMembershipPlan(data);
 
 		console.log("premium inside create premium ",premium);
 		return await premium.save();
 	},
 
-	getPremiums: async (id: string) => {
-		const chatMessages = await PremiumModel.findById(id);
+	getMembershipPlan: async (id: string) => {
+		const chatMessages = await MembershipPlansModel.findById(id);
 		return chatMessages;
 	},
 
-	updatePremium: async (id: string, status: object) => {
-		const updatedJob = await PremiumModel.findOneAndUpdate(
+	getAllMembershipPlans: async () => {
+		const membershipPlans = await MembershipPlansModel.find({});
+		return membershipPlans;
+	},
+
+	updateMembershipPlan: async (id: string, status: object) => {
+		const updatedJob = await MembershipPlansModel.findOneAndUpdate(
 			{ _id: id },
 			{ $set: status },
 			{ new: true }

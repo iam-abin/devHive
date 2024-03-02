@@ -3,14 +3,14 @@ import { DependenciesData } from "../../frameworks/types/dependencyInterface";
 
 export = (dependencies: DependenciesData) => {
 	const {
-		useCases: { getAllMemberShipPlansUseCase },
+		useCases: { getAllMembershipPlansUseCase },
 	} = dependencies;
 
 	return async (req: Request, res: Response) => {
 		console.log("in getAll memberShipPlans controller 1: ");
 		console.log("req.params.page ",req.params.page);
 
-		const memberShipPlans = await getAllMemberShipPlansUseCase(dependencies).execute();
+		const memberShipPlans = await getAllMembershipPlansUseCase(dependencies).execute();
 
 		console.log("in getAll memberShipPlans controller 2: ", memberShipPlans);
 

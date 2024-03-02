@@ -27,8 +27,8 @@ import { getAllPaymentsUseCase } from "./payment";
 import {
 	updateMembershipPlanUseCase,
 	blockUnblockMembershipPlanUseCase,
-	createMembershipPlanUseCase,
-	getAllMembershipPlanUseCase,
+	createMemberShipPlanUseCase,
+	getAllMembershipPlansUseCase,
 	getMembershipPlanByIdUseCase,
 } from "./membership";
 
@@ -53,8 +53,8 @@ export default {
 
 	updateMembershipPlanUseCase,
 	blockUnblockMembershipPlanUseCase,
-	createMembershipPlanUseCase,
-	getAllMembershipPlanUseCase,
+	createMemberShipPlanUseCase,
+	getAllMembershipPlansUseCase,
 	getMembershipPlanByIdUseCase,
 
 	getAllPaymentsUseCase,

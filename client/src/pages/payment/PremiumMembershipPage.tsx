@@ -12,6 +12,7 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
+import { createMembershipPlanApi, getAllMembershipPlansApi } from "../../axios/apiMethods/premium-plans-service/admin";
 
 interface RecruiterInterface {
 	id: string;
@@ -24,21 +25,23 @@ interface RecruiterInterface {
 
 function PremiumMembershipPage() {
 	const navigate = useNavigate();
-	const [recruitersData, setRecruitersData] = useState<RecruiterInterface[]>(
+	const [membershipPlansData, setMembershipPlansData] = useState<RecruiterInterface[]>(
 		[]
 	);
 
 	useEffect(() => {
 		(async () => {
 			try {
-				const recruiters = await getAllRecruitersApi();
+				const recruiters = await getAllMembershipPlansApi();
 				console.log("in useEffect", recruiters.data);
-				setRecruitersData(recruiters.data);
+				setMembershipPlansData(recruiters.data);
 			} catch (error: any) {
 				console.error(error);
 			}
 		})();
 	}, []);
+
+	
 
 	const viewProfileDetails = async (userId: string) => {
 		console.log("in viewProfileDetails fn ", userId);
@@ -63,7 +66,7 @@ function PremiumMembershipPage() {
 					notify(updatedRecruiter.message, "success");
 				}
 
-				const recruiters = recruitersData.map((recruiter) => {
+				const recruiters = membershipPlansData.map((recruiter) => {
 					if (recruiter.id === userId) {
 						return {
 							...recruiter,
@@ -74,7 +77,7 @@ function PremiumMembershipPage() {
 					return recruiter;
 				});
 
-				setRecruitersData(recruiters);
+				setMembershipPlansData(recruiters);
 			}
 		});
 	};
@@ -87,55 +90,55 @@ function PremiumMembershipPage() {
 		},
 		{
 			name: "Price",
-			selector: (row: { phone: number }) => row.phone,
+			selector: (row: { price: number }) => row.price,
 			sortable: true,
 		},
 
-		{
-			name: "View",
-			cell: (row: { id: string }) => (
-				<button
-					onClick={() => {
-						viewProfileDetails(row.id);
-					}}
-					className="btn btn-info btn-sm w-24"
-				>
-					view details
-				</button>
-			),
-		},
+		// {
+		// 	name: "View",
+		// 	cell: (row: { id: string }) => (
+		// 		<button
+		// 			onClick={() => {
+		// 				viewProfileDetails(row.id);
+		// 			}}
+		// 			className="btn btn-info btn-sm w-24"
+		// 		>
+		// 			view details
+		// 		</button>
+		// 	),
+		// },
 
-		{
-			name: "Status",
-			cell: (row: { isActive: string }) => (
-				<div
-					className={`badge ${
-						row.isActive
-							? "badge badge-success gap-2 w-20"
-							: "badge badge-error gap-2 w-20"
-					} `}
-				>
-					{row.isActive ? "active" : "inActive"}
-				</div>
-			),
-		},
-		{
-			name: "Action",
-			cell: (row: { id: string; isActive: boolean }) => (
-				<button
-					onClick={() => {
-						handleBlockUnblock(row.id, row.isActive);
-					}}
-					className={`btn ${
-						row.isActive
-							? "btn-success btn-sm w-24 bg-green-600"
-							: "btn btn-error btn-sm w-24 bg-red-600"
-					} `}
-				>
-					{row.isActive ? "Block" : "unBlock"}
-				</button>
-			),
-		},
+		// {
+		// 	name: "Status",
+		// 	cell: (row: { isActive: string }) => (
+		// 		<div
+		// 			className={`badge ${
+		// 				row.isActive
+		// 					? "badge badge-success gap-2 w-20"
+		// 					: "badge badge-error gap-2 w-20"
+		// 			} `}
+		// 		>
+		// 			{row.isActive ? "active" : "inActive"}
+		// 		</div>
+		// 	),
+		// },
+		// {
+		// 	name: "Action",
+		// 	cell: (row: { id: string; isActive: boolean }) => (
+		// 		<button
+		// 			onClick={() => {
+		// 				handleBlockUnblock(row.id, row.isActive);
+		// 			}}
+		// 			className={`btn ${
+		// 				row.isActive
+		// 					? "btn-success btn-sm w-24 bg-green-600"
+		// 					: "btn btn-error btn-sm w-24 bg-red-600"
+		// 			} `}
+		// 		>
+		// 			{row.isActive ? "Block" : "unBlock"}
+		// 		</button>
+		// 	),
+		// },
 	];
 
 	const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -145,7 +148,26 @@ function PremiumMembershipPage() {
 	const handleModalClose = () => setModalIsOpen(false);
 
 	// Handle creating premium membership plan
-	const handleCreatePremium = () => {
+	const handleCreatePremium = async(values: any) => {
+		let arr: Array<string> = [];
+		
+		// Using map instead of forEach to create a new array
+		console.log(values.features);
+		console.log(typeof values.features);
+		
+		values.features = values.features.split(',').map((element: string) => {
+		  arr.push(element.trim());
+		  return element;
+		});
+		const membershipPlans = await createMembershipPlanApi(values);
+		if(membershipPlans){
+			notify(membershipPlans.message, "success");
+		}
+		setMembershipPlansData([...membershipPlansData,membershipPlans.data]);
+
+		console.log("after crate premium data", membershipPlans.data);
+		
+
 		// Add logic to create premium membership plan
 		// You can use state management (e.g., Redux) or send an API request to the server
 		// to create the plan and update the list
@@ -155,7 +177,7 @@ function PremiumMembershipPage() {
 	// Formik initialValues
 	const initialValues = {
 		name: "",
-		price: "",
+		price: 0,
 		description: "",
 		features: "",
 	};
@@ -194,7 +216,7 @@ function PremiumMembershipPage() {
 						validationSchema={validationSchema}
 						onSubmit={(values) => {
 							console.log(values);
-							handleCreatePremium();
+							handleCreatePremium(values);
 						}}
 					>
 						<Form>
@@ -281,7 +303,7 @@ function PremiumMembershipPage() {
 					</Formik>
 				</div>
 			</Modal>
-			<TableComponent columns={columns} data={recruitersData} />
+			<TableComponent columns={columns} data={membershipPlansData} />
 		</div>
 	);
 }

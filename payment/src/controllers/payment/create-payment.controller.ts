@@ -23,7 +23,8 @@ export = (dependencies: DependenciesData) => {
 
 		const paymentCreatedEvent = new PremiumPaymentDonePublisher(kafkaClient);
 		await paymentCreatedEvent.publish({
-			candidateId
+			candidateId,
+			membershipPlanId: ""
 		})
 
 		res.status(200).json({

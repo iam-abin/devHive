@@ -6,7 +6,7 @@ export = (dependencies: any) => {
 	}
 
 	const execute = () => {
-		return membershipRepository.getAllJobs();
+		return membershipRepository.getAllMembershipPlans();
 	};
 
 	return { execute };

@@ -1,8 +1,9 @@
 import mongoose from "mongoose";
 // 1. An interface that describes the properties ,that are requried to create a new Chat
 interface MembershipPlansAttributes {
+	membershipPlanId: string;
 	name: String;
-	features: [string];
+	features: Array<string>;
 	description: string;
 	price: number;
 	isActive: boolean;
@@ -57,12 +58,13 @@ const membershipPlansSchema = new mongoose.Schema(
 
 // 4. An interface that describes the properties ,that a user model has
 interface MembershipPlansModel extends mongoose.Model<MembershipPlansDocument> {
-	buildPremium(attributes: MembershipPlansAttributes): MembershipPlansDocument;
+	buildMembershipPlan(attributes: MembershipPlansAttributes): MembershipPlansDocument;
 }
 
 // 5.In Mongoose, you can also add custom functions to a model using statics.
-membershipPlansSchema.statics.buildPremium = (attributes: MembershipPlansAttributes) => {
+membershipPlansSchema.statics.buildMembershipPlan = (attributes: MembershipPlansAttributes) => {
 	return new MembershipPlansModel({
+		_id: attributes.membershipPlanId,
 		name: attributes.name,
 		features: attributes.features,
 		description: attributes.description,

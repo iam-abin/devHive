@@ -1,6 +1,6 @@
-import { Job } from "../../entities/job";
+import { MembershipPlan } from "../../entities/membership-plan";
 import { DependenciesData } from "../../frameworks/types/dependencyInterface";
-import { JobInterface } from "../../frameworks/types/job-interface";
+import { MembershipPlanData } from "../../frameworks/types/membership-plan-interface";
 
 export = (dependencies: DependenciesData) => {
 	const {
@@ -11,12 +11,14 @@ export = (dependencies: DependenciesData) => {
 		throw new Error("membershipRepository should exist in dependencies");
 	}
 
-	const execute = async (jobData: JobInterface) => {
-		const job = new Job(jobData);
-		console.log("in execute ", job);
+	const execute = async (premiumPlanData: MembershipPlanData) => {
 		
-		return await membershipRepository.createJob(job);
-	};
+	  
+		const membershipPlan = new MembershipPlan(premiumPlanData);
+		console.log("in execute ", membershipPlan);
+		
+		return await membershipRepository.createMembershipPlan(membershipPlan);
+	  };
 
 	return { execute };
 };

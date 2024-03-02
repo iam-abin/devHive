@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 // 1. An interface that describes the properties ,that are requried to create a new Chat
 interface MembershipPlansAttributes {
 	name: String;
-	features: [string];
+	features: Array<string>;
 	description: string;
 	price: number;
 }

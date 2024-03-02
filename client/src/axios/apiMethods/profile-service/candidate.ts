@@ -51,7 +51,7 @@ export const deleteResumeApi = async (candidateId: string): Promise<any> => {
     return response.data;
 };
 
-export const updateCandidateSkillsProfileApi = async (userId: string,skills: [string]): Promise<any> => {
+export const updateCandidateSkillsProfileApi = async (userId: string,skills: Array<string>): Promise<any> => {
     console.log("updateCandidateSkillsProfileApi skills is    ..//////", skills);
     let data = {
         id: userId,

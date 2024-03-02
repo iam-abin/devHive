@@ -1,5 +1,5 @@
-import { KafkaPublisher, TOPICS, PREMIUM_PAYMENT_DONE_EVENT } from "@abijobportal/common";
+import { KafkaPublisher, TOPICS, PAYMENT_CREATED_EVENT } from "@abijobportal/common";
 
-export class PremiumPaymentDonePublisher extends KafkaPublisher<PREMIUM_PAYMENT_DONE_EVENT>{
-    topic: TOPICS.PREMIUM_PAYMENT_TOPIC = TOPICS.PREMIUM_PAYMENT_TOPIC;
+export class PremiumPaymentDonePublisher extends KafkaPublisher<PAYMENT_CREATED_EVENT>{
+    topic: TOPICS.PAYMENT_CREATED_TOPIC = TOPICS.PAYMENT_CREATED_TOPIC;
 }

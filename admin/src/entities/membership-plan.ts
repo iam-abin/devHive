@@ -2,7 +2,7 @@ import { MembershipPlanData } from "../frameworks/types/membership-plan-interfac
 
 export class MembershipPlan {
 	name: String;
-	features: [string];
+	features: Array<string>;
 	description: string;
 	price: number;
 

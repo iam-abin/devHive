@@ -3,6 +3,8 @@ const RECRUITER_ADMIN_URL = `admin/recruiter`; // recruiter management in admin 
 const CANDIDATE_ADMIN_URL = `admin/candidate`;
 const COMPANY_ADMIN_URL = `admin/company`;
 const DASHBOARD_ADMIN_URL = `admin/dashboard`;
+const ADMIN_MEMBERSHIP_PLANS_URL = `admin/membership`;
+const ADMIN_PAYMENT_URL = `admin/payment`
 
 const adminApiUrlConfig = {
 	// jobs
@@ -31,8 +33,22 @@ const adminApiUrlConfig = {
 		`${COMPANY_ADMIN_URL}/company/blockUnblock/${companyId}`,
 	// viewCompanyProfileDetailsUrl: (companyId: string) => `${COMPANY_ADMIN_URL}/viewProfile/${companyId}`,
 
+	// Premium plans
+	getAllMembershipPlansUrl: `${ADMIN_MEMBERSHIP_PLANS_URL}/view-membership-plans`,
+	createMembershipPlanUrl: `${ADMIN_MEMBERSHIP_PLANS_URL}/create-membership-plan`,
+	updateMembershipPlanUrl: `${ADMIN_MEMBERSHIP_PLANS_URL}/update-membership-plan`,
+	getAMembershipPlanUrl: (membershipPlanId: string) =>
+		`${ADMIN_MEMBERSHIP_PLANS_URL}/view-membership-plan/${membershipPlanId}`,
+	blockUnblockMembershipPlanUrl: (membershipPlanId: string) =>
+	`${ADMIN_MEMBERSHIP_PLANS_URL}/block-unblock-membership-plan/${membershipPlanId}`,
+
+	// Payment
+	getAllPaymentsUrl: `${ADMIN_PAYMENT_URL}/view-payments`,
+
 	// dashboard
 	getAllCardsDetailsUrl: `${DASHBOARD_ADMIN_URL}/data`,
 };
+
+
 
 export default adminApiUrlConfig;

@@ -1,6 +1,6 @@
 export interface MembershipPlanData {
 	name: String;
-	features: [string];
+	features: Array<string>;
 	description: string;
 	price: number;
 	isActive?: boolean;

@@ -61,7 +61,7 @@ export = {
 		return jobs;
 	},
 
-	getAllJobsDistinctValues: async (fields: [string]): Promise<any> => {
+	getAllJobsDistinctValues: async (fields: Array<string>): Promise<any> => {
 		// const jobs = await JobModel.aggregate([{ $sort: { createdAt: 1 } }]);
 		// const fields = ['title', 'company_location', 'employment_type'];
 
