@@ -3,12 +3,12 @@ import schemas from "../../database/mongo/models";
 const { MessageModel, ChatRoomModel } = schemas;
 
 export = {
-	createChatRoom: async (sender: string, recipient: string) => {
-		let arr = [];
-		arr.push(sender);
-		arr.push(recipient);
-		const chatRoom = ChatRoomModel.buildChatRoom(arr);
-		console.log("in applyJob repository");
+	createChatRoom: async (chatRoomData: any) => {
+		// let arr = [];
+		// arr.push(sender);
+		// arr.push(recipient);
+		const chatRoom = ChatRoomModel.buildChatRoom(chatRoomData);
+		console.log("in createChatRoom repository");
 
 		return await chatRoom.save();
 	},
@@ -31,11 +31,7 @@ export = {
 		const chatRooms = await ChatRoomModel.find({
 			users: { $elemMatch: { $eq: userId } },
 		}).populate('users').lean();
-
-		// for(let i in chatRooms){
-		// 	console.log(i.users[0]);
-			
-		// }
+		
 		console.log("in getAllChatRoomsByUserId repository ", chatRooms);
 
 		return chatRooms;

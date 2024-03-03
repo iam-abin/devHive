@@ -1,6 +1,5 @@
 import express from "express";
 
-import { requireAuthCandidate } from "@abijobportal/common";
 import { otpControllers } from "../../../controllers";
 import { DependenciesData } from "../../types/dependencyInterface";
 

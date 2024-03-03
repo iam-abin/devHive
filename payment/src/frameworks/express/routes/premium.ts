@@ -14,8 +14,6 @@ export const premiumRouter = (dependencies: DependenciesData) => {
 
 	const {
 		// getAllChatRoomsByUserIDController,
-		createPremiumPlanController,
-		getAllPremiumPlansByAdminController,
 		getAllPremiumPlansByCandidateController,
 	} = premiumControllers(dependencies);
 	
@@ -26,20 +24,8 @@ export const premiumRouter = (dependencies: DependenciesData) => {
 		getAllPremiumPlansByCandidateController  
 	);
 
-	router.use(currentUserAdminCheck);
-	router.use(requireAuthAdmin);
-
-	router.post(
-		"/create-premium-plan",
-		requireAuthAdmin,
-		createPremiumPlanController  
-	);
-
-	router.get(
-		"/get-all-premium-plans-admin",
-		requireAuthAdmin,
-		getAllPremiumPlansByAdminController  
-	);
+	// router.use(currentUserAdminCheck);
+	// router.use(requireAuthAdmin);
 
 	return router;
 };

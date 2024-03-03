@@ -1,17 +1,15 @@
 import schemas from "../../database/mongo/models";
 
-const { MembershipPlansModel } = schemas;
+const { PaymentModel } = schemas;
 
 export = {
 	
-	createMembershipPlan: async (membershipPlanData: any): Promise<any> => {
-		console.log(
-			"inside createMembershipPlan fn in admin service",
-			membershipPlanData
-		);
+	createPayment: async ({candidateId,  stripeId, membershipPlanId}:{candidateId: string,  stripeId: string, membershipPlanId: string} ) => {
+		const payment = PaymentModel.buildPayment({candidateId,
+			membershipPlanId,
+			stripeId});
+		console.log("inside create payment repo", payment);
 
-		const membershipPlanObject =
-			MembershipPlansModel.buildMembershipPlan(membershipPlanData);
-		return await membershipPlanObject.save();
+		return await payment.save();
 	},
 };

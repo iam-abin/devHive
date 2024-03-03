@@ -22,10 +22,6 @@ interface JobAttributes {
 interface JobDocument extends mongoose.Document {
 	title: string;
 	recruiterId: mongoose.Schema.Types.ObjectId;
-	// recruiterId: {
-	// 	type: mongoose.Schema.Types.ObjectId,
-	// 	ref: 'Users'
-	// }
 	company_name: string;
 	company_location: string;
 	// companyId: mongoose.Schema.Types.ObjectId;
@@ -34,7 +30,6 @@ interface JobDocument extends mongoose.Document {
 	available_position?: string;
 	experience_required?: string;
 	education_required?: string;
-	// location?: string;
 	employment_type?: string;
 	salary_min?: number;
 	salary_max?: number;
@@ -61,7 +56,6 @@ const jobSchema = new mongoose.Schema(
 		available_position: String,
 		experience_required: String,
 		education_required: String,
-		// location: String,
 		employment_type: {
 			type: String,
 			enum: ["full-time", "part-time", "internship", "contract"],
@@ -103,8 +97,7 @@ interface JobModel extends mongoose.Model<JobDocument> {
 }
 
 jobSchema.statics.buildJob = (attributes: JobAttributes) => {
-	console.log("in build job attributes", attributes);
-
+	
 	if (
 		attributes.recruiterId &&
 		!mongoose.Types.ObjectId.isValid(attributes.recruiterId)
@@ -112,17 +105,11 @@ jobSchema.statics.buildJob = (attributes: JobAttributes) => {
 		throw new Error("Invalid ObjectId format for recruiterId");
 	}
 
-	// if (attributes.companyId && !mongoose.Types.ObjectId.isValid(attributes.companyId)) {
-	//     throw new Error("Invalid ObjectId format for companyId");
-	// }
-
 	// Create ObjectId instances or set to null if not provided
 	const recruiterId = attributes.recruiterId
 		? new mongoose.Types.ObjectId(attributes.recruiterId)
 		: null;
-	//   const companyId = attributes.companyId ? new mongoose.Types.ObjectId(attributes.companyId) : null;
 
-	//   return new JobModel( {...attributes, recruiterId, companyId } );
 	return new JobModel({ ...attributes, recruiterId });
 };
 

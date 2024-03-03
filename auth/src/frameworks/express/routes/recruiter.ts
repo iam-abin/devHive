@@ -18,7 +18,7 @@ export const recruiterRouter = (dependencies: DependenciesData) => {
 
 	const { sendOtpTwilioController, verifyOtpTwilioController} = otpControllers(dependencies);
 
-	const { updatePasswordController } = passwordUpdateControllers(dependencies)
+	const { updatePasswordController } = passwordUpdateControllers(dependencies);
 
 	router.post(
 		"/signup",
@@ -26,8 +26,7 @@ export const recruiterRouter = (dependencies: DependenciesData) => {
 		recruiterSignupController
 	);
 
-	router.post("/verifyEmail",recruiterSignupEmailOtpVerificationController)
-	// router.post("/verifyEmail",recruiterSignupEmailVerifyController)
+	router.post("/verifyEmail",recruiterSignupEmailOtpVerificationController);
 
 	router.post(
 		"/signin",
@@ -42,7 +41,6 @@ export const recruiterRouter = (dependencies: DependenciesData) => {
 	router.post("/verifyOtp",requireAuthRecruiter, verifyOtpTwilioController);
 
 	router.put("/resetPassword", requireAuthRecruiter, updatePasswordController);
-	// router.put("/resetPassword", updatePasswordController);
 
 	router.post("/signout", recruiterSignoutController);
 

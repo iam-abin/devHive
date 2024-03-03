@@ -13,6 +13,7 @@ import NotFound from "./pages/Error/NotFound";
 import { useEffect } from "react";
 import { myFirebaseMessaging } from "./config/firebase";
 import { getToken } from "firebase/messaging";
+import { Toaster } from "react-hot-toast";
 // import { ToastBar } from "react-hot-toast";
 
 export default function App() {
@@ -24,35 +25,30 @@ export default function App() {
 		(state: RootState) => state.recruiterData.data
 	);
 
-	// useEffect(() => {
-	// 	// Request user or browser for notification permission
-	// 	async function requestPermission() {
-	// 		console.log("Requesting permission...");
-	// 		const notification = await Notification.requestPermission();
-	// 		console.log("notification ", notification);
+	useEffect(() => {
+		// Request user or browser for notification permission
+		async function requestPermission() {
+			console.log("Requesting permission...");
+			const notification = await Notification.requestPermission();
+			console.log("notification ", notification);
 
-	// 		if (notification === "granted") {
-	// 			console.log("Notification permission granted.");
-	// 			const token = await getToken(myFirebaseMessaging, {
-	// 				vapidKey:
-	// 					"BK0k3xDNrcpTikZGffov_gMiiYCOiJOvzqOydzjT5ZOK9yiIaLAqQUdmTYQkw7UxqIXFLIu1FzquInV0g_5ACLY",
-	// 			});
-	// 			console.log("Notification Token is ", token);
-	// 		}
-	// 	}
+			if (notification === "granted") {
+				console.log("Notification permission granted.");
+				const token = await getToken(myFirebaseMessaging, {
+					vapidKey:
+						"BK0k3xDNrcpTikZGffov_gMiiYCOiJOvzqOydzjT5ZOK9yiIaLAqQUdmTYQkw7UxqIXFLIu1FzquInV0g_5ACLY",
+				});
+				console.log("Notification Token is ", token);
+			}
+		}
 
-	// 	requestPermission();
-	// }, []);
+		requestPermission();
+	}, []);
 
 	return (
 		<>
 			<ToastContainer className="mt-10" />
-			{/* <ToastContainer className="mt-10" /> */}
-			{/* <ToastBar
-  toast={t}
-  style={{}} // Overwrite styles
-  position="top-center" // Used to adapt the animation
-/> */}
+			<Toaster />
 			<Routes>
 				<Route
 					path="/"

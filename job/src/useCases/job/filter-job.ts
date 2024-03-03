@@ -1,16 +1,14 @@
 import { DependenciesData } from "../../frameworks/types/dependencyInterface";
 
 export = (dependencies: DependenciesData) => {
-	const {
-		repositories: { jobRepository },
-	} = dependencies;
+	const { repositories: { jobRepository } } = dependencies;
 
 	if (!jobRepository) {
 		throw new Error("jobRepository should exist in dependencies");
 	}
 
 	const execute = (jobFilterData: string) => {
-		console.log("in filter jobs usecase 1 ", jobFilterData);
+		// console.log("in filter jobs usecase 1 ", jobFilterData);
 
 		const filterCriteria: any = {};
 
@@ -20,9 +18,7 @@ export = (dependencies: DependenciesData) => {
 			}
 		});
 
-		console.log("in filter jobs usecase 2 ", filterCriteria);
-		
-
+		// console.log("in filter jobs usecase 2 ", filterCriteria);
 		return jobRepository.filterJob(filterCriteria);
 	};
 

@@ -3,9 +3,7 @@ import { DependenciesData } from "../../frameworks/types/dependencyInterface";
 import { JobInterface } from "../../frameworks/types/job-interface";
 
 export = (dependencies: DependenciesData) => {
-	const {
-		repositories: { jobRepository },
-	} = dependencies;
+	const { repositories: { jobRepository } } = dependencies;
 
 	if (!jobRepository) {
 		throw new Error("jobRepository should exist in dependencies");
@@ -13,7 +11,7 @@ export = (dependencies: DependenciesData) => {
 
 	const execute = async (jobData: JobInterface) => {
 		const job = new Job(jobData);
-		console.log("in execute ", job);
+		// console.log("in execute ", job);
 		
 		return await jobRepository.createJob(job);
 	};

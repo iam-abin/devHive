@@ -27,26 +27,22 @@ export const candidateRouter = (dependencies: DependenciesData) => {
 	);
 	
 	router.post("/verifyEmail",candidateSignupEmailOtpVerificationController)
-	// router.post("/verifyEmail",candidateSignupEmailVerifyController)
+
 	router.post(
 		"/signin",
 		signinRequestBodyValidatorMiddlewares,
 		candidateSigninController
 	);
 
-	
-	// router.put("/forgotPassword",requireAuthCandidate, updatePasswordController);
 	router.put("/forgotPassword", updatePasswordController);
 
 	router.post("/sendOtp",requireAuthCandidate, sendOtpTwilioController);
 
 	router.post("/verifyOtp",requireAuthCandidate, verifyOtpTwilioController);
 	
-	// router.put("/resetPassword", updatePasswordController);
 	router.put("/resetPassword", requireAuthCandidate, updatePasswordController);
 
 	router.post("/signout", requireAuthCandidate, candidateSignoutController);
-	// router.post("/signout", candidateSignoutController);
 
 	return router;
 };

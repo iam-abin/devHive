@@ -52,16 +52,10 @@ interface jobApplicationModel extends mongoose.Model<jobApplicationDocument> {
 	buildJob(attributes: jobApplicationAttributes): jobApplicationDocument;
 }
 
-// jobApplicationSchema.statics.buildJob = (attributes: jobApplicationAttributes) => {
-// 	console.log("in build jobApplication attributes", attributes);
-	
-// 	return new jobApplicationModel( attributes );
-// };
 
 jobApplicationSchema.statics.buildJob = (attributes: jobApplicationAttributes) => {
     console.log("in build jobApplication attributes", attributes);
 
-    // Convert string IDs to mongoose.Types.ObjectId
     const jobId = new mongoose.Types.ObjectId(attributes.jobId);
     const candidateId = new mongoose.Types.ObjectId(attributes.candidateId);
     const recruiterId = new mongoose.Types.ObjectId(attributes.recruiterId);

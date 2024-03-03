@@ -5,24 +5,25 @@ interface CardDataStatsProps {
   total: number;
   children: ReactNode;
 }
-
 const CardDataStats: React.FC<CardDataStatsProps> = ({
   title,
   total,
   children,
 }) => {
   return (
-    <div className="rounded-sm border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark">
-      <div className="flex h-11.5 w-11.5 items-center justify-center rounded-full bg-meta-2 dark:bg-meta-4">
+    <div className="rounded-lg border flex justify-center items-center gap-10 p-10 border-gray-30 shadow-default dark:border-dark dark:bg-gray-700">
+      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-500 text-white">
         {children}
       </div>
 
       <div className="mt-4 flex items-end justify-between">
         <div>
-          <h4 className="text-title-md font-bold text-black ">
+          <h4 className="text-lg font-bold text-gray-800 dark:text-white">
             {`${total}`}
           </h4>
-          <span className="text-sm font-medium">{title}</span>
+          <span className="text-sm font-medium text-gray-600 dark:text-gray-300">
+            {title}
+          </span>
         </div>
       </div>
     </div>

@@ -37,13 +37,15 @@ const chatRoomSchema = new mongoose.Schema(
 
 // 4. An interface that describes the properties ,that a user model has
 interface ChatRoomModel extends mongoose.Model<ChatRoomDocument> {
-	buildChatRoom(attributes: string[]): ChatRoomDocument;
+	buildChatRoom(attributes: ChatRoomAttributes): ChatRoomDocument;
 }
 
 // 5.In Mongoose, you can also add custom functions to a model using statics.
-chatRoomSchema.statics.buildChatRoom = (attributes: string[]) => {
+chatRoomSchema.statics.buildChatRoom = (attributes: ChatRoomAttributes) => {
+	console.log("in build chatroom attributes ", attributes);
+	
 	return new ChatRoomModel({
-	  users: attributes,
+	  users: attributes.users,
 	//   lastMessage: attributes.lastMessage,
 	//   lastMessageTime: attributes.lastMessageTime,
 	});

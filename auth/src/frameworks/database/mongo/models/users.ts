@@ -9,10 +9,8 @@ interface UserAttributes {
 	password: string;
 	userType: string;
 	otp: number
-	// expiry: Date
-	// isActive: boolean;
-	// userId: string;
 }
+
 // 2. An interface that describes the properties ,that a User Document has
 interface UserDocument extends mongoose.Document {
 	name: string;
@@ -108,7 +106,6 @@ interface UserModel extends mongoose.Model<UserDocument> {
 userSchema.statics.buildUser = (attributes: UserAttributes) => {
 	return new UserModel({
 		// to create a new user document
-		// _id: attributes.userId,
 		name: attributes.name,
 		email: attributes.email,
 		phone: attributes.phone,

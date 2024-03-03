@@ -5,6 +5,8 @@ import { BadRequestError } from "@abijobportal/common";
 import userRepository from "../repositories/mongo/user.repository";
 import messageRepository from "../repositories/mongo/message.repository";
 import chatRoomRepository from "../repositories/mongo/chatRoom.repository";
+import { User } from "../../entities/users";
+import { ChatRoom } from "../../entities/chat-room";
 interface activeUsersType {
 	userId: string;
 	socketId: string;
@@ -72,11 +74,18 @@ export const onSocketConnection = (io: Server, socket: Socket) => {
 					senderId,
 					recepientId
 				);
+				console.log("getAchatroom room",room);
+				
 				if (room.length === 0) {
 					// no room so creating room
+					let chatRoomData = {
+						users: [senderId, recepientId]
+					}
+					const chatRoom = new ChatRoom(chatRoomData)
+					console.log("chatRoom after entity in socket");
+					
 					await chatRoomRepository.createChatRoom(
-						senderId,
-						recepientId
+						chatRoom
 					);
 				}
 

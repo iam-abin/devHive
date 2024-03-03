@@ -41,11 +41,11 @@ const AdminLayout = () => {
 	const menus = [
 		{ title: "Dashboard", src: dashboard, to: "/admin" },
 		// { title: "Finance", src: finance, to: "/admin/finance" },
-		{ title: "Companies", src: companies, to: "/admin/companies" },
 		{ title: "Candidates", src: candidates, to: "/admin/candidates" },
 		{ title: "Recruiters", src: finance, to: "/admin/recruiters" },
 		{ title: "jobs", src: finance, to: "/admin/jobs" },
 		{ title: "MemberShip", src: membership, to: "/admin/memberships" },
+		{ title: "payments", src: companies, to: "/admin/payments" },
 		{ title: "Logout", src: logout, onClick: handleLogout },
 	];
 	return (

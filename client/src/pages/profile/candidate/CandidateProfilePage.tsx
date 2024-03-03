@@ -9,7 +9,7 @@ import {
 	uploadCandidateResumeProfileApi,
 } from "../../../axios/apiMethods/profile-service/candidate";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
-import { notify } from "../../../utils/toastMessage";
+// import { hotToastMessage } from "../../../utils/toastMessage";
 import ImageFileUpload from "../../../components/upload/ImageFileUpload";
 // import ProfileResumeDisplay from "../../../components/upload/ProfileResumeDisplay";
 import TopNavBarCandidate from "../../../components/navBar/TopNavBarCandidate";
@@ -24,6 +24,8 @@ import { FaFacebookMessenger } from "react-icons/fa";
 import Swal from "sweetalert2";
 import CircleLoading from "../../../components/loading/CircleLoading";
 import { setCandidateProfileDetails } from "../../../redux/slice/candidateSlice/candidateProfileSlice";
+import { hotToastMessage } from "../../../utils/hotToastMessage";
+
 
 const CandidateProfilePage: React.FC = () => {
 	const navigate = useNavigate();
@@ -132,18 +134,17 @@ const CandidateProfilePage: React.FC = () => {
 					});
 
 					dispatch(setCandidateProfileDetails(response?.data))
-
-
-					notify(response.message, "success");
+					hotToastMessage(response.message, "success")
+					
 					return response.data;
 				} else {
-					notify("resume not uploaded", "error");
+					hotToastMessage("resume not uploaded", "error");
 				}
 			}
 		} catch (error: any) {
 			// console.log("drrer",error);
-			// notify("file is size is > 1mb", "error");
-			notify(error.response.data.errors[0].message, "error");
+			// hotToastMessage("file is size is > 1mb", "error");
+			hotToastMessage(error.response.data.errors[0].message, "error");
 		} finally {
 			setPdfLoading(false);
 		}
@@ -188,7 +189,7 @@ const CandidateProfilePage: React.FC = () => {
 					// 	},
 					// });
 					// setAddSkillRerender(addSkillRerender + 1);
-					notify(updatedCandidate.message, "success");
+					hotToastMessage(updatedCandidate.message, "success");
 				}
 			}
 		});
@@ -202,16 +203,16 @@ const CandidateProfilePage: React.FC = () => {
 			);
 			console.log("resume skills update response", response);
 			if (response.data) {
-				notify(response.message, "success");
+				hotToastMessage(response.message, "success");
 				setAddSkillRerender(addSkillRerender + 1);
 				return response.data;
 			} else {
-				notify("skills not uploaded", "error");
+				hotToastMessage("skills not uploaded", "error");
 			}
 		} catch (error: any) {
 			// console.log("drrer",error);
 			// notify("file is size is > 1mb", "error");
-			notify(error.response.data.errors[0].message, "error");
+			hotToastMessage(error.response.data.errors[0].message, "error");
 		}
 	};
 
@@ -228,7 +229,7 @@ const CandidateProfilePage: React.FC = () => {
 			);
 			console.log("resume image upload response", response);
 			if (response.data) {
-				notify(response.message, "success");
+				hotToastMessage(response.message, "success")
 				setCandidateProfileData({
 					...candidateProfileData,
 						profile_image: response.data.profile_image,
@@ -237,10 +238,10 @@ const CandidateProfilePage: React.FC = () => {
 				navigate("/candidate/profile");
 				return response.data;
 			} else {
-				notify("resume not uploaded", "error");
+				hotToastMessage("resume not uploaded", "error");
 			}
 		} catch (error: any) {
-			notify(error.response.data.errors[0].message, "error");
+			hotToastMessage(error.response.data.errors[0].message, "error");
 		} finally {
 			setImgLoading(false); // Set loading to false after upload completes (whether success or failure)
 		}

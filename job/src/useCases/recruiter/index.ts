@@ -1,4 +1,3 @@
-
 import createJobUseCase from "./create-job";
 import updateJobUseCase from "./update-job";
 import deleteJobUseCase from "./delete-job";

@@ -7,14 +7,14 @@ const { UserModel } = schemas;
 // const repository = () => {
 // 	return {
 export = {
-	// these fn's are returning a promise as async so we can defile return type as Promise<CandidateDataInterface>
+	// these fn's are returning a promise as async so we can define return type as Promise<CandidateDataInterface>
 
-	register: async (userData: UserDataSignup) => {
+	register: async (userData: UserDataSignup): Promise<any> => {
 		const userObject = UserModel.buildUser(userData);
 		return await userObject.save();
 	},
 
-	updatePassword: async ({ id, password }: UpdatePasswordInput) => {
+	updatePassword: async ({ id, password }: UpdatePasswordInput): Promise<any> => {
 		const user = await UserModel.findById(id);
 		if (!user) {
 			throw new Error("User not found");
@@ -25,18 +25,18 @@ export = {
 		return await user.save();
 	},
 
-	getByEmail: async (email: string) => {
+	getByEmail: async (email: string): Promise<any> => {
 		const user = await UserModel.findOne({ email });
 		return user;
 	},
 
-	getByPhone: async (phone: number) => {
+	getByPhone: async (phone: number): Promise<any> => {
 		const user = await UserModel.findOne({ phone });
 		return user;
 	},
 
 	// "setOtp" using only in forgot password email otp
-	setOtp: async (email: string, otp: any) => {
+	setOtp: async (email: string, otp: any): Promise<any> => {
 		console.log("in set otp");
 
 		const result = await UserModel.findOneAndUpdate(
@@ -48,7 +48,7 @@ export = {
 		return result;
 	},
 
-	deleteOtp: async (email: string) => {
+	deleteOtp: async (email: string): Promise<any> => {
 		console.log("in delete otp");
 
 		const result = await UserModel.findOneAndUpdate(
@@ -76,25 +76,7 @@ export = {
 	},
 
 	
-
-	// updateStatus: async ({ email, isActive }: any) => {
-
-	// 	console.log("in update status",);
-
-	// 	const user = await UserModel.findOne({email});
-	// 	if (!user) {
-	// 		throw new Error("User not found");
-	// 	}
-
-	// 	user.isActive = isActive;
-
-	// 	return await user.save();
-
-	// },
-
-	updateVerification: async (email: string) => {
-		console.log("in update status", email);
-
+	updateVerification: async (email: string): Promise<any> => {
 		const user = await UserModel.findOne({ email });
 		if (!user) {
 			throw new Error("User not found");

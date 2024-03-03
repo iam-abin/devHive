@@ -1,12 +1,12 @@
 import express from "express";
 import "express-async-errors";
 import morgan from "morgan";
+import { NotFoundError, errorHandler } from "@abijobportal/common";
 // import cookieSession from "cookie-session";
 // import cookieParser from "cookie-parser"
 
 import { routes } from "./routes"
 import dependencies from "../../config/dependencies"
-import { NotFoundError, errorHandler } from "@abijobportal/common";
 
 const app = express();
 

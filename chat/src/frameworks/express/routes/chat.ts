@@ -30,12 +30,5 @@ export const chatRouter = (dependencies: DependenciesData) => {
 
 	router.get("/room-conversation/:chatRoomId", getConversationController);
 
-	// router.post("/new-message/:roomId", sendNewMessageController);
-
-	// router.post(
-	// 	"/create-chat-room/:currentUserId/:secondPersonId",
-	// 	createChatRoomController
-	// );
-
 	return router;
 };
