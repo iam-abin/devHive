@@ -15,18 +15,23 @@ import { RootState } from "../../redux/reducer/reducer";
 import socket from "../../config/socket";
 
 const ChatPageCandidate = () => {
+	const { recepientId } = useParams();
+
 	const candidateData: any = useSelector(
 		(state: RootState) => state.candidateData.data
 	);
-	const { recepientId } = useParams();
 
+	const candidateProfile: any = useSelector((state: RootState) => {
+		return state.candidateProfile.candidateProfile;
+	});
+	
 	const [chatRooms, setchatRooms] = useState([]);
 	const [selectedChatRoom, setSelectedChatRoom] = useState<any>(null);
 	const [onlineUsers, setOnlineUsers] = useState<any>([]);
 	const [selectedChatRoomMessages, setSelectedChatRoomMessages] =
-		useState<any>([]);
+	useState<any>([]);
+	
 	const chatAreaRef = useRef<HTMLDivElement>(null);
-
 	const scrollToBottom = () => {
 		if (chatAreaRef.current) {
 			chatAreaRef.current.scrollTop = chatAreaRef.current.scrollHeight;
@@ -47,9 +52,7 @@ const ChatPageCandidate = () => {
 		};
 	}, []);
 
-	const candidateProfile: any = useSelector((state: RootState) => {
-		return state.candidateProfile.candidateProfile;
-	});
+
 
 	useEffect(() => {
 		console.log("=========in socket io addActiveUser useEffect");
@@ -57,7 +60,6 @@ const ChatPageCandidate = () => {
 		socket.on("getActiveUsers", (users) => {
 			setOnlineUsers(users);
 		});
-		// console.log(socket); // Ensure that the socket is created here
 	}, [candidateData?._id]);
 
 	useEffect(() => {
@@ -76,20 +78,20 @@ const ChatPageCandidate = () => {
 					message.result,
 				]);
 
-				console.log("/////////////");
 
-				selectedChatRoomMessages.forEach((message: any) => {
-					console.log("???????????????? message.read", message.read);
-					console.log(
-						"???????????????? message.senderId!= candidateData.id",
-						message.senderId != candidateData.id
-					);
-					console.log(message);
 
-					if (!message.read && message.senderId != candidateData.id) {
-						socket.emit("markAsRead", message.id);
-					}
-				});
+				// selectedChatRoomMessages.forEach((message: any) => {
+				// 	console.log("???????????????? message.read", message.read);
+				// 	console.log(
+				// 		"???????????????? message.senderId!= candidateData.id",
+				// 		message.senderId != candidateData.id
+				// 	);
+				// 	console.log(message);
+
+				// 	if (!message.read && message.senderId != candidateData.id) {
+				// 		socket.emit("markAsRead", message.id);
+				// 	}
+				// });
 			}
 		});
 
