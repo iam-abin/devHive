@@ -1,12 +1,12 @@
 export = (dependencies: any) => {
-	const { repositories:{membershipRepository} } = dependencies;
+	const { repositories:{paymentRepository} } = dependencies;
 
-	if (!membershipRepository) {
-		throw new Error("membershipRepository should exist in dependencies");
+	if (!paymentRepository) {
+		throw new Error("paymentRepository should exist in dependencies");
 	}
 
 	const execute = () => {
-		return membershipRepository.getAllJobs();
+		return paymentRepository.getAllPayments();
 	};
 
 	return { execute };

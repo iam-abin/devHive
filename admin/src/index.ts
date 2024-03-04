@@ -11,6 +11,7 @@ import { kafkaClient } from "./config/kafka-connection";
 import { JobDeletedEventConsumer } from "./frameworks/utils/kafka-events/consumers/job-deleted-consumer";
 import { CandidateProfileUpdatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/candidate-profile-updated-consumer";
 import { RecruiterProfileUpdatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/recruiter-profile-updated-consumer";
+import { PaymentcreatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/payment-created-consumer";
 
 const start = async () => {
 	console.log("Starting up....");
@@ -51,6 +52,7 @@ const start = async () => {
 	const userCreatedEvent = new UserCreatedEventConsumer(kafkaClient);
 	const userUpdatedEvent = new UserUpdatedEventConsumer(kafkaClient);
 	const jobDeletedEvent = new JobDeletedEventConsumer(kafkaClient);
+	const paymentcreatedEvent = new PaymentcreatedEventConsumer(kafkaClient);
 
 	// // await companyProfileCreatedEvent.subscribe();
 	// // await companyProfileUpdatedEvent.subscribe();
@@ -61,14 +63,15 @@ const start = async () => {
 	// await jobDeletedEvent.subscribe();
 	// await userUpdatedEvent.subscribe();
 	// await userCreatedEvent.subscribe();
+	await paymentcreatedEvent.subscribe()
 	
 	app.listen(3000, () => {
 		console.log("admin Listening on port 3000....");
 	})
 	
 		.on("error", async () => {
-			// await companyProfileCreatedEvent.disconnect();
-			// await companyProfileUpdatedEvent.disconnect();
+			// // await companyProfileCreatedEvent.disconnect();
+			// // await companyProfileUpdatedEvent.disconnect();
 			// await candidateProfileUpdatedEvent.disconnect();
 			// await recruiterProfileUpdatedEvent.disconnect();
 			// await jobCreatedEvent.disconnect();
@@ -76,6 +79,7 @@ const start = async () => {
 			// await jobDeletedEvent.disconnect();
 			// await userUpdatedEvent.disconnect();
 			// await userCreatedEvent.disconnect();
+			await paymentcreatedEvent.disconnect()
 		})
 		.on("close", async () => {
 			// // await companyProfileCreatedEvent.disconnect();
@@ -87,6 +91,7 @@ const start = async () => {
 			// await jobDeletedEvent.disconnect();
 			// await userUpdatedEvent.disconnect();
 			// await userCreatedEvent.disconnect();
+			await paymentcreatedEvent.disconnect()
 		});
 };
 

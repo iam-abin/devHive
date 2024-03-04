@@ -1,15 +1,11 @@
 import mongoose from "mongoose";
 // 1. An interface that describes the properties ,that are requried to create a new Chat
-interface PaymentAttributes {
-	candidateId: string;
-	membershipPlanId: string;
-	stripeId: string;
-}
+import { PaymentData } from "../../../entities/payment";
 // 2. An interface that describes the properties ,that a Chat Document has
 interface PaymentDocument extends mongoose.Document {
 	candidateId: string;
 	membershipPlanId: string;
-	stripeId: string;
+	stripeId?: string;
 	createdAt: Date;
 	updatedAt: Date;
 }
@@ -36,11 +32,11 @@ const paymentSchema = new mongoose.Schema(
 
 // 4. An interface that describes the properties ,that a user model has
 interface PaymentModel extends mongoose.Model<PaymentDocument> {
-	buildPayment(attributes: PaymentAttributes): PaymentDocument;
+	buildPayment(attributes: PaymentData): PaymentDocument;
 }
 
 // 5.In Mongoose, you can also add custom functions to a model using statics.
-paymentSchema.statics.buildPayment = (attributes: PaymentAttributes) => {
+paymentSchema.statics.buildPayment = (attributes: PaymentData) => {
 	return new PaymentModel({
 		candidateId: attributes.candidateId,
 		membershipPlanId: attributes.membershipPlanId,

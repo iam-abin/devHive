@@ -1,9 +1,9 @@
 
-import premiumRepository  from "../../repositories/mongo/premium.repository";
+import premiumRepository  from "../../repositories/mongo/membership-plan.repository";
 
 export const handleMessage = (data: any, topic: string, message: any) => {
 	switch (topic) {
-		case "MEMBERSHIP_PLAN_CREATED_TOPIC":
+		case "MEMBERSHIP-PLAN-CREATED-TOPIC":
 			console.log(
 				"admin handleMessage MEMBERSHIP_PLAN_CREATED_TOPIC",
 				data
@@ -13,7 +13,7 @@ export const handleMessage = (data: any, topic: string, message: any) => {
 
 			break;
 
-		case "MEMBERSHIP_PLAN_UPDATED_TOPIC":
+		case "MEMBERSHIP-PLAN-UPDATED-TOPIC":
 			console.log("admin handleMessage createUserTopic", data);
 
 			premiumRepository.updateMembershipPlan(data.userId, data);

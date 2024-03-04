@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import TableComponent from "../../components/table/TableComponent";
 import {
 	blockUnblockRecruiterApi,
-	getAllRecruitersApi,
 } from "../../axios/apiMethods/admin-service/recruiters";
 import { notify } from "../../utils/toastMessage";
 import Swal from "sweetalert2";
@@ -33,7 +32,7 @@ function PremiumMembershipPage() {
 		(async () => {
 			try {
 				const recruiters = await getAllMembershipPlansApi();
-				console.log("in useEffect", recruiters.data);
+				console.log("in useEffect getAllMembershipPlansApi()", recruiters.data);
 				setMembershipPlansData(recruiters.data);
 			} catch (error: any) {
 				console.error(error);
@@ -43,12 +42,12 @@ function PremiumMembershipPage() {
 
 	
 
-	const viewProfileDetails = async (userId: string) => {
+	const viewplanDetails = async (userId: string) => {
 		console.log("in viewProfileDetails fn ", userId);
 		navigate(`/admin/recruiter/viewProfileDetails/${userId}`);
 	};
 
-	const handleBlockUnblock = async (userId: string, isActive: boolean) => {
+	const handleBlockUnblockPlans = async (userId: string, isActive: boolean) => {
 		Swal.fire({
 			title: `Do you want to ${
 				isActive ? "block" : "unblock"
@@ -205,7 +204,7 @@ function PremiumMembershipPage() {
 				</button>
 			</div>
 			{/* ReactModal */}
-			{/* ReactModal */}
+			
 			<Modal open={modalIsOpen} onClose={handleModalClose} center>
 				<div className="p-6 bg-white rounded-lg shadow-md">
 					<h2 className="text-2xl font-semibold mb-4">

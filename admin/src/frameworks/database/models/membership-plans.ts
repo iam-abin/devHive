@@ -70,7 +70,7 @@ membershipPlansSchema.statics.buildMembershipPlan = (attributes: MembershipPlans
 };
 // 6. // 6.hover on 'Premium' ,we can see that 'Premium' is getting 'MembershipPlansModel', ie,a Second arg indicate returning type
 const MembershipPlansModel = mongoose.model<MembershipPlansDocument, MembershipPlansModel>(
-	"membershipPlan",
+	"MembershipPlan",
 	membershipPlansSchema
 );
 

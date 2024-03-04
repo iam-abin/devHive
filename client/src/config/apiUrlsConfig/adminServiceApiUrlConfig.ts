@@ -43,7 +43,7 @@ const adminApiUrlConfig = {
 	`${ADMIN_MEMBERSHIP_PLANS_URL}/block-unblock-membership-plan/${membershipPlanId}`,
 
 	// Payment
-	getAllPaymentsUrl: `${ADMIN_PAYMENT_URL}/view-payments`,
+	getAllPaymentsUrl: `${ADMIN_PAYMENT_URL}/get-all-payments`,
 
 	// dashboard
 	getAllCardsDetailsUrl: `${DASHBOARD_ADMIN_URL}/data`,

@@ -40,12 +40,9 @@ export const handleMessage = (data: any, topic: string, message: any) => {
 
 			break;
 
-		case "PREMIUM-PAYMENT-TOPIC":
+		case "PAYMENT-CREATED-TOPIC":
 			console.log("handleMessage payment premium topic data", data);
-			candidateProfileRepository.premiumPaymentDone(
-				data.candidateId,
-				data
-			);
+			candidateProfileRepository.premiumPaymentDone(data);
 
 			break;
 			

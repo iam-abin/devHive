@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { DependenciesData } from "../../frameworks/types/dependencyInterface";
 import { PremiumPaymentDonePublisher } from "../../frameworks/utils/kafka-events/publishers/payment-done-publisher";
 import { kafkaClient } from "../../config/kafka-connection";
+import { Payment } from "../../entities/payment";
 
 export = (dependencies: DependenciesData) => {
 	const {
@@ -9,10 +10,10 @@ export = (dependencies: DependenciesData) => {
 	} = dependencies;
 
 	return async (req: Request, res: Response) => {
-		const { amount } = req.body;
+		const { membershipPlanId, amount } = req.body;
 		let candidateId = req.currentUserCandidate!.id;
 
-		console.log("in  paymentCreated controller 1: ", amount);
+		console.log("in  paymentCreated controller 1: membershipPlanId", amount, membershipPlanId);
 		
 
 		const paymentCreated = await createPaymentUseCase(dependencies).execute(
@@ -20,11 +21,14 @@ export = (dependencies: DependenciesData) => {
 			amount,
 		);
 		console.log("in  paymentCreated controller 2: ", paymentCreated);
+		// const paymentCreated = new Payment({})
+
 
 		const paymentCreatedEvent = new PremiumPaymentDonePublisher(kafkaClient);
 		await paymentCreatedEvent.publish({
 			candidateId,
-			membershipPlanId: ""
+			membershipPlanId,
+			// stripeId
 		})
 
 		res.status(200).json({

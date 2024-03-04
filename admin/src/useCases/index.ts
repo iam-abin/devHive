@@ -51,13 +51,13 @@ export default {
 	getAllCompaniesUseCase,
 	getCompanyByIdUseCase,
 
+	getAllPaymentsUseCase,
+
 	updateMembershipPlanUseCase,
 	blockUnblockMembershipPlanUseCase,
 	createMemberShipPlanUseCase,
 	getAllMembershipPlansUseCase,
 	getMembershipPlanByIdUseCase,
-
-	getAllPaymentsUseCase,
 
 	getAllDashboardCardsDetailsUseCase,
 };

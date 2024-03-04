@@ -1,4 +1,4 @@
-import membershipRepository from "./premium.repository";
+import membershipRepository from "./membership-plan.repository";
 import paymentRepository from "./payment.repository"
 
 export = {

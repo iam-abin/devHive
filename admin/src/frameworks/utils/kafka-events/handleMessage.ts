@@ -1,6 +1,7 @@
 import candidateRepository from "../../repositories/mongo/candidateRepository";
 import recruiterRepository from "../../repositories/mongo/recruiterRepository";
 import jobRepository from "../../repositories/mongo/jobRepository";
+import paymentRepository from "../../repositories/mongo/paymentRepository";
 
 // interface handleMessageInterface {
 // 	data: any;
@@ -81,6 +82,12 @@ export const handleMessage = (data: any, topic: string, message: any) => {
 		case "JOB-DELETED-TOPIC":
 			console.log("admin handleMessage jobDeletedTopic", data);
 			jobRepository.deleteJob(data.jobId);
+
+			break;
+
+		case "PAYMENT-CREATED-TOPIC":
+			console.log("admin handleMessage PAYMENT-CREATED-TOPIC", data);
+			paymentRepository.createPayment(data);
 
 			break;
 

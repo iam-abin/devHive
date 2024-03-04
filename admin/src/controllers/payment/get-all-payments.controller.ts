@@ -7,13 +7,13 @@ export = (dependencies: DependenciesData)=>{
 
     return async (req: Request, res: Response)=>{
         const {userId} = req.params
-        console.log("in  get all chatroom controller 1: ",userId);
+        console.log("in  get all payments controller 1: ",userId);
 
-        const payment = await getAllPaymentsUseCase(dependencies).execute(userId);
-        console.log("in  get all chatroom controller 2: ",payment);
+        const payment = await getAllPaymentsUseCase(dependencies).execute();
+        console.log("in  get all payments controller 2: ",payment);
 
 
-        res.status(200).json({message: "Chat rooms are ", data: payment })
+        res.status(200).json({message: "Payments are ", data: payment })
     };
 
 }

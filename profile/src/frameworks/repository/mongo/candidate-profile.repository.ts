@@ -29,15 +29,15 @@ export = {
 	updateCandidateProfile: async (id: string, data: any): Promise<any> => {
 		console.log("user update candidate repo----");
 		console.log(id);
-		console.log("data",data);
-		
+		console.log("data", data);
+
 		const candidate = await CandidateProfileModel.findOneAndUpdate(
 			{ _id: id },
 			{ $set: data },
 			{ new: true }
 		);
 		console.log(candidate);
-		
+
 		return candidate;
 	},
 
@@ -79,8 +79,8 @@ export = {
 		console.log("delete resume candidate repo----", userId);
 
 		const candidate = await CandidateProfileModel.findOneAndUpdate(
-			{ _id: userId},
-			{ $unset: {resume: null} },
+			{ _id: userId },
+			{ $unset: { resume: null } },
 			{ new: true }
 		);
 		return candidate;
@@ -99,9 +99,10 @@ export = {
 		return profile;
 	},
 
-	premiumPaymentDone: async (userId: string, data: any): Promise<any> => {
+	premiumPaymentDone: async (data: any): Promise<any> => {
+		const { candidateId, membershipPlanId } = data;
 		const user = await CandidateProfileModel.findOneAndUpdate(
-			{ _id: userId },
+			{ _id: candidateId },
 			{ $set: { isPremiumUser: true } },
 			{ new: true }
 		);

@@ -13,14 +13,13 @@ export const paymentRouter = (dependencies: DependenciesData) => {
 
 	const {
 		cratePaymentController,
-		getAllPaymentsController,
 	} = paymentControllers(dependencies);
 	
 	router.post("/create-payment", currentUserCandidateCheck, requireAuthCandidate, cratePaymentController);
 
 	// router.use(currentUserAdminCheck);
 	// router.use(requireAuthAdmin);
-	router.post("/get-all-payments", currentUserAdminCheck, requireAuthAdmin, getAllPaymentsController);
+	
 	
 	return router;
 };

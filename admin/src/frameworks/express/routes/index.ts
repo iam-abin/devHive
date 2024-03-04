@@ -7,6 +7,7 @@ import { recruiterRouter } from "./recruiter";
 import { membershipPlanRouter } from "./membership-plan";
 import { companyRouter } from "./company";
 import { jobRouter } from "./job";
+import { paymentRouter } from "./payment";
 
 import { DependenciesData } from "../../types/dependencyInterface";
 
@@ -19,6 +20,7 @@ export const routes = (dependencies: DependenciesData) => {
 	const membershipPlan = membershipPlanRouter(dependencies);
 	const company = companyRouter(dependencies);
 	const job = jobRouter(dependencies);
+	const payment = paymentRouter(dependencies);
 
 	// currentUserAdmin extract current user from jwt, if user is present add it to req.currentUser
 	// here every routes are used by admin, so it is easy to understand for us when define it at the top.
@@ -36,6 +38,7 @@ export const routes = (dependencies: DependenciesData) => {
 	router.use("/membership", membershipPlan);
 	router.use("/company", company);
 	router.use("/job", job);
+	router.use("/payment", payment);
 
 	return router;
 };

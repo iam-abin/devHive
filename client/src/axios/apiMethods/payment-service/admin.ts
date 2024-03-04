@@ -2,8 +2,7 @@ import adminApiUrlConfig from "../../../config/apiUrlsConfig/adminServiceApiUrlC
 import adminApiCalls from "../../admin/apiCalls";
 
 
-export const getAllPaymentsApi = async (paymentData: any): Promise<any> => {
-    console.log("iside candidateGetProfileApi ",paymentData);
+export const getAllPaymentsApi = async (): Promise<any> => {
 		const response: any = await adminApiCalls("get", adminApiUrlConfig.getAllPaymentsUrl);
 		console.log("response is ", response.data);
 	
