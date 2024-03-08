@@ -7,8 +7,13 @@ import candidates from "../../assets/candidates.svg";
 import membership from "../../assets/membership.svg";
 import TopNavBarRecruiter from "../../components/navBar/TopNavBarRecruiter";
 import LeftNavBarRecruiter from "../../components/navBar/LeftNavBarRecruiter";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/reducer/reducer";
 
 const RecruiterLayout = () => {
+	const recruiterProfile: any = useSelector(
+		(state: RootState) => state.recruiterData.data
+	);
 	const menus = [
 		{ title: "Dashboard", src: dashboard, to: "/recruiter" },
 		{
@@ -27,7 +32,7 @@ const RecruiterLayout = () => {
 			src: companies,
 			to: "/recruiter/applications",
 		},
-		{ title: "Chats", src: candidates, to: "/recruiter/chats" },
+		{ title: "Chats", src: candidates, to: `/recruiter/chat/${recruiterProfile?.id!}` },
 		{ title: "Profile", src: membership, to: "/recruiter/profile" },
 	];
 

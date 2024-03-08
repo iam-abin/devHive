@@ -2,14 +2,11 @@ import mongoose from "mongoose";
 // 1. An interface that describes the properties ,that are requried to create a new Chat
 interface ChatRoomAttributes {
 	users: string[];
-	// lastMessage?: string;
-	// lastMessageTime?: boolean;
 }
 // 2. An interface that describes the properties ,that a Chat Document has
 interface ChatRoomDocument extends mongoose.Document {
 	users: mongoose.Types.ObjectId[];
-	// lastMessage?: string;
-	// lastMessageTime?: boolean;
+	lastMessage?: string;
 	createdAt: Date;
 	updatedAt: Date;
 }
@@ -20,7 +17,6 @@ const chatRoomSchema = new mongoose.Schema(
 
 		users: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
 		lastMessage: String,
-		lastMessageTime: String,
 	},
 	{
 		// to reformat id and remove password,__v from response when converting to json (we can also use other approaches)
@@ -46,8 +42,6 @@ chatRoomSchema.statics.buildChatRoom = (attributes: ChatRoomAttributes) => {
 	
 	return new ChatRoomModel({
 	  users: attributes.users,
-	//   lastMessage: attributes.lastMessage,
-	//   lastMessageTime: attributes.lastMessageTime,
 	});
   };
 // 6. // 6.hover on 'ChatRoom' ,we can see that 'ChatRoom' is getting 'ChatRoomModel', ie,a Second arg indicate returning type

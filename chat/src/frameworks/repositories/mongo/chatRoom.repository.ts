@@ -27,10 +27,19 @@ export = {
 		return chatRooms;
 	},
 
+	updateAChatRoom: async ( roomId: string, message: string) => {
+		const chatRooms = await ChatRoomModel.updateOne(
+			{  _id: roomId },
+			{ $set: { lastMessage: message } },
+			{ new: true }
+		);
+		return chatRooms;
+	},
+
 	getAllChatRoomsByUserId: async (userId: string) => {
 		const chatRooms = await ChatRoomModel.find({
 			users: { $elemMatch: { $eq: userId } },
-		}).populate('users').lean();
+		}).sort({ updatedAt: -1 }).populate('users').lean();
 		
 		console.log("in getAllChatRoomsByUserId repository ", chatRooms);
 

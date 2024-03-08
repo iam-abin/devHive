@@ -122,4 +122,12 @@ export = {
 
 		return jobApplications;
 	},
+
+	numberOfJobApplicationsToMe: async (id: string): Promise<number> => {
+		const totalJobs: number = await jobApplicationModel.countDocuments({
+			recruiterId: id,
+		});
+		console.log(totalJobs);
+		return totalJobs;
+	},
 };

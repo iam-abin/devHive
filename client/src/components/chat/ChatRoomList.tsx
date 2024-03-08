@@ -3,6 +3,7 @@ import React from "react";
 interface ChatRoomListProps {
 	receiver: any;
 	isOnline: boolean;
+	lastMessage: string;
 	onClick: () => void;
 	selected: boolean;
 }
@@ -10,13 +11,19 @@ interface ChatRoomListProps {
 const ChatRoomList: React.FC<ChatRoomListProps> = ({
 	receiver,
 	isOnline,
+	lastMessage,
 	onClick,
 	selected,
 }) => {
 	console.log("inside chatRoomList", selected);
 	console.log("inside chatRoomList", selected);
+	console.log("inside chatRoomList lastMessage", lastMessage);
 	console.log("inside chatRoomList receiver ", receiver);
-	console.log("inside chatRoomList receiver?.name isOnline ", receiver[0]?.name, isOnline);
+	console.log(
+		"inside chatRoomList receiver?.name isOnline ",
+		receiver[0]?.name,
+		isOnline
+	);
 
 	return (
 		<div
@@ -31,27 +38,27 @@ const ChatRoomList: React.FC<ChatRoomListProps> = ({
 				<div
 					tabIndex={0}
 					role="button"
-					className="btn btn-ghost btn-circle avatar"
+					className="btn btn-ghost btn-circle avatar flex flex-col items-start relative"
 				>
-					<div className="w-10 rounded-full">
+					<div className="w-10 rounded-full relative">
 						<img
 							alt="Tailwind CSS Navbar component"
 							src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
 						/>
-					</div>
-				</div>
-				{/* <div className="flex flex-row w-full justify-between"> */}
-				<div className="flex flex-col w-full justify-between">
-					<h5>{receiver[0].name}</h5>
-					<span className="flex flex-row items-center">
 						<span
 							className={`${
 								isOnline ? "bg-green-500" : "bg-red-500"
-							} w-4 h-4 rounded-full mr-2`}
+							} w-4 h-4 rounded-full absolute top-0 right-0`}
 						></span>
-						<p>{isOnline ? "online" : "ofline"}</p>
+					</div>
+				</div>
+				<div className="flex flex-col w-full justify-between">
+					<h5>{receiver[0]?.name}</h5>
+					<span className="flex flex-row items-center">
+						<p>{lastMessage}</p>
 					</span>
 				</div>
+				{/* <div className="flex flex-row w-full justify-between"> */}
 			</div>
 		</div>
 	);

@@ -7,6 +7,7 @@ import getAllJobApplicationsUseCase from "./get-all-job-applications";
 import getAJobApplicationUseCase from "./get-a-job-application";
 import changeJobApplicationStatusUseCase from "./change-job-application-status";
 import changeClosejobStatusUseCase from "./change-closejob-status";
+import recruiterDashboardCardsDetailsUseCase from "./recruiter-dashboard-cards-details";
 
 export {
 	createJobUseCase,
@@ -18,4 +19,5 @@ export {
 	getAJobApplicationUseCase,
 	changeJobApplicationStatusUseCase,
 	changeClosejobStatusUseCase,
+	recruiterDashboardCardsDetailsUseCase,
 };

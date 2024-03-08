@@ -24,13 +24,13 @@ const ChatPageCandidate = () => {
 	const candidateProfile: any = useSelector((state: RootState) => {
 		return state.candidateProfile.candidateProfile;
 	});
-	
+
 	const [chatRooms, setchatRooms] = useState([]);
 	const [selectedChatRoom, setSelectedChatRoom] = useState<any>(null);
 	const [onlineUsers, setOnlineUsers] = useState<any>([]);
 	const [selectedChatRoomMessages, setSelectedChatRoomMessages] =
-	useState<any>([]);
-	
+		useState<any>([]);
+
 	const chatAreaRef = useRef<HTMLDivElement>(null);
 	const scrollToBottom = () => {
 		if (chatAreaRef.current) {
@@ -52,8 +52,6 @@ const ChatPageCandidate = () => {
 		};
 	}, []);
 
-
-
 	useEffect(() => {
 		console.log("=========in socket io addActiveUser useEffect");
 		socket.emit("addActiveUser", candidateData.id);
@@ -67,18 +65,21 @@ const ChatPageCandidate = () => {
 		socket.on("getAllChatRooms", (rooms) => {
 			setchatRooms(rooms);
 		});
-	}, [selectedChatRoom]);
+		console.log("getAllChatRooms useEffect candidate");
+		
+	}, [selectedChatRoom, selectedChatRoomMessages]);
 
 	useEffect(() => {
 		// Listen for "selectedChatRoomMessages" events and update the selectedChatRoomMessages state
 		socket.on("receiveMessage", (message) => {
+			console.log("in receive message candidateEEEEEEEEEEEE ", message);
+
 			if (message.result.roomId.toString() === selectedChatRoom?._id) {
+				if(message.result.senderId != candidateData.id) socket.emit("markAsRead", message.result.id);
 				setSelectedChatRoomMessages([
 					...selectedChatRoomMessages,
 					message.result,
 				]);
-
-
 
 				// selectedChatRoomMessages.forEach((message: any) => {
 				// 	console.log("???????????????? message.read", message.read);
@@ -120,20 +121,22 @@ const ChatPageCandidate = () => {
 		setSelectedChatRoom(room);
 		const conversations = await getAConversationApi(room._id);
 		setSelectedChatRoomMessages(conversations.data);
-		selectedChatRoomMessages.forEach((message: any) => {
-			console.log("???????????????? message.read", message.read);
-			console.log(
-				"???????????????? message.senderId!= candidateData.id",
-				message.senderId != candidateData.id
-			);
-			console.log(message);
+		// selectedChatRoomMessages.forEach((message: any) => {
+		// 	console.log("???????????????? message.read", message.read);
+		// 	console.log(
+		// 		"???????????????? message.senderId!= candidateData.id",
+		// 		message.senderId != candidateData.id
+		// 	);
+		// 	console.log(message);
 
-			if (!message.read && message.senderId != candidateData.id) {
-				console.log("////////////////////////////////////////////////////////");
+		// 	if (!message.read && message.senderId != candidateData.id) {
+		// 		console.log(
+		// 			"////////////////////////////////////////////////////////"
+		// 		);
 
-				socket.emit("markAsRead", message.id);
-			}
-		});
+		// 		socket.emit("markAsRead", message.id);
+		// 	}
+		// });
 	};
 
 	console.log("onlineUsers are --->>>", onlineUsers);
@@ -188,6 +191,7 @@ const ChatPageCandidate = () => {
 											key={index}
 											receiver={getReceiver(chatRoom)}
 											isOnline={isUserOnline(chatRoom)}
+											lastMessage={chatRoom?.lastMessage}
 											onClick={() =>
 												handleChatRoomClick(chatRoom)
 											} // Update the onClick handler

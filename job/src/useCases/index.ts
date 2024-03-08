@@ -25,6 +25,7 @@ import {
 	getAJobApplicationUseCase,
 	changeJobApplicationStatusUseCase,
 	changeClosejobStatusUseCase,
+	recruiterDashboardCardsDetailsUseCase,
 } from "./recruiter";
 
 export default {
@@ -50,4 +51,5 @@ export default {
 	getAJobApplicationUseCase,
 	changeJobApplicationStatusUseCase,
 	changeClosejobStatusUseCase,
+	recruiterDashboardCardsDetailsUseCase,
 };

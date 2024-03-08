@@ -90,6 +90,12 @@ export = {
 		return totalJobs;
 	},
 
+	numberOfCreatedJobsByMe: async (id: string): Promise<number> => {
+		const jobs = await JobModel.countDocuments({ recruiterId: id });
+		console.log(jobs);
+		return jobs;
+	},
+
 	getSearchResults: async (searchKey: string): Promise<number> => {
 		const searchedJobs: any = await JobModel.find({ jobTitle: { $regex: new RegExp(searchKey, 'i') } })
 		console.log("searchedJobs ",searchedJobs);
@@ -119,4 +125,6 @@ export = {
 
 		return job;
 	},
+	
+
 };

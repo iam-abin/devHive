@@ -3,11 +3,11 @@ import "react-responsive-modal/styles.css";
 
 import { useEffect, useState } from "react";
 import TableComponent from "../../components/table/TableComponent";
-import {
-	blockUnblockRecruiterApi,
-} from "../../axios/apiMethods/admin-service/recruiters";
+// import {
+// 	blockUnblockRecruiterApi,
+// } from "../../axios/apiMethods/admin-service/recruiters";
 import { notify } from "../../utils/toastMessage";
-import Swal from "sweetalert2";
+// import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
@@ -42,44 +42,44 @@ function PremiumMembershipPage() {
 
 	
 
-	const viewplanDetails = async (userId: string) => {
-		console.log("in viewProfileDetails fn ", userId);
-		navigate(`/admin/recruiter/viewProfileDetails/${userId}`);
-	};
+	// const viewplanDetails = async (userId: string) => {
+	// 	console.log("in viewProfileDetails fn ", userId);
+	// 	navigate(`/admin/recruiter/viewProfileDetails/${userId}`);
+	// };
 
-	const handleBlockUnblockPlans = async (userId: string, isActive: boolean) => {
-		Swal.fire({
-			title: `Do you want to ${
-				isActive ? "block" : "unblock"
-			} this Recruiter?`,
-			text: "Are you sure!",
-			icon: "warning",
-			showCancelButton: true,
-			confirmButtonColor: "#3085d6",
-			cancelButtonColor: "#d33",
-			confirmButtonText: `Yes, ${isActive ? "block" : "unblock"}`,
-		}).then(async (result) => {
-			if (result.isConfirmed) {
-				const updatedRecruiter = await blockUnblockRecruiterApi(userId);
-				if (updatedRecruiter) {
-					notify(updatedRecruiter.message, "success");
-				}
+	// const handleBlockUnblockPlans = async (userId: string, isActive: boolean) => {
+	// 	Swal.fire({
+	// 		title: `Do you want to ${
+	// 			isActive ? "block" : "unblock"
+	// 		} this Recruiter?`,
+	// 		text: "Are you sure!",
+	// 		icon: "warning",
+	// 		showCancelButton: true,
+	// 		confirmButtonColor: "#3085d6",
+	// 		cancelButtonColor: "#d33",
+	// 		confirmButtonText: `Yes, ${isActive ? "block" : "unblock"}`,
+	// 	}).then(async (result) => {
+	// 		if (result.isConfirmed) {
+	// 			const updatedRecruiter = await blockUnblockRecruiterApi(userId);
+	// 			if (updatedRecruiter) {
+	// 				notify(updatedRecruiter.message, "success");
+	// 			}
 
-				const recruiters = membershipPlansData.map((recruiter) => {
-					if (recruiter.id === userId) {
-						return {
-							...recruiter,
-							isActive: updatedRecruiter.data.isActive,
-						};
-					}
+	// 			const recruiters = membershipPlansData.map((recruiter) => {
+	// 				if (recruiter.id === userId) {
+	// 					return {
+	// 						...recruiter,
+	// 						isActive: updatedRecruiter.data.isActive,
+	// 					};
+	// 				}
 
-					return recruiter;
-				});
+	// 				return recruiter;
+	// 			});
 
-				setMembershipPlansData(recruiters);
-			}
-		});
-	};
+	// 			setMembershipPlansData(recruiters);
+	// 		}
+	// 	});
+	// };
 
 	const columns = [
 		{

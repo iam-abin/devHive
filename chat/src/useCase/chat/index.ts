@@ -5,3 +5,5 @@ export {
 	getChatRoomsUseCase,
 	getConversationUseCase,
 };
+
+// chat room creation and chat cration are doing inside frameworks/weSocket/socket.ts file

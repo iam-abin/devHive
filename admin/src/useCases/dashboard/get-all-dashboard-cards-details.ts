@@ -4,6 +4,7 @@ export = (dependencies: any) => {
 			candidateRepository,
 			recruiterRepository,
 			jobRepository,
+			paymentRepository,
 		},
 	} = dependencies;
 
@@ -19,25 +20,23 @@ export = (dependencies: any) => {
 		throw new Error("jobRepository should exist in dependencies");
 	}
 
-	const execute = async () => {
-		// const [candidatesCount, recruitersCount, jobsCount, totalRevenue] = await Promise.all([
-		//     Candidate.countDocuments(),
-		//     Recruiter.countDocuments(),
-		//     Job.countDocuments(),
-		//     Price.aggregate([{ $group: { _id: null, total: { $sum: '$amount' } } }]),
-		//   ]);
+	if (!paymentRepository) {
+		throw new Error("paymentRepository should exist in dependencies");
+	}
 
-		const [candidateCount, recruiterCount, jobCount]: any =
+	const execute = async () => {
+		const [candidateCount, recruiterCount, jobCount, totalRevenue]: any =
 			await Promise.all([
 				candidateRepository.numberOfCandidates(),
 				recruiterRepository.numberOfRecruiters(),
 				jobRepository.numberOfJobs(),
+				paymentRepository.totalRevenue(),
 			]);
 
-            console.log("inside get all dashboard cars derails usecase ", { candidateCount, recruiterCount, jobCount });
+            console.log("inside get all dashboard cars derails usecase ", { candidateCount, recruiterCount, jobCount, totalRevenue });
             
 
-		return { candidateCount, recruiterCount, jobCount };
+		return { candidateCount, recruiterCount, jobCount, totalRevenue };
 	};
 
 	return { execute };

@@ -8,6 +8,10 @@ const Message: React.FC<{
 	candidateImage?: string;
 	
 }> = ({ message, currentUserId, candidateImage }) => {
+	console.log("insdie message componenttttttttt",message);
+	console.log("insdie message currentUserId componenttttttttt",currentUserId);
+	console.log("insdie message candidateImage componenttttttttt",candidateImage);
+	
 	return (
 		<>
 			{message.senderId === currentUserId ? (
@@ -24,10 +28,19 @@ const Message: React.FC<{
 							/>
 						</div>
 					</div>
-					<div className="chat-header">
+					<div className="chat-header flex">
 						<time className="text-xs opacity-50">
 							{formatDateWithTime(message.createdAt)}
 						</time>
+						
+						{ message.senderId == currentUserId && message.read ? (
+							<>
+								<TiTick className="text-blue-700" />
+								<TiTick className="text-blue-700" />
+							</>
+						) : (
+							"c"
+						)}
 					</div>
 					<div className="chat-bubble shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px]">
 						{message.textMessage}
@@ -44,18 +57,11 @@ const Message: React.FC<{
 							/>
 						</div>
 					</div>
-					<div className="chat-header flex">
+					<div className="chat-header ">
 						<time className="text-xs opacity-50">
 							{formatDateWithTime(message.createdAt)}
 						</time>
-						{message.read && message.senderId === currentUserId ? (
-							<>
-								<TiTick className="text-blue-700" />
-								<TiTick className="text-blue-700" />
-							</>
-						) : (
-							""
-						)}
+						
 					</div>
 					<div className="chat-bubble shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] whitespace-normal">
 						{message.textMessage}

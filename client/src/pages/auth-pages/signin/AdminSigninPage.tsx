@@ -26,7 +26,7 @@ function AdminSigninPage() {
 
 	const handleSubmit = async (userData: any) => {
 		try {
-			dispatch(setLoading());
+			// dispatch(setLoading());
 			const response = await adminSigninApi(userData);
 			console.log("hiiii", response);
 			dispatch(setAdmin(response));
@@ -35,10 +35,11 @@ function AdminSigninPage() {
 			navigate("/admin");
 		} catch (error: any) {
 			console.log("in signin form error", error);
+			console.log("in signin form errorrrrr", error.response.data.errors[0].message);
 
-			notify(error.errors[0].message, "error");
+			notify(error.response.data.errors[0].message, "error");
 		} finally {
-			dispatch(setLoaded());
+			// dispatch(setLoaded());
 		}
 	};
 

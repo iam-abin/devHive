@@ -70,7 +70,7 @@ candidateApi.interceptors.response.use(
 				}
 			} catch (refreshError) {
 				console.error("Refresh token failed:", refreshError);
-				clearCandidateFromLocal();
+				// clearCandidateFromLocal();
 			}
 		}
 		return Promise.reject(error);
@@ -99,7 +99,7 @@ const refreshToken = async () => {
 		}
 	} catch (error) {
 		console.error("Failed to refresh token", error);
-		clearCandidateFromLocal();
+		// clearCandidateFromLocal(); // never call it
 	}
 	return null;
 };

@@ -8,7 +8,7 @@ import ChatRoomList from "../../components/chat/ChatRoomList";
 import Message from "../../components/chat/Message";
 import ChatBoxTopBar from "../../components/chat/ChatBoxTopBar";
 import ChatInputBox from "../../components/chat/ChatInputBox";
-import { getAConversationApi } from "../../axios/apiMethods/chat-service/chat";
+import { getAConversationApi, getAllChatRoomsApi } from "../../axios/apiMethods/chat-service/chat";
 import { RootState } from "../../redux/reducer/reducer";
 import socket from "../../config/socket";
 
@@ -56,34 +56,56 @@ const ChatPageRecruiter = () => {
 
 	useEffect(() => {
 		console.log("//////////in socket io addRoomeUser useEffect");
+		
 		socket.emit("createChatRoom", recruiterData.id, recepientId);
 		socket.on("getAllChatRooms", (rooms) => {
 			setchatRooms(rooms);
 		});
-	}, [selectedChatRoom]);
+		console.log("getAllChatRooms useEffect recruiter");
+
+	}, [selectedChatRoom, selectedChatRoomMessages]);
+
+	// useEffect(() => {
+	// 	console.log("//////////in socket io addRoomeUser useEffect");
+	// 	socket.emit("createChatRoom", recruiterData.id, recepientId);
+	// 	let rooms = await getAllChatRoomsApi(recruiterData.id)
+	// 	setchatRooms(rooms);
+	// }, [selectedChatRoomMessages]);
 
 	useEffect(() => {
 		// Listen for "selectedChatRoomMessages" events and update the selectedChatRoomMessages state
 		socket.on("receiveMessage", (message) => {
+			console.log("in receive message recruitereEEEEEEEEEEEE ", message);
+
+			if(selectedChatRoom?._id != message.result.roomId.toString() ){
+				console.log("no chat rooms are selected");
+
+				
+			}
+			
 			if (message.result.roomId.toString() === selectedChatRoom?._id) {
+				if(message.result.senderId != recruiterData.id) {
+					socket.emit("markAsRead", message.result.id);
+					// message.result.read = true
+				}
 				setSelectedChatRoomMessages([
 					...selectedChatRoomMessages,
 					message.result,
 				]);
 			}
 
-			selectedChatRoomMessages.forEach((message: any) => {
-				console.log("???????????????? message.read", message.read);
-				console.log(
-					"???????????????? message.senderId!= recruiterData.id",
-					message.senderId != recruiterData.id
-				);
-				console.log(message);
+			// selectedChatRoomMessages.forEach((message: any) => {
+			// 	console.log("???????????????? message.read", message.read);
+			// 	console.log(
+			// 		"???????????????? message.senderId!= recruiterData.id",
+			// 		message.senderId != recruiterData.id
+			// 	);
+			// 	console.log(message);
 
-				if (!message.read && message.senderId != recruiterData.id) {
-					socket.emit("markAsRead", message.id);
-				}
-			});
+			// 	if (!message.read && message.senderId != recruiterData.id) {
+			// 		socket.emit("markAsRead", message.id);
+			// 	}
+			// });
 		});
 
 		socket.on("connect_error", (error) => {
@@ -110,20 +132,29 @@ const ChatPageRecruiter = () => {
 	const handleChatRoomClick = async (room: any) => {
 		setSelectedChatRoom(room);
 		const conversations = await getAConversationApi(room._id);
+		console.log("!!!!!!!!!!!!!!!!!!!!!!");
+		console.log(conversations.data);
+		console.log("!!!!!!!!!!!!!!!!!!!!!!");
+		
+		
 		setSelectedChatRoomMessages(conversations.data);
-		selectedChatRoomMessages.forEach((message: any) => {
-			console.log("???????????????? message.read", message.read);
-			console.log(
-				"???????????????? message.senderId!= candidateData.id",
-				message.senderId != recruiterData.id
-			);
-			console.log(message);
+		// selectedChatRoomMessages.forEach((message: any) => {
+		// 	console.log("???????????????? message.read", message.read);
+		// 	console.log(
+		// 		"???????????????? message.senderId!= candidateData.id",
+		// 		message.senderId != recruiterData.id
+		// 	);
+		// 	console.log(message);
+
+		// 	// const otherUser = chatRoom.users.filter(
+		// 	// 	(value: any) => value?._id !== recruiterData?.id
+		// 	// );
 			
-			if (!message.read && message.senderId != recruiterData.id) {
-				console.log("////////////////////////////////////////////////////////");
-				socket.emit("markAsRead", message.id);
-			}
-		});
+		// 	if (!message.read && message.senderId != recruiterData.id) {
+		// 		console.log("////////////////////////////////////////////////////////");
+		// 		socket.emit("markAsRead", message.id);
+		// 	}
+		// });
 	};
 
 	console.log("onlineUsers are --->>>", onlineUsers);
@@ -138,7 +169,7 @@ const ChatPageRecruiter = () => {
 			// console.log("oooooooooooooooo onlineUsers[i].userId == otherValue",onlineUsers[i].userId == otherValue[0]._id," oooooooooooo");
 			// console.log("oooooooooooooooo onlineUsers[i].userId ",onlineUsers[i].userId," oooooooooooo");
 			// console.log("oooooooooooooooo otherValue ",otherValue[0]._id," oooooooooooo");
-			if(onlineUsers[i].userId == otherValue[0]._id){
+			if(onlineUsers[i].userId == otherValue[0]?._id){
 				return true
 			}
 			if (onlineUsers[i].userId == otherValue) {
@@ -181,6 +212,7 @@ const ChatPageRecruiter = () => {
 											key={index}
 											receiver={getReceiver(chatRoom)}
 											isOnline={isUserOnline(chatRoom)}
+											lastMessage={chatRoom?.lastMessage}
 											onClick={() =>
 												handleChatRoomClick(chatRoom)
 											} // Update the onClick handler

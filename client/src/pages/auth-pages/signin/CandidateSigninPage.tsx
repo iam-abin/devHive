@@ -12,17 +12,25 @@ import { candidateSigninApi } from "../../../axios/apiMethods/auth-service/candi
 import { setCandidate } from "../../../redux/slice/candidateSlice/candidateDataSlice";
 import { RootState } from "../../../redux/reducer/reducer";
 import Loading from "../../../components/loading/Loading";
-import candidateLoginImage from "../../../assets/candidate/candidate-login.svg"
-import googleIcon from "../../../assets/google/google-icon.svg"
+import candidateLoginImage from "../../../assets/candidate/candidate-login.svg";
+import googleIcon from "../../../assets/google/google-icon.svg";
+import { gapi } from 'gapi-script';
 
-function CandidateSigninPage() {
+import React, { useEffect, useState } from "react";
+import { GoogleLogin, GoogleOAuthProvider, useGoogleLogin } from "@react-oauth/google";
+import axios from "axios";
+// import { GoogleLogin } from "@react-oauth/google";
+const CandidateSigninPage: React.FC = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+
+	const [ user, setUser ] = useState<any>([]);
+    const [ profile, setProfile ] = useState([]);
+	// let clientId = "489110239720-2e35usfdf9kavcchc93fbun2oeismh10.apps.googleusercontent.com"
 
 	const isLoading = useSelector(
 		(state: RootState) => state.loading.isLoading
 	);
-
 
 	const handleSubmit = async (userData: any) => {
 		try {
@@ -45,6 +53,54 @@ function CandidateSigninPage() {
 	if (isLoading) {
 		return <Loading />;
 	}
+
+	const responseMessage = (response: any) => {
+		console.log("res message success ",response);
+		setUser(response)
+		
+	};
+	const errorMessage: any = (error: any) => {
+		console.log("error message ",error);
+	};
+
+	useEffect(()=>{
+		function start(){
+			gapi.client.init({
+				clientId: "489110239720-2e35usfdf9kavcchc93fbun2oeismh10.apps.googleusercontent.com",
+				scope: ""
+			})
+		};
+
+		gapi.load('client:auth2', start)
+	})
+
+
+	// useEffect(
+    //     () => {
+    //         if (user) {
+    //             // user == [] ? console.log(user) : console.log("Empty user")
+    //             axios
+    //                 .get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
+    //                     headers: {
+    //                         Authorization: `Bearer ${user.access_token}`,
+    //                         Accept: 'application/json'
+    //                     }
+    //                 })
+    //                 .then((res) => {
+    //                     setProfile(res.data);
+    //                     console.log("data assigned res.data", res.data);
+    //                 })
+    //                 .catch((err) => console.log(err));
+    //         }
+    //     },
+    //     [user]
+    // );
+
+
+    // const login = useGoogleLogin({
+    //     onSuccess: (codeResponse: any) => setUser(codeResponse),
+    //     onError: (error) => console.log('Login Failed:', error)
+    // });
 	return (
 		<div className="flex w-full h-screen">
 			<div className="w-full lg:w-6/12 flex items-center justify-center">
@@ -127,6 +183,7 @@ function CandidateSigninPage() {
 									</div>
 
 									<div className="flex items-center justify-center mb-3">
+										
 										<button
 											type="submit"
 											className={`btn btn-outline w-60 btn-primary`}
@@ -144,14 +201,23 @@ function CandidateSigninPage() {
 									</div>
 								</Form>
 								<div className="flex items-center justify-center gap-3">
-									<button className="btn border-gray-600 w-60">
+										<GoogleOAuthProvider clientId="489110239720-2e35usfdf9kavcchc93fbun2oeismh10.apps.googleusercontent.com">
+										<GoogleLogin
+											onSuccess={responseMessage}
+											onError={errorMessage}
+										/>
+									{/* <button
+									
+									onClick={() => login()}
+									className="btn border-gray-600 w-60">
 										<img
 											src={googleIcon}
 											className="w-7"
 											alt=""
 										/>
 										Sign in With Google
-									</button>
+									</button> */}
+									</GoogleOAuthProvider>
 								</div>
 
 								<div className="w-full mt-5 items-center justify-center flex">
@@ -181,6 +247,6 @@ function CandidateSigninPage() {
 			</div>
 		</div>
 	);
-}
+};
 
 export default CandidateSigninPage;

@@ -15,7 +15,9 @@ const jobApiUrlConfig = {
 	`${CANDIDATE_JOB_URL}/applied-jobs/${candidateId}/${currentPage}`,
 	
 	// Recruiter
+	
 	createJobUrl: `${RECRUITER_JOB_URL}/create`,
+	getRecruiterDashboardDetailsUrl: `${RECRUITER_JOB_URL}/getRecruiterDashboardDetails`,
 	changeJobCloseStatusUrl: (id: string) => `${RECRUITER_JOB_URL}/change-close-status/${id}`,
 	updateJobUrl: `${RECRUITER_JOB_URL}/update-job`,
 	deleteAJobUrl: (id: string) => `${RECRUITER_JOB_URL}/${id}`,
@@ -29,6 +31,8 @@ const jobApiUrlConfig = {
 	`${CANDIDATE_JOB_URL}/job-application/${jobApplicationId}`,
 	changeJobApplicationStatusUrl: (jobApplicationId: string) =>
 		`${RECRUITER_JOB_URL}/change-application-status/${jobApplicationId}`,
+
+	getAllRecruiterDashboardCardsDetailsUrl: `${RECRUITER_JOB_URL}/getRecruiterDashboardsAllCardsDetails`,
 };
 
 export default jobApiUrlConfig;

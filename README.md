@@ -7,33 +7,13 @@ This is a Job Finding Application For software developers.
 
 ## env variables
 
-#### to create a secret or env variable,
+#### to create a secret or env variables,
 
 ```
 kubectl create secret generic NAME_OF_THE_SECRET_KEY --from-literal=KEY=VALUE_FOR_THE_KEY
 ```
 
 eg:- kubectl create secret generic auth-api-key --from-literal=AUTH_API_KEY=1234567890
-
-#### api prefix
-
-API_PREFIX = 'api prifix' eg:- /api/v1
-
-#### jwt secret
-
-JWT_SECRET_KEY = "your jwt secret"
-
-#### twilio otp sending and verification
-
-TWILIO_ACCOUNT_SID = 'your_twilio_sid' <br>
-TWILIO_AUTH_TOKEN = 'your_twilio_auth_token' <br>
-TWILIO_SERVICE_SID = 'your_twilio_service_sid'
-
-#### mongo atlas utls(Not necessary)
-
-MONGO_URL_AUTH = "authentication db url" <br>
-MONGO_URL_ADMIN = "admin db url" <br>
-MONGO_URL_PROFILE = "profile db url"
 
 
 ### steps to start

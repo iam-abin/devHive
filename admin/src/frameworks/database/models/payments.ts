@@ -3,8 +3,8 @@ import mongoose from "mongoose";
 import { PaymentData } from "../../../entities/payment";
 // 2. An interface that describes the properties ,that a Chat Document has
 interface PaymentDocument extends mongoose.Document {
-	candidateId: string;
-	membershipPlanId: string;
+	candidateId: mongoose.Schema.Types.ObjectId;
+	membershipPlanId: mongoose.Schema.Types.ObjectId;
 	stripeId?: string;
 	createdAt: Date;
 	updatedAt: Date;
@@ -13,8 +13,8 @@ interface PaymentDocument extends mongoose.Document {
 // 3.
 const paymentSchema = new mongoose.Schema(
 	{
-		candidateId: String,
-		membershipPlanId: String,
+		candidateId: mongoose.Schema.Types.ObjectId,
+		membershipPlanId: mongoose.Schema.Types.ObjectId,
 		stripeId: String,
 	},
 	{

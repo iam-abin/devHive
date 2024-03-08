@@ -38,7 +38,7 @@ function RecruiterSigninPage() {
 	
 	const handleSubmit = async (userData: any) => {
 		try {
-			dispatch(setLoading());
+			// dispatch(setLoading());
 			const response = await recruiterSigninApi(userData);
 			console.log("hiiii", response);
 			console.log("hiiii", response.data);
@@ -51,7 +51,7 @@ function RecruiterSigninPage() {
 			console.log("in signin form error", error);
 			notify(error.errors[0].message, "error");
 		}finally {
-			dispatch(setLoaded());
+			// dispatch(setLoaded());
 		}
 	};
 

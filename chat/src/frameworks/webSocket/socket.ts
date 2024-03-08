@@ -54,11 +54,10 @@ export const onSocketConnection = (io: Server, socket: Socket) => {
 	socket.on(
 		"createChatRoom",
 		async (senderId: string, recepientId: string) => {
-			
 			try {
 				const senderData = await userRepository.findUserById(senderId);
-				console.log("recepientId ",recepientId);
-				
+				console.log("recepientId ", recepientId);
+
 				const recipientData = await userRepository.findUserById(
 					recepientId
 				);
@@ -74,19 +73,17 @@ export const onSocketConnection = (io: Server, socket: Socket) => {
 					senderId,
 					recepientId
 				);
-				console.log("getAchatroom room",room);
-				
+				console.log("getAchatroom room", room);
+
 				if (room.length === 0) {
 					// no room so creating room
 					let chatRoomData = {
-						users: [senderId, recepientId]
-					}
-					const chatRoom = new ChatRoom(chatRoomData)
+						users: [senderId, recepientId],
+					};
+					const chatRoom = new ChatRoom(chatRoomData);
 					console.log("chatRoom after entity in socket");
-					
-					await chatRoomRepository.createChatRoom(
-						chatRoom
-					);
+
+					await chatRoomRepository.createChatRoom(chatRoom);
 				}
 
 				if (room.length > 0) {
@@ -117,8 +114,8 @@ export const onSocketConnection = (io: Server, socket: Socket) => {
 
 		try {
 			const { senderId, roomId, textMessage } = data;
-			console.log("/////",data,"///////");
-			
+			console.log("/////", data, "///////");
+
 			console.log("senderId", senderId);
 			console.log("roomId", roomId);
 			console.log("textMessage", textMessage);
@@ -127,7 +124,7 @@ export const onSocketConnection = (io: Server, socket: Socket) => {
 				throw new BadRequestError("please provide message");
 
 			// 	console.log("----senderId ", senderId);
-			
+
 			// console.log("----recepientId ", recepientId);
 			const senderData = await userRepository.findUserById(senderId);
 
@@ -141,18 +138,26 @@ export const onSocketConnection = (io: Server, socket: Socket) => {
 				console.log("room already there");
 			}
 
+			
 			const result = await messageRepository.createMessage({
 				senderId,
 				roomId,
 				textMessage,
 			});
+			console.log("before chatroom repo)))))))))))");
+			
+			let chatroomResult = await chatRoomRepository.updateAChatRoom(
+				roomId,
+				textMessage
+				);
+				console.log("after chatroom repo))))))))))) chatroomResult", chatroomResult);
 
 			const user1: any = getUser(senderId);
 
 			const recipient: any = room?.users.filter(
 				(user) => user.toString() !== senderId
 			);
-			
+
 			const recipientData = await userRepository.findUserById(
 				recipient[0].toString()
 			);
@@ -161,7 +166,6 @@ export const onSocketConnection = (io: Server, socket: Socket) => {
 			console.log("recepeint from room ", recipient);
 
 			const user2: any = getUser(recipient[0].toString());
-			
 
 			const message = {
 				result,
@@ -171,11 +175,13 @@ export const onSocketConnection = (io: Server, socket: Socket) => {
 
 			console.log("after recepeint from room ", message);
 
-
 			if (user1?.socketId) {
-				console.log("inside user1 emit user1?.socketId", user1?.socketId);
+				console.log(
+					"inside user1 emit user1?.socketId",
+					user1?.socketId
+				);
 				console.log("inside user1 emit receiveMessage", message.result);
-				
+
 				io.to(user1.socketId).emit("receiveMessage", message);
 			}
 
@@ -189,15 +195,15 @@ export const onSocketConnection = (io: Server, socket: Socket) => {
 		}
 	});
 
-	socket.on('markAsRead', async (messageId: string) => {
-		console.log("in socket read messageId ", messageId);
+	socket.on("markAsRead", async (messageId: string) => {
+		console.log("---------------in socket read messageId ", messageId);
 
 		const result = await messageRepository.setReadMessage(messageId);
 		// await Message.updateOne({ _id: messageId }, { read: true });
 		console.log("in socket read result ", result);
-		
-		io.emit('messageRead', messageId);
-	 });
+
+		io.emit("messageRead", messageId);
+	});
 
 	// when a user disconnect
 	socket.on("disconnect", () => {

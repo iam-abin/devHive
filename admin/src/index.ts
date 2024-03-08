@@ -54,15 +54,15 @@ const start = async () => {
 	const jobDeletedEvent = new JobDeletedEventConsumer(kafkaClient);
 	const paymentcreatedEvent = new PaymentcreatedEventConsumer(kafkaClient);
 
-	// // await companyProfileCreatedEvent.subscribe();
-	// // await companyProfileUpdatedEvent.subscribe();
-	// await candidateProfileUpdatedEvent.subscribe();
-	// await recruiterProfileUpdatedEvent.subscribe();
-	// await jobCreatedEvent.subscribe();
-	// await jobUpdatedEvent.subscribe();
-	// await jobDeletedEvent.subscribe();
-	// await userUpdatedEvent.subscribe();
-	// await userCreatedEvent.subscribe();
+	// await companyProfileCreatedEvent.subscribe();
+	// await companyProfileUpdatedEvent.subscribe();
+	await candidateProfileUpdatedEvent.subscribe();
+	await recruiterProfileUpdatedEvent.subscribe();
+	await jobCreatedEvent.subscribe();
+	await jobUpdatedEvent.subscribe();
+	await jobDeletedEvent.subscribe();
+	await userUpdatedEvent.subscribe();
+	await userCreatedEvent.subscribe();
 	await paymentcreatedEvent.subscribe()
 	
 	app.listen(3000, () => {
@@ -70,27 +70,27 @@ const start = async () => {
 	})
 	
 		.on("error", async () => {
-			// // await companyProfileCreatedEvent.disconnect();
-			// // await companyProfileUpdatedEvent.disconnect();
-			// await candidateProfileUpdatedEvent.disconnect();
-			// await recruiterProfileUpdatedEvent.disconnect();
-			// await jobCreatedEvent.disconnect();
-			// await jobUpdatedEvent.disconnect();
-			// await jobDeletedEvent.disconnect();
-			// await userUpdatedEvent.disconnect();
-			// await userCreatedEvent.disconnect();
+			// await companyProfileCreatedEvent.disconnect();
+			// await companyProfileUpdatedEvent.disconnect();
+			await candidateProfileUpdatedEvent.disconnect();
+			await recruiterProfileUpdatedEvent.disconnect();
+			await jobCreatedEvent.disconnect();
+			await jobUpdatedEvent.disconnect();
+			await jobDeletedEvent.disconnect();
+			await userUpdatedEvent.disconnect();
+			await userCreatedEvent.disconnect();
 			await paymentcreatedEvent.disconnect()
 		})
 		.on("close", async () => {
-			// // await companyProfileCreatedEvent.disconnect();
-			// // await companyProfileUpdatedEvent.disconnect();
-			// await candidateProfileUpdatedEvent.disconnect();
-			// await recruiterProfileUpdatedEvent.disconnect();
-			// await jobCreatedEvent.disconnect();
-			// await jobUpdatedEvent.disconnect();
-			// await jobDeletedEvent.disconnect();
-			// await userUpdatedEvent.disconnect();
-			// await userCreatedEvent.disconnect();
+			// await companyProfileCreatedEvent.disconnect();
+			// await companyProfileUpdatedEvent.disconnect();
+			await candidateProfileUpdatedEvent.disconnect();
+			await recruiterProfileUpdatedEvent.disconnect();
+			await jobCreatedEvent.disconnect();
+			await jobUpdatedEvent.disconnect();
+			await jobDeletedEvent.disconnect();
+			await userUpdatedEvent.disconnect();
+			await userCreatedEvent.disconnect();
 			await paymentcreatedEvent.disconnect()
 		});
 };

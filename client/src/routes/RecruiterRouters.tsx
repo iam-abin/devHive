@@ -8,7 +8,7 @@ import Loading from "../components/loading/Loading";
 import NotFound from "../pages/Error/NotFound";
 
 import RecruiterLayout from "../pages/layout/RecruiterLayout";
-import RecruiterDashBoard from "../pages/dashboard/RecruiterDashBoard";
+import RecruiterDashBoard from "../pages/dashboard/RecruiterDashBoardPage";
 import CandidateProfilePage from "../pages/profile/candidate/CandidateProfilePage";
 
 

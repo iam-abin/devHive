@@ -82,7 +82,7 @@ const TopNavBarCandidate = () => {
 			title: "Premium",
 			to: "/candidate/payment-plans",
 		},
-		{ title: "Chat", to: "/candidate/chat" },
+		{ title: "Chat", to: `/candidate/chat/${candidate.id}` },
 		{ title: "Reset Password", to: "/candidate/passwordResetMobile" },
 	];
 

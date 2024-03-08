@@ -71,7 +71,7 @@ recruiterApi.interceptors.response.use(
 				}
 			} catch (refreshError) {
 				console.error("Refresh token failed:", refreshError);
-				clearRecruiterFromLocal();
+				// clearRecruiterFromLocal();
 			}
 		}
 		return Promise.reject(error);
@@ -100,7 +100,7 @@ const refreshToken = async () => {
 		}
 	} catch (error) {
 		console.error("Failed to refresh token", error);
-		clearRecruiterFromLocal();
+		// clearRecruiterFromLocal(); never call it
 	}
 	return null;
 };

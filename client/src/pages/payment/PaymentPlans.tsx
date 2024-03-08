@@ -9,7 +9,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { getAllMembershipPlansApi } from "../../axios/apiMethods/premium-plans-service/admin";
 import PaymentPlanCard from "../../components/cards/PaymentPlanCard";
 
-const PaymentPlans = () => {
+const PaymentPlans: React.FC = () => {
 	const [membershipPlansData, setMembershipPlansData] = useState<[]>([]);
 
 	const candidateData: any = useSelector(

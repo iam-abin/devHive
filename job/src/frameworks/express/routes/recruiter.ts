@@ -24,6 +24,7 @@ export const recruiterRouter = (dependencies: DependenciesData) => {
 		viewJobApplicationController,
 		changeJobApplicationStatusController,
 		changeJobCloseStatusController,
+		recruiterDashboardCardsController,
 	} = recruiterJobControllers(dependencies);
 
 	router.get("/all-jobs/:page", viewAllJobsController);
@@ -45,10 +46,13 @@ export const recruiterRouter = (dependencies: DependenciesData) => {
 	router.get("/job-applications/:recruiterId", viewJobApplicationsController);
 
 	router.get("/job-application/:jobApplicationId", viewJobApplicationController);
-
+	
 	router.post("/change-application-status/:jobApplicationId", changeJobApplicationStatusController);
+
+	// router.get("/getRecruiterDashboardDetails", recruiterDashboardCardsController)
 	
 	router.patch("/change-close-status/:jobId", changeJobCloseStatusController);
 	
+	// router.get("/getRecruiterDashboardCardsDetails", recruiterDashboardCardsController);
 	return router;
 };

@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react'
 import TableComponent from '../../components/table/TableComponent';
 import { useNavigate } from 'react-router-dom';
 import { getAllPaymentsApi } from '../../axios/apiMethods/payment-service/admin';
-import Swal from 'sweetalert2';
-import { notify } from '../../utils/toastMessage';
+// import Swal from 'sweetalert2';
+// import { notify } from '../../utils/toastMessage';
 
 const PaymentsListPage: React.FC = () => {
-  const navigate = useNavigate();
+//   const navigate = useNavigate();
 	const [paymentsData, setPaymentsData] = useState(
 		[]
 	);
@@ -23,10 +23,10 @@ const PaymentsListPage: React.FC = () => {
 		})();
 	}, []);
 
-	const viewProfileDetails = async (userId: string) => {
-		console.log("in viewProfileDetails fn ", userId);
-		navigate(`/admin/candidate/viewProfileDetails/${userId}`);
-	};
+	// const viewProfileDetails = async (userId: string) => {
+	// 	console.log("in viewProfileDetails fn ", userId);
+	// 	navigate(`/admin/candidate/viewProfileDetails/${userId}`);
+	// };
 
 	// const handleBlockUnblock = async (userId: string, isActive: boolean) => {
 	// 	console.log("userId", userId);
