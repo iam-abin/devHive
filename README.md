@@ -16,6 +16,21 @@ kubectl create secret generic NAME_OF_THE_SECRET_KEY --from-literal=KEY=VALUE_FO
 eg:- kubectl create secret generic auth-api-key --from-literal=AUTH_API_KEY=1234567890
 
 
+### To open minikube minikube 
+
+1. if for the first time
+
+```
+minikube addons enable metrics-server
+```
+
+2. then
+
+```
+minikube dashboard
+```
+
+
 ### steps to start
 
 1. start minikube
