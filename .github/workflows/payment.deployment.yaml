@@ -1,11 +1,11 @@
-name: deploy-auth
+name: deploy-payment
 
 on:
   push:
     branches:
       - master
     paths:
-      - 'auth/**'
+      - 'payment/**'
 
 jobs:
   build:
@@ -16,10 +16,10 @@ jobs:
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      - run: cd auth  && docker build -t abinv/auth .
-      - run: docker push abinv/auth
+      - run: cd auth  && docker build -t abinv/payment .
+      - run: docker push abinv/payment
       - uses: digitalocean/action-doctl@v2
         with:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
       - run: doctl kubernetes cluster kubeconfig save devhive-jobportal
-      - run: kubectl rollout restart deployment auth-depl  
+      - run: kubectl rollout restart deployment payment-depl 
