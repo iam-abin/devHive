@@ -6,6 +6,7 @@ on:
       - master
     paths:
       - 'k8s/**'
+      
 jobs:     
   build:
     runs-on: ubuntu-latest
