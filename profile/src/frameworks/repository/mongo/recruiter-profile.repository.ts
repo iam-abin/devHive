@@ -4,9 +4,8 @@ const { RecruiterProfileModel } = schemas;
 
 // we want to export some closure
 export = {
-	// these fn's are returning a promise as async so we can defile return type as Promise<CandidateDataInterface>
-
-	// createRecruiterProfile is calling when the user is signed in, and then creates a basic profile
+	// These fn's are returning a promise as async so we can defile return type as Promise<CandidateDataInterface>
+	// CreateRecruiterProfile is calling when the user is signed in, and then creates a basic profile
 
 	createRecruiterProfile: async (userData: any): Promise<any> => {
 		console.log(

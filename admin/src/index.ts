@@ -13,6 +13,7 @@ import { CandidateProfileUpdatedEventConsumer } from "./frameworks/utils/kafka-e
 import { RecruiterProfileUpdatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/recruiter-profile-updated-consumer";
 import { PaymentcreatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/payment-created-consumer";
 
+
 const start = async () => {
 	console.log("Starting up....");
 

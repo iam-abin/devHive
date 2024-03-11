@@ -7,6 +7,8 @@ import {
 	blockUnblockCandidateApi,
 	getAllCandidatesApi,
 } from "../../axios/apiMethods/admin-service/candidates";
+
+
 interface CandidateInterface {
 	id: string;
 	name: string;

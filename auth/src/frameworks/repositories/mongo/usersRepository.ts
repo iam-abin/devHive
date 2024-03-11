@@ -16,6 +16,7 @@ export = {
 
 	updatePassword: async ({ id, password }: UpdatePasswordInput): Promise<any> => {
 		const user = await UserModel.findById(id);
+		
 		if (!user) {
 			throw new Error("User not found");
 		}

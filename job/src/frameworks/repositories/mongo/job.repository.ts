@@ -119,9 +119,9 @@ export = {
 			// select: 'name email profileImgUrl userType', // Select the fields you want to populate
 		});
 
-		console.log("inside get A job  ============");
-		console.log(job);
-		console.log("inside get A job ============");
+		// console.log("inside get A job  ============");
+		// console.log(job);
+		// console.log("inside get A job ============");
 
 		return job;
 	},

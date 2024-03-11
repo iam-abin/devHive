@@ -4,9 +4,6 @@ const { MessageModel, ChatRoomModel } = schemas;
 
 export = {
 	createChatRoom: async (chatRoomData: any) => {
-		// let arr = [];
-		// arr.push(sender);
-		// arr.push(recipient);
 		const chatRoom = ChatRoomModel.buildChatRoom(chatRoomData);
 		console.log("in createChatRoom repository");
 
