@@ -6,10 +6,10 @@ import { jobsController, candidateJobControllers } from "../../../controllers";
 // import { signinRequestBodyValidatorMiddlewares } from "../middlewares/signinValidation";
 import { DependenciesData } from "../../types/dependencyInterface";
 
+
 export const candidateRouter = (dependencies: DependenciesData) => {
 	const router = express.Router();
-	console.log("routeeeeeeeeeee");
-
+	
 	const {
 		viewAllJobsController,
 		filterJobsController,

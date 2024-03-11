@@ -9,7 +9,7 @@ export = {
 	 // these fn's are returning a promise as async so we can defile return type as Promise<CandidateDataInterface>
 
 	 createCompanyProfile: async (companyData: any): Promise<any> => {
-		console.log("inside create Company repo in profile service", companyData);
+		// console.log("inside create Company repo in profile service", companyData);
 		const {company_name, company_location, company_state, company_country,recruiterId} = companyData
 		const userObject = CompanyProfileModel.buildCompany({company_name, company_location, company_state, company_country, recruiterId});
 		return await userObject.save();

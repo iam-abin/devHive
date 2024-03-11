@@ -11,6 +11,7 @@ import { notify } from "../../../utils/toastMessage";
 import Footer from "../../../components/footer/Footer";
 import TopNavBarCandidate from "../../../components/navBar/TopNavBarCandidate";
 
+
 interface ProfileFormData {
 	name: string;
 	email: string;

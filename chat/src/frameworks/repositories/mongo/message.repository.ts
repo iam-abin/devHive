@@ -19,7 +19,6 @@ export = {
 	},
 
 	setReadMessage: async (messageId: string) => {
-		// const result = await messageRepository.setReadMessage(messageId);
 		let message = await MessageModel.updateOne(
 			{ _id: messageId },
 			{ $set: { read: true } },

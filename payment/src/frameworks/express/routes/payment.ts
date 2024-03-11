@@ -3,7 +3,6 @@ import express from "express";
 import { paymentControllers } from "../../../controllers";
 import { DependenciesData } from "../../types/dependencyInterface";
 import {
-	currentUserAdminCheck,
 	currentUserCandidateCheck,
 } from "@abijobportal/common";
 import { requireAuthAdmin, requireAuthCandidate } from "@abijobportal/common";

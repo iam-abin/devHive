@@ -33,7 +33,7 @@ export = (dependencies: any) => {
 				paymentRepository.totalRevenue(),
 			]);
 
-            console.log("inside get all dashboard cars derails usecase ", { candidateCount, recruiterCount, jobCount, totalRevenue });
+		console.log("inside get all dashboard cars derails usecase ", { candidateCount, recruiterCount, jobCount, totalRevenue });
             
 		return { candidateCount, recruiterCount, jobCount, totalRevenue };
 	};
