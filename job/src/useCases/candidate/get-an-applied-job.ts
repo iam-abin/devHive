@@ -9,6 +9,7 @@ export = (dependencies: DependenciesData) => {
 	}
 
 	const execute = ( candidateId: string, jobApplicationId: string) => {
+		
 		return jobApplicationRepository.getAnAppliedJobByCandidate(candidateId, jobApplicationId);
 	};
 

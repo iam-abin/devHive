@@ -10,7 +10,6 @@ export = {
 		const membershipPlanData = new MembershipPlan(data)
 		const premium =  MembershipPlansModel.buildMembershipPlan(membershipPlanData);
 
-		// console.log("premium inside create premium ",premium);
 		return await premium.save();
 	},
 

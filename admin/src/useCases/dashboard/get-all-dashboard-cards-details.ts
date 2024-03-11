@@ -35,7 +35,6 @@ export = (dependencies: any) => {
 
             console.log("inside get all dashboard cars derails usecase ", { candidateCount, recruiterCount, jobCount, totalRevenue });
             
-
 		return { candidateCount, recruiterCount, jobCount, totalRevenue };
 	};
 

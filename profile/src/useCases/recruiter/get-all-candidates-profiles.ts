@@ -10,8 +10,8 @@ export = (dependencies: any) => {
 	}
 
 	const execute = async(skip: number, limit: number) => {
+
 		const profiles = await candidateProfileRepository.getAllCandidatesProfiles(skip, limit);
-		
 		return profiles;
 	};
 	

@@ -16,7 +16,7 @@ export = {
 
 	updatePassword: async ({ id, password }: UpdatePasswordInput): Promise<any> => {
 		const user = await UserModel.findById(id);
-		
+
 		if (!user) {
 			throw new Error("User not found");
 		}
@@ -45,6 +45,7 @@ export = {
 			{ $set: { otp: otp } },
 			{ new: true }
 		);
+		
 		console.log("set result: ", result);
 		return result;
 	},

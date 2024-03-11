@@ -1,6 +1,7 @@
 import React from "react";
 
 const DropDownSelect: React.FC<{ firstItem: string; jobs: any }> = ({ firstItem, jobs }) => {
+	
 	return (
 		<>
 			<select className="select select-primary text-center font-semibold rounded-md py-3 max-w-sm">

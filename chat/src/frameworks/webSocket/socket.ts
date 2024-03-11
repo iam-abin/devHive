@@ -1,6 +1,6 @@
 import { Server, Socket } from "socket.io";
 import http from "http";
-import { Server as SocketIo } from "socket.io";
+// import { Server as SocketIo } from "socket.io";
 import { BadRequestError } from "@abijobportal/common";
 import userRepository from "../repositories/mongo/user.repository";
 import messageRepository from "../repositories/mongo/message.repository";
