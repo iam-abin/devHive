@@ -16,7 +16,7 @@ jobs:
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      - run: cd auth  && docker build -t abinv/profile .
+      - run: cd profile  && docker build -t abinv/profile .
       - run: docker push abinv/profile
       - uses: digitalocean/action-doctl@v2
         with:

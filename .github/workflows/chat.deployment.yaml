@@ -16,7 +16,7 @@ jobs:
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      - run: cd auth  && docker build -t abinv/chat .
+      - run: cd chat  && docker build -t abinv/chat .
       - run: docker push abinv/chat
       - uses: digitalocean/action-doctl@v2
         with:

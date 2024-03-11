@@ -16,7 +16,7 @@ jobs:
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      - run: cd auth  && docker build -t abinv/payment .
+      - run: cd payment  && docker build -t abinv/payment .
       - run: docker push abinv/payment
       - uses: digitalocean/action-doctl@v2
         with:

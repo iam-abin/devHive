@@ -1,0 +1,163 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata: 
+  name: ingress-service
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/use-regex: 'true'
+    nginx.ingress.kubernetes.io/proxy-body-size: '50m' # Set the maximum allowed request body size
+    nginx.ingress.kubernetes.io/websocket-services: "chat-srv"
+spec:
+  tls:
+  - hosts:
+    - devhive.dev
+    secretName: devhive-tls
+  rules:
+    - host: abinvarghese.online
+      http:
+        paths:
+          - path: /api/v1/auth/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: auth-srv
+                port:
+                  number: 3000
+          - path: /api/v1/admin/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: admin-srv
+                port:
+                  number: 3000
+          - path: /api/v1/job/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: job-srv
+                port:
+                  number: 3000
+          - path: /api/v1/profile/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: profile-srv
+                port:
+                  number: 3000
+          - path: /api/v1/chat/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: chat-srv
+                port:
+                  number: 3000
+          - path: /api/v1/payment/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: payment-srv
+                port:
+                  number: 3000
+          - path: /?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: client-app-srvs
+                port:
+                  number: 3000
+
+
+# -----------------------------------------------------------------------------------
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: ingress-service
+#   annotations:
+#     cert-manager.io/cluster-issuer: "letsencrypt-prod"
+#     kubernetes.io/ingress.class: nginx
+#     nginx.ingress.kubernetes.io/use-regex: "true"
+#     nginx.ingress.kubernetes.io/proxy-body-size: "50m"
+# spec:
+#   tls:
+#     - hosts:
+#       - devhive.dev
+#       secretName: devhive-tls
+#   rules:
+#     - host: devhive.dev
+#       http:
+#        paths:
+#           - path: /api/v1/auth/?(.*)
+#             pathType: Prefix
+#             backend:
+#               service:
+#                 name: auth-srv
+#                 port:
+#                   number: 3000
+#           - path: /api/v1/admin/?(.*)
+#             pathType: Prefix
+#             backend:
+#               service:
+#                 name: admin-srv
+#                 port:
+#                   number: 3000
+#           - path: /api/v1/job/?(.*)
+#             pathType: Prefix
+#             backend:
+#               service:
+#                 name: job-srv
+#                 port:
+#                   number: 3000
+#           - path: /api/v1/profile/?(.*)
+#             pathType: Prefix
+#             backend:
+#               service:
+#                 name: profile-srv
+#                 port:
+#                   number: 3000
+#           - path: /api/v1/chat/?(.*)
+#             pathType: Prefix
+#             backend:
+#               service:
+#                 name: chat-srv
+#                 port:
+#                   number: 3000
+#           - path: /?(.*)
+#             pathType: Prefix
+#             backend:
+#               service:
+#                 name: client-app-srvs
+#                 port:
+#                   number: 3000
+# ---  
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   annotations:
+#     service.beta.kubernetes.io/do-loadbalancer-enable-proxy-protocol: 'true'
+#     service.beta.kubernetes.io/do-loadbalancer-hostname: 'devhive.dev'
+#   labels:
+#     helm.sh/chart: ingress-nginx-2.0.3
+#     app.kubernetes.io/name: ingress-nginx
+#     app.kubernetes.io/instance: ingress-nginx
+#     app.kubernetes.io/version: 0.32.0
+#     app.kubernetes.io/managed-by: Helm
+#     app.kubernetes.io/component: controller
+#   name: ingress-nginx-controller
+#   namespace: ingress-nginx
+# spec:
+#   type: LoadBalancer
+#   externalTrafficPolicy: Local
+#   ports:
+#     - name: http
+#       port: 80
+#       protocol: TCP
+#       targetPort: http
+#     - name: https
+#       port: 443
+#       protocol: TCP
+#       targetPort: https
+#   selector:
+#     app.kubernetes.io/name: ingress-nginx
+#     app.kubernetes.io/instance: ingress-nginx
+#     app.kubernetes.io/component: controller
