@@ -14,5 +14,5 @@ jobs:
       - uses: digitalocean/action-doctl@v2
         with:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-      - run: doctl kubernetes cluster kubeconfig save devhive-jobportal
+      - run: doctl kubernetes cluster kubeconfig save devhive-hosted-cluster
       - run: kubectl apply -f k8s/stateless && kubectl apply -f k8s/ingress/prod  
