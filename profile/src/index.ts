@@ -40,7 +40,6 @@ const start = async () => {
 
 	// to connect to mongodb
 	await connectDB();
-
 	
 	// it is used to listen to incomming message from kafka topics
 	const userCreatedEvent = new UserCreatedEventConsumer(kafkaClient);
