@@ -31,6 +31,7 @@ const start = async () => {
 	if (!process.env.MONGO_URL_ADMIN) {
 		throw new Error("MONGO_URL_ADMIN must be defined");
 	}
+
 	
 	// to connect to mongodb
 	await connectDB();
