@@ -105,9 +105,9 @@ const refreshToken = async () => {
 };
 
 
-function clearCandidateFromLocal() {
-	localStorage.removeItem(candidateAccessToken);
-	localStorage.removeItem(candidateRefreshToken);
-}
+// function clearCandidateFromLocal() {
+// 	localStorage.removeItem(candidateAccessToken);
+// 	localStorage.removeItem(candidateRefreshToken);
+// }
 
 export default candidateApiCalls;

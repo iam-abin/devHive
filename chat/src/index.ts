@@ -29,6 +29,7 @@ const start = async () => {
 
 	await connectDB();
 
+	
 	const userCreatedEvent = new UserCreatedEventConsumer(kafkaClient);
 	const userUpdatedEvent = new UserUpdatedEventConsumer(kafkaClient);
 	

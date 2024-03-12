@@ -32,6 +32,7 @@ const start = async () => {
 		throw new Error("MONGO_URL_ADMIN must be defined");
 	}
 
+	
 	// to connect to mongodb
 	await connectDB();
 
