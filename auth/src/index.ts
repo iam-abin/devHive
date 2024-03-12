@@ -37,6 +37,7 @@ const start = async () => {
 		throw new Error("TWILIO_SERVICE_SID must be defined");
 	}
 
+	
 	// to connect to mongodb
 	await connectDB();
 

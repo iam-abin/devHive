@@ -45,11 +45,13 @@ export default function App() {
 	// 	requestPermission();
 	// }, []);
 
+	
 	return (
 		<>
 			<ToastContainer className="mt-10" />
 			<Toaster />
 			<Routes>
+
 				<Route
 					path="/"
 					element={
@@ -66,6 +68,7 @@ export default function App() {
 				<Route path="/candidate/*" element={<CandidateRoutes />} />
 				<Route path="/recruiter/*" element={<RecruiterRouters />} />
 				<Route path="*" element={<NotFound url="/" />} />
+				
 			</Routes>
 		</>
 	);

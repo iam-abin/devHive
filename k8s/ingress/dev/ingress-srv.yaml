@@ -12,7 +12,7 @@ spec:
   tls:
   - hosts:
     - devhive.dev
-    secretName: devhive-tls
+    secretName: devhive-jobportal-tls
   rules:
     - host: devhive.dev
       http:
@@ -82,7 +82,7 @@ spec:
 #   tls:
 #     - hosts:
 #       - devhive.dev
-#       secretName: devhive-tls
+#       secretName: devhive-jobportal-tls
 #   rules:
 #     - host: devhive.dev
 #       http:

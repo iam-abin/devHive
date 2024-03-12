@@ -28,7 +28,6 @@ const start = async () => {
 	console.log("after socket instance");
 
 	await connectDB();
-
 	
 	const userCreatedEvent = new UserCreatedEventConsumer(kafkaClient);
 	const userUpdatedEvent = new UserUpdatedEventConsumer(kafkaClient);

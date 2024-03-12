@@ -38,6 +38,7 @@ const start = async () => {
 	}
 
 
+	
 	// to connect to mongodb
 	await connectDB();
 
