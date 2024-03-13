@@ -201,11 +201,11 @@ const CandidateSigninPage: React.FC = () => {
 									</div>
 								</Form>
 								<div className="flex items-center justify-center gap-3">
-										<GoogleOAuthProvider clientId="489110239720-2e35usfdf9kavcchc93fbun2oeismh10.apps.googleusercontent.com">
+										{/* <GoogleOAuthProvider clientId="489110239720-2e35usfdf9kavcchc93fbun2oeismh10.apps.googleusercontent.com">
 										<GoogleLogin
 											onSuccess={responseMessage}
 											onError={errorMessage}
-										/>
+										/> */}
 									{/* <button
 									
 									onClick={() => login()}
@@ -217,7 +217,7 @@ const CandidateSigninPage: React.FC = () => {
 										/>
 										Sign in With Google
 									</button> */}
-									</GoogleOAuthProvider>
+									{/* </GoogleOAuthProvider> */}
 								</div>
 
 								<div className="w-full mt-5 items-center justify-center flex">

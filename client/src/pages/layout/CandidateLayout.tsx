@@ -1,4 +1,4 @@
-import React, { useState, ReactNode } from "react";
+import React, {  ReactNode } from "react";
 import TopNavBarCandidate from "../../components/navBar/TopNavBarCandidate";
 import Footer from "../../components/footer/Footer";
 

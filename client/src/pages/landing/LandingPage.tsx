@@ -23,7 +23,7 @@ import { setTotalNumberOfPages } from "../../redux/slice/job/filteredJobsSlice";
 import { setCurrentPage } from "../../redux/slice/job/filteredJobsSlice";
 import TopNavBarCandidate from "../../components/navBar/TopNavBarCandidate";
 import Footer from "../../components/footer/Footer";
-import { getACandidateProfileApi } from "../../axios/apiMethods/profile-service/recruiter";
+// import { getACandidateProfileApi } from "../../axios/apiMethods/profile-service/recruiter";
 import { candidateGetProfileApi } from "../../axios/apiMethods/profile-service/candidate";
 import { setCandidateProfileDetails } from "../../redux/slice/candidateSlice/candidateProfileSlice";
 
@@ -62,12 +62,11 @@ function LandingPage() {
 
 	useEffect(() => {
 		(async () => {
-			
 			let id = candidate?.id;
 			let candidateProfile;
 			if (isCandidateUrl && candidate) {
-				candidateProfile = await candidateGetProfileApi( id );
-				dispatch(setCandidateProfileDetails(candidateProfile?.data))
+				candidateProfile = await candidateGetProfileApi(id);
+				dispatch(setCandidateProfileDetails(candidateProfile?.data));
 			}
 		})();
 	}, []);
@@ -112,8 +111,6 @@ function LandingPage() {
 		console.log("selected+1 : ", selected + 1);
 		dispatch(setCurrentPage({ currentPage: selected + 1 }));
 	};
-
-	
 
 	const handleViewJob = async (jobId: string) => {
 		console.log("id handle view ", jobId);
@@ -181,13 +178,17 @@ function LandingPage() {
 					</div>
 					<div>
 						{jobs && jobs.length > 0 ? (
-							jobs.map((job: any) => (
-								job.isActive && !job.isClosed && <JobCard
-									key={job?.id}
-									job={job}
-									handleViewJob={handleViewJob}
-								/>
-							))
+							jobs.map(
+								(job: any) =>
+									job.isActive &&
+									!job.isClosed && (
+										<JobCard
+											key={job?.id}
+											job={job}
+											handleViewJob={handleViewJob}
+										/>
+									)
+							)
 						) : (
 							<div className="mx-40 p-6 bg-transparent rounded-md shadow-md">
 								<div className="flex items-center justify-center mb-4">
