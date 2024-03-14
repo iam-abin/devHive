@@ -8,7 +8,7 @@ import ChatRoomList from "../../components/chat/ChatRoomList";
 import Message from "../../components/chat/Message";
 import ChatBoxTopBar from "../../components/chat/ChatBoxTopBar";
 import ChatInputBox from "../../components/chat/ChatInputBox";
-import { getAConversationApi, getAllChatRoomsApi } from "../../axios/apiMethods/chat-service/chat";
+import { getARecrutierConversationApi } from "../../axios/apiMethods/chat-service/chat";
 import { RootState } from "../../redux/reducer/reducer";
 import socket from "../../config/socket";
 
@@ -131,7 +131,7 @@ const ChatPageRecruiter = () => {
 
 	const handleChatRoomClick = async (room: any) => {
 		setSelectedChatRoom(room);
-		const conversations = await getAConversationApi(room._id);
+		const conversations = await getARecrutierConversationApi(room._id);
 		console.log("!!!!!!!!!!!!!!!!!!!!!!");
 		console.log(conversations.data);
 		console.log("!!!!!!!!!!!!!!!!!!!!!!");

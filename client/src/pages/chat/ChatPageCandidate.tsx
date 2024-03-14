@@ -10,7 +10,7 @@ import ChatRoomList from "../../components/chat/ChatRoomList";
 import Message from "../../components/chat/Message";
 import ChatBoxTopBar from "../../components/chat/ChatBoxTopBar";
 import ChatInputBox from "../../components/chat/ChatInputBox";
-import { getAConversationApi } from "../../axios/apiMethods/chat-service/chat";
+import { getACandidateConversationApi } from "../../axios/apiMethods/chat-service/chat";
 import { RootState } from "../../redux/reducer/reducer";
 import socket from "../../config/socket";
 
@@ -119,7 +119,7 @@ const ChatPageCandidate = () => {
 
 	const handleChatRoomClick = async (room: any) => {
 		setSelectedChatRoom(room);
-		const conversations = await getAConversationApi(room._id);
+		const conversations = await getACandidateConversationApi(room._id);
 		setSelectedChatRoomMessages(conversations.data);
 		// selectedChatRoomMessages.forEach((message: any) => {
 		// 	console.log("???????????????? message.read", message.read);

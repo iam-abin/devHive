@@ -5,35 +5,35 @@ import recruiterApiCalls from "../../recruiter/apiCalls";
 
 
 
+// export const getAllCandidateChatRoomsApi = async (senderId: string): Promise<any> => {
+//     const response: any = await candidateApiCalls("get", chatApiUrlConfig.getAllCandidateRoomsUrl(senderId));
+//     console.log("response is",response.data);
 
-
-// export const getAllJobsApi = async (senderId: string): Promise<any> => {
-// 		const response: any = await candidateApiCalls("get", chatApiUrlConfig.getARoomChatsUrl(senderId));
-// 		console.log("response is",response.data);
-	
-// 		return response.data;
+//     return response.data;
 // };
 
-export const getAllChatRoomsApi = async (senderId: string): Promise<any> => {
-    const response: any = await candidateApiCalls("get", chatApiUrlConfig.getAllRoomsUrl(senderId));
+
+export const getACandidateConversationApi = async (roomId: string): Promise<any> => {
+    const response: any = await candidateApiCalls("get", chatApiUrlConfig.getACandidateConversationUrl(roomId));
     console.log("response is",response.data);
 
     return response.data;
 };
 
 
-export const getAConversationApi = async (roomId: string): Promise<any> => {
-    const response: any = await candidateApiCalls("get", chatApiUrlConfig.getAConversationUrl(roomId));
+
+// export const getAllRecrutierChatRoomsApi = async (senderId: string): Promise<any> => {
+//     const response: any = await recruiterApiCalls("get", chatApiUrlConfig.getAllRecruiterRoomsUrl(senderId));
+//     console.log("response is",response.data);
+
+//     return response.data;
+// };
+
+
+
+export const getARecrutierConversationApi = async (roomId: string): Promise<any> => {
+    const response: any = await recruiterApiCalls("get", chatApiUrlConfig.getARecruiterConversationUrl(roomId));
     console.log("response is",response.data);
 
     return response.data;
 };
-
-// export const getAllRoomsUrl = async (roomId: string): Promise<any> => {
-// const response: any = await candidateApiCalls("get", chatApiUrlConfig.getAllRoomsUrl(roomId));
-// console.log("response is",response.data);
-
-// return response.data;
-// };
-
-
