@@ -7,13 +7,25 @@ import { clearRecruiter } from "../../redux/slice/recruiterSlice/recruiterDataSl
 import Swal from "sweetalert2";
 import { notify } from "../../utils/toastMessage";
 import { IoMdNotifications } from "react-icons/io";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Notifications from "../notification/Notifications";
+
+// import { candidateGetProfileApi } from "../../axios/apiMethods/profile-service/candidate";
+
+import socket from "../../config/socket";
+import { 
+	deleteCandidatesAllNotificationsApi,
+	 getRecruiterAllNotificationsApi,
+	 getRecruiterNotificationCountApi} from "../../axios/apiMethods/chat-service/notification";
 
 function TopNavBarRecruiter() {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const isLoggedIn = useSelector((state: RootState) => {
+
+	const [notifications, setNotifications] = useState<any[]>([]);
+	const [notificationsCount, setNotificationsCount] = useState<number>(0);
+
+	const isLoggedIn: any = useSelector((state: RootState) => {
 		return state.recruiterData.data;
 	});
 
@@ -21,6 +33,23 @@ function TopNavBarRecruiter() {
 		return state.recruiterData.data;
 	});
 
+		// to get the other user
+	const getOtherUser = (chatRoom: any) => {
+		const otherUser = chatRoom.users.filter(
+			(value: any) => value._id !== recruiter?.id
+		);
+
+		return otherUser;
+	};
+
+		// to avoid notification for current chatbox
+	const currentlySelectedChatRoom = useSelector(
+		(state: RootState) => state.candidateCurrentlySelectedChatroom.data
+	);
+
+	
+
+	const isRecruiterUrl = location.pathname.includes("recruiter");
 	console.log("isLoggedin Data", isLoggedIn);
 
 	const handleRecruiterLogout = async () => {
@@ -45,17 +74,123 @@ function TopNavBarRecruiter() {
 		});
 	};
 
+	// ============================================================================
+
 	const [openNotifications, setOpenNotifications] = useState(false);
+	
+	useEffect(() => {
+		(async () => {
+			try {
+				// console.log("no");
+				
+				if (openNotifications) {
+					
+					let fetchedNotifications = await getRecruiterAllNotificationsApi(recruiter?.id);
+					console.log("fetchedNotifications$$$$$$$$$$$$", fetchedNotifications.data);
+					let sender = getOtherUser(currentlySelectedChatRoom)
+					console.log("socket.on chatNotification 000000000000004", sender);
 
-	const notifications = [
-		// Add your notification data here
-		{ id: 1, message: "Notification 1" },
-		{ id: 2, message: "Notification 2" },
-	];
+					let filteredNotifications = fetchedNotifications.data.filter((notification: any)=>{
+						console.log("socket.on chatNotification 000000000000005", sender[0]?._id !== notification?.senderId);
+						return sender[0]?._id !== notification?.senderId
+					})
+					// if(sender[0]._id !== data?.senderId) setNotifications([...notifications, data]);
 
-	const clearNotifications = () => {
+					setNotifications(filteredNotifications);
+
+					// })
+					// dispatch(
+					// 	setCandidateProfileDetails(notifications?.data)
+					// );
+				}
+			} catch (error) {
+				console.error("Error fetching candidate profile:", error);
+			}
+		})();
+	}, [openNotifications]);
+	// io.to(user2.socketId).emit("chatNotification", {sender: senderId,message: textMessage });
+	useEffect(()=>{
+		socket.on("chatNotification", (data: any) => {
+			console.log("socket.on chatNotification 000000000000001", notifications);
+			console.log("socket.on chatNotification 000000000000002", data);
+			console.log("socket.on chatNotification 000000000000003", [...notifications,data]);
+			let sender = getOtherUser(currentlySelectedChatRoom)
+			console.log("socket.on chatNotification 000000000000004", sender);
+			console.log("socket.on chatNotification 000000000000005", sender[0]?._id !== data?.senderId);
+			if(sender[0]._id !== data?.senderId) setNotifications([...notifications, data]);
+			
+		});
+	},[])
+	// dispatch(setCandidateProfileDetails(notifications?.data));setNotificationsCount(fetchedNotificationsCount)
+
+
+
+	useEffect(() => {
+		(async () => {
+			try {
+					let notificationsCount = await getRecruiterNotificationCountApi(
+						recruiter?.id
+					);
+
+					let fetchedNotifications = await getRecruiterAllNotificationsApi(recruiter?.id);
+					console.log("fetchedNotifications$$$$$$$$$$$$", fetchedNotifications.data);
+					let sender = getOtherUser(currentlySelectedChatRoom)
+					console.log("socket.on chatNotification 000000000000004", sender);
+
+					let filteredNotifications = fetchedNotifications.data.filter((notification: any)=>{
+						console.log("socket.on chatNotification 000000000000005", sender[0]?._id !== notification?.senderId);
+						return sender[0]?._id !== notification?.senderId
+					})
+
+					console.log("notificationsCount1*****************", notificationsCount.data);
+					console.log("notificationsCount2*****************", filteredNotifications.length);
+
+					// console.log("socket.on chatNotification 000000000000005", sender[0]?._id !== notification?.senderId);
+					// return sender[0]?._id !== notification?.senderId
+
+					setNotificationsCount(filteredNotifications.length)
+
+					// dispatch(setCandidateProfileDetails(notifications?.data));
+				
+			} catch (error) {
+				console.error("Error fetching candidate profile:", error);
+			}
+		})();
+	}, [notifications]);
+
+	// useEffect(() => {
+	// 	(async () => {
+	// 		try {
+	// 			if (openNotifications) {
+	// 				let notifications = await getRecruiterAllNotificationsApi(
+	// 					recruiter?.id
+	// 				);
+
+	// 				console.log("notifications", notifications);
+
+	// 				// dispatch(setCandidateProfileDetails(notifications?.data));
+	// 			}
+	// 		} catch (error) {
+	// 			console.error("Error fetching candidate profile:", error);
+	// 		}
+	// 	})();
+	// }, []);
+
+	// ============================================================================
+	
+	// const notifications = [
+	// 	// Add your notification data here
+	// 	{ id: 1, message: "Notification 1" },
+	// 	{ id: 2, message: "Notification 2" },
+	// ];
+
+	const clearNotifications = async(e: React.MouseEvent<HTMLElement, MouseEvent>) => {
 		// Implement logic to clear notifications
-		console.log("Clearing notifications");
+		e.stopPropagation()
+		console.log("Clearing notifications...");
+		await deleteCandidatesAllNotificationsApi(recruiter.id)
+		setNotificationsCount(0)
+		setNotifications([])
 	};
 
 	return (
@@ -74,14 +209,14 @@ function TopNavBarRecruiter() {
 			>
 				<IoMdNotifications className="text-2xl mr-3" />
 				<div className="badge absolute top-0 right-0 bg-green-600 text-white rounded-full p-1 text-xs">
-					{notifications.length}
+				{notificationsCount}
 				</div>
 
 				 {openNotifications && (
 						<Notifications
-							notifications={notifications}
-							clearNotifications={clearNotifications}
-						/>
+						notifications={notifications}
+						clearNotifications={clearNotifications} 
+						setOpenNotificationFn={setOpenNotifications}						/>
 					)}
 		
 			</div>

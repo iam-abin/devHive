@@ -17,12 +17,12 @@ const Notifications: React.FC<{
 				<ul>
 					{notifications.length > 0 ? (
 						notifications?.map((notification: any) => (
-							<li className="my-4" key={notification.id}>
+							<li className="my-4 p-2 text-sm shadow-lg" key={notification.id}>
 								{notification.message}
 							</li>
 						))
 					) : (
-						<div className="bg-blue-400 flex flex-col items-center justify-center ">
+						<div className=" flex flex-col items-center justify-center ">
 							<span className="my-aut">No Notifications</span>
 						</div>
 					)}

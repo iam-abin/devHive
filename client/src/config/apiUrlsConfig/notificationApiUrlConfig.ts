@@ -15,7 +15,8 @@ const notificationApiUrlConfig = {
 	getRecruiterNotificationCountUrl: (userId: string) => `${RECRUITER_CHAT_URL}/notifications-count/${userId}`,
 	getRecruiterAllNotificationsUrl: (userId: string) => `${RECRUITER_CHAT_URL}/notificatons/${userId}`,
 	deleteRecruiterAllNotificationsUrl: (userId: string) => `${RECRUITER_CHAT_URL}/notificatons/${userId}`,
-	
+	deleteRecruitersAllNotificationsBySenderIdUrl: (senderId: string) => `${RECRUITER_CHAT_URL}/delete-notifications-by-senderId/${senderId}`,
+
 };
 
 export default notificationApiUrlConfig;

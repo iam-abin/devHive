@@ -15,7 +15,7 @@ const Message: React.FC<{
 	return (
 		<>
 			{message.senderId === currentUserId ? (
-				<div className="chat chat-end mt-3">
+				<div className="chat chat-end mt-3 ">
 					<div className="chat-image avatar">
 						<div className="w-10 rounded-full">
 							<img

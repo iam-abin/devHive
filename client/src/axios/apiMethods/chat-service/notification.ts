@@ -55,3 +55,10 @@ export const deleteRecruiterAllNotificationsApi = async (userId: string): Promis
 
     return response.data;
 };
+
+export const deleteRecruitersAllNotificationsBySenderIdApi = async (senderId: string): Promise<any> => {
+    const response: any = await recruiterApiCalls("delete", notificationApiUrlConfig.deleteRecruitersAllNotificationsBySenderIdUrl(senderId));
+    console.log("response is",response.data);
+
+    return response.data;
+};

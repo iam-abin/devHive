@@ -4,6 +4,7 @@ interface ChatRoomListProps {
 	receiver: any;
 	isOnline: boolean;
 	lastMessage: string;
+	unreadCount: number;
 	onClick: () => void;
 	selected: boolean;
 }
@@ -12,6 +13,7 @@ const ChatRoomList: React.FC<ChatRoomListProps> = ({
 	receiver,
 	isOnline,
 	lastMessage,
+	unreadCount,
 	onClick,
 	selected,
 }) => {
@@ -53,11 +55,14 @@ const ChatRoomList: React.FC<ChatRoomListProps> = ({
 					</div>
 				</div>
 				<div className="flex flex-col w-full justify-between">
-					<h5>{receiver[0]?.name}</h5>
+					<h5 className="text-gray-600 font-semibold text-sm">{receiver[0]?.name}</h5>
 					<span className="flex flex-row items-center">
 						<p>{lastMessage?.length>8?lastMessage?.substring(0,8)+"...": lastMessage}</p>
 					</span>
 				</div>
+					{unreadCount>0 && <div className="badge  right-0 bg-green-600 text-white rounded-full p-1 text-xs">
+						{unreadCount}
+					</div>}
 				{/* <div className="flex flex-row w-full justify-between"> */}
 			</div>
 		</div>

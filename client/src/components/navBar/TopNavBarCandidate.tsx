@@ -2,8 +2,9 @@
 import { Link, useMatch, useNavigate } from "react-router-dom";
 import { RootState } from "../../redux/reducer/reducer";
 import { useDispatch, useSelector } from "react-redux";
-import { clearCandidate } from "../../redux/slice/candidateSlice/candidateDataSlice";
+
 import { candidateSignoutApi } from "../../axios/apiMethods/auth-service/candidateAuth";
+import { clearCandidate } from "../../redux/slice/candidateSlice/candidateDataSlice";
 import Swal from "sweetalert2";
 import { notify } from "../../utils/toastMessage";
 import { IoMdNotifications } from "react-icons/io";
@@ -29,9 +30,23 @@ const TopNavBarCandidate = () => {
 		return state.candidateData.data;
 	});
 
+	// to avoid notification for current chatbox
+	const currentlySelectedChatRoom = useSelector(
+		(state: RootState) => state.candidateCurrentlySelectedChatroom.data
+	);
+
+	
 	const candidateProfile: any = useSelector((state: RootState) => {
 		return state.candidateProfile.candidateProfile;
 	});
+	// to get the other user
+	const getOtherUser = (chatRoom: any) => {
+		const otherUser = chatRoom.users.filter(
+			(value: any) => value._id !== candidateProfile.id
+		);
+
+		return otherUser;
+	};
 
 	const isCandidateUrl = location.pathname.includes("candidate");
 
@@ -97,6 +112,7 @@ const TopNavBarCandidate = () => {
 		{ title: "Chat", to: `/candidate/chat/${candidate.id}` },
 		{ title: "Reset Password", to: "/candidate/passwordResetMobile" },
 	];
+	// ============================================================================
 
 	const [openNotifications, setOpenNotifications] = useState(false);
 
@@ -114,8 +130,16 @@ const TopNavBarCandidate = () => {
 					console.log("fetchedNotifications$$$$$$$$$$$$", fetchedNotifications.data);
 					// socket.on('notification', (data: any) => {
 
-					
-					setNotifications(fetchedNotifications.data);
+					let sender = getOtherUser(currentlySelectedChatRoom)
+					console.log("socket.on chatNotification 000000000000004", sender);
+
+					let filteredNotifications = fetchedNotifications.data.filter((notification: any)=>{
+						console.log("socket.on chatNotification 000000000000005", sender[0]?._id !== notification?.senderId);
+						return sender[0]?._id !== notification?.senderId
+					})
+					// if(sender[0]._id !== data?.senderId) setNotifications([...notifications, data]);
+
+					setNotifications(filteredNotifications);
 
 					// })
 					// dispatch(
@@ -133,20 +157,16 @@ const TopNavBarCandidate = () => {
 			console.log("socket.on chatNotification 000000000000001", notifications);
 			console.log("socket.on chatNotification 000000000000002", data);
 			console.log("socket.on chatNotification 000000000000003", [...notifications,data]);
+			let sender = getOtherUser(currentlySelectedChatRoom)
+			console.log("socket.on chatNotification 000000000000004", sender);
+			console.log("socket.on chatNotification 000000000000005", sender[0]?._id !== data?.senderId);
+			if(sender[0]._id !== data?.senderId) setNotifications([...notifications, data]);
 			
-			setNotifications([...notifications, data]);
 		});
 	},[])
 	// dispatch(setCandidateProfileDetails(notifications?.data));setNotificationsCount(fetchedNotificationsCount)
 
-	const clearNotifications = async(e: React.MouseEvent<HTMLElement, MouseEvent>) => {
-		// Implement logic to clear notifications
-		e.stopPropagation()
-		console.log("Clearing notifications...");
-		await deleteCandidatesAllNotificationsApi(candidate.id)
-		setNotificationsCount(0)
-		setNotifications([])
-	};
+
 
 	useEffect(() => {
 		(async () => {
@@ -155,8 +175,28 @@ const TopNavBarCandidate = () => {
 						candidate?.id
 					);
 
-					console.log("notificationsCount*****************", notificationsCount);
-					setNotificationsCount(notificationsCount.data)
+					let fetchedNotifications = await getCandidatesAllNotificationsApi(candidate?.id);
+					// let fetchedNotificationsCount = await getCandidatesNotificationCountApi(candidate?.id);
+
+					// console.log("fetchedNotifications$$$$$$$$$$$$", fetchedNotifications);
+					console.log("fetchedNotifications$$$$$$$$$$$$", fetchedNotifications.data);
+					// socket.on('notification', (data: any) => {
+
+					let sender = getOtherUser(currentlySelectedChatRoom)
+					console.log("socket.on chatNotification 000000000000004", sender);
+
+					let filteredNotifications = fetchedNotifications.data.filter((notification: any)=>{
+						console.log("socket.on chatNotification 000000000000005", sender[0]?._id !== notification?.senderId);
+						return sender[0]?._id !== notification?.senderId
+					})
+
+					console.log("notificationsCount1*****************", notificationsCount.data);
+					console.log("notificationsCount2*****************", filteredNotifications.length);
+
+					// console.log("socket.on chatNotification 000000000000005", sender[0]?._id !== notification?.senderId);
+					// return sender[0]?._id !== notification?.senderId
+
+					setNotificationsCount(filteredNotifications.length)
 
 					// dispatch(setCandidateProfileDetails(notifications?.data));
 				
@@ -166,23 +206,25 @@ const TopNavBarCandidate = () => {
 		})();
 	}, [notifications]);
 
-	useEffect(() => {
-		(async () => {
-			try {
-				if (openNotifications) {
-					let notifications = await getCandidatesAllNotificationsApi(
-						candidate?.id
-					);
+	// useEffect(() => {
+	// 	(async () => {
+	// 		try {
+	// 			if (openNotifications) {
+	// 				let notifications = await getCandidatesAllNotificationsApi(
+	// 					candidate?.id
+	// 				);
 
-					console.log("notifications", notifications);
+	// 				console.log("notifications", notifications);
 
-					dispatch(setCandidateProfileDetails(notifications?.data));
-				}
-			} catch (error) {
-				console.error("Error fetching candidate profile:", error);
-			}
-		})();
-	}, []);
+	// 				dispatch(setCandidateProfileDetails(notifications?.data));
+	// 			}
+	// 		} catch (error) {
+	// 			console.error("Error fetching candidate profile:", error);
+	// 		}
+	// 	})();
+	// }, []);
+
+	// ============================================================================
 
 	// const notifications = [
 	// 	// Add your notification data here
@@ -193,6 +235,14 @@ const TopNavBarCandidate = () => {
 	// ];
 
 	
+	const clearNotifications = async(e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+		// Implement logic to clear notifications
+		e.stopPropagation()
+		console.log("Clearing notifications...");
+		await deleteCandidatesAllNotificationsApi(candidate.id)
+		setNotificationsCount(0)
+		setNotifications([])
+	};
 
 	return (
 		<>

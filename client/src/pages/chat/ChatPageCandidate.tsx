@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 // import { FaSearch } from "react-icons/fa";
 import { TiTick } from "react-icons/ti";
 
@@ -14,9 +14,12 @@ import { getACandidateConversationApi } from "../../axios/apiMethods/chat-servic
 import { RootState } from "../../redux/reducer/reducer";
 import socket from "../../config/socket";
 import { deleteCandidatesAllNotificationsBySenderIdApi } from "../../axios/apiMethods/chat-service/notification";
+import { clearCandidateCurrentlySelectedChatRoom, setCandidateCurrentlySelectedChatRoom } from "../../redux/slice/chat/candidateCurrentlySelectedChatroomSlice";
 
 const ChatPageCandidate = () => {
+	const dispatch = useDispatch()
 	const { recepientId } = useParams();
+	
 
 	const candidateData: any = useSelector(
 		(state: RootState) => state.candidateData.data
@@ -87,6 +90,7 @@ const ChatPageCandidate = () => {
 		return () => {
 			// Clean up the event listener when the component unmounts
 			socket.off("chatNotification");
+			dispatch(clearCandidateCurrentlySelectedChatRoom())
 		};
 	}, []);
 
@@ -174,6 +178,8 @@ const ChatPageCandidate = () => {
 
 	const handleChatRoomClick = async (room: any) => {
 		setSelectedChatRoom(room);
+		
+		dispatch(setCandidateCurrentlySelectedChatRoom(room))
 		const conversations = await getACandidateConversationApi(room._id);
 		let senderId = getReceiver(room); // to find the other user
 		console.log("senderId from room", senderId);
@@ -252,6 +258,7 @@ const ChatPageCandidate = () => {
 											receiver={getReceiver(chatRoom)}
 											isOnline={isUserOnline(chatRoom)}
 											lastMessage={chatRoom?.lastMessage}
+											unreadCount = {1}
 											onClick={() =>
 												handleChatRoomClick(chatRoom)
 											} // Update the onClick handler
