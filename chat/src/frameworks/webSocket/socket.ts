@@ -7,6 +7,8 @@ import messageRepository from "../repositories/mongo/message.repository";
 import chatRoomRepository from "../repositories/mongo/chatRoom.repository";
 import { User } from "../../entities/users";
 import { ChatRoom } from "../../entities/chat-room";
+import notificationRepository from "../repositories/mongo/notifications.repository";
+
 interface activeUsersType {
 	userId: string;
 	socketId: string;
@@ -114,43 +116,40 @@ export const onSocketConnection = (io: Server, socket: Socket) => {
 
 		try {
 			const { senderId, roomId, textMessage } = data;
-			console.log("/////", data, "///////");
-
-			console.log("senderId", senderId);
-			console.log("roomId", roomId);
-			console.log("textMessage", textMessage);
+			console.log("senderIddddd", senderId);
+			console.log("roomIddddddd", roomId);
+			console.log("textMessageeeee", textMessage);
 
 			if (!textMessage)
 				throw new BadRequestError("please provide message");
 
-			// 	console.log("----senderId ", senderId);
-
-			// console.log("----recepientId ", recepientId);
 			const senderData = await userRepository.findUserById(senderId);
 
 			if (!senderData)
 				throw new BadRequestError("sender is not in user db");
 
 			const room = await chatRoomRepository.getAChatRoomById(roomId);
-			if (room) {
-				console.log(room);
 
-				console.log("room already there");
+			if (room) {
+				console.log("room already thereeeee ", room);
 			}
 
-			
 			const result = await messageRepository.createMessage({
 				senderId,
 				roomId,
 				textMessage,
 			});
+
 			console.log("before chatroom repo)))))))))))");
-			
+
 			let chatroomResult = await chatRoomRepository.updateAChatRoom(
 				roomId,
 				textMessage
-				);
-				console.log("after chatroom repo))))))))))) chatroomResult", chatroomResult);
+			);
+			console.log(
+				"after chatroom repo))))))))))) chatroomResult",
+				chatroomResult
+			);
 
 			const user1: any = getUser(senderId);
 
@@ -161,8 +160,10 @@ export const onSocketConnection = (io: Server, socket: Socket) => {
 			const recipientData = await userRepository.findUserById(
 				recipient[0].toString()
 			);
+
 			if (!recipientData)
 				throw new BadRequestError("recipient is not in user db");
+
 			console.log("recepeint from room ", recipient);
 
 			const user2: any = getUser(recipient[0].toString());
@@ -172,6 +173,28 @@ export const onSocketConnection = (io: Server, socket: Socket) => {
 				senderId: senderId,
 				recipient: recipient.toString(),
 			};
+
+
+			const notification = await notificationRepository.createNotification({	
+				senderId,
+				targetUserId: recipient.toString(),
+				message: textMessage,
+			})
+
+
+			// ================================
+
+			// it is working when the recepient is not online or active
+			// if(!user2){
+
+			// 	const user: any = getUser(senderId);
+			// 	const allChatRooms = await chatRoomRepository.getAllChatRoomsByUserId(senderId);
+	
+			// 	io.to(user.socketId).emit("chatNotification", allChatRooms);
+			// }
+
+
+			// ================================
 
 			console.log("after recepeint from room ", message);
 
@@ -189,6 +212,7 @@ export const onSocketConnection = (io: Server, socket: Socket) => {
 				console.log("inside user2 emit receiveMessage");
 
 				io.to(user2.socketId).emit("receiveMessage", message);
+				io.to(user2.socketId).emit("chatNotification", notification);
 			}
 		} catch (error) {
 			console.error("Error processing message:", error);
@@ -207,7 +231,7 @@ export const onSocketConnection = (io: Server, socket: Socket) => {
 
 	// when a user disconnect
 	socket.on("disconnect", () => {
-		console.log("a user disconnected");
+		console.log("a user disconnected!!!");
 		removeUser(socket.id);
 		io.emit("getActiveUsers", activeUsers);
 	});

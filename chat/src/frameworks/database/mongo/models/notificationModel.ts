@@ -1,20 +1,20 @@
 import mongoose from "mongoose";
 // 1. An interface that describes the properties ,that are requried to create a new User
 interface NotificationAttributes {
-	userId: string;
+	senderId: string;
 	targetUserId: string;
 	message: string;
 	// email: string;
-	profileImgUrl: number;
-	userType: string;
+	// profileImgUrl: number;
+	// userType: string;
 }
 // 2. An interface that describes the properties ,that a User Document has
 interface NotificationDocument extends mongoose.Document {
-	userId: mongoose.Schema.Types.ObjectId;
+	senderId: mongoose.Schema.Types.ObjectId;
 	targetUserId: mongoose.Schema.Types.ObjectId;
 	message: string;
-	profileImgUrl: number;
-	userType: string;
+	// profileImgUrl: number;
+	// userType: string;
 	// isActive: boolean;
 	createdAt: string;
 	updatedAt: string;
@@ -23,15 +23,15 @@ interface NotificationDocument extends mongoose.Document {
 // 3.
 const notificationSchema = new mongoose.Schema(
 	{
-		userId: mongoose.Schema.Types.ObjectId,
+		senderId: mongoose.Schema.Types.ObjectId,
 		targetUserId: mongoose.Schema.Types.ObjectId,
 		message: String,
-		profileImgUrl: String,
-		userType: {
-			type: String,
-			required: true,
-			enum: ["candidate", "recruiter"],
-		},
+		// profileImgUrl: String,
+		// userType: {
+		// 	type: String,
+		// 	required: true,
+		// 	enum: ["candidate", "recruiter"],
+		// },
 		// isActive: {
 		// 	type: Boolean,
 		// 	default: true,
@@ -61,12 +61,12 @@ notificationSchema.statics.buildNotification = (
 ) => {
 	return new NotificationModel({
 		// to create a new user document
-		userId: attributes.userId,
+		senderId: attributes.senderId,
 		targetUserId: attributes.targetUserId,
 		message: attributes.message,
 		// email: attributes.email,
-		profileImgUrl: attributes.profileImgUrl,
-		userType: attributes.userType,
+		// profileImgUrl: attributes.profileImgUrl,
+		// userType: attributes.userType,
 	});
 };
 

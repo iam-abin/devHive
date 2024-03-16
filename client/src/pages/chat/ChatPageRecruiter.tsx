@@ -45,6 +45,12 @@ const ChatPageRecruiter = () => {
 		};
 	}, []);
 
+	const [isChatOpen, setIsChatOpen] = useState(false);
+
+		const handleChatVisibility = (isOpen: boolean) => {
+		   setIsChatOpen(isOpen);
+		};
+
 	useEffect(() => {
 		console.log("=========in socket io addActiveUser useEffect");
 		socket.emit("addActiveUser", recruiterData.id);
@@ -71,6 +77,40 @@ const ChatPageRecruiter = () => {
 	// 	let rooms = await getAllChatRoomsApi(recruiterData.id)
 	// 	setchatRooms(rooms);
 	// }, [selectedChatRoomMessages]);
+	useEffect(() => {
+		socket.on("chatNotification", (message) => {
+			console.log("in receive chat Notification recruiterRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR ", message);
+		});
+	
+		return () => {
+			// Clean up the event listener when the component unmounts
+			socket.off("chatNotification");
+		};
+	}, []);
+	// socket.on("chatNotification", (message) => {
+		
+
+	// 	// if (message.result.roomId.toString() === selectedChatRoom?._id) {
+	// 	// 	if(message.result.senderId != candidateData.id) socket.emit("markAsRead", message.result.id);
+	// 	// 	setSelectedChatRoomMessages([
+	// 	// 		...selectedChatRoomMessages,
+	// 	// 		message.result,
+	// 	// 	]);
+
+	// 	// 	// selectedChatRoomMessages.forEach((message: any) => {
+	// 	// 	// 	console.log("???????????????? message.read", message.read);
+	// 	// 	// 	console.log(
+	// 	// 	// 		"???????????????? message.senderId!= candidateData.id",
+	// 	// 	// 		message.senderId != candidateData.id
+	// 	// 	// 	);
+	// 	// 	// 	console.log(message);
+
+	// 	// 	// 	if (!message.read && message.senderId != candidateData.id) {
+	// 	// 	// 		socket.emit("markAsRead", message.id);
+	// 	// 	// 	}
+	// 	// 	// });
+	// 	// }
+	// });
 
 	useEffect(() => {
 		// Listen for "selectedChatRoomMessages" events and update the selectedChatRoomMessages state
@@ -237,11 +277,11 @@ const ChatPageRecruiter = () => {
 							<div className="flex flex-col gap-3">
 								<div>
 									<ChatBoxTopBar
-										isOnline={isUserOnline(
-											selectedChatRoom
-										)}
-										receiver={getReceiver(selectedChatRoom)}
-									/>
+											isOnline={isUserOnline(
+												selectedChatRoom
+											)}
+											receiver={getReceiver(selectedChatRoom)}
+											 handleChatVisibility={handleChatVisibility}									/>
 								</div>
 								<div
 									className="bg-red-300 min-h-[58vh] max-h-[58vh] p-5 overflow-x-scroll "

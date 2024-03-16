@@ -13,6 +13,7 @@ import ChatInputBox from "../../components/chat/ChatInputBox";
 import { getACandidateConversationApi } from "../../axios/apiMethods/chat-service/chat";
 import { RootState } from "../../redux/reducer/reducer";
 import socket from "../../config/socket";
+import { deleteCandidatesAllNotificationsBySenderIdApi } from "../../axios/apiMethods/chat-service/notification";
 
 const ChatPageCandidate = () => {
 	const { recepientId } = useParams();
@@ -31,6 +32,12 @@ const ChatPageCandidate = () => {
 	const [selectedChatRoomMessages, setSelectedChatRoomMessages] =
 		useState<any>([]);
 
+	const [isChatOpen, setIsChatOpen] = useState(false);
+
+	const handleChatVisibility = (isOpen: boolean) => {
+		setIsChatOpen(isOpen);
+	};
+
 	const chatAreaRef = useRef<HTMLDivElement>(null);
 	const scrollToBottom = () => {
 		if (chatAreaRef.current) {
@@ -38,6 +45,8 @@ const ChatPageCandidate = () => {
 		}
 	};
 
+	console.log("===========================isChatOpen===========================", isChatOpen);
+	
 	useEffect(() => {
 		scrollToBottom();
 	}, [selectedChatRoomMessages]);
@@ -69,10 +78,47 @@ const ChatPageCandidate = () => {
 		
 	}, [selectedChatRoom, selectedChatRoomMessages]);
 
+	
+	useEffect(() => {
+		socket.on("chatNotification", (message) => {
+			console.log("in receive chat Notification candidateEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE ", message);
+		});
+	
+		return () => {
+			// Clean up the event listener when the component unmounts
+			socket.off("chatNotification");
+		};
+	}, []);
+
+	// socket.on("chatNotification", (message) => {
+		
+
+	// 	// if (message.result.roomId.toString() === selectedChatRoom?._id) {
+	// 	// 	if(message.result.senderId != candidateData.id) socket.emit("markAsRead", message.result.id);
+	// 	// 	setSelectedChatRoomMessages([
+	// 	// 		...selectedChatRoomMessages,
+	// 	// 		message.result,
+	// 	// 	]);
+
+	// 	// 	// selectedChatRoomMessages.forEach((message: any) => {
+	// 	// 	// 	console.log("???????????????? message.read", message.read);
+	// 	// 	// 	console.log(
+	// 	// 	// 		"???????????????? message.senderId!= candidateData.id",
+	// 	// 	// 		message.senderId != candidateData.id
+	// 	// 	// 	);
+	// 	// 	// 	console.log(message);
+
+	// 	// 	// 	if (!message.read && message.senderId != candidateData.id) {
+	// 	// 	// 		socket.emit("markAsRead", message.id);
+	// 	// 	// 	}
+	// 	// 	// });
+	// 	// }
+	// });
+
 	useEffect(() => {
 		// Listen for "selectedChatRoomMessages" events and update the selectedChatRoomMessages state
 		socket.on("receiveMessage", (message) => {
-			console.log("in receive message candidateEEEEEEEEEEEE ", message);
+			console.log("in receive message candidateEEEEEEEE ", message);
 
 			if (message.result.roomId.toString() === selectedChatRoom?._id) {
 				if(message.result.senderId != candidateData.id) socket.emit("markAsRead", message.result.id);
@@ -117,9 +163,23 @@ const ChatPageCandidate = () => {
 		socket.emit("sendMessage", messageToSend);
 	};
 
+	// const clearNotifications = async(e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+	// 	// Implement logic to clear notifications
+	// 	e.stopPropagation()
+	// 	console.log("Clearing notifications...");
+	// 	await deleteCandidatesAllNotificationsApi(candidate.id)
+	// 	setNotificationsCount(0)
+	// 	setNotifications([])
+	// };
+
 	const handleChatRoomClick = async (room: any) => {
 		setSelectedChatRoom(room);
 		const conversations = await getACandidateConversationApi(room._id);
+		let senderId = getReceiver(room); // to find the other user
+		console.log("senderId from room", senderId);
+		console.log("senderId from room", senderId[0]?._id);
+		
+		await deleteCandidatesAllNotificationsBySenderIdApi(senderId[0]?._id)
 		setSelectedChatRoomMessages(conversations.data);
 		// selectedChatRoomMessages.forEach((message: any) => {
 		// 	console.log("???????????????? message.read", message.read);
@@ -216,12 +276,13 @@ const ChatPageCandidate = () => {
 							<div className="flex flex-col gap-3">
 								<div>
 									<ChatBoxTopBar
-										// chatRoom={selectedChatRoom}
-										isOnline={isUserOnline(
-											selectedChatRoom
-										)}
-										receiver={getReceiver(selectedChatRoom)}
-									/>
+											// chatRoom={selectedChatRoom}
+											isOnline={isUserOnline(
+												selectedChatRoom
+											)}
+											receiver={getReceiver(selectedChatRoom)}
+											// if the chat topbar is there, the chat window will also be there
+											 handleChatVisibility={handleChatVisibility}	 								/>
 								</div>
 								<div
 									className="bg-red-300 min-h-[58vh] max-h-[58vh] p-5 overflow-x-scroll "

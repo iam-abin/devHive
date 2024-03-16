@@ -8,14 +8,22 @@ import Swal from "sweetalert2";
 import { notify } from "../../utils/toastMessage";
 import { IoMdNotifications } from "react-icons/io";
 import { useEffect, useState } from "react";
-import { clearCandidateProfileDetails, setCandidateProfileDetails } from "../../redux/slice/candidateSlice/candidateProfileSlice";
+import {
+	clearCandidateProfileDetails,
+	setCandidateProfileDetails,
+} from "../../redux/slice/candidateSlice/candidateProfileSlice";
 import { candidateGetProfileApi } from "../../axios/apiMethods/profile-service/candidate";
 import { FaCrown } from "react-icons/fa";
-
+import Notifications from "../notification/Notifications";
+import socket from "../../config/socket";
+import { deleteCandidatesAllNotificationsApi, getCandidatesAllNotificationsApi, getCandidatesNotificationCountApi } from "../../axios/apiMethods/chat-service/notification";
 
 const TopNavBarCandidate = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+
+	const [notifications, setNotifications] = useState<any[]>([]);
+	const [notificationsCount, setNotificationsCount] = useState<number>(0);
 
 	const candidate: any = useSelector((state: RootState) => {
 		return state.candidateData.data;
@@ -53,19 +61,23 @@ const TopNavBarCandidate = () => {
 
 	useEffect(() => {
 		(async () => {
-		  try {
-			if (isCandidateUrl && candidate) {
-			  let candidateProfileData = await candidateGetProfileApi(candidate?.id);
-	  
-			  console.log("candidateProfileData", candidateProfileData);
-	  
-			  dispatch(setCandidateProfileDetails(candidateProfileData?.data));
+			try {
+				if (isCandidateUrl && candidate) {
+					let candidateProfileData = await candidateGetProfileApi(
+						candidate?.id
+					);
+
+					console.log("candidateProfileData", candidateProfileData);
+
+					dispatch(
+						setCandidateProfileDetails(candidateProfileData?.data)
+					);
+				}
+			} catch (error) {
+				console.error("Error fetching candidate profile:", error);
 			}
-		  } catch (error) {
-			console.error("Error fetching candidate profile:", error);
-		  }
 		})();
-	  }, [candidate]);
+	}, [candidate]);
 
 	const menus = [
 		{ title: "Jobs", to: "/candidate/all-jobs" },
@@ -86,18 +98,101 @@ const TopNavBarCandidate = () => {
 		{ title: "Reset Password", to: "/candidate/passwordResetMobile" },
 	];
 
-	const [showNotifications, setShowNotifications] = useState(false);
+	const [openNotifications, setOpenNotifications] = useState(false);
 
-	const notifications = [
-		// Add your notification data here
-		{ id: 1, message: "Notification 1" },
-		{ id: 2, message: "Notification 2" },
-	];
+	useEffect(() => {
+		(async () => {
+			try {
+				// console.log("no");
+				
+				if (openNotifications) {
+					
+					let fetchedNotifications = await getCandidatesAllNotificationsApi(candidate?.id);
+					// let fetchedNotificationsCount = await getCandidatesNotificationCountApi(candidate?.id);
 
-	const clearNotifications = () => {
+					// console.log("fetchedNotifications$$$$$$$$$$$$", fetchedNotifications);
+					console.log("fetchedNotifications$$$$$$$$$$$$", fetchedNotifications.data);
+					// socket.on('notification', (data: any) => {
+
+					
+					setNotifications(fetchedNotifications.data);
+
+					// })
+					// dispatch(
+					// 	setCandidateProfileDetails(notifications?.data)
+					// );
+				}
+			} catch (error) {
+				console.error("Error fetching candidate profile:", error);
+			}
+		})();
+	}, [openNotifications]);
+	// io.to(user2.socketId).emit("chatNotification", {sender: senderId,message: textMessage });
+	useEffect(()=>{
+		socket.on("chatNotification", (data: any) => {
+			console.log("socket.on chatNotification 000000000000001", notifications);
+			console.log("socket.on chatNotification 000000000000002", data);
+			console.log("socket.on chatNotification 000000000000003", [...notifications,data]);
+			
+			setNotifications([...notifications, data]);
+		});
+	},[])
+	// dispatch(setCandidateProfileDetails(notifications?.data));setNotificationsCount(fetchedNotificationsCount)
+
+	const clearNotifications = async(e: React.MouseEvent<HTMLElement, MouseEvent>) => {
 		// Implement logic to clear notifications
-		console.log("Clearing notifications");
+		e.stopPropagation()
+		console.log("Clearing notifications...");
+		await deleteCandidatesAllNotificationsApi(candidate.id)
+		setNotificationsCount(0)
+		setNotifications([])
 	};
+
+	useEffect(() => {
+		(async () => {
+			try {
+					let notificationsCount = await getCandidatesNotificationCountApi(
+						candidate?.id
+					);
+
+					console.log("notificationsCount*****************", notificationsCount);
+					setNotificationsCount(notificationsCount.data)
+
+					// dispatch(setCandidateProfileDetails(notifications?.data));
+				
+			} catch (error) {
+				console.error("Error fetching candidate profile:", error);
+			}
+		})();
+	}, [notifications]);
+
+	useEffect(() => {
+		(async () => {
+			try {
+				if (openNotifications) {
+					let notifications = await getCandidatesAllNotificationsApi(
+						candidate?.id
+					);
+
+					console.log("notifications", notifications);
+
+					dispatch(setCandidateProfileDetails(notifications?.data));
+				}
+			} catch (error) {
+				console.error("Error fetching candidate profile:", error);
+			}
+		})();
+	}, []);
+
+	// const notifications = [
+	// 	// Add your notification data here
+	// 	{ id: 1, message: "Notification 1" },
+	// 	{ id: 2, message: "Notification 2" },
+	// 	{ id: 2, message: "Notification 2" },
+	// 	{ id: 2, message: "Notification 2" },
+	// ];
+
+	
 
 	return (
 		<>
@@ -110,39 +205,25 @@ const TopNavBarCandidate = () => {
 					>
 						DevHive
 					</a>
-					{candidateProfile?.isPremiumUser&& <FaCrown className="text-yellow-600"/>}
-					
+					{candidateProfile?.isPremiumUser && (
+						<FaCrown className="text-yellow-600" />
+					)}
 				</div>
 				<div
 					className="relative mr-3 cursor-pointer"
-					onClick={() => setShowNotifications(!showNotifications)}
+					onClick={() => setOpenNotifications(!openNotifications)}
 				>
 					<IoMdNotifications className="text-2xl mr-3" />
 					<div className="badge absolute top-0 right-0 bg-green-600 text-white rounded-full p-1 text-xs">
-						{notifications.length}
+						{notificationsCount}
 					</div>
 
-					{showNotifications && (
-						<div className="absolute top-full right-0 w-56 bg-white border border-gray-300 rounded shadow-md p-4">
-							<div className="mb-2 font-bold">
-								chat notifications are
-							</div>
-							<ul>
-								{notifications.map((notification) => (
-									<li className="my-4" key={notification.id}>
-										{notification.message}
-									</li>
-								))}
-							</ul>
-							<div className="flex justify-end">
-								<button
-									className="bg-green-600 text-white rounded-full p-1  text-xs mt-2"
-									onClick={clearNotifications}
-								>
-									Clear Notifications
-								</button>
-							</div>
-						</div>
+					{openNotifications && (
+						<Notifications
+							notifications={notifications}
+							clearNotifications={clearNotifications}
+							setOpenNotificationFn = {setOpenNotifications}
+						/>
 					)}
 				</div>
 				{candidateProfile && candidateProfile?.name}

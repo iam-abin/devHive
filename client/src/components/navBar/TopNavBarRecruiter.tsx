@@ -8,6 +8,7 @@ import Swal from "sweetalert2";
 import { notify } from "../../utils/toastMessage";
 import { IoMdNotifications } from "react-icons/io";
 import { useState } from "react";
+import Notifications from "../notification/Notifications";
 
 function TopNavBarRecruiter() {
 	const dispatch = useDispatch();
@@ -44,7 +45,7 @@ function TopNavBarRecruiter() {
 		});
 	};
 
-	const [showNotifications, setShowNotifications] = useState(false);
+	const [openNotifications, setOpenNotifications] = useState(false);
 
 	const notifications = [
 		// Add your notification data here
@@ -69,35 +70,20 @@ function TopNavBarRecruiter() {
 			</div>
 			<div
 				className="relative mr-3 cursor-pointer"
-				onClick={() => setShowNotifications(!showNotifications)}
+				onClick={() => setOpenNotifications(!openNotifications)}
 			>
 				<IoMdNotifications className="text-2xl mr-3" />
 				<div className="badge absolute top-0 right-0 bg-green-600 text-white rounded-full p-1 text-xs">
 					{notifications.length}
 				</div>
 
-				{showNotifications && (
-					<div className="absolute top-full right-0 w-56 bg-white border border-gray-300 rounded shadow-md p-4">
-						<div className="mb-2 font-bold">
-							chat notifications are
-						</div>
-						<ul>
-							{notifications.map((notification) => (
-								<li className="my-4" key={notification.id}>
-									{notification.message}
-								</li>
-							))}
-						</ul>
-						<div className="flex justify-end">
-							<button
-								className="bg-green-600 text-white rounded-full p-1  text-xs mt-2"
-								onClick={clearNotifications}
-							>
-								Clear Notifications
-							</button>
-						</div>
-					</div>
-				)}
+				 {openNotifications && (
+						<Notifications
+							notifications={notifications}
+							clearNotifications={clearNotifications}
+						/>
+					)}
+		
 			</div>
 
 			<div className="flex-none">

@@ -32,7 +32,7 @@ export const uploadCandidateImageProfileApi = async (userId: string,profileImage
     return response.data;
 };
 
-export const uploadCandidateResumeProfileApi = async (userId: string,resumeData: any): Promise<any> => {
+export const uploadCandidateResumeProfileApi = async (userId: string, resumeData: any): Promise<any> => {
     console.log("uploadCandidateResumeProfileApi resumeData is    ..//////", resumeData);
     const response: any = await candidateApiCalls("put", profileApiUrlConfig.uploadCandidateResumeUrl, resumeData, false); 
     // isFileUpload is giving 'false' because we are sending filename and url of uploaded resume in the client side using firebase.

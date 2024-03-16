@@ -14,17 +14,23 @@ export const candidateRouter = (dependencies: DependenciesData) => {
 		getAllNotificationsController,
 		createNotificationController,
 		deleteAllNotificationsController,
+		getAllNotificationsCountController,
+		deleteAllNotificationsBySenderController,
 	} = notificationControllers(dependencies);
 
 	router.get("/chat-rooms/:userId", getAllChatRoomsByUserIDController);
 
 	router.get("/room-conversation/:chatRoomId", getConversationController);
 
-	router.get("/notificatons/:userId", getAllNotificationsController);
+	router.get("/notifications/:userId", getAllNotificationsController);
+
+	router.get("/notifications-count/:userId", getAllNotificationsCountController);
 	
 	router.post("/create", createNotificationController);
 
 	router.delete("/notifications/:userId", deleteAllNotificationsController);
+	
+	router.delete("/delete-notifications-by-senderId/:senderId", deleteAllNotificationsBySenderController);
 
 	return router;
 };

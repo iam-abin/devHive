@@ -1,6 +1,20 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
-const ChatBoxTopBar: React.FC<{ receiver: any, isOnline: any }> = ({ receiver, isOnline })=> {
+const ChatBoxTopBar: React.FC<{ receiver: any, isOnline: any, handleChatVisibility:any }> = ({ receiver, isOnline, handleChatVisibility })=> {
+
+	
+	// if the chat topbar is there, the chat window will also be there
+	  useEffect(() => {
+		// Open the chat window when the component mounts
+		handleChatVisibility(true);
+	   
+		// Return a cleanup function to close the chat window when the component unmounts
+		return () => {
+		   handleChatVisibility(false);
+		};
+	   }, []);
+	   
+
   return (
     <div>
       	<div className="card w-full bg-base-100 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] mb-1">

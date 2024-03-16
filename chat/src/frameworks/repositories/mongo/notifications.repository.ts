@@ -11,13 +11,28 @@ export = {
 		return await chatNotification.save();
 	},
 
-	getAllNotificationsByUserId: async (userId: string) => {
-		const chatNotifications = await NotificationModel.find({_id: userId}).sort({createdAt: -1});
-		return chatNotifications;
+	getAllNotificationsCountByUserId: async (userId: string) => {
+		// const count = await NotificationModel.aggregate([
+		// 	{$match: {targetUserId: userId}},{$count: "countOfNotifications"}
+		// ]);
+		const count = (await NotificationModel.find({targetUserId: userId})).length;
+		console.log("in getAllNotificationsCountByUserId", count);
+		
+		return count;
 	},
 
+	getAllNotificationsByUserId: async (userId: string) => {
+		const chatNotifications = await NotificationModel.find({targetUserId: userId}).sort({createdAt: -1});
+		return chatNotifications;
+	},
+	
 	clearAllNotificationsByUserId: async (userId: string) => {
-        const response = await NotificationModel.findByIdAndDelete(userId);
+        const response = await NotificationModel.deleteMany({targetUserId: userId});
+		return response;
+	},
+
+	clearAllNotificationsBySenderId: async (senderId: string, receiverId: string) => {
+        const response = await NotificationModel.deleteMany({senderId , targetUserId: receiverId});
 		return response;
 	},
 };

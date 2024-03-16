@@ -22,11 +22,17 @@ export const recruiterRouter = (dependencies: DependenciesData) => {
 
 	router.get("/room-conversation/:chatRoomId", getConversationController);
 
-	router.get("/notificatons/:userId", getAllNotificationsController);
+
+	router.get("/notifications/:userId", getAllNotificationsController);
 	
 	router.post("/create", createNotificationController);
 
 	router.delete("/notifications/:userId", deleteAllNotificationsController);
+
+	router.get("/notificatons/:userId", getAllNotificationsController);
+
+	// router.get("/notifications-count/:userId", getAllNotificationsCountController);
+	
 
 	return router;
 };

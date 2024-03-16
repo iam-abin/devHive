@@ -6,6 +6,8 @@ import {
 	createNotificationUseCase,
 	deleteAllNotificationsUseCase,
 	getAllNotificationsUseCase,
+	getAllNotificationsCountUseCase,
+	deleteAllNotificationsBySenderIdUseCase,
 } from "./notification";
 
 export default {
@@ -18,4 +20,6 @@ export default {
 	createNotificationUseCase,
 	getAllNotificationsUseCase,
 	deleteAllNotificationsUseCase,
+	getAllNotificationsCountUseCase,
+	deleteAllNotificationsBySenderIdUseCase,
 };

@@ -8,9 +8,9 @@ const Message: React.FC<{
 	candidateImage?: string;
 	
 }> = ({ message, currentUserId, candidateImage }) => {
-	console.log("insdie message componenttttttttt",message);
-	console.log("insdie message currentUserId componenttttttttt",currentUserId);
-	console.log("insdie message candidateImage componenttttttttt",candidateImage);
+	// console.log("insdie message componenttttttttt",message);
+	// console.log("insdie message currentUserId componenttttttttt",currentUserId);
+	// console.log("insdie message candidateImage componenttttttttt",candidateImage);
 	
 	return (
 		<>

@@ -55,7 +55,7 @@ const ChatRoomList: React.FC<ChatRoomListProps> = ({
 				<div className="flex flex-col w-full justify-between">
 					<h5>{receiver[0]?.name}</h5>
 					<span className="flex flex-row items-center">
-						<p>{lastMessage}</p>
+						<p>{lastMessage?.length>8?lastMessage?.substring(0,8)+"...": lastMessage}</p>
 					</span>
 				</div>
 				{/* <div className="flex flex-row w-full justify-between"> */}
