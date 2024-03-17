@@ -127,7 +127,7 @@ export = {
 		const totalJobs: number = await jobApplicationModel.countDocuments({
 			recruiterId: id,
 		});
-		console.log(totalJobs);
+		console.log("numberOfJobApplicationsToMe",totalJobs);
 		return totalJobs;
 	},
 };

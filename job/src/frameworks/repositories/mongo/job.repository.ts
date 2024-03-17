@@ -91,11 +91,14 @@ export = {
 	},
 
 	numberOfCreatedJobsByMe: async (id: string): Promise<number> => {
+		console.log("numberOfCreatedJobsByMe =======", id);
+		
 		const jobs = await JobModel.countDocuments({ recruiterId: id });
-		console.log(jobs);
+		console.log("numberOfCreatedJobsByMe ",jobs);
 		return jobs;
 	},
 
+	
 	getSearchResults: async (searchKey: string): Promise<number> => {
 		const searchedJobs: any = await JobModel.find({ jobTitle: { $regex: new RegExp(searchKey, 'i') } })
 		console.log("searchedJobs ",searchedJobs);

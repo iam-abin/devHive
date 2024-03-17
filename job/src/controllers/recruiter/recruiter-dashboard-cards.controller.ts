@@ -3,13 +3,14 @@ import { DependenciesData } from "../../frameworks/types/dependencyInterface";
 
 export = (dependencies: DependenciesData)=>{
 
-    const { useCases: { getAllRecruiterDashboardCardsDetailsUseCase }} = dependencies
+    const { useCases: { recruiterDashboardCardsDetailsUseCase }} = dependencies
 
     return async (req: Request, res: Response)=>{
-        console.log("inside get all dashboard cards derails controller 111111");
+        let {recruiterId} = req.params
+        console.log("inside get all dashboard cards derails controller 1111====11", recruiterId);
         
         
-        const dashboardCardsDetails = await getAllRecruiterDashboardCardsDetailsUseCase(dependencies).execute();
+        const dashboardCardsDetails = await recruiterDashboardCardsDetailsUseCase(dependencies).execute(recruiterId);
 
 
         console.log("inside get all dashboard cards derails controller 2",dashboardCardsDetails);

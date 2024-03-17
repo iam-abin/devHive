@@ -156,18 +156,18 @@ export const changeJobApplicationStatusApi = async (jobApplicationId: string, jo
     return response.data;
 };
 
-export const getRecruiterDashboadApi = async ()=>{
-    console.log("in getAllRecruiterDashboardCardsDetailsApi 1 api");
-    const response: any = await recruiterApiCalls("get", jobApiUrlConfig.getRecruiterDashboardDetailsUrl)
-    console.log("in getAllRecruiterDashboardCardsDetailsApi 2 api response ",response);
+export const getRecruiterDashboadGraphApi = async (recruiterId: string)=>{
+    console.log("in getAllRecruiterDashboardGraphDetailsApi 1 api");
+    const response: any = await recruiterApiCalls("get", jobApiUrlConfig.getRecruiterDashboadGraphUrl(recruiterId))
+    console.log("in getAllRecruiterDashboardGraphDetailsApi 2 api response ",response);
 
     return response.data
 }
 
-export const getAllRecruiterDashboardCardsDetailsApi = async (): Promise<any> => {
+export const getRecruiterDashboardCardsApi = async (recruiterId: string): Promise<any> => {
     console.log("in getAllRecruiterDashboardCardsDetailsApi api");
     
-    const response: any = await recruiterApiCalls("get", jobApiUrlConfig.getAllRecruiterDashboardCardsDetailsUrl);
+    const response: any = await recruiterApiCalls("get", jobApiUrlConfig.getRecruiterDashboardCardsUrl(recruiterId));
     console.log("in getAllRecruiterDashboardCardsDetailsApi api response ",response);
     
     console.log("response is",response.data);

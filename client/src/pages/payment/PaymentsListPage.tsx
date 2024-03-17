@@ -15,7 +15,7 @@ const PaymentsListPage: React.FC = () => {
 		(async () => {
 			try {
 				const payments = await getAllPaymentsApi();
-				console.log("in useEffect", payments);
+				console.log("in useEffect 00000000000", payments);
 				setPaymentsData(payments.data);
 			} catch (error: any) {
 				console.error(error);
@@ -70,19 +70,19 @@ const PaymentsListPage: React.FC = () => {
 	const columns = [
 		{
 			name: "Candidate",
-			selector: (row: { candidateId:   { name: string }  }) => row.candidateId.name,
+			selector: (row: { candidateId:   { name: string }  }) => row.candidateId?.name,
 			sortable: true,
 		  },
 		  {
 			name: "Plan",
 			selector: (row: { membershipPlanId: { name: string } }) =>
-			  row.membershipPlanId.name,
+			  row.membershipPlanId?.name,
 			sortable: true,
 		  },
 		  {
 			name: "Amount Paid",
 			selector: (row: { membershipPlanId: { price: number } }) =>
-			  row.membershipPlanId.price,
+			  row.membershipPlanId?.price,
 			sortable: true,
 		  },
 

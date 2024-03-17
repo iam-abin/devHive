@@ -7,6 +7,7 @@ import viewJobApplicationController from "./view-job-application.controller";
 import changeJobApplicationStatusController from "./change-job-application-status.controller";
 import changeJobCloseStatusController from "./change-job-close-status.controller";
 import recruiterDashboardCardsController from "./recruiter-dashboard-cards.controller";
+import recruiterDashboardGraphController from "./recruiter-dashboard-graph.controller";
 
 import { DependenciesData } from "../../frameworks/types/dependencyInterface";
 
@@ -21,6 +22,7 @@ export = (dependencies: DependenciesData) => {
 		changeJobApplicationStatusController: changeJobApplicationStatusController(dependencies),
 		changeJobCloseStatusController: changeJobCloseStatusController(dependencies),
 		recruiterDashboardCardsController: recruiterDashboardCardsController(dependencies),
+		recruiterDashboardGraphController: recruiterDashboardGraphController(dependencies),
 
 	};
 };
