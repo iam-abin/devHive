@@ -28,6 +28,8 @@ export = {
 
 	getByEmail: async (email: string): Promise<any> => {
 		const user = await UserModel.findOne({ email });
+		console.log("getByEmail repo ",user);
+		
 		return user;
 	},
 

@@ -34,6 +34,8 @@ export = (dependencies: DependenciesData) => {
 			mode: "payment",
 			success_url: `https://devhive.dev/candidate/payment-success`,
 			cancel_url: `https://devhive.dev/candidate/payment-failed`,
+			// success_url: `https://abinvarghese.online/candidate/payment-success`,
+			// cancel_url: `https://abinvarghese.online/candidate/payment-failed`,
 		});
 
 		//   return session

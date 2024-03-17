@@ -51,6 +51,18 @@ export = {
 		return updatedMembershipPlan;
 	},
 
+	getAllMembershipPlanNames:  async () => {
+		const membershipPlansName = await MembershipPlansModel.aggregate([
+			{
+				$group: { _id: "$name" }
+			},
+			{
+				$project: { name: "$_id", _id: 0 }
+			}
+		]);
+		return membershipPlansName;
+	},
+
 	getById: async (membershipPlanId: string) => {
 		const membershipPlan = await MembershipPlansModel.findById(
 			membershipPlanId

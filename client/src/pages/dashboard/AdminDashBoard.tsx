@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import DashBoardCard from "../../components/cards/DashBoardCard";
 import ChartOne from "../../components/charts/ChartOne";
-import ChartTwo from "../../components/charts/ChartTwo";
-import ChartThree from "../../components/charts/ChartThree";
-import { getAllCardsDetailsApi } from "../../axios/apiMethods/admin-service/admin-dashboard";
+// import ChartTwo from "../../components/charts/ChartTwo";
+// import ChartThree from "../../components/charts/ChartThree";
+import { getAllCardsDetailsApi, getGraphDataApi } from "../../axios/apiMethods/admin-service/admin-dashboard";
 import { formatCurrency } from "../../utils/currency-format";
 // import ChatCard from '../../components/Chat/ChatCard';
 // import MapOne from '../../components/Maps/MapOne';
@@ -18,10 +18,16 @@ const AdminDashBoard: React.FC = () => {
 		totalRevenue: 0,
 	});
 
+	const [graphDataState, setGraphDataState] = useState([
+		{name: "", data: []}
+	]);
+
 	useEffect(() => {
 		(async () => {
 			const data = await getAllCardsDetailsApi();
+			const graphData = await getGraphDataApi()
 			console.log("LLLLLLLLLL response ", data.data);
+			console.log("PPPPPPPPPP response ", graphData.data);
 
 			if (data && data.data) {
 				const { candidateCount, recruiterCount, jobCount } = data.data;
@@ -31,6 +37,14 @@ const AdminDashBoard: React.FC = () => {
 
 				// Now you can set the state or perform any other operations with the counts
 				setData({ ...data.data });
+			}
+
+			if (graphData && graphData.data) {
+				
+				console.log("graphData is  :", graphData);
+
+				// Now you can set the state or perform any other operations with the counts
+				setGraphDataState(graphData.data);
 			}
 		})();
 	}, []);
@@ -125,7 +139,7 @@ const AdminDashBoard: React.FC = () => {
 			</div>
 
 			<div className="mt-4 grid grid-cols-9 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
-				<ChartOne />
+				{graphDataState && <ChartOne graphData = {graphDataState} />}
 				{/* <ChartTwo /> */}
 				{/* <ChartThree /> */}
 				{/* <MapOne />

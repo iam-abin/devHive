@@ -45,8 +45,9 @@ const adminApiUrlConfig = {
 	// Payment
 	getAllPaymentsUrl: `${ADMIN_PAYMENT_URL}/get-all-payments`,
 
-	// dashboard
+	// dashboard 
 	getAllCardsDetailsUrl: `${DASHBOARD_ADMIN_URL}/data`,
+	getGraphDataUrl: `${DASHBOARD_ADMIN_URL}/graph-data`,
 };
 
 

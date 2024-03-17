@@ -32,7 +32,7 @@ import {
 	getMembershipPlanByIdUseCase,
 } from "./membership";
 
-import { getAllDashboardCardsDetailsUseCase } from "./dashboard";
+import { getAllDashboardCardsDetailsUseCase, getDashboardGraphDetailsUseCase } from "./dashboard";
 
 export default {
 	blockUnblockCandidateUseCase,
@@ -60,4 +60,5 @@ export default {
 	getMembershipPlanByIdUseCase,
 
 	getAllDashboardCardsDetailsUseCase,
+	getDashboardGraphDetailsUseCase,
 };
