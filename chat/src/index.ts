@@ -32,8 +32,8 @@ const start = async () => {
 	const userCreatedEvent = new UserCreatedEventConsumer(kafkaClient);
 	const userUpdatedEvent = new UserUpdatedEventConsumer(kafkaClient);
 	
-	// await userUpdatedEvent.subscribe();
-	// await userCreatedEvent.subscribe();
+	await userUpdatedEvent.subscribe();
+	await userCreatedEvent.subscribe();
 
 	httpServer.listen(3000, () => {
 		console.log("chat service Listening on port 3000....");
