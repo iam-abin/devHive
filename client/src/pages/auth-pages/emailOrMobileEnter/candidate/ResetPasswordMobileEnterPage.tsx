@@ -78,13 +78,13 @@ function ResetPasswordMobileEnterPage() {
 
 	return (
 		<>
-		<TopNavBarCandidate />
+		{candidateData && <TopNavBarCandidate />}
 		<EmailOrMobile
 			handleSubmit={handleSubmit}
 			initialValues={initialValues}
 			validationSchema={mobileSchema}
 		/>
-		<Footer />
+		{candidateData && <Footer />}
 		</>
 	);
 }

@@ -26,8 +26,8 @@ export const deleteCandidatesAllNotificationsApi = async (userId: string): Promi
     return response.data;
 };
 
-export const deleteCandidatesAllNotificationsBySenderIdApi = async (senderId: string): Promise<any> => {
-    const response: any = await candidateApiCalls("delete", notificationApiUrlConfig.deleteCandidatesAllNotificationsBySenderIdUrl(senderId));
+export const deleteCandidatesAllNotificationsBySenderIdApi = async (senderId: string, receiverId: string): Promise<any> => {
+    const response: any = await candidateApiCalls("delete", notificationApiUrlConfig.deleteCandidatesAllNotificationsBySenderIdUrl(senderId, receiverId));
     console.log("response is",response.data);
 
     return response.data;
@@ -56,8 +56,8 @@ export const deleteRecruiterAllNotificationsApi = async (userId: string): Promis
     return response.data;
 };
 
-export const deleteRecruitersAllNotificationsBySenderIdApi = async (senderId: string): Promise<any> => {
-    const response: any = await recruiterApiCalls("delete", notificationApiUrlConfig.deleteRecruitersAllNotificationsBySenderIdUrl(senderId));
+export const deleteRecruitersAllNotificationsBySenderIdApi = async (senderId: string, receiverId: string): Promise<any> => {
+    const response: any = await recruiterApiCalls("delete", notificationApiUrlConfig.deleteRecruitersAllNotificationsBySenderIdUrl(senderId, receiverId));
     console.log("response is",response.data);
 
     return response.data;

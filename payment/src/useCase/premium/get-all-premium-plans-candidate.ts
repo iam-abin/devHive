@@ -1,21 +1,21 @@
 export = (dependencies: any) => {
 	const {
-		repositories: { candidateProfileRepository },
+		repositories: { membershipRepository },
 	} = dependencies;
 
-	if (!candidateProfileRepository) {
+	if (!membershipRepository) {
 		throw new Error(
-			"candidateProfileRepository should exist in dependencies"
+			"membershipRepository should exist in dependencies"
 		);
 	}
 
-	const execute = async (userId: string) => {
-		console.log("in candidate profile execute ", userId);
+	const execute = async () => {
+		console.log("in candidate membershipPlans execute ");
 		
-		const profile = await candidateProfileRepository.deleteResumeByCandidateId(userId);
-		console.log("profile ", profile);
+		const membershipPlans = await membershipRepository.getAllMembershipPlans();
+		console.log("membershipPlans ", membershipPlans);
 		
-		return profile;
+		return membershipPlans;
 	};
 
 	return { execute };

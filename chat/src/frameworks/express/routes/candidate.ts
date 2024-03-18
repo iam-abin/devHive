@@ -30,7 +30,7 @@ export const candidateRouter = (dependencies: DependenciesData) => {
 
 	router.delete("/notifications/:userId", deleteAllNotificationsController);
 	
-	router.delete("/delete-notifications-by-senderId/:senderId", deleteAllNotificationsBySenderController);
+	router.delete("/delete-notifications-by-senderId/:senderId/:receiverId", deleteAllNotificationsBySenderController);
 
 	return router;
 };

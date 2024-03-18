@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-// import { FaSearch } from "react-icons/fa";
 import { TiTick } from "react-icons/ti";
 
 import ChatImage from "../../assets/chat/double-chat-bubble-icon.svg";
@@ -48,7 +47,6 @@ const ChatPageCandidate = () => {
 		}
 	};
 
-	console.log("===========================isChatOpen===========================", isChatOpen);
 	
 	useEffect(() => {
 		scrollToBottom();
@@ -63,6 +61,21 @@ const ChatPageCandidate = () => {
 			socket.disconnect();
 		};
 	}, []);
+
+	useEffect(() => {
+		// Check if the page is being refreshed
+		const handleBeforeUnload = (event: any) => {
+		  event.preventDefault();
+		  // Dispatch the action to clear the currently selected chat room
+		  dispatch(clearCandidateCurrentlySelectedChatRoom());
+		};
+	
+		window.addEventListener("beforeunload", handleBeforeUnload);
+	
+		return () => {
+		  window.removeEventListener("beforeunload", handleBeforeUnload);
+		};
+	  }, []);
 
 	useEffect(() => {
 		console.log("=========in socket io addActiveUser useEffect");
@@ -124,6 +137,10 @@ const ChatPageCandidate = () => {
 		socket.on("receiveMessage", (message) => {
 			console.log("in receive message candidateEEEEEEEE ", message);
 
+			if(selectedChatRoom?._id != message.result.roomId.toString() ){
+				console.log("no chat rooms are selected");
+			}
+
 			if (message.result.roomId.toString() === selectedChatRoom?._id) {
 				if(message.result.senderId != candidateData.id) socket.emit("markAsRead", message.result.id);
 				setSelectedChatRoomMessages([
@@ -167,15 +184,6 @@ const ChatPageCandidate = () => {
 		socket.emit("sendMessage", messageToSend);
 	};
 
-	// const clearNotifications = async(e: React.MouseEvent<HTMLElement, MouseEvent>) => {
-	// 	// Implement logic to clear notifications
-	// 	e.stopPropagation()
-	// 	console.log("Clearing notifications...");
-	// 	await deleteCandidatesAllNotificationsApi(candidate.id)
-	// 	setNotificationsCount(0)
-	// 	setNotifications([])
-	// };
-
 	const handleChatRoomClick = async (room: any) => {
 		setSelectedChatRoom(room);
 		
@@ -185,7 +193,7 @@ const ChatPageCandidate = () => {
 		console.log("senderId from room", senderId);
 		console.log("senderId from room", senderId[0]?._id);
 		
-		await deleteCandidatesAllNotificationsBySenderIdApi(senderId[0]?._id)
+		await deleteCandidatesAllNotificationsBySenderIdApi(senderId[0]?._id,candidateData.id )
 		setSelectedChatRoomMessages(conversations.data);
 		// selectedChatRoomMessages.forEach((message: any) => {
 		// 	console.log("???????????????? message.read", message.read);
@@ -215,6 +223,9 @@ const ChatPageCandidate = () => {
 		);
 
 		for (let i = 0; i < onlineUsers.length; i++) {
+			console.log("oooooooooooooooo onlineUsers[i].userId == otherValue",onlineUsers[i].userId == otherValue[0]._id," oooooooooooo");
+			console.log("oooooooooooooooo onlineUsers[i].userId ",onlineUsers[i].userId," oooooooooooo");
+			console.log("oooooooooooooooo otherValue ",otherValue[0]._id," oooooooooooo");
 			if (onlineUsers[i]?.userId == otherValue[0]?._id) {
 				return true;
 			}
@@ -224,9 +235,8 @@ const ChatPageCandidate = () => {
 
 	const getReceiver = (chatRoom: any) => {
 		const otherUser = chatRoom.users.filter(
-			(value: any) => value._id !== candidateData.id
+			(value: any) => value._id !== candidateData?.id
 		);
-
 		return otherUser;
 	};
 

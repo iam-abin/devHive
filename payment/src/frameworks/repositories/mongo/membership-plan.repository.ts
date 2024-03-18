@@ -4,7 +4,12 @@ import schemas from "../../database/mongo/models";
 const { MembershipPlansModel } = schemas;
 
 export = {
+	getAllMembershipPlans: async () => {
+		const membershipPlans = await MembershipPlansModel.find({});
+		return membershipPlans;
+	},
 
+	// Following functions are used by handleMessage when a kafka event comes 
 	createMembershipPlan: async (data: any)=>{
 		console.log("premium inside create premium ",data);
 		const membershipPlanData = new MembershipPlan(data)
@@ -18,10 +23,6 @@ export = {
 		return chatMessages;
 	},
 
-	getAllMembershipPlans: async () => {
-		const membershipPlans = await MembershipPlansModel.find({});
-		return membershipPlans;
-	},
 
 	updateMembershipPlan: async (id: string, status: object) => {
 		const updatedJob = await MembershipPlansModel.findOneAndUpdate(

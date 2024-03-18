@@ -15,6 +15,7 @@ import Notifications from "../notification/Notifications";
 import socket from "../../config/socket";
 import { 
 	deleteCandidatesAllNotificationsApi,
+	deleteRecruiterAllNotificationsApi,
 	 getRecruiterAllNotificationsApi,
 	 getRecruiterNotificationCountApi} from "../../axios/apiMethods/chat-service/notification";
 
@@ -35,7 +36,7 @@ function TopNavBarRecruiter() {
 
 		// to get the other user
 	const getOtherUser = (chatRoom: any) => {
-		const otherUser = chatRoom.users.filter(
+		const otherUser = chatRoom?.users?.filter(
 			(value: any) => value._id !== recruiter?.id
 		);
 
@@ -43,9 +44,9 @@ function TopNavBarRecruiter() {
 	};
 
 		// to avoid notification for current chatbox
-	const currentlySelectedChatRoom = useSelector(
-		(state: RootState) => state.candidateCurrentlySelectedChatroom.data
-	);
+	const currentlySelectedRecruiterChatRoom = useSelector(
+		(state: RootState) => state.recruiterCurrentlySelectedChatroom.data
+	);	
 
 	
 
@@ -77,7 +78,6 @@ function TopNavBarRecruiter() {
 	// ============================================================================
 
 	const [openNotifications, setOpenNotifications] = useState(false);
-	
 	useEffect(() => {
 		(async () => {
 			try {
@@ -86,38 +86,94 @@ function TopNavBarRecruiter() {
 				if (openNotifications) {
 					
 					let fetchedNotifications = await getRecruiterAllNotificationsApi(recruiter?.id);
-					console.log("fetchedNotifications$$$$$$$$$$$$", fetchedNotifications.data);
-					let sender = getOtherUser(currentlySelectedChatRoom)
-					console.log("socket.on chatNotification 000000000000004", sender);
+					// let fetchedNotificationsCount = await getrecruitersNotificationCountApi(recruiter?.id);
 
-					let filteredNotifications = fetchedNotifications.data.filter((notification: any)=>{
-						console.log("socket.on chatNotification 000000000000005", sender[0]?._id !== notification?.senderId);
-						return sender[0]?._id !== notification?.senderId
-					})
+					// console.log("fetchedNotifications$$$$$$$$$$$$", fetchedNotifications);
+					console.log("fetchedNotifications$$$$$$$$$$$$", fetchedNotifications.data);
+					// socket.on('notification', (data: any) => {
+
+					let currentChatRoomSender = getOtherUser(currentlySelectedRecruiterChatRoom)
+					console.log("socket.on chatNotification 000000000000004", currentChatRoomSender);
+
+					// let filteredNotifications = fetchedNotifications.data.filter((notification: any)=>{
+					// 	console.log("socket.on chatNotification 000000000000005", currentChatRoomSender[0]?._id !== notification?.senderId);
+					// 	if((currentChatRoomSender[0]?._id !== notification?.senderId) || !currentlySelectedRecruiterChatRoom){
+					// 		return notification
+					// 	}
+
+					// })
+
+					let filteredNotifications = []
+					if(currentlySelectedRecruiterChatRoom){
+						filteredNotifications = fetchedNotifications.data.filter((notification: any)=>{
+							// console.log("socket.on chatNotification 000000000000005", currentChatRoomSender[0]?._id !== notification?.senderId);
+							if((currentChatRoomSender[0]?._id !== notification?.senderId)){
+								return notification
+							}
+	
+						})
+					}else{
+						filteredNotifications = fetchedNotifications.data
+					}
+
+					if(filteredNotifications.length ==0){
+						await deleteRecruiterAllNotificationsApi(recruiter.id)
+					}
 					// if(sender[0]._id !== data?.senderId) setNotifications([...notifications, data]);
 
 					setNotifications(filteredNotifications);
 
 					// })
 					// dispatch(
-					// 	setCandidateProfileDetails(notifications?.data)
+					// 	setrecruiterProfileDetails(notifications?.data)
 					// );
 				}
 			} catch (error) {
-				console.error("Error fetching candidate profile:", error);
+				console.error("Error fetching recruiter profile:", error);
 			}
 		})();
 	}, [openNotifications]);
+	
+	// useEffect(() => {
+	// 	(async () => {
+	// 		try {
+	// 			if (openNotifications) {
+	// 				let fetchedNotifications = await getRecruiterAllNotificationsApi(recruiter?.id);
+	// 				console.log("fetchedNotifications:", fetchedNotifications);
+	// 				console.log("currentlySelectedRecruiterChatRoom:", currentlySelectedRecruiterChatRoom);
+	// 				let sender = getOtherUser(currentlySelectedRecruiterChatRoom);
+	// 				console.log("sender:", sender);
+	
+	// 				// let filteredNotifications = fetchedNotifications?.data?.filter((notification: any) => {
+	// 				// 	return sender && sender.length > 0 && sender[0]?._id !== notification?.senderId;
+	// 				// });
+
+	// 				let filteredNotifications = fetchedNotifications.data.filter((notification: any)=>{
+	// 					console.log("on filteredNotifications 000000000000005", sender[0]?._id !== notification?.senderId);
+	// 					return sender[0]?._id !== notification?.senderId
+	// 				})
+					
+	// 				console.log("filteredNotifications in openNotification useCase ", filteredNotifications);
+					
+	
+	// 				setNotifications(filteredNotifications);
+	// 			}
+	// 		} catch (error) {
+	// 			console.error("Error fetching candidate profile:", error);
+	// 		}
+	// 	})();
+	// }, [openNotifications]);
+
 	// io.to(user2.socketId).emit("chatNotification", {sender: senderId,message: textMessage });
 	useEffect(()=>{
 		socket.on("chatNotification", (data: any) => {
 			console.log("socket.on chatNotification 000000000000001", notifications);
 			console.log("socket.on chatNotification 000000000000002", data);
 			console.log("socket.on chatNotification 000000000000003", [...notifications,data]);
-			let sender = getOtherUser(currentlySelectedChatRoom)
-			console.log("socket.on chatNotification 000000000000004", sender);
-			console.log("socket.on chatNotification 000000000000005", sender[0]?._id !== data?.senderId);
-			if(sender[0]._id !== data?.senderId) setNotifications([...notifications, data]);
+			let senderToChatRoom = getOtherUser(currentlySelectedRecruiterChatRoom)
+			console.log("socket.on chatNotification 000000000000004", senderToChatRoom);
+			console.log("socket.on chatNotification 000000000000005", senderToChatRoom[0]?._id !== data?.senderId);
+			if(senderToChatRoom[0]._id !== data?.senderId) setNotifications([...notifications, data]);
 			
 		});
 	},[])
@@ -128,30 +184,39 @@ function TopNavBarRecruiter() {
 	useEffect(() => {
 		(async () => {
 			try {
-					let notificationsCount = await getRecruiterNotificationCountApi(
-						recruiter?.id
-					);
-
-					let fetchedNotifications = await getRecruiterAllNotificationsApi(recruiter?.id);
-					console.log("fetchedNotifications$$$$$$$$$$$$", fetchedNotifications.data);
-					let sender = getOtherUser(currentlySelectedChatRoom)
-					console.log("socket.on chatNotification 000000000000004", sender);
-
-					let filteredNotifications = fetchedNotifications.data.filter((notification: any)=>{
-						console.log("socket.on chatNotification 000000000000005", sender[0]?._id !== notification?.senderId);
-						return sender[0]?._id !== notification?.senderId
-					})
-
-					console.log("notificationsCount1*****************", notificationsCount.data);
-					console.log("notificationsCount2*****************", filteredNotifications.length);
-
-					// console.log("socket.on chatNotification 000000000000005", sender[0]?._id !== notification?.senderId);
-					// return sender[0]?._id !== notification?.senderId
-
-					setNotificationsCount(filteredNotifications.length)
-
-					// dispatch(setCandidateProfileDetails(notifications?.data));
+				let notificationsCount = await getRecruiterNotificationCountApi(recruiter?.id);
+				console.log("notificationsCounttttttttt", notificationsCount.data);
 				
+				let fetchedNotifications = await getRecruiterAllNotificationsApi(recruiter?.id);
+				console.log("fetchedNotifications$$$$$$$$$$$$", fetchedNotifications.data);
+				
+				let currentChatRoomSender = getOtherUser(currentlySelectedRecruiterChatRoom);
+				console.log("socket.on chatNotification 000000000000004", currentChatRoomSender);
+	
+				// let filteredNotifications = fetchedNotifications?.data?.filter((notification: any) => {
+    			// 	return currentChatRoomSender && currentChatRoomSender.length > 0 && currentChatRoomSender[0]?._id !== notification?.senderId;
+				// });
+
+				let filteredNotifications = []
+					if(currentlySelectedRecruiterChatRoom){
+						filteredNotifications = fetchedNotifications.data.filter((notification: any)=>{
+							// console.log("socket.on chatNotification 000000000000005", currentChatRoomSender[0]?._id !== notification?.senderId);
+							if((currentChatRoomSender[0]?._id !== notification?.senderId)){
+								return notification
+							}
+	
+						})
+					}else{
+						filteredNotifications = fetchedNotifications.data
+					}
+
+	
+				// if (filteredNotifications) {
+					setNotificationsCount(filteredNotifications.length);
+				// } else {
+				// 	setNotificationsCount(0);
+				// }
+	
 			} catch (error) {
 				console.error("Error fetching candidate profile:", error);
 			}
@@ -188,7 +253,8 @@ function TopNavBarRecruiter() {
 		// Implement logic to clear notifications
 		e.stopPropagation()
 		console.log("Clearing notifications...");
-		await deleteCandidatesAllNotificationsApi(recruiter.id)
+		// await deleteCandidatesAllNotificationsApi(recruiter.id)
+		await deleteRecruiterAllNotificationsApi(recruiter.id)
 		setNotificationsCount(0)
 		setNotifications([])
 	};

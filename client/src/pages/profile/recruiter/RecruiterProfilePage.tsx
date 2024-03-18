@@ -146,7 +146,7 @@ const RecruiterProfilePage: React.FC = () => {
 										</h2>
 										<p className="text-gray-600">
 											{recruiterProfileData?.data
-												?.gender ?? "Not specified"}
+												?.gender ?? ""}
 										</p>
 									</div>
 								)}
@@ -160,27 +160,27 @@ const RecruiterProfilePage: React.FC = () => {
 											<h3 className="text-blue-500 font-semibold">
 												{recruiterProfileData?.data
 													?.company_name ??
-													"Not specified"}
+													""}
 											</h3>
 											<p className="text-gray-600">
 												{recruiterProfileData?.data
 													?.company_location ??
-													"Not specified"}
+													""}
 											</p>
 											<p className="text-gray-600">
 												{recruiterProfileData?.data
 													?.company_state ??
-													"Not specified"}
+													""}
 											</p>
 											<p className="text-gray-600">
 												{recruiterProfileData?.data
 													?.company_country ??
-													"Not specified"}
+													" "}
 											</p>
 											<p className="text-gray-600">
 												{recruiterProfileData?.data
 													?.company_website ??
-													"Not specified"}
+													""}
 											</p>
 										</li>
 										{/* Add more job postings */}

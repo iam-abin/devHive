@@ -41,7 +41,7 @@ const TopNavBarCandidate = () => {
 	});
 	// to get the other user
 	const getOtherUser = (chatRoom: any) => {
-		const otherUser = chatRoom.users.filter(
+		const otherUser = chatRoom?.users?.filter(
 			(value: any) => value._id !== candidateProfile.id
 		);
 
@@ -130,13 +130,25 @@ const TopNavBarCandidate = () => {
 					console.log("fetchedNotifications$$$$$$$$$$$$", fetchedNotifications.data);
 					// socket.on('notification', (data: any) => {
 
-					let sender = getOtherUser(currentlySelectedChatRoom)
-					console.log("socket.on chatNotification 000000000000004", sender);
+					let currentChatRoomSender = getOtherUser(currentlySelectedChatRoom)
+					console.log("socket.on chatNotification 000000000000004", currentChatRoomSender);
 
-					let filteredNotifications = fetchedNotifications.data.filter((notification: any)=>{
-						console.log("socket.on chatNotification 000000000000005", sender[0]?._id !== notification?.senderId);
-						return sender[0]?._id !== notification?.senderId
-					})
+					let filteredNotifications = []
+					if(currentlySelectedChatRoom){
+						filteredNotifications = fetchedNotifications.data.filter((notification: any)=>{
+							// console.log("socket.on chatNotification 000000000000005", currentChatRoomSender[0]?._id !== notification?.senderId);
+							if((currentChatRoomSender[0]?._id !== notification?.senderId)){
+								return notification
+							}
+	
+						})
+					}else{
+						filteredNotifications = fetchedNotifications.data
+					}
+
+					if(filteredNotifications.length ==0){
+						await deleteCandidatesAllNotificationsApi(candidate.id)
+					}
 					// if(sender[0]._id !== data?.senderId) setNotifications([...notifications, data]);
 
 					setNotifications(filteredNotifications);
@@ -159,11 +171,24 @@ const TopNavBarCandidate = () => {
 			console.log("socket.on chatNotification 000000000000003", [...notifications,data]);
 			let sender = getOtherUser(currentlySelectedChatRoom)
 			console.log("socket.on chatNotification 000000000000004", sender);
-			console.log("socket.on chatNotification 000000000000005", sender[0]?._id !== data?.senderId);
 			if(sender[0]._id !== data?.senderId) setNotifications([...notifications, data]);
+			
+			// useEffect(() => {
+			// 	socket.on("chatNotification", (data: any) => {
+			// 		// Increment notificationsCount when a chat notification is received
+			// 	});
+			// }, []);
 			
 		});
 	},[])
+
+	useEffect(() => {
+        socket.on("chatNotification", (data: any) => {
+            // Increment notificationsCount when a chat notification is received
+            setNotificationsCount(prevCount => prevCount + 1);
+        });
+    }, []);
+
 	// dispatch(setCandidateProfileDetails(notifications?.data));setNotificationsCount(fetchedNotificationsCount)
 
 
@@ -182,16 +207,29 @@ const TopNavBarCandidate = () => {
 					console.log("fetchedNotifications$$$$$$$$$$$$", fetchedNotifications.data);
 					// socket.on('notification', (data: any) => {
 
-					let sender = getOtherUser(currentlySelectedChatRoom)
-					console.log("socket.on chatNotification 000000000000004", sender);
+					let currentChatRoomSender = getOtherUser(currentlySelectedChatRoom)
+					console.log("socket.on chatNotification 000000000000004", currentChatRoomSender);
 
-					let filteredNotifications = fetchedNotifications.data.filter((notification: any)=>{
-						console.log("socket.on chatNotification 000000000000005", sender[0]?._id !== notification?.senderId);
-						return sender[0]?._id !== notification?.senderId
-					})
+					// let filteredNotifications = fetchedNotifications?.data?.filter((notification: any)=>{
+					// 	// console.log("socket.on chatNotification 000000000000005", currentChatRoomSender[0]?._id !== notification?.senderId);
+					// 	return currentChatRoomSender[0]?._id !== notification?.senderId
+					// })
 
-					console.log("notificationsCount1*****************", notificationsCount.data);
-					console.log("notificationsCount2*****************", filteredNotifications.length);
+					let filteredNotifications = []
+					if(currentlySelectedChatRoom){
+						filteredNotifications = fetchedNotifications.data.filter((notification: any)=>{
+							// console.log("socket.on chatNotification 000000000000005", currentChatRoomSender[0]?._id !== notification?.senderId);
+							if((currentChatRoomSender[0]?._id !== notification?.senderId)){
+								return notification
+							}
+	
+						})
+					}else{
+						filteredNotifications = fetchedNotifications.data
+					}
+
+					console.log("notificationsCount1*****************", notificationsCount?.data);
+					console.log("notificationsCount2*****************", filteredNotifications?.length);
 
 					// console.log("socket.on chatNotification 000000000000005", sender[0]?._id !== notification?.senderId);
 					// return sender[0]?._id !== notification?.senderId

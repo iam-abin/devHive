@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { loadStripe } from "@stripe/stripe-js";
 import { getAllMembershipPlansApi } from "../../axios/apiMethods/premium-plans-service/admin";
 import PaymentPlanCard from "../../components/cards/PaymentPlanCard";
+import { getAllMembershipPlansByCandidateApi } from "../../axios/apiMethods/premium-plans-service/candidate";
 
 const PaymentPlans: React.FC = () => {
 	const [membershipPlansData, setMembershipPlansData] = useState<[]>([]);
@@ -31,7 +32,7 @@ const PaymentPlans: React.FC = () => {
 	useEffect(() => {
 		(async () => {
 			try {
-				const recruiters = await getAllMembershipPlansApi();
+				const recruiters = await getAllMembershipPlansByCandidateApi();
 				console.log(
 					"in useEffect getAllMembershipPlansApi()",
 					recruiters.data

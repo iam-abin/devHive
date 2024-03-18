@@ -1,6 +1,5 @@
 // import { GiHamburgerMenu } from "react-icons/gi"
 import homeImage from "../../assets/landingPage/company-like.jpg";
-// import FooterLanding from "../../components/footer/FooterLanding";
 import { useEffect } from "react";
 import NavBarLanding from "../../components/navBar/NavBarLanding";
 import SearchBar from "../../components/searchBar/SearchBar";
@@ -23,7 +22,6 @@ import { setTotalNumberOfPages } from "../../redux/slice/job/filteredJobsSlice";
 import { setCurrentPage } from "../../redux/slice/job/filteredJobsSlice";
 import TopNavBarCandidate from "../../components/navBar/TopNavBarCandidate";
 import Footer from "../../components/footer/Footer";
-// import { getACandidateProfileApi } from "../../axios/apiMethods/profile-service/recruiter";
 import { candidateGetProfileApi } from "../../axios/apiMethods/profile-service/candidate";
 import { setCandidateProfileDetails } from "../../redux/slice/candidateSlice/candidateProfileSlice";
 

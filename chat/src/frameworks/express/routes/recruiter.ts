@@ -2,37 +2,37 @@ import express from "express";
 
 import { chatControllers, notificationControllers } from "../../../controllers";
 import { DependenciesData } from "../../types/dependencyInterface";
-import {
-	requireAuthRecruiter,
-} from "@abijobportal/common";
+import { requireAuthRecruiter } from "@abijobportal/common";
 
 export const recruiterRouter = (dependencies: DependenciesData) => {
 	const router = express.Router();
 
-	const {
-		getAllChatRoomsByUserIDController,
-		getConversationController
-	} = chatControllers(dependencies);
+	const { getAllChatRoomsByUserIDController, getConversationController } =
+		chatControllers(dependencies);
 
-	const { getAllNotificationsController,
+	const {
+		getAllNotificationsController,
 		createNotificationController,
-	deleteAllNotificationsController } = notificationControllers(dependencies)
+		deleteAllNotificationsController,
+		getAllNotificationsCountController,
+	} = notificationControllers(dependencies);
 
 	router.get("/chat-rooms/:userId", getAllChatRoomsByUserIDController);
 
 	router.get("/room-conversation/:chatRoomId", getConversationController);
 
-
 	router.get("/notifications/:userId", getAllNotificationsController);
-	
+
 	router.post("/create", createNotificationController);
 
 	router.delete("/notifications/:userId", deleteAllNotificationsController);
 
-	router.get("/notificatons/:userId", getAllNotificationsController);
+	// router.delete("/delete-notifications-by-senderId/:senderId/:receiverId", deleteAllNotificationsBySenderController);
 
-	// router.get("/notifications-count/:userId", getAllNotificationsCountController);
-	
+	router.get(
+		"/notifications-count/:userId",
+		getAllNotificationsCountController
+	);
 
 	return router;
 };

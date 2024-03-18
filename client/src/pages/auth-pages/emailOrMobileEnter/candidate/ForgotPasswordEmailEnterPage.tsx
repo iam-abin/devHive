@@ -22,6 +22,10 @@ function ForgotPasswordEmailEnterPage() {
 		(state: RootState) => state.loading.isLoading
 	);
 
+	const candidateData: any = useSelector((state: RootState) => {
+		return state.candidateData.data;
+	});
+
 	const emailSchema = yup.object().shape({
 		email: yup
 			.string()
@@ -74,13 +78,15 @@ function ForgotPasswordEmailEnterPage() {
 
 	return (
 		<>
-			<TopNavBarCandidate />
+			{candidateData && <TopNavBarCandidate />}
 			<EmailOrMobile
 				handleSubmit={handleSubmit}
 				initialValues={initialValues}
 				validationSchema={emailSchema}
 			/>
-			<Footer />
+			{candidateData && <Footer />}
+
+			
 		</>
 	);
 }

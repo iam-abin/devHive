@@ -6,14 +6,14 @@ export = (dependencies: DependenciesData)=>{
     const { useCases: { getAllPremiumPlansCandidateUseCase }} = dependencies 
 
     return async (req: Request, res: Response)=>{
-        const keyword = req.query.search
-        console.log("in  Job Applications controller 1: ",keyword);
 
-        const applications = await getAllPremiumPlansCandidateUseCase(dependencies).execute(keyword);
-        console.log("in Job Applications controller 2: ",applications);
+        console.log("in  getAllPremiumPlansByCandidateController 1: ");
+
+        const plans = await getAllPremiumPlansCandidateUseCase(dependencies).execute();
+        console.log("in getAllPremiumPlansByCandidateController 2: ",plans);
 
 
-        res.status(200).json({message: "Job applications are ", data: applications })
+        res.status(200).json({message: "Premium plans are ", data: plans })
     };
 
 }

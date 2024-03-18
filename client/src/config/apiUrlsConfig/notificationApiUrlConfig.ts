@@ -8,14 +8,14 @@ const notificationApiUrlConfig = {
 	getCandidatesNotificationCountUrl: (userId: string) => `${CANDIDATE_CHAT_URL}/notifications-count/${userId}`,
 	getCandidatesAllNotificationsUrl: (userId: string) => `${CANDIDATE_CHAT_URL}/notifications/${userId}`,//:userId
 	deleteCandidatesAllNotificationsUrl: (userId: string) => `${CANDIDATE_CHAT_URL}/notifications/${userId}`,
-	deleteCandidatesAllNotificationsBySenderIdUrl: (senderId: string) => `${CANDIDATE_CHAT_URL}/delete-notifications-by-senderId/${senderId}`,
+	deleteCandidatesAllNotificationsBySenderIdUrl: (senderId: string, receiverId: string) => `${CANDIDATE_CHAT_URL}/delete-notifications-by-senderId/${senderId}/${receiverId}`,
 	
 
 	// recruiter
 	getRecruiterNotificationCountUrl: (userId: string) => `${RECRUITER_CHAT_URL}/notifications-count/${userId}`,
-	getRecruiterAllNotificationsUrl: (userId: string) => `${RECRUITER_CHAT_URL}/notificatons/${userId}`,
-	deleteRecruiterAllNotificationsUrl: (userId: string) => `${RECRUITER_CHAT_URL}/notificatons/${userId}`,
-	deleteRecruitersAllNotificationsBySenderIdUrl: (senderId: string) => `${RECRUITER_CHAT_URL}/delete-notifications-by-senderId/${senderId}`,
+	getRecruiterAllNotificationsUrl: (userId: string) => `${RECRUITER_CHAT_URL}/notifications/${userId}`,
+	deleteRecruiterAllNotificationsUrl: (userId: string) => `${RECRUITER_CHAT_URL}/notifications/${userId}`,
+	deleteRecruitersAllNotificationsBySenderIdUrl: (senderId: string, receiverId: string) => `${RECRUITER_CHAT_URL}/delete-notifications-by-senderId/${senderId}/${receiverId}`,
 
 };
 

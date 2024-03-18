@@ -31,7 +31,7 @@ const start = async () => {
 		kafkaClient
 	);
 
-	await membershipPlanCreatedEvent.subscribe();
+	// await membershipPlanCreatedEvent.subscribe();
 
 	// to connect to mongodb
 	await connectDB();
