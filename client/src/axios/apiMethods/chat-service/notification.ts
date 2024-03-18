@@ -33,6 +33,14 @@ export const deleteCandidatesAllNotificationsBySenderIdApi = async (senderId: st
     return response.data;
 };
 
+
+export const getCandidatesUnreadMessagesCountApi =  async (senderId: string, receiverId: string): Promise<any> => {
+    const response: any = await candidateApiCalls("get", notificationApiUrlConfig.getCandidatessUnreadMessagesCountUrl(senderId, receiverId));
+    console.log("response is",response.data);
+
+    return response.data;
+};
+
 // Recruiter
 export const getRecruiterNotificationCountApi = async (userId: string): Promise<any> => {
     const response: any = await recruiterApiCalls("get", notificationApiUrlConfig.getRecruiterNotificationCountUrl(userId));
@@ -56,8 +64,16 @@ export const deleteRecruiterAllNotificationsApi = async (userId: string): Promis
     return response.data;
 };
 
+
 export const deleteRecruitersAllNotificationsBySenderIdApi = async (senderId: string, receiverId: string): Promise<any> => {
     const response: any = await recruiterApiCalls("delete", notificationApiUrlConfig.deleteRecruitersAllNotificationsBySenderIdUrl(senderId, receiverId));
+    console.log("response is",response.data);
+
+    return response.data;
+};
+
+export const getRecruitersUnreadMessagesCountApi =  async (senderId: string, receiverId: string): Promise<any> => {
+    const response: any = await recruiterApiCalls("get", notificationApiUrlConfig.getRecruitersUnreadMessagesCountUrl(senderId, receiverId));
     console.log("response is",response.data);
 
     return response.data;

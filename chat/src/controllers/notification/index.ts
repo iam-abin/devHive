@@ -3,6 +3,7 @@ import getAllNotificationsController from "./get-all-notifications.controller";
 import deleteAllNotificationsController from "./delete-all-notifications.controller";
 import getAllNotificationsCountController from "./get-all-notifications-count.controller";
 import deleteAllNotificationsBySenderController from "./delete-all-notifications-by-sender.controller";
+import getUnreadMessagesCountController from "./get-unread-messages-count.controller";
 
 import { DependenciesData } from "../../frameworks/types/dependencyInterface";
 
@@ -13,5 +14,6 @@ export = (dependencies: DependenciesData) => {
 		deleteAllNotificationsController: deleteAllNotificationsController(dependencies),
 		getAllNotificationsCountController: getAllNotificationsCountController(dependencies),
 		deleteAllNotificationsBySenderController: deleteAllNotificationsBySenderController(dependencies),
+		getUnreadMessagesCountController: getUnreadMessagesCountController(dependencies),
 	};
 };

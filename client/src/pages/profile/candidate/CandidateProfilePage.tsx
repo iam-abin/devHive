@@ -355,7 +355,7 @@ const CandidateProfilePage: React.FC = () => {
 								</div>
 							</div>
 							<div className="flex flex-col w-full border-opacity-50 mt-3">
-								<div className="grid h-12 pl-5 card bg-base-300 rounded-box items-center">
+								<div className="grid min-h-12 pl-5 card bg-base-300 rounded-box items-center">
 									<div className="text-left">
 										About:{" "}
 										{candidateProfileData?.about ??

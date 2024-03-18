@@ -35,4 +35,11 @@ export = {
         const response = await NotificationModel.deleteMany({senderId , targetUserId: receiverId});
 		return response;
 	},
+
+	getUnreadMessagesCount: async (senderId: string, receiverId: string) => {
+		const count = await NotificationModel.countDocuments({senderId, targetUserId: receiverId});
+		console.log("unread count ", count);
+		
+		return count;
+	},
 };

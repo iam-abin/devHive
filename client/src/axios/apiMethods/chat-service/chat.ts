@@ -5,12 +5,12 @@ import recruiterApiCalls from "../../recruiter/apiCalls";
 
 
 
-// export const getAllCandidateChatRoomsApi = async (senderId: string): Promise<any> => {
-//     const response: any = await candidateApiCalls("get", chatApiUrlConfig.getAllCandidateRoomsUrl(senderId));
-//     console.log("response is",response.data);
+export const getAllCandidateChatRoomsApi = async (senderId: string): Promise<any> => {
+    const response: any = await candidateApiCalls("get", chatApiUrlConfig.getAllCandidateRoomsUrl(senderId));
+    console.log("response is",response.data);
 
-//     return response.data;
-// };
+    return response.data;
+};
 
 
 export const getACandidateConversationApi = async (roomId: string): Promise<any> => {
@@ -22,12 +22,12 @@ export const getACandidateConversationApi = async (roomId: string): Promise<any>
 
 
 
-// export const getAllRecrutierChatRoomsApi = async (senderId: string): Promise<any> => {
-//     const response: any = await recruiterApiCalls("get", chatApiUrlConfig.getAllRecruiterRoomsUrl(senderId));
-//     console.log("response is",response.data);
+export const getAllRecruiterChatRoomsApi = async (senderId: string): Promise<any> => {
+    const response: any = await recruiterApiCalls("get", chatApiUrlConfig.getAllRecruiterRoomsUrl(senderId));
+    console.log("response is",response.data);
 
-//     return response.data;
-// };
+    return response.data;
+};
 
 
 

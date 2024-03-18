@@ -71,10 +71,10 @@ function JobDetailsPage() {
 				}
 			})
 			.catch((error) => {
-				console.log(error.errors[0].message);
+				// console.log(error.response.data.errors[0].message);
 
 				notify(
-					error.errors[0]?.message ||
+					error.response.data.errors[0].message ||
 						"You already applied for this jobb",
 					"error"
 				);

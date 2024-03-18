@@ -48,7 +48,7 @@ function CandidateSignupPage() {
 			});
 		} catch (error: any) {
 			console.log("in signup form error", error);
-			notify(error.errors[0].message, "error");
+			notify(error.response.data.errors[0].message, "error");
 		} finally {
 			dispatch(setLoaded());
 		}

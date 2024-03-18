@@ -59,9 +59,9 @@ function ResetPasswordMobileEnterPage() {
 			});
 		} catch (error: any) {
 			console.error("Error during mobile number submission:", error);
-			// notify(error.errors[0].message, "error");
+			// notify(error.response.data.errors[0].message, "error");
 			notify(
-				error.response?.data?.errors?.[0]?.message ||
+				error.response.data.errors[0].message ||
 					"An error occurred during mobile number submission",
 				"error"
 			);

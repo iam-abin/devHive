@@ -40,7 +40,7 @@ function OtpFormPageForgotPassword() {
 		} catch (error: any) {
 			console.error("Error during OTP submission:", error);
 
-			notify(error.message || "An error occurred during OTP submission", "error");
+			notify(error.response.data.errors[0].message || "An error occurred during OTP submission", "error");
 		} finally {
 			dispatch(setLoaded());
 		}

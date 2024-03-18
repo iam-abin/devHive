@@ -45,6 +45,16 @@ const TopNavBarCandidate = () => {
 			(value: any) => value._id !== candidateProfile.id
 		);
 
+		// const otherUser = chatRoom?.users?.filter(
+		// 	(value: any) =>{
+		// 		if( value._id !== candidateProfile.id){
+		// 			return value._id
+		// 		}
+		// 	}
+		// );
+
+		console.log("in getOtherUser fn other user ", otherUser);
+		
 		return otherUser;
 	};
 
@@ -169,9 +179,35 @@ const TopNavBarCandidate = () => {
 			console.log("socket.on chatNotification 000000000000001", notifications);
 			console.log("socket.on chatNotification 000000000000002", data);
 			console.log("socket.on chatNotification 000000000000003", [...notifications,data]);
-			let sender = getOtherUser(currentlySelectedChatRoom)
-			console.log("socket.on chatNotification 000000000000004", sender);
-			if(sender[0]._id !== data?.senderId) setNotifications([...notifications, data]);
+			let senderToChatRoom = getOtherUser(currentlySelectedChatRoom)
+			console.log("socket.on chatNotification 000000000000004", senderToChatRoom);
+			// ============================================================================================
+			// if(senderToChatRoom[0].id !== data?.senderId) setNotifications([...notifications, data]);
+
+			let currentChatRoomSender = getOtherUser(currentlySelectedChatRoom)
+					console.log("socket.on chatNotification 000000000000004", currentChatRoomSender);
+
+					// let filteredNotifications = []
+					if(!currentlySelectedChatRoom){
+						// filteredNotifications = fetchedNotifications.data.filter((notification: any)=>{
+						// 	// console.log("socket.on chatNotification 000000000000005", currentChatRoomSender[0]?._id !== notification?.senderId);
+						// 	if((currentChatRoomSender[0]?._id !== notification?.senderId)){
+						// 		return notification
+						// 	}
+	
+						// })
+						setNotifications([...notifications, data]);
+					}
+					// else{
+					// }
+
+					// if(filteredNotifications.length ==0){
+					// 	await deleteCandidatesAllNotificationsApi(candidate.id)
+					// }
+					// if(sender[0]._id !== data?.senderId) setNotifications([...notifications, data]);
+
+					
+			// ============================================================================================
 			
 			// useEffect(() => {
 			// 	socket.on("chatNotification", (data: any) => {
@@ -182,12 +218,12 @@ const TopNavBarCandidate = () => {
 		});
 	},[])
 
-	useEffect(() => {
-        socket.on("chatNotification", (data: any) => {
-            // Increment notificationsCount when a chat notification is received
-            setNotificationsCount(prevCount => prevCount + 1);
-        });
-    }, []);
+	// useEffect(() => {
+    //     socket.on("chatNotification", (data: any) => {
+    //         // Increment notificationsCount when a chat notification is received
+    //         setNotificationsCount(prevCount => prevCount + 1);
+    //     });
+    // }, []);
 
 	// dispatch(setCandidateProfileDetails(notifications?.data));setNotificationsCount(fetchedNotificationsCount)
 

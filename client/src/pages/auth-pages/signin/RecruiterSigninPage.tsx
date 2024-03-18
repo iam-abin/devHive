@@ -49,7 +49,7 @@ function RecruiterSigninPage() {
 			navigate("/recruiter");
 		} catch (error: any) {
 			console.log("in signin form error", error);
-			notify(error.errors[0].message, "error");
+			notify(error.response.data.errors[0].message, "error");
 		}finally {
 			// dispatch(setLoaded());
 		}

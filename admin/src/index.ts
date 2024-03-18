@@ -55,16 +55,16 @@ const start = async () => {
 	const jobDeletedEvent = new JobDeletedEventConsumer(kafkaClient);
 	const paymentcreatedEvent = new PaymentcreatedEventConsumer(kafkaClient);
 
-	// // await companyProfileCreatedEvent.subscribe();
-	// // await companyProfileUpdatedEvent.subscribe();
-	// await candidateProfileUpdatedEvent.subscribe();
-	// await recruiterProfileUpdatedEvent.subscribe();
-	// await jobCreatedEvent.subscribe();
-	// await jobUpdatedEvent.subscribe();
-	// await jobDeletedEvent.subscribe();
-	// await userUpdatedEvent.subscribe();
-	// await userCreatedEvent.subscribe();
-	// await paymentcreatedEvent.subscribe()
+	// await companyProfileCreatedEvent.subscribe();
+	// await companyProfileUpdatedEvent.subscribe();
+	await candidateProfileUpdatedEvent.subscribe();
+	await recruiterProfileUpdatedEvent.subscribe();
+	await jobCreatedEvent.subscribe();
+	await jobUpdatedEvent.subscribe();
+	await jobDeletedEvent.subscribe();
+	await userUpdatedEvent.subscribe();
+	await userCreatedEvent.subscribe();
+	await paymentcreatedEvent.subscribe()
 	
 	app.listen(3000, () => {
 		console.log("admin Listening on port 3000....");

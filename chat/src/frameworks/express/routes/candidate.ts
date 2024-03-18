@@ -16,6 +16,7 @@ export const candidateRouter = (dependencies: DependenciesData) => {
 		deleteAllNotificationsController,
 		getAllNotificationsCountController,
 		deleteAllNotificationsBySenderController,
+		getUnreadMessagesCountController,
 	} = notificationControllers(dependencies);
 
 	router.get("/chat-rooms/:userId", getAllChatRoomsByUserIDController);
@@ -31,6 +32,8 @@ export const candidateRouter = (dependencies: DependenciesData) => {
 	router.delete("/notifications/:userId", deleteAllNotificationsController);
 	
 	router.delete("/delete-notifications-by-senderId/:senderId/:receiverId", deleteAllNotificationsBySenderController);
+	
+	router.get("/unread-messages-count/:senderId/:receiverId", getUnreadMessagesCountController);
 
 	return router;
 };

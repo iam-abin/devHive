@@ -57,6 +57,7 @@ export const onSocketConnection = (io: Server, socket: Socket) => {
 		"createChatRoom",
 		async (senderId: string, recepientId: string) => {
 			try {
+			
 				const senderData = await userRepository.findUserById(senderId);
 				console.log("recepientId ", recepientId);
 
@@ -70,6 +71,12 @@ export const onSocketConnection = (io: Server, socket: Socket) => {
 					throw new BadRequestError("recipient is not in user db");
 
 				console.log("before checking room");
+				// // ==================================================
+
+				// // to solve a bug that if there is no chatrooms found then creating chatroom with current user as users in the array
+				// if(senderId === recepientId) return 
+
+				// // ==================================================
 
 				const room = await chatRoomRepository.getAChatRoom(
 					senderId,
@@ -77,7 +84,7 @@ export const onSocketConnection = (io: Server, socket: Socket) => {
 				);
 				console.log("getAchatroom room", room);
 
-				if (room.length === 0) {
+				if (room.length === 0 && senderId !== recepientId) {
 					// no room so creating room
 					let chatRoomData = {
 						users: [senderId, recepientId],

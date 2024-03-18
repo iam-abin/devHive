@@ -11,7 +11,7 @@ export const createJwtAccessToken = (payload: {
 	console.log("inside createdJwtToken payload", payload);
 
 	const createdJwtToken = jwt.sign(payload, process.env.JWT_SECRET_KEY!, {
-		expiresIn: "15m",
+		expiresIn: "3h",
 	});
 
 	return createdJwtToken;

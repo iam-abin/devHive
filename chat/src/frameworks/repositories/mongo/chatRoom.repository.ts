@@ -32,7 +32,7 @@ export = {
 		);
 		return chatRooms;
 	},
-
+	
 	getAllChatRoomsByUserId: async (userId: string) => {
 		const chatRooms = await ChatRoomModel.find({
 			users: { $elemMatch: { $eq: userId } },

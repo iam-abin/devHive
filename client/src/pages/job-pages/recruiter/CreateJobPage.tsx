@@ -63,7 +63,7 @@ function CreateJobPage() {
 		} catch (error: any) {
 			console.log("fdsf",error);
 			
-			notify(error.errors[0].message, "warning");
+			notify(error.response.data.errors[0].message, "warning");
 		}
 	};
 

@@ -34,7 +34,7 @@ const AllAddedJobs = lazy(()=> import("../pages/job-pages/recruiter/AllAddedJobs
 const JobApplicationsPage = lazy(()=> import("../pages/job-pages/recruiter/JobApplicationsPage"))
 const JobApplicationDetailsPage = lazy(()=> import("../pages/job-pages/recruiter/JobApplicationDetailsPage"))
 // const CandidateProfileDetailsPage = lazy(()=> import("../pages/profile/recruiter/CandidateProfileDetailsPage"))
-const ChatPageRecruiter = lazy(()=> import("../pages/chat/ChatPageRecruiter"))
+const ChatPageRecruiter = lazy(()=> import("../pages/chat/ChatPageRecruiter2"))
 const ViewAllCandidatesPage = lazy(()=> import("../pages/recruiter/ViewAllCandidatesPage"))
 
 function RecruiterRouters() {

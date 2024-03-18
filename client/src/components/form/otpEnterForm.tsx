@@ -34,7 +34,7 @@ const OtpEnterForm: React.FC<OtpFromSignupProps> = ({ email, phone, handleSubmit
       } catch (error: any) {
         console.error('Error during OTP submission:', error);
         notify(
-          error.response?.data?.message ||
+          error.response.data.errors[0].message ||
             'An error occurred during OTP submission',
           'error'
         );
