@@ -57,6 +57,7 @@ const start = async () => {
 
 	// await companyProfileCreatedEvent.subscribe();
 	// await companyProfileUpdatedEvent.subscribe();
+	
 	await candidateProfileUpdatedEvent.subscribe();
 	await recruiterProfileUpdatedEvent.subscribe();
 	await jobCreatedEvent.subscribe();
@@ -73,6 +74,7 @@ const start = async () => {
 		.on("error", async () => {
 			// await companyProfileCreatedEvent.disconnect();
 			// await companyProfileUpdatedEvent.disconnect();
+
 			await candidateProfileUpdatedEvent.disconnect();
 			await recruiterProfileUpdatedEvent.disconnect();
 			await jobCreatedEvent.disconnect();
@@ -94,6 +96,7 @@ const start = async () => {
 			await userCreatedEvent.disconnect();
 			await paymentcreatedEvent.disconnect()
 		});
+
 };
 
 start();

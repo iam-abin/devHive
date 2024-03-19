@@ -258,6 +258,7 @@ const ChatPageCandidate = () => {
 
 	return (
 		<>
+		
 			<TopNavBarCandidate />
 			<div className="bg-white  h-[92vh] flex justify-center items-center">
 				<div className="bg-slate-200 h-max-[88vh] w-[90vw] flex rounded-md">

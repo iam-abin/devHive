@@ -12,6 +12,7 @@ interface MembershipPlansDocument extends mongoose.Document {
 	updatedAt: Date;
 }
 
+
 // 3.
 const membershipPlansSchema = new mongoose.Schema(
 	{

@@ -27,6 +27,7 @@ const start = async () => {
 		throw new Error("TWILIO_AUTH_TOKEN must be defined");
 	}
 
+
 	// if we do not set twilio account sid
 	if (!process.env.TWILIO_ACCOUNT_SID) {
 		throw new Error("TWILIO_ACCOUNT_SID must be defined");
@@ -44,6 +45,7 @@ const start = async () => {
 	
 	// it is used to listen to incomming message from kafka topics
 	const userUpdatedEvent = new UserUpdatedEventConsumer(kafkaClient)
+	
 	await userUpdatedEvent.subscribe()
 
 	app.listen(3000, () => {

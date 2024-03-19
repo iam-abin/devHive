@@ -32,6 +32,7 @@ const start = async () => {
 	);
 
 	await membershipPlanCreatedEvent.subscribe();
+	
 
 	// to connect to mongodb
 	await connectDB();

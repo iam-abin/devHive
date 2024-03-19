@@ -46,6 +46,7 @@ const start = async () => {
 	const userCreatedEvent = new UserCreatedEventConsumer(kafkaClient);
 	const userUpdatedEvent = new UserUpdatedEventConsumer(kafkaClient);
 	const paymentCreatedEvent = new paymentCreatedEventConsumer(kafkaClient)
+
 	// const companyProfileUpdatedEvent = new CompanyProfileUpdatedEventConsumer(
 	// 	kafkaClient
 	// );
@@ -53,6 +54,7 @@ const start = async () => {
 	await userCreatedEvent.subscribe();
 	await userUpdatedEvent.subscribe();
 	await paymentCreatedEvent.subscribe()
+
 	// await companyProfileUpdatedEvent.subscribe();
 
 	app.listen(3000, () => {
@@ -63,6 +65,7 @@ const start = async () => {
 			await userUpdatedEvent.disconnect();
 			await paymentCreatedEvent.disconnect()
 			// await companyProfileUpdatedEvent.disconnect();
+			
 		})
 		.on("close", async () => {
 			await userCreatedEvent.disconnect();
