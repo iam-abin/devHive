@@ -10,6 +10,7 @@ export = (dependencies: DependenciesData) => {
 	} = dependencies;
 
 	return async (req: Request, res: Response) => {
+
 		const { membershipPlanId, amount } = req.body;
 		let candidateId = req.currentUserCandidate!.id;
 
@@ -25,6 +26,7 @@ export = (dependencies: DependenciesData) => {
 
 
 		const paymentCreatedEvent = new PremiumPaymentDonePublisher(kafkaClient);
+		
 		await paymentCreatedEvent.publish({
 			candidateId,
 			membershipPlanId,

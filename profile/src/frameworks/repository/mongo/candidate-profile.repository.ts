@@ -99,6 +99,15 @@ export = {
 		return profile;
 	},
 
+	updatePreferredJobs: async (id: string, preferredJobs: [string]): Promise<any> => {
+		const profile = await CandidateProfileModel.findOneAndUpdate(
+			{ _id: id },
+			{ $set: { preferredJobs: preferredJobs } },
+			{ new: true }
+		);
+		return profile;
+	},
+
 	premiumPaymentDone: async (data: any): Promise<any> => {
 		const { candidateId, membershipPlanId } = data;
 		const user = await CandidateProfileModel.findOneAndUpdate(

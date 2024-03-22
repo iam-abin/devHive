@@ -4,13 +4,17 @@ import { FaShoppingBag } from "react-icons/fa";
 import { IoLocationSharp } from "react-icons/io5";
 import { HiMiniCurrencyRupee } from "react-icons/hi2";
 import { formatCurrency } from "../../utils/currency-format";
+import { dateFormatHumanized } from "../../utils/date-functions";
 
 const JobCard: React.FC<{ job: any; handleViewJob: any }> = ({
 	job,
 	handleViewJob,
 }) => {
-	const date1 = dayjs(Date.now());
-	const diffInDays = date1.diff(job.createdAt, "day");
+	// const date1 = dayjs(Date.now());
+	// const diffInDays = date1.diff(job.createdAt, "day");
+	const diffInDays = dateFormatHumanized(job.createdAt);
+	console.log(diffInDays, "in job cardDDDDDDDDDDDDDD");
+	
 	console.log("job  ", job);
 
 	return (
@@ -46,7 +50,7 @@ const JobCard: React.FC<{ job: any; handleViewJob: any }> = ({
 				<div className="flex items-center gap-4">
 					<p className="text-gray-500">
 						Posted{" "}
-						{diffInDays > 1 ? `${diffInDays} days ago` : `today`}{" "}
+						{diffInDays} ago
 					</p>
 
 					<button

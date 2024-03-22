@@ -52,11 +52,21 @@ export = {
 		return filteredJobs;
 	},
 
-	getAllJobs: async (skip: number, limit: number): Promise<any[]> => {
-		const jobs = await JobModel.find()
+	getAllJobs: async (skip: number, limit: number, applicationJobIds?: string[]): Promise<any[]> => {
+
+			let jobs;
+		if(applicationJobIds){
+			jobs = await JobModel.find({ _id: { $nin: applicationJobIds } })
 			.sort({ createdAt: -1 })
 			.skip(skip)
 			.limit(limit);
+		}else{
+			jobs = await JobModel.find()
+			.sort({ createdAt: -1 })
+			.skip(skip)
+			.limit(limit);
+		}
+
 		console.log(jobs);
 		return jobs;
 	},
@@ -84,8 +94,14 @@ export = {
 		return jobs;
 	},
 
-	getCountOfJobs: async (): Promise<number> => {
-		const totalJobs: number = await JobModel.countDocuments();
+	getCountOfJobs: async (applicationJobIds?: string[]): Promise<number> => {
+		let totalJobs;
+		if(applicationJobIds){
+			totalJobs = await JobModel.countDocuments({ _id: { $nin: applicationJobIds } });
+		}else{
+			totalJobs = await JobModel.countDocuments();
+		}
+
 		console.log(totalJobs);
 		return totalJobs;
 	},

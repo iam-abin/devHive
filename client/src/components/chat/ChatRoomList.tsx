@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { deleteCandidatesAllNotificationsApi, deleteRecruiterAllNotificationsApi, getCandidatesUnreadMessagesCountApi, getRecruitersUnreadMessagesCountApi } from "../../axios/apiMethods/chat-service/notification";
+import { dateFormatHumanized, getTime, isToday } from "../../utils/date-functions";
+import { formatDate } from "../../utils/date-functions";
 
 interface ChatRoomListProps {
 	receiver: any;
 	isOnline: boolean;
 	lastMessage: string;
+	lastMessageTime: Date;
 	currentUser: any;
 	onClick: () => void;
 	selected: boolean;
@@ -14,6 +17,7 @@ const ChatRoomList: React.FC<ChatRoomListProps> = ({
 	receiver,
 	isOnline,
 	lastMessage,
+	lastMessageTime,
 	currentUser,
 	onClick,
 	selected,
@@ -83,8 +87,11 @@ const ChatRoomList: React.FC<ChatRoomListProps> = ({
 				{unReadCount > 0 && !selected && (
 					<div className="badge right-0 bg-green-600 text-white rounded-full p-1 text-xs">
 						{unReadCount}
+
 					</div>
-				)}
+					
+					)}
+					{isToday(lastMessageTime)? getTime(lastMessageTime) :formatDate(lastMessageTime.toString())}
 			</div>
 		</div>
 	);

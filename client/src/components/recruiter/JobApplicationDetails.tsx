@@ -4,7 +4,7 @@ import StatusChangeForm from "../dropDown/StatusChangeForm";
 import { changeJobApplicationStatusApi } from "../../axios/apiMethods/jobs-service/jobs";
 import { notify } from "../../utils/toastMessage";
 import Swal from "sweetalert2";
-import { formatDate } from "../../utils/date-format";
+import { formatDate } from "../../utils/date-functions";
 import { formatCurrency } from "../../utils/currency-format";
 import { FaFacebookMessenger, FaLock } from "react-icons/fa";
 import { RootState } from "../../redux/reducer/reducer";

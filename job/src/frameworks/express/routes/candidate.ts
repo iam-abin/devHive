@@ -1,6 +1,6 @@
 import express from "express";
 
-import { requireAuthCandidate } from "@abijobportal/common";
+import { currentUserCandidateCheck, requireAuthCandidate } from "@abijobportal/common";
 import { jobsController, candidateJobControllers } from "../../../controllers";
 // import { signupRequestBodyValidatorMiddlewares } from "../middlewares/signupValidation";
 // import { signinRequestBodyValidatorMiddlewares } from "../middlewares/signinValidation";
@@ -21,7 +21,7 @@ export const candidateRouter = (dependencies: DependenciesData) => {
 	const { applyJobController, appliedJobsController, viewPliedJobApplicationController } =
 		candidateJobControllers(dependencies);
 
-	router.get("/all-jobs/:page", viewAllJobsController);
+	router.get("/all-jobs/:page", currentUserCandidateCheck, viewAllJobsController);
 
 	router.post("/all-job-fields-distinct-values", viewAllJobFieldsDistinctValuesController);
 

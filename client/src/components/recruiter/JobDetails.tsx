@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { CiCalendarDate } from "react-icons/ci";
 import { RootState } from "../../redux/reducer/reducer";
-import { formatDate } from "../../utils/date-format";
+import { formatDate } from "../../utils/date-functions";
 import { FaFacebookMessenger } from "react-icons/fa";
 import { BsFillBagDashFill } from "react-icons/bs";
 

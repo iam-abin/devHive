@@ -6,6 +6,7 @@ import getCandidateProfileByEmailUseCase from "./get-profile-by-email";
 import uploadCandidateProfilePicUseCase from "./upload-profile-pic";
 import updateSkillsUseCase from "./update-skills";
 import deleteResumeUseCase from "./delete-resume";
+import updatePreferredJobsUseCase from "./update-preferred-jobs";
 
 export {
     // createCandidateProfileUseCase,
@@ -16,4 +17,5 @@ export {
 	getCandidateProfileByEmailUseCase,
 	uploadCandidateProfilePicUseCase,
 	updateSkillsUseCase,
+	updatePreferredJobsUseCase,
 };

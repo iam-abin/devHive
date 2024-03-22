@@ -1,5 +1,5 @@
 import React from "react";
-import { formatDateWithTime } from "../../utils/date-format-with-time";
+import { formatDateWithTime } from "../../utils/date-functions";
 import { TiTick } from "react-icons/ti";
 
 const Message: React.FC<{

@@ -15,10 +15,6 @@ export const paymentRouter = (dependencies: DependenciesData) => {
 	} = paymentControllers(dependencies);
 	
 	router.post("/create-payment", currentUserCandidateCheck, requireAuthCandidate, cratePaymentController);
-
-	// router.use(currentUserAdminCheck);
-	// router.use(requireAuthAdmin);
-	
 	
 	return router;
 };

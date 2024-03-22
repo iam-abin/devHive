@@ -64,6 +64,20 @@ export const updateCandidateSkillsProfileApi = async (userId: string,skills: Arr
     return response.data;
 };
 
+export const updateCandidatePreferredJobsProfileApi = async (userId: string,preferredJobs: Array<string>): Promise<any> => {
+    console.log("updateCandidatePreferredJobsProfileApi preferredJobs is    ..//////", preferredJobs);
+
+    let data = {
+        id: userId,
+        preferredJobs
+    }
+    const response: any = await candidateApiCalls("patch", profileApiUrlConfig.updateCandidatePreferredJobsUrl, data, true);
+
+    console.log("response is ", response.data);
+
+    return response.data;
+};
+
 
 export const recruiterGetProfileByCandidateApi = async (userId: string): Promise<any> => {
     console.log(userId);

@@ -11,6 +11,7 @@ const profileApiUrlConfig = {
 	deleteResumeUrl: (userId: string) =>
 		`${CANDIDATE_PROFILE_URL}/delete-resume/${userId}`,
 	updateCandidateSkillsUrl: `${CANDIDATE_PROFILE_URL}/updateSkills`,
+	updateCandidatePreferredJobsUrl: `${CANDIDATE_PROFILE_URL}/updatePreferredJobs`,
 
 	// Recruiter
 	getgetRecruiterProfileUrl: (userId: string) =>

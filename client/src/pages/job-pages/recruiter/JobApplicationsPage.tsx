@@ -8,7 +8,7 @@ import {
 } from "../../../axios/apiMethods/jobs-service/jobs";
 import { RootState } from "../../../redux/reducer/reducer";
 import { useSelector } from "react-redux";
-import { formatDate } from "../../../utils/date-format";
+import { formatDate } from "../../../utils/date-functions";
 
 interface JobInterface {
 	id: string;

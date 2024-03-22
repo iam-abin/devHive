@@ -6,6 +6,7 @@ import uploadResumeController from "./upload-resume.controller";
 import deleteResumeController from "./delete-resume-controller";
 import viewRecruiterProfileController from "./view-recruiter-profile.controller";
 import updateSkillsController from "./update-skills.controller";
+import updatePreferredJobsController from "./update-preferred-jobs.controller";
 
 import { DependenciesData } from "../../frameworks/types/dependencyInterface";
 
@@ -19,7 +20,7 @@ export = (dependencies: DependenciesData)=>{
         deleteResumeController: deleteResumeController(dependencies),
         viewRecruiterProfileByCandidateController: viewRecruiterProfileController(dependencies),
         updateSkillsController: updateSkillsController(dependencies),
-
+        updatePreferredJobsController: updatePreferredJobsController(dependencies),
 
     }
 }

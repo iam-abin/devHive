@@ -4,6 +4,7 @@ import { RootState } from "../../../redux/reducer/reducer";
 import {
 	candidateGetProfileApi,
 	deleteResumeApi,
+	updateCandidatePreferredJobsProfileApi,
 	updateCandidateSkillsProfileApi,
 	uploadCandidateImageProfileApi,
 	uploadCandidateResumeProfileApi,
@@ -26,11 +27,10 @@ import CircleLoading from "../../../components/loading/CircleLoading";
 import { setCandidateProfileDetails } from "../../../redux/slice/candidateSlice/candidateProfileSlice";
 import { hotToastMessage } from "../../../utils/hotToastMessage";
 
-
 const CandidateProfilePage: React.FC = () => {
 	const navigate = useNavigate();
 	const location = useLocation();
-	const dispatch = useDispatch()
+	const dispatch = useDispatch();
 
 	const candidateData: any = useSelector(
 		(state: RootState) => state.candidateData.data
@@ -42,20 +42,32 @@ const CandidateProfilePage: React.FC = () => {
 
 	const [skills, setSkills] = useState<any>([]);
 	const [skill, setSkill] = useState<any>("");
+	const [preferredJobs, setPreferredJobs] = useState<any>([]);
+	const [preferredJob, setPreferredJob] = useState<any>("");
+
 	const [addSkillRerender, setAddSkillRerender] = useState(0);
 	const [imgLoading, setImgLoading] = useState<boolean>(false);
 	const [pdfLoading, setPdfLoading] = useState<boolean>(false);
 
 	console.log("skills--------  ", skills);
-
 	const handleSetSkill = async (e: any) => {
 		setSkill(e.target.value);
+	};
+
+	const handleSetPreferredJob = async (e: any) => {
+		setPreferredJob(e.target.value);
 	};
 
 	const handleSetSkills = async () => {
 		if (!skill) return;
 		setSkills([...skills, skill]);
 		setSkill("");
+	};
+
+	const handleSetPreferredJobs = async () => {
+		if (!preferredJob) return;
+		setPreferredJobs([...preferredJobs, preferredJob]);
+		setPreferredJob("");
 	};
 
 	const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -82,7 +94,7 @@ const CandidateProfilePage: React.FC = () => {
 			);
 
 			setCandidateProfileData(candidateProfile.data);
-			dispatch(setCandidateProfileDetails(candidateProfile?.data))
+			dispatch(setCandidateProfileDetails(candidateProfile?.data));
 			setSkills([...candidateProfile?.data.keySkills]);
 		})();
 	}, [addSkillRerender]);
@@ -130,12 +142,12 @@ const CandidateProfilePage: React.FC = () => {
 
 					setCandidateProfileData({
 						...candidateProfileData,
-							resume: response.data.resume
+						resume: response.data.resume,
 					});
 
-					dispatch(setCandidateProfileDetails(response?.data))
-					hotToastMessage(response.message, "success")
-					
+					dispatch(setCandidateProfileDetails(response?.data));
+					hotToastMessage(response.message, "success");
+
 					return response.data;
 				} else {
 					hotToastMessage("resume not uploaded", "error");
@@ -178,7 +190,7 @@ const CandidateProfilePage: React.FC = () => {
 
 					setCandidateProfileData({
 						...candidateProfileData,
-							resume: updatedCandidate.data.resume,
+						resume: updatedCandidate.data.resume,
 					});
 
 					// setCandidateProfileData({
@@ -193,6 +205,27 @@ const CandidateProfilePage: React.FC = () => {
 				}
 			}
 		});
+	};
+
+	const handleSavePreferredJobs = async () => {
+		try {
+			const response = await updateCandidatePreferredJobsProfileApi(
+				candidateData.id,
+				preferredJobs
+			);
+			console.log("resume preferredJobs update response", response);
+			if (response.data) {
+				hotToastMessage(response.message, "success");
+				setAddSkillRerender(addSkillRerender + 1);
+				return response.data;
+			} else {
+				hotToastMessage("preferredJobs not uploaded", "error");
+			}
+		} catch (error: any) {
+			// console.log("drrer",error);
+			// notify("file is size is > 1mb", "error");
+			hotToastMessage(error.response.data.errors[0].message, "error");
+		}
 	};
 
 	const handleSaveSkills = async () => {
@@ -229,12 +262,12 @@ const CandidateProfilePage: React.FC = () => {
 			);
 			console.log("resume image upload response", response);
 			if (response.data) {
-				hotToastMessage(response.message, "success")
+				hotToastMessage(response.message, "success");
 				setCandidateProfileData({
 					...candidateProfileData,
-						profile_image: response.data.profile_image,
+					profile_image: response.data.profile_image,
 				});
-				dispatch(setCandidateProfileDetails(response?.data))
+				dispatch(setCandidateProfileDetails(response?.data));
 				navigate("/candidate/profile");
 				return response.data;
 			} else {
@@ -278,8 +311,7 @@ const CandidateProfilePage: React.FC = () => {
 								{!imgLoading && (
 									<img
 										src={
-											candidateProfileData
-												?.profile_image
+											candidateProfileData?.profile_image
 										}
 										className="w-1/6 max-w-sm rounded-full shadow-2xl"
 										alt="CandidateProfilePage"
@@ -376,8 +408,7 @@ const CandidateProfilePage: React.FC = () => {
 								<div className="grid h-12 pl-5 card bg-base-300 rounded-box items-center">
 									<div className="text-left">
 										Current Location:{" "}
-										{candidateProfileData
-											?.currentLocation ??
+										{candidateProfileData?.currentLocation ??
 											"Not specified"}
 									</div>
 								</div>
@@ -386,8 +417,8 @@ const CandidateProfilePage: React.FC = () => {
 								<div className="grid h-12 pl-5 card bg-base-300 rounded-box items-center">
 									<div className="text-left">
 										Experience:{" "}
-										{candidateProfileData
-											?.experience ?? "Not specified"}
+										{candidateProfileData?.experience ??
+											"Not specified"}
 									</div>
 								</div>
 							</div>
@@ -408,12 +439,14 @@ const CandidateProfilePage: React.FC = () => {
 										<label className="block mb-4 text-lg font-semibold">
 											Resume
 										</label>
-										<div className=" max-w-fit p-2 my-5 flex items-c
+										<div
+											className=" max-w-fit p-2 my-5 flex items-c
 										
-										enter gap-3 border border-gray-400">
+										enter gap-3 border border-gray-400"
+										>
 											{
-												candidateProfileData
-													?.resume?.filename
+												candidateProfileData?.resume
+													?.filename
 											}
 											{!isRecruiterUrl && (
 												<div
@@ -434,7 +467,8 @@ const CandidateProfilePage: React.FC = () => {
 											>
 												<Link
 													to={
-														candidateProfileData?.resume?.url
+														candidateProfileData
+															?.resume?.url
 													}
 												>
 													<FaEye />
@@ -485,6 +519,7 @@ const CandidateProfilePage: React.FC = () => {
 							</div>
 						</div>
 
+						{/* =============================================start============================================= */}
 						{/* ====modal start ==== */}
 						{/* Put this part before </body> tag */}
 
@@ -497,7 +532,7 @@ const CandidateProfilePage: React.FC = () => {
 						<div className="modal " role="dialog">
 							<div className="modal-box">
 								<h3 className="font-bold text-lg">
-									Add yout key skills
+									Add your key skills
 								</h3>
 
 								<div className="flex gap-3 mt-3 mb-3">
@@ -579,7 +614,9 @@ const CandidateProfilePage: React.FC = () => {
 								</div>
 							</div>
 						</div>
+
 						{/* ====modal end ==== */}
+
 						{/* Skills */}
 						<div className="bg-gray-100 p-6 my-6 rounded-lg shadow-md">
 							<div className="">
@@ -616,6 +653,143 @@ const CandidateProfilePage: React.FC = () => {
 								</ul>
 							</div>
 						</div>
+						{/* ===============================================end================================================== */}
+
+						{/* =================================================start================================================ */}
+						{/* ====modal start ==== */}
+						{/* Put this part before </body> tag */}
+
+						<input
+							type="checkbox"
+							id="my_modal_7"
+							className="modal-toggle"
+						/>
+
+						<div className="modal " role="dialog">
+							<div className="modal-box">
+								<h3 className="font-bold text-lg">
+									Add your Preffered Jobs
+								</h3>
+
+								<div className="flex gap-3 mt-3 mb-3">
+									<input
+										type="text"
+										placeholder="Type here"
+										className="input input-bordered input-accent w-full max-w-xs"
+										value={preferredJob}
+										onChange={handleSetPreferredJob}
+									/>
+									<label
+										className="btn"
+										onClick={handleSetPreferredJobs}
+									>
+										Add
+									</label>
+								</div>
+								<ul className="list-none flex flex-wrap gap-2 ">
+									{/* Add more skills based on your data */}
+									{preferredJobs.length > 0 &&
+										preferredJobs.map(
+											(preferredJob: string) => (
+												<div
+													key={preferredJob}
+													className="badge text-white bg-sky-700 p-4 flex flex-row gap-2"
+												>
+													<li>{preferredJob}</li>
+													<span>
+														<svg
+															xmlns="http://www.w3.org/2000/svg"
+															fill="none"
+															viewBox="0 0 24 24"
+															className="inline-block w-4 h-4 stroke-current hover: cursor-pointer "
+															onClick={() => {
+																console.log(
+																	"X clicked"
+																);
+
+																let preferredJobsAfterRemove =
+																	preferredJobs.filter(
+																		(
+																			currentPreferredJob: string
+																		) => {
+																			return (
+																				currentPreferredJob !==
+																				preferredJob
+																			);
+																		}
+																	);
+																setPreferredJobs(
+																	preferredJobsAfterRemove
+																);
+															}}
+														>
+															<path
+																strokeLinecap="round"
+																strokeLinejoin="round"
+																strokeWidth="2"
+																d="M6 18L18 6M6 6l12 12"
+															></path>
+														</svg>
+													</span>
+												</div>
+											)
+										)}
+								</ul>
+								<div className="modal-action">
+									<label
+										htmlFor="my_modal_7"
+										className="btn rounded-xl"
+									>
+										Close
+									</label>
+									<label
+										htmlFor="my_modal_7"
+										className="btn rounded-xl bg-yellow-600"
+										onClick={handleSavePreferredJobs}
+									>
+										Save
+									</label>
+								</div>
+							</div>
+						</div>
+						{/* ====modal end ==== */}
+						{/* Preferred jobs */}
+						<div className="bg-gray-100 p-6 my-6 rounded-lg shadow-md">
+							<div className="">
+								<p className="flex items-center gap-4">
+									<span className="text-xl font-bold mb-2">
+										Preferred jobs{" "}
+									</span>
+									{/* The button to open modal */}
+									<span
+										className="tooltip tooltip-top"
+										data-tip="add or edit Preferred jobs"
+									>
+										{!isRecruiterUrl && (
+											<label htmlFor="my_modal_7">
+												<FaEdit />
+											</label>
+										)}
+									</span>
+								</p>
+
+								<ul className="list-none flex flex-wrap gap-2">
+									{/* Add more skills based on your data */}
+									{preferredJobs.length > 0 &&
+										candidateProfileData?.preferredJobs.map(
+											(job: string) => (
+												<div
+													key={job}
+													className="badge text-white bg-sky-700 p-4 flex flex-row gap-2"
+												>
+													<li>{job}</li>
+												</div>
+											)
+										)}
+								</ul>
+							</div>
+						</div>
+						{/* ====================================== */}
 					</div>
 				</div>
 			</main>

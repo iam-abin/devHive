@@ -14,6 +14,7 @@ import { RootState } from "../../redux/reducer/reducer";
 import socket from "../../config/socket";
 import { deleteCandidatesAllNotificationsBySenderIdApi } from "../../axios/apiMethods/chat-service/notification";
 import { clearCandidateCurrentlySelectedChatRoom, setCandidateCurrentlySelectedChatRoom } from "../../redux/slice/chat/candidateCurrentlySelectedChatroomSlice";
+import { dateFormatHumanized } from "../../utils/date-functions";
 
 const ChatPageCandidate = () => {
 	const dispatch = useDispatch()
@@ -285,6 +286,7 @@ const ChatPageCandidate = () => {
 									   receiver={getReceiver(chatRoom)}
 									   isOnline={isUserOnline(chatRoom)}
 									   lastMessage={chatRoom?.lastMessage}
+									   lastMessageTime = {chatRoom.updatedAt}
 									   onClick={() => handleChatRoomClick(chatRoom)}
 									   selected={selectedChatRoom?._id === chatRoom?._id} // Adjust this line as needed
 									/>

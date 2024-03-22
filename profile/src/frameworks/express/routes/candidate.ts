@@ -16,6 +16,7 @@ export const candidateRouter = (dependencies: DependenciesData) => {
 		uploadCandidateProfilePicController,
 		viewRecruiterProfileByCandidateController,
 		updateSkillsController,
+		updatePreferredJobsController,
 	} = candidateProfileControllers(dependencies);
 
 	// candidate authentication
@@ -26,6 +27,7 @@ export const candidateRouter = (dependencies: DependenciesData) => {
 	router.get("/viewProfile/:userId", viewCandidateProfileController);
 	router.patch("/updateProfile", updateCandidateProfileController);
 	router.patch("/updateSkills", updateSkillsController);
+	router.patch("/updatePreferredJobs", updatePreferredJobsController);
 
 	router.put(
 		"/uploadProfilePic",

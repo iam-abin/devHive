@@ -7,6 +7,7 @@ import {
 	getCandidateProfileByEmailUseCase,
 	uploadCandidateProfilePicUseCase,
 	updateSkillsUseCase,
+	updatePreferredJobsUseCase,
 } from "./candidate";
 
 import {
@@ -31,6 +32,7 @@ export default {
 	getCandidateProfileByEmailUseCase,
 	uploadCandidateProfilePicUseCase,
 	updateSkillsUseCase,
+	updatePreferredJobsUseCase,
 
 	createRecruiterProfileUseCase,
 	updateRecruiterProfileUseCase,

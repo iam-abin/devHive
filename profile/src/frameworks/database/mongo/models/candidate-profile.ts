@@ -36,8 +36,8 @@ interface CandidateDocument extends mongoose.Document {
 	about: string;
 	resume: string;
 	experience: object;
-	isPremiumUser: boolean
-	// userId: mongoose.Schema.Types.ObjectId;
+	isPremiumUser: boolean;
+	preferredJobs: string[];
 	createdAt: string;
 	updatedAt: string;
 }
@@ -104,7 +104,7 @@ const candidateSchema = new mongoose.Schema(
 			type: Boolean,
 			default: false
 		},
-		// userId: mongoose.Schema.Types.ObjectId
+		preferredJobs: [String]
 	},
 	{
 		// to reformat id and remove password,__v from response when converting to json (we can also use other approaches)
