@@ -89,11 +89,11 @@ const JobApplicationDetails: React.FC<{
 	return (
 		<div>
 			<div>
-				<div className="container mx-auto my-8">
-					<div className="max-w-2xl mx-auto bg-white p-8 rounded shadow-md">
+				<div className="container mx-auto my-8 ">
+					<div className="max-w-2xl mx-3 md:mx-auto bg-white p-8 rounded-md shadow-md">
 						<div className="flex justify-between items-center mb-4">
 							<div>
-								<h1 className="text-3xl font-bold mb-4">
+								<h1 className="text-2xl md:text-3xl font-bold mb-4">
 									{jobApplicationDetails
 										? jobApplicationDetails?.jobId?.title
 										: "Loading..."}

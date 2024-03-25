@@ -8,6 +8,8 @@ export = (dependencies: DependenciesData) => {
 	}
 
 	const execute = (skip: number, limit: number, applicationJobIds: string[]) => {
+		console.log("IIIIIIIIIIIIIIin execute skip, limit, applicationJobIds" , skip, limit, applicationJobIds);
+		
 		return jobRepository.getAllJobs(skip,limit, applicationJobIds);
 	};
 

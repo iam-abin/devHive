@@ -1,4 +1,3 @@
-// import { GiHamburgerMenu } from "react-icons/gi"
 import homeImage from "../../assets/landingPage/company-like.jpg";
 import { useEffect } from "react";
 import NavBarLanding from "../../components/navBar/NavBarLanding";
@@ -127,7 +126,7 @@ function LandingPage() {
 			{candidate && isCandidateUrl ? (
 				<TopNavBarCandidate />
 			) : recruiter && isRecruiterUrl ? (
-				<TopNavBarRecruiter />
+				<TopNavBarRecruiter  />
 			) : (
 				<NavBarLanding />
 			)}

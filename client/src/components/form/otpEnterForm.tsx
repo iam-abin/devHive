@@ -44,7 +44,7 @@ const OtpEnterForm: React.FC<OtpFromSignupProps> = ({ email, phone, handleSubmit
 
   return (
     <div className="flex items-center justify-center h-screen">
-      <div className="w-6/12">
+      <div className="md:w-6/12  sm:w-9/12  p-5 rounded-3xl shadow-2xl bg-stone-300 shadow-black ">
         <div className="mb-10">
           <h1 className="text-center text-5xl font-bold">Enter OTP</h1>
           <div className="w-16 h-1 bg-black mx-auto my-4"></div>

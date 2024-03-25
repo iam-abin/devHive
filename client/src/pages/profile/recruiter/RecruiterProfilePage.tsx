@@ -57,7 +57,7 @@ const RecruiterProfilePage: React.FC = () => {
 			<div>
 				{isCandidate && <TopNavBarCandidate />}
 				<main className="h-screen flex items-center justify-center">
-					<div className="bg-gray-100 min-h-screen w-3/5 flex">
+					<div className="bg-gray-100 min-h-screen sm: w-full md:w-3/5 flex">
 						{/* Main Content */}
 						<div className="flex-1 p-8">
 							<div className="bg-white p-8 shadow-md rounded-md">

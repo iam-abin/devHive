@@ -13,19 +13,38 @@ const TableComponent: React.FC<TablePropsInterface> = ({ columns, data }) => {
 	const [filteredData, setFilteredData] = useState(data);
 
 	useEffect(() => {
-		setFilteredData(
-			data.filter((item: any) =>
-				Object.values(item).some(
-					(value) =>
-						value &&
-						value
-							.toString()
-							.toLowerCase()
-							.includes(searchText.toLowerCase())
-				)
-			)
-		);
-	}, [data, searchText]);
+		const filtered = data.filter((item: any) => {
+		  // Loop through each key in the item
+		  for (let key in item) {
+			// Check if the key is an object
+			if (typeof item[key] === "object" && item[key] !== null) {
+			  // If the key is an object, loop through its properties
+			  for (let nestedKey in item[key]) {
+				// Check if the nested property is a string
+				if (
+				  typeof item[key][nestedKey] === "string" &&
+				  item[key][nestedKey]
+					.toLowerCase().trim()
+					.includes(searchText.toLowerCase().trim())
+				) {
+				  return true; // Return true if the nested property matches the search text
+				}
+			  }
+			} else if (
+			  // Check if the item's value is a string and matches the search text
+			  typeof item[key] === "string" &&
+			  item[key].toLowerCase().includes(searchText.toLowerCase())
+			) {
+			  return true;
+			}
+		  }
+		  return false; // Return false if no match is found
+		});
+		setFilteredData(filtered);
+	  }, [data, searchText]);
+
+	console.log("filtered data isssssssssssssssssssssssssssssssss", filteredData);
+	
 
 	const customStyles = {
 		headRow: {

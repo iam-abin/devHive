@@ -279,14 +279,15 @@ const ChatPageRecruiter2 = () => {
 							) : (
 								chatRooms.map((chatRoom: any, index: number) => (
 									<ChatRoomList
-									   key={index}
-									   currentUser={recruiterData}
-									   receiver={getReceiver(chatRoom)}
-									   isOnline={isUserOnline(chatRoom)}
-									   lastMessage={chatRoom?.lastMessage}
-									   onClick={() => handleChatRoomClick(chatRoom)}
-									   selected={selectedChatRoom?._id === chatRoom?._id} // Adjust this line as needed
-									/>
+										key={index}
+										currentUser={recruiterData}
+										receiver={getReceiver(chatRoom)}
+										isOnline={isUserOnline(chatRoom)}
+										lastMessage={chatRoom?.lastMessage}
+										onClick={() => handleChatRoomClick(chatRoom)}
+										selected={selectedChatRoom?._id === chatRoom?._id} // Adjust this line as needed
+										lastMessageTime = {chatRoom.updatedAt}							
+										/>
 								   ))
 								   
 							)}
@@ -294,9 +295,9 @@ const ChatPageRecruiter2 = () => {
 					</div>
 
 					{/* Right */}
-					<div className="chat-area bg-slate-50 flex-4 w-5/6 p-4 rounded-r-lg">
+					<div className=" chat-area bg-slate-50 flex-4 w-5/6 p-4 rounded-r-lg">
 						{selectedChatRoom === null ? (
-							<div className="flex justify-center items-center p-4 min-h-[80vh] max-h-[80vh]">
+							<div className="flex justify-center bg-slate-500 items-center p-4 min-h-[80vh] max-h-[80vh]">
 								<img className="h-52" src={ChatImage} alt="" />
 							</div>
 						) : (
@@ -309,7 +310,9 @@ const ChatPageRecruiter2 = () => {
 											)}
 											receiver={getReceiver(selectedChatRoom)}
 											// if the chat topbar is there, the chat window will also be there
-											 handleChatVisibility={handleChatVisibility}	 								/>
+											handleChatVisibility={handleChatVisibility}
+											//  handleBackButtonClick={undefined}	 						
+													/>
 								</div>
 								<div
 									className="bg-red-300 min-h-[58vh] max-h-[58vh] p-5 overflow-x-scroll "

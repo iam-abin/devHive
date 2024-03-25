@@ -53,23 +53,50 @@ export = {
 	},
 
 	getAllJobs: async (skip: number, limit: number, applicationJobIds?: string[]): Promise<any[]> => {
+			console.log("getalljobss repo )))))))))))))))",skip, limit, applicationJobIds);
+		let jobs;
+	if(applicationJobIds){
+		jobs = await JobModel.find({ _id: { $nin: applicationJobIds } })
+		.sort({ createdAt: -1 })
+		.skip(skip)
+		.limit(limit);
+	}else{
+		jobs = await JobModel.find()
+		.sort({ createdAt: -1 })
+		.skip(skip)
+		.limit(limit);
+	}
 
-			let jobs;
+	console.log(jobs);
+	return jobs;
+},
+
+	// getAllJobs: async (skip: number, limit: number): Promise<any[]> => {
+	// 	const jobs = await JobModel.find({isActive: true, isClosed: false})
+	// 		.sort({ createdAt: -1 })
+	// 		.skip(skip)
+	// 		.limit(limit);
+	// 	console.log("getalljobss )))))))))))))))",jobs);
+	// 	return jobs;
+	// },
+
+	getCountOfJobs: async (applicationJobIds?: string[]): Promise<number> => {
+		let totalJobs;
 		if(applicationJobIds){
-			jobs = await JobModel.find({ _id: { $nin: applicationJobIds } })
-			.sort({ createdAt: -1 })
-			.skip(skip)
-			.limit(limit);
+			totalJobs = await JobModel.countDocuments({ _id: { $nin: applicationJobIds } });
 		}else{
-			jobs = await JobModel.find()
-			.sort({ createdAt: -1 })
-			.skip(skip)
-			.limit(limit);
+			totalJobs = await JobModel.countDocuments();
 		}
 
-		console.log(jobs);
-		return jobs;
+		console.log(totalJobs);
+		return totalJobs;
 	},
+	
+	// getCountOfJobs: async (): Promise<number> => {
+	// 	const totalJobs: number = await JobModel.countDocuments({isActive: true, isClosed: false});
+	// 	console.log(totalJobs);
+	// 	return totalJobs;
+	// },
 
 	getAllJobsDistinctValues: async (fields: Array<string>): Promise<any> => {
 		// const jobs = await JobModel.aggregate([{ $sort: { createdAt: 1 } }]);
@@ -94,17 +121,7 @@ export = {
 		return jobs;
 	},
 
-	getCountOfJobs: async (applicationJobIds?: string[]): Promise<number> => {
-		let totalJobs;
-		if(applicationJobIds){
-			totalJobs = await JobModel.countDocuments({ _id: { $nin: applicationJobIds } });
-		}else{
-			totalJobs = await JobModel.countDocuments();
-		}
-
-		console.log(totalJobs);
-		return totalJobs;
-	},
+	
 
 	numberOfCreatedJobsByMe: async (id: string): Promise<number> => {
 		console.log("numberOfCreatedJobsByMe =======", id);

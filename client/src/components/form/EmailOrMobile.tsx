@@ -41,10 +41,10 @@ const EmailOrMobile: React.FC<EmailOrMobileProps> = ({
 				const { errors, touched } = formik;
 
 				return (
-					<div className="flex items-center justify-center h-screen">
-						<div className="w-6/12">
-							<div className="mb-10">
-								<h1 className="text-center text-5xl font-bold">
+					<div className="flex items-center justify-center h-screen ">
+						<div className="md:w-6/12  sm:w-9/12  p-5 rounded-3xl shadow-2xl bg-stone-300 shadow-black ">
+							<div className="w-full mb-10">
+								<h1 className="text-center sm:text-4xl md:text-5xl font-bold ">
 									{isEmailEnterPage
 										? "Enter Email"
 										: "Enter Mobile number"}
@@ -112,7 +112,7 @@ const EmailOrMobile: React.FC<EmailOrMobileProps> = ({
 									<div className="flex items-center justify-center mb-3">
 										<button
 											type="submit"
-											className={`btn btn-outline w-60 btn-primary`}
+											className={`btn btn-outline w-60 from-neutral-300 to-stone-400`}
 										>
 											Submit Mobile Number
 										</button>

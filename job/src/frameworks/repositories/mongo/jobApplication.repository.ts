@@ -51,14 +51,24 @@ export = {
 		return totalJobs;
 	},
 
-	getAllJobApplicationsByRecruiterId: async (id: string) => {
+	getAllJobApplicationsByRecruiterId: async (recruiterId: string, candidateId: string) => {
 		// use populate
 		// const jobApplications = await jobApplicationModel.find({},{recruiterId:id});
-		const jobApplications = await jobApplicationModel
-			.find({ recruiterId: id })
-			.populate({ path: "jobId", model: JobModel })
-			.populate({ path: "candidateId", model: UserModel });
-		console.log("in getAllJobApplicationsByRecruiterId", jobApplications);
+		let jobApplications;
+		if(recruiterId){
+			
+			jobApplications = await jobApplicationModel
+				.find({ recruiterId: recruiterId })
+				.populate({ path: "jobId", model: JobModel })
+				.populate({ path: "candidateId", model: UserModel });
+			console.log("in getAllJobApplicationsByRecruiterId", jobApplications);
+		}else{
+			jobApplications = await jobApplicationModel
+				.find({ candidateId: candidateId })
+				.populate({ path: "jobId", model: JobModel })
+				.populate({ path: "candidateId", model: UserModel });
+			console.log("in getAllJobApplicationsByRecruiterId", jobApplications);
+		}
 
 		return jobApplications;
 	},
@@ -79,7 +89,7 @@ export = {
 			.populate({ path: "jobId", model: JobModel })
 			.populate({ path: "candidateId", model: UserModel })
 			.populate({ path: "recruiterId", model: UserModel });
-		console.log("in getAllJobApplicationsByRecruiterId", jobApplications);
+		console.log("in getAJobApplicationByRecruiter", jobApplications);
 
 		return jobApplications;
 	},
@@ -118,7 +128,7 @@ export = {
 			},
 			{ new: true }
 		);
-		console.log("in getAllJobApplicationsByRecruiterId", jobApplications);
+		console.log("in changeJobApplicationStatus", jobApplications);
 
 		return jobApplications;
 	},

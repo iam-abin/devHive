@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-const ChatBoxTopBar: React.FC<{ receiver: any, isOnline: any, handleChatVisibility:any }> = ({ receiver, isOnline, handleChatVisibility })=> {
+const ChatBoxTopBar: React.FC<{ receiver: any, isOnline: any, handleChatVisibility:any, handleBackButtonClick: any }> = ({ receiver, isOnline, handleChatVisibility, handleBackButtonClick })=> {
 
 	
 	// if the chat topbar is there, the chat window will also be there

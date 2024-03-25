@@ -298,53 +298,54 @@ const CandidateProfilePage: React.FC = () => {
 			{!isRecruiterUrl && <TopNavBarCandidate />}
 
 			<main className="h-full flex items-center justify-center">
-				<div className="bg-gray-200 md:w-9/12 p-8 mt-3 mb-3">
-					<div className="w-md mx-auto bg-white p-8 rounded shadow-md">
-						<div className="hero h-56 bg-base-200 relative">
-							<div className="hero-content flex-col justify-center gap-5  lg:flex-row-reverse">
-								{!isRecruiterUrl && !imgLoading && (
-									<ImageFileUpload
-										uploadImage={handleImageUpload}
-									/>
-								)}
-								{imgLoading && <CircleLoading />}
-								{!imgLoading && (
-									<img
-										src={
-											candidateProfileData?.profile_image
-										}
-										className="w-1/6 max-w-sm rounded-full shadow-2xl"
-										alt="CandidateProfilePage"
-									/>
-								)}
-								<div className="flex flex-col items-start ">
-									<h1 className="text-5xl font-bold">
-										I'm{" "}
-										{candidateProfileData?.name ??
-											candidateData?.name}
-									</h1>
-									{/* <p className="py-6">
-										{candidateProfileData?.about}
-									</p> */}
-									{isRecruiterUrl && (
-										<div>
-											<FaFacebookMessenger
-												onClick={() =>
-													navigate(
-														`/recruiter/chat/${candidateProfileData?.id}` // Add the path to your chat page
-													)
-												}
-												className="text-5xl cursor-pointer absolute top-0 right-0 mr-6 mt-20"
-											/>
-										</div>
+				<div className="bg-slate-200 sm: w-full md:w-9/12 lg:w-7/12 p-8 mt-3 mb-3">
+					<div className="w-md mx-auto bg-white p-8 rounded-sm shadow-md">
+						<div className=" h-72 flex justify-center  shadow-2xl sm:flex sm: flex-row bg-slate-300 rounded-3xl relative">
+							<div className="items-center w-5/6 justify-between md:flex md:flex-row md:gap-5 ">
+								<div className=" md:w-3/6  sm:w-full h-2/3 flex flex-row">
+									{imgLoading && <CircleLoading />}
+									{!imgLoading && (
+										<img
+											src={
+												candidateProfileData?.profile_image
+											}
+											className="md:w-3/6  rounded-full shadow-2xl"
+										/>
+									)}
+									{!isRecruiterUrl && !imgLoading && (
+										<ImageFileUpload
+											uploadImage={handleImageUpload}
+										/>
 									)}
 								</div>
+								<h1 className="font-bold sm:flex sm: text-center sm:justify-center text-2xl md:text-2lg lg:text-2xl xl:text-2xl">
+									I'm{" "}
+									{candidateProfileData?.name ??
+										candidateData?.name}
+								</h1>
+								{isRecruiterUrl && (
+									<div>
+										<FaFacebookMessenger
+											onClick={() =>
+												navigate(
+													`/recruiter/chat/${candidateProfileData?.id}` // Add the path to your chat page
+												)
+											}
+											className="text-5xl cursor-pointer absolute top-0 right-0 mr-6 mt-3"
+										/>
+									</div>
+								)}
+								{/* <div className="flex flex-col bg-green-400"> */}
+								{/* <p className="py-6">
+										{candidateProfileData?.about}
+									</p> */}
+								{/* </div> */}
 							</div>
 						</div>
 
 						{/* Profile information */}
 						<div className="">
-							<div className="flex justify-between  items-center">
+							<div className="flex justify-between  items-center ">
 								<h2 className="text-xl font-bold">
 									Profile Information
 								</h2>
@@ -360,7 +361,7 @@ const CandidateProfilePage: React.FC = () => {
 								)}
 							</div>
 							<div className="flex flex-col w-full border-opacity-50 ">
-								<div className="grid h-12 pl-5 card bg-base-300 rounded-box items-center">
+								<div className="grid h-12 pl-5 card bg-base-300 rounded-box shadow-lg items-center">
 									<div className="text-left">
 										Name:{" "}
 										{candidateProfileData?.name ??
@@ -369,7 +370,7 @@ const CandidateProfilePage: React.FC = () => {
 								</div>
 							</div>
 							<div className="flex flex-col w-full border-opacity-50 mt-3">
-								<div className="grid h-12 pl-5 card bg-base-300 rounded-box items-center">
+								<div className="grid h-12 pl-5 card bg-base-300 rounded-box shadow-lg items-center">
 									<div className="text-left">
 										Email:{" "}
 										{candidateProfileData?.email ??
@@ -378,7 +379,7 @@ const CandidateProfilePage: React.FC = () => {
 								</div>
 							</div>
 							<div className="flex flex-col w-full border-opacity-50 mt-3">
-								<div className="grid h-12 pl-5 card bg-base-300 rounded-box items-center">
+								<div className="grid h-12 pl-5 card bg-base-300 rounded-box shadow-lg items-center">
 									<div className="text-left">
 										Phone:{" "}
 										{candidateProfileData?.phone ??
@@ -387,7 +388,7 @@ const CandidateProfilePage: React.FC = () => {
 								</div>
 							</div>
 							<div className="flex flex-col w-full border-opacity-50 mt-3">
-								<div className="grid min-h-12 pl-5 card bg-base-300 rounded-box items-center">
+								<div className="grid min-h-12 pl-5 card bg-base-300 rounded-box shadow-lg items-center">
 									<div className="text-left">
 										About:{" "}
 										{candidateProfileData?.about ??
@@ -396,7 +397,7 @@ const CandidateProfilePage: React.FC = () => {
 								</div>
 							</div>
 							<div className="flex flex-col w-full border-opacity-50 mt-3">
-								<div className="grid h-12 pl-5 card bg-base-300 rounded-box items-center">
+								<div className="grid h-12 pl-5 card bg-base-300 rounded-box shadow-lg items-center">
 									<div className="text-left">
 										Gender:{" "}
 										{candidateProfileData?.gender ??
@@ -405,7 +406,7 @@ const CandidateProfilePage: React.FC = () => {
 								</div>
 							</div>
 							<div className="flex flex-col w-full border-opacity-50 mt-3">
-								<div className="grid h-12 pl-5 card bg-base-300 rounded-box items-center">
+								<div className="grid h-12 pl-5 card bg-base-300 rounded-box shadow-lg items-center">
 									<div className="text-left">
 										Current Location:{" "}
 										{candidateProfileData?.currentLocation ??
@@ -414,7 +415,7 @@ const CandidateProfilePage: React.FC = () => {
 								</div>
 							</div>
 							<div className="flex flex-col w-full border-opacity-50 mt-3">
-								<div className="grid h-12 pl-5 card bg-base-300 rounded-box items-center">
+								<div className="grid h-12 pl-5 card bg-base-300 rounded-box shadow-lg items-center">
 									<div className="text-left">
 										Experience:{" "}
 										{candidateProfileData?.experience ??
@@ -424,7 +425,7 @@ const CandidateProfilePage: React.FC = () => {
 							</div>
 
 							<div className="flex flex-col w-full border-opacity-50 mt-3">
-								<div className="grid h-12 pl-5 card bg-base-300 rounded-box items-center">
+								<div className="grid min-h-12 pl-5 card bg-base-300 rounded-box shadow-lg items-center">
 									<div className="text-left">
 										Address:{" "}
 										{candidateProfileData?.address ??
@@ -492,7 +493,7 @@ const CandidateProfilePage: React.FC = () => {
 												name="image"
 												// accept=".pdf, .doc, .docx"
 												accept=".pdf "
-												className="border-2 border-gray-300 p-2 w-64"
+												className="border-2 border-gray-300 p-2 w-full md:w-64 "
 												onChange={handleFileChange}
 											/>
 
@@ -689,7 +690,7 @@ const CandidateProfilePage: React.FC = () => {
 								<ul className="list-none flex flex-wrap gap-2 ">
 									{/* Add more skills based on your data */}
 									{preferredJobs.length > 0 &&
-										preferredJobs.map(
+										candidateProfileData?.preferredJobs.map(
 											(preferredJob: string) => (
 												<div
 													key={preferredJob}

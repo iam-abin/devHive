@@ -14,7 +14,6 @@ import { RootState } from "../../redux/reducer/reducer";
 import socket from "../../config/socket";
 import { deleteCandidatesAllNotificationsBySenderIdApi } from "../../axios/apiMethods/chat-service/notification";
 import { clearCandidateCurrentlySelectedChatRoom, setCandidateCurrentlySelectedChatRoom } from "../../redux/slice/chat/candidateCurrentlySelectedChatroomSlice";
-import { dateFormatHumanized } from "../../utils/date-functions";
 
 const ChatPageCandidate = () => {
 	const dispatch = useDispatch()
@@ -115,31 +114,6 @@ const ChatPageCandidate = () => {
 		};
 	}, []);
 
-	// socket.on("chatNotification", (message) => {
-		
-
-	// 	// if (message.result.roomId.toString() === selectedChatRoom?._id) {
-	// 	// 	if(message.result.senderId != candidateData.id) socket.emit("markAsRead", message.result.id);
-	// 	// 	setSelectedChatRoomMessages([
-	// 	// 		...selectedChatRoomMessages,
-	// 	// 		message.result,
-	// 	// 	]);
-
-	// 	// 	// selectedChatRoomMessages.forEach((message: any) => {
-	// 	// 	// 	console.log("???????????????? message.read", message.read);
-	// 	// 	// 	console.log(
-	// 	// 	// 		"???????????????? message.senderId!= candidateData.id",
-	// 	// 	// 		message.senderId != candidateData.id
-	// 	// 	// 	);
-	// 	// 	// 	console.log(message);
-
-	// 	// 	// 	if (!message.read && message.senderId != candidateData.id) {
-	// 	// 	// 		socket.emit("markAsRead", message.id);
-	// 	// 	// 	}
-	// 	// 	// });
-	// 	// }
-	// });
-
 	useEffect(() => {
 		// Listen for "selectedChatRoomMessages" events and update the selectedChatRoomMessages state
 		socket.on("receiveMessage", (message) => {
@@ -162,14 +136,6 @@ const ChatPageCandidate = () => {
 					...selectedChatRoomMessages,
 					message.result,
 				]);
-				// let selectedChatRoom?._id = getReceiver(selectedChatRoom)
-				// console.log("otherUserId ???????????????????????????????????????????? otherUser", otherUser);
-				// console.log("otherUserId ???????????????????????????????????????????? otherUser[0]?._id", otherUser[0]?._id);
-				// console.log("otherUserId ???????????????????????????????????????????? message.result.roomId", message.result.roomId);
-				// console.log("otherUserId ???????????????????????????????????????????? selectedChatRoom?._id", selectedChatRoom?._id);
-				// console.log("otherUserId ???????????????????????????????????????????? message.result.roomId === selectedChatRoom?._id",message.result.roomId === selectedChatRoom?._id);
-				
-				// if(message.result.roomId === selectedChatRoom?._id) 
 			}else{
 				setSelectedChatRoomMessages([
 					...selectedChatRoomMessages

@@ -57,7 +57,7 @@ function CandidateProfileEditPage() {
 		fetchProfileDetails();
 	}, [id]);
 
-	if (!profileDetails) {
+	if (!candidateProfileData) {
 		return <div>Loading...</div>;
 	}
 
@@ -110,9 +110,9 @@ function CandidateProfileEditPage() {
 						{(formik) => {
 							const { errors, touched } = formik;
 							return (
-								<div className="w-6/12 p-6">
-									<div className="mb-6">
-										<h1 className="text-center text-5xl font-bold">
+								<div className="sm:w-full md:w-9/12 lg:w-7/12 p-8 mb-3">
+									<div className="mb-6 w-full">
+										<h1 className="text-center md:text-5xl font-bold">
 											Edit Profile
 										</h1>
 										<div className="w-16 h-1 bg-black mx-auto my-4"></div>

@@ -9,7 +9,7 @@ export = (dependencies: DependenciesData)=>{
         const {recruiterId} = req.params;
         console.log("in  Job Applications controller 1: ",recruiterId);
 
-        const applications = await getAllJobApplicationsUseCase(dependencies).execute(recruiterId);
+        const applications = await getAllJobApplicationsUseCase(dependencies).execute(recruiterId, null);
         console.log("in Job Applications controller 2: ",applications);
 
 

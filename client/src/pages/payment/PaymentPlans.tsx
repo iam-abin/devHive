@@ -80,7 +80,7 @@ const PaymentPlans: React.FC = () => {
 		<>
 			<TopNavBarCandidate />
 
-			<section className="bg-white dark:bg-gray-900 h-screen">
+			<section className="flex flex-col gap-12 bg-white dark:bg-gray-900 ">
 				<div className="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
 					<div className="mx-auto max-w-screen-md text-center mb-8 lg:mb-12">
 						<h2 className="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
@@ -92,7 +92,7 @@ const PaymentPlans: React.FC = () => {
 							your job search experience.
 						</p>
 					</div>
-					<div className="flex justify-center">
+					<div className="flex md:flex-row gap-5 sm:flex-col flex-wrap justify-center">
 						{/* Pricing Card */}
 						{membershipPlansData.length > 0
 							? membershipPlansData.map((plan: any) => {

@@ -2,8 +2,8 @@ import React from 'react'
 
 const CircleLoading: React.FC = () => {
   return (
-    <div>
-      <span className="loading loading-spinner text-purple-600"></span>
+    <div className='w-10/12 h-10/ flex justify-center items-center'>
+      <span className="loading text-3xl loading-spinner text-purple-600"></span>
     </div>
   )
 }

@@ -101,9 +101,9 @@ function RecruiterProfileEditPage() {
 					{(formik) => {
 						const { errors, touched } = formik;
 						return (
-							<div className="w-6/12 p-6">
+							<div className="md:w-6/12 p-6">
 								<div className="mb-5">
-									<h1 className="text-center text-5xl font-bold">
+									<h1 className="text-center sm:text-5xl font-bold">
 										Edit Profile
 									</h1>
 									<div className="w-16 h-1 bg-black mx-auto my-4"></div>

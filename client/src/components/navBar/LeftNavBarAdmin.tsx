@@ -41,17 +41,21 @@ const LeftNavBarAdmin: React.FC<{ menus: any }> = ({ menus }) => {
 					{menus.map((menu: any, index: number) => {
 						const isActive = location.pathname === menu.to;
 						return (
-							<li
-								key={index}
-								className={`text-white text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-sky-800 rounded-md gap-5 mt-7 ${
-									isActive
-										? "font-bold text-blue-500 bg-sky-800"
-										: ""
-								}`}
-								onClick={menu.onClick} // Add onClick event
-							>
-								<img src={menu.src} className="w-5" alt="" />
-								<Link to={menu.to}>
+							<Link to={menu.to}>
+								<li
+									key={index}
+									className={`text-white text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-sky-800 rounded-md gap-5 mt-7 ${
+										isActive
+											? "font-bold text-blue-500 bg-sky-800"
+											: ""
+									}`}
+									onClick={menu.onClick} // Add onClick event
+								>
+									<img
+										src={menu.src}
+										className="w-5"
+										alt=""
+									/>
 									<span
 										className={`${
 											!open && "hidden"
@@ -59,8 +63,8 @@ const LeftNavBarAdmin: React.FC<{ menus: any }> = ({ menus }) => {
 									>
 										{menu.title}
 									</span>
-								</Link>
-							</li>
+								</li>
+							</Link>
 						);
 					})}
 				</ul>

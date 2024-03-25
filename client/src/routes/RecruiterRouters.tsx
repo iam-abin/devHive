@@ -17,7 +17,7 @@ import CandidateProfilePage from "../pages/profile/candidate/CandidateProfilePag
 const RecruiterSignupPage = lazy(()=> import("../pages/auth-pages/signup/RecruiterSignupPage"))
 const LandingPage = lazy(()=> import("../pages/landing/LandingPage"))
 const RecruiterSigninPage = lazy(()=> import("../pages/auth-pages/signin/RecruiterSigninPage"))
-const AllJobsPage = lazy(()=> import("../pages/job-pages/recruiter/AllJobsPage"))
+// const AllJobsPage = lazy(()=> import("../pages/job-pages/recruiter/AllJobsPage"))
 const CreateJobPage = lazy(()=> import("../pages/job-pages/recruiter/CreateJobPage"))
 const EditJobPage = lazy(()=> import("../pages/job-pages/recruiter/EditJobPage"))
 const OtpFormPageSignup = lazy(()=> import("../pages/auth-pages/otp/recruiter/OtpFormPageSignup"))
@@ -67,7 +67,7 @@ function RecruiterRouters() {
 
 					<Route path="/all-candidates" element={isRecruiterLoggedIn?<ViewAllCandidatesPage />:<Navigate to={"/recruiter/signin"} />} />
 				
-					<Route path="/all-jobs" element={isRecruiterLoggedIn?<AllJobsPage />:<Navigate to={"/recruiter/signin"} />} />
+					{/* <Route path="/all-jobs" element={isRecruiterLoggedIn?<AllJobsPage />:<Navigate to={"/recruiter/signin"} />} /> */}
 					<Route path="/recruiter-added-jobs" element={isRecruiterLoggedIn?<AllAddedJobs />:<Navigate to={"/recruiter/signin"} />} />
 					<Route path="/create-job" element={isRecruiterLoggedIn?<CreateJobPage />:<Navigate to={"/recruiter/signin"} />} />
 					<Route path="/job-details/:jobId" element={isRecruiterLoggedIn?<JobDetailsPage />:<Navigate to={"/recruiter/signin"} />} />

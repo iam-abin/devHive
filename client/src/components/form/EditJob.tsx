@@ -111,15 +111,15 @@ function EditJob() {
 			{(formik) => {
 				const { errors, touched } = formik;
 				return (
-					<div className="w-6/12 p-6">
-						<div className="mb-16">
-							<h1 className="text-center text-5xl font-bold">
+					<div className="md:w-6/12 p-6">
+						<div className="mb-4">
+							<h1 className="text-center text-2xl md:text-5xl font-bold">
 								Edit Job
 							</h1>
 							<div className="w-16 h-1 bg-black mx-auto my-4"></div>
 						</div>
 
-						<Form noValidate className="bg-slate-300 p-6">
+						<Form noValidate className="bg-slate-300 rounded-lg shadow-2xl p-6">
 							{/* Job title field */}
 							<div className="form-control w-6/6">
 								<label htmlFor="title" className="label">
@@ -286,9 +286,9 @@ function EditJob() {
 								/>
 							</div> */}
 
-							<div className="flex justify-between">
+							<div className="flex sm:flex-col justify-between">
 								{/* Experience Required field */}
-								<div className="form-control w-6/6">
+								<div className=" form-control w-6/6">
 									<label
 										htmlFor="experience_required"
 										className="label"
@@ -314,7 +314,7 @@ function EditJob() {
 								</div>
 
 								{/* Employment Type field */}
-								<div className="form-control w-5/12">
+								<div className="form-control w-5/12 md:w-full">
 									<label
 										htmlFor="employment_type"
 										className="label"

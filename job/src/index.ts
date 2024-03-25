@@ -13,6 +13,7 @@ const start = async () => {
 		throw new Error("JWT_SECRET_KEY must be defined");
 	}
 
+	
 	// if we do not set JWT_REFRESH_SECRET_KEY
 	if (!process.env.JWT_REFRESH_SECRET_KEY) {
 		throw new Error("JWT_REFRESH_SECRET_KEY must be defined");
@@ -25,7 +26,6 @@ const start = async () => {
 
 	// to connect to mongodb
 	await connectDB();
-	
 
 	// it is used to listen to incomming message from kafka topics
 	const userCreatedEvent = new UserCreatedEventConsumer(kafkaClient);

@@ -89,35 +89,39 @@ function AppliedJobsPage() {
 		<div>
 			<TopNavBarCandidate />
 			{/* <div className="pb-20"> */}
-				{appliedJobsData.length > 0 ? (
-					<>
-						<div className="flex items-center justify-center mt-5 mb-10">
+			{appliedJobsData.length > 0 ? (
+				<>
+					<div className="flex flex-col gap-12">
+						<div className="flex items-center justify-center mt-5">
 							<h1 className="text-3xl font-bold">
 								My Applied Jobs
 							</h1>
 						</div>
 						<div className="justify-center h-[70vh]">
-						{appliedJobsData.map((job: any) => (
-							<JobAppliedCard
-								key={job?.id}
-								job={job}
-								handleViewJob={viewApplicationDetails}
-							/>
-						))}
+							{appliedJobsData.map((job: any) => (
+								<JobAppliedCard
+									key={job?.id}
+									job={job}
+									handleViewJob={viewApplicationDetails}
+								/>
+							))}
 						</div>
 
-						<Paginate
-							pageCount={pageCount}
-							handlePageChange={handlePageChange}
-						/>
-					</>
-				) : (
-						<div className="flex justify-center items-center h-[55.7vh]">
-							<h1 className="font-bold text-3xl">
-								No jobs are Applied Yet yet
-							</h1>
+						<div>
+							<Paginate
+								pageCount={pageCount}
+								handlePageChange={handlePageChange}
+							/>
 						</div>
-				)}
+					</div>
+				</>
+			) : (
+				<div className="flex justify-center items-center h-[55.7vh]">
+					<h1 className="font-bold text-3xl">
+						No jobs are Applied Yet yet
+					</h1>
+				</div>
+			)}
 			{/* </div> */}
 			<Footer />
 		</div>

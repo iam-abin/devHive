@@ -11,7 +11,10 @@ import { notify } from "../../utils/toastMessage";
 import { useNavigate } from "react-router-dom";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
-import { createMembershipPlanApi, getAllMembershipPlansApi } from "../../axios/apiMethods/premium-plans-service/admin";
+import {
+	createMembershipPlanApi,
+	getAllMembershipPlansApi,
+} from "../../axios/apiMethods/premium-plans-service/admin";
 
 interface RecruiterInterface {
 	id: string;
@@ -24,62 +27,24 @@ interface RecruiterInterface {
 
 function PremiumMembershipPage() {
 	const navigate = useNavigate();
-	const [membershipPlansData, setMembershipPlansData] = useState<RecruiterInterface[]>(
-		[]
-	);
+	const [membershipPlansData, setMembershipPlansData] = useState<
+		RecruiterInterface[]
+	>([]);
 
 	useEffect(() => {
 		(async () => {
 			try {
 				const recruiters = await getAllMembershipPlansApi();
-				console.log("in useEffect getAllMembershipPlansApi()", recruiters.data);
+				console.log(
+					"in useEffect getAllMembershipPlansApi()",
+					recruiters.data
+				);
 				setMembershipPlansData(recruiters.data);
 			} catch (error: any) {
 				console.error(error);
 			}
 		})();
 	}, []);
-
-	
-
-	// const viewplanDetails = async (userId: string) => {
-	// 	console.log("in viewProfileDetails fn ", userId);
-	// 	navigate(`/admin/recruiter/viewProfileDetails/${userId}`);
-	// };
-
-	// const handleBlockUnblockPlans = async (userId: string, isActive: boolean) => {
-	// 	Swal.fire({
-	// 		title: `Do you want to ${
-	// 			isActive ? "block" : "unblock"
-	// 		} this Recruiter?`,
-	// 		text: "Are you sure!",
-	// 		icon: "warning",
-	// 		showCancelButton: true,
-	// 		confirmButtonColor: "#3085d6",
-	// 		cancelButtonColor: "#d33",
-	// 		confirmButtonText: `Yes, ${isActive ? "block" : "unblock"}`,
-	// 	}).then(async (result) => {
-	// 		if (result.isConfirmed) {
-	// 			const updatedRecruiter = await blockUnblockRecruiterApi(userId);
-	// 			if (updatedRecruiter) {
-	// 				notify(updatedRecruiter.message, "success");
-	// 			}
-
-	// 			const recruiters = membershipPlansData.map((recruiter) => {
-	// 				if (recruiter.id === userId) {
-	// 					return {
-	// 						...recruiter,
-	// 						isActive: updatedRecruiter.data.isActive,
-	// 					};
-	// 				}
-
-	// 				return recruiter;
-	// 			});
-
-	// 			setMembershipPlansData(recruiters);
-	// 		}
-	// 	});
-	// };
 
 	const columns = [
 		{
@@ -147,25 +112,24 @@ function PremiumMembershipPage() {
 	const handleModalClose = () => setModalIsOpen(false);
 
 	// Handle creating premium membership plan
-	const handleCreatePremium = async(values: any) => {
+	const handleCreatePremium = async (values: any) => {
 		let arr: Array<string> = [];
-		
+
 		// Using map instead of forEach to create a new array
 		console.log(values.features);
 		console.log(typeof values.features);
-		
-		values.features = values.features.split(',').map((element: string) => {
-		  arr.push(element.trim());
-		  return element;
+
+		values.features = values.features.split(",").map((element: string) => {
+			arr.push(element.trim());
+			return element;
 		});
 		const membershipPlans = await createMembershipPlanApi(values);
-		if(membershipPlans){
+		if (membershipPlans) {
 			notify(membershipPlans.message, "success");
 		}
-		setMembershipPlansData([...membershipPlansData,membershipPlans.data]);
+		setMembershipPlansData([...membershipPlansData, membershipPlans.data]);
 
 		console.log("after crate premium data", membershipPlans.data);
-		
 
 		// Add logic to create premium membership plan
 		// You can use state management (e.g., Redux) or send an API request to the server
@@ -204,7 +168,7 @@ function PremiumMembershipPage() {
 				</button>
 			</div>
 			{/* ReactModal */}
-			
+
 			<Modal open={modalIsOpen} onClose={handleModalClose} center>
 				<div className="p-6 bg-white rounded-lg shadow-md">
 					<h2 className="text-2xl font-semibold mb-4">
