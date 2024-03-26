@@ -10,8 +10,7 @@ export = (dependencies: DependenciesData) => {
 	}
 
 	const execute =(chatRoomId: object) => {
-        console.log("in getConversation usecase",chatRoomId);
-        
+		
 		return messageRepository.getChatMessages(chatRoomId);
 	};
 

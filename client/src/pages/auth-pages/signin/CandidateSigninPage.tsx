@@ -19,6 +19,7 @@ import { gapi } from 'gapi-script';
 import React, { useEffect, useState } from "react";
 import { GoogleLogin, GoogleOAuthProvider, useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
+import { RiArrowLeftFill } from "react-icons/ri";
 // import { GoogleLogin } from "@react-oauth/google";
 const CandidateSigninPage: React.FC = () => {
 	const dispatch = useDispatch();
@@ -103,6 +104,7 @@ const CandidateSigninPage: React.FC = () => {
     // });
 	return (
 		<div className="flex w-full h-screen">
+			<button onClick={()=>navigate('/candidate')} className="bg-slate-700 rounded-xl p-2 text-white w-20 flex justify-between items-center absolute m-10"><RiArrowLeftFill />home</button>
 			<div className="w-full lg:w-6/12 flex items-center justify-center">
 				<Formik
 					initialValues={initialSigninValues}

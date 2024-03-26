@@ -127,6 +127,26 @@ const TopNavBarCandidate = () => {
 	const [openNotifications, setOpenNotifications] = useState(false);
 
 	useEffect(() => {
+		socket.on("chatNotification", (message) => {
+			console.log("in receive chat Notification candidateNNNNNNNNNaaaaVVVVVV recruiterRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR", message);
+			// socket.on("getAllChatRooms", (rooms) => {
+			// 	setchatRooms(rooms);
+			// });
+			// (async()=>{
+			// 	const rooms = await getAllRecruiterChatRoomsApi(recruiterData.id)
+			// 	setchatRooms(rooms.data);
+			// })()
+		});
+	
+		return () => {
+			// Clean up the event listener when the component unmounts
+			socket.off("chatNotification");
+			// dispatch(clearRecruiterCurrentlySelectedChatRoom())
+		};
+	}, []);
+
+
+	useEffect(() => {
 		(async () => {
 			try {
 				// console.log("no");
@@ -329,16 +349,17 @@ const TopNavBarCandidate = () => {
 					>
 						DevHive
 					</a>
+					
 					{candidateProfile?.isPremiumUser && (
 						<FaCrown className="text-yellow-600" />
 					)}
 				</div>
 				<div
-					className="relative mr-3 cursor-pointer"
+					className="flex w-9 cursor-pointer mr-3 "
 					onClick={() => setOpenNotifications(!openNotifications)}
 				>
-					<IoMdNotifications className="text-2xl mr-3" />
-					<div className="badge absolute top-0 right-0 bg-green-600 text-white rounded-full p-1 text-xs">
+					<IoMdNotifications className="text-2xl" />
+					<div className="badge bg-green-600 text-white rounded-full p-1 text-xs">
 						{notificationsCount}
 					</div>
 

@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import { useEffect, useState } from "react"; // Import useState hook
+import { useState } from "react"; // Import useState hook
 
 import dashboard from "../../assets/dashboard.svg";
 import finance from "../../assets/finance.svg";
@@ -16,27 +16,15 @@ const RecruiterLayout = () => {
 		(state: RootState) => state.recruiterData.data
 	);
 
-  const [screenSize, setScreenSize] = useState("");
-  const handleResize = () => {
-    const width = window.innerWidth;
-    if (width < 768) {
-        setScreenSize("small");
-    } else if (width >= 768 && width < 1024) {
-        setScreenSize("medium");
-    } else {
-        setScreenSize("large");
-    }
-};
+	// State to manage visibility of left navbar on mobile
+	const [isLeftNavBarVisible, setIsLeftNavBarVisible] =
+		useState<boolean>(false);
 
-useEffect(() => {
-  handleResize(); // Initial screen size check
-  window.addEventListener("resize", handleResize); // Listen for resize events
+	const toggleLeftNavBar = () => {
+		console.log("togglechangeFn ", isLeftNavBarVisible);
 
-  // Clean up event listener
-  return () => {
-      window.removeEventListener("resize", handleResize);
-  };
-}, []);
+		setIsLeftNavBarVisible(!isLeftNavBarVisible);
+	};
 
 	const menus = [
 		{ title: "Dashboard", src: dashboard, to: "/recruiter" },
@@ -64,35 +52,30 @@ useEffect(() => {
 		{ title: "Profile", src: membership, to: "/recruiter/profile" },
 	];
 
-	// State to manage visibility of left navbar on mobile
-	const [isLeftNavBarVisible, setIsLeftNavBarVisible] =
-		useState<boolean>(false);
-
-	const toggleLeftNavBar = () => {
-		console.log("togglechangeFn ", isLeftNavBarVisible);
-
-		setIsLeftNavBarVisible(!isLeftNavBarVisible);
-	};
-
 	return (
 		<>
 			{/*top-nav-bar */}
 			<TopNavBarRecruiter toggleLeftNavBar={toggleLeftNavBar} />
 
+			{/*left-nav-bar sm screens*/}
+			<div
+				className={`absolute md:hidden overflow-y-auto ${
+					!isLeftNavBarVisible ? "hidden " : "block z-30"
+				}`} // Hide on small screens, show on medium and larger screens
+			>
+				{isLeftNavBarVisible && <LeftNavBarRecruiter menus={menus} />}
+			</div>
+
 			<div className="flex">
-				{/*left-nav-bar */}
+				{/* left-nav-bar for screens larger >=md */}
 				<div
-					className={`md:block sticky top-0 h-screen overflow-y-auto ${
-						!isLeftNavBarVisible ? "hidden md:block z-30" : "block"
-					}`} // Hide on small screens, show on medium and larger screens
+					className={`sticky hidden md:block top-0  overflow-y-auto `} // Hide on small screens, show on medium and larger screens
 				>
-					{isLeftNavBarVisible && (
-						<LeftNavBarRecruiter menus={menus} />
-					)}
+					<LeftNavBarRecruiter menus={menus} />
 				</div>
 
 				{/* right-side */}
-				<div className="flex-1 overflow-auto bg-slate-400 h-screen">
+				<div className="flex-1 sm:h-screen overflow-auto bg-slate-400">
 					{<Outlet />}
 				</div>
 			</div>

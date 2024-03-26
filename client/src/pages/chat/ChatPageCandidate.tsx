@@ -278,7 +278,8 @@ const ChatPageCandidate = () => {
 											)}
 											receiver={getReceiver(selectedChatRoom)}
 											// if the chat topbar is there, the chat window will also be there
-											 handleChatVisibility={handleChatVisibility}	 								/>
+											handleChatVisibility={handleChatVisibility}
+											 handleBackButtonClick={undefined}	 								/>
 								</div>
 								<div
 									className="bg-red-300 min-h-[58vh] max-h-[58vh] p-5 overflow-x-scroll "

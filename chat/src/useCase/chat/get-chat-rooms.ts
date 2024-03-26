@@ -10,8 +10,6 @@ export = (dependencies: DependenciesData) => {
 	}
 
 	const execute =(userId: string) => {
-        console.log("in getAllChatRoomsByUserId usecase",userId);
-        
 		return chatRoomRepository.getAllChatRoomsByUserId(userId);
 	};
 

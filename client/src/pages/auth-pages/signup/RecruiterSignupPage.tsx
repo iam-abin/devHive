@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
+import { RiArrowLeftFill } from "react-icons/ri";
 
 import {
 	initialSignupValues,
@@ -58,9 +59,10 @@ function RecruiterSignupPage() {
 		return <Loading />;
 	}
 	return (
-		<main className="w-full h-screen flex items-center  ">
+		<main className="w-full h-screen md:flex md:items-center  ">
 			{/* left */}
-			<div className="hidden lg:flex relative flex-col w-1/2 h-full  ">
+			<div className="hidden lg:flex relative flex-col md:w-1/2 h-full  ">
+				<button onClick={()=>navigate('/recruiter')} className="bg-slate-700 rounded-xl p-2 text-white w-20 flex justify-between items-center absolute m-10"><RiArrowLeftFill />home</button>
 				<img
 					src={recruiterLoginImage}
 					className="w-full h-full object-cover"
@@ -80,7 +82,7 @@ function RecruiterSignupPage() {
 				{(formik) => {
 					const { errors, touched } = formik;
 					return (
-						<div className="w-1/2 h-full flex flex-col p-14 justify-between items-center">
+						<div className="md:w-1/2 h-full flex flex-col p-14  gap-10 items-center">
 							<h1 className="text-xl font-semibold">
 								Recruiter Sign Up
 							</h1>
@@ -91,7 +93,7 @@ function RecruiterSignupPage() {
 										Sign Up
 									</h3>
 									<p className="text-base mb-4">
-										welcome back! please enter your details
+										welcome! please enter your details
 									</p>
 								</div>
 								<Form noValidate>

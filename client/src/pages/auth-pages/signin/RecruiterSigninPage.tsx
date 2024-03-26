@@ -13,6 +13,7 @@ import { setRecruiter } from "../../../redux/slice/recruiterSlice/recruiterDataS
 import { RootState } from "../../../redux/reducer/reducer";
 import Loading from "../../../components/loading/Loading";
 import { setLoaded, setLoading } from "../../../redux/slice/loaderSlice/isLoading";
+import { RiArrowLeftFill } from "react-icons/ri";
 
 function RecruiterSigninPage() {
 	const dispatch = useDispatch();
@@ -62,6 +63,7 @@ function RecruiterSigninPage() {
 		<main className="w-full h-screen flex items-center  ">
 			{/* left */}
 			<div className="hidden lg:flex relative flex-col w-1/2 h-full  ">
+				<button onClick={()=>navigate('/recruiter')} className="bg-slate-700 rounded-xl p-2 text-white w-20 flex justify-between items-center absolute m-10"><RiArrowLeftFill />home</button>
 				<img
 					src={recruiterLoginImage}
 					className="w-full h-full object-cover"
@@ -81,7 +83,7 @@ function RecruiterSigninPage() {
 				{(formik) => {
 					const { errors, touched } = formik;
 					return (
-						<div className="w-1/2 h-full flex flex-col p-14 justify-between items-center">
+						<div className="md:w-1/2 h-full flex flex-col p-14 justify-between items-center">
 							<h1 className="text-xl font-semibold">
 								Recruiter Sign In
 							</h1>

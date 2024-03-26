@@ -325,22 +325,22 @@ const TopNavBarRecruiter: React.FC<{ toggleLeftNavBar: any }> = ({
 				</a>
 			</div>
 			<div
-				className="relative mr-3 cursor-pointer"
-				onClick={() => setOpenNotifications(!openNotifications)}
-			>
-				<IoMdNotifications className="text-2xl mr-3" />
-				<div className="badge absolute top-0 right-0 bg-green-600 text-white rounded-full p-1 text-xs">
-					{notificationsCount}
-				</div>
+					className="flex w-9 cursor-pointer mr-3 "
+					onClick={() => setOpenNotifications(!openNotifications)}
+				>
+					<IoMdNotifications className="text-2xl" />
+					<div className="badge bg-green-600 text-white rounded-full p-1 text-xs">
+						{notificationsCount}
+					</div>
 
-				{openNotifications && (
-					<Notifications
-						notifications={notifications}
-						clearNotifications={clearNotifications}
-						setOpenNotificationFn={setOpenNotifications}
-					/>
-				)}
-			</div>
+					{openNotifications && (
+						<Notifications
+							notifications={notifications}
+							clearNotifications={clearNotifications}
+							setOpenNotificationFn = {setOpenNotifications}
+						/>
+					)}
+				</div>
 
 			<div className="flex-none">
 				<ul className="menu menu-horizontal px-1">

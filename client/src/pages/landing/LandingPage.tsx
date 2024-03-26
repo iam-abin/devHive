@@ -126,7 +126,7 @@ function LandingPage() {
 			{candidate && isCandidateUrl ? (
 				<TopNavBarCandidate />
 			) : recruiter && isRecruiterUrl ? (
-				<TopNavBarRecruiter  />
+				<TopNavBarRecruiter toggleLeftNavBar={undefined} />
 			) : (
 				<NavBarLanding />
 			)}

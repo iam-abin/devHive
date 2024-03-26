@@ -37,6 +37,7 @@ function CandidateRoutes() {
 	const isCandidateLoggedIn = useSelector(
 		(state: RootState) => state.candidateData.data
 	);
+
 	return (
 		<>
 			<Suspense fallback={<Loading />}>

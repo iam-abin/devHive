@@ -18,6 +18,9 @@ import candidateJobDetailsSlice from "../slice/candidateSlice/candidateJobDetail
 import candidateCurrentlySelectedChatroomSlice from "../slice/chat/candidateCurrentlySelectedChatroomSlice";
 import recruiterCurrentlySelectedChatroomSlice from "../slice/chat/recruiterCurrentlySelectedChatroomSlice";
 
+import candidateNotificationSlice from "../slice/chat/candidateNotificationSlice";
+import recruiterNotificationSlice from "../slice/chat/recruiterNotificationSlice";
+
 import apiCallLoadingSlice from "../slice/loaderSlice/isLoading"
 
 const rootRedcucer = combineReducers({
@@ -38,6 +41,9 @@ const rootRedcucer = combineReducers({
 
     candidateCurrentlySelectedChatroom: candidateCurrentlySelectedChatroomSlice,
     recruiterCurrentlySelectedChatroom: recruiterCurrentlySelectedChatroomSlice,
+
+    candidateNotification:candidateNotificationSlice,
+recruiterNotification:recruiterNotificationSlice,
 
     loading: apiCallLoadingSlice,
 

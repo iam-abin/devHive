@@ -21,6 +21,7 @@ export const candidateRouter = (dependencies: DependenciesData) => {
 	const { applyJobController, appliedJobsController, viewPliedJobApplicationController } =
 		candidateJobControllers(dependencies);
 
+	// This route is to get all jobs. It's a post req because i am passing some data to server.
 	router.get("/all-jobs/:page", currentUserCandidateCheck, viewAllJobsController);
 
 	router.post("/all-job-fields-distinct-values", viewAllJobFieldsDistinctValuesController);

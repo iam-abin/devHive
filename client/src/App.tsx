@@ -14,6 +14,7 @@ import { useEffect } from "react";
 // import { myFirebaseMessaging } from "./config/firebase";
 // import { getToken } from "firebase/messaging";
 import { Toaster } from "react-hot-toast";
+import socket from "./config/socket";
 // import { ToastBar } from "react-hot-toast";
 
 export default function App() {
@@ -24,6 +25,8 @@ export default function App() {
 	const isRecruiterLoggedIn = useSelector(
 		(state: RootState) => state.recruiterData.data
 	);
+
+	
 
 	// useEffect(() => {
 	// 	// Request user or browser for notification permission

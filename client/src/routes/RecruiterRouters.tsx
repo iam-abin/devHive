@@ -10,6 +10,7 @@ import NotFound from "../pages/Error/NotFound";
 import RecruiterLayout from "../pages/layout/RecruiterLayout";
 import RecruiterDashBoard from "../pages/dashboard/RecruiterDashBoardPage";
 import CandidateProfilePage from "../pages/profile/candidate/CandidateProfilePage";
+// import socket from "../config/socket";
 
 
 
@@ -34,13 +35,14 @@ const AllAddedJobs = lazy(()=> import("../pages/job-pages/recruiter/AllAddedJobs
 const JobApplicationsPage = lazy(()=> import("../pages/job-pages/recruiter/JobApplicationsPage"))
 const JobApplicationDetailsPage = lazy(()=> import("../pages/job-pages/recruiter/JobApplicationDetailsPage"))
 // const CandidateProfileDetailsPage = lazy(()=> import("../pages/profile/recruiter/CandidateProfileDetailsPage"))
-const ChatPageRecruiter = lazy(()=> import("../pages/chat/ChatPageRecruiter2"))
+const ChatPageRecruiter = lazy(()=> import("../pages/chat/ChatPageRecruiter"))
 const ViewAllCandidatesPage = lazy(()=> import("../pages/recruiter/ViewAllCandidatesPage"))
 
 function RecruiterRouters() {
 	const isRecruiterLoggedIn = useSelector(
 		(state: RootState) => state.recruiterData.data
 	);
+
   return (
     <>
 		<Suspense fallback={<Loading />}>

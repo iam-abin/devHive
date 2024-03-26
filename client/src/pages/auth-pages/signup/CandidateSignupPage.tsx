@@ -19,6 +19,7 @@ import {
 	setLoading,
 } from "../../../redux/slice/loaderSlice/isLoading";
 import Loading from "../../../components/loading/Loading";
+import { RiArrowLeftFill } from "react-icons/ri";
 
 function CandidateSignupPage() {
 	const dispatch = useDispatch();
@@ -59,6 +60,8 @@ function CandidateSignupPage() {
 	}
 	return (
 		<div className="flex w-full h-screen">
+			<button onClick={()=>navigate('/candidate')} className="bg-slate-700 rounded-xl p-2 text-white w-20 flex justify-between items-center absolute m-10"><RiArrowLeftFill />home</button>
+
 			<div className="w-full lg:w-7/12 flex items-center justify-center">
 				<Formik
 					initialValues={initialSignupValues}

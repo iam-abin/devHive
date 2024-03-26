@@ -21,10 +21,15 @@ const SearchBar = () => {
 
     const [jobCriteria, setJobCriteria] = useState({
         title: "",
-        location: "",
+        company_location: "",
         employment_type: "",
         experience: "",
     });
+
+    console.log("?????????????????????????????????????????????????????????????????");
+    console.log(jobCriteria);
+    console.log("?????????????????????????????????????????????????????????????????");
+    
 
     const handleChange = (e: any) => {
         setJobCriteria({
@@ -34,7 +39,7 @@ const SearchBar = () => {
     };
 
     const handleJobFilter = async () => {
-        if (jobCriteria.title === "" && jobCriteria.location === "" && jobCriteria.employment_type === "") {
+        if (jobCriteria.title === "" && jobCriteria.company_location === "" && jobCriteria.employment_type === "") {
             return;
         }
 
@@ -63,15 +68,15 @@ const SearchBar = () => {
             <select
                 onChange={handleChange}
                 name="company_location"
-                value={jobCriteria.location}
+                value={jobCriteria.company_location}
                 className="select select-primary text-center font-semibold rounded-md py-3 md:max-w-sm"
             >
                 <option value="" disabled hidden>
                     Location
                 </option>
-                {jobFieldsValues.company_location?.map((location, index) => (
-                    <option key={index} value={location}>
-                        {location}
+                {jobFieldsValues.company_location?.map((company_location, index) => (
+                    <option key={index} value={company_location}>
+                        {company_location}
                     </option>
                 ))}
             </select>

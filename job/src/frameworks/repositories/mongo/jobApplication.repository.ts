@@ -51,23 +51,31 @@ export = {
 		return totalJobs;
 	},
 
-	getAllJobApplicationsByRecruiterId: async (recruiterId: string, candidateId: string) => {
+	getAllJobApplicationsByRecruiterId: async (
+		recruiterId: string,
+		candidateId: string
+	) => {
 		// use populate
 		// const jobApplications = await jobApplicationModel.find({},{recruiterId:id});
 		let jobApplications;
-		if(recruiterId){
-			
+		if (recruiterId) {
 			jobApplications = await jobApplicationModel
 				.find({ recruiterId: recruiterId })
 				.populate({ path: "jobId", model: JobModel })
 				.populate({ path: "candidateId", model: UserModel });
-			console.log("in getAllJobApplicationsByRecruiterId", jobApplications);
-		}else{
+			console.log(
+				"in getAllJobApplicationsByRecruiterId",
+				jobApplications
+			);
+		} else {
 			jobApplications = await jobApplicationModel
 				.find({ candidateId: candidateId })
 				.populate({ path: "jobId", model: JobModel })
 				.populate({ path: "candidateId", model: UserModel });
-			console.log("in getAllJobApplicationsByRecruiterId", jobApplications);
+			console.log(
+				"in getAllJobApplicationsByRecruiterId",
+				jobApplications
+			);
 		}
 
 		return jobApplications;
@@ -137,7 +145,32 @@ export = {
 		const totalJobs: number = await jobApplicationModel.countDocuments({
 			recruiterId: id,
 		});
-		console.log("numberOfJobApplicationsToMe",totalJobs);
+		console.log("numberOfJobApplicationsToMe", totalJobs);
+		return totalJobs;
+	},
+
+	numberOfAppliedStatusCount: async (recruiterId: string) => {
+		const totalJobs: number = await jobApplicationModel.countDocuments({
+			recruiterId: recruiterId,
+			applicationStatus: "Applied",
+		});
+		console.log("numberOfAppliedStatusCount", totalJobs);
+		return totalJobs;
+	},
+	numberOfShortlistedStatusCount: async (recruiterId: string) => {
+		const totalJobs: number = await jobApplicationModel.countDocuments({
+			recruiterId: recruiterId,
+			applicationStatus: "Shortlisted",
+		});
+		console.log("numberOfJobApplicationsToMe", totalJobs);
+		return totalJobs;
+	},
+	numberOfRejectedStatusCount: async (recruiterId: string) => {
+		const totalJobs: number = await jobApplicationModel.countDocuments({
+			recruiterId: recruiterId,
+			applicationStatus: "Rejected",
+		});
+		console.log("numberOfJobApplicationsToMe", totalJobs);
 		return totalJobs;
 	},
 };

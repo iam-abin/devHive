@@ -40,36 +40,40 @@ const CandidateProfilePage: React.FC = () => {
 
 	const [candidateProfileData, setCandidateProfileData] = useState<any>([]);
 
-	const [skills, setSkills] = useState<any>([]);
-	const [skill, setSkill] = useState<any>("");
-	const [preferredJobs, setPreferredJobs] = useState<any>([]);
-	const [preferredJob, setPreferredJob] = useState<any>("");
+	// State variables for the first modal
+    const [skill, setSkill] = useState<string>("");
+    const [skills, setSkills] = useState<string[]>([]);
+    const [addSkillRerender, setAddSkillRerender] = useState<number>(0);
 
-	const [addSkillRerender, setAddSkillRerender] = useState(0);
+    // State variables for the second modal
+	const [preferredJob, setPreferredJob] = useState<string>("");
+	const [preferredJobs, setPreferredJobs] = useState<string[]>([]);
+
 	const [imgLoading, setImgLoading] = useState<boolean>(false);
 	const [pdfLoading, setPdfLoading] = useState<boolean>(false);
 
-	console.log("skills--------  ", skills);
-	const handleSetSkill = async (e: any) => {
-		setSkill(e.target.value);
-	};
+	 // Handlers for the first modal
+    const handleSetSkill = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSkill(e.target.value);
+    };
 
-	const handleSetPreferredJob = async (e: any) => {
+    const handleSetSkills = () => {
+        if (skill.trim() !== "") {
+            setSkills([...skills, skill.trim()]);
+            setSkill(""); // Clear the input after adding skill
+        }
+    };
+
+    // Handlers for the second modal
+	const handleSetPreferredJob = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setPreferredJob(e.target.value);
 	};
-
-	const handleSetSkills = async () => {
-		if (!skill) return;
-		setSkills([...skills, skill]);
-		setSkill("");
-	};
-
-	const handleSetPreferredJobs = async () => {
-		if (!preferredJob) return;
-		setPreferredJobs([...preferredJobs, preferredJob]);
-		setPreferredJob("");
-	};
-
+ const handleSetPreferredJobs = () => {
+    if (preferredJob.trim() !== "") {
+        setPreferredJobs([...preferredJobs, preferredJob.trim()]);
+        setPreferredJob(""); // Clear the input after adding preferred job
+    }
+};
 	const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
 	const { candidateId } = useParams(); // and used when recruiter view user profile
@@ -96,6 +100,7 @@ const CandidateProfilePage: React.FC = () => {
 			setCandidateProfileData(candidateProfile.data);
 			dispatch(setCandidateProfileDetails(candidateProfile?.data));
 			setSkills([...candidateProfile?.data.keySkills]);
+			setPreferredJobs([...candidateProfile?.data.preferredJobs]);
 		})();
 	}, [addSkillRerender]);
 
@@ -175,7 +180,6 @@ const CandidateProfilePage: React.FC = () => {
 			confirmButtonText: `Yes, delete`,
 		}).then(async (result) => {
 			if (result.isConfirmed) {
-				// const updatedCandidate = await blockUnblockCandidateApi(userId);
 				const updatedCandidate = await deleteResumeApi(
 					candidateData.id
 				);
@@ -183,24 +187,10 @@ const CandidateProfilePage: React.FC = () => {
 				console.log("resume delete ");
 
 				if (updatedCandidate) {
-					// setCandidateProfileData({
-					// 	...candidateProfileData,
-					// 	resume: updatedCandidate.data.resume,
-					// });
-
 					setCandidateProfileData({
 						...candidateProfileData,
 						resume: updatedCandidate.data.resume,
 					});
-
-					// setCandidateProfileData({
-					// 	...candidateProfileData,
-					// 	data: {
-					// 		...candidateProfileData.data,
-					// 		profile_image: response.data.profile_image,
-					// 	},
-					// });
-					// setAddSkillRerender(addSkillRerender + 1);
 					hotToastMessage(updatedCandidate.message, "success");
 				}
 			}
@@ -213,7 +203,7 @@ const CandidateProfilePage: React.FC = () => {
 				candidateData.id,
 				preferredJobs
 			);
-			console.log("resume preferredJobs update response", response);
+			console.log("preferredJobs update response", response);
 			if (response.data) {
 				hotToastMessage(response.message, "success");
 				setAddSkillRerender(addSkillRerender + 1);
@@ -222,8 +212,6 @@ const CandidateProfilePage: React.FC = () => {
 				hotToastMessage("preferredJobs not uploaded", "error");
 			}
 		} catch (error: any) {
-			// console.log("drrer",error);
-			// notify("file is size is > 1mb", "error");
 			hotToastMessage(error.response.data.errors[0].message, "error");
 		}
 	};
@@ -234,7 +222,7 @@ const CandidateProfilePage: React.FC = () => {
 				candidateData.id,
 				skills
 			);
-			console.log("resume skills update response", response);
+			console.log("skills update response", response);
 			if (response.data) {
 				hotToastMessage(response.message, "success");
 				setAddSkillRerender(addSkillRerender + 1);
@@ -243,8 +231,6 @@ const CandidateProfilePage: React.FC = () => {
 				hotToastMessage("skills not uploaded", "error");
 			}
 		} catch (error: any) {
-			// console.log("drrer",error);
-			// notify("file is size is > 1mb", "error");
 			hotToastMessage(error.response.data.errors[0].message, "error");
 		}
 	};
@@ -335,11 +321,6 @@ const CandidateProfilePage: React.FC = () => {
 										/>
 									</div>
 								)}
-								{/* <div className="flex flex-col bg-green-400"> */}
-								{/* <p className="py-6">
-										{candidateProfileData?.about}
-									</p> */}
-								{/* </div> */}
 							</div>
 						</div>
 
@@ -520,7 +501,7 @@ const CandidateProfilePage: React.FC = () => {
 							</div>
 						</div>
 
-						{/* =============================================start============================================= */}
+						{/* =============================================Skill start============================================= */}
 						{/* ====modal start ==== */}
 						{/* Put this part before </body> tag */}
 
@@ -654,9 +635,9 @@ const CandidateProfilePage: React.FC = () => {
 								</ul>
 							</div>
 						</div>
-						{/* ===============================================end================================================== */}
+						{/* ===============================================Skill end================================================== */}
 
-						{/* =================================================start================================================ */}
+						{/* =================================================Preferred jobs start================================================ */}
 						{/* ====modal start ==== */}
 						{/* Put this part before </body> tag */}
 
@@ -790,7 +771,7 @@ const CandidateProfilePage: React.FC = () => {
 								</ul>
 							</div>
 						</div>
-						{/* ====================================== */}
+						{/* =================================================Preferred jobs end================================================ */}
 					</div>
 				</div>
 			</main>

@@ -16,19 +16,20 @@ export = (dependencies: any) => {
 
 
 	const execute = async (recruiterId: string) => {
-		console.log("inside get all dashboard graph details useCase 1");
+		console.log("inside get all dashboard graph details useCase 111");
 		
-		const [candidateCount, recruiterCount, jobCount, totalRevenue]: any =
+		const [applied, shortlisted, rejected]: any =
+		// await jobApplicationRepository.jobApplicationsStatuses(recruiterId)
 			await Promise.all([
-				jobRepository.numberOfCreatedJobsByMe(recruiterId),
-				jobApplicationRepository.numberOfJobApplicationsToMe(recruiterId),
-				// jobRepository.numberOfJobs(),
+				jobApplicationRepository.numberOfAppliedStatusCount(recruiterId),
+				jobApplicationRepository.numberOfShortlistedStatusCount(recruiterId),
+				jobApplicationRepository.numberOfRejectedStatusCount(recruiterId),
 			]);
 
-            console.log("inside get all dashboard graph details useCase 2 ", { candidateCount, recruiterCount, jobCount, totalRevenue });
+            console.log("inside get all dashboard graph details useCase 2 ", {applied, shortlisted, rejected });
             
 
-		return { candidateCount, recruiterCount, jobCount, totalRevenue };
+		return { applied, shortlisted, rejected };
 	};
 
 	return { execute };

@@ -17,8 +17,9 @@ const Notifications: React.FC<{
 				<ul>
 					{notifications.length > 0 ? (
 						notifications?.map((notification: any) => (
-							<li className="my-4 p-2 text-sm shadow-lg" key={notification.id}>
-								{notification.message}
+							<li className="my-4 p-2 text-sm shadow-lg flex flex-row justify-between" key={notification.id}>
+								<p>{ notification?.message?.length > 17 ? notification.message.substring(0, 17) + "..." : notification.message}</p>
+								<p>{notification?.senderId?.name}</p>
 							</li>
 						))
 					) : (

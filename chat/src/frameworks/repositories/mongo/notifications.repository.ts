@@ -22,7 +22,12 @@ export = {
 	},
 
 	getAllNotificationsByUserId: async (userId: string) => {
-		const chatNotifications = await NotificationModel.find({targetUserId: userId}).sort({createdAt: -1});
+		const chatNotifications = await NotificationModel.find({targetUserId: userId}).populate({
+			path: "senderId",
+			model: "User",
+		})
+		.sort({createdAt: -1});
+		
 		return chatNotifications;
 	},
 	

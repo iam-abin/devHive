@@ -65,7 +65,7 @@ function AllJobsPage() {
 				</div>
 				{filteredJobs.length > 0 ? (
 					<>
-						<div className="mx-28">
+						<div className="">
 							{filteredJobs.map(
 								(job: any) =>
 										<JobCard

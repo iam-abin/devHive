@@ -12,12 +12,12 @@ export = (dependencies: DependenciesData)=>{
         console.log("inside get all dashboard graph derails controller 1111====11", recruiterId);
         
         
-        const dashboardCardsDetails = await recruiterDashboardGraphDetailsUseCase(dependencies).execute(recruiterId);
+        const dashboardGraphDetails = await recruiterDashboardGraphDetailsUseCase(dependencies).execute(recruiterId);
 
 
-        console.log("inside get all dashboard graph derails controller 2",dashboardCardsDetails);
+        console.log("inside get all dashboard graph derails controller 2",dashboardGraphDetails);
 
-        res.status(200).json({message: "dashboard card details", data: dashboardCardsDetails })
+        res.status(200).json({message: "dashboard graph details", data: dashboardGraphDetails })
     };
 
 }

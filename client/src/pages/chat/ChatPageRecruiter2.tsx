@@ -282,11 +282,11 @@ const ChatPageRecruiter2 = () => {
 										key={index}
 										currentUser={recruiterData}
 										receiver={getReceiver(chatRoom)}
+										lastMessageTime = {chatRoom.updatedAt}							
 										isOnline={isUserOnline(chatRoom)}
 										lastMessage={chatRoom?.lastMessage}
 										onClick={() => handleChatRoomClick(chatRoom)}
 										selected={selectedChatRoom?._id === chatRoom?._id} // Adjust this line as needed
-										lastMessageTime = {chatRoom.updatedAt}							
 										/>
 								   ))
 								   
