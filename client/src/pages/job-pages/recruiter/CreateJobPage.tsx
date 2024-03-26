@@ -59,7 +59,7 @@ function CreateJobPage() {
 			}
 			const response = await createJobApi(jobData);
 			notify(response.message, "success");
-			navigate("/recruiter/all-jobs");
+			navigate("/recruiter/recruiter-added-jobs");
 		} catch (error: any) {
 			console.log("fdsf",error);
 			

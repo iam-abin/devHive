@@ -66,7 +66,7 @@ function EditJob() {
 			console.log("Hello");
 			if (data.data) {
 				notify("updated successfully", "success");
-				navigate("/recruiter/all-jobs");
+				navigate("/recruiter/recruiter-added-jobs");
 			} else {
 				notify("not updated", "error");
 			}
