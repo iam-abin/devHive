@@ -2,13 +2,7 @@ export = (dependencies: any) => {
 	const {
 		repositories: { usersRepository },
 	} = dependencies;
-
-	// if (!emailVerificationTokenRepository) {
-	// 	throw new Error(
-	// 		"emailVerificationTokenRepository should exist in dependencies"
-	// 	);
-	// }
-
+	
 	if (!usersRepository) {
 		throw new Error("usersRepository should exist in dependencies");
 	}

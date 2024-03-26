@@ -20,10 +20,6 @@ export = {
 		console.log("inside get user by userId repo ", userId , typeof userId);
 		
 		const user = await UserModel.findById(userId);
-		console.log("User found is ", user);
-		console.log("-------");
-		
-		
 		return user;
 	},
 	

@@ -22,8 +22,7 @@ export = (dependencies: DependenciesData)=>{
         }
 
         const updatedMemberShipPlan = await updateMemberShipPlanUseCase(dependencies).execute(membershipId, data);
-        console.log("in recruiter update MemberShipPlan controller 2: ",updatedMemberShipPlan, "membershipId: ",membershipId);
-
+        
         //  // to produce a message to kafka topic
         // // isBlocked contains user data with 'isActive' value changed
 		// await produceMessage(updatedMemberShipPlan, 'MEMBERSHIP_PLAN_UPDATED_TOPIC')

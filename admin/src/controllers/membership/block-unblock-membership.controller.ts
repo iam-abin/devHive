@@ -16,10 +16,6 @@ export = (dependencies: DependenciesData) => {
 
 	return async (req: Request, res: Response) => {
 		const { id: membershipPlanId } = req.params;
-		console.log(
-			"in  blockUnblockMemberShipPlan controller 1: ",
-			membershipPlanId
-		);
 
 		const job = await getMemberShipPlanByIdUseCase(dependencies).execute(
 			membershipPlanId
@@ -35,7 +31,6 @@ export = (dependencies: DependenciesData) => {
 		const response = await blockUnblockMemberShipPlanUseCase(
 			dependencies
 		).execute(membershipPlanId);
-		console.log("in blockUnblockMemberShipPlan controller 2: ", response);
 
 		const membershipPlan = await getMemberShipPlanByIdUseCase(
 			dependencies

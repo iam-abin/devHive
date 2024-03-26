@@ -10,11 +10,7 @@ export = (dependencies: any) => {
 	}
 
 	const execute = async (userId: string) => {
-		console.log("in candidate profile execute ", userId);
-		
 		const profile = await candidateProfileRepository.deleteResumeByCandidateId(userId);
-		console.log("profile ", profile);
-		
 		return profile;
 	};
 

@@ -10,11 +10,8 @@ export = (dependencies: DependenciesData)=>{
 
     return async (req: Request, res: Response)=>{
         const data = req.body;
-        console.log("in recruiter create MemberShipPlan controller 1: ",data);
-
+        
         const membershipPlan = await createMemberShipPlanUseCase(dependencies).execute(data);
-        console.log("in admin create MemberShipPlan controller 2: ",membershipPlan);
-
         // // to produce a message to kafka topic
         // // isBlocked contains user data with 'isActive' value changed
 

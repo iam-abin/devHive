@@ -32,8 +32,7 @@ export = {
 
 
 	changeClosejobStatus: async (jobId: string) => {
-		console.log("in updateJob repository changeClosejobStatus jobId", jobId, " data ");
-
+		
 		const job: any = await JobModel.findById(jobId)
 		if(job){
 			job.isClosed = !job?.isClosed // Toggle the boolean field

@@ -10,10 +10,8 @@ export = (dependencies: any) => {
 	}
 
 	const execute = async () => {
-		console.log("in candidate membershipPlans execute ");
 		
 		const membershipPlans = await membershipRepository.getAllMembershipPlans();
-		console.log("membershipPlans ", membershipPlans);
 		
 		return membershipPlans;
 	};

@@ -9,9 +9,6 @@ export = (dependencies: DependenciesData)=>{
         
         const dashboardGraphDetails = await getDashboardGraphDetailsUseCase(dependencies).execute();
 
-
-        console.log("inside get  dashboard graph derails controller ",dashboardGraphDetails);
-
         res.status(200).json({message: "dashboard graph details", data: dashboardGraphDetails })
     };
 

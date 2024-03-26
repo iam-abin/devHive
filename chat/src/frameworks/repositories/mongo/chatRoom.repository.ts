@@ -12,8 +12,6 @@ export = {
 
 	getAChatRoomById: async (chatRoomId: string) => {
 		const chatRoom = await ChatRoomModel.findById({ _id: chatRoomId });
-		console.log("inside getAChatRoomById chatRoom ", chatRoom);
-
 		return chatRoom;
 	},
 
