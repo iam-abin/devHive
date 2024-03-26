@@ -8,13 +8,9 @@ export = (dependencies: DependenciesData)=>{
     return async (req: Request, res: Response)=>{
         const { senderId } = req.params;
         const {receiverId} = req.params;
-        console.log("in  get conversation controller senderId 1: ", senderId );
-        console.log("in  get conversation controller receiverId 1: ", receiverId );
 
         const response = await deleteAllNotificationsBySenderIdUseCase(dependencies).execute( senderId, receiverId );
-        console.log("in  get response controller 2: ", senderId, receiverId );
-
-
+        
         res.status(200).json({message: "response is ", data: response })
     };
 

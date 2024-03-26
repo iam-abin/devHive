@@ -6,12 +6,8 @@ export = (dependencies: DependenciesData)=>{
     const { useCases: { getAllNotificationsUseCase }} = dependencies 
 
     return async (req: Request, res: Response)=>{
-        const {userId} = req.params
-        console.log("in  getAllNotifications controller 1: ",userId);
-
+        const {userId} = req.params;
         const notification = await getAllNotificationsUseCase(dependencies).execute(userId);
-        console.log("in  getAllNotifications controller 2: ",notification);
-
 
         res.status(200).json({message: "Notifications are ", data: notification })
     };

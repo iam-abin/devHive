@@ -9,13 +9,9 @@ export = (dependencies: DependenciesData) => {
 	} = dependencies;
 
 	return async (req: Request, res: Response) => {
-		console.log("inside refresh token controller");
-		console.log("inside refresh token controller req.headers", req.headers);
-		
 		let refreshToken;
 		if (req.headers.authorization) {
 			const authHeader = req.headers.authorization;
-			console.log("inside refresh token controller===== req.headers.authorization ",req.headers.authorization);
 			if (authHeader.startsWith("Bearer ")) {
 				refreshToken = authHeader.substring("Bearer ".length);
 			}

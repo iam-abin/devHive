@@ -20,7 +20,6 @@ export = (dependencies: DependenciesData) => {
 			).execute(email);
 
 			if (isExistingUser && isExistingUser.isVarified) {
-                // return res.status(400).json({message:"Email already exist"})
 				throw new BadRequestError("Email already exist");
 			}
 
@@ -29,11 +28,6 @@ export = (dependencies: DependenciesData) => {
 			if(isExistingUser && !isExistingUser.isVarified){
 				// const token = await getEmailVerifyTokenUseCase(dependencies).execute(email)
 				const response = await sendVerificationEmail(isExistingUser.email, isExistingUser.otp ,subject ,topic);
-				// if(response){
-				// 	return res.status(200).json({"message": "An email is send to your email, please verify."});
-				// }else{
-				// 	return res.status(200).json({"message": "An email is send to your email, please verify."});
-				// }
 				console.log("email sended response ", response);
 				return res.status(200).json({"message": `An email is send to ${isExistingUser.email}, please verify.`});
 			}
@@ -57,15 +51,6 @@ export = (dependencies: DependenciesData) => {
 			}
 
 			
-			
-			// to add values to otp collection, 
-			// const emailVerify = await createEmailVerificationOtpUseCase(dependencies).execute({
-			// 	userId: newUser._id,
-			// 	email: newUser.email,
-			// 	otp: otp,
-			// 	expiry: expiryTime
-			// });
-
 			console.log("-------newUserCandidate ",newUser);
 			console.log("-------newUser._id",newUser._id);
 

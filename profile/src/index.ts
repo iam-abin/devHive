@@ -2,7 +2,7 @@ import { connectDB } from "./config/db";
 import { app } from "./frameworks/express/app";
 import { UserCreatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/user-created-consumer";
 import { UserUpdatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/user-updated-consumer";
-import { CompanyProfileUpdatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/company-profile-updated-consumer";
+// import { CompanyProfileUpdatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/company-profile-updated-consumer";
 import { kafkaClient } from "./config/kafka-connection";
 import { paymentCreatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/payment-created-consumer";
 

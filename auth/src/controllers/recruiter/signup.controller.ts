@@ -28,11 +28,6 @@ export = (dependencies: DependenciesData) => {
 			const topic = "Enter the 6 digit otp to verify your email"
 			if(isExistingUser && !isExistingUser.isVarified){
 				const response = await sendVerificationEmail(isExistingUser.email, isExistingUser.otp ,subject ,topic);
-				// if(response){
-				// 	return res.status(200).json({"message": "An email is send to your email, please verify."});
-				// }else{
-				// 	return res.status(200).json({"message": "An email is send to your email, please verify."});
-				// }
 				console.log("email sended response ", response);
 				return res.status(200).json({"message": "An email is send to your email, please verify."});
 			}

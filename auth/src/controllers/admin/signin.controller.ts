@@ -22,13 +22,10 @@ export = (dependencies: DependenciesData) => {
 		).execute(email);
 
 		if (!isExistingUser) {
-			// return res.status(400).json({message:"Invalid email or password"})
-
 			throw new BadRequestError("Invalid email or password");
 		}
 
 		if (isExistingUser.userType !== "admin") throw new BadRequestError("Invalid Admin");
-
 
 		// check password is correct
 		const isSamePassword = password === isExistingUser.password;

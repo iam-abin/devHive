@@ -22,8 +22,6 @@ export = (dependencies: DependenciesData) => {
 			amount,
 		);
 		console.log("in  paymentCreated controller 2: ", paymentCreated);
-		// const paymentCreated = new Payment({})
-
 
 		const paymentCreatedEvent = new PremiumPaymentDonePublisher(kafkaClient);
 		

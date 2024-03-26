@@ -29,10 +29,6 @@ export = (dependencies: any) => {
 		palmentPlanNamesArray.forEach((paymentPlan: string) => {
 			arrays[paymentPlan] = new Array(12).fill(0);
 		});
-		// let obj: any = {}
-		// obj.name = paymentPlans[i].name
-		// obj.data = palmentPlanNamesArray.push(paymentPlans[i].name);
-
 		console.log(arrays); // Output: { premium: [], gold: [] }
 		
 		for(let payment of monthlyPayments){
@@ -43,11 +39,6 @@ export = (dependencies: any) => {
 			"inside get dashboard graph details usecase ",
 			monthlyPayments
 		);
-		// console.log(
-		// 	"inside get dashboard graph details paymentPlans usecase ",
-		// 	palmentPlanNamesSet
-		// );
-
 		console.log(
 			"inside get dashboard graph details paymentPlans usecase array of Objects ",
 			arrays

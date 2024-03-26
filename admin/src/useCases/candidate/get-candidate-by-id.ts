@@ -6,8 +6,6 @@ export = (dependencies: any) => {
 	}
 
 	const execute = (userId: string) => {
-		console.log("inside get candidate profile by id repo, " ,userId);
-		
 		return candidateRepository.getById(userId);
 	};
 

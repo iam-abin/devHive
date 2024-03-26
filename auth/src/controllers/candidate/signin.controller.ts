@@ -22,13 +22,8 @@ export = (dependencies: DependenciesData) => {
 		).execute(email);
 
 		if (!isExistingUser) {
-			// return res.status(400).json({message:"Invalid email or password"})
-
 			throw new BadRequestError("Invalid email or password");
 		}
-
-
-	
 
 		// check password is correct
 		const isSamePassword = await comparePassword(
@@ -37,20 +32,14 @@ export = (dependencies: DependenciesData) => {
 		);
 
 		if (!isSamePassword) {
-			// return res.status(400).json({message:"Invalid email or passwordd"})
-
 			throw new BadRequestError("Invalid email or passwordd");
 		}
 
 		if (isExistingUser.userType !== "candidate") {
-			// return res.status(400).json({message:"Invalid email or password"})
-
 			throw new BadRequestError("Invalid Candidate");
 		}
 
 		if (!isExistingUser.isActive) {
-			// return res.status(400).json({message:"Invalid email or passwordd"})
-
 			throw new BadRequestError("This is a blocked user");
 		}
 
