@@ -20,10 +20,7 @@ const PaymentSuccessFul: React.FC = () => {
 			let candidateProfileData = await candidateGetProfileApi(
 				candidateData?.id
 			);
-			console.log(
-				"candidateProfileData to store to redux ",
-				candidateProfileData.data
-			);
+			
 			dispatch(setCandidateProfileDetails(candidateProfileData?.data));
 		})();
 	}, []);

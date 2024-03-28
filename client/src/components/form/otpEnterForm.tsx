@@ -28,7 +28,6 @@ const OtpEnterForm: React.FC<OtpFromSignupProps> = ({ email, phone, handleSubmit
           return;
         }
     
-        console.log('Submitted OTP:', values.otp);
         handleSubmit(values.otp)
 
       } catch (error: any) {

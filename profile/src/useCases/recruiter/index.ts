@@ -1,4 +1,4 @@
-import createRecruiterProfileUseCase from "./create-profile";
+// import createRecruiterProfileUseCase from "./create-profile";
 import updateRecruiterProfileUseCase from "./update-profile";
 import getRecruiterProfileByUserIdUseCase from "./get-profile-by-recruiter-id";
 import getRecruiterProfileByEmailUseCase from "./get-profile-by-email";
@@ -9,7 +9,7 @@ import getAllCandidatesProfilesUseCase from "./get-all-candidates-profiles";
 import getNumberofCandidatesProfilesUseCase from "./get-numberof-candidates-profiles";
 
 export {
-	createRecruiterProfileUseCase,
+	// createRecruiterProfileUseCase,
 	updateRecruiterProfileUseCase,
 	getRecruiterProfileByUserIdUseCase,
 	getRecruiterProfileByEmailUseCase,

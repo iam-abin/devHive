@@ -23,8 +23,6 @@ function ForgotResetPasswordForm({handleSubmit}:{handleSubmit: any}) {
     initialValues={initialValues}
     validationSchema={passwordResetSchema}
     onSubmit={(values) => {
-      console.log(values);
-
       if (!values) {
         console.error('Form values are undefined.');
         return;

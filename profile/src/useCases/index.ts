@@ -11,7 +11,7 @@ import {
 } from "./candidate";
 
 import {
-	createRecruiterProfileUseCase,
+	// createRecruiterProfileUseCase,
 	updateRecruiterProfileUseCase,
 	getRecruiterProfileByUserIdUseCase,
 	getRecruiterProfileByEmailUseCase,
@@ -34,7 +34,7 @@ export default {
 	updateSkillsUseCase,
 	updatePreferredJobsUseCase,
 
-	createRecruiterProfileUseCase,
+	// createRecruiterProfileUseCase,
 	updateRecruiterProfileUseCase,
 	getRecruiterProfileByUserIdUseCase,
 	getRecruiterProfileByEmailUseCase,

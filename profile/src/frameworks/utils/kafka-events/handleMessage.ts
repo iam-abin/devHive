@@ -9,20 +9,16 @@ import companyProfileRepository from "../../repository/mongo/company-profile.rep
 
 export const handleMessage = (data: any, topic: string, message: any) => {
 	switch (topic) {
-		case "USER-CREATED-TOPIC":
-			console.log("admin handleMessage createUserTopic", data);
 
+		case "USER-CREATED-TOPIC":
 			if (data.userType === "candidate") {
 				candidateProfileRepository.createCandidateProfile(data);
 			} else if (data.userType === "recruiter") {
 				recruiterProfileRepository.createRecruiterProfile(data);
 			}
-
 			break;
 
-		case "USER-UPDATED-TOPIC":
-			console.log("admin handleMessage UpdateUserTopic", data);
-
+		case "USER-UPDATED-TOPIC": 
 			if (data.userType === "candidate") {
 				candidateProfileRepository.updateCandidateProfile(
 					data.userId,
@@ -34,16 +30,10 @@ export const handleMessage = (data: any, topic: string, message: any) => {
 					data
 				);
 			}
-			//  else {
-			// 	companyProfileRepository.createCompanyProfile(data);
-			// }
-
 			break;
 
 		case "PAYMENT-CREATED-TOPIC":
-			console.log("handleMessage payment premium topic data", data);
 			candidateProfileRepository.premiumPaymentDone(data);
-
 			break;
 			
 		default:

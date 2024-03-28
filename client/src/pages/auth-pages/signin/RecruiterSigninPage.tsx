@@ -23,33 +23,16 @@ function RecruiterSigninPage() {
 		(state: RootState) => state.loading.isLoading
 	);
 
-	// const isLoggedIn = useSelector((state: RootState) => {
-	// 	return state.recruiterAuth.recruiterLoggedIn;
-	// });
-
-	// useEffect(() => {
-	// 	console.log("recruiter is logged in", isLoggedIn);
-
-	// 	if (isLoggedIn) {
-	// 		navigate("/recruiter");
-	// 	}
-	// }, []);
-
-	console.log("hi recruiter signin");
-	
 	const handleSubmit = async (userData: any) => {
 		try {
 			// dispatch(setLoading());
 			const response = await recruiterSigninApi(userData);
-			console.log("hiiii", response);
-			console.log("hiiii", response.data);
-
 			dispatch(setRecruiter(response));
 			
 			notify(response.message, "success");
 			navigate("/recruiter");
 		} catch (error: any) {
-			console.log("in signin form error", error);
+			console.error("in signin form error", error);
 			notify(error.response.data.errors[0].message, "error");
 		}finally {
 			// dispatch(setLoaded());
@@ -76,7 +59,6 @@ function RecruiterSigninPage() {
 				initialValues={initialSigninValues}
 				validationSchema={signInSchema}
 				onSubmit={(values) => {
-					console.log(values);
 					handleSubmit(values);
 				}}
 			>

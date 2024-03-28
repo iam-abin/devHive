@@ -28,27 +28,19 @@ function CandidateSignupPage() {
 	const isLoading = useSelector(
 		(state: RootState) => state.loading.isLoading
 	);
-
-	console.log("hi candidate signup");
-
 	const handleSubmit = async (userData: any) => {
 		try {
 			dispatch(setLoading());
 			const response = await candidateSignupApi(userData);
-
-			console.log("Hello", response);
 			Swal.fire({
 				text: response?.message || "Email sendedddd",
 				confirmButtonText: "ok",
 			}).then((res) => {
-				console.log(res);
-
 				if (res) {
 					navigate(`/candidate/otpSignupCandidate/${userData.email}`);
 				}
 			});
 		} catch (error: any) {
-			console.log("in signup form error", error);
 			notify(error.response.data.errors[0].message, "error");
 		} finally {
 			dispatch(setLoaded());
@@ -67,7 +59,6 @@ function CandidateSignupPage() {
 					initialValues={initialSignupValues}
 					validationSchema={signUpSchema}
 					onSubmit={(values) => {
-						console.log(values);
 						handleSubmit(values);
 					}}
 				>

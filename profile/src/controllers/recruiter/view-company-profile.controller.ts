@@ -7,13 +7,9 @@ export = (dependencies: DependenciesData)=>{
 
     return async (req: Request, res: Response)=>{
         const {id} = req.params;
-        console.log("in company view profile controller id: ",id);
         
         const company = await getCompanyProfileByRecruiterUseCase(dependencies).execute(id);
-        console.log("in canidiare view profile controller company: ",company);
-
-
-
+        
         res.status(200).json({message: "company data", data: company })
     };
 

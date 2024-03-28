@@ -19,24 +19,15 @@ const AdminDashBoard: React.FC = () => {
 	useEffect(() => {
 		(async () => {
 			const data = await getAllCardsDetailsApi();
-			const graphData = await getGraphDataApi()
-			console.log("LLLLLLLLLL response ", data.data);
-			console.log("PPPPPPPPPP response ", graphData.data);
-
+			const graphData = await getGraphDataApi();
 			if (data && data.data) {
-				const { candidateCount, recruiterCount, jobCount } = data.data;
-				console.log("Candidate Count:", candidateCount);
-				console.log("Recruiter Count:", recruiterCount);
-				console.log("Job Count:", jobCount);
-
+				// const { candidateCount, recruiterCount, jobCount } = data.data;
+			
 				// Now you can set the state or perform any other operations with the counts
 				setData({ ...data.data });
 			}
 
 			if (graphData && graphData.data) {
-				
-				console.log("graphData is  :", graphData);
-
 				// Now you can set the state or perform any other operations with the counts
 				setGraphDataState(graphData.data);
 			}

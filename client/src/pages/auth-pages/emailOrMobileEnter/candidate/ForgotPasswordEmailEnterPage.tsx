@@ -39,22 +39,16 @@ function ForgotPasswordEmailEnterPage() {
 
 	const handleSubmit = async (values: any) => {
 		try {
-			console.log("Email submitted:", values.email);
-
 			dispatch(setLoading());
 			const response = await forgotPasswordEmailCandidateApi(
 				values.email
 			);
-			console.log("hiiii", response);
-
 			Swal.fire({
 				text:
 					response?.message ||
 					`Otp sendeddd to email ${values.email}`,
 				confirmButtonText: "ok",
 			}).then((res) => {
-				console.log(res);
-
 				if (res) {
 					navigate(`/candidate/forgotPasswordOtp/${values.email}`);
 				}

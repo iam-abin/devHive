@@ -6,7 +6,6 @@ import { RootState } from "../../redux/reducer/reducer";
 
 import { useSelector } from "react-redux";
 import { loadStripe } from "@stripe/stripe-js";
-import { getAllMembershipPlansApi } from "../../axios/apiMethods/premium-plans-service/admin";
 import PaymentPlanCard from "../../components/cards/PaymentPlanCard";
 import { getAllMembershipPlansByCandidateApi } from "../../axios/apiMethods/premium-plans-service/candidate";
 
@@ -20,11 +19,7 @@ const PaymentPlans: React.FC = () => {
 	const candidateProfileData: any = useSelector(
 		(state: RootState) => state.candidateProfile.candidateProfile
 	);
-	console.log(
-		"candidateProfileData?.isPremiumUser",
-		candidateProfileData?.isPremiumUser
-	);
-
+	
 	if (!import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY) {
 		throw new Error("VITE_STRIPE_PUBLISHABLE_KEY must be defined");
 	}
@@ -33,10 +28,7 @@ const PaymentPlans: React.FC = () => {
 		(async () => {
 			try {
 				const recruiters = await getAllMembershipPlansByCandidateApi();
-				console.log(
-					"in useEffect getAllMembershipPlansApi()",
-					recruiters.data
-				);
+				
 				setMembershipPlansData(recruiters.data);
 			} catch (error: any) {
 				console.error(error);
@@ -48,31 +40,25 @@ const PaymentPlans: React.FC = () => {
 
 	// payment integration
 	const makePayment = async (membershipPlanId: string, amount: number) => {
-		// event.preventDefault();
-		console.log(
-			"payment clicked publish key",
-			import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY
-		);
-
+		
 		try {
 			const stripePromise = await loadStripe(
 				import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY
 			);
-
-			console.log("payment stripe", stripePromise);
+			
 			const paymentData = {
 				userId: candidateData?.id,
 				amount,
 				membershipPlanId,
 			};
-			console.log("payment data", paymentData);
+			
 			const payment = await createPaymentApi(paymentData);
-			console.log("payment done ", payment);
+			
 			await stripePromise?.redirectToCheckout({
 				sessionId: payment?.data?.stripeId,
 			});
 		} catch (error) {
-			console.log(error);
+			console.error(error);
 		}
 	};
 

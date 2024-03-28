@@ -5,13 +5,9 @@ export = (dependencies: DependenciesData) => {
 		repositories: { jobApplicationRepository },
 	} = dependencies;
 
-	if (!jobApplicationRepository) {
-		throw new Error("jobApplicationRepository should exist in dependencies");
-	}
+	if (!jobApplicationRepository) throw new Error("jobApplicationRepository should exist in dependencies");
 
 	const execute =(data: object) => {
-        console.log("in applyjob usecase",data);
-        
 		return jobApplicationRepository.applyJob(data);
 	};
 

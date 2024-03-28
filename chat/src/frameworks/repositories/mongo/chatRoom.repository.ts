@@ -4,9 +4,9 @@ const { MessageModel, ChatRoomModel } = schemas;
 
 export = {
 	createChatRoom: async (chatRoomData: any) => {
-		const chatRoom = ChatRoomModel.buildChatRoom(chatRoomData);
-		console.log("in createChatRoom repository");
 
+		const chatRoom = ChatRoomModel.buildChatRoom(chatRoomData);
+		
 		return await chatRoom.save();
 	},
 
@@ -36,8 +36,6 @@ export = {
 			users: { $elemMatch: { $eq: userId } },
 		}).sort({ updatedAt: -1 }).populate('users').lean();
 		
-		console.log("in getAllChatRoomsByUserId repository ", chatRooms);
-
 		return chatRooms;
 	},
 };

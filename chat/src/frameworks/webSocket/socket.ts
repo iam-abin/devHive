@@ -30,8 +30,7 @@ const removeUser = (socketId: string) => {
 };
 
 export const setupSocketIO = (httpServer: http.Server) => {
-	console.log("inside socket config ------------------------");
-
+	
 	const io = new Server(httpServer, {
 		path: "/api/v1/chat/socket.io",
 		cors: {
@@ -59,8 +58,7 @@ export const onSocketConnection = (io: Server, socket: Socket) => {
 			try {
 			
 				const senderData = await userRepository.findUserById(senderId);
-				console.log("recepientId ", recepientId);
-
+				
 				const recipientData = await userRepository.findUserById(
 					recepientId
 				);
@@ -69,35 +67,24 @@ export const onSocketConnection = (io: Server, socket: Socket) => {
 					throw new BadRequestError("sender is not in user db");
 				if (!recipientData)
 					throw new BadRequestError("recipient is not in user db");
-
-				console.log("before checking room");
-				// // ==================================================
-
-				// // to solve a bug that if there is no chatrooms found then creating chatroom with current user as users in the array
-				// if(senderId === recepientId) return 
-
-				// // ==================================================
-
+				
 				const room = await chatRoomRepository.getAChatRoom(
 					senderId,
 					recepientId
 				);
-				console.log("getAchatroom room", room);
-
+				
 				if (room.length === 0 && senderId !== recepientId) {
 					// no room so creating room
 					let chatRoomData = {
 						users: [senderId, recepientId],
 					};
 					const chatRoom = new ChatRoom(chatRoomData);
-					console.log("chatRoom after entity in socket");
-
+					
 					await chatRoomRepository.createChatRoom(chatRoom);
 				}
 
 				if (room.length > 0) {
-					console.log(room);
-					console.log("room already there");
+					console.log("this chatroom is already there ", room);
 				}
 
 				const user: any = getUser(senderId);
@@ -123,10 +110,7 @@ export const onSocketConnection = (io: Server, socket: Socket) => {
 
 		try {
 			const { senderId, roomId, textMessage } = data;
-			console.log("senderIddddd", senderId);
-			console.log("roomIddddddd", roomId);
-			console.log("textMessageeeee", textMessage);
-
+			
 			if (!textMessage)
 				throw new BadRequestError("please provide message");
 
@@ -138,7 +122,7 @@ export const onSocketConnection = (io: Server, socket: Socket) => {
 			const room = await chatRoomRepository.getAChatRoomById(roomId);
 
 			if (room) {
-				console.log("room already thereeeee ", room);
+				console.log("this chatroom is already there : ", room);
 			}
 
 			const result = await messageRepository.createMessage({
@@ -146,18 +130,12 @@ export const onSocketConnection = (io: Server, socket: Socket) => {
 				roomId,
 				textMessage,
 			});
-
-			console.log("before chatroom repo)))))))))))");
-
+			
 			let chatroomResult = await chatRoomRepository.updateAChatRoom(
 				roomId,
 				textMessage
 			);
-			console.log(
-				"after chatroom repo))))))))))) chatroomResult",
-				chatroomResult
-			);
-
+			
 			const user1: any = getUser(senderId);
 
 			const recipient: any = room?.users.filter(
@@ -170,9 +148,7 @@ export const onSocketConnection = (io: Server, socket: Socket) => {
 
 			if (!recipientData)
 				throw new BadRequestError("recipient is not in user db");
-
-			console.log("recepeint from room ", recipient);
-
+			
 			const user2: any = getUser(recipient[0].toString());
 
 			const message = {
@@ -181,58 +157,28 @@ export const onSocketConnection = (io: Server, socket: Socket) => {
 				recipient: recipient.toString(),
 			};
 
-
 			const notification = await notificationRepository.createNotification({	
 				senderId,
 				targetUserId: recipient.toString(),
 				message: textMessage,
 			})
-
-
-			// ================================
-
-			// it is working when the recepient is not online or active
-			// if(!user2){
-
-			// 	const user: any = getUser(senderId);
-			// 	const allChatRooms = await chatRoomRepository.getAllChatRoomsByUserId(senderId);
-	
-			// 	io.to(user.socketId).emit("chatNotification", allChatRooms);
-			// }
-
-
-			// ================================
-
-			console.log("after recepeint from room ", message);
-
-			if (user1?.socketId) {
-				console.log(
-					"inside user1 emit user1?.socketId",
-					user1?.socketId
-				);
-				console.log("inside user1 emit receiveMessage", message.result);
-
-				io.to(user1.socketId).emit("receiveMessage", message);
-			}
+			
+			if (user1?.socketId) io.to(user1.socketId).emit("receiveMessage", message);
 
 			if (user2?.socketId) {
-				console.log("inside user2 emit receiveMessage");
-
 				io.to(user2.socketId).emit("receiveMessage", message);
 				io.to(user2.socketId).emit("chatNotification", notification);
 			}
+
 		} catch (error) {
 			console.error("Error processing message:", error);
 		}
 	});
 
 	socket.on("markAsRead", async (messageId: string) => {
-		console.log("---------------in socket read messageId ", messageId);
-
+		
 		const result = await messageRepository.setReadMessage(messageId);
-		// await Message.updateOne({ _id: messageId }, { read: true });
-		console.log("in socket read result ", result);
-
+		
 		io.emit("messageRead", messageId);
 	});
 

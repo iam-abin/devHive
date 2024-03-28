@@ -91,12 +91,7 @@ const CandidateProfilePage: React.FC = () => {
 					candidateId ?? id
 				);
 			}
-
-			console.log(
-				"/////////////////////candidateProfile ",
-				candidateProfile
-			);
-
+			
 			setCandidateProfileData(candidateProfile.data);
 			dispatch(setCandidateProfileDetails(candidateProfile?.data));
 			setSkills([...candidateProfile?.data.keySkills]);
@@ -110,11 +105,7 @@ const CandidateProfilePage: React.FC = () => {
 			// formData.append("file", selectedFile);
 			if (selectedFile) {
 				// Perform the upload action here
-				console.log("in handleUpload selectedFile", selectedFile);
-
-				console.log("File uploaded:", selectedFile);
-				console.log("File uploaded:", selectedFile.name);
-				// console.log("File uploaded fortData:", formData);
+				
 				const resumeRef = ref(
 					myFirebaseStorage,
 					`devHiveResume/${uuidv4()}`
@@ -125,26 +116,14 @@ const CandidateProfilePage: React.FC = () => {
 					selectedFile
 				);
 				const downloadURL = await getDownloadURL(uploadResume.ref);
-
-				console.log("After upload //// ", uploadResume);
-				console.log("//// Download URL: //// ", downloadURL);
-
+				
 				const response = await uploadCandidateResumeProfileApi(
 					candidateData.id,
 					{ filename: selectedFile.name, url: downloadURL }
 				);
-				console.log("resume upload response", response);
+				
 				if (response.data) {
-					// setCandidateProfileData({
-					// 	...candidateProfileData,
-					// 	resume: response.data.resume,
-					// });
-
-					// setCandidateProfileData({
-					// 	...candidateProfileData,
-					// 	resume: updatedCandidate.data.resume,
-					// });
-
+					
 					setCandidateProfileData({
 						...candidateProfileData,
 						resume: response.data.resume,
@@ -159,7 +138,7 @@ const CandidateProfilePage: React.FC = () => {
 				}
 			}
 		} catch (error: any) {
-			// console.log("drrer",error);
+			
 			// hotToastMessage("file is size is > 1mb", "error");
 			hotToastMessage(error.response.data.errors[0].message, "error");
 		} finally {
@@ -168,8 +147,7 @@ const CandidateProfilePage: React.FC = () => {
 	};
 
 	const handleResumeDelete = () => {
-		console.log("resume delete click");
-
+		
 		Swal.fire({
 			title: `Do you want to delete this resume`,
 			text: "Are you sure!",
@@ -183,9 +161,7 @@ const CandidateProfilePage: React.FC = () => {
 				const updatedCandidate = await deleteResumeApi(
 					candidateData.id
 				);
-
-				console.log("resume delete ");
-
+				
 				if (updatedCandidate) {
 					setCandidateProfileData({
 						...candidateProfileData,
@@ -203,7 +179,7 @@ const CandidateProfilePage: React.FC = () => {
 				candidateData.id,
 				preferredJobs
 			);
-			console.log("preferredJobs update response", response);
+			
 			if (response.data) {
 				hotToastMessage(response.message, "success");
 				setAddSkillRerender(addSkillRerender + 1);
@@ -222,7 +198,7 @@ const CandidateProfilePage: React.FC = () => {
 				candidateData.id,
 				skills
 			);
-			console.log("skills update response", response);
+			
 			if (response.data) {
 				hotToastMessage(response.message, "success");
 				setAddSkillRerender(addSkillRerender + 1);
@@ -239,14 +215,13 @@ const CandidateProfilePage: React.FC = () => {
 		try {
 			const formData = new FormData();
 			formData.append("file", selectedFile);
-
-			console.log("File uploaded:", selectedFile);
+			
 			setImgLoading(true);
 			const response = await uploadCandidateImageProfileApi(
 				candidateData.id,
 				formData
 			);
-			console.log("resume image upload response", response);
+			
 			if (response.data) {
 				hotToastMessage(response.message, "success");
 				setCandidateProfileData({
@@ -268,17 +243,13 @@ const CandidateProfilePage: React.FC = () => {
 
 	const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
 		const files = event.target.files;
-
-		console.log("in file upload event.target.files ", files);
-
+		
 		if (files && files.length > 0) {
 			const selected = files[0];
 			setSelectedFile(selected);
 		}
 	};
-
-	console.log("7777777777777777777777", candidateProfileData);
-
+	
 	return (
 		<div>
 			{!isRecruiterUrl && <TopNavBarCandidate />}
@@ -548,10 +519,6 @@ const CandidateProfilePage: React.FC = () => {
 														viewBox="0 0 24 24"
 														className="inline-block w-4 h-4 stroke-current hover: cursor-pointer "
 														onClick={() => {
-															console.log(
-																"X clicked"
-															);
-
 															let skillsAfterRemove =
 																skills.filter(
 																	(
@@ -685,10 +652,7 @@ const CandidateProfilePage: React.FC = () => {
 															viewBox="0 0 24 24"
 															className="inline-block w-4 h-4 stroke-current hover: cursor-pointer "
 															onClick={() => {
-																console.log(
-																	"X clicked"
-																);
-
+																
 																let preferredJobsAfterRemove =
 																	preferredJobs.filter(
 																		(

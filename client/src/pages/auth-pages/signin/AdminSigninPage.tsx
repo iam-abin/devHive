@@ -23,15 +23,11 @@ function AdminSigninPage() {
     const handleSubmit = async (userData: any) => {
         try {
             const response = await adminSigninApi(userData);
-            console.log("hiiii", response);
             dispatch(setAdmin(response));
 
             notify(response.message, "success");
             navigate("/admin");
         } catch (error: any) {
-            console.log("in signin form error", error);
-            console.log("in signin form errorrrrr", error.response.data.errors[0].message);
-
             notify(error.response.data.errors[0].message, "error");
         }
     };
@@ -41,7 +37,6 @@ function AdminSigninPage() {
     });
 
     useEffect(() => {
-        console.log("admin is logged in", adminData);
 
         if (adminData) {
             navigate("/");

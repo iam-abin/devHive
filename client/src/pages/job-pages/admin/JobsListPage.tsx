@@ -35,8 +35,7 @@ function JobsManagementPage() {
 	useEffect(() => {
 		(async () => {
 			try {
-				const jobs = await getAllJobsAdminApi();
-				console.log("in useEffect", jobs);
+				const jobs = await getAllJobsAdminApi(); 
 				setJobsData(jobs.data);
 			} catch (error: any) {
 				console.error(error);
@@ -44,13 +43,11 @@ function JobsManagementPage() {
 		})();
 	}, []);
 
-    const viewJobDetails = async (jobId: string) => {
-		console.log("in viewJobDetails fn ", jobId);
+    const viewJobDetails = async (jobId: string) => { 
 		navigate(`/admin/job/viewJobDetails/${jobId}`);
 	};
 
-	const handleBlockUnblock = async (jobId: string, isActive: boolean) => {
-		console.log("isActive ",isActive);
+	const handleBlockUnblock = async (jobId: string, isActive: boolean) => { 
 		
 		Swal.fire({
 			title: `Do you want to ${

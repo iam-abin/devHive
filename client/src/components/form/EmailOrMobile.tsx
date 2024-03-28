@@ -16,7 +16,6 @@ const EmailOrMobile: React.FC<EmailOrMobileProps> = ({
 }) => {
 	const locationUrl = useLocation();
 
-	console.log(location);
 	// Check if the path contains the word "otpEmail"
 	const isEmailEnterPage = locationUrl.pathname.includes(
 		"forgotPasswordEmail"
@@ -32,8 +31,6 @@ const EmailOrMobile: React.FC<EmailOrMobileProps> = ({
 					console.error("Form values are undefined.");
 					return;
 				}
-
-				console.log("Email submitted values:", values);
 				handleSubmit(values);
 			}}
 		>

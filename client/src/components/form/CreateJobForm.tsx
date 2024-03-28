@@ -23,7 +23,6 @@ const CreateJobForm: React.FC<{
 	handleSubmit: any;
 	recruiterData: any;
 }> = ({ initialJobValues, handleSubmit, recruiterData }) => {
-	console.log(":::::::::::::: initialJobValues ", initialJobValues);
 	const today = new Date().toISOString().split("T")[0];
 
 	const jobCreationSchema = yup.object().shape({
@@ -38,7 +37,6 @@ const CreateJobForm: React.FC<{
 			validationSchema={jobCreationSchema}
 			onSubmit={(values) => {
 				values.recruiterId = recruiterData?.id;
-				console.log(values);
 				handleSubmit(values);
 			}}
 		>

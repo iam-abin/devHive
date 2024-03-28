@@ -8,7 +8,6 @@ export = {
 	 // these fn's are returning a promise as async so we can defile return type as Promise<CandidateDataInterface>
 
 	 createCompany: async (companyData: any) => {
-		console.log("inside createCompany fn in admin service", companyData);
 		
 		// const {name, email, phone, userType, isActive} = companyData
 		// const companyObject = new CompanyProfileModel({name, email, phone, userType, isActive});
@@ -18,9 +17,8 @@ export = {
 
 	blockUnblock: async (companyId: string) => {
 		const company = await CompanyProfileModel.findById(companyId);
-		if (!company) {
-			throw new Error("Company not found");
-		}
+		
+		if (!company) throw new Error("Company not found");
 
 		company.isActive = !company.isActive;
 

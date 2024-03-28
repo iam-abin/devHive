@@ -37,8 +37,7 @@ interface ChatRoomModel extends mongoose.Model<ChatRoomDocument> {
 }
 
 // 5.In Mongoose, you can also add custom functions to a model using statics.
-chatRoomSchema.statics.buildChatRoom = (attributes: ChatRoomAttributes) => {
-	console.log("in build chatroom attributes ", attributes);
+chatRoomSchema.statics.buildChatRoom = (attributes: ChatRoomAttributes) => { 
 	
 	return new ChatRoomModel({
 	  users: attributes.users,

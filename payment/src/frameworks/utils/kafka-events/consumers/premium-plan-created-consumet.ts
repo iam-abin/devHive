@@ -13,9 +13,7 @@ export class MembershipPlanCreatedEventConsumer extends KafkaConsumer<MEMBERSHIP
     }
 
     async onMessage(data: MEMBERSHIP_PLAN_CREATED_EVENT['data'], topic: string, message: KafkaMessage): Promise<void> {
-
-        console.log("MembershipPlanCreatedEvent consumer admin",data);
-			
+        
 			// dont need to check userType as every users are stored in one collection 
 			handleMessage(data, topic, message )
         

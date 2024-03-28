@@ -43,9 +43,6 @@ const TableComponent: React.FC<TablePropsInterface> = ({ columns, data }) => {
 		setFilteredData(filtered);
 	  }, [data, searchText]);
 
-	console.log("filtered data isssssssssssssssssssssssssssssssss", filteredData);
-	
-
 	const customStyles = {
 		headRow: {
 			style: {

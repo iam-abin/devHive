@@ -19,8 +19,7 @@ const recruiterDataSlice = createSlice({
 	reducers: {
 		setRecruiter: (state, action: PayloadAction<Recruiter>) => {
 			state.data = action.payload?.data;
-			console.log("in setrecruiter reducer payload", action.payload);
-
+			
 			localStorage.setItem(
 				recruiterAccessToken,
 				JSON.stringify(action.payload?.recruiterAccessToken)

@@ -4,10 +4,9 @@ const { MessageModel, ChatRoomModel } = schemas;
 
 export = {
 	createMessage: async (message: any) => {
-		console.log("message inside create message ", message);
+		
 		const chatMessage = MessageModel.buildMessage(message);
-
-		console.log("chatMessage inside create message ", chatMessage);
+		
 		return await chatMessage.save();
 	},
 

@@ -11,8 +11,6 @@ const JobAppliedCard: React.FC<{ job: any; handleViewJob: any }> = ({
 }) => {
 	const date1 = dayjs(Date.now());
 	const diffInDays = date1.diff(job.createdAt, "day");
-	console.log("in applied jobs card ", job);
-
 	return (
 		<div className="mx-4 md:mx-40 pb-4" key={job.id}>
 			<div className="flex flex-col sm:flex-row justify-between items-center sm:px-6 py-4 bg-zinc-200 rounded-md border border-black shadow-lg hover:border-blue-500 hover:translate-y-1 hover:scale-103">

@@ -13,16 +13,12 @@ export = (dependencies: DependenciesData) => {
 
 		const { membershipPlanId, amount } = req.body;
 		let candidateId = req.currentUserCandidate!.id;
-
-		console.log("in  paymentCreated controller 1: membershipPlanId", amount, membershipPlanId);
 		
-
 		const paymentCreated = await createPaymentUseCase(dependencies).execute(
             candidateId,
 			amount,
 		);
-		console.log("in  paymentCreated controller 2: ", paymentCreated);
-
+		
 		const paymentCreatedEvent = new PremiumPaymentDonePublisher(kafkaClient);
 		
 		await paymentCreatedEvent.publish({

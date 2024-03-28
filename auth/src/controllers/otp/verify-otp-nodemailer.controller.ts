@@ -14,7 +14,7 @@ export = (dependencies: DependenciesData) => {
 
 	return async (req: Request, res: Response) => {
 		const { email, otp } = req.body;
-		console.log("email ",email,"otp ",otp);
+		
 		let parsedOtp;
 		if(typeof otp == "string"){
 			parsedOtp = parseInt(otp)
@@ -26,11 +26,8 @@ export = (dependencies: DependenciesData) => {
 
 
 		const user = await getUserByEmailUseCase(dependencies).execute(email);
-		if (!user) {
-			throw new BadRequestError("Invalid email");
-		}
-        console.log(user,"fetched user");
-		
+		if (!user) throw new BadRequestError("Invalid email");
+			
 		const checkOtp = await checkEmailVerificationOtpUseCase(
 			dependencies
 		).execute({ otp: parsedOtp, email });
@@ -41,14 +38,7 @@ export = (dependencies: DependenciesData) => {
 				message: "invalid otp"
 			});
 		}
-
-	
-
-        console.log("email verified");
-        
-		// const user = await getUserByEmailUseCase(dependencies).execute(checkToken.email);
-
-
+		
 		res.status(200).json({
 			message: "user is verified successfully",
 			data: user,

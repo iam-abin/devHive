@@ -126,7 +126,7 @@ interface CandidateProfileModel extends mongoose.Model<CandidateDocument> {
 
 // 5.In Mongoose, you can also add custom functions to a model using statics.
 candidateSchema.statics.buildCandidate = (attributes: CandidateAttributes) => {
-	console.log("inside build candidate ", attributes);
+	
 	// const userId =  new mongoose.Types.ObjectId(attributes.userId);
 	let userId: String | undefined = attributes.userId;
 	delete attributes.userId;

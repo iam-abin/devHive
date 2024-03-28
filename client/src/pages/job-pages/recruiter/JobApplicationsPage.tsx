@@ -43,10 +43,7 @@ function JobApplicationsPage() {
 				const response = await getAllJobsApplicationsForRecruiterApi(
 					recruiterData?.id
 				);
-				console.log(
-					"in useEffect getAllJobsApplicationsForRecruiterApi",
-					response
-				);
+				
 				setJobApplicationsData(response.data);
 			} catch (error: any) {
 				console.error(error);
@@ -55,7 +52,6 @@ function JobApplicationsPage() {
 	}, []);
 
 	const viewApplicationDetails = async (jobId: string) => {
-		console.log("id handle view ", jobId);
 		// dispatch(setRecruiterId(id))
 		navigate(`/recruiter/application-details/${jobId}`);
 	};

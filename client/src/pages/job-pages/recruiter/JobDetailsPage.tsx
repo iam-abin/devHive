@@ -18,8 +18,7 @@ function JobDetailsPage() {
 			try {
 				if (jobId) {
 					const job = await getAJobApi(jobId);
-					console.log("in job details page job is: ", job);
-
+					
 					setJobDetails(job.data);
 				}
 			} catch (error) {
@@ -32,12 +31,12 @@ function JobDetailsPage() {
 	}, [jobId]);
 
 	const handleEditJob = async (id: string) => {
-		console.log("id handle edit ", id);
+		
 		navigate(`/recruiter/edit-job-details/${id}`);
 	};
 
 	const handleChangeJobCloseStatus = async (jobId: string) => {
-		console.log("jobId handle edit ", jobId);
+		
 		try {
 			if (jobId) {
 				Swal.fire({
@@ -56,8 +55,7 @@ function JobDetailsPage() {
 					if (result.isConfirmed) {
 						const job = await changeJobCloseStatusApi(jobId);
 						if (job) {
-							console.log("in job details page job is: ", job);
-
+							
 							setJobDetails({
 								...jobDetails,
 								isClosed: job.data.isClosed,

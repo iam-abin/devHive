@@ -10,14 +10,11 @@ export = (dependencies: DependenciesData)=>{
 
     return async (req: Request, res: Response)=>{
         const updatedData = req.body;
-        console.log("in recruiter update profile controller data: ",updatedData);
         const { id } = req.body
         const existingData = await getCompanyProfileByRecruiterUseCase(dependencies).execute(id);
         
-
         const recruiter = await updateCompanyProfileByRecruiterUseCase(dependencies).execute(existingData, updatedData);
-        console.log("in recruiter update profile controller recruiter: ",recruiter);
-
+        
         const companyProfileUpdatedEvent = new CompanyProfileUpdatedEventPublisher(kafkaClient);
         await companyProfileUpdatedEvent.publish({
             company_name: updatedData?.company_name,

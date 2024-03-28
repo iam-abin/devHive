@@ -39,10 +39,8 @@ function RecruiterProfileEditPage() {
 	useEffect(() => {
 		const fetchProfileDetails = async () => {
 			try {
-				console.log("id is ", id);
 				const profile = await recruiterGetProfileApi(id);
 				setProfileDetails(profile.data);
-				console.log("edit profile data is ", profile.data);
 			} catch (error) {
 				console.error("Error fetching profile details:", error);
 			}

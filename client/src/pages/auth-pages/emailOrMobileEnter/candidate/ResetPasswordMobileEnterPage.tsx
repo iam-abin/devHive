@@ -40,20 +40,15 @@ function ResetPasswordMobileEnterPage() {
 	const handleSubmit = async (values: any) => {
 		try {
 			dispatch(setLoading());
-
-			console.log("Mobile number submitted:", values.mobile);
-
 			const response = await passwordResetMobileCandidateApi(
 				candidateData.email,
 				values.mobile
 			);
-			console.log("hiiii", response);
 
 			Swal.fire({
 				text: response?.message || `Otp sendeddd to mobile number ${values.mobile}`,
 				confirmButtonText: "ok",
 			}).then((res) => {
-				console.log(res);
 
 				if (res) {
 					navigate("/candidate/passwordResetOtp");

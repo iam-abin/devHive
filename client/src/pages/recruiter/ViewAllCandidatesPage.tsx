@@ -30,7 +30,6 @@ function ViewAllCandidatesPage() {
 		(async () => {
 			// dispatch(setLoading());
 			const candidates = await getAllCandidatesProfilesApi(currentPage);
-			console.log("candidates", candidates);
 			setCandidatesData(candidates.data);
 			setpageCount(candidates.totalNumberOfPages);
 			// dispatch(setLoaded());
@@ -40,20 +39,9 @@ function ViewAllCandidatesPage() {
 	const filteredCandidated = candidatesData.filter(
 		(candidate: any) =>
 			candidate.name.toLowerCase().includes(searchTerm.toLowerCase())
-		//  ||
-		// candidate.employment_type
-		// 	.toLowerCase()
-		// 	.includes(searchTerm.toLowerCase()) ||
-		// candidate.company_location.toLowerCase().includes(searchTerm.toLowerCase())
 	);
 
 	const viewProfileDetails = async (candidateId: string) => {
-		console.log(
-			"in view candidate profile details candidate id is:",
-			candidateId
-		);
-
-		console.log("))))))))))in viewProfileDetails fn ", candidateId);
 		navigate(`/recruiter/viewCandidateProfileDetails/${candidateId}`);
 	};
 

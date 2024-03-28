@@ -8,13 +8,14 @@ import Loading from "../components/loading/Loading";
 import NotFound from "../pages/Error/NotFound";
 
 import RecruiterLayout from "../pages/layout/RecruiterLayout";
-import RecruiterDashBoard from "../pages/dashboard/RecruiterDashBoardPage";
-import CandidateProfilePage from "../pages/profile/candidate/CandidateProfilePage";
+
 // import socket from "../config/socket";
 
 
 
 // const RecruiterHomePage = lazy(()=> import("../pages/home/RecruiterHomePage"))
+const RecruiterDashBoard = lazy(()=> import("../pages/dashboard/RecruiterDashBoardPage"))
+const CandidateProfilePage = lazy(()=> import("../pages/profile/candidate/CandidateProfilePage"))
 const RecruiterSignupPage = lazy(()=> import("../pages/auth-pages/signup/RecruiterSignupPage"))
 const LandingPage = lazy(()=> import("../pages/landing/LandingPage"))
 const RecruiterSigninPage = lazy(()=> import("../pages/auth-pages/signin/RecruiterSigninPage"))

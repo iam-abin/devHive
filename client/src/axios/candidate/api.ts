@@ -10,11 +10,6 @@ export const candidateApi: AxiosInstance = axios.create({
 candidateApi.interceptors.request.use(
 	async (config: any) => {
 	  let tokenString = localStorage.getItem(candidateAccessToken);
-	  console.log(
-		"in axios request interceptor localStorage.getItem(candidateAccessToken) is ",
-		tokenString
-	  );
-  
 	  if (tokenString) {
 		// No need to parse if the token is already a string
 		const token = tokenString;

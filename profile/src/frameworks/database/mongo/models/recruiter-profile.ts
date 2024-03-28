@@ -128,16 +128,10 @@ interface RecruiterProfileModel extends mongoose.Model<RecruiterDocument> {
 
 // 5.In Mongoose, you can also add custom functions to a model using statics.
 recruiterSchema.statics.buildRecruiter = (attributes: RecruiterAttributes) => {
-	console.log("inside build candidate ", attributes);
-	// const userId =  new mongoose.Types.ObjectId(attributes.userId);
+	
 	let userId: String | undefined = attributes.userId;
 	delete attributes.userId;
-
-	console.log("--------------------------");
-	console.log("inside recruiter model attributes ", attributes);
-	console.log("--------------------------");
 	
-
 	return new RecruiterProfileModel({ _id: userId, ...attributes });
 };
 

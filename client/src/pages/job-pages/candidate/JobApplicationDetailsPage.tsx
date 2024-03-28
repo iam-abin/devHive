@@ -17,17 +17,12 @@ function JobApplicationDetailsPage() {
 	useEffect(() => {
 		const fetchJobDetails = async () => {
 			try {
-				console.log("job application details useEffect jobApplicationId");
 				
 				if (jobApplicationId) {
 					const jobApplication = await getAnAppliedJobApi(
 						jobApplicationId
 					);
-					console.log(
-						"in job Application details page job is: ",
-						jobApplication
-					);
-
+					
 					setJobApplicationDetails(jobApplication.data);
 				}
 			} catch (error) {

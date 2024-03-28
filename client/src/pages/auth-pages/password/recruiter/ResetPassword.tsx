@@ -18,14 +18,8 @@ const ResetPassword: React.FC = () => {
   const handleSubmit = async (values: any) => {
     try {
 
-      console.log('Submitted password:', values.password);
       dispatch(setLoading());
       const response = await resetPasswordRecruiterApi(recruiterData.id, values.password);
-      console.log('hiiii', response);
-      // if (response.data.data === 'pending') {
-      //   notify(response.data.message, 'error');
-      //   return;
-      // }
       notify(response.message, 'success');
       navigate('/recruiter');
     } catch (error: any) {

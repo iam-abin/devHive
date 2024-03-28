@@ -4,10 +4,9 @@ const { UserModel } = schemas;
 
 export = {
 	createUser: async (userData: any) => {
-		console.log("user repository userData", userData);
-
+		
 		const newUser = UserModel.buildUser(userData);
-		console.log(newUser);
+		
 		return await newUser.save();
 	},
 
@@ -17,21 +16,13 @@ export = {
 	},
 	
 	findUserById: async (userId: string) => {
-		console.log("inside get user by userId repo ", userId , typeof userId);
 		
 		const user = await UserModel.findById(userId);
 		return user;
 	},
 	
-	// filterJob: async (searchText: string,currentUserId: string) => {
-	// 	const filteredUsers = await UserModel.find({"name": {$regex: searchText, $options: 'i'} }).find({_id: {$ne: currentUserId}});
-	// 	return filteredUsers;
-	// },
-
 	getAllUsers: async (skip: number, limit: number): Promise<any[]> => {
 		const users = await UserModel.find()
-		console.log('*********users in getAllUsers chat ***********', users);
-		
 		return users;
 	},
 };

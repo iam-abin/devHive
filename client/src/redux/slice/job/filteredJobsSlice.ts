@@ -22,16 +22,16 @@ const filteredJobsSlice = createSlice({
 	reducers: {
 		setFilteredJobs: (state, action: PayloadAction<any>) => {
 			state.data = action.payload?.data;
-			console.log("in setFilteredJobs reducer payload", action.payload);
 		},
+
 		setTotalNumberOfPages: (state, action: PayloadAction<any>) => {
 			state.totalNumberOfPages = action.payload?.totalNumberOfPages;
-			console.log("in setFilteredJobs reducer payload", action.payload);
 		},
+
 		setCurrentPage: (state, action: PayloadAction<any>) => {
 			state.currentPage = action.payload?.currentPage;
-			console.log("in setFilteredJobs reducer payload", action.payload);
 		},
+		
 		clearFilteredJobs: (state) => {
 			state.data = [];
 		},

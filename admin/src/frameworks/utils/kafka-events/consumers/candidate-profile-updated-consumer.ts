@@ -12,9 +12,7 @@ export class CandidateProfileUpdatedEventConsumer extends KafkaConsumer<CANDIDAT
     }
 
     async onMessage(data: CANDIDATE_PROFILE_UPDATED_EVENT['data'], topic: string, message: KafkaMessage): Promise<void> {
-
-        console.log("CandidateProfileUpdatedTopic consumer admin",data);
-			
+        
 			// dont need to check userType as every users are stored in one collection 
 			handleMessage(data, topic, message )
         

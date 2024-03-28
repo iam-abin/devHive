@@ -6,7 +6,6 @@ export = (dependencies: any) => {
 	}
 
 	const execute = (userId: string) => {
-		console.log(" in getRecruiterById useCase", userId);
 		return recruiterRepository.getById(userId);
 	};
 

@@ -10,10 +10,7 @@ export = (dependencies: DependenciesData)=>{
     return async (req: Request, res: Response)=>{
         const {jobId} = req.params;
         
-
         const isBlocked = await blockUnblockJobUseCase(dependencies).execute(jobId);
-
-        console.log("in bocke unblock controller before message send to kafka", isBlocked);
         
         // to produce a message to kafka topic
         // isBlocked contains user data with 'isActive' value changed

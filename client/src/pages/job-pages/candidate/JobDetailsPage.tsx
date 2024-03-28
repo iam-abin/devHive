@@ -21,8 +21,7 @@ function JobDetailsPage() {
 			try {
 				if (jobId) {
 					const job = await getAJobApi(jobId);
-					console.log("in job details page job is: ", job);
-
+					
 					setJobDetails(job.data);
 				}
 			} catch (error) {
@@ -39,14 +38,13 @@ function JobDetailsPage() {
 		candidateId: string,
 		recruiterId: string
 	) => {
-		console.log("jobId handle apply ", jobId);
+		
 		// navigate("/candidate/edit-job-details");
 		const jobApplicationData = {
 			jobId,
 			candidateId,
 			recruiterId,
 		};
-		console.log("jobApplicationData ", jobApplicationData);
 
 		Swal.fire({
 			title: "Do you want to Apply For this job?",
@@ -62,8 +60,7 @@ function JobDetailsPage() {
 					const response = await candidateApplyJobApi(
 						jobApplicationData
 					);
-					console.log("job apply response", response);
-
+					
 					if (response) {
 						notify("Applied successfully", "success");
 						// navigate("/candidate/signin");
@@ -71,7 +68,7 @@ function JobDetailsPage() {
 				}
 			})
 			.catch((error) => {
-				// console.log(error.response.data.errors[0].message);
+				// console.error(error.response.data.errors[0].message);
 
 				notify(
 					error.response.data.errors[0].message ||

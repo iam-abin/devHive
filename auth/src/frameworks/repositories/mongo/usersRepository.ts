@@ -14,7 +14,10 @@ export = {
 		return await userObject.save();
 	},
 
-	updatePassword: async ({ id, password }: UpdatePasswordInput): Promise<any> => {
+	updatePassword: async ({
+		id,
+		password,
+	}: UpdatePasswordInput): Promise<any> => {
 		const user = await UserModel.findById(id);
 
 		if (!user) {
@@ -28,8 +31,7 @@ export = {
 
 	getByEmail: async (email: string): Promise<any> => {
 		const user = await UserModel.findOne({ email });
-		console.log("getByEmail repo ",user);
-		
+
 		return user;
 	},
 
@@ -40,32 +42,25 @@ export = {
 
 	// "setOtp" using only in forgot password email otp
 	setOtp: async (email: string, otp: any): Promise<any> => {
-		console.log("in set otp");
-
 		const result = await UserModel.findOneAndUpdate(
 			{ email },
 			{ $set: { otp: otp } },
 			{ new: true }
 		);
-		
-		console.log("set result: ", result);
+
 		return result;
 	},
 
 	deleteOtp: async (email: string): Promise<any> => {
-		console.log("in delete otp");
-
+		
 		const result = await UserModel.findOneAndUpdate(
 			{ email },
 			{ $unset: { otp: "" } },
 			{ new: true }
 		);
-		console.log("delete result: ", result);
-
-		if (!result) {
-			throw new Error("User not found");
-		}
-
+		
+		if (!result) throw new Error("User not found");
+			
 		return result;
 	},
 
@@ -79,12 +74,9 @@ export = {
 		return user;
 	},
 
-	
 	updateVerification: async (email: string): Promise<any> => {
 		const user = await UserModel.findOne({ email });
-		if (!user) {
-			throw new Error("User not found");
-		}
+		if (!user) throw new Error("User not found"); 
 
 		user.isVarified = !user.isVarified;
 

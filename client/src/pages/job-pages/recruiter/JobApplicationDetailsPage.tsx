@@ -8,22 +8,17 @@ import JobApplicationDetails from "../../../components/recruiter/JobApplicationD
 function JobApplicationDetailsPage() {
 	const [jobApplicationDetails, setJobApplicationDetails] =
 		useState<any>(null);
-	const navigate = useNavigate();
+		
 	const { jobApplicationId } = useParams();
 	useEffect(() => {
 		const fetchJobDetails = async () => {
 			try {
-				console.log("job application details useEffect jobApplicationId");
 				
 				if (jobApplicationId) {
 					const jobApplication = await getAJobApplicationApi(
 						jobApplicationId
 					);
-					console.log(
-						"in job Application details page job is: ",
-						jobApplication
-					);
-
+					
 					setJobApplicationDetails(jobApplication.data);
 				}
 			} catch (error) {
@@ -34,11 +29,7 @@ function JobApplicationDetailsPage() {
 
 		fetchJobDetails();
 	}, [jobApplicationId]);
-
-	const handleEditJob = async (id: string) => {
-		console.log("id handle edit ", id);
-		navigate(`/recruiter/edit-job-details/${id}`);
-	};
+	
 	return (
 		<div>
 			<JobApplicationDetails

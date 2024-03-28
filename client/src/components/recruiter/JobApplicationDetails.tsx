@@ -19,23 +19,13 @@ const JobApplicationDetails: React.FC<{
 	const isRecruiterPage = location.pathname.includes("recruiter");
 	const isCandidatePage = location.pathname.includes("candidate");
 
-	const candidateData: any = useSelector(
-		(state: RootState) => state.candidateData.data
-	);
-
 	const candidateProfileData: any = useSelector(
 		(state: RootState) => state.candidateProfile.candidateProfile
 	);
 
 	if (isRecruiterPage) {
 		// Do something specific for the "recruiter" page
-		console.log("This is a recruiter page");
 	}
-	console.log(
-		jobApplicationDetails,
-		"in job --recruiter --application details component"
-	);
-
 	const navigate = useNavigate();
 	const handleViewRecruiter = () => {
 		// let isPremiumUser = false;
@@ -43,7 +33,6 @@ const JobApplicationDetails: React.FC<{
 			notify("only premium users can view recruiter profile", "success");
 			return;
 		}
-		console.log("clicked handleViewRecruiter");
 
 		navigate(
 			`/candidate/recruiter-profile/${jobApplicationDetails?.jobId?.recruiterId}`
@@ -51,7 +40,6 @@ const JobApplicationDetails: React.FC<{
 	};
 
 	const handleViewCandidate = () => {
-		console.log("clicked handleViewCandidate");
 
 		navigate(
 			`/recruiter/candidate-profile/${jobApplicationDetails?.candidateId?.id}`
@@ -59,7 +47,6 @@ const JobApplicationDetails: React.FC<{
 	};
 
 	const handleChangeStatus = async (applicationStatus: string) => {
-		console.log("handleChangeapplicationStatus ", applicationStatus);
 
 		const status = {
 			jobApplicationStatus: applicationStatus,
@@ -79,7 +66,6 @@ const JobApplicationDetails: React.FC<{
 					jobApplicationDetails?.id,
 					status
 				);
-				console.log("applicationStatus", response);
 				notify(response.message, "success");
 			}
 		});

@@ -5,9 +5,9 @@ import { useSelector } from "react-redux";
 
 import { RootState } from "../redux/reducer/reducer";
 import Loading from "../components/loading/Loading";
-import PaymentFailed from "../pages/payment/PaymentFailed";
 
 
+const PaymentFailed = lazy(()=> import("../pages/payment/PaymentFailed"))
 const CandidateSigninPage = lazy(()=> import("../pages/auth-pages/signin/CandidateSigninPage"))
 const CandidateSignupPage = lazy(()=> import("../pages/auth-pages/signup/CandidateSignupPage"))
 const LandingPage = lazy(()=> import("../pages/landing/LandingPage"))

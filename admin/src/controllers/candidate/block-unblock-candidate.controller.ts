@@ -10,15 +10,11 @@ export = (dependencies: DependenciesData)=>{
     return async (req: Request, res: Response)=>{
         const {userId} = req.params;
         
-        console.log("in block unblock controller userId ",userId);
-        
         const isBlocked = await blockUnblockCandidateUseCase(dependencies).execute(userId);
 
         if(!isBlocked){
             throw new Error("Candidate Not Found")
         }
-
-        console.log("in bocke unblock controller before message send to kafka", isBlocked);
         
         // to produce a message to kafka topic
         // isBlocked contains user data with 'isActive' value changed

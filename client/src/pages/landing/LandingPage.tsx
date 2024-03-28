@@ -42,17 +42,15 @@ function LandingPage() {
 	const pageCount: any = useSelector(
 		(state: RootState) => state.filteredJobs.totalNumberOfPages
 	);
-	console.log("pageCount", pageCount);
-
+	
 	const currentPage: any = useSelector(
 		(state: RootState) => state.filteredJobs.currentPage
 	);
-	console.log("currentPage", currentPage);
-
+	
 	const handleGetAllJobs = async (page: number) => {
 		// dispatch(setLoading());
 		const allJobs = await getAllJobsApi(page);
-		console.log("API Response:", allJobs);
+		
 		// dispatch(setLoaded());
 		return allJobs;
 	};
@@ -75,11 +73,7 @@ function LandingPage() {
 
 				// Check if allJobs.data exists before accessing its properties
 				if (allJobs && allJobs.data) {
-					console.log(
-						"landing page before handleGetAllJobs dispatch",
-						allJobs
-					);
-
+					
 					dispatch(setFilteredJobs({ data: allJobs.data }));
 					dispatch(
 						setTotalNumberOfPages({
@@ -102,15 +96,14 @@ function LandingPage() {
 	const jobs: any = useSelector(
 		(state: RootState) => state.filteredJobs.data
 	);
-	console.log("jobs -----------------------------", jobs);
-
+	
 	const handlePageChange = async ({ selected }: { selected: number }) => {
-		console.log("selected+1 : ", selected + 1);
+		
 		dispatch(setCurrentPage({ currentPage: selected + 1 }));
 	};
 
 	const handleViewJob = async (jobId: string) => {
-		console.log("id handle view ", jobId);
+		
 		// dispatch(setRecruiterJobId(id))
 		if (isRecruiterUrl) {
 			navigate(`/recruiter/job-details/${jobId}`);

@@ -8,14 +8,10 @@ export = (dependencies: DependenciesData)=>{
 
     return async (req: Request, res: Response)=>{
         const {memberShipPlanId} = req.params;
-        console.log("in get memberShipPlan controller 1: ",memberShipPlanId);
-
+        
         const response = await getMemberShipPlanByIdUseCase(dependencies).execute(memberShipPlanId);
-        console.log("in get memberShipPlan controller 2: ",response);
-
-        if(response == null){
-            throw new BadRequestError("invalid memberShipPlan memberShipPlanId")
-        }
+        
+        if(response == null) throw new BadRequestError("invalid memberShipPlan memberShipPlanId")
         
         res.status(200).json({message: "memberShipPlan get successfully", data: response })
 

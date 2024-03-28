@@ -12,9 +12,7 @@ export class CompanyProfileCreatedEventConsumer extends KafkaConsumer<COMPANY_PR
     }
 
     async onMessage(data: COMPANY_PROFILE_CREATED_EVENT['data'], topic: string, message: KafkaMessage): Promise<void> {
-
-        console.log("CompanyProfileCreatedTopic consumer admin",data);
-			
+        
 			// dont need to check userType as every users are stored in one collection 
 			handleMessage(data, topic, message )
         

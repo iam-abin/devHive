@@ -14,25 +14,16 @@ const RecruiterProfilePage: React.FC = () => {
 		(state: RootState) => state.recruiterData.data
 	);
 
-	const { id } = useParams();
-	console.log("99999999999", id);
-	console.log("iam abbbbbbbbbbbbi");
-
+	const { id } = useParams(); 
 	const location = useLocation();
 
 	const isCandidate = location.pathname.includes("candidate");
 
 	const [recruiterProfileData, setRecruiterProfileData] = useState<any>([]);
 
-	const navigate = useNavigate();
-	console.log("recruiterProfileData", recruiterProfileData);
-	console.log("isCandidate", isCandidate);
-
+	const navigate = useNavigate(); 
 	useEffect(() => {
 		(async () => {
-			console.log("Entering useEffect");
-			console.log("Before", recruiterData);
-
 			try {
 				let recruiterProfile = null;
 				if (isCandidate) {
@@ -44,8 +35,7 @@ const RecruiterProfilePage: React.FC = () => {
 						recruiterData.id
 					);
 				}
-				console.log("recruiterProfile", recruiterProfile);
-
+				
 				setRecruiterProfileData(recruiterProfile);
 			} catch (error) {
 				console.error("Error fetching recruiter profile:", error);

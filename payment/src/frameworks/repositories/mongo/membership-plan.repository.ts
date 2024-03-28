@@ -11,7 +11,7 @@ export = {
 
 	// Following functions are used by handleMessage when a kafka event comes 
 	createMembershipPlan: async (data: any)=>{
-		console.log("premium inside create premium ",data);
+		
 		const membershipPlanData = new MembershipPlan(data)
 		const premium =  MembershipPlansModel.buildMembershipPlan(membershipPlanData);
 

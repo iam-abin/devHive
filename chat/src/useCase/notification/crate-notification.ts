@@ -5,13 +5,10 @@ export = (dependencies: DependenciesData) => {
 		repositories: { notificationsRepository },
 	} = dependencies;
 
-	if (!notificationsRepository) {
-		throw new Error("notificationsRepository should exist in dependencies");
-	}
+	if (!notificationsRepository) throw new Error("notificationsRepository should exist in dependencies");
 
 	const execute =(notificationData: any) => {
-        console.log("in createNotification usecase",notificationData);
-        
+		
 		return notificationsRepository.createNotification(notificationData);
 	};
 

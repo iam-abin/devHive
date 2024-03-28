@@ -10,8 +10,7 @@ export const sendOtp = async (phoneNo: number) => {
 	const result = await client.verify.v2
 		.services(serviceSID!)
 		.verifications.create({ to: `+91 ${phoneNo}`, channel: "sms" });
-
-	console.log(result.status);
+		
 	return result.status
 };
 
@@ -19,8 +18,7 @@ export const verifyOtp = async (phoneNo: number, otp: string) => {
 	const result = await client.verify.v2
 		.services(serviceSID!)
 		.verificationChecks.create({ to: `+91 ${phoneNo}`, code: otp });
-
-		console.log(result);
+		
 		return result.status
 		
 };

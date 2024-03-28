@@ -28,7 +28,6 @@ function CandidateManagementPage() {
 		(async () => {
 			try {
 				const candidates = await getAllCandidatesApi();
-				console.log("in useEffect", candidates);
 				setCandidatesData(candidates.data);
 			} catch (error: any) {
 				console.error(error);
@@ -37,14 +36,10 @@ function CandidateManagementPage() {
 	}, []);
 
 	const viewProfileDetails = async (userId: string) => {
-		console.log("in viewProfileDetails fn ", userId);
 		navigate(`/admin/candidate/viewProfileDetails/${userId}`);
 	};
 
 	const handleBlockUnblock = async (userId: string, isActive: boolean) => {
-		console.log("userId", userId);
-		console.log("isActive", isActive);
-		
 		Swal.fire({
 			title: `Do you want to ${
 				isActive ? "block" : "unblock"

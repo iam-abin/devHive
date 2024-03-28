@@ -4,7 +4,6 @@ import ReactApexChart from 'react-apexcharts';
 
 const ChartOne: React.FC<{graphData: any}> = ({graphData}) => {
   const [yAxisMax, setYAxisMax] = useState<number>(0);
-  console.log("graphData graphData",graphData);
   
 
   // const [state, setState] = useState<any>({

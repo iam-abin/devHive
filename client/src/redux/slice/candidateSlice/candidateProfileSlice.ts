@@ -14,8 +14,6 @@ const candidateProfileDetailsSlice = createSlice({
 	initialState,
 	reducers: {
 		setCandidateProfileDetails: (state, action: PayloadAction<any>) => {
-			console.log("##########################in setCandidateProfileDetails slice ", action.payload);
-			
 			state.candidateProfile = action.payload;
 		},
 		clearCandidateProfileDetails: (state) => {

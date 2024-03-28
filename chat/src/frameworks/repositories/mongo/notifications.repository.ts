@@ -4,19 +4,15 @@ const {  NotificationModel } = schemas;
 
 export = {
 	createNotification: async (notificationData: any) => {
-		console.log("notificationData inside create Notification ", notificationData);
+		
 		const chatNotification = NotificationModel.buildNotification(notificationData);
-
-		console.log("chatNotification inside create Notification ", chatNotification);
+		
 		return await chatNotification.save();
 	},
 
 	getAllNotificationsCountByUserId: async (userId: string) => {
-		// const count = await NotificationModel.aggregate([
-		// 	{$match: {targetUserId: userId}},{$count: "countOfNotifications"}
-		// ]);
+		
 		const count = (await NotificationModel.find({targetUserId: userId})).length;
-		console.log("in getAllNotificationsCountByUserId", count);
 		
 		return count;
 	},
@@ -43,7 +39,6 @@ export = {
 
 	getUnreadMessagesCount: async (senderId: string, receiverId: string) => {
 		const count = await NotificationModel.countDocuments({senderId, targetUserId: receiverId});
-		console.log("unread count ", count);
 		
 		return count;
 	},

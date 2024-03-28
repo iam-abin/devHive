@@ -38,8 +38,6 @@ function CandidateProfileEditPage() {
 	const candidateProfileData: any = useSelector(
 		(state: RootState) => state.candidateProfile.candidateProfile
 	);
-
-	console.log("candidateProfileData >>>>>>>>",candidateProfileData);
 	
 	const { id } = candidateData;
 
@@ -48,7 +46,7 @@ function CandidateProfileEditPage() {
 			try {
 				const profile = await candidateGetProfileApi(id);
 				setProfileDetails(profile.data);
-				console.log("edit profile data is ", profile.data);
+				
 			} catch (error) {
 				console.error("Error fetching profile details:", error);
 			}
@@ -63,10 +61,7 @@ function CandidateProfileEditPage() {
 
 	const handleSubmit = async (profileData: ProfileFormData) => {
 		try {
-			console.log("handleSubmit profiledata------------>", profileData);
 			const data = await updateCandidateProfileApi(profileData);
-			console.log("handleSubmit------------>", data);
-			
 			if (data.data) {
 				notify(data.message, "success");
 				navigate("/candidate/profile");

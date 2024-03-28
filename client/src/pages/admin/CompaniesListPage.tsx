@@ -36,7 +36,6 @@ const CompaniesListPage: React.FC = () => {
 		(async () => {
 			try {
 				const companies = await getAllCompaniesApi();
-                console.log("in useEffect", companies.data);
 				setCompaniesData(companies.data);
 			} catch (error: any) {
 				console.error(error);
@@ -45,7 +44,6 @@ const CompaniesListPage: React.FC = () => {
 	}, []);
 
     const viewCompanyDetails = async (companyId: string) => {
-		console.log("in viewCompanyDetails fn ", companyId);
 		navigate(`/admin/company/viewCompanyDetails/${companyId}`);
 	};
 

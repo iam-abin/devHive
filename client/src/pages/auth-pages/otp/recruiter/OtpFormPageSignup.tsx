@@ -25,12 +25,8 @@ function OtpFormPageSignup() {
 
 	const handleSubmit = async (otp: string) => {
 		try {
-			console.log("Submitted OTP:", otp);
-
 			dispatch(setLoading());
 			const response = await verifySignupOtpRecruiterApi(otp, userEmail);
-			console.log("hiiii", response);
-			console.log("hiiii", response.data);
 			dispatch(setRecruiter(response));
 			notify(response.message, "success");
 			navigate("/recruiter");

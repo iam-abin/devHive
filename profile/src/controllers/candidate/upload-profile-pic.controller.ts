@@ -8,13 +8,9 @@ export = (dependencies: DependenciesData)=>{
     const { useCases: { uploadCandidateProfilePicUseCase }} = dependencies
 
     return async (req: Request, res: Response)=>{
-        const user = req.currentUserCandidate;
-        console.log("----------------------------------------------------------------------",req.currentUserCandidate);
-        
-        console.log("in candidate upload resume controller data 1: req.file",req.file);
+        const user = req.currentUserCandidate; 
         const candidate = await uploadCandidateProfilePicUseCase(dependencies).execute(user?.id ,req.file);
-        console.log("in candidate upload profile pic controller data 2: ",candidate);
-
+        
         const candidateProfileUpdatedEvent = new CandidateProfileUpdatedEventPublisher(kafkaClient)
         await candidateProfileUpdatedEvent.publish({
             name: candidate?.name,
@@ -31,9 +27,7 @@ export = (dependencies: DependenciesData)=>{
             experience: candidate?.experience,
             userId: candidate?._id,
         })
-
         
-
         res.status(201).json({message: "profile image uploaded", data: candidate })
     };
 

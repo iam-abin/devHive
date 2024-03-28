@@ -15,57 +15,12 @@ const PaymentsListPage: React.FC = () => {
 		(async () => {
 			try {
 				const payments = await getAllPaymentsApi();
-				console.log("in useEffect 00000000000", payments);
 				setPaymentsData(payments.data);
 			} catch (error: any) {
 				console.error(error);
 			}
 		})();
 	}, []);
-
-	// const viewProfileDetails = async (userId: string) => {
-	// 	console.log("in viewProfileDetails fn ", userId);
-	// 	navigate(`/admin/candidate/viewProfileDetails/${userId}`);
-	// };
-
-	// const handleBlockUnblock = async (userId: string, isActive: boolean) => {
-	// 	console.log("userId", userId);
-	// 	console.log("isActive", isActive);
-		
-	// 	Swal.fire({
-	// 		title: `Do you want to ${
-	// 			isActive ? "block" : "unblock"
-	// 		} this Candidate?`,
-	// 		text: "Are you sure!",
-	// 		icon: "warning",
-	// 		showCancelButton: true,
-	// 		confirmButtonColor: "#3085d6",
-	// 		cancelButtonColor: "#d33",
-	// 		confirmButtonText: `Yes, ${
-	// 			isActive ? "block" : "unblock"
-	// 		}`,
-	// 	}).then(async (result) => {
-	// 		if (result.isConfirmed) {
-	// 			const updatedCandidate = await blockUnblockCandidateApi(userId);
-	// 			if (updatedCandidate) {
-	// 				notify(updatedCandidate.message, "success");
-	// 			}
-
-	// 			const candidates = candidatesData.map((candidate) => {
-	// 				if (candidate.id === userId) {
-	// 					return {
-	// 						...candidate,
-	// 						isActive: updatedCandidate.data.isActive,
-	// 					};
-	// 				}
-
-	// 				return candidate;
-	// 			});
-
-	// 			setCandidatesData(candidates);
-	// 		}
-	// 	});
-	// };
 
 	const columns = [
 		{

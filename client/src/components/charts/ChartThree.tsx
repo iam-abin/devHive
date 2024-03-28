@@ -42,12 +42,6 @@ const ChartThree: React.FC<{ graphData: any }> = ({ graphData }) => {
 		const entries = Object.entries(graphData);
 		setEntries(entries);
 	}, [graphData]);
-	//  const allZeros = state.series.reduce((accumulator, currentValue) => {
-	//   return accumulator && currentValue === 0;
-	// }, true);
-
-	// console.log("allZeros",allZeros);
-
 	const options: ApexOptions = {
 		chart: {
 			fontFamily: "Satoshi, sans-serif",

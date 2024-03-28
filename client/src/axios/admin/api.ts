@@ -10,10 +10,7 @@ export const adminApi: AxiosInstance = axios.create({
 adminApi.interceptors.request.use(
 	async (config: any) => {
 		let tokenString = localStorage.getItem(adminAccessToken);
-		console.log(
-			"in request interceptot  localStorage.getItem(adminAccessToken) is ",
-			tokenString
-		);
+		
 		if (tokenString) {
 			// const token = JSON.parse(tokenString);
 			// No need to parse if the token is already a string

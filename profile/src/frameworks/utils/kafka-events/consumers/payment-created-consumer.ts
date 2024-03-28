@@ -12,9 +12,7 @@ export class paymentCreatedEventConsumer extends KafkaConsumer<PAYMENT_CREATED_E
     }
 
     async onMessage(data: PAYMENT_CREATED_EVENT['data'], topic: string, message: KafkaMessage): Promise<void> {
-
-        console.log("payment crated consumer job ",data);
-			
+        
 		handleMessage(data, topic, message )
         
     }

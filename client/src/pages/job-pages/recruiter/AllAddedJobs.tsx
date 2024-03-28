@@ -43,10 +43,7 @@ function AllAddedJobs() {
 				const response = await getAllRecruiterAddedJobsApi(
 					recruiterData?.id
 				);
-				console.log(
-					"in useEffect getAllRecruiterAddedJobsApi jobs",
-					response
-				);
+				
 				setJobsData(response.jobs);
 			} catch (error: any) {
 				console.error(error);
@@ -55,13 +52,13 @@ function AllAddedJobs() {
 	}, []);
 
 	const viewJobDetails = async (id: string) => {
-		console.log("id handle view ", id);
+		
 		// dispatch(setRecruiterId(id))
 		navigate(`/recruiter/job-details/${id}`);
 	};
 
 	const handleEdit = async (id: string) => {
-		console.log("id handle edit ", id);
+		
 		navigate(`/recruiter/edit-job-details/${id}`);
 	};
 

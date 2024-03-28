@@ -5,12 +5,9 @@ const { PaymentModel, MembershipPlansModel } = schemas;
 
 export = {
 	createPayment: async (data: PaymentData): Promise<any> => {
-		console.log("inside createPayment fn in admin service", data);
+		
 		const paymentData = new Payment(data);
-		console.log(
-			"inside createPayment after new Payment fn in admin service",
-			data
-		);
+		
 		const paymentObject = PaymentModel.buildPayment(paymentData);
 		return await paymentObject.save();
 	},
@@ -43,12 +40,8 @@ export = {
 		]);
 
 		if (totalAmount[0]) {
-			
-			console.log("totalAmount ", totalAmount[0].sumOfAmount);
 			return totalAmount[0].sumOfAmount;
 		}else{
-			console.log("totalAmount",totalAmount);
-			
 			return 0
 		}
 
@@ -104,8 +97,7 @@ export = {
 			  $sort: { month: 1 } // Sort by month
 			}
 		  ]);
-
-		console.log("monthlyPayments payment ", monthlyPayments);
+		  
 		return monthlyPayments
 	},
 };

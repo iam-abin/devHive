@@ -30,24 +30,12 @@ const RecruiterDashBoardPage: React.FC = () => {
 			const graphData = await getRecruiterDashboadGraphApi(
 				recruiterData.id
 			);
-			console.log("LLLLLLLLLL response ", cardData.data);
-			console.log("PPPPPPPPPP response ", graphData.data);
-
 			if (cardData && cardData.data) {
-				const { addedJobsCount, jobApplicationsCount } = cardData.data;
-				console.log("addedJobsCount Count:", addedJobsCount);
-				console.log(
-					"jobApplicationsCount Count:",
-					jobApplicationsCount
-				);
-				console.log("graphData.data :", graphData.data);
+				// const { addedJobsCount, jobApplicationsCount } = cardData.data;
 				setCardData({ ...cardData.data });
 			}
 
 			if (graphData && graphData.data) {
-				
-				console.log("graphData is  :", graphData);
-
 				// Now you can set the state or perform any other operations with the counts
 				setGraphDataState(graphData.data);
 			}

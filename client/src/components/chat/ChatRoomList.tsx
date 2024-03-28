@@ -30,20 +30,8 @@ const ChatRoomList: React.FC<ChatRoomListProps> = ({
 		const fetchUnreadCount = async () => {
 			let count: any = 0;
 			if (currentUser.userType === "candidate") {
-				// if(selected){
-				// 	await deleteCandidatesAllNotificationsApi(currentUser.id)
-				// }else{
 					count = await getCandidatesUnreadMessagesCountApi(currentUser.id, receiver[0]._id);
-				// }
 			} 
-			// else if(currentUser.userType === "recruiter") {
-			// 	// if(selected){
-			// 	// 	await deleteRecruiterAllNotificationsApi(currentUser.id)
-			// 	// }else{
-			// 		count = await getRecruitersUnreadMessagesCountApi(currentUser.id, receiver[0]._id);
-			// 	// }
-			// }
-			console.log("unread ****** count", count);
 			
 			setUnReadCount(count.data);
 		};

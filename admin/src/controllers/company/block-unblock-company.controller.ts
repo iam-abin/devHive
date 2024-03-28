@@ -15,8 +15,6 @@ export = (dependencies: DependenciesData)=>{
         const isBlocked = await blockUnblockCompanyUseCase(dependencies).execute({
             id
         });
-
-        console.log("in bock unblock controller before message send to kafka", isBlocked);
         
         // to produce a message to kafka topic
         // isBlocked contains user data with 'isActive' value changed

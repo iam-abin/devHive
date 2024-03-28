@@ -26,30 +26,20 @@ function RecruiterSignupPage() {
 	const isLoading = useSelector(
 		(state: RootState) => state.loading.isLoading
 	);
-
-	console.log("hi recruiter signup");
-
 	const handleSubmit = async (userData: any) => {
 		try {
 			dispatch(setLoading());
 			const response = await recruiterSignupApi(userData);
-
-			console.log("in handle submit recruiter signup data", userData);
-			
-
-			console.log("Hello", response);
 			Swal.fire({
 				text: response?.message || "Email sendedddd",
 				confirmButtonText: "ok",
 			}).then((res) => {
-				console.log(res);
 
 				if (res) {
 					navigate(`/recruiter/otpSignupRecruiter/${userData.email}`);
 				}
 			});
 		} catch (error: any) {
-			console.log("in signup form error", error);
 			notify(error.response.data.errors[0].message, "error");
 		} finally {
 			dispatch(setLoaded());
@@ -75,7 +65,6 @@ function RecruiterSignupPage() {
 				initialValues={initialSignupValues}
 				validationSchema={signUpSchema}
 				onSubmit={(values) => {
-					console.log(values, "formik");
 					handleSubmit(values);
 				}}
 			>

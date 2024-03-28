@@ -7,7 +7,6 @@ const ImageFileUpload: React.FC<{uploadImage: any}> = ({uploadImage}) => {
 
 	const handleFileChange = (e: any) => {
 		const file = e.target.files[0];
-		console.log("in fileChange selectedFile", file);
 		uploadImage(file);
 	};
 

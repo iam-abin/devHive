@@ -17,18 +17,11 @@ const ForgotPassword: React.FC = () => {
 
 	const handleSubmit = async (values: any) => {
 		try {
-      
-			console.log("Submitted password:", values.password);
 			dispatch(setLoading());
 			const response = await forgotPasswordRecruiterApi(
 				userId!,
 				values.password
 			);
-			console.log("hiiii", response);
-			// if (response.data.data === "pending") {
-			// 	notify(response.data.message, "error");
-			// 	return;
-			// }
 			notify(response.message, "success");
 			navigate("/recruiter/signin");
 		} catch (error: any) {

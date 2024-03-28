@@ -78,7 +78,6 @@ const ChatPageRecruiter = () => {
 	  }, []);
 
 	useEffect(() => {
-		console.log("=========in socket io addActiveUser useEffect");
 		socket.emit("addActiveUser", recruiterData.id);
 		socket.on("getActiveUsers", (users) => {
 			setOnlineUsers(users);
@@ -90,21 +89,14 @@ const ChatPageRecruiter = () => {
 		socket.on("getAllChatRooms", (rooms) => {
 			setchatRooms(rooms);
 		});
-		console.log("getAllChatRooms useEffect Recruiter");
 		
 	}, [selectedChatRoom, selectedChatRoomMessages]);
 
 	
 	useEffect(() => {
 		socket.on("chatNotification", (message) => {
-			console.log("in receive chat Notification recruiterRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR", message);
-			// socket.on("getAllChatRooms", (rooms) => {
-			// 	setchatRooms(rooms);
-			// });
 			(async()=>{
 				const rooms = await getAllRecruiterChatRoomsApi(recruiterData.id)
-				console.log('chatrooms dddddddddddddddddddddddddddd recrutier',rooms);
-				
 				setchatRooms(rooms.data);
 			})()
 		});
@@ -119,18 +111,9 @@ const ChatPageRecruiter = () => {
 	useEffect(() => {
 		// Listen for "selectedChatRoomMessages" events and update the selectedChatRoomMessages state
 		socket.on("receiveMessage", (message) => {
-			console.log("in receive message cruitereEEEEEEEEEEEE  ", message);
-
 			if(selectedChatRoom?._id != message.result.roomId.toString() ){
-				console.log("no chat rooms are selected");
+				// console.error("no chat rooms are selected");
 			}
-
-		
-			console.log("otherUserId ???????????????????????????????????????????? message.result.roomId.toString() === selectedChatRoom?._id", message.result.roomId.toString() === selectedChatRoom?._id);
-				console.log("otherUserId ???????????????????????????????????????????? message.result.roomId.toString()", message.result.roomId.toString());
-
-				console.log("otherUserId ???????????????????????????????????????????? selectedChatRoom?._id", selectedChatRoom?._id);
-
 			if (message.result.roomId.toString() === selectedChatRoom?._id) {
 				if(message.result.senderId.toString() != recruiterData.id){
 					socket.emit("markAsRead", message.result.id);
@@ -174,42 +157,15 @@ const ChatPageRecruiter = () => {
 		dispatch(setRecruiterCurrentlySelectedChatRoom(room))
 		const conversations = await getARecrutierConversationApi(room._id);
 		let senderId = getReceiver(room); // to find the other user
-		console.log("senderId from room", senderId);
-		console.log("senderId from room", senderId[0]?._id);
-		
 		await deleteRecruitersAllNotificationsBySenderIdApi(senderId[0]?._id,recruiterData.id )
 		setSelectedChatRoomMessages(conversations.data);
-		// selectedChatRoomMessages.forEach((message: any) => {
-		// 	console.log("???????????????? message.read", message.read);
-		// 	console.log(
-		// 		"???????????????? message.senderId!= candidateData.id",
-		// 		message.senderId != candidateData.id
-		// 	);
-		// 	console.log(message);
-
-		// 	if (!message.read && message.senderId != candidateData.id) {
-		// 		console.log(
-		// 			"////////////////////////////////////////////////////////"
-		// 		);
-
-		// 		socket.emit("markAsRead", message.id);
-		// 	}
-		// });
 	};
-
-	console.log("onlineUsers are --->>>", onlineUsers);
-	console.log("chatRooms are --->>>", chatRooms);
-	console.log("selected chatRoom is --->>>", selectedChatRoom);
-
 	const isUserOnline = (chatRoom: any) => {
 		const otherValue = chatRoom.users.filter(
 			(value: any) => value._id !== recruiterData.id
 		);
 
 		for (let i = 0; i < onlineUsers.length; i++) {
-			console.log("oooooooooooooooo onlineUsers[i].userId == otherValue",onlineUsers[i]?.userId == otherValue[0]?._id," oooooooooooo");
-			console.log("oooooooooooooooo onlineUsers[i].userId ",onlineUsers[i]?.userId," oooooooooooo");
-			console.log("oooooooooooooooo otherValue ",otherValue[0]?._id," oooooooooooo");
 			if (onlineUsers[i]?.userId == otherValue[0]?._id) {
 				return true;
 			}
@@ -218,8 +174,6 @@ const ChatPageRecruiter = () => {
 	};
 
 	const getReceiver = (chatRoom: any) => {
-		console.log("chatroom -------------------",chatRoom);
-		
 		const otherUser = chatRoom.users.filter(
 			(value: any) => value._id !== recruiterData?.id
 		);

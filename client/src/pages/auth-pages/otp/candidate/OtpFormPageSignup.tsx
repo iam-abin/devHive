@@ -22,12 +22,9 @@ function OtpFormPageSignup() {
 
 	const handleSubmit = async (otp: string) => {
 		try {
-			console.log("Submitted OTP:", otp);
 
 			dispatch(setLoading());
 			const response = await verifySignupOtpCandidateApi(otp, userEmail);
-			console.log("hiiii", response);
-			console.log("hiiii", response.data);
 			dispatch(setCandidate(response));
 			notify(response.message, "success");
 			navigate("/candidate");

@@ -10,19 +10,12 @@ export = (dependencies: DependenciesData)=>{
 
     return async (req: Request, res: Response)=>{
         const data = req.body;
-        console.log("in recruiter create job controller 1: ",data);
 
-        if(!data.company_name || !data.company_location ){
-            // throw new Error("All company details should be added before creating a job!!")
-            throw new BadRequestError('Add company details in the profile before creating a job!!')
-        }
-
+        if(!data.company_name || !data.company_location ) throw new BadRequestError('Add company details in the profile before creating a job!!');
         const newJob = await createJobUseCase(dependencies).execute(data);
-        console.log("in recruiter create job controller 2: ",newJob);
 
         // // to produce a message to kafka topic
         // // isBlocked contains user data with 'isActive' value changed
-
         const jobCreatedEvent = new JobCreatedEventPublisher(kafkaClient);
         await jobCreatedEvent.publish({
             jobId: newJob.id,

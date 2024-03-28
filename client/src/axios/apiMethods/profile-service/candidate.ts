@@ -4,91 +4,60 @@ import candidateApiCalls from "../../candidate/apiCalls";
 
 
 export const candidateGetProfileApi = async (userId: string): Promise<any> => {
-    console.log(userId);
-		const response: any = await candidateApiCalls("get", profileApiUrlConfig.getCandidateProfileUrl(userId), userId);
-		console.log("response is ", response.data);
-	
-		return response.data;
+    const response: any = await candidateApiCalls("get", profileApiUrlConfig.getCandidateProfileUrl(userId), userId);
+    return response.data;
 };
 
 
 export const updateCandidateProfileApi = async (candidateProfileData: any): Promise<any> => {
-		const response: any = await candidateApiCalls("patch", profileApiUrlConfig.updateCandidateProfileUrl, candidateProfileData);
-
-        console.log(candidateProfileData.userId);
-		console.log("response is ", response.data);
-	
-		return response.data;
+    const response: any = await candidateApiCalls("patch", profileApiUrlConfig.updateCandidateProfileUrl, candidateProfileData);
+    return response.data;
 };
 
 
 export const uploadCandidateImageProfileApi = async (userId: string,profileImageData: any): Promise<any> => {
-    console.log("uploadCandidateResumeProfileApi profileImageData is    ..//////", profileImageData);
     const response: any = await candidateApiCalls("put", profileApiUrlConfig.uploadCandidateImageUrl, profileImageData, true);
     // isFileUpload is giving 'true' because we are sending a file to the backend.
-
-    console.log("response is ", response.data);
-
     return response.data;
 };
 
 export const uploadCandidateResumeProfileApi = async (userId: string, resumeData: any): Promise<any> => {
-    console.log("uploadCandidateResumeProfileApi resumeData is    ..//////", resumeData);
     const response: any = await candidateApiCalls("put", profileApiUrlConfig.uploadCandidateResumeUrl, resumeData, false); 
     // isFileUpload is giving 'false' because we are sending filename and url of uploaded resume in the client side using firebase.
     // by default it is false
-
-    console.log("response is ", response.data);
-
     return response.data;
 };
 
 export const deleteResumeApi = async (candidateId: string): Promise<any> => {
-    console.log("deleteResumeApi candidateId is    ..//////", candidateId);
     const response: any = await candidateApiCalls("patch", profileApiUrlConfig.deleteResumeUrl(candidateId)); 
-    console.log("response is ", response.data);
-
     return response.data;
 };
 
 export const updateCandidateSkillsProfileApi = async (userId: string,skills: Array<string>): Promise<any> => {
-    console.log("updateCandidateSkillsProfileApi skills is    ..//////", skills);
     let data = {
         id: userId,
         skills
     }
     const response: any = await candidateApiCalls("patch", profileApiUrlConfig.updateCandidateSkillsUrl, data, true);
-
-    console.log("response is ", response.data);
-
     return response.data;
 };
 
 export const updateCandidatePreferredJobsProfileApi = async (userId: string,preferredJobs: Array<string>): Promise<any> => {
-    console.log("updateCandidatePreferredJobsProfileApi preferredJobs is    ..//////", preferredJobs);
-
     let data = {
         id: userId,
         preferredJobs
     }
     const response: any = await candidateApiCalls("patch", profileApiUrlConfig.updateCandidatePreferredJobsUrl, data, true);
-
-    console.log("response is ", response.data);
-
     return response.data;
 };
 
 
 export const recruiterGetProfileByCandidateApi = async (userId: string): Promise<any> => {
-    console.log(userId);
-
     try {
 		const response: any = await candidateApiCalls("get", profileApiUrlConfig.getRecruiterProfileUrl(userId), userId);
-		console.log("response is ", response.data);
-	
 		return response.data;
 	} catch (error) {
-		console.log(error);
+		console.error(error);
 		
 	}
 };

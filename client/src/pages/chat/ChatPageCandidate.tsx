@@ -81,7 +81,6 @@ const ChatPageCandidate = () => {
 	}, []);
 
 	useEffect(() => {
-		console.log("=========in socket io addActiveUser useEffect");
 		socket.emit("addActiveUser", candidateData.id);
 		socket.on("getActiveUsers", (users) => {
 			setOnlineUsers(users);
@@ -93,15 +92,10 @@ const ChatPageCandidate = () => {
 		socket.on("getAllChatRooms", (rooms) => {
 			setchatRooms(rooms);
 		});
-		console.log("getAllChatRooms useEffect candidate");
 	}, [selectedChatRoom, selectedChatRoomMessages]);
 
 	useEffect(() => {
 		socket.on("chatNotification", (message) => {
-			console.log(
-				"in receive chat Notification candidateEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE ",
-				message
-			);
 			(async () => {
 				const rooms = await getAllCandidateChatRoomsApi(
 					candidateData.id
@@ -120,26 +114,9 @@ const ChatPageCandidate = () => {
 	useEffect(() => {
 		// Listen for "selectedChatRoomMessages" events and update the selectedChatRoomMessages state
 		socket.on("receiveMessage", (message) => {
-			console.log("in receive message candidateEEEEEEEE ", message);
-
 			if (selectedChatRoom?._id != message.result.roomId.toString()) {
-				console.log("no chat rooms are selected");
+				// console.error("no chat rooms are selected");
 			}
-
-			// console.log(
-			// 	"otherUserId ???????????????????????????????????????????? message.result.roomId.toString() === selectedChatRoom?._id",
-			// 	message.result.roomId.toString() === selectedChatRoom?._id
-			// );
-			// console.log(
-			// 	"otherUserId ???????????????????????????????????????????? message.result.roomId.toString()",
-			// 	message.result.roomId.toString()
-			// );
-
-			// console.log(
-			// 	"otherUserId ???????????????????????????????????????????? selectedChatRoom?._id",
-			// 	selectedChatRoom?._id
-			// );
-
 			if (message.result.roomId.toString() === selectedChatRoom?._id) {
 				if (message.result.senderId.toString() != candidateData.id) {
 					socket.emit("markAsRead", message.result.id);
@@ -181,41 +158,18 @@ const ChatPageCandidate = () => {
 		dispatch(setCandidateCurrentlySelectedChatRoom(room));
 		const conversations = await getACandidateConversationApi(room._id);
 		let senderId = getReceiver(room); // to find the other user
-		console.log("senderId from room", senderId);
-		console.log("senderId from room", senderId[0]?._id);
-
 		await deleteCandidatesAllNotificationsBySenderIdApi(
 			senderId[0]?._id,
 			candidateData.id
 		);
 		setSelectedChatRoomMessages(conversations.data);
 	};
-
-	console.log("onlineUsers are --->>>", onlineUsers);
-	console.log("chatRooms are --->>>", chatRooms);
-	console.log("selected chatRoom is --->>>", selectedChatRoom);
-
 	const isUserOnline = (chatRoom: any) => {
 		const otherValue = chatRoom.users.filter(
 			(value: any) => value._id !== candidateData.id
 		);
 
 		for (let i = 0; i < onlineUsers.length; i++) {
-			// console.log(
-			// 	"oooooooooooooooo onlineUsers[i].userId == otherValue",
-			// 	onlineUsers[i]?.userId == otherValue[0]?._id,
-			// 	" oooooooooooo"
-			// );
-			// console.log(
-			// 	"oooooooooooooooo onlineUsers[i].userId ",
-			// 	onlineUsers[i]?.userId,
-			// 	" oooooooooooo"
-			// );
-			// console.log(
-			// 	"oooooooooooooooo otherValue ",
-			// 	otherValue[0]?._id,
-			// 	" oooooooooooo"
-			// );
 			if (onlineUsers[i]?.userId == otherValue[0]?._id) {
 				return true;
 			}
@@ -224,8 +178,6 @@ const ChatPageCandidate = () => {
 	};
 
 	const getReceiver = (chatRoom: any) => {
-		console.log("chatroom -------------------", chatRoom);
-
 		const otherUser = chatRoom.users.filter(
 			(value: any) => value._id !== candidateData?.id
 		);

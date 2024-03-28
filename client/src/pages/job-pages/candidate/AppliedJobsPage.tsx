@@ -52,35 +52,14 @@ function AppliedJobsPage() {
 				candidateData?.id,
 				currentPage
 			);
-			console.log(
-				"in useEffect getAllCandidateAppliedJobsApi jobs",
-				response
-			);
+			
 			setAppliedJobsData(response.data);
 			setpageCount(response.totalNumberOfPages);
 			// dispatch(setLoaded());
 		})();
 	}, [currentPage]);
 
-	// useEffect(() => {
-	// 	(async () => {
-	// 		try {
-	// 			const response = await getAllCandidateAppliedJobsApi(
-	// 				candidateData?.id
-	// 			);
-	// 			console.log(
-	// 				"in useEffect getAllCandidateAppliedJobsApi jobs",
-	// 				response
-	// 			);
-	// 			setAppliedJobsData(response.data);
-	// 		} catch (error: any) {
-	// 			console.error(error);
-	// 		}
-	// 	})();
-	// }, []);
-
 	const viewApplicationDetails = async (jobId: string) => {
-		console.log("id handle view ", jobId);
 		// dispatch(setRecruiterId(id))
 		navigate(`/candidate/application-details/${jobId}`);
 	};

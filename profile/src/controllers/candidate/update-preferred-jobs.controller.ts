@@ -9,13 +9,9 @@ export = (dependencies: DependenciesData)=>{
 
     return async (req: Request, res: Response)=>{
         const {id, preferredJobs} = req.body;
-        console.log("--------in candidate PreferredJobs controller 1-------------------------------------",id);
-        console.log("--------in candidate PreferredJobs controller 1------------------------------------",preferredJobs);
         
-
         const candidate = await updatePreferredJobsUseCase(dependencies).execute(id, preferredJobs);
-        console.log("in candidate PreferredJobs controller 2: ",candidate);
-
+        
         const candidateProfileUpdatedEvent = new CandidateProfileUpdatedEventPublisher(kafkaClient)
         await candidateProfileUpdatedEvent.publish({
             name: candidate?.name,
@@ -34,7 +30,6 @@ export = (dependencies: DependenciesData)=>{
             userId: id,
         })
 
-        
         res.status(201).json({message: "skills updated", data: candidate })
     };
 

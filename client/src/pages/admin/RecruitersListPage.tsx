@@ -27,7 +27,6 @@ function RecruiterManagementPage() {
 		(async () => {
 			try {
 				const recruiters = await getAllRecruitersApi();
-				console.log("in useEffect", recruiters.data);
 				setRecruitersData(recruiters.data);
 			} catch (error: any) {
 				console.error(error);
@@ -36,7 +35,6 @@ function RecruiterManagementPage() {
 	}, []);
 
 	const viewProfileDetails = async (userId: string) => {
-		console.log("in viewProfileDetails fn ", userId);
 		navigate(`/admin/recruiter/viewProfileDetails/${userId}`);
 	};
 

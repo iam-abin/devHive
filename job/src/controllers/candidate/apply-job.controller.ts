@@ -9,8 +9,7 @@ export = (dependencies: DependenciesData) => {
 
 	return async (req: Request, res: Response) => {
 		const jobApplicationPayload = req.body;
-		console.log("in  apply job controller 1: ", jobApplicationPayload);
-
+		
 		const isApplicationExist = await getAnAppliedJobUseCase(
 			dependencies
 		).execute(
@@ -18,16 +17,13 @@ export = (dependencies: DependenciesData) => {
 			jobApplicationPayload.jobId
 		);
 
-		if (isApplicationExist) {
-			throw new BadRequestError("you have already applied for this job");
-		}
+		if (isApplicationExist) throw new BadRequestError("you have already applied for this job"); 
 
 		jobApplicationPayload.recruiterId = jobApplicationPayload.recruiterId.id
 		const applied = await applyJobUseCase(dependencies).execute(
 			jobApplicationPayload
 		);
-		console.log("in  apply job controller 2: ", applied);
-
+		
 		res.status(200).json({
 			message: "Job applied successfully",
 			data: applied,

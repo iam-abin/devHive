@@ -11,15 +11,6 @@ export = (dependencies: DependenciesData) => {
 
 	return async (req: Request, res: Response) => {
 			let { phone, otp, email } = req.body;
-			console.log("otp before parse", otp);
-			
-			// phone = parseInt(phone,)
-			// otp = parseInt(otp)
-
-			console.log(`in verify otp twilio phone ${phone} otp ${otp} email ${email}`);
-			console.log(`in verify otp twilio phone `, typeof phone);
-			console.log(`in verify otp twilio otp `, typeof otp);
-			console.log(`in verify otp twilio email `, typeof email);
 			
 			// write code go get user using phone number and continue if the phone number exists in out db
 			const isExistingUser = await getUserByEmailUseCase(
@@ -27,19 +18,11 @@ export = (dependencies: DependenciesData) => {
 			).execute(email);
 
 			if (!isExistingUser) {
-                // return res.status(400).json({message:"Invalid email or password"})
-
+                // return res.status(400).json({message:"Invalid email or password"});
 				throw new BadRequestError("User with this phone number is not existing");
 			}
-
-			// verifyOtp
-			console.log(isExistingUser);
 			
 			const verifyOtpData = await verifyOtp(phone, otp);
-
-            console.log(verifyOtpData);
-			
-            console.log("ooooooooooottttttttttpppppppppp",verifyOtpData,"ooooooooooottttttttttpppppppppp");
 			
 			if(verifyOtpData === "pending"){
 				return res.status(200).json({message: `Invalid otp,`, data: verifyOtpData});

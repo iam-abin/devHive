@@ -45,13 +45,10 @@ export = (dependencies: any) => {
 			company_state,
 			company_country,
 		});
-
-		console.log("isCompanyExist ", isCompanyExist);
-
+		
 		if (!isCompanyExist) {
 			// If the company doesn't exist, create a new company profile
-		
-
+			
 			const newCompany =
 				await companyProfileRepository.createCompanyProfile({
 					company_name,
@@ -60,11 +57,7 @@ export = (dependencies: any) => {
 					company_country,
 					userId, // it is not working, need to solve
 				});
-
-			// console.log("new Company ", newCompany);
-			// console.log("company id ", newCompany._id);
-			// console.log("company id ", newCompany._id.toString());
-
+				
 			profileData.company_id = newCompany._id.toString();
 		} else {
 			// if the company already exists, need to push new recruiter to the company

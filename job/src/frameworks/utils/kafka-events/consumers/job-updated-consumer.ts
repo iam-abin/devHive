@@ -12,9 +12,7 @@ export class jobUpdatedEventConsumer extends KafkaConsumer<JOB_UPDATED_EVENT>{
     }
 
     async onMessage(data: JOB_UPDATED_EVENT['data'], topic: string, message: KafkaMessage): Promise<void> {
-
-        console.log("updateJobTopic consumer job ",data);
-			
+        
 		handleMessage(data, topic, message )
         
     }

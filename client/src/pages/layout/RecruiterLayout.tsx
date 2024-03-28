@@ -21,8 +21,7 @@ const RecruiterLayout = () => {
 		useState<boolean>(false);
 
 	const toggleLeftNavBar = () => {
-		console.log("togglechangeFn ", isLeftNavBarVisible);
-
+		
 		setIsLeftNavBarVisible(!isLeftNavBarVisible);
 	};
 

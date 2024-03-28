@@ -15,10 +15,8 @@ import Notifications from "../notification/Notifications";
 
 import socket from "../../config/socket";
 import {
-	deleteCandidatesAllNotificationsApi,
 	deleteRecruiterAllNotificationsApi,
 	getRecruiterAllNotificationsApi,
-	getRecruiterNotificationCountApi,
 } from "../../axios/apiMethods/chat-service/notification";
 
 const TopNavBarRecruiter: React.FC<{ toggleLeftNavBar: any }> = ({
@@ -29,9 +27,6 @@ const TopNavBarRecruiter: React.FC<{ toggleLeftNavBar: any }> = ({
 
 	const [notifications, setNotifications] = useState<any[]>([]);
 	const [notificationsCount, setNotificationsCount] = useState<number>(0);
-
-	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // State to toggle mobile menu
-	const [isLeftNavBarVisible, setIsLeftNavBarVisible] = useState(false); // State to toggle LeftNavBarRecruiter
 
 	const isLoggedIn: any = useSelector((state: RootState) => {
 		return state.recruiterData.data;
@@ -55,9 +50,6 @@ const TopNavBarRecruiter: React.FC<{ toggleLeftNavBar: any }> = ({
 		(state: RootState) => state.recruiterCurrentlySelectedChatroom.data
 	);
 
-	const isRecruiterUrl = location.pathname.includes("recruiter");
-	console.log("isLoggedin Data", isLoggedIn);
-
 	const handleRecruiterLogout = async () => {
 		Swal.fire({
 			title: "Do you want to Logout?",
@@ -70,7 +62,6 @@ const TopNavBarRecruiter: React.FC<{ toggleLeftNavBar: any }> = ({
 		}).then(async (result) => {
 			if (result.isConfirmed) {
 				const response = await recruiterSignoutApi(recruiter);
-				console.log("signout response", response);
 				if (response) {
 					dispatch(clearRecruiter());
 					notify("Logged out successfully", "success");
@@ -79,49 +70,27 @@ const TopNavBarRecruiter: React.FC<{ toggleLeftNavBar: any }> = ({
 			}
 		});
 	};
-
-	// ============================================================================
-
 	const [openNotifications, setOpenNotifications] = useState(false);
 	useEffect(() => {
 		(async () => {
 			try {
-				// console.log("no");
 
 				if (openNotifications) {
 					let fetchedNotifications =
 						await getRecruiterAllNotificationsApi(recruiter?.id);
-					// let fetchedNotificationsCount = await getrecruitersNotificationCountApi(recruiter?.id);
-
-					// console.log("fetchedNotifications$$$$$$$$$$$$", fetchedNotifications);
-					console.log(
-						"fetchedNotifications$$$$$$$$$$$$",
-						fetchedNotifications.data
-					);
+				
 					// socket.on('notification', (data: any) => {
 
 					let currentChatRoomSender = getOtherUser(
 						currentlySelectedRecruiterChatRoom
 					);
-					console.log(
-						"socket.on chatNotification 000000000000004",
-						currentChatRoomSender
-					);
-
-					// let filteredNotifications = fetchedNotifications.data.filter((notification: any)=>{
-					// 	console.log("socket.on chatNotification 000000000000005", currentChatRoomSender[0]?._id !== notification?.senderId);
-					// 	if((currentChatRoomSender[0]?._id !== notification?.senderId) || !currentlySelectedRecruiterChatRoom){
-					// 		return notification
-					// 	}
-
-					// })
+					
 
 					let filteredNotifications = [];
 					if (currentlySelectedRecruiterChatRoom) {
 						filteredNotifications =
 							fetchedNotifications.data.filter(
 								(notification: any) => {
-									// console.log("socket.on chatNotification 000000000000005", currentChatRoomSender[0]?._id !== notification?.senderId);
 									if (
 										currentChatRoomSender[0]?._id !==
 										notification?.senderId
@@ -152,57 +121,11 @@ const TopNavBarRecruiter: React.FC<{ toggleLeftNavBar: any }> = ({
 		})();
 	}, [openNotifications]);
 
-	// useEffect(() => {
-	// 	(async () => {
-	// 		try {
-	// 			if (openNotifications) {
-	// 				let fetchedNotifications = await getRecruiterAllNotificationsApi(recruiter?.id);
-	// 				console.log("fetchedNotifications:", fetchedNotifications);
-	// 				console.log("currentlySelectedRecruiterChatRoom:", currentlySelectedRecruiterChatRoom);
-	// 				let sender = getOtherUser(currentlySelectedRecruiterChatRoom);
-	// 				console.log("sender:", sender);
-
-	// 				// let filteredNotifications = fetchedNotifications?.data?.filter((notification: any) => {
-	// 				// 	return sender && sender.length > 0 && sender[0]?._id !== notification?.senderId;
-	// 				// });
-
-	// 				let filteredNotifications = fetchedNotifications.data.filter((notification: any)=>{
-	// 					console.log("on filteredNotifications 000000000000005", sender[0]?._id !== notification?.senderId);
-	// 					return sender[0]?._id !== notification?.senderId
-	// 				})
-
-	// 				console.log("filteredNotifications in openNotification useCase ", filteredNotifications);
-
-	// 				setNotifications(filteredNotifications);
-	// 			}
-	// 		} catch (error) {
-	// 			console.error("Error fetching candidate profile:", error);
-	// 		}
-	// 	})();
-	// }, [openNotifications]);
-
-	// io.to(user2.socketId).emit("chatNotification", {sender: senderId,message: textMessage });
+	
 	useEffect(() => {
 		socket.on("chatNotification", (data: any) => {
-			console.log(
-				"socket.on chatNotification 000000000000001",
-				notifications
-			);
-			console.log("socket.on chatNotification 000000000000002", data);
-			console.log("socket.on chatNotification 000000000000003", [
-				...notifications,
-				data,
-			]);
 			let senderToChatRoom = getOtherUser(
 				currentlySelectedRecruiterChatRoom
-			);
-			console.log(
-				"socket.on chatNotification 000000000000004",
-				senderToChatRoom
-			);
-			console.log(
-				"socket.on chatNotification 000000000000005",
-				senderToChatRoom[0]?._id !== data?.senderId
 			);
 			if (senderToChatRoom[0]._id !== data?.senderId)
 				setNotifications([...notifications, data]);
@@ -213,27 +136,11 @@ const TopNavBarRecruiter: React.FC<{ toggleLeftNavBar: any }> = ({
 	useEffect(() => {
 		(async () => {
 			try {
-				let notificationsCount = await getRecruiterNotificationCountApi(
-					recruiter?.id
-				);
-				console.log(
-					"notificationsCounttttttttt",
-					notificationsCount.data
-				);
 
 				let fetchedNotifications =
 					await getRecruiterAllNotificationsApi(recruiter?.id);
-				console.log(
-					"fetchedNotifications$$$$$$$$$$$$",
-					fetchedNotifications.data
-				);
-
 				let currentChatRoomSender = getOtherUser(
 					currentlySelectedRecruiterChatRoom
-				);
-				console.log(
-					"socket.on chatNotification 000000000000004",
-					currentChatRoomSender
 				);
 
 				// let filteredNotifications = fetchedNotifications?.data?.filter((notification: any) => {
@@ -244,7 +151,6 @@ const TopNavBarRecruiter: React.FC<{ toggleLeftNavBar: any }> = ({
 				if (currentlySelectedRecruiterChatRoom) {
 					filteredNotifications = fetchedNotifications.data.filter(
 						(notification: any) => {
-							// console.log("socket.on chatNotification 000000000000005", currentChatRoomSender[0]?._id !== notification?.senderId);
 							if (
 								currentChatRoomSender[0]?._id !==
 								notification?.senderId
@@ -268,38 +174,12 @@ const TopNavBarRecruiter: React.FC<{ toggleLeftNavBar: any }> = ({
 		})();
 	}, [notifications]);
 
-	// useEffect(() => {
-	// 	(async () => {
-	// 		try {
-	// 			if (openNotifications) {
-	// 				let notifications = await getRecruiterAllNotificationsApi(
-	// 					recruiter?.id
-	// 				);
-
-	// 				console.log("notifications", notifications);
-
-	// 				// dispatch(setCandidateProfileDetails(notifications?.data));
-	// 			}
-	// 		} catch (error) {
-	// 			console.error("Error fetching candidate profile:", error);
-	// 		}
-	// 	})();
-	// }, []);
-
-	// ============================================================================
-
-	// const notifications = [
-	// 	// Add your notification data here
-	// 	{ id: 1, message: "Notification 1" },
-	// 	{ id: 2, message: "Notification 2" },
-	// ];
-
+	
 	const clearNotifications = async (
 		e: React.MouseEvent<HTMLElement, MouseEvent>
 	) => {
 		// Implement logic to clear notifications
 		e.stopPropagation();
-		console.log("Clearing notifications...");
 		// await deleteCandidatesAllNotificationsApi(recruiter.id)
 		await deleteRecruiterAllNotificationsApi(recruiter.id);
 		setNotificationsCount(0);

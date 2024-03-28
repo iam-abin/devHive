@@ -54,16 +54,10 @@ function EditJob() {
 		return <div>Loading...</div>;
 	}
 
-	console.log(jobDetails, "in edit job details component");
-
 	const handleSubmit = async (jobData: JobFormData) => {
 		try {
-			console.log("jobData ", jobData);
-			console.log("jobDetails.jobId ", jobDetails.jobId);
-
 			const data = await updateJobApi(jobData);
 
-			console.log("Hello");
 			if (data.data) {
 				notify("updated successfully", "success");
 				navigate("/recruiter/recruiter-added-jobs");
@@ -103,7 +97,6 @@ function EditJob() {
 			initialValues={initialJobValues}
 			// validationSchema={jobCreationSchema}
 			onSubmit={(values) => {
-				console.log("on submit edit job formik", values);
 				values.jobId = jobDetails.id;
 				handleSubmit(values);
 			}}

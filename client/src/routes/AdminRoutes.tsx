@@ -6,9 +6,8 @@ import { RootState } from "../redux/reducer/reducer";
 import Loading from "../components/loading/Loading";
 
 import AdminLayout from "../pages/layout/AdminLayout";
-import NotFound from "../pages/Error/NotFound";
-import AdminDashBoard from "../pages/dashboard/AdminDashBoard";
-import PaymentsListPage from "../pages/payment/PaymentsListPage";
+
+
 
 const AdminSigninPage = lazy(
 	() => import("../pages/auth-pages/signin/AdminSigninPage")
@@ -36,6 +35,18 @@ const PremiumMembershipPage = lazy(
 	() => import("../pages/payment/PremiumMembershipPage")
 );
 
+const PaymentsListPage = lazy(
+	() => import("../pages/Error/NotFound")
+);
+
+const AdminDashBoard = lazy(
+	() => import("../pages/dashboard/AdminDashBoard")
+);
+
+import NotFound from "../pages/Error/NotFound";
+// const NotFound = lazy(
+// 	() => import("../pages/auth-pages/signin/AdminSigninPage")
+// );
 
 function AdminRoutes() {
 	const isAdminLoggedIn = useSelector(
@@ -156,13 +167,14 @@ function AdminRoutes() {
 							path="/payments"
 							element={
 								isAdminLoggedIn ? (
-									<PaymentsListPage />
+									<PaymentsListPage url={""} />
 								) : (
 									<Navigate to="/admin" />
 								)
 							}
 						/>
 					</Route>
+					
 					<Route path="*" element={<NotFound url={"/admin"} />} />
 				</Routes>
 			</Suspense>

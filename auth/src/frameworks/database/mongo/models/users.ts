@@ -93,7 +93,7 @@ userSchema.pre("save", async function (next) {
 		this.password = hashedPassword;
 		next();
 	} catch (error) {
-		console.log(error);
+		console.error(error);
 	}
 });
 

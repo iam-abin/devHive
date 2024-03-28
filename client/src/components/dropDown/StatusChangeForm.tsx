@@ -36,8 +36,6 @@ const StatusChangeForm: React.FC<{
 			initialValues={initialValues}
 			validationSchema={statusChangeSchema}
 			onSubmit={(values) => {
-				console.log(values);
-
 				if (!values) {
 					console.error("Form values are undefined.");
 					return;

@@ -48,8 +48,7 @@ function CreateJobPage() {
 
 	const handleSubmit = async (jobData: JobFormData) => {
 		try {
-			console.log("jobData ", jobData);
-
+			
 			if (!recruiterProfileData?.company_name) {
 				notify(
 					"Please provide company details in your profile before creating a job!!!",
@@ -61,7 +60,6 @@ function CreateJobPage() {
 			notify(response.message, "success");
 			navigate("/recruiter/recruiter-added-jobs");
 		} catch (error: any) {
-			console.log("fdsf",error);
 			
 			notify(error.response.data.errors[0].message, "warning");
 		}

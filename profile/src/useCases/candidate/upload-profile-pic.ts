@@ -12,10 +12,7 @@ export = (dependencies: any) => {
 
 	const execute = async (id: string, file: any) => {
 		try {
-			if (!file) {
-				console.log("No files uploaded");
-				return; // Return or handle accordingly
-			}
+			if (!file) return; // Return or handle accordingly 
 
 			const uploadResult: { public_id: string, url: string} = await new Promise((resolve, reject) => {
 				const cloudinary_upload_stream = cloudinary.uploader.upload_stream(
@@ -24,8 +21,7 @@ export = (dependencies: any) => {
 						if (error) {
 							console.error(error);
 							reject(error);
-						} else {
-							console.log(result);
+						} else { 
 							resolve({
 								public_id: result.public_id,
 								url: result.secure_url,
@@ -35,12 +31,8 @@ export = (dependencies: any) => {
 				);
 
 				streamifier.createReadStream(file.buffer).pipe(cloudinary_upload_stream);
-			});
+			}); 
 
-			// Call your repository method with the result
-
-			console.log("inside upload profile pic usecase uploadresult ", uploadResult);
-			
 			return await candidateProfileRepository.uploadProfilePic(id, uploadResult?.url);
 		} catch (error) {
 			console.error(error);

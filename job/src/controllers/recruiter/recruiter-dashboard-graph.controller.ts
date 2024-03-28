@@ -6,17 +6,9 @@ export = (dependencies: DependenciesData)=>{
     const { useCases: { recruiterDashboardGraphDetailsUseCase }} = dependencies
 
     return async (req: Request, res: Response)=>{
-        const {recruiterId} = req.params
-        console.log(recruiterId);
-        
-        console.log("inside get all dashboard graph derails controller 1111====11", recruiterId);
-        
-        
+        const {recruiterId} = req.params;
         const dashboardGraphDetails = await recruiterDashboardGraphDetailsUseCase(dependencies).execute(recruiterId);
-
-
-        console.log("inside get all dashboard graph derails controller 2",dashboardGraphDetails);
-
+        
         res.status(200).json({message: "dashboard graph details", data: dashboardGraphDetails })
     };
 

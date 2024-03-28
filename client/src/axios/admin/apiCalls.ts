@@ -13,7 +13,6 @@ const adminApiCalls = async (method: string, url: string, data?: any) => {
 
 			case "post":
 				response = await adminApi.post(url, data);
-				console.log("inside post response", response);
 				break;
 
 			case "put":
@@ -32,7 +31,6 @@ const adminApiCalls = async (method: string, url: string, data?: any) => {
 				throw new Error(`Invalid method: ${method}`);
 		}
 
-		console.log("in apiCalls response ", response);
 		return response;
 	} catch (error) {
 		console.error("API call failed:", error);
@@ -45,8 +43,6 @@ adminApi.interceptors.response.use(
 	(response) => response,
 	async (error) => {
 		const originalRequest = error.config;
-		console.log("error =======", error);
-
 		if (error?.response?.status === 401 && !originalRequest._retry) {
 			originalRequest._retry = true;
 			try {

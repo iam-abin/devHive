@@ -35,10 +35,7 @@ function PremiumMembershipPage() {
 		(async () => {
 			try {
 				const recruiters = await getAllMembershipPlansApi();
-				console.log(
-					"in useEffect getAllMembershipPlansApi()",
-					recruiters.data
-				);
+				
 				setMembershipPlansData(recruiters.data);
 			} catch (error: any) {
 				console.error(error);
@@ -114,11 +111,7 @@ function PremiumMembershipPage() {
 	// Handle creating premium membership plan
 	const handleCreatePremium = async (values: any) => {
 		let arr: Array<string> = [];
-
-		// Using map instead of forEach to create a new array
-		console.log(values.features);
-		console.log(typeof values.features);
-
+		
 		values.features = values.features.split(",").map((element: string) => {
 			arr.push(element.trim());
 			return element;
@@ -128,9 +121,7 @@ function PremiumMembershipPage() {
 			notify(membershipPlans.message, "success");
 		}
 		setMembershipPlansData([...membershipPlansData, membershipPlans.data]);
-
-		console.log("after crate premium data", membershipPlans.data);
-
+		
 		// Add logic to create premium membership plan
 		// You can use state management (e.g., Redux) or send an API request to the server
 		// to create the plan and update the list
@@ -178,7 +169,6 @@ function PremiumMembershipPage() {
 						initialValues={initialValues}
 						validationSchema={validationSchema}
 						onSubmit={(values) => {
-							console.log(values);
 							handleCreatePremium(values);
 						}}
 					>

@@ -26,9 +26,7 @@ function ViewRecruiterProfilePage() {
       try {
         dispatch(setLoading())
         const recruiter = await viewRecruiterProfileDetailsApi(userId);
-        console.log("recruiter profile data",recruiter);
-        console.log("candidateprofile data.data", recruiter);
-
+        
         setRecruiterProfileData(recruiter.data);
       } catch (error) {
         console.error("Error fetching profile details:", error);

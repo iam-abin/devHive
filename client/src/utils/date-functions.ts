@@ -8,10 +8,7 @@ export const dateFormatHumanized = (date: Date) => {
 	const formattedTimeDifference = moment
 		.duration(timeDifference, "seconds")
 		.humanize();
-
-	console.log(
-		`Document ID AAAAAAAAAAAAAAAA: is , Updated ${formattedTimeDifference}`
-	);
+		
 	return formattedTimeDifference;
 };
 
@@ -21,8 +18,6 @@ export const isToday = (date: Date) => {
 	const today = moment().startOf("day");
 
 	const todayOrNot = createdAt.isSame(today, "day");
-	console.log(todayOrNot, "today or not");
-
 	return todayOrNot;
 };
 

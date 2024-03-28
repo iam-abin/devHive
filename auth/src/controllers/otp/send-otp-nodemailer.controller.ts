@@ -12,8 +12,6 @@ export = (dependencies: DependenciesData) => {
 
 	return async (req: Request, res: Response) => {
 			let { email } = req.body;
-
-			console.log(email);
 			
             // check user exist
 			const isExistingUser = await getUserByEmailUseCase(
@@ -28,9 +26,7 @@ export = (dependencies: DependenciesData) => {
 
 			
 			const {otp, expiryTime} = generateEmailVerificationOtp()
-			console.log("-------emailVerificationOtp ",otp);
-			console.log("-------expiryTime ",expiryTime);
-
+			
 			const setOtp = await setNodemailerOtpUseCase(
 				dependencies
 			).execute({email, otp});
@@ -39,8 +35,7 @@ export = (dependencies: DependenciesData) => {
 			const topic = "Enter the 6 digit otp to verify your email"
 			// sendOtp
 			const response = await sendVerificationEmail(isExistingUser.email, otp ,subject ,topic);
-
-			console.log("email sended response", response);
+			
 			return res.status(200).json({"message": `An email is send to ${isExistingUser.email}, please verify.`});
 	};
 };

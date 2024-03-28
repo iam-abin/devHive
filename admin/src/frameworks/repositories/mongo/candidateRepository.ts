@@ -8,37 +8,26 @@ export = {
 	 // these fn's are returning a promise as async so we can defile return type as Promise<CandidateDataInterface>
 
 	 createCandidate: async (userData: any) => {
-		console.log("inside createCandidate fn in admin service", userData);
 		
 		const {name, email, phone, userType, isActive, userId} = userData
-		console.log("userIddddddddddd",userId);
-		
 		
 		const userObject = CandidateModel.buildCandidate({name, email, phone, userType, isActive, userId});
-		console.log("in create Candidate in admin>><<><><><", userObject);
-
+		
 		return await userObject.save();
 	},
 
 	// updating and block unblocking is also doing here
 	updateCandidateProfile: async (userId: string, data: any): Promise<any> => {
-		console.log("updateCandidateProfile before",userId, "vvvvvvv", data);
 		
 		const candidate = await CandidateModel.findOneAndUpdate({ "_id": userId }, { $set: data }, {new: true});
-		console.log("in update candidate Profile in admin>><<><><><", candidate);
-
+		
 		return candidate;
 	},
 
 	blockUnblock: async (userId: string) => {
-		console.log("blockUnblock repo candidate id", userId);
 		
 		const candidate = await CandidateModel.findById(userId)
-		if (!candidate) {
-			console.log("hi");
-			
-			throw new Error("Candidate not found");
-		}
+		if (!candidate) throw new Error("Candidate not found");
 
 		candidate.isActive = !candidate.isActive;
 
@@ -46,10 +35,7 @@ export = {
 	},
 
 	getById: async (userId: string) => {
-		console.log("inside get candidate by userId candidate repo ", userId , typeof userId);
-		
 		const candidate = await CandidateModel.findById(userId)
-		console.log("candidate found is ", candidate);
 		
 		return candidate;
 	},

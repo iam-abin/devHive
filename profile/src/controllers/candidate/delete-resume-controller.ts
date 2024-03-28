@@ -9,14 +9,9 @@ export = (dependencies: DependenciesData)=>{
 
     return async (req: Request, res: Response)=>{
         const user = req.currentUserCandidate;
-        const {userId} = req.params
-        console.log("----------------------------------------------------------------------",req.currentUserCandidate);
-        console.log("in candidate delete resume controller data 1: req.file",req.params);
-        
-
+        const {userId} = req.params;
         const candidate = await deleteResumeUseCase(dependencies).execute(userId);
-        console.log("in candidate delete resume controller data 2: ",candidate);
-
+        
         const candidateProfileUpdatedEvent = new CandidateProfileUpdatedEventPublisher(kafkaClient)
         await candidateProfileUpdatedEvent.publish({
             name: candidate?.name,
@@ -33,7 +28,6 @@ export = (dependencies: DependenciesData)=>{
             experience: candidate?.experience,
             userId: candidate?.userId,
         })
-
         
         res.status(201).json({message: "resume deleted", data: candidate })
     };

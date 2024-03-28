@@ -44,16 +44,6 @@ const TopNavBarCandidate = () => {
 		const otherUser = chatRoom?.users?.filter(
 			(value: any) => value._id !== candidateProfile.id
 		);
-
-		// const otherUser = chatRoom?.users?.filter(
-		// 	(value: any) =>{
-		// 		if( value._id !== candidateProfile.id){
-		// 			return value._id
-		// 		}
-		// 	}
-		// );
-
-		console.log("in getOtherUser fn other user ", otherUser);
 		
 		return otherUser;
 	};
@@ -72,7 +62,6 @@ const TopNavBarCandidate = () => {
 		}).then(async (result) => {
 			if (result.isConfirmed) {
 				const response = await candidateSignoutApi(candidate);
-				console.log("signout response", response);
 
 				if (response) {
 					dispatch(clearCandidate());
@@ -91,9 +80,6 @@ const TopNavBarCandidate = () => {
 					let candidateProfileData = await candidateGetProfileApi(
 						candidate?.id
 					);
-
-					console.log("candidateProfileData", candidateProfileData);
-
 					dispatch(
 						setCandidateProfileDetails(candidateProfileData?.data)
 					);
@@ -122,21 +108,12 @@ const TopNavBarCandidate = () => {
 		{ title: "Chat", to: `/candidate/chat/${candidate.id}` },
 		{ title: "Reset Password", to: "/candidate/passwordResetMobile" },
 	];
-	// ============================================================================
-
+	
 	const [openNotifications, setOpenNotifications] = useState(false);
 
 	useEffect(() => {
-		socket.on("chatNotification", (message) => {
-			console.log("in receive chat Notification candidateNNNNNNNNNaaaaVVVVVV recruiterRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR", message);
-			// socket.on("getAllChatRooms", (rooms) => {
-			// 	setchatRooms(rooms);
-			// });
-			// (async()=>{
-			// 	const rooms = await getAllRecruiterChatRoomsApi(recruiterData.id)
-			// 	setchatRooms(rooms.data);
-			// })()
-		});
+		// socket.on("chatNotification", (message) => {
+		// });
 	
 		return () => {
 			// Clean up the event listener when the component unmounts
@@ -149,24 +126,17 @@ const TopNavBarCandidate = () => {
 	useEffect(() => {
 		(async () => {
 			try {
-				// console.log("no");
 				
 				if (openNotifications) {
 					
 					let fetchedNotifications = await getCandidatesAllNotificationsApi(candidate?.id);
-					// let fetchedNotificationsCount = await getCandidatesNotificationCountApi(candidate?.id);
-
-					// console.log("fetchedNotifications$$$$$$$$$$$$", fetchedNotifications);
-					console.log("fetchedNotifications$$$$$$$$$$$$", fetchedNotifications.data);
-					// socket.on('notification', (data: any) => {
-
+					
 					let currentChatRoomSender = getOtherUser(currentlySelectedChatRoom)
-					console.log("socket.on chatNotification 000000000000004", currentChatRoomSender);
-
+					
 					let filteredNotifications = []
 					if(currentlySelectedChatRoom){
 						filteredNotifications = fetchedNotifications.data.filter((notification: any)=>{
-							// console.log("socket.on chatNotification 000000000000005", currentChatRoomSender[0]?._id !== notification?.senderId);
+							
 							if((currentChatRoomSender[0]?._id !== notification?.senderId)){
 								return notification
 							}
@@ -179,14 +149,8 @@ const TopNavBarCandidate = () => {
 					if(filteredNotifications.length ==0){
 						await deleteCandidatesAllNotificationsApi(candidate.id)
 					}
-					// if(sender[0]._id !== data?.senderId) setNotifications([...notifications, data]);
-
+					
 					setNotifications(filteredNotifications);
-
-					// })
-					// dispatch(
-					// 	setCandidateProfileDetails(notifications?.data)
-					// );
 				}
 			} catch (error) {
 				console.error("Error fetching candidate profile:", error);
@@ -196,59 +160,16 @@ const TopNavBarCandidate = () => {
 	// io.to(user2.socketId).emit("chatNotification", {sender: senderId,message: textMessage });
 	useEffect(()=>{
 		socket.on("chatNotification", (data: any) => {
-			console.log("socket.on chatNotification 000000000000001", notifications);
-			console.log("socket.on chatNotification 000000000000002", data);
-			console.log("socket.on chatNotification 000000000000003", [...notifications,data]);
 			let senderToChatRoom = getOtherUser(currentlySelectedChatRoom)
-			console.log("socket.on chatNotification 000000000000004", senderToChatRoom);
-			// ============================================================================================
-			// if(senderToChatRoom[0].id !== data?.senderId) setNotifications([...notifications, data]);
 
 			let currentChatRoomSender = getOtherUser(currentlySelectedChatRoom)
-					console.log("socket.on chatNotification 000000000000004", currentChatRoomSender);
-
-					// let filteredNotifications = []
 					if(!currentlySelectedChatRoom){
-						// filteredNotifications = fetchedNotifications.data.filter((notification: any)=>{
-						// 	// console.log("socket.on chatNotification 000000000000005", currentChatRoomSender[0]?._id !== notification?.senderId);
-						// 	if((currentChatRoomSender[0]?._id !== notification?.senderId)){
-						// 		return notification
-						// 	}
-	
-						// })
 						setNotifications([...notifications, data]);
 					}
-					// else{
-					// }
-
-					// if(filteredNotifications.length ==0){
-					// 	await deleteCandidatesAllNotificationsApi(candidate.id)
-					// }
-					// if(sender[0]._id !== data?.senderId) setNotifications([...notifications, data]);
-
-					
-			// ============================================================================================
-			
-			// useEffect(() => {
-			// 	socket.on("chatNotification", (data: any) => {
-			// 		// Increment notificationsCount when a chat notification is received
-			// 	});
-			// }, []);
 			
 		});
 	},[])
-
-	// useEffect(() => {
-    //     socket.on("chatNotification", (data: any) => {
-    //         // Increment notificationsCount when a chat notification is received
-    //         setNotificationsCount(prevCount => prevCount + 1);
-    //     });
-    // }, []);
-
-	// dispatch(setCandidateProfileDetails(notifications?.data));setNotificationsCount(fetchedNotificationsCount)
-
-
-
+	
 	useEffect(() => {
 		(async () => {
 			try {
@@ -257,24 +178,12 @@ const TopNavBarCandidate = () => {
 					);
 
 					let fetchedNotifications = await getCandidatesAllNotificationsApi(candidate?.id);
-					// let fetchedNotificationsCount = await getCandidatesNotificationCountApi(candidate?.id);
-
-					// console.log("fetchedNotifications$$$$$$$$$$$$", fetchedNotifications);
-					console.log("fetchedNotifications$$$$$$$$$$$$", fetchedNotifications.data);
-					// socket.on('notification', (data: any) => {
-
+					
 					let currentChatRoomSender = getOtherUser(currentlySelectedChatRoom)
-					console.log("socket.on chatNotification 000000000000004", currentChatRoomSender);
-
-					// let filteredNotifications = fetchedNotifications?.data?.filter((notification: any)=>{
-					// 	// console.log("socket.on chatNotification 000000000000005", currentChatRoomSender[0]?._id !== notification?.senderId);
-					// 	return currentChatRoomSender[0]?._id !== notification?.senderId
-					// })
-
+					
 					let filteredNotifications = []
 					if(currentlySelectedChatRoom){
 						filteredNotifications = fetchedNotifications.data.filter((notification: any)=>{
-							// console.log("socket.on chatNotification 000000000000005", currentChatRoomSender[0]?._id !== notification?.senderId);
 							if((currentChatRoomSender[0]?._id !== notification?.senderId)){
 								return notification
 							}
@@ -283,13 +192,7 @@ const TopNavBarCandidate = () => {
 					}else{
 						filteredNotifications = fetchedNotifications.data
 					}
-
-					console.log("notificationsCount1*****************", notificationsCount?.data);
-					console.log("notificationsCount2*****************", filteredNotifications?.length);
-
-					// console.log("socket.on chatNotification 000000000000005", sender[0]?._id !== notification?.senderId);
-					// return sender[0]?._id !== notification?.senderId
-
+					
 					setNotificationsCount(filteredNotifications.length)
 
 					// dispatch(setCandidateProfileDetails(notifications?.data));
@@ -300,39 +203,12 @@ const TopNavBarCandidate = () => {
 		})();
 	}, [notifications]);
 
-	// useEffect(() => {
-	// 	(async () => {
-	// 		try {
-	// 			if (openNotifications) {
-	// 				let notifications = await getCandidatesAllNotificationsApi(
-	// 					candidate?.id
-	// 				);
-
-	// 				console.log("notifications", notifications);
-
-	// 				dispatch(setCandidateProfileDetails(notifications?.data));
-	// 			}
-	// 		} catch (error) {
-	// 			console.error("Error fetching candidate profile:", error);
-	// 		}
-	// 	})();
-	// }, []);
-
-	// ============================================================================
-
-	// const notifications = [
-	// 	// Add your notification data here
-	// 	{ id: 1, message: "Notification 1" },
-	// 	{ id: 2, message: "Notification 2" },
-	// 	{ id: 2, message: "Notification 2" },
-	// 	{ id: 2, message: "Notification 2" },
-	// ];
 
 	
 	const clearNotifications = async(e: React.MouseEvent<HTMLElement, MouseEvent>) => {
 		// Implement logic to clear notifications
 		e.stopPropagation()
-		console.log("Clearing notifications...");
+		
 		await deleteCandidatesAllNotificationsApi(candidate.id)
 		setNotificationsCount(0)
 		setNotifications([])

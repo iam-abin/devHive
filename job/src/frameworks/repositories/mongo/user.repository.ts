@@ -3,11 +3,8 @@ import schemas from "../../database/mongo/models";
 const { UserModel } = schemas;
 
 export = {
-	createUser: async (userData: any) => {
-		console.log("user repository userData", userData);
-
+	createUser: async (userData: any) => { 
 		const newUser = UserModel.buildUser(userData);
-		console.log(newUser);
 		return await newUser.save();
 	},
 
@@ -22,11 +19,7 @@ export = {
 	},
 
 	findUserById: async (userId: string) => {
-		console.log("inside get user by userId repo ", userId , typeof userId);
-		
 		const user = await UserModel.findById(userId);
-		console.log("User found is ", user);
-		
 		return user;
 	},
 	

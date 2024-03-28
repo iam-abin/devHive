@@ -37,7 +37,6 @@ const ViewJobDetailsPage: React.FC = () => {
 		(async () => {
 			try {
 				const job = await viewJobDetailsApi(jobId);
-				console.log("in useEffect", job.data);
 				setJobDetails(job.data);
 			} catch (error: any) {
 				console.error(error);

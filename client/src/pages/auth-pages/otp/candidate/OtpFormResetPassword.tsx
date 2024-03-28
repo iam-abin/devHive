@@ -26,7 +26,6 @@ function OtpFormResetPassword() {
 
 	const handleSubmit = async (otp: string) => {
 		try {
-			console.log("Submitted OTP:", otp);
 
 			dispatch(setLoading());
 			const response = await verifyResetPasswordOtpCandidateApi(
@@ -34,8 +33,6 @@ function OtpFormResetPassword() {
 				otp,
 				candidateData.email
 			);
-			console.log("hiiii", response);
-			console.log("hiiii", response.data);
 			if (response.data === "pending") {
 				notify(
 					response.message ||

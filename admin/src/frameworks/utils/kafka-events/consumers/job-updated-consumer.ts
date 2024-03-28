@@ -13,9 +13,7 @@ export class JobUpdatedEventConsumer extends KafkaConsumer<JOB_UPDATED_EVENT>{
     }
 
     async onMessage(data: JOB_UPDATED_EVENT['data'], topic: string, message: KafkaMessage): Promise<void> {
-
-        console.log("JobUpdatedTopic consumer admin",data);
-			
+        
 			// dont need to check userType as every users are stored in one collection 
 			handleMessage(data, topic, message )
         

@@ -3,9 +3,7 @@ export = (dependencies: any) => {
 		repositories: { membershipRepository, paymentRepository },
 	} = dependencies;
 
-	if (!paymentRepository) {
-		throw new Error("paymentRepository should exist in dependencies");
-	}
+	if (!paymentRepository) throw new Error("paymentRepository should exist in dependencies"); 
 
 	const execute = async () => {
 		const monthlyPayments: any = await paymentRepository.getGraphData();
@@ -29,22 +27,12 @@ export = (dependencies: any) => {
 		palmentPlanNamesArray.forEach((paymentPlan: string) => {
 			arrays[paymentPlan] = new Array(12).fill(0);
 		});
-		console.log(arrays); // Output: { premium: [], gold: [] }
 		
+		// Output: { premium: [], gold: [] }
 		for(let payment of monthlyPayments){
 			arrays[payment.planName][payment.month.month-1] = payment.totalAmount
-		}
-
-		console.log(
-			"inside get dashboard graph details usecase ",
-			monthlyPayments
-		);
-		console.log(
-			"inside get dashboard graph details paymentPlans usecase array of Objects ",
-			arrays
-		);
-
-		  
+		} 
+		
 		let arr = [];
 		for(let plan in arrays){
 		  arr.push({

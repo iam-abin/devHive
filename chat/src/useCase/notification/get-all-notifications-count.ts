@@ -9,9 +9,7 @@ export = (dependencies: DependenciesData) => {
 		throw new Error("notificationsRepository should exist in dependencies");
 	}
 
-	const execute =(userId: string) => {
-        console.log("in get all notifications usecase",userId);
-        
+	const execute =(userId: string) => { 
 		return notificationsRepository.getAllNotificationsCountByUserId(userId);
 	};
 

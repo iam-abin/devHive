@@ -24,15 +24,12 @@ function OtpFormPageForgotPassword() {
 
 	const handleSubmit = async (otp: string) => {
 		try {
-			console.log("Submitted OTP:", otp);
 
 			dispatch(setLoading());
 			const response = await verifyForgotPasswordOtpRecruiterApi(
 				otp,
 				email!
 			);
-			console.log("hiiii", response);
-			console.log("hiiii", response.data);
 			notify(response?.message, "success");
 			navigate(`/recruiter/forgotPassword/${response.data.id}`);
 		} catch (error: any) {

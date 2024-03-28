@@ -13,10 +13,8 @@ export = (dependencies: DependenciesData) => {
 
 	const execute = async (premiumPlanData: MembershipPlanData) => {
 		
-	  
 		const membershipPlan = new MembershipPlan(premiumPlanData);
-		console.log("in execute ", membershipPlan);
-		
+
 		return await membershipRepository.createMembershipPlan(membershipPlan);
 	  };
 

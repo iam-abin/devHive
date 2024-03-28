@@ -9,10 +9,7 @@ const FileUpload: React.FC<FileUploadUploadProps> = ({ onUpload }) => {
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
-
-    console.log("in file upload event.target.files ",files  );
     
-
     if (files && files.length > 0) {
       const selected = files[0];
       setSelectedFile(selected);
@@ -22,8 +19,6 @@ const FileUpload: React.FC<FileUploadUploadProps> = ({ onUpload }) => {
   const handleUpload = () => {
     if (selectedFile) {
       // Perform the upload action here
-      console.log("in handleUpload selectedFile", selectedFile);
-      
       onUpload(selectedFile);
     }
   };

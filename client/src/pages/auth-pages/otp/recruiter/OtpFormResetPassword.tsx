@@ -25,7 +25,6 @@ function OtpFormResetPassword() {
 
 	const handleSubmit = async (otp: string) => {
 		try {
-			console.log("Submitted OTP:", otp);
 
 			dispatch(setLoading());
 			const response = await verifyResetPasswordOtpRecruiterApi(
@@ -33,12 +32,6 @@ function OtpFormResetPassword() {
 				otp,
 				recruiterData?.email
 			);
-			console.log("hiiii", response);
-			console.log("hiiii", response.data);
-			// if(response.data.data == "pending") {
-			//     notify(response.data.message, 'error');
-			//     return
-			//   }
 			if (response.data === "pending") {
 				notify(
 					response.message ||

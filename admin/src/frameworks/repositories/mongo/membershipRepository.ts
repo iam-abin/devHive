@@ -7,11 +7,6 @@ export = {
 	// these fn's are returning a promise as async so we can defile return type as Promise<CandidateDataInterface>
 
 	createMembershipPlan: async (membershipPlanData: any): Promise<any> => {
-		console.log(
-			"inside createMembershipPlan fn in admin service",
-			membershipPlanData
-		);
-
 		const membershipPlanObject =
 			MembershipPlansModel.buildMembershipPlan(membershipPlanData);
 		return await membershipPlanObject.save();
@@ -21,9 +16,7 @@ export = {
 		const membershipPlan = await MembershipPlansModel.findById(
 			membershipPlanId
 		);
-		if (!membershipPlan) {
-			throw new Error("membershipPlan not found");
-		}
+		if (!membershipPlan) throw new Error("membershipPlan not found");
 
 		membershipPlan.isActive = !membershipPlan.isActive;
 
@@ -31,23 +24,12 @@ export = {
 	},
 
 	updateMembershipPlan: async (membershipPlanId: string, data: object) => {
-		console.log(
-			"in updateMembershipPlan repository membershipPlanId",
-			membershipPlanId,
-			" data ",
-			data
-		);
-
 		const updatedMembershipPlan =
 			await MembershipPlansModel.findOneAndUpdate(
 				{ _id: membershipPlanId },
 				{ $set: data },
 				{ new: true }
 			);
-		console.log(
-			"in updateMembershipPlan repository after update",
-			updatedMembershipPlan
-		);
 		return updatedMembershipPlan;
 	},
 

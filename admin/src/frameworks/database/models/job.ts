@@ -80,7 +80,7 @@ interface JobModel extends mongoose.Model<JobDocument> {
 }
 
 jobSchema.statics.buildJob = (attributes: JobAttributes) => {
-	console.log("in build job attributes", attributes);
+	
 	const jobId = new mongoose.Types.ObjectId(attributes.jobId);
 
 	return new JobModel({ ...attributes, jobId });

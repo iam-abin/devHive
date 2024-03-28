@@ -7,21 +7,13 @@ export = {
 	// These fn's are returning a promise as async so we can defile return type as Promise<CandidateDataInterface>
 	// CreateRecruiterProfile is calling when the user is signed in, and then creates a basic profile
 
-	createRecruiterProfile: async (userData: any): Promise<any> => {
-		console.log(
-			"inside create Recruiter repo in  profile service",
-			userData
-		);
-		// const userObject = new RecruiterProfileModel(userData);
+	createRecruiterProfile: async (userData: any): Promise<any> => { 
 		const userObject = RecruiterProfileModel.buildRecruiter(userData);
 		return await userObject.save();
 	},
 
-	getProfileByUserId: async (userId: string): Promise<any> => {
-		console.log("get getRecruiterProfileByUserId repo userId ",userId);
-		const recruiter = await RecruiterProfileModel.findById(userId);
-		console.log("get getRecruiterProfileByUserId repo ",recruiter);
-		
+	getProfileByUserId: async (userId: string): Promise<any> => { 
+		const recruiter = await RecruiterProfileModel.findById(userId); 
 		return recruiter;
 	},
 
@@ -32,9 +24,6 @@ export = {
 
 	// updating and block unblocking is also doing here
 	updateRecruiterProfile: async (id: string, data: any): Promise<any> => {
-		console.log(" in updateRecruiterProfile repo id ", id);
-		console.log(" in updateRecruiterProfile repo data ", data);
-		
 		
 		const recruiter = await RecruiterProfileModel.findOneAndUpdate(
 			{ _id: id },

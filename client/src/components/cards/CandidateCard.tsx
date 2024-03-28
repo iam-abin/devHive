@@ -4,14 +4,7 @@ const CandidateCard: React.FC<{ candidate: any; handleViewCandidate: any }> = ({
 	candidate,
 	handleViewCandidate,
 }) => {
-	console.log("in candidate Card");
-	console.log("in candidate Card", candidate);
-	console.log(candidate.name);
-
-	// Check if candidate or skills_required is undefined before mapping
-	if (!candidate) {
-		return null; // or render an alternative UI
-	}
+	if (!candidate) return null; // or render an alternative UI
 
 	return (
 		<div className="md:mx-40 pb-4 px-2" key={candidate.id}>

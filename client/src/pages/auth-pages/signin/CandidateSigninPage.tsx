@@ -13,22 +13,18 @@ import { setCandidate } from "../../../redux/slice/candidateSlice/candidateDataS
 import { RootState } from "../../../redux/reducer/reducer";
 import Loading from "../../../components/loading/Loading";
 import candidateLoginImage from "../../../assets/candidate/candidate-login.svg";
-import googleIcon from "../../../assets/google/google-icon.svg";
+// import googleIcon from "../../../assets/google/google-icon.svg";
 import { gapi } from 'gapi-script';
 
-import React, { useEffect, useState } from "react";
-import { GoogleLogin, GoogleOAuthProvider, useGoogleLogin } from "@react-oauth/google";
-import axios from "axios";
+import React, { useEffect } from "react";
+// import { GoogleLogin, GoogleOAuthProvider, useGoogleLogin } from "@react-oauth/google";
+// import axios from "axios";
 import { RiArrowLeftFill } from "react-icons/ri";
 // import { GoogleLogin } from "@react-oauth/google";
 const CandidateSigninPage: React.FC = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-
-	const [ user, setUser ] = useState<any>([]);
-    const [ profile, setProfile ] = useState([]);
-	// let clientId = "489110239720-2e35usfdf9kavcchc93fbun2oeismh10.apps.googleusercontent.com"
-
+	
 	const isLoading = useSelector(
 		(state: RootState) => state.loading.isLoading
 	);
@@ -37,13 +33,11 @@ const CandidateSigninPage: React.FC = () => {
 		try {
 			// dispatch(setLoading());
 			const response = await candidateSigninApi(userData);
-			console.log("hiiii", response);
-			console.log("hiiii", response.data);
 			dispatch(setCandidate(response));
 			notify(response.message, "success");
 			navigate("/candidate");
 		} catch (error: any) {
-			console.log("in signin form error", error);
+			console.error("in signin form error", error);
 
 			notify(error.response.data.errors[0].message || "invalid email or password", "error");
 		} finally {
@@ -55,14 +49,6 @@ const CandidateSigninPage: React.FC = () => {
 		return <Loading />;
 	}
 
-	const responseMessage = (response: any) => {
-		console.log("res message success ",response);
-		setUser(response)
-		
-	};
-	const errorMessage: any = (error: any) => {
-		console.log("error message ",error);
-	};
 
 	useEffect(()=>{
 		function start(){
@@ -74,34 +60,6 @@ const CandidateSigninPage: React.FC = () => {
 
 		gapi.load('client:auth2', start)
 	})
-
-
-	// useEffect(
-    //     () => {
-    //         if (user) {
-    //             // user == [] ? console.log(user) : console.log("Empty user")
-    //             axios
-    //                 .get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
-    //                     headers: {
-    //                         Authorization: `Bearer ${user.access_token}`,
-    //                         Accept: 'application/json'
-    //                     }
-    //                 })
-    //                 .then((res) => {
-    //                     setProfile(res.data);
-    //                     console.log("data assigned res.data", res.data);
-    //                 })
-    //                 .catch((err) => console.log(err));
-    //         }
-    //     },
-    //     [user]
-    // );
-
-
-    // const login = useGoogleLogin({
-    //     onSuccess: (codeResponse: any) => setUser(codeResponse),
-    //     onError: (error) => console.log('Login Failed:', error)
-    // });
 	return (
 		<div className="flex w-full h-screen">
 			<button onClick={()=>navigate('/candidate')} className="bg-slate-700 rounded-xl p-2 text-white w-20 flex justify-between items-center absolute m-10"><RiArrowLeftFill />home</button>
@@ -110,7 +68,6 @@ const CandidateSigninPage: React.FC = () => {
 					initialValues={initialSigninValues}
 					validationSchema={signInSchema}
 					onSubmit={(values) => {
-						console.log(values);
 						handleSubmit(values);
 					}}
 				>

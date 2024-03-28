@@ -20,13 +20,7 @@ export = (dependencies: DependenciesData) => {
 		const job = await getMemberShipPlanByIdUseCase(dependencies).execute(
 			membershipPlanId
 		);
-		if (!job) {
-			console.log(
-				`No job Fount with membershipPlanId ${membershipPlanId}`
-			);
-
-			throw new NotFoundError();
-		}
+		if (!job) throw new NotFoundError();
 
 		const response = await blockUnblockMemberShipPlanUseCase(
 			dependencies

@@ -72,7 +72,7 @@ interface CompanyProfileModel extends mongoose.Model<CompanyDocument> {
 
 // 5.In Mongoose, you can also add custom functions to a model using statics.
 companySchema.statics.buildCompany = (attributes: CompanyAttributes) => {
-	console.log("inside build candidate ", attributes);
+	
 	const recruiterId =  new mongoose.Types.ObjectId(attributes.recruiterId);
 	
 	return new CompanyProfileModel( {...attributes, recruiters: recruiterId? [recruiterId] : []} );

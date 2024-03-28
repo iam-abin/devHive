@@ -17,7 +17,7 @@ export = (dependencies: DependenciesData) => {
 
 	return async (req: Request, res: Response) => {
 		const { email, otp } = req.body;
-		console.log("email ", email, "otp ", otp);
+		
 		let parsedOtp;
 		if (typeof otp == "string") {
 			parsedOtp = parseInt(otp);
@@ -27,9 +27,7 @@ export = (dependencies: DependenciesData) => {
 		}
 
 		const user = await getUserByEmailUseCase(dependencies).execute(email);
-		if (!user) {
-			throw new BadRequestError("Invalid email");
-		}
+		if (!user) throw new BadRequestError("Invalid email"); 
 		
 		const checkOtp = await checkEmailVerificationOtpUseCase(
 			dependencies
@@ -40,11 +38,7 @@ export = (dependencies: DependenciesData) => {
 				message: "invalid otp",
 			});
 		}
-
-		console.log("email verified");
-
-		// const user = await getUserByEmailUseCase(dependencies).execute(checkToken.email);
-
+		
 		// to produce a message to kafka topic
 		const userCreatedEvent = new UserCreatedEventPublisher(kafkaClient);
 		await userCreatedEvent.publish({

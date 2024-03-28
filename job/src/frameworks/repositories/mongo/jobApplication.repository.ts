@@ -5,25 +5,16 @@ const { JobModel, jobApplicationModel, UserModel } = schemas;
 export = {
 	applyJob: async (data: object) => {
 		const newApplication = await jobApplicationModel.create(data);
-		console.log("in applyJob repository");
-
+		
 		return newApplication;
 	},
 
 	getAJobApplication: async (id: string, data: object) => {
-		console.log(
-			".................................................................."
-		);
-
+		
 		const applicationExists = await jobApplicationModel.findOne({
 			_id: id,
 		});
-
-		// console.log("inside get A JobApplication ============");
-		// console.log(applicationExists);
-
-		// console.log("inside get A JobApplication ============");
-
+		
 		return applicationExists;
 	},
 
@@ -39,7 +30,7 @@ export = {
 			.sort({ createdAt: -1 })
 			.skip(skip)
 			.limit(limit);
-		console.log(appliedJobs);
+			
 		return appliedJobs;
 	},
 
@@ -47,7 +38,7 @@ export = {
 		const totalJobs: number = await jobApplicationModel.countDocuments({
 			candidateId: id,
 		});
-		console.log(totalJobs);
+		
 		return totalJobs;
 	},
 
@@ -63,19 +54,13 @@ export = {
 				.find({ recruiterId: recruiterId })
 				.populate({ path: "jobId", model: JobModel })
 				.populate({ path: "candidateId", model: UserModel });
-			console.log(
-				"in getAllJobApplicationsByRecruiterId",
-				jobApplications
-			);
+				
 		} else {
 			jobApplications = await jobApplicationModel
 				.find({ candidateId: candidateId })
 				.populate({ path: "jobId", model: JobModel })
 				.populate({ path: "candidateId", model: UserModel });
-			console.log(
-				"in getAllJobApplicationsByRecruiterId",
-				jobApplications
-			);
+				
 		}
 
 		return jobApplications;
@@ -91,14 +76,13 @@ export = {
 	},
 
 	getAJobApplicationByRecruiter: async (jobApplicationId: string) => {
-		// use populate
+		
 		const jobApplications = await jobApplicationModel
 			.findOne({ _id: jobApplicationId })
 			.populate({ path: "jobId", model: JobModel })
 			.populate({ path: "candidateId", model: UserModel })
 			.populate({ path: "recruiterId", model: UserModel });
-		console.log("in getAJobApplicationByRecruiter", jobApplications);
-
+			
 		return jobApplications;
 	},
 
@@ -106,19 +90,12 @@ export = {
 		candidateId: string,
 		jobApplicationId: string
 	) => {
-		// use populate
-		console.log(
-			"in getAnAppliedJobByCandidate1 jobApplicationId",
-			jobApplicationId
-		);
-		console.log("in getAnAppliedJobByCandidate1 candidateId", candidateId);
-
+		
 		const jobApplication = await jobApplicationModel
 			.findOne({ jobId: jobApplicationId, candidateId })
 			.populate({ path: "jobId", model: JobModel })
 			.populate({ path: "recruiterId", model: UserModel });
-		console.log("in getAnAppliedJobByCandidate2", jobApplication);
-
+			
 		return jobApplication;
 	},
 
@@ -126,7 +103,7 @@ export = {
 		jobApplicationId: string,
 		applicationStatus: string
 	) => {
-		// use populate
+		
 		const jobApplications = await jobApplicationModel.findOneAndUpdate(
 			{ _id: jobApplicationId },
 			{
@@ -136,8 +113,7 @@ export = {
 			},
 			{ new: true }
 		);
-		console.log("in changeJobApplicationStatus", jobApplications);
-
+		
 		return jobApplications;
 	},
 
@@ -145,7 +121,7 @@ export = {
 		const totalJobs: number = await jobApplicationModel.countDocuments({
 			recruiterId: id,
 		});
-		console.log("numberOfJobApplicationsToMe", totalJobs);
+		
 		return totalJobs;
 	},
 
@@ -154,7 +130,7 @@ export = {
 			recruiterId: recruiterId,
 			applicationStatus: "Applied",
 		});
-		console.log("numberOfAppliedStatusCount", totalJobs);
+		
 		return totalJobs;
 	},
 	numberOfShortlistedStatusCount: async (recruiterId: string) => {
@@ -162,7 +138,7 @@ export = {
 			recruiterId: recruiterId,
 			applicationStatus: "Shortlisted",
 		});
-		console.log("numberOfJobApplicationsToMe", totalJobs);
+		
 		return totalJobs;
 	},
 	numberOfRejectedStatusCount: async (recruiterId: string) => {
@@ -170,7 +146,7 @@ export = {
 			recruiterId: recruiterId,
 			applicationStatus: "Rejected",
 		});
-		console.log("numberOfJobApplicationsToMe", totalJobs);
+		
 		return totalJobs;
 	},
 };

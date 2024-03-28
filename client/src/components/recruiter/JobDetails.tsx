@@ -20,7 +20,6 @@ const JobDetails: React.FC<{
 	handleApplyJob,
 	handleGoBack,
 }) => {
-	console.log("jobDetails in JobDetails component:", jobDetails);
 	const location = useLocation();
 	const navigate = useNavigate();
 
@@ -37,9 +36,7 @@ const JobDetails: React.FC<{
 
 	if (isRecruiterPage) {
 		// Do something specific for the "recruiter" page
-		console.log("This is a recruiter page");
 	}
-	console.log(jobDetails, "in job details component");
 
 	return (
 		<div>
@@ -234,11 +231,6 @@ const JobDetails: React.FC<{
 											: "bg-red-600"
 									} text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300`}
 									onClick={() => {
-										console.log(
-											"onclick handle submit jobDetails ",
-											jobDetails.id
-										);
-
 										return handleChangeJobCloseStatus(
 											jobDetails?.id
 										);
@@ -257,11 +249,6 @@ const JobDetails: React.FC<{
 							<button
 								className="bg-primary text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300"
 								onClick={() => {
-									console.log(
-										"onclick handle submit jobDetails ",
-										jobDetails.id
-									);
-
 									return handleEditJob(jobDetails?.id);
 								}}
 							>
@@ -271,11 +258,6 @@ const JobDetails: React.FC<{
 							<button
 								className="bg-primary text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300"
 								onClick={() => {
-									console.log(
-										"onclick handle apply ",
-										jobDetails.id
-									);
-
 									return handleApplyJob(
 										jobDetails?.id,
 										candidateData.id,
@@ -289,11 +271,6 @@ const JobDetails: React.FC<{
 							<button
 								className="bg-primary text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300"
 								onClick={() => {
-									console.log(
-										"onclick handle apply ",
-										jobDetails.id
-									);
-
 									return handleGoBack(jobDetails?.id);
 								}}
 							>

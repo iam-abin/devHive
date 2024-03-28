@@ -26,7 +26,6 @@ function AllJobsPage() {
 	};
 
 	const handleView = async (jobId: string) => {
-		console.log("id handle view ", jobId);
 		// dispatch(setRecruiterJobId(id))
 		navigate(`/candidate/job-details/${jobId}`);
 	};
@@ -34,7 +33,6 @@ function AllJobsPage() {
 	useEffect(() => {
 		(async () => {
 			const allJobs = await getAllJobsApi(currentPage);
-			console.log("allJobs", allJobs);
 			setJobs(allJobs.data);
 			setpageCount(allJobs.totalNumberOfPages);
 		})();

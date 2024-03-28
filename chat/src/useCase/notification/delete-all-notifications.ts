@@ -9,9 +9,7 @@ export = (dependencies: DependenciesData) => {
 		throw new Error("jobApplicationRepository should exist in dependencies");
 	}
 
-	const execute =(userId: string) => {
-        console.log("in delete notifications usecase",userId);
-        
+	const execute =(userId: string) => { 
 		return notificationsRepository.clearAllNotificationsByUserId(userId);
 	};
 
