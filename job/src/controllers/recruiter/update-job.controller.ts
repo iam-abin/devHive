@@ -12,6 +12,12 @@ export = (dependencies: DependenciesData)=>{
         const data = req.body;
         const {jobId} = data;
         
+        if(!data.company_name || !data.company_location ) throw new BadRequestError('Add company details in the profile before creating a job!!');
+        if(!data.salary_min || !data.salary_max) throw new BadRequestError('must add all salary fields!!'); 
+        if(data.salary_min > data.salary_max ) throw new BadRequestError('min salary must be less than max salary!!');
+        if(data.salary_min <0 || data.salary_max<0 ) throw new BadRequestError('cannot add negative values in the salary field!!');
+        if(data.available_position && data.available_position<0 ) throw new BadRequestError('cannot add negative values in the available position field!!');
+        
         const job = await getJobByIdUseCase(dependencies).execute(jobId);
         if(!job)  throw new NotFoundError();
 
