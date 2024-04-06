@@ -36,7 +36,7 @@ const PremiumMembershipPage = lazy(
 );
 
 const PaymentsListPage = lazy(
-	() => import("../pages/Error/NotFound")
+	() => import("../pages/payment/PaymentsListPage")
 );
 
 const AdminDashBoard = lazy(
@@ -167,7 +167,7 @@ function AdminRoutes() {
 							path="/payments"
 							element={
 								isAdminLoggedIn ? (
-									<PaymentsListPage url={""} />
+									<PaymentsListPage />
 								) : (
 									<Navigate to="/admin" />
 								)
