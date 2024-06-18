@@ -2,9 +2,9 @@ import express from "express"
 import { requireAuthAdmin } from "@abijobportal/common";
 
 import { jobControllers } from "../../../controllers";
-import { DependenciesData } from "../../types/dependencyInterface";
+import { IDependenciesData } from "../../types/dependencyInterface";
 
-export const jobRouter = (dependencies: DependenciesData)=>{
+export const jobRouter = (dependencies: IDependenciesData)=>{
     const router = express.Router();
 
     const { blockUnblockJobController, viewJobController, viewJobsController  } = jobControllers(dependencies);

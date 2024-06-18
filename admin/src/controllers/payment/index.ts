@@ -1,8 +1,8 @@
-import { DependenciesData } from "../../frameworks/types/dependencyInterface";
+import { IDependenciesData } from "../../frameworks/types/dependencyInterface";
 
 import getAllPaymentsController from "./get-all-payments.controller";
 
-export = (dependencies: DependenciesData) => {
+export = (dependencies: IDependenciesData) => {
 	return {
 		getAllPaymentsController: getAllPaymentsController(dependencies),
 	};

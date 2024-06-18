@@ -1,19 +1,19 @@
-import schemas from "../../database/mongo/models";
+import models from "../../database/mongo/models";
 
-const { RecruiterProfileModel } = schemas;
+const { RecruiterProfileModel } = models;
 
 // we want to export some closure
 export = {
 	// These fn's are returning a promise as async so we can defile return type as Promise<CandidateDataInterface>
 	// CreateRecruiterProfile is calling when the user is signed in, and then creates a basic profile
 
-	createRecruiterProfile: async (userData: any): Promise<any> => { 
+	createRecruiterProfile: async (userData: any): Promise<any> => {
 		const userObject = RecruiterProfileModel.buildRecruiter(userData);
 		return await userObject.save();
 	},
 
-	getProfileByUserId: async (userId: string): Promise<any> => { 
-		const recruiter = await RecruiterProfileModel.findById(userId); 
+	getProfileByUserId: async (userId: string): Promise<any> => {
+		const recruiter = await RecruiterProfileModel.findById(userId);
 		return recruiter;
 	},
 
@@ -24,7 +24,6 @@ export = {
 
 	// updating and block unblocking is also doing here
 	updateRecruiterProfile: async (id: string, data: any): Promise<any> => {
-		
 		const recruiter = await RecruiterProfileModel.findOneAndUpdate(
 			{ _id: id },
 			{ $set: data },
@@ -44,7 +43,7 @@ export = {
 	getCandidateResume: async (id: string): Promise<any> => {
 		const candidate = await RecruiterProfileModel.findById(id);
 		return candidate;
-	},	
+	},
 };
 
 // export default repository();

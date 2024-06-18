@@ -1,11 +1,11 @@
-import schemas from "../../database/models"
+import Models from "../../database/models"
 
-const { CompanyProfileModel } = schemas;
+const { CompanyProfileModel } = Models;
 
 // we want to export some closure
 export = {
 
-	 // these fn's are returning a promise as async so we can defile return type as Promise<CandidateDataInterface>
+	 // these fn's are returning a promise as async so we can define return type as Promise<ICandidateData>
 
 	 createCompany: async (companyData: any) => {
 		

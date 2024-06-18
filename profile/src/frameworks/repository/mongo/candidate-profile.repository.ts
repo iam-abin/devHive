@@ -1,19 +1,17 @@
-import schemas from "../../database/mongo/models";
+import models from "../../database/mongo/models";
 
-const { CandidateProfileModel } = schemas;
+const { CandidateProfileModel } = models;
 
 // we want to export some closure
 export = {
 	// These fn's are returning a promise as async so we can defile return type as Promise<CandidateDataInterface>
 	// CreateCandidateProfile is calling when the user is signed in, and then creates a basic profile
 	createCandidateProfile: async (userData: any): Promise<any> => {
-		
 		const userObject = CandidateProfileModel.buildCandidate(userData);
 		return await userObject.save();
 	},
 
 	getProfileByUserId: async (userId: string): Promise<any> => {
-		
 		const candidate = await CandidateProfileModel.findById(userId);
 		return candidate;
 	},
@@ -25,24 +23,22 @@ export = {
 
 	// updating and block unblocking is also doing here
 	updateCandidateProfile: async (id: string, data: any): Promise<any> => {
-		
 		const candidate = await CandidateProfileModel.findOneAndUpdate(
 			{ _id: id },
 			{ $set: data },
 			{ new: true }
 		);
-		
+
 		return candidate;
 	},
 
 	uploadProfilePic: async (id: string, url: string): Promise<any> => {
-		
 		const candidate = await CandidateProfileModel.findOneAndUpdate(
 			{ _id: id },
 			{ $set: { profile_image: url } },
 			{ new: true }
 		);
-		
+
 		return candidate;
 	},
 
@@ -51,18 +47,16 @@ export = {
 		url: string,
 		filename: string
 	): Promise<any> => {
-		
 		const candidate = await CandidateProfileModel.findOneAndUpdate(
 			{ _id: id },
 			{ $set: { resume: { filename, url } } },
 			{ new: true }
 		);
-		
+
 		return candidate;
 	},
 
 	deleteResumeByCandidateId: async (userId: string): Promise<any> => {
-		
 		const candidate = await CandidateProfileModel.findOneAndUpdate(
 			{ _id: userId },
 			{ $unset: { resume: null } },
@@ -71,18 +65,20 @@ export = {
 		return candidate;
 	},
 
-	updateSkills: async (id: string, skills: [string]): Promise<any> => {
-		
+	updateSkills: async (id: string, skills: string[]): Promise<any> => {
 		const profile = await CandidateProfileModel.findOneAndUpdate(
 			{ _id: id },
 			{ $set: { keySkills: skills } },
 			{ new: true }
 		);
-		
+
 		return profile;
 	},
 
-	updatePreferredJobs: async (id: string, preferredJobs: [string]): Promise<any> => {
+	updatePreferredJobs: async (
+		id: string,
+		preferredJobs: string[]
+	): Promise<any> => {
 		const profile = await CandidateProfileModel.findOneAndUpdate(
 			{ _id: id },
 			{ $set: { preferredJobs: preferredJobs } },
@@ -100,17 +96,16 @@ export = {
 		);
 		return user;
 	},
-	
+
 	getAllCandidatesProfiles: async (
 		skip: number,
 		limit: number
 	): Promise<any[]> => {
-		
 		const jobs = await CandidateProfileModel.find()
 			.sort({ createdAt: -1 })
 			.skip(skip)
 			.limit(limit);
-			
+
 		return jobs;
 	},
 

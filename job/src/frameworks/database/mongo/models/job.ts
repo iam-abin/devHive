@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-interface JobAttributes {
+interface IJobAttributes {
 	title: string;
 	recruiterId: string;
 	// company_name: string,
@@ -19,7 +19,7 @@ interface JobAttributes {
 	deadline?: Date;
 }
 
-interface JobDocument extends mongoose.Document {
+interface IJobDocument extends mongoose.Document {
 	title: string;
 	recruiterId: mongoose.Schema.Types.ObjectId;
 	company_name: string;
@@ -92,11 +92,11 @@ const jobSchema = new mongoose.Schema(
 	}
 );
 
-interface JobModel extends mongoose.Model<JobDocument> {
-	buildJob(attributes: JobAttributes): JobDocument;
+interface JobModel extends mongoose.Model<IJobDocument> {
+	buildJob(attributes: IJobAttributes): IJobDocument;
 }
 
-jobSchema.statics.buildJob = (attributes: JobAttributes) => {
+jobSchema.statics.buildJob = (attributes: IJobAttributes) => {
 	
 	if (
 		attributes.recruiterId &&
@@ -113,6 +113,6 @@ jobSchema.statics.buildJob = (attributes: JobAttributes) => {
 	return new JobModel({ ...attributes, recruiterId });
 };
 
-const JobModel = mongoose.model<JobDocument, JobModel>("Job", jobSchema);
+const JobModel = mongoose.model<IJobDocument, JobModel>("Job", jobSchema);
 
 export { JobModel };

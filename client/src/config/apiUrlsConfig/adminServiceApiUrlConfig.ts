@@ -7,11 +7,13 @@ const ADMIN_MEMBERSHIP_PLANS_URL = `admin/membership`;
 const ADMIN_PAYMENT_URL = `admin/payment`
 
 const adminApiUrlConfig = {
+	
 	// jobs
 	getAllJobsUrl: `${JOB_ADMIN_URL}/jobs`,
 	blockUnblockJobUrl: (jobId: string) =>
 		`${JOB_ADMIN_URL}/blockUnblock/${jobId}`,
 	viewJobDetailsUrl: (jobId: string) => `${JOB_ADMIN_URL}/viewJob/${jobId}`,
+
 
 	// Recruiter
 	getAllRecruitersUrl: `${RECRUITER_ADMIN_URL}/recruiters`,
@@ -20,6 +22,7 @@ const adminApiUrlConfig = {
 	viewRecruiterProfileDetailsUrl: (userId: string) =>
 		`${RECRUITER_ADMIN_URL}/viewProfile/${userId}`,
 
+
 	// Candidate
 	getAllCandidatesUrl: `${CANDIDATE_ADMIN_URL}/candidates`,
 	blockUnblockCandidateUrl: (userId: string) =>
@@ -27,11 +30,13 @@ const adminApiUrlConfig = {
 	viewCandidateProfileDetailsUrl: (userId: string) =>
 		`${CANDIDATE_ADMIN_URL}/viewProfile/${userId}`,
 
+
 	// Company
 	getAllCompaniesUrl: `${COMPANY_ADMIN_URL}/companies`,
 	blockUnblockCompanyUrl: (companyId: string) =>
 		`${COMPANY_ADMIN_URL}/company/blockUnblock/${companyId}`,
 	// viewCompanyProfileDetailsUrl: (companyId: string) => `${COMPANY_ADMIN_URL}/viewProfile/${companyId}`,
+
 
 	// Premium plans
 	getAllMembershipPlansUrl: `${ADMIN_MEMBERSHIP_PLANS_URL}/view-membership-plans`,
@@ -42,8 +47,10 @@ const adminApiUrlConfig = {
 	blockUnblockMembershipPlanUrl: (membershipPlanId: string) =>
 	`${ADMIN_MEMBERSHIP_PLANS_URL}/block-unblock-membership-plan/${membershipPlanId}`,
 
+
 	// Payment
 	getAllPaymentsUrl: `${ADMIN_PAYMENT_URL}/get-all-payments`,
+
 
 	// dashboard 
 	getAllCardsDetailsUrl: `${DASHBOARD_ADMIN_URL}/data`,

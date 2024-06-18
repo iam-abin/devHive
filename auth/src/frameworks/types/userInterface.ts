@@ -1,4 +1,4 @@
-export interface UserDataSignup {
+export interface IUserDataSignup {
 	name: string;
 	email: string;
 	phone: number;
@@ -8,13 +8,13 @@ export interface UserDataSignup {
 	otp: number
 }
 
-export interface UserDataSignin {
+export interface IUserDataSignin {
 	email: string;
 	password: string;
 	userType: string;
 }
 
-export interface UpdatePasswordInput {
+export interface IUpdatePasswordInput {
 	id: string;
 	password: string;
 }

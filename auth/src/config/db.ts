@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const connectDB = async () => {
+const connectDB = async ():  Promise<void> => {
 	try {
 		await mongoose.connect(process.env.MONGO_URL_AUTH as string);
 		console.log("auth service connected to mongodb...");

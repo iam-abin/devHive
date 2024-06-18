@@ -1,9 +1,9 @@
 import express from "express";
 
 import { otpControllers } from "../../../controllers";
-import { DependenciesData } from "../../types/dependencyInterface";
+import { IDependenciesData } from "../../types/dependencyInterface";
 
-export const otpRouter = (dependencies: DependenciesData) => {
+export const otpRouter = (dependencies: IDependenciesData) => {
 	const router = express.Router();
 
 	const {

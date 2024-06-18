@@ -1,13 +1,12 @@
-import schemas from "../../database/models";
+import Models from "../../database/models";
 
-const { JobModel } = schemas;
+const { JobModel } = Models;
 
 // we want to export some closure
 export = {
-	// these fn's are returning a promise as async so we can defile return type as Promise<CandidateDataInterface>
+	// these fn's are returning a promise as async so we can define return type as Promise<ICandidateData>
 
 	createJob: async (jobData: any): Promise<any> => {
-
 		const jobObject = JobModel.buildJob(jobData);
 		return await jobObject.save();
 	},
@@ -24,13 +23,12 @@ export = {
 	},
 
 	updateJob: async (jobId: string, data: object) => {
-
 		const updatedJob = await JobModel.findOneAndUpdate(
 			{ jobId: jobId },
 			{ $set: data },
 			{ new: true }
 		);
-		
+
 		return updatedJob;
 	},
 
@@ -45,15 +43,13 @@ export = {
 	},
 
 	deleteJob: async (jobId: string) => {
-		
 		const deletedJob = await JobModel.deleteOne({ jobId: jobId });
-		
 		return deletedJob;
 	},
 
-	numberOfJobs: async ()=>{
-		const totalJobs = await JobModel.countDocuments()
-		return totalJobs
+	numberOfJobs: async () => {
+		const totalJobs = await JobModel.countDocuments();
+		return totalJobs;
 	},
 };
 

@@ -1,8 +1,8 @@
 import updatePasswordController from "../passwordUpdate/update-password.controller";
 
-import { DependenciesData } from "../../frameworks/types/dependencyInterface";
+import { IDependenciesData } from "../../frameworks/types/dependencyInterface";
 
-export = (dependencies: DependenciesData) => {
+export = (dependencies: IDependenciesData) => {
 	return {
         updatePasswordController: updatePasswordController(dependencies),
 	};

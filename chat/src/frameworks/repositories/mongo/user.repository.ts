@@ -1,6 +1,6 @@
-import schemas from "../../database/mongo/models";
+import Models from "../../database/mongo/models";
 
-const { UserModel } = schemas;
+const { UserModel } = Models;
 
 export = {
 	createUser: async (userData: any) => {

@@ -1,7 +1,7 @@
-import schemas from "../../database/mongo/models";
-import { UpdatePasswordInput, UserDataSignup } from "../../types/userInterface";
+import Models from "../../database/mongo/models";
+import { IUpdatePasswordInput, IUserDataSignup } from "../../types/userInterface";
 
-const { UserModel } = schemas;
+const { UserModel } = Models;
 
 // we want to export some closure
 // const repository = () => {
@@ -9,7 +9,7 @@ const { UserModel } = schemas;
 export = {
 	// these fn's are returning a promise as async so we can define return type as Promise<CandidateDataInterface>
 
-	register: async (userData: UserDataSignup): Promise<any> => {
+	register: async (userData: IUserDataSignup): Promise<any> => {
 		const userObject = UserModel.buildUser(userData);
 		return await userObject.save();
 	},
@@ -17,7 +17,7 @@ export = {
 	updatePassword: async ({
 		id,
 		password,
-	}: UpdatePasswordInput): Promise<any> => {
+	}: IUpdatePasswordInput): Promise<any> => {
 		const user = await UserModel.findById(id);
 
 		if (!user) {

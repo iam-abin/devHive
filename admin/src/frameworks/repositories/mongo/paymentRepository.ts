@@ -1,10 +1,10 @@
-import { Payment, PaymentData } from "../../../entities/payment";
-import schemas from "../../database/models";
+import { Payment, IPaymentData } from "../../../entities/payment";
+import Models from "../../database/models";
 
-const { PaymentModel, MembershipPlansModel } = schemas;
+const { PaymentModel } = Models;
 
 export = {
-	createPayment: async (data: PaymentData): Promise<any> => {
+	createPayment: async (data: IPaymentData): Promise<any> => {
 		
 		const paymentData = new Payment(data);
 		

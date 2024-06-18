@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
 import { BadRequestError } from "@abijobportal/common";
 
-import { DependenciesData } from "../../frameworks/types/dependencyInterface";
+import { IDependenciesData } from "../../frameworks/types/dependencyInterface";
 import { verifyOtp } from "../../frameworks/utils/twilio";
 
-export = (dependencies: DependenciesData) => {
+export = (dependencies: IDependenciesData) => {
 	const {
 		useCases: { getUserByEmailUseCase },
 	} = dependencies;
@@ -22,7 +22,7 @@ export = (dependencies: DependenciesData) => {
 				throw new BadRequestError("User with this phone number is not existing");
 			}
 			
-			const verifyOtpData = await verifyOtp(phone, otp);
+			const verifyOtpData: string = await verifyOtp(phone, otp);
 			
 			if(verifyOtpData === "pending"){
 				return res.status(200).json({message: `Invalid otp,`, data: verifyOtpData});

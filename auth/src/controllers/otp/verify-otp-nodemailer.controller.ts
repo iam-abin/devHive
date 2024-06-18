@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
 // import { BadRequestError } from "@abijobportal/common";
 
-import { DependenciesData } from "../../frameworks/types/dependencyInterface";
+import { IDependenciesData } from "../../frameworks/types/dependencyInterface";
 import { BadRequestError } from "@abijobportal/common";
 
-export = (dependencies: DependenciesData) => {
+export = (dependencies: IDependenciesData) => {
 	const {
 		useCases: {
 			checkEmailVerificationOtpUseCase,

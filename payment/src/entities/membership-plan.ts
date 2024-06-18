@@ -1,5 +1,5 @@
-// import { MembershipPlanData } from "../frameworks/types/membership-plan-interface";
-export interface MembershipPlanData {
+// import { IMembershipPlanData } from "../frameworks/types/membership-plan-interface";
+export interface IMembershipPlanData {
 	membershipPlanId: string,
 	name: String;
 	features: string[];
@@ -17,7 +17,7 @@ export class MembershipPlan {
 	isActive: boolean;
 
 
-	constructor({ membershipPlanId, name, features, description, price, isActive }: MembershipPlanData) {
+	constructor({ membershipPlanId, name, features, description, price, isActive }: IMembershipPlanData) {
 		this.membershipPlanId = membershipPlanId;
 		this.name = name;
 		this.features = features;

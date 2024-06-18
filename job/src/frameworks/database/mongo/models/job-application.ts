@@ -1,13 +1,13 @@
 import mongoose from "mongoose";
 
-interface jobApplicationAttributes {
+interface IJobApplicationAttributes {
 	jobId: string;
 	candidateId:string;
 	recruiterId:string;
 	applicationStatus: string;
 }
 
-interface jobApplicationDocument extends mongoose.Document {
+interface IJobApplicationDocument extends mongoose.Document {
 	jobId: mongoose.Schema.Types.ObjectId;
 	candidateId:mongoose.Schema.Types.ObjectId;
 	recruiterId:mongoose.Schema.Types.ObjectId;
@@ -48,12 +48,12 @@ const jobApplicationSchema = new mongoose.Schema ({
     timestamps: true,
 });
 
-interface jobApplicationModel extends mongoose.Model<jobApplicationDocument> {
-	buildJob(attributes: jobApplicationAttributes): jobApplicationDocument;
+interface jobApplicationModel extends mongoose.Model<IJobApplicationDocument> {
+	buildJob(attributes: IJobApplicationAttributes): IJobApplicationDocument;
 }
 
 
-jobApplicationSchema.statics.buildJob = (attributes: jobApplicationAttributes) => {
+jobApplicationSchema.statics.buildJob = (attributes: IJobApplicationAttributes) => {
     
     const jobId = new mongoose.Types.ObjectId(attributes.jobId);
     const candidateId = new mongoose.Types.ObjectId(attributes.candidateId);
@@ -71,7 +71,7 @@ jobApplicationSchema.statics.buildJob = (attributes: jobApplicationAttributes) =
 };
 
 
-const jobApplicationModel = mongoose.model<jobApplicationDocument, jobApplicationModel>(
+const jobApplicationModel = mongoose.model<IJobApplicationDocument, jobApplicationModel>(
 	"jobApplication",
 	jobApplicationSchema
 );

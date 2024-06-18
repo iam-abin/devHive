@@ -10,11 +10,9 @@ import "react-toastify/dist/ReactToastify.css";
 import { useSelector } from "react-redux";
 import { RootState } from "./redux/reducer/reducer";
 import NotFound from "./pages/Error/NotFound";
-import { useEffect } from "react";
 // import { myFirebaseMessaging } from "./config/firebase";
 // import { getToken } from "firebase/messaging";
 import { Toaster } from "react-hot-toast";
-import socket from "./config/socket";
 // import { ToastBar } from "react-hot-toast";
 
 export default function App() {
@@ -45,6 +43,7 @@ export default function App() {
 						)
 					}
 				/>
+
 				<Route path="/admin/*" element={<AdminRoutes />} />
 				<Route path="/candidate/*" element={<CandidateRoutes />} />
 				<Route path="/recruiter/*" element={<RecruiterRouters />} />

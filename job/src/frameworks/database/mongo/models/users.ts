@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 // 1. An interface that describes the properties ,that are requried to create a new User
-interface UserAttributes {
+interface IUserAttributes {
 	userId: string;
 	name: string;
 	email: string;
@@ -8,7 +8,7 @@ interface UserAttributes {
 	userType: string;
 }
 // 2. An interface that describes the properties ,that a User Document has
-interface UserDocument extends mongoose.Document {
+interface IUserDocument extends mongoose.Document {
 	// _id: mongoose.Schema.Types.ObjectId;
 	name: string;
 	email: string;
@@ -50,12 +50,12 @@ const userSchema = new mongoose.Schema(
 );
 
 // 4. An interface that describes the properties ,that a user model has
-interface UserModel extends mongoose.Model<UserDocument> {
-	buildUser(attributes: UserAttributes): UserDocument;
+interface UserModel extends mongoose.Model<IUserDocument> {
+	buildUser(attributes: IUserAttributes): IUserDocument;
 }
 
 // 5.In Mongoose, you can also add custom functions to a model using statics.
-userSchema.statics.buildUser = (attributes: UserAttributes) => {
+userSchema.statics.buildUser = (attributes: IUserAttributes) => {
 	return new UserModel({
 		// to create a new user document
 		_id: attributes.userId,
@@ -67,6 +67,6 @@ userSchema.statics.buildUser = (attributes: UserAttributes) => {
 };
 
 // 6. // 6.hover on 'User' ,we can see that 'User' is getting 'UserMdel', ie,a Second arg indicate returning type
-const UserModel = mongoose.model<UserDocument, UserModel>("User", userSchema);
+const UserModel = mongoose.model<IUserDocument, UserModel>("User", userSchema);
 
 export { UserModel };

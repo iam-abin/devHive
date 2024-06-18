@@ -4,9 +4,9 @@ import verifyOtpTwilioController from "./verify-otp-twilio.controller";
 import sendOtpNodemailerController from "./send-otp-nodemailer.controller";
 import verifyOtpNodemailerController from "./verify-otp-nodemailer.controller";
 
-import { DependenciesData } from "../../frameworks/types/dependencyInterface";
+import { IDependenciesData } from "../../frameworks/types/dependencyInterface";
 
-export = (dependencies: DependenciesData) => {
+export = (dependencies: IDependenciesData) => {
 	return {
         sendOtpTwilioController: sendOtpTwilioController(dependencies),
 		verifyOtpTwilioController: verifyOtpTwilioController(dependencies),

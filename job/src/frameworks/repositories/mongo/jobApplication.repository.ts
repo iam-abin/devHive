@@ -1,6 +1,6 @@
-import schemas from "../../database/mongo/models";
+import Models from "../../database/mongo/models";
 
-const { JobModel, jobApplicationModel, UserModel } = schemas;
+const { JobModel, jobApplicationModel, UserModel } = Models;
 
 export = {
 	applyJob: async (data: object) => {

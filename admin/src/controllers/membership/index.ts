@@ -1,4 +1,4 @@
-import { DependenciesData } from "../../frameworks/types/dependencyInterface";
+import { IDependenciesData } from "../../frameworks/types/dependencyInterface";
 
 import createMembershipController from "./create-membership.controller";
 import updateMembershipController from "./update-membership.controller";
@@ -6,7 +6,7 @@ import blockUnblockMembershipController from "./block-unblock-membership.control
 import viewAllMembershipsController from "./view-all-memberships.controller";
 import viewMembershipController from "./view-membership.controller";
 
-export = (dependencies: DependenciesData) => {
+export = (dependencies: IDependenciesData) => {
 	return {
 		createMembershipController: createMembershipController(dependencies),
 		updateMembershipController: updateMembershipController(dependencies),

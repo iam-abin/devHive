@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
-import { DependenciesData } from "../../frameworks/types/dependencyInterface";
+import { IDependenciesData } from "../../frameworks/types/dependencyInterface";
 import { NotAuthorizedError, verifyJwt } from "@abijobportal/common";
 import { createJwtAccessToken } from "../../frameworks/utils/jwtToken";
 
-export = (dependencies: DependenciesData) => {
+export = (dependencies: IDependenciesData) => {
 	const {
 		useCases: { getUserByEmailUseCase },
 	} = dependencies;

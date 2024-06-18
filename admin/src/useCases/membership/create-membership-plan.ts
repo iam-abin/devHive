@@ -1,8 +1,8 @@
 import { MembershipPlan } from "../../entities/membership-plan";
-import { DependenciesData } from "../../frameworks/types/dependencyInterface";
-import { MembershipPlanData } from "../../frameworks/types/membership-plan-interface";
+import { IDependenciesData } from "../../frameworks/types/dependencyInterface";
+import { IMembershipPlanData } from "../../entities/membership-plan";
 
-export = (dependencies: DependenciesData) => {
+export = (dependencies: IDependenciesData) => {
 	const {
 		repositories: { membershipRepository },
 	} = dependencies;
@@ -11,7 +11,7 @@ export = (dependencies: DependenciesData) => {
 		throw new Error("membershipRepository should exist in dependencies");
 	}
 
-	const execute = async (premiumPlanData: MembershipPlanData) => {
+	const execute = async (premiumPlanData: IMembershipPlanData) => {
 		
 		const membershipPlan = new MembershipPlan(premiumPlanData);
 

@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
-import { DependenciesData } from "../../frameworks/types/dependencyInterface";
+import { IDependenciesData } from "../../frameworks/types/dependencyInterface";
 import { JobUpdatedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/job-updated-publisher";
 import { kafkaClient } from "../../config/kafka-connection";
 import { BadRequestError, NotAuthorizedError, NotFoundError } from "@abijobportal/common";
 
-export = (dependencies: DependenciesData)=>{
+export = (dependencies: IDependenciesData)=>{
 
     const { useCases: { updateJobUseCase, getJobByIdUseCase }} = dependencies
 

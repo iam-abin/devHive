@@ -1,13 +1,13 @@
 import express from "express";
 
 import { paymentControllers } from "../../../controllers";
-import { DependenciesData } from "../../types/dependencyInterface";
+import { IDependenciesData } from "../../types/dependencyInterface";
 import {
 	currentUserCandidateCheck,
 } from "@abijobportal/common";
 import { requireAuthAdmin, requireAuthCandidate } from "@abijobportal/common";
 
-export const paymentRouter = (dependencies: DependenciesData) => {
+export const paymentRouter = (dependencies: IDependenciesData) => {
 	const router = express.Router();
 
 	const {

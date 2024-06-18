@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 // 1. An interface that describes the properties ,that are requried to create a new Candidate
-interface CandidateAttributes {
+interface ICandidateAttributes {
 	userId?: string;
 	name: string;
 	email: string;
@@ -21,7 +21,7 @@ interface CandidateAttributes {
 	experience: object;
 }
 // 2. An interface that describes the properties ,that a Candidate Document has
-interface CandidateDocument extends mongoose.Document {
+interface ICandidateDocument extends mongoose.Document {
 	name: string;
 	email: string;
 	phone: number;
@@ -120,12 +120,12 @@ const candidateSchema = new mongoose.Schema(
 );
 
 // 4. An interface that describes the properties ,that a candidate model has
-interface CandidateProfileModel extends mongoose.Model<CandidateDocument> {
-	buildCandidate(attributes: CandidateAttributes): CandidateDocument;
+interface CandidateProfileModel extends mongoose.Model<ICandidateDocument> {
+	buildCandidate(attributes: ICandidateAttributes): ICandidateDocument;
 }
 
 // 5.In Mongoose, you can also add custom functions to a model using statics.
-candidateSchema.statics.buildCandidate = (attributes: CandidateAttributes) => {
+candidateSchema.statics.buildCandidate = (attributes: ICandidateAttributes) => {
 	
 	// const userId =  new mongoose.Types.ObjectId(attributes.userId);
 	let userId: String | undefined = attributes.userId;
@@ -136,7 +136,7 @@ candidateSchema.statics.buildCandidate = (attributes: CandidateAttributes) => {
 
 // 6. // 6.hover on 'Candidate' ,we can see that 'Candidate' is getting 'CandidateMdel', ie,a Second arg indicate returning type
 const CandidateProfileModel = mongoose.model<
-	CandidateDocument,
+	ICandidateDocument,
 	CandidateProfileModel
 >("Candidate", candidateSchema);
 

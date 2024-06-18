@@ -1,4 +1,4 @@
-export interface JobInterface {
+export interface IJob {
 	title: string;
 	recruiterId: string;
 	// companyId?: string;

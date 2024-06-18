@@ -2,10 +2,10 @@ import express from "express";
 
 
 import { companyControllers } from "../../../controllers";
-import { DependenciesData } from "../../types/dependencyInterface";
+import { IDependenciesData } from "../../types/dependencyInterface";
 import { requireAuthAdmin } from "@abijobportal/common";
 
-export const companyRouter = (dependencies: DependenciesData) => {
+export const companyRouter = (dependencies: IDependenciesData) => {
 	const router = express.Router();
 
 	const {

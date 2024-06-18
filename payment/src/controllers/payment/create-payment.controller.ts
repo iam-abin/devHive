@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
-import { DependenciesData } from "../../frameworks/types/dependencyInterface";
+import { IDependenciesData } from "../../frameworks/types/dependencyInterface";
 import { PremiumPaymentDonePublisher } from "../../frameworks/utils/kafka-events/publishers/payment-done-publisher";
 import { kafkaClient } from "../../config/kafka-connection";
 import { Payment } from "../../entities/payment";
 
-export = (dependencies: DependenciesData) => {
+export = (dependencies: IDependenciesData) => {
 	const {
 		useCases: { createPaymentUseCase },
 	} = dependencies;

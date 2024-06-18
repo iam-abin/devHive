@@ -1,4 +1,4 @@
-import { JobInterface } from "../frameworks/types/job-interface";
+import { IJob } from "../frameworks/types/job-interface";
 
 export class Job {
 	title: string;
@@ -42,7 +42,7 @@ export class Job {
 		number_rejected,
 		company_name,
 		company_location,
-	}: JobInterface) {
+	}: IJob) {
 		(this.title = title),
 			(this.recruiterId = recruiterId),
 			// this.companyId = companyId ,

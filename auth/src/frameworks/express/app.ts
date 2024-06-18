@@ -1,5 +1,5 @@
-import express from "express";
 import "express-async-errors";
+import express, { Express } from "express";
 import morgan from "morgan";
 import { NotFoundError, errorHandler } from "@abijobportal/common";
 // import cookieSession from "cookie-session";
@@ -8,9 +8,9 @@ import { NotFoundError, errorHandler } from "@abijobportal/common";
 import { routes } from "./routes"
 import dependencies from "../../config/dependencies"
 
-const app = express();
+const app: Express = express();
 
-const API_PREFIX = process.env.API_PREFIX || "/api/v1/auth";
+const API_PREFIX: string = process.env.API_PREFIX || "/api/v1/auth";
 
 app.set("trust proxy", true); // trust first proxy
 // app.use(

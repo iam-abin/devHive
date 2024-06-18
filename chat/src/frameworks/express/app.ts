@@ -11,7 +11,7 @@ import dependencies from '../../config/dependencies';
 const app: Express = express()
 const httpServer = http.createServer(app);
 
-const API_PREFIX = process.env.API_PREFIX || "/api/v1/chat";
+const API_PREFIX: string = process.env.API_PREFIX || "/api/v1/chat";
 
 app.set("trust proxy", true); // trust first proxy
 app.use(cors())
