@@ -1,7 +1,8 @@
 import { RecruiterProfile } from "../../entities";
+import { IDependenciesData } from "../../frameworks/types/dependencyInterface";
 import { RecruiterDataProfile } from "../../frameworks/types/recruiter-profile-interface";
 
-export = (dependencies: any) => {
+export = (dependencies: IDependenciesData) => {
 	const {
 		repositories: { recruiterProfileRepository, companyProfileRepository },
 	} = dependencies;

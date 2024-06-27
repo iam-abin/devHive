@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { DependenciesData } from "../../frameworks/types/dependencyInterface";
+import { IDependenciesData } from "../../frameworks/types/dependencyInterface";
 
-export = (dependencies: DependenciesData)=>{
+export = (dependencies: IDependenciesData)=>{
 
     const { useCases: { getAllRecruitersUseCase }} = dependencies
 

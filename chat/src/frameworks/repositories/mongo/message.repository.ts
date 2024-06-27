@@ -1,6 +1,6 @@
-import schemas from "../../database/mongo/models";
+import Models from "../../database/mongo/models";
 
-const { MessageModel, ChatRoomModel } = schemas;
+const { MessageModel, ChatRoomModel } = Models;
 
 export = {
 	createMessage: async (message: any) => {

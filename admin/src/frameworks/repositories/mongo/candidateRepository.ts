@@ -1,32 +1,39 @@
-import schemas from "../../database/models"
+import Models from "../../database/models";
 
-const { CandidateModel } = schemas;
+const { CandidateModel } = Models;
 
 // we want to export some closure
 export = {
+	// these fn's are returning a promise as async so we can define return type as Promise<ICandidateData>
 
-	 // these fn's are returning a promise as async so we can defile return type as Promise<CandidateDataInterface>
+	createCandidate: async (userData: any) => {
+		const { name, email, phone, userType, isActive, userId } = userData;
 
-	 createCandidate: async (userData: any) => {
-		
-		const {name, email, phone, userType, isActive, userId} = userData
-		
-		const userObject = CandidateModel.buildCandidate({name, email, phone, userType, isActive, userId});
-		
+		const userObject = CandidateModel.buildCandidate({
+			name,
+			email,
+			phone,
+			userType,
+			isActive,
+			userId,
+		});
+
 		return await userObject.save();
 	},
 
 	// updating and block unblocking is also doing here
 	updateCandidateProfile: async (userId: string, data: any): Promise<any> => {
-		
-		const candidate = await CandidateModel.findOneAndUpdate({ "_id": userId }, { $set: data }, {new: true});
-		
+		const candidate = await CandidateModel.findOneAndUpdate(
+			{ _id: userId },
+			{ $set: data },
+			{ new: true }
+		);
+
 		return candidate;
 	},
 
 	blockUnblock: async (userId: string) => {
-		
-		const candidate = await CandidateModel.findById(userId)
+		const candidate = await CandidateModel.findById(userId);
 		if (!candidate) throw new Error("Candidate not found");
 
 		candidate.isActive = !candidate.isActive;
@@ -35,8 +42,8 @@ export = {
 	},
 
 	getById: async (userId: string) => {
-		const candidate = await CandidateModel.findById(userId)
-		
+		const candidate = await CandidateModel.findById(userId);
+
 		return candidate;
 	},
 
@@ -45,11 +52,10 @@ export = {
 		return candidates;
 	},
 
-	numberOfCandidates: async ()=>{
-		const totalCandidates = await CandidateModel.countDocuments()
-		return totalCandidates
-	}
+	numberOfCandidates: async () => {
+		const totalCandidates = await CandidateModel.countDocuments();
+		return totalCandidates;
+	},
 };
-
 
 // export default repository();

@@ -1,3 +1,4 @@
+import { DatabaseConnectionError } from "@abijobportal/common";
 import mongoose from "mongoose";
 
 const connectDB = async () => {
@@ -6,6 +7,7 @@ const connectDB = async () => {
         console.log("chat service connected to mongodb...");
 	} catch (error) {
 		console.error("chat service mongodb connection failed!!!!",error);
+		throw new DatabaseConnectionError()
 	}
 };
 

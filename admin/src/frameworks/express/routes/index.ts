@@ -9,9 +9,9 @@ import { companyRouter } from "./company";
 import { jobRouter } from "./job";
 import { paymentRouter } from "./payment";
 
-import { DependenciesData } from "../../types/dependencyInterface";
+import { IDependenciesData } from "../../types/dependencyInterface";
 
-export const routes = (dependencies: DependenciesData) => {
+export const routes = (dependencies: IDependenciesData) => {
 	const router = express.Router();
 
 	const dashboard = dashboardRouter(dependencies);

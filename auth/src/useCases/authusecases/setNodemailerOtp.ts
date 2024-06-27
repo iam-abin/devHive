@@ -1,5 +1,7 @@
+import { IDependenciesData } from "../../frameworks/types/dependencyInterface";
+
 // used in forgot password
-export = (dependencies: any)=>{
+export = (dependencies: IDependenciesData)=>{
     const { repositories:{usersRepository} } = dependencies;
 
     if (!usersRepository) {

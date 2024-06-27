@@ -5,12 +5,12 @@ import {
 	createJwtAccessToken,
 	createJwtRefreshToken,
 } from "../../frameworks/utils/jwtToken";
-import { DependenciesData } from "../../frameworks/types/dependencyInterface";
+import { IDependenciesData } from "../../frameworks/types/dependencyInterface";
 import { BadRequestError } from "@abijobportal/common";
 import { UserCreatedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/user-created-publisher";
 import { kafkaClient } from "../../config/kafka-connection";
 
-export = (dependencies: DependenciesData) => {
+export = (dependencies: IDependenciesData) => {
 	const {
 		useCases: { checkEmailVerificationOtpUseCase, getUserByEmailUseCase },
 	} = dependencies;

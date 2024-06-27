@@ -1,6 +1,6 @@
-import schemas from "../../database/mongo/models";
+import Models from "../../database/mongo/models";
 
-const { PaymentModel } = schemas;
+const { PaymentModel } = Models;
 
 export = {
 	createPayment: async ({

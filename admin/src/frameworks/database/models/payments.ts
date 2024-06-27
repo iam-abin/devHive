@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 // 1. An interface that describes the properties ,that are requried to create a new Chat
-import { PaymentData } from "../../../entities/payment";
+import { IPaymentData } from "../../../entities/payment";
 // 2. An interface that describes the properties ,that a Chat Document has
-interface PaymentDocument extends mongoose.Document {
+interface IPaymentDocument extends mongoose.Document {
 	candidateId: mongoose.Schema.Types.ObjectId;
 	membershipPlanId: mongoose.Schema.Types.ObjectId;
 	stripeId?: string;
@@ -31,12 +31,12 @@ const paymentSchema = new mongoose.Schema(
 );
 
 // 4. An interface that describes the properties ,that a user model has
-interface PaymentModel extends mongoose.Model<PaymentDocument> {
-	buildPayment(attributes: PaymentData): PaymentDocument;
+interface PaymentModel extends mongoose.Model<IPaymentDocument> {
+	buildPayment(attributes: IPaymentData): IPaymentDocument;
 }
 
 // 5.In Mongoose, you can also add custom functions to a model using statics.
-paymentSchema.statics.buildPayment = (attributes: PaymentData) => {
+paymentSchema.statics.buildPayment = (attributes: IPaymentData) => {
 	return new PaymentModel({
 		candidateId: attributes.candidateId,
 		membershipPlanId: attributes.membershipPlanId,
@@ -44,7 +44,7 @@ paymentSchema.statics.buildPayment = (attributes: PaymentData) => {
 	});
 };
 // 6. // 6.hover on 'Payment' ,we can see that 'Payment' is getting 'PaymentModel', ie,a Second arg indicate returning type
-const PaymentModel = mongoose.model<PaymentDocument, PaymentModel>(
+const PaymentModel = mongoose.model<IPaymentDocument, PaymentModel>(
 	"Payment",
 	paymentSchema
 );

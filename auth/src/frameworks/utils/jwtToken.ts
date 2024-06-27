@@ -10,7 +10,8 @@ export const createJwtAccessToken = (payload: {
 }) => {
 	
 	const createdJwtToken = jwt.sign(payload, process.env.JWT_SECRET_KEY!, {
-		expiresIn: "3h",
+		// expiresIn: "3h",
+		expiresIn: "10d",
 	});
 
 	return createdJwtToken;

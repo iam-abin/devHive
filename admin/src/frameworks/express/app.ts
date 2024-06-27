@@ -1,16 +1,16 @@
-import express from "express";
-import "express-async-errors"
+import "express-async-errors";
+import express, { Express } from "express";
 import morgan from "morgan";
 // import cookieSession from "cookie-session";
 
-import { routes } from "./routes"
+import { routes } from "./routes";
 import dependencies from "../../config/dependencies";
-import { NotFoundError, currentUserAdminCheck, errorHandler } from "@abijobportal/common";
+import { NotFoundError, errorHandler } from "@abijobportal/common";
 
-const app = express();
+const app: Express = express();
 // dotenv.config()
 
-const API_PREFIX = process.env.API_PREFIX || '/api/v1/admin'
+const API_PREFIX: string = process.env.API_PREFIX || "/api/v1/admin";
 
 app.set("trust proxy", true); // trust first proxy
 // app.use(
@@ -26,11 +26,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Routes
-app.use(API_PREFIX, routes(dependencies))
+app.use(API_PREFIX, routes(dependencies));
 
-app.all('*',async ()=>{
-    throw new NotFoundError()
-})
+app.all("*", async () => {
+	throw new NotFoundError();
+});
 
 app.use(errorHandler);
 

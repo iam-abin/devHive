@@ -1,8 +1,6 @@
-import { Job } from "../../entities/job";
-import { DependenciesData } from "../../frameworks/types/dependencyInterface";
-import { JobInterface } from "../../frameworks/types/job-interface";
+import { IDependenciesData } from "../../frameworks/types/dependencyInterface";
 
-export = (dependencies: DependenciesData) => {
+export = (dependencies: IDependenciesData) => {
 	const { repositories: { jobRepository } } = dependencies;
 
 	if (!jobRepository) {

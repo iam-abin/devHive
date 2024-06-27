@@ -7,9 +7,9 @@ import { recruiterRouter } from "./recruiter";
 import { otpRouter } from "./otp"; 
 
 import { jwtRouter } from "./jwt-refresh";
-import { DependenciesData } from "../../types/dependencyInterface";
+import { IDependenciesData } from "../../types/dependencyInterface";
 
-export const routes = (dependencies: DependenciesData) => {
+export const routes = (dependencies: IDependenciesData) => {
 	const router = express.Router();
 
 	const admin = adminRouter(dependencies);

@@ -1,13 +1,13 @@
 import express from "express";
 
 import { premiumControllers } from "../../../controllers";
-import { DependenciesData } from "../../types/dependencyInterface";
+import { IDependenciesData } from "../../types/dependencyInterface";
 import {
 	currentUserCandidateCheck,
 	requireAuthCandidate,
 } from "@abijobportal/common";
 
-export const premiumRouter = (dependencies: DependenciesData) => {
+export const premiumRouter = (dependencies: IDependenciesData) => {
 	const router = express.Router();
 
 	const { getAllPremiumPlansByCandidateController, } = premiumControllers(dependencies);

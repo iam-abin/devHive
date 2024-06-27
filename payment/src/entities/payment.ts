@@ -1,4 +1,4 @@
-export interface PaymentData {
+export interface IPaymentData {
 	candidateId: string;
 	membershipPlanId: string;
 	stripeId: string;
@@ -9,7 +9,7 @@ export class Payment {
 	membershipPlanId: string;
 	stripeId: string;
 
-	constructor({ candidateId, membershipPlanId, stripeId }: PaymentData) {
+	constructor({ candidateId, membershipPlanId, stripeId }: IPaymentData) {
 		this.candidateId = candidateId;
 		this.membershipPlanId = membershipPlanId;
 		this.stripeId = stripeId;

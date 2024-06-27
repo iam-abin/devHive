@@ -1,4 +1,6 @@
-export = (dependencies: any) => {
+import { IDependenciesData } from "../../frameworks/types/dependencyInterface";
+
+export = (dependencies: IDependenciesData) => {
 	const {
 		repositories: {
 			jobRepository,

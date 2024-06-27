@@ -1,7 +1,7 @@
 import { connectDB } from "./config/db";
 import { app } from "./frameworks/express/app";
-import { CompanyProfileCreatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/company-profile-created-consumer";
-import { CompanyProfileUpdatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/company-profile-updated-consumer";
+// import { CompanyProfileCreatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/company-profile-created-consumer";
+// import { CompanyProfileUpdatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/company-profile-updated-consumer";
 import { JobCreatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/job-created-consumer";
 import { JobUpdatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/job-updated-consumer";
 import { UserCreatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/user-created-consumer";

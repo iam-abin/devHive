@@ -1,7 +1,7 @@
 import { stripeInstance } from "../../config/stripe";
-import { DependenciesData } from "../../frameworks/types/dependencyInterface";
+import { IDependenciesData } from "../../frameworks/types/dependencyInterface";
 
-export = (dependencies: DependenciesData) => {
+export = (dependencies: IDependenciesData) => {
 	const {
 		repositories: { paymentRepository },
 	} = dependencies;
@@ -10,7 +10,7 @@ export = (dependencies: DependenciesData) => {
 		throw new Error("paymentRepository should exist in dependencies");
 	}
 
-	const execute = async (candidateId: string, amount: number) => {
+	const execute = async (candidateId: string, amount: number):Promise<any> => {
 		// const paymentIntent = await stripeInstance.checkout.sessions.create({
 		// 	amount: amount,
 		// 	currency: "usd",
@@ -32,10 +32,10 @@ export = (dependencies: DependenciesData) => {
 				},
 			],
 			mode: "payment",
-			success_url: `https://abinvarghese.online/candidate/payment-success`,
-			cancel_url: `https://abinvarghese.online/candidate/payment-failed`,
-			// success_url: `https://devhive.dev/candidate/payment-success`,
-			// cancel_url: `https://devhive.dev/candidate/payment-failed`,
+			// success_url: `https://abinvarghese.online/candidate/payment-success`,
+			// cancel_url: `https://abinvarghese.online/candidate/payment-failed`,
+			success_url: `https://devhive.dev/candidate/payment-success`,
+			cancel_url: `https://devhive.dev/candidate/payment-failed`,
 		});
 
 		//   return session

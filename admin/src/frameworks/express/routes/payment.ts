@@ -1,9 +1,9 @@
 import express from "express"
-import { DependenciesData } from "../../types/dependencyInterface";
+import { IDependenciesData } from "../../types/dependencyInterface";
 import { currentUserAdminCheck, requireAuthAdmin } from "@abijobportal/common";
 import { paymentControllers } from "../../../controllers";
 
-export const paymentRouter = (dependencies: DependenciesData)=>{
+export const paymentRouter = (dependencies: IDependenciesData)=>{
     const router = express.Router();
 
     const { getAllPaymentsController } = paymentControllers(dependencies);

@@ -3,9 +3,9 @@ import { requireAuthAdmin } from "@abijobportal/common";
 
 import { adminControllers } from "../../../controllers";
 import { signinRequestBodyValidatorMiddlewares } from "../../middlewares/signinValidation";
-import { DependenciesData } from "../../types/dependencyInterface";
+import { IDependenciesData } from "../../types/dependencyInterface";
 
-export const adminRouter = (dependencies: DependenciesData)=>{
+export const adminRouter = (dependencies: IDependenciesData)=>{
     const router = express.Router();
 
     const { adminSigninController, adminSignoutController } = adminControllers(dependencies)

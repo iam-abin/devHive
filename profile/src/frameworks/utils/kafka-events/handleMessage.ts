@@ -21,7 +21,7 @@ export const handleMessage = (data: any, topic: string, message: any) => {
 		case "USER-UPDATED-TOPIC": 
 			if (data.userType === "candidate") {
 				candidateProfileRepository.updateCandidateProfile(
-					data.userId,
+					data.id,
 					data
 				);
 			} else if (data.userType === "recruiter") {

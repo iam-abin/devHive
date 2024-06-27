@@ -1,7 +1,7 @@
 import { MembershipPlan } from "../../../entities/membership-plan";
-import schemas from "../../database/mongo/models";
+import Models from "../../database/mongo/models";
 
-const { MembershipPlansModel } = schemas;
+const { MembershipPlansModel } = Models;
 
 export = {
 	getAllMembershipPlans: async () => {

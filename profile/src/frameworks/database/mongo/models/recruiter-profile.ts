@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 // 1. An interface that describes the properties ,that are requried to create a new Candidate
-interface RecruiterAttributes {
+interface IRecruiterAttributes {
 	userId?: string;
 	name: string;
 	email: string;
@@ -20,7 +20,7 @@ interface RecruiterAttributes {
 	// // isActive: boolean;
 }
 // 2. An interface that describes the properties ,that a Candidate Document has
-interface RecruiterDocument extends mongoose.Document {
+interface IRecruiterDocument extends mongoose.Document {
 	name: string;
 	email: string;
 	phone: number;
@@ -122,12 +122,12 @@ const recruiterSchema = new mongoose.Schema(
 );
 
 // 4. An interface that describes the properties ,that a recruiter model has
-interface RecruiterProfileModel extends mongoose.Model<RecruiterDocument> {
-	buildRecruiter(attributes: RecruiterAttributes): RecruiterDocument;
+interface RecruiterProfileModel extends mongoose.Model<IRecruiterDocument> {
+	buildRecruiter(attributes: IRecruiterAttributes): IRecruiterDocument;
 }
 
 // 5.In Mongoose, you can also add custom functions to a model using statics.
-recruiterSchema.statics.buildRecruiter = (attributes: RecruiterAttributes) => {
+recruiterSchema.statics.buildRecruiter = (attributes: IRecruiterAttributes) => {
 	
 	let userId: String | undefined = attributes.userId;
 	delete attributes.userId;
@@ -137,7 +137,7 @@ recruiterSchema.statics.buildRecruiter = (attributes: RecruiterAttributes) => {
 
 // 6. // 6.hover on 'Recruiter' ,we can see that 'Recruiter' is getting 'RecruiterProfileModel', ie,a Second arg indicate returning type
 const RecruiterProfileModel = mongoose.model<
-	RecruiterDocument,
+	IRecruiterDocument,
 	RecruiterProfileModel
 >("Recruiter", recruiterSchema);
 

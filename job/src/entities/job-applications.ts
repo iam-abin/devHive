@@ -1,4 +1,4 @@
-export interface jobApplicationInterface {
+export interface IJobApplication {
 	jobId: string;
 	candidateId: string;
 	recruiterId: string;
@@ -16,7 +16,7 @@ export class JobApplication {
 		candidateId,
 		recruiterId,
 		applicationStatus,
-	}: jobApplicationInterface) {
+	}: IJobApplication) {
 
 		(this.jobId = jobId),
         (this.candidateId = candidateId),

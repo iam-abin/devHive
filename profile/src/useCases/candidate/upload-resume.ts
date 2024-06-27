@@ -1,7 +1,8 @@
 import { cloudinary } from "../../config/cloudinary";
 import streamifier from "streamifier";
+import { IDependenciesData } from "../../frameworks/types/dependencyInterface";
 
-export = (dependencies: any)=>{
+export = (dependencies: IDependenciesData)=>{
     const { repositories:{candidateProfileRepository} } = dependencies;
 
     if (!candidateProfileRepository) throw new Error("candidateProfileRepository should exist in dependencies");

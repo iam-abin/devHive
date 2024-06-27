@@ -2,10 +2,10 @@
 
 
 // import { userControllers } from "../../../controllers";
-// import { DependenciesData } from "../../types/dependencyInterface";
+// import { IDependenciesData } from "../../types/dependencyInterface";
 // import { requireAuthAdmin } from "@abijobportal/common";
 
-// export const userRouter = (dependencies: DependenciesData) => {
+// export const userRouter = (dependencies: IDependenciesData) => {
 // 	const router = express.Router();
 
 // 	const {

@@ -1,6 +1,8 @@
-export = (dependencies: any) => {
+import { IDependenciesData } from "../../frameworks/types/dependencyInterface";
+
+export = (dependencies: IDependenciesData) => {
 	const {
-		repositories: { candidateProfileRepository },
+		repositories: { candidateProfileRepository }
 	} = dependencies;
 
 	if (!candidateProfileRepository) throw new Error("candidateProfileRepository should exist in dependencies");

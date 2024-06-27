@@ -1,6 +1,6 @@
-import schemas from "../../database/mongo/models";
+import Models from "../../database/mongo/models";
 
-const {  NotificationModel } = schemas;
+const {  NotificationModel } = Models;
 
 export = {
 	createNotification: async (notificationData: any) => {

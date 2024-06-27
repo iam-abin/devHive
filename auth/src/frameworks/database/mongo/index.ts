@@ -1,3 +1,3 @@
-import schemas from "./models";
+import Models from "./models";
 
-export default {  schemas };
+export default {  Models };

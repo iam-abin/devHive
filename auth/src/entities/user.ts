@@ -1,4 +1,4 @@
-import { UserDataSignup } from "../frameworks/types/userInterface";
+import { IUserDataSignup } from "../frameworks/types/userInterface";
 
 export class User {
 	name: string;
@@ -9,7 +9,7 @@ export class User {
 	// isPremiumUser: boolean
 	otp: number;
 
-	constructor({ name, email, phone, password, userType, otp }: UserDataSignup) {
+	constructor({ name, email, phone, password, userType, otp }: IUserDataSignup) {
 		this.name = name;
 		this.email = email;
 		this.phone = phone;

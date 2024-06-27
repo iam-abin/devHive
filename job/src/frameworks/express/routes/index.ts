@@ -5,10 +5,10 @@ import { currentUserAdminCheck, currentUserCandidateCheck, currentUserRecruiterC
 import { candidateRouter } from "./candidate";
 import { recruiterRouter } from "./recruiter";
 // import { jobRouter } from "./jobs";
-import { DependenciesData } from "../../types/dependencyInterface";
+import { IDependenciesData } from "../../types/dependencyInterface";
 
 
-export const routes = (dependencies: DependenciesData) => {
+export const routes = (dependencies: IDependenciesData) => {
 	const router = express.Router();
 
 	// const admin = adminRouter(dependencies);

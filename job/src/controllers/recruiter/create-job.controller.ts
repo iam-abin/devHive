@@ -1,21 +1,27 @@
 import { Request, Response } from "express";
-import { DependenciesData } from "../../frameworks/types/dependencyInterface";
+import { IDependenciesData } from "../../frameworks/types/dependencyInterface";
 import { BadRequestError, RequestValidationError } from "@abijobportal/common";
 import { JobCreatedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/job-created-publisher";
 import { kafkaClient } from "../../config/kafka-connection";
 
-export = (dependencies: DependenciesData)=>{
+export = (dependencies: IDependenciesData)=>{
 
     const { useCases: { createJobUseCase }} = dependencies
 
     return async (req: Request, res: Response)=>{
         const data = req.body;
 
+        console.log("{{{{{{{{{{{{{{{{{{{{{{{{{{{");
+        console.log(data);
+        
+        console.log("}}}}}}}}}}}}}}}}}}}}}}}}}}}");
+        
+
         if(!data.company_name || !data.company_location ) throw new BadRequestError('Add company details in the profile before creating a job!!');
         if(!data.salary_min || !data.salary_max) throw new BadRequestError('must add all salary fields!!'); 
         if(data.salary_min > data.salary_max ) throw new BadRequestError('min salary must be less than max salary!!');
         if(data.salary_min <0 || data.salary_max<0 ) throw new BadRequestError('cannot add negative values in the salary field!!');
-        if(data.available_position && data.available_position<0 ) throw new BadRequestError('cannot add negative values in the available position field!!');
+        if(data.available_position && data.available_position<1 ) throw new BadRequestError('Available number of position must be grater than 0!!');
 
         const newJob = await createJobUseCase(dependencies).execute(data);
 

@@ -4,9 +4,9 @@ import { requireAuthRecruiter } from "@abijobportal/common";
 import { jobsController, recruiterJobControllers } from "../../../controllers";
 // import { signupRequestBodyValidatorMiddlewares } from "../middlewares/signupValidation";
 // import { signinRequestBodyValidatorMiddlewares } from "../middlewares/signinValidation";
-import { DependenciesData } from "../../types/dependencyInterface";
+import { IDependenciesData } from "../../types/dependencyInterface";
 
-export const recruiterRouter = (dependencies: DependenciesData) => {
+export const recruiterRouter = (dependencies: IDependenciesData) => {
 	const router = express.Router();
 
 	const {
