@@ -24,7 +24,7 @@ const CreateJobForm: React.FC<{
 	recruiterData: any;
 }> = ({ initialJobValues, handleSubmit, recruiterData }) => {
 	const today = new Date().toISOString().split("T")[0];
-
+	console.log("initialJobValues ", initialJobValues);
 	const jobCreationSchema = yup.object().shape({
 		available_position: yup
 			.number()
@@ -36,6 +36,14 @@ const CreateJobForm: React.FC<{
 			initialValues={initialJobValues}
 			validationSchema={jobCreationSchema}
 			onSubmit={(values) => {
+				// console.log("FORmik onsubmit values ",values);
+				if (recruiterData?.company_name) {
+					values.company_name = recruiterData.company_name;
+				}
+				if (recruiterData?.company_location) {
+					values.company_location = recruiterData.company_location;
+				}
+				
 				values.recruiterId = recruiterData?.id;
 				handleSubmit(values);
 			}}
@@ -151,29 +159,7 @@ const CreateJobForm: React.FC<{
 									className="error label-text-alt"
 								/>
 							</div>
-
-							{/* Location field */}
-							{/* <div className="form-control w-6/6">
-								<label htmlFor="location" className="label">
-									Location
-								</label>
-								<Field
-									type="text"
-									id="location"
-									name="location"
-									className={`input input-primary w-full rounded-xl ${
-										errors.location && touched.location
-											? "input-error"
-											: ""
-									}`}
-								/>
-								<ErrorMessage
-									name="location"
-									component="div"
-									className="error label-text-alt"
-								/>
-							</div> */}
-
+							
 							<div className="flex justify-between">
 								{/* Experience Required field */}
 								<div className="form-control w-6/6">
