@@ -1,3 +1,4 @@
+import { DatabaseConnectionError } from "@abijobportal/common";
 import mongoose from "mongoose";
 
 const connectDB = async ():Promise<void> => {
@@ -6,6 +7,7 @@ const connectDB = async ():Promise<void> => {
 		console.log("profile service connected to mongodb...");
 	} catch (error) {
 		console.error("profile service mongodb connection failed!!!!", error);
+		throw new DatabaseConnectionError()
 	}
 };
 export { connectDB };
