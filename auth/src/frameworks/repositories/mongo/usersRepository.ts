@@ -65,9 +65,11 @@ export = {
 	},
 
 	// user status is updated only by 'admin'
-	updateUser: async (userId: string, data: any): Promise<any> => {
+	updateUser: async (id: string, data: any): Promise<any> => {
+		console.log("in updateUserRepo ", id, data);
+		
 		const user = await UserModel.findOneAndUpdate(
-			{ _id: userId },
+			{ _id: id },
 			{ $set: data },
 			{ new: true }
 		);
