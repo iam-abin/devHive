@@ -50,7 +50,7 @@ data:
         pod_id=0
         while :
         do
-            VOTERS="${VOTERS}$node_id@devhive-kafka-$pod_id.devhive-kafka-headless.default.svc.cluster.local:9093"
+            VOTERS="${VOTERS}$node_id@devhive-kafka-$pod_id.devhive-kafka.default.svc.cluster.local:9093"
             node_id=$(( $node_id + 1 ))
             pod_id=$(( $pod_id + 1 ))
             if [[ $pod_id -ge 1 ]]; then
@@ -69,7 +69,7 @@ data:
 apiVersion: v1
 kind: Service
 metadata:
-  name: devhive-kafka-headless
+  name: devhive-kafka
   namespace: "default"
   labels:
     app.kubernetes.io/name: kafka
@@ -143,7 +143,7 @@ spec:
       app.kubernetes.io/name: kafka
       app.kubernetes.io/instance: devhive
       app.kubernetes.io/component: kafka
-  serviceName: devhive-kafka-headless
+  serviceName: devhive-kafka
   updateStrategy:
     rollingUpdate: {}
     type: RollingUpdate
@@ -208,7 +208,7 @@ spec:
             - name: KAFKA_CFG_LISTENERS
               value: "INTERNAL://:9094,CLIENT://:9092,CONTROLLER://:9093"
             - name: KAFKA_CFG_ADVERTISED_LISTENERS
-              value: "INTERNAL://$(MY_POD_NAME).devhive-kafka-headless.default.svc.cluster.local:9094,CLIENT://$(MY_POD_NAME).devhive-kafka-headless.default.svc.cluster.local:9092"
+              value: "INTERNAL://$(MY_POD_NAME).devhive-kafka.default.svc.cluster.local:9094,CLIENT://$(MY_POD_NAME).devhive-kafka.default.svc.cluster.local:9092"
             - name: ALLOW_PLAINTEXT_LISTENER
               value: "yes"
             - name: KAFKA_ZOOKEEPER_PROTOCOL

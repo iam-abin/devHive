@@ -4,26 +4,28 @@
 <br/>
 
 ## Getting Started
-### To Run Locally:
+## Prerequisites To Run Locally:
+
+- in ubuntu,
+1. install docker (refer any documents)
+2. install minikube (refer any documents)
+3. enable ingress, 
+```
+ minikube addons enable ingress
+```
+4. enable dashboard (optional), 
+```
+ minikube addons enable dashboard
+```
+5. [Install Skaffold](https://skaffold.dev/docs/install/) (optional)
+  
 - in windows,
 
 1. [install Docker Desktop](https://docs.docker.com/get-docker/)
 2. Enable Kubernetes in the Docker Desktop
-3. [Install Ingress Nginx](https://kubernetes.github.io/ingress-nginx/deploy/)\
+3. [Install Ingress Nginx](https://kubernetes.github.io/ingress-nginx/deploy/)
 
-- in ubuntu,
-
-1. [install minikube](https://www.linuxbuzz.com/install-minikube-on-ubuntu/) 
-2. enable ingress, 
-```
- minikube addons enable ingress
-```
-
-### Optional
-
-- [Install Skaffold](https://skaffold.dev/docs/install/)
-  
-
+## steps to start application
 1. start minikube
 
 ```
@@ -32,42 +34,43 @@ minikube start
 
 2. Create the required secrets(env's) (example)
 
-[env-template](https://github.com/iam-abin/devHive/blob/master/env-template)
+[.env.example](https://github.com/iam-abin/devHive/blob/master/.env.example)
 
-3. To apply configuration to a resource to create deployment, services and pods
+3. To apply configuration of deployment, services and pods
 
 - go to root folder
-
+1) 
 ### for ingress deployments
 
 ```
 kubectl apply -f k8s/ingress/dev/ingress-srv.yaml
 ```
-
+2) 
 ### for stateful deployments
 
-- if using mongodb atlat not necessary to apply the mongodb-srv yaml files inside the stateful folder,
+#### imp:- 
 
-#### for kafka deployments
+- if using mongodb atlas not necessary to apply the mongodb-srv yaml files inside the stateful folder,
+    But we need to apply the configuration file for kafka().
+### for kafka deployments
 ``` 
 kubectl apply -f k8s/stateful/kafka-deployment.yaml
 ```
 
-- else
+- if not using mongodb atlas
 
 ```
 kubectl apply -f k8s/stateful/
 ```
-
+3) 
 ### for stateless deployments
 
 ```
 kubectl apply -f ./k8s/stateless
 ```
 
-#### Skaffold (Optional)
-
-### If Skaffold is installed run,
+4. 
+## If Skaffold is installed run,
 
 ```
 skaffold dev
@@ -108,7 +111,7 @@ https://ticketing.dev
 ```
 
 - to stop minikube context or cluster
-- 
+
 ```
 minikube stop
 ```
