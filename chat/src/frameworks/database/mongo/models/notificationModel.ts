@@ -4,7 +4,6 @@ interface NotificationAttributes {
 	senderId: string;
 	targetUserId: string;
 	message: string;
-	// email: string;
 	// profileImgUrl: number;
 	// userType: string;
 }
@@ -64,7 +63,6 @@ notificationSchema.statics.buildNotification = (
 		senderId: attributes.senderId,
 		targetUserId: attributes.targetUserId,
 		message: attributes.message,
-		// email: attributes.email,
 		// profileImgUrl: attributes.profileImgUrl,
 		// userType: attributes.userType,
 	});

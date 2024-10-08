@@ -15,8 +15,8 @@ export const updateCandidateProfileApi = async (candidateProfileData: any): Prom
 };
 
 
-export const uploadCandidateImageProfileApi = async (userId: string,profileImageData: any): Promise<any> => {
-    const response: any = await candidateApiCalls("put", profileApiUrlConfig.uploadCandidateImageUrl, profileImageData, true);
+export const uploadCandidateImageProfileApi = async (userId: string,profile_imageData: any): Promise<any> => {
+    const response: any = await candidateApiCalls("put", profileApiUrlConfig.uploadCandidateImageUrl, profile_imageData, true);
     // isFileUpload is giving 'true' because we are sending a file to the backend.
     return response.data;
 };

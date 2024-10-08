@@ -3,16 +3,14 @@ import mongoose from "mongoose";
 interface UserAttributes {
 	userId: string;
 	name: string;
-	email: string;
-	profileImgUrl: number;
+	profile_image: number;
 	userType: string;
 }
 // 2. An interface that describes the properties ,that a User Document has
 interface UserDocument extends mongoose.Document {
 	// _id: mongoose.Schema.Types.ObjectId;
 	name: string;
-	email: string;
-	profileImgUrl: number;
+	profile_image: number;
 	userType: string;
 	isActive: boolean;
 	createdAt: string;
@@ -24,8 +22,7 @@ const userSchema = new mongoose.Schema(
 	{
 		// userId: mongoose.Schema.Types.ObjectId,
 		name: String,
-		email: String,
-		profileImgUrl: String,
+		profile_image: String,
 		userType: {
 			type: String,
 			required: true,
@@ -60,8 +57,7 @@ userSchema.statics.buildUser = (attributes: UserAttributes) => {
 		// to create a new user document
 		_id: attributes.userId,
 		name: attributes.name,
-		email: attributes.email,
-		profileImgUrl: attributes.profileImgUrl,
+		profile_image: attributes.profile_image,
 		userType: attributes.userType,
 	});
 };
