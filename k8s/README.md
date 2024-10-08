@@ -32,7 +32,7 @@ minikube start
 
 2. Create the required secrets(env's) (example)
 
-[env-template](https://github.com/iam-abin/devHive/blob/master/env-template)
+[env-example](https://github.com/iam-abin/devHive/blob/master/.env.example)
 
 3. To apply configuration to a resource to create deployment, services and pods
 
@@ -108,7 +108,7 @@ https://ticketing.dev
 ```
 
 - to stop minikube context or cluster
-- 
+
 ```
 minikube stop
 ```
