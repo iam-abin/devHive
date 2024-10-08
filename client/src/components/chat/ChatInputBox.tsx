@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { FaRegPaperPlane } from 'react-icons/fa';
 
 const ChatInputBox: React.FC<{ onSend: (message: string) => void }> = ({ onSend }) => {

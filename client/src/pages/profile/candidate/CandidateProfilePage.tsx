@@ -10,9 +10,7 @@ import {
 	uploadCandidateResumeProfileApi,
 } from "../../../axios/apiMethods/profile-service/candidate";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
-// import { hotToastMessage } from "../../../utils/toastMessage";
 import ImageFileUpload from "../../../components/upload/ImageFileUpload";
-// import ProfileResumeDisplay from "../../../components/upload/ProfileResumeDisplay";
 import TopNavBarCandidate from "../../../components/navBar/TopNavBarCandidate";
 import Footer from "../../../components/footer/Footer";
 import { FaEdit, FaEye } from "react-icons/fa";
@@ -344,7 +342,7 @@ const CandidateProfilePage: React.FC = () => {
 									<div className="text-left">
 										About:{" "}
 										{candidateProfileData?.about ??
-											"Not specified"}
+											""}
 									</div>
 								</div>
 							</div>
@@ -353,7 +351,7 @@ const CandidateProfilePage: React.FC = () => {
 									<div className="text-left">
 										Gender:{" "}
 										{candidateProfileData?.gender ??
-											"Not specified"}
+											""}
 									</div>
 								</div>
 							</div>
@@ -362,7 +360,7 @@ const CandidateProfilePage: React.FC = () => {
 									<div className="text-left">
 										Current Location:{" "}
 										{candidateProfileData?.currentLocation ??
-											"Not specified"}
+											""}
 									</div>
 								</div>
 							</div>
@@ -371,7 +369,7 @@ const CandidateProfilePage: React.FC = () => {
 									<div className="text-left">
 										Experience:{" "}
 										{candidateProfileData?.experience ??
-											"Not specified"}
+											""}
 									</div>
 								</div>
 							</div>
@@ -381,7 +379,7 @@ const CandidateProfilePage: React.FC = () => {
 									<div className="text-left">
 										Address:{" "}
 										{candidateProfileData?.address ??
-											"Not specified"}
+											""}
 									</div>
 								</div>
 							</div>

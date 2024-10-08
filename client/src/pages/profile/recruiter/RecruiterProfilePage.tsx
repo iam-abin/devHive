@@ -70,7 +70,7 @@ const RecruiterProfilePage: React.FC = () => {
 											<h1 className="text-2xl font-bold text-gray-800">
 												{recruiterProfileData?.data
 													?.name ??
-													"recruiterData.name"}
+													recruiterData.name}
 											</h1>
 										</div>
 									</div>

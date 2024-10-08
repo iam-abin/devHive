@@ -30,7 +30,7 @@ export const sendVerificationEmail = async (
 		secure: false,
 		auth: {
 			user: "abinvarghese273@gmail.com",
-			pass: "frjn aczl fyet pxaj",
+			pass: "dogu rtwq gxiv dton",
 		},
 		connectionTimeout: 10000,
 	});

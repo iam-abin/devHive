@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import { generateHashedPassword } from "../../../utils/password";
 
 // 1. An interface that describes the properties ,that are requried to create a new User
-interface UserAttributes {
+export interface IUserAttributes {
 	name: string;
 	email: string;
 	phone: number;
@@ -99,11 +99,11 @@ userSchema.pre("save", async function (next) {
 
 // 4. An interface that describes the properties ,that a user model has
 interface UserModel extends mongoose.Model<UserDocument> {
-	buildUser(attributes: UserAttributes): UserDocument;
+	buildUser(attributes: IUserAttributes): UserDocument;
 }
 
 // 5.In Mongoose, you can also add custom functions to a model using statics.
-userSchema.statics.buildUser = (attributes: UserAttributes) => {
+userSchema.statics.buildUser = (attributes: IUserAttributes) => {
 	return new UserModel({
 		// to create a new user document
 		name: attributes.name,

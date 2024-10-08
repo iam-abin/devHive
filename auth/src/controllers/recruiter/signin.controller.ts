@@ -16,17 +16,12 @@ export = (dependencies: IDependenciesData) => {
 		const { email, password } = req.body;
 
 		// check user exist
-		const isExistingUser = await getUserByEmailUseCase(
-			dependencies
-		).execute(email);
+		const isExistingUser = await getUserByEmailUseCase( dependencies ).execute(email);
 
 		if (!isExistingUser) {
 			// return res.status(400).json({message:"Invalid email or password"})
-
 			throw new BadRequestError("Invalid email or password");
 		}
-
-	
 
 		// check password is correct
 		const isSamePassword = await comparePassword(
@@ -34,24 +29,11 @@ export = (dependencies: IDependenciesData) => {
 			isExistingUser.password
 		);
 
-		if (!isSamePassword) {
-			// return res.status(400).json({message:"Invalid email or passwordd"})
+		if (!isSamePassword) throw new BadRequestError("Invalid email or passwordd");
 
-			throw new BadRequestError("Invalid email or passwordd");
-		}
-
-		if (isExistingUser.userType !== "recruiter") {
-			// return res.status(400).json({message:"Invalid email or password"})
-
-			throw new BadRequestError("Invalid Recruiter");
-		}
-
-
-		if (!isExistingUser.isActive) {
-			// return res.status(400).json({message:"Invalid email or passwordd"})
-
-			throw new BadRequestError("This is a blocked user");
-		}
+		if (isExistingUser.userType !== "recruiter")  throw new BadRequestError("Invalid Recruiter");
+	
+		if (!isExistingUser.isActive)  throw new BadRequestError("This is a blocked user");
 
 		// Generate Jwt
 		const recruiterPayloadData = {

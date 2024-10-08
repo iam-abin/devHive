@@ -1,6 +1,7 @@
 import { connectDB } from "./config/db";
 import { kafkaClient } from "./config/kafka-connection";
 import { app, httpServer } from "./frameworks/express/app";
+import { CandidateProfileUpdatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/candidate-profile-updated-consumer";
 import { UserCreatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/user-created-consumer";
 import { UserUpdatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/user-updated-consumer";
 import { setupSocketIO } from "./frameworks/webSocket/socket";
@@ -32,9 +33,12 @@ const start = async () => {
 	const userCreatedEvent = new UserCreatedEventConsumer(kafkaClient);
 	
 	const userUpdatedEvent = new UserUpdatedEventConsumer(kafkaClient);
+
+	const candidateProfileUpdatedEvent = new CandidateProfileUpdatedEventConsumer(kafkaClient)
 	
 	await userUpdatedEvent.subscribe();
 	await userCreatedEvent.subscribe();
+	await candidateProfileUpdatedEvent.subscribe();
 
 	httpServer.listen(3000, () => {
 		console.log("chat service Listening on port 3000....");
@@ -42,10 +46,12 @@ const start = async () => {
 		.on("error", async () => {
 			await userUpdatedEvent.disconnect();
 			await userCreatedEvent.disconnect();
+			await candidateProfileUpdatedEvent.disconnect();
 		})
 		.on("close", async () => {
 			await userUpdatedEvent.disconnect();
 			await userCreatedEvent.disconnect();
+			await candidateProfileUpdatedEvent.disconnect();
 		});
 };
 

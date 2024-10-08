@@ -6,11 +6,11 @@ import userSignupUseCase from "./userSignup";
 import updatePasswordUseCase from "./updatePassword";
 import setNodemailerOtpUseCase from "./setNodemailerOtp";
 export {
-	checkEmailVerificationOtpUseCase,
-	getEmailVerifyOtpUseCase,
-	getUserByEmailUseCase,
-	getUserByPhoneUseCase,
-	userSignupUseCase,
-	updatePasswordUseCase,
-	setNodemailerOtpUseCase
+  checkEmailVerificationOtpUseCase,
+  getEmailVerifyOtpUseCase,
+  getUserByEmailUseCase,
+  getUserByPhoneUseCase,
+  userSignupUseCase,
+  updatePasswordUseCase,
+  setNodemailerOtpUseCase,
 };
