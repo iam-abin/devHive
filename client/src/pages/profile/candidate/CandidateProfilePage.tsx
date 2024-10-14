@@ -314,7 +314,7 @@ const CandidateProfilePage: React.FC = () => {
 								<div className="grid h-12 pl-5 card bg-base-300 rounded-box shadow-lg items-center">
 									<div className="text-left">
 										Name:{" "}
-										{candidateProfileData?.name ??
+										{isRecruiterUrl? candidateProfileData?.name : candidateProfileData?.name ??
 											candidateData?.name}
 									</div>
 								</div>

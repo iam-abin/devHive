@@ -28,15 +28,6 @@ export const handleMessage = (data: any, topic: string, message: any) => {
 
 			break;
 
-		case "COMPANY-PROFILE-CREATED-TOPIC":
-			
-			candidateRepository.createCandidate(data);
-			break;
-
-		case "COMPANY-PROFILE-UPDATED-TOPIC":
-			candidateRepository.createCandidate(data);
-			break;
-
 		case "CANDIDATE-PROFILE-CREATED-TOPIC":
 			candidateRepository.createCandidate(data);
 			break;

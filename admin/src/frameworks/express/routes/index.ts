@@ -5,7 +5,6 @@ import { dashboardRouter } from "./dashboard";
 import { candidateRouter } from "./candidate";
 import { recruiterRouter } from "./recruiter";
 import { membershipPlanRouter } from "./membership-plan";
-import { companyRouter } from "./company";
 import { jobRouter } from "./job";
 import { paymentRouter } from "./payment";
 
@@ -18,7 +17,6 @@ export const routes = (dependencies: IDependenciesData) => {
 	const candidate = candidateRouter(dependencies);
 	const recruiter = recruiterRouter(dependencies);
 	const membershipPlan = membershipPlanRouter(dependencies);
-	const company = companyRouter(dependencies);
 	const job = jobRouter(dependencies);
 	const payment = paymentRouter(dependencies);
 
@@ -29,13 +27,12 @@ export const routes = (dependencies: IDependenciesData) => {
 	router.use(requireAuthAdmin);
 
 	router.use("/dashboard", dashboard);
-	// router.use("/candidate",requireAuthAdmin, candidate);
 	router.use("/candidate", candidate);
 	router.use("/recruiter", recruiter);
 	router.use("/membership", membershipPlan);
-	router.use("/company", company);
 	router.use("/job", job);
 	router.use("/payment", payment);
-
+	// router.use("/candidate",requireAuthAdmin, candidate);
+	
 	return router;
 };

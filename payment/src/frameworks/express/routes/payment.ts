@@ -5,7 +5,7 @@ import { IDependenciesData } from "../../types/dependencyInterface";
 import {
 	currentUserCandidateCheck,
 } from "@abijobportal/common";
-import { requireAuthAdmin, requireAuthCandidate } from "@abijobportal/common";
+import { requireAuthCandidate } from "@abijobportal/common";
 
 export const paymentRouter = (dependencies: IDependenciesData) => {
 	const router = express.Router();

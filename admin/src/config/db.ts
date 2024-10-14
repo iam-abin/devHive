@@ -1,7 +1,7 @@
 import { DatabaseConnectionError } from "@abijobportal/common";
 import mongoose from "mongoose";
 
-const connectDB = async () => {
+const connectDB = async (): Promise<void> => {
 	try {
 		await mongoose.connect(process.env.MONGO_URL_ADMIN as string);
 		console.log("admin service connected to mongodb...");

@@ -7,52 +7,46 @@ import { UserUpdatedEventConsumer } from "./frameworks/utils/kafka-events/consum
 import { setupSocketIO } from "./frameworks/webSocket/socket";
 
 const start = async () => {
-	console.log("chat service Starting up....");
+    console.log("chat service Starting up....");
 
-    //if we do not set MONGO_URL_CHAT
-	if (!process.env.MONGO_URL_CHAT) {
-		throw new Error("MONGO_URL_CHAT must be defined");
-	}
+    if (!process.env.MONGO_URL_CHAT)
+        throw new Error("MONGO_URL_CHAT must be defined");
+    if (!process.env.JWT_SECRET_KEY)
+        throw new Error("JWT_SECRET_KEY must be defined");
+    if (!process.env.JWT_REFRESH_SECRET_KEY)
+        throw new Error("JWT_REFRESH_SECRET_KEY must be defined");
 
-    //if we do not set JWT_SECRET_KEY
-	if (!process.env.JWT_SECRET_KEY) {
-		throw new Error("JWT_SECRET_KEY must be defined");
-	}
+    console.log("before socket instance");
+    setupSocketIO(httpServer);
+    console.log("after socket instance");
 
-	// if we do not set JWT_REFRESH_SECRET_KEY
-	if (!process.env.JWT_REFRESH_SECRET_KEY) {
-		throw new Error("JWT_REFRESH_SECRET_KEY must be defined");
-	}
-	
-	console.log("before socket instance");
-	setupSocketIO(httpServer);
-	console.log("after socket instance");
+    await connectDB();
 
-	await connectDB();
-	
-	const userCreatedEvent = new UserCreatedEventConsumer(kafkaClient);
-	
-	const userUpdatedEvent = new UserUpdatedEventConsumer(kafkaClient);
+    const userCreatedEvent = new UserCreatedEventConsumer(kafkaClient);
 
-	const candidateProfileUpdatedEvent = new CandidateProfileUpdatedEventConsumer(kafkaClient)
-	
-	await userUpdatedEvent.subscribe();
-	await userCreatedEvent.subscribe();
-	await candidateProfileUpdatedEvent.subscribe();
+    const userUpdatedEvent = new UserUpdatedEventConsumer(kafkaClient);
 
-	httpServer.listen(3000, () => {
-		console.log("chat service Listening on port 3000....");
-	})
-		.on("error", async () => {
-			await userUpdatedEvent.disconnect();
-			await userCreatedEvent.disconnect();
-			await candidateProfileUpdatedEvent.disconnect();
-		})
-		.on("close", async () => {
-			await userUpdatedEvent.disconnect();
-			await userCreatedEvent.disconnect();
-			await candidateProfileUpdatedEvent.disconnect();
-		});
+    const candidateProfileUpdatedEvent =
+        new CandidateProfileUpdatedEventConsumer(kafkaClient);
+
+    await userUpdatedEvent.subscribe();
+    await userCreatedEvent.subscribe();
+    await candidateProfileUpdatedEvent.subscribe();
+
+    httpServer
+        .listen(3000, () => {
+            console.log("chat service Listening on port 3000....");
+        })
+        .on("error", async () => {
+            await userUpdatedEvent.disconnect();
+            await userCreatedEvent.disconnect();
+            await candidateProfileUpdatedEvent.disconnect();
+        })
+        .on("close", async () => {
+            await userUpdatedEvent.disconnect();
+            await userCreatedEvent.disconnect();
+            await candidateProfileUpdatedEvent.disconnect();
+        });
 };
 
 start();

@@ -16,12 +16,6 @@ import {
 	getJobByIdUseCase,
 } from "./job";
 
-import {
-	blockUnblockCompanyUseCase,
-	getAllCompaniesUseCase,
-	getCompanyByIdUseCase,
-} from "./company";
-
 import { getAllPaymentsUseCase } from "./payment";
 
 import {
@@ -49,11 +43,7 @@ export default {
 	blockUnblockJobUseCase,
 	getAllJobsUseCase,
 	getJobByIdUseCase,
-
-	blockUnblockCompanyUseCase,
-	getAllCompaniesUseCase,
-	getCompanyByIdUseCase,
-
+	
 	getAllPaymentsUseCase,
 
 	updateMembershipPlanUseCase,

@@ -1,9 +1,9 @@
-import express from "express";
+import express, { Router } from "express";
 import { IDependenciesData } from "../../types/dependencyInterface";
 import { membershipControllers } from "../../../controllers";
 
 export const membershipPlanRouter = (dependencies: IDependenciesData) => {
-	const router = express.Router();
+	const router: Router = express.Router();
 
 	const {
 		blockUnblockMembershipController,
@@ -13,7 +13,6 @@ export const membershipPlanRouter = (dependencies: IDependenciesData) => {
 		viewMembershipController,
 	} = membershipControllers(dependencies);
 
-	// recruiter
 	router.post("/create-membership-plan", createMembershipController);
 	router.get("/view-membership-plans", viewAllMembershipsController);
 	router.get(

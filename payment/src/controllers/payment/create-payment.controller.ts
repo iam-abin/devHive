@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import { IDependenciesData } from "../../frameworks/types/dependencyInterface";
 import { PremiumPaymentDonePublisher } from "../../frameworks/utils/kafka-events/publishers/payment-done-publisher";
 import { kafkaClient } from "../../config/kafka-connection";
-import { Payment } from "../../entities/payment";
 
 export = (dependencies: IDependenciesData) => {
 	const {
@@ -14,17 +13,13 @@ export = (dependencies: IDependenciesData) => {
 		const { membershipPlanId, amount } = req.body;
 		let candidateId = req.currentUserCandidate!.id;
 		
-		const paymentCreated = await createPaymentUseCase(dependencies).execute(
-            candidateId,
-			amount,
-		);
+		const paymentCreated = await createPaymentUseCase(dependencies).execute( candidateId, amount );
 		
 		const paymentCreatedEvent = new PremiumPaymentDonePublisher(kafkaClient);
 		
 		await paymentCreatedEvent.publish({
 			candidateId,
 			membershipPlanId,
-			// stripeId
 		})
 
 		res.status(200).json({
