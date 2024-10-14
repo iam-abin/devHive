@@ -1,6 +1,5 @@
 import { connectDB } from "./config/db";
 import { app } from "./frameworks/express/app";
-// import { CompanyProfileUpdatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/company-profile-updated-consumer";
 import { kafkaClient } from "./config/kafka-connection";
 import { MembershipPlanCreatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/premium-plan-created-consumet";
 

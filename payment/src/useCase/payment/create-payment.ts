@@ -6,9 +6,7 @@ export = (dependencies: IDependenciesData) => {
 		repositories: { paymentRepository },
 	} = dependencies;
 
-	if (!paymentRepository) {
-		throw new Error("paymentRepository should exist in dependencies");
-	}
+	if (!paymentRepository) throw new Error("paymentRepository should exist in dependencies");
 
 	const execute = async (candidateId: string, amount: number):Promise<any> => {
 		// const paymentIntent = await stripeInstance.checkout.sessions.create({
@@ -39,7 +37,7 @@ export = (dependencies: IDependenciesData) => {
 		});
 
 		//   return session
-		return paymentRepository.createPayment({
+		return await paymentRepository.createPayment({
 			candidateId,
 			stripeId: session.id,
 		});

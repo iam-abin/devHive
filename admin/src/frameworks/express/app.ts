@@ -1,7 +1,6 @@
 import "express-async-errors";
 import express, { Express } from "express";
 import morgan from "morgan";
-// import cookieSession from "cookie-session";
 
 import { routes } from "./routes";
 import dependencies from "../../config/dependencies";
@@ -13,12 +12,6 @@ const app: Express = express();
 const API_PREFIX: string = process.env.API_PREFIX || "/api/v1/admin";
 
 app.set("trust proxy", true); // trust first proxy
-// app.use(
-// 	cookieSession({
-// 		signed: false,
-// 		secure:true
-// 	})
-// );
 
 // Middlewares
 app.use(morgan("dev"));

@@ -37,6 +37,8 @@ const RecruiterProfilePage: React.FC = () => {
 				}
 				
 				setRecruiterProfileData(recruiterProfile);
+				console.log(recruiterProfile, "recruiter profile data");
+				
 			} catch (error) {
 				console.error("Error fetching recruiter profile:", error);
 			}
@@ -68,7 +70,8 @@ const RecruiterProfilePage: React.FC = () => {
 										/>
 										<div>
 											<h1 className="text-2xl font-bold text-gray-800">
-												{recruiterProfileData?.data
+												{isCandidate ?  recruiterProfileData?.data
+													?.name :recruiterProfileData?.data
 													?.name ??
 													recruiterData.name}
 											</h1>
