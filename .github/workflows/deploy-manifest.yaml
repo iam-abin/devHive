@@ -10,10 +10,11 @@ on:
 jobs:     
   build:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: digitalocean/action-doctl@v2
-        with:
-          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-      - run: doctl kubernetes cluster kubeconfig save devhive-hosted-clusterr
-      - run: kubectl apply -f k8s/stateless && kubectl apply -f k8s/ingress/prod  
+    #  # Commenting out Digital Ocean specific steps since we're not deploying there now
+    # steps:
+    #   - uses: actions/checkout@v3
+    #   - uses: digitalocean/action-doctl@v2
+    #     with:
+    #       token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+    #   - run: doctl kubernetes cluster kubeconfig save devhive-hosted-clusterr
+    #   - run: kubectl apply -f k8s/stateless && kubectl apply -f k8s/ingress/prod  
