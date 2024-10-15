@@ -2,7 +2,7 @@ import express, { Router } from "express";
 
 import { candidateProfileControllers } from "../../../controllers";
 import { IDependency } from "../../types/dependencyInterface";
-import { auth, ROLES } from "@abijobportal/common";
+import {  auth, ROLES } from "@abijobportal/common";
 import { multerConfig } from "../../../config/multer";
 
 export const candidateRouter = (dependencies: IDependency) => {
@@ -10,6 +10,8 @@ export const candidateRouter = (dependencies: IDependency) => {
 
 	const profileController = candidateProfileControllers(dependencies);
 
+	
+	
 	// candidate authentication
 	router.use(auth(ROLES.CANDIDATE));
 

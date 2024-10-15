@@ -1,6 +1,6 @@
 import { BadRequestError } from "@abijobportal/common";
 import { IDependency } from "../../frameworks/types/dependencyInterface";
-import { IOtp } from "../../frameworks/types/otp-nodemailer-interface";
+import { IOtp } from "../../frameworks/types/otpInterface";
 import { UserCreatedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/user-created-publisher";
 import { kafkaClient } from "../../config/kafka-connection";
 import {
@@ -53,7 +53,6 @@ export = (dependencies: IDependency) => {
             role: user.role,
         };
 
-        // Generate Jwt key
         // Generate Jwt key
         const accessToken = createJwtAccessToken(jwtPayload);
         const refreshToken = createJwtRefreshToken(jwtPayload);

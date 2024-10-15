@@ -51,9 +51,9 @@ const start = async () => {
 	// 	kafkaClient
 	// );
 	
-	await userCreatedEvent.subscribe();
-	await userUpdatedEvent.subscribe();
-	await paymentCreatedEvent.subscribe()
+	// await userCreatedEvent.subscribe();
+	// await userUpdatedEvent.subscribe();
+	// await paymentCreatedEvent.subscribe()
 
 	// await companyProfileUpdatedEvent.subscribe();
 

@@ -1,34 +1,20 @@
 import { Request, Response } from "express";
-import { BadRequestError } from "@abijobportal/common";
 
 import { IDependency } from "../../frameworks/types/dependencyInterface";
-import { verifyOtp } from "../../frameworks/utils/twilio";
+import { IMobileOtp } from "../../frameworks/types/otpInterface";
 
 export = (dependencies: IDependency) => {
-	const {
-		useCases: { getUserByEmailUseCase },
-	} = dependencies;
+    const {
+        useCases: { verifyMobileOtpUseCase },
+    } = dependencies;
 
-	return async (req: Request, res: Response) => {
-			let { phone, otp, email } = req.body;
-			
-			// write code go get user using phone number and continue if the phone number exists in out db
-			const isExistingUser = await getUserByEmailUseCase(
-				dependencies
-			).execute(email);
+    return async (req: Request, res: Response) => {
+        let { phone, otp, email } = req.body as IMobileOtp;
 
-			if (!isExistingUser) {
-                // return res.status(400).json({message:"Invalid email or password"});
-				throw new BadRequestError("User with this phone number is not existing");
-			}
-			
-			const verifyOtpData: string = await verifyOtp(phone, otp);
-			
-			if(verifyOtpData === "pending"){
-				return res.status(200).json({message: `Invalid otp,`, data: verifyOtpData});
-			}else{
-				return res.status(200).json({message: `Otp Verified successfully`, data: verifyOtpData});
-			}
-			
-	};
+        const user = await verifyMobileOtpUseCase(dependencies).execute({ email, phone, otp });
+
+        return res
+            .status(200)
+            .json({ message: `Otp Verified successfully`, data: user });
+    };
 };

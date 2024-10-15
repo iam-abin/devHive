@@ -69,12 +69,9 @@ export = {
 	},
 
 	updateVerification: async (email: string): Promise<any> => {
-		const user = await UserModel.findOne({ email });
-		if (!user) throw new Error("User not found"); 
-
-		user.isVarified = !user.isVarified;
-
-		return await user.save();
+		const user = await UserModel.findOneAndUpdate({ email }, {isVerified: true}, {new: true});
+		
+		return user
 	},
 };
 // };

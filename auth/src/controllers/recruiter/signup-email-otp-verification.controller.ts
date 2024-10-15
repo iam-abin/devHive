@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 
 import { IDependency } from "../../frameworks/types/dependencyInterface";
-import { IOtp } from "../../frameworks/types/otp-nodemailer-interface";
+import { IOtp } from "../../frameworks/types/otpInterface";
 
 export = (dependencies: IDependency) => {
 	const {

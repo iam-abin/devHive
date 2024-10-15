@@ -15,35 +15,36 @@ export = (dependencies: IDependency) => {
         throw new Error("usersRepository should exist in dependencies");
 
     const execute = async (email: string, password: string, requiredRole: string) => {
-        const isExistingUser = await usersRepository.getByEmail(email);
+        const existingUser = await usersRepository.getByEmail(email);
 
-        if (!isExistingUser) {
+        if (!existingUser) {
             throw new BadRequestError("Invalid email or password");
         }
 
         // check password is correct
         const isSamePassword = await comparePassword(
             password,
-            isExistingUser.password
+            existingUser.password
         );
-
+        
         if (!isSamePassword) {
             throw new BadRequestError("Invalid email or passwordd");
         }
 
-        if (isExistingUser.role !== requiredRole) {
+        if (existingUser.role !== requiredRole) {
             throw new BadRequestError(`Invalid ${requiredRole}`);
         }
 
-        if (!isExistingUser.isActive) {
+        
+        if (!existingUser.isActive) {
             throw new BadRequestError("This is a blocked user");
         }
 
         // Generate Jwt
         const jwtPayload = {
-            userId: isExistingUser.id,
-            email: isExistingUser.email,
-            role: isExistingUser.role,
+            userId: existingUser.id,
+            email: existingUser.email,
+            role: existingUser.role,
         };
 
         // Generate Jwt key
@@ -51,7 +52,7 @@ export = (dependencies: IDependency) => {
         const refreshToken = createJwtRefreshToken(jwtPayload);
 
         return {
-            user: isExistingUser,
+            user: existingUser,
             accessToken,
             refreshToken,
         };

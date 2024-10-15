@@ -88,10 +88,25 @@ userSchema.pre("save", async function (next) {
 		const hashedPassword = await generateHashedPassword(this.password);
 		this.password = hashedPassword;
 		next();
-	} catch (error) {
-		console.error(error);
+	} catch (error: unknown) {
+		next(error as Error)
 	}
 });
+
+// To hash password before saving the updated password to db
+userSchema.pre('findOneAndUpdate', async function (next) {
+    const update = this.getUpdate() as Partial<IUserAttributes>;
+    if (!update.password) return next();
+
+    try {
+        const hashedPassword: string = await generateHashedPassword(update.password);
+        this.setUpdate({ ...update, password: hashedPassword });
+        next();
+    } catch (error: unknown) {
+        next(error as Error);
+    }
+});
+
 
 // 4. An interface that describes the properties ,that a user model has
 interface UserModel extends mongoose.Model<UserDocument> {

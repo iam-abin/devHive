@@ -1,6 +1,6 @@
 import nodemailer from "nodemailer";
 import otpGenerator from "otp-generator";
-import { IOtp } from "../types/otp-nodemailer-interface"; 
+import { IOtp } from "../types/otpInterface"; 
 
 export const generateEmailVerificationOtp = (): Pick<IOtp, "otp"> => {
 	

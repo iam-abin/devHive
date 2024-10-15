@@ -8,7 +8,7 @@ import {
 import { IDependency } from "../../frameworks/types/dependencyInterface";
 import { UserCreatedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/user-created-publisher";
 import { kafkaClient } from "../../config/kafka-connection";
-import { IOtp } from "../../frameworks/types/otp-nodemailer-interface";
+import { IOtp } from "../../frameworks/types/otpInterface";
 
 export = (dependencies: IDependency) => {
     const {
