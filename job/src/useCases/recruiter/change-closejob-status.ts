@@ -1,4 +1,5 @@
 
+import { ForbiddenError } from "@abijobportal/common";
 import { IDependenciesData } from "../../frameworks/types/dependencyInterface";
 
 export = (dependencies: IDependenciesData) => {
@@ -8,9 +9,14 @@ export = (dependencies: IDependenciesData) => {
 		throw new Error("jobRepository should exist in dependencies");
 	}
 
-	const execute = (jobId: string) => {
+	const execute = async(jobId: string, recruiterId: string) => {
+		const job = await jobRepository.getAJob(jobId);
 		
-		return jobRepository.changeClosejobStatus(jobId);
+		if(recruiterId !== job.recruiterId.toString()){
+			throw new ForbiddenError("You cannot modify others job")
+		}
+
+		return await jobRepository.changeClosejobStatus(jobId);
 	};
 
 	return { execute };

@@ -10,10 +10,6 @@ export = (dependencies: IDependenciesData)=>{
 
     return async (req: Request, res: Response)=>{
         const {id: jobId} = req.params;
-        
-        const job = await getJobByIdUseCase(dependencies).execute(jobId);
-        if(!job) throw new NotFoundError();
-        if( job.recruiterId.id.toString() !== req.currentUser?.userId) throw new NotAuthorizedError();
         const response = await deleteJobUseCase(dependencies).execute(jobId);
         
         const jobs = await getRecruiterCreatedJobsUseCase(dependencies).execute(req.currentUser?.userId);
@@ -31,7 +27,7 @@ export = (dependencies: IDependenciesData)=>{
            return res.status(200).json({message: "Job deleted successfully", data: jobs, daletedDetails: response })
         }
 
-        return res.status(200).json({message: "Job couldn't deleted", data: response });
+        res.status(200).json({message: "Job couldn't deleted", data: response });
     };
 
 }

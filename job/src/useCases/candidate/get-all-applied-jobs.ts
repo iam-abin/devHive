@@ -9,12 +9,15 @@ export = (dependencies: IDependenciesData) => {
 		);
 	}
 
-	const execute = (candidateId: string, skip: number, limit: number) => {
-		return jobApplicationRepository.getAllAppliedJobsByCandidateId(
+	const execute = async(candidateId: string, skip: number, limit: number) => {
+		const appliedJobsCount = await jobApplicationRepository.getCountOfCandidateAppliedJobs(candidateId);
+		const appliedJobs = jobApplicationRepository.getAllAppliedJobsByCandidateId(
 			candidateId,
 			skip,
 			limit
 		);
+
+		return {appliedJobs, appliedJobsCount}
 	};
 
 	return { execute };

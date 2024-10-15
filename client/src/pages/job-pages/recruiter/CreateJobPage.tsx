@@ -38,7 +38,6 @@ function CreateJobPage() {
 			const recruiterProfile = await recruiterGetProfileApi(
 				recruiterData.id
 			);
-			console.log("recruiterProfile ", recruiterProfile);
 			
 			setecruiterProfileData(recruiterProfile.data);
 			initialJobValues.company_name = recruiterProfile.data.company_name;
@@ -50,8 +49,6 @@ function CreateJobPage() {
 
 	const handleSubmit = async (jobData: JobFormData) => {
 		try {
-			console.log("create job page handle submit ",jobData);
-			
 			
 			if (!recruiterProfileData?.company_name) {
 				notify(

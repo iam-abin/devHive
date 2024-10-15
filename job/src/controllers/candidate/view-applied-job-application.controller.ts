@@ -6,7 +6,7 @@ export = (dependencies: IDependenciesData)=>{
     const { useCases: { getAJobApplicationUseCase }} = dependencies 
 
     return async (req: Request, res: Response)=>{
-        const {jobApplicationId} = req.params;
+        const { jobApplicationId } = req.params;
         
         const application = await getAJobApplicationUseCase(dependencies).execute(jobApplicationId);
         

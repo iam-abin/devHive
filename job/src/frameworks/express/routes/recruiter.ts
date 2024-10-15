@@ -1,59 +1,44 @@
 import express from "express";
 
 import { auth, ROLES } from "@abijobportal/common";
-import { jobsController, recruiterJobControllers } from "../../../controllers";
+import { jobsControllers, recruiterJobControllers } from "../../../controllers";
 import { IDependenciesData } from "../../types/dependencyInterface";
 
 export const recruiterRouter = (dependencies: IDependenciesData) => {
 	const router = express.Router();
 
-	const {
-		viewAllJobsController,
-		filterJobsController,
-		viewJobByJobIdController,
-	} = jobsController(dependencies);
+	const jobsController = jobsControllers(dependencies);
+	const recruiterJobController = recruiterJobControllers(dependencies);
 
-	const {
-		createJobController,
-		updateJobController,
-		deleteJobController,
-		createdJobsByRecruiterController,
-		viewJobApplicationsController,
-		viewJobApplicationController,
-		changeJobApplicationStatusController,
-		changeJobCloseStatusController,
-		recruiterDashboardCardsController,
-		recruiterDashboardGraphController,
-	} = recruiterJobControllers(dependencies);
-
-	router.get("/all-jobs/:page", viewAllJobsController);
 
 	
-	router.get("/:id", viewJobByJobIdController);
+	router.get("/all-jobs/:page", jobsController.viewAllJobsController);
 	
-	router.post("/filter", filterJobsController);
+	router.get("/:id", jobsController.viewJobByJobIdController);
+	
+	router.post("/filter", jobsController.filterJobsController);
 	
 	router.use(auth(ROLES.RECRUITER));
 
-	router.get("/getRecruiterDashboard/cardsDetails/:recruiterId", recruiterDashboardCardsController);
+	router.get("/getRecruiterDashboard/cardsDetails/:recruiterId", recruiterJobController.recruiterDashboardCardsController);
 
-	router.get("/getRecruiterDashboard/graphDetails/:recruiterId", recruiterDashboardGraphController);
+	router.get("/getRecruiterDashboard/graphDetails/:recruiterId", recruiterJobController.recruiterDashboardGraphController);
 	
-	router.post("/create", createJobController);
+	router.post("/create", recruiterJobController.createJobController);
 
-	router.patch("/update-job", updateJobController);
+	router.patch("/update-job", recruiterJobController.updateJobController);
 	
-	router.delete("/:id", deleteJobController);
+	router.delete("/:id", recruiterJobController.deleteJobController);
 
-	router.get("/created-jobs/:recruiterId", createdJobsByRecruiterController);
+	router.get("/created-jobs/:recruiterId", recruiterJobController.createdJobsByRecruiterController);
 
-	router.get("/job-applications/:recruiterId", viewJobApplicationsController);
+	router.get("/job-applications/:recruiterId", recruiterJobController.viewJobApplicationsController);
 
-	router.get("/job-application/:jobApplicationId", viewJobApplicationController);
+	router.get("/job-application/:jobApplicationId", recruiterJobController.viewJobApplicationController);
 	
-	router.post("/change-application-status/:jobApplicationId", changeJobApplicationStatusController);
+	router.post("/change-application-status/:jobApplicationId", recruiterJobController.changeJobApplicationStatusController);
 	
-	router.patch("/change-close-status/:jobId", changeJobCloseStatusController);
+	router.patch("/change-close-status/:jobId", recruiterJobController.changeJobCloseStatusController);
 	
 	return router;
 };

@@ -8,12 +8,13 @@ export = (dependencies: IDependenciesData) => {
 	if (!jobRepository)
 		throw new Error("jobRepository should exist in dependencies");
 
-	const execute = (
+	const execute = async(
 		skip: number,
-		limit: number,
-		applicationJobIds: string[]
+		limit: number
 	) => {
-		return jobRepository.getAllJobs(skip, limit, applicationJobIds);
+		const jobs = await jobRepository.getAllJobs(skip, limit);
+		const jobCount = await jobRepository.getCountOfJobs()
+		return { jobs ,jobCount }
 	};
 
 	return { execute };

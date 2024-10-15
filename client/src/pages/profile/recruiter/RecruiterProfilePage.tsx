@@ -37,8 +37,6 @@ const RecruiterProfilePage: React.FC = () => {
 				}
 				
 				setRecruiterProfileData(recruiterProfile);
-				console.log(recruiterProfile, "recruiter profile data");
-				
 			} catch (error) {
 				console.error("Error fetching recruiter profile:", error);
 			}

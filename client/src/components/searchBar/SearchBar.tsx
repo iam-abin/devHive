@@ -1,4 +1,4 @@
-import React,{ useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { filterJobsApi, getJobFieldsValuesApi } from "../../axios/apiMethods/jobs-service/jobs";
 import { setFilteredJobs } from "../../redux/slice/job/filteredJobsSlice";
 import { useEffect, useState } from "react";
@@ -54,7 +54,7 @@ const SearchBar = () => {
                 <option  value="" disabled hidden>
                     Job Role
                 </option>
-                {jobFieldsValues.title?.map((title, index) => (
+                {jobFieldsValues?.title?.map((title, index) => (
                     <option className="md:max-w-sm" key={index} value={title}>
                         {title}
                     </option>
@@ -64,13 +64,13 @@ const SearchBar = () => {
             <select
                 onChange={handleChange}
                 name="company_location"
-                value={jobCriteria.company_location}
+                value={jobCriteria?.company_location}
                 className="select select-primary text-center font-semibold rounded-md py-3 md:max-w-sm"
             >
                 <option value="" disabled hidden>
                     Location
                 </option>
-                {jobFieldsValues.company_location?.map((company_location, index) => (
+                {jobFieldsValues?.company_location?.map((company_location, index) => (
                     <option key={index} value={company_location}>
                         {company_location}
                     </option>
@@ -80,13 +80,13 @@ const SearchBar = () => {
             <select
                 onChange={handleChange}
                 name="employment_type"
-                value={jobCriteria.employment_type}
+                value={jobCriteria?.employment_type}
                 className="select select-primary text-center font-semibold rounded-md py-3 md:max-w-sm"
             >
                 <option value="" disabled hidden>
                     Job Type
                 </option>
-                {jobFieldsValues.employment_type?.map((employment_type, index) => (
+                {jobFieldsValues?.employment_type?.map((employment_type, index) => (
                     <option key={index} value={employment_type}>
                         {employment_type}
                     </option>

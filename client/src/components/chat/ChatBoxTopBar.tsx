@@ -8,8 +8,6 @@ const ChatBoxTopBar: React.FC<{
     handleBackButtonClick: any;
     userImage: string;
 }> = ({ receiver, isOnline, handleChatVisibility, userImage }) => {
-    console.log(receiver, "receiver");
-
     // if the chat topbar is there, the chat window will also be there
     useEffect(() => {
         // Open the chat window when the component mounts

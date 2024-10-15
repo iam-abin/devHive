@@ -24,7 +24,6 @@ const CreateJobForm: React.FC<{
 	recruiterData: any;
 }> = ({ initialJobValues, handleSubmit, recruiterData }) => {
 	const today = new Date().toISOString().split("T")[0];
-	console.log("initialJobValues ", initialJobValues);
 	const jobCreationSchema = yup.object().shape({
 		available_position: yup
 			.number()
@@ -36,7 +35,6 @@ const CreateJobForm: React.FC<{
 			initialValues={initialJobValues}
 			validationSchema={jobCreationSchema}
 			onSubmit={(values) => {
-				// console.log("FORmik onsubmit values ",values);
 				if (recruiterData?.company_name) {
 					values.company_name = recruiterData.company_name;
 				}

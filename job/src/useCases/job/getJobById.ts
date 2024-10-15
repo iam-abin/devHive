@@ -1,14 +1,14 @@
 import { IDependenciesData } from "../../frameworks/types/dependencyInterface";
 
 export = (dependencies: IDependenciesData) => {
-	const { repositories: { jobApplicationRepository } } = dependencies;
+	const { repositories: { jobRepository } } = dependencies;
 
-	if (!jobApplicationRepository) {
+	if (!jobRepository) {
 		throw new Error("jobRepository should exist in dependencies");
 	}
 
-	const execute = (candidateId: string) => {
-		return jobApplicationRepository.getCountOfCandidateAppliedJobs(candidateId)
+	const execute = async (jobId: string) => {
+		return await jobRepository.getAJob(jobId);
 	};
 
 	return { execute };

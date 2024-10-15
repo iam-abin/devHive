@@ -8,7 +8,8 @@ export = (dependencies: IDependenciesData) => {
 	}
 
 	const execute = async(fields: Array<string>) => {
-		return jobRepository.getAllJobsDistinctValues(fields);
+		const jobFields = await jobRepository.getAllJobsDistinctValues(fields);
+		return jobFields
 	};
 
 	return { execute };

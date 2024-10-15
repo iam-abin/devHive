@@ -9,8 +9,8 @@ export = (dependencies: IDependenciesData) => {
 	}
 
 	// either recruiterId or candidateId can be null based on the request sender
-	const execute = (recruiterId: string, candidateId: string) => {
-		return jobApplicationRepository.getAllJobApplicationsByRecruiterId(recruiterId, candidateId);
+	const execute = async(recruiterId: string, candidateId: string) => {
+		return await jobApplicationRepository.getAllJobApplicationsByRecruiterId(recruiterId, candidateId);
 	};
 
 	return { execute };

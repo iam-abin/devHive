@@ -120,8 +120,8 @@ export = {
         return searchedJobsCount;
     },
 
-    getAJob: async (id: string) => {
-        const job = await JobModel.findById(id).populate({
+    getAJob: async (jobId: string) => {
+        const job = await JobModel.findById(jobId).populate({
             path: "recruiterId",
             model: "User", // Assuming your User model is named 'User'
         });

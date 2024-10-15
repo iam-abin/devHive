@@ -1,4 +1,5 @@
 
+import { ForbiddenError } from "@abijobportal/common";
 import { IDependenciesData } from "../../frameworks/types/dependencyInterface";
 
 export = (dependencies: IDependenciesData) => {
@@ -8,7 +9,13 @@ export = (dependencies: IDependenciesData) => {
 		throw new Error("jobApplicationRepository should exist in dependencies");
 	}
 
-	const execute = (jobApplicationId: string) => {
+	const execute = async (jobApplicationId: string, recruiterId: string) => {
+		const jobApplication =  await jobApplicationRepository.getAJobApplication(jobApplicationId);
+
+		if(recruiterId !== jobApplication.recruiterId.toString()){
+			throw new ForbiddenError("You cannot access others added jobs application")
+		}
+
 		return jobApplicationRepository.getAJobApplicationByRecruiter(jobApplicationId);
 	};
 

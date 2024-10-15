@@ -6,17 +6,11 @@ const { JobModel, jobApplicationModel, UserModel } = Models;
 export = {
 	applyJob: async (data: IJobApplication) => {
 		const newApplication = await jobApplicationModel.create(data);
-		
 		return newApplication;
 	},
 
-	getAJobApplication: async (id: string, data: object) => {
-		
-		const applicationExists = await jobApplicationModel.findOne({
-			_id: id,
-		});
-		
-		return applicationExists;
+	getAJobApplication: async (applicationId: string) => {
+		return await jobApplicationModel.findById(applicationId);
 	},
 
 	getAllAppliedJobsByCandidateId: async (

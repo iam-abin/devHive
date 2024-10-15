@@ -33,7 +33,7 @@ const ChatPageRecruiter = () => {
     const [selectedChatRoomMessages, setSelectedChatRoomMessages] =
         useState<any>([]);
 
-    console.log("selectedChatRoom [[[[[[[", selectedChatRoom);
+    console.log("selectedChatRoom >>", selectedChatRoom);
     if (selectedChatRoom) {
         console.log(
             "getReceiver(selectedChatRoom)",

@@ -1,56 +1,8 @@
-import {
-	applyJobUseCase,
-	getAllAppliedJobsUseCase,
-	getNumberofCandidateAppliedJobsUseCase,
-} from "./candidate";
+// Re-export everything from usecase/job
+export * from './job';
 
-import {
-	filterJobUseCase,
-	getAllJobsUseCase,
-	getJobByIdUseCase,
-	getNumberofJobsUseCase,
-	getAllJobFieldsDistinctValuesUseCase,
-	getSearchResultUseCase,
-	// getSearchResultCountUseCase,
+// Re-export everything from usecase/candidate
+export * from './candidate';
 
-} from "./job";
-
-import {
-	createJobUseCase,
-	updateJobUseCase,
-	deleteJobUseCase,
-	getAllJobApplicationsUseCase,
-	updateJobApplicationStatusUseCase,
-	getRecruiterCreatedJobsUseCase,
-	getAJobApplicationUseCase,
-	changeJobApplicationStatusUseCase,
-	changeClosejobStatusUseCase,
-	recruiterDashboardCardsDetailsUseCase,
-	recruiterDashboardGraphDetailsUseCase,
-} from "./recruiter";
-
-export default {
-	applyJobUseCase,
-	getAllAppliedJobsUseCase,
-	getNumberofCandidateAppliedJobsUseCase,
-
-	filterJobUseCase,
-	getAllJobsUseCase,
-	getJobByIdUseCase,
-	getNumberofJobsUseCase,
-	getAllJobFieldsDistinctValuesUseCase,
-	getSearchResultUseCase,
-	// getSearchResultCountUseCase,
-
-	createJobUseCase,
-	updateJobUseCase,
-	deleteJobUseCase,
-	getAllJobApplicationsUseCase,
-	updateJobApplicationStatusUseCase,
-	getRecruiterCreatedJobsUseCase,
-	getAJobApplicationUseCase,
-	changeJobApplicationStatusUseCase,
-	changeClosejobStatusUseCase,
-	recruiterDashboardCardsDetailsUseCase,
-	recruiterDashboardGraphDetailsUseCase,
-};
+// Re-export everything from usecase/recruiter
+export * from './recruiter';

@@ -9,7 +9,6 @@ export = (dependencies: IDependenciesData) => {
 	
 	const execute = async (jobData: IJob) => {
 		const job = new Job(jobData);
-		
 		return await jobRepository.createJob(job);
 	};
 
