@@ -1,4 +1,4 @@
 import repositories from "../frameworks/repository/mongo";
-import useCases from "../useCases";
+import * as useCases from "../useCases";
 
 export default { repositories, useCases };

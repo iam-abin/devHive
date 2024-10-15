@@ -4,16 +4,17 @@ import { otpControllers } from "../../../controllers";
 import { IDependenciesData } from "../../types/dependencyInterface";
 
 export const otpRouter = (dependencies: IDependenciesData) => {
-	const router = express.Router();
+    const router = express.Router();
 
-	const {
-		sendOtpNodemailerController,
-        verifyOtpNodemailerController
-	} = otpControllers(dependencies);
+    const otpController = otpControllers(dependencies);
 
-	router.post("/sendOtp",  sendOtpNodemailerController);
-
-	router.post("/verify-forgotPassword-otp", verifyOtpNodemailerController);
 	
-	return router;
+    router.post("/sendOtp", otpController.sendOtpNodemailerController);
+
+    router.post(
+        "/verify-forgotPassword-otp",
+        otpController.verifyOtpNodemailerController
+    );
+
+    return router;
 };

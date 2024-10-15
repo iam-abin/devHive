@@ -6,9 +6,9 @@ import { paymentControllers } from "../../../controllers";
 export const paymentRouter = (dependencies: IDependenciesData)=>{
     const router: Router = express.Router();
 
-    const { getAllPaymentsController } = paymentControllers(dependencies);
+    const paymentController = paymentControllers(dependencies);
     
-    router.get("/get-all-payments", getAllPaymentsController);
+    router.get("/get-all-payments", paymentController.getAllPaymentsController);
     
     return router
 }

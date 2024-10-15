@@ -7,15 +7,20 @@ import { IDependenciesData } from "../../types/dependencyInterface";
 export const candidateRouter = (dependencies: IDependenciesData) => {
     const router = express.Router();
 
-    const  jobsController = jobsControllers(dependencies);
+    const jobsController = jobsControllers(dependencies);
     const candidateJobController = candidateJobControllers(dependencies);
 
     // This route is to get all jobs. It's a post req because i am passing some data to server.
-    router.get("/all-jobs/:page", checkCurrentUser, jobsController.viewAllJobsController);
+    router.get(
+        "/all-jobs/:page",
+        checkCurrentUser,
+        jobsController.viewAllJobsController
+    );
 
     router.post(
         "/all-job-fields-distinct-values",
-        jobsController.viewAllJobFieldsDistinctValuesController);
+        jobsController.viewAllJobFieldsDistinctValuesController
+    );
 
     router.get("/:id", jobsController.viewJobByJobIdController);
 
@@ -28,11 +33,15 @@ export const candidateRouter = (dependencies: IDependenciesData) => {
 
     router.post("/apply", candidateJobController.applyJobController);
 
-    router.get("/applied-jobs/:candidateId/:page", candidateJobController.appliedJobsController);
+    router.get(
+        "/applied-jobs/:candidateId/:page",
+        candidateJobController.appliedJobsController
+    );
 
     router.get(
         "/job-application/:jobApplicationId",
-        candidateJobController.viewPliedJobApplicationController);
+        candidateJobController.viewPliedJobApplicationController
+    );
 
     return router;
 };

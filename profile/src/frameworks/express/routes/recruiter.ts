@@ -1,25 +1,30 @@
-import express from "express"
+import express from "express";
 
-import { recruiterProfileControllers, candidateProfileControllers } from "../../../controllers";
+import {
+    recruiterProfileControllers,
+    candidateProfileControllers,
+} from "../../../controllers";
 
 import { IDependenciesData } from "../../types/dependencyInterface";
 import { auth, ROLES } from "@abijobportal/common";
 
-export const recruiterRouter = (dependencies: IDependenciesData)=>{
+export const recruiterRouter = (dependencies: IDependenciesData) => {
     const router = express.Router();
 
-    const {  viewRecruiterProfileController, updateRecruiterProfileController, viewAllCandidatesProfilesController } = recruiterProfileControllers(dependencies)
-    const { viewCandidateProfileController} = candidateProfileControllers(dependencies);
+    const recruiterProfileController = recruiterProfileControllers(dependencies);
+    const candidateProfileController = candidateProfileControllers(dependencies);
 
     // recruiter
-	router.use(auth(ROLES.RECRUITER))
+    router.use(auth(ROLES.RECRUITER));
 
-	// router.post("/createProfile", createRecruiterProfileController);
-	router.get("/viewProfile/:id", viewRecruiterProfileController);
-	router.patch("/updateProfile", updateRecruiterProfileController);
-    router.put("/uploadProfilePic", updateRecruiterProfileController);
-	router.get("/viewCandidateProfile/:userId",viewCandidateProfileController);
-	router.get("/viewAllCandidatesProfiles/:page",viewAllCandidatesProfilesController);
+    router.get("/viewProfile/:id", recruiterProfileController.viewRecruiterProfileController);
+    router.patch("/updateProfile", recruiterProfileController.updateRecruiterProfileController);
+    router.put("/uploadProfilePic", recruiterProfileController.updateRecruiterProfileController);
+    router.get("/viewCandidateProfile/:userId", candidateProfileController.viewCandidateProfileController);
+    router.get(
+        "/viewAllCandidatesProfiles/:page",
+        recruiterProfileController.viewAllCandidatesProfilesController
+    );
 
-    return router
-}
+    return router;
+};

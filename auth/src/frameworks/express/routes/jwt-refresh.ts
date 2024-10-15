@@ -4,13 +4,11 @@ import { jwtRefreshControllers } from "../../../controllers";
 import { IDependenciesData } from "../../types/dependencyInterface";
 
 export const jwtRouter = (dependencies: IDependenciesData) => {
-	const router = express.Router();
+    const router = express.Router();
 
-	const {
-		jwtRefreshController
-	} = jwtRefreshControllers(dependencies);
+    const jwtController = jwtRefreshControllers(dependencies);
 
-	router.post("/refreshToken", jwtRefreshController);
+    router.post("/refreshToken", jwtController.jwtRefreshController);
 
-	return router;
+    return router;
 };

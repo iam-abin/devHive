@@ -6,37 +6,48 @@ import { IDependenciesData } from "../../types/dependencyInterface";
 import getUnreadMessagesCountController from "../../../controllers/notification/get-unread-messages-count.controller";
 
 export const recruiterRouter = (dependencies: IDependenciesData) => {
-	const router = express.Router();
+    const router = express.Router();
 
-	const { getAllChatRoomsByUserIDController, getConversationController } =
-		chatControllers(dependencies);
+    const chatController = chatControllers(dependencies);
+    const notificationController = notificationControllers(dependencies);
 
-	const {
-		getAllNotificationsController,
-		createNotificationController,
-		deleteAllNotificationsController,
-		getAllNotificationsCountController,
-		deleteAllNotificationsBySenderController,
-	} = notificationControllers(dependencies);
+	
+    router.get(
+        "/chat-rooms/:userId",
+        chatController.getAllChatRoomsByUserIDController
+    );
 
-	router.get("/chat-rooms/:userId", getAllChatRoomsByUserIDController);
+    router.get(
+        "/room-conversation/:chatRoomId",
+        chatController.getConversationController
+    );
 
-	router.get("/room-conversation/:chatRoomId", getConversationController);
+    router.get(
+        "/notifications/:userId",
+        notificationController.getAllNotificationsController
+    );
 
-	router.get("/notifications/:userId", getAllNotificationsController);
+    router.post("/create", notificationController.createNotificationController);
 
-	router.post("/create", createNotificationController);
+    router.delete(
+        "/notifications/:userId",
+        notificationController.deleteAllNotificationsController
+    );
 
-	router.delete("/notifications/:userId", deleteAllNotificationsController);
+    router.delete(
+        "/delete-notifications-by-senderId/:senderId/:receiverId",
+        notificationController.deleteAllNotificationsBySenderController
+    );
 
-	router.delete("/delete-notifications-by-senderId/:senderId/:receiverId", deleteAllNotificationsBySenderController);
+    router.get(
+        "/unread-messages-count/:senderId/:receiverId",
+        getUnreadMessagesCountController
+    );
 
-	router.get("/unread-messages-count/:senderId/:receiverId", getUnreadMessagesCountController);
+    router.get(
+        "/notifications-count/:userId",
+        notificationController.getAllNotificationsCountController
+    );
 
-	router.get(
-		"/notifications-count/:userId",
-		getAllNotificationsCountController
-	);
-
-	return router;
+    return router;
 };
