@@ -8,7 +8,7 @@ export = (dependencies: IDependenciesData)=>{
     return async (req: Request, res: Response)=>{
         const {userId} = req.currentUser!;
         
-        console.log(req);
+      
         
         // pagination
 		const page = Number(req.params.page) || 1;

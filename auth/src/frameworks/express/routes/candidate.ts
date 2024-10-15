@@ -1,6 +1,6 @@
 import express from "express";
+import { auth, ROLES } from "@abijobportal/common";
 
-import { requireAuthCandidate } from "@abijobportal/common";
 import { candidateControllers, otpControllers, passwordUpdateControllers } from "../../../controllers";
 import { signupRequestBodyValidatorMiddlewares } from "../../middlewares/signupValidation";
 import { signinRequestBodyValidatorMiddlewares } from "../../middlewares/signinValidation";
@@ -36,13 +36,13 @@ export const candidateRouter = (dependencies: IDependenciesData) => {
 
 	router.put("/forgotPassword", updatePasswordController);
 
-	router.post("/sendOtp",requireAuthCandidate, sendOtpTwilioController);
+	router.post("/sendOtp",auth(ROLES.CANDIDATE), sendOtpTwilioController);
 
-	router.post("/verifyOtp",requireAuthCandidate, verifyOtpTwilioController);
+	router.post("/verifyOtp",auth(ROLES.CANDIDATE), verifyOtpTwilioController);
 	
-	router.put("/resetPassword", requireAuthCandidate, updatePasswordController);
+	router.put("/resetPassword", auth(ROLES.CANDIDATE), updatePasswordController);
 
-	router.post("/signout", requireAuthCandidate, candidateSignoutController);
+	router.post("/signout", auth(ROLES.CANDIDATE), candidateSignoutController);
 
 	return router;
 };

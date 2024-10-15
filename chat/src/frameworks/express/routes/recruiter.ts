@@ -2,7 +2,7 @@ import express from "express";
 
 import { chatControllers, notificationControllers } from "../../../controllers";
 import { IDependenciesData } from "../../types/dependencyInterface";
-import { requireAuthRecruiter } from "@abijobportal/common";
+// import { auth, ROLES } from "@abijobportal/common";
 import getUnreadMessagesCountController from "../../../controllers/notification/get-unread-messages-count.controller";
 
 export const recruiterRouter = (dependencies: IDependenciesData) => {

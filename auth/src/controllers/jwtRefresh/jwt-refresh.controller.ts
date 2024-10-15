@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { IDependenciesData } from "../../frameworks/types/dependencyInterface";
-import { NotAuthorizedError, verifyJwt } from "@abijobportal/common";
+import { NotAuthorizedError, verifyJwtToken } from "@abijobportal/common";
 import { createJwtAccessToken } from "../../frameworks/utils/jwtToken";
 
 export = (dependencies: IDependenciesData) => {
@@ -23,10 +23,7 @@ export = (dependencies: IDependenciesData) => {
 
 		if (!refreshToken) throw new NotAuthorizedError(); 
 		
-		const refreshTokenVerified: any = verifyJwt(
-			refreshToken,
-			process.env.JWT_REFRESH_SECRET_KEY!
-		);
+		const refreshTokenVerified: any = verifyJwtToken(refreshToken);
 		
 		let user = null;
 		if (refreshTokenVerified) {

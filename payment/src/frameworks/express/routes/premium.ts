@@ -3,8 +3,9 @@ import express from "express";
 import { premiumControllers } from "../../../controllers";
 import { IDependenciesData } from "../../types/dependencyInterface";
 import {
-	currentUserCandidateCheck,
-	requireAuthCandidate,
+	checkCurrentUser,
+	auth,
+	ROLES,
 } from "@abijobportal/common";
 
 export const premiumRouter = (dependencies: IDependenciesData) => {
@@ -14,8 +15,8 @@ export const premiumRouter = (dependencies: IDependenciesData) => {
 	
 	router.get(
 		"/get-all-premium-plans-candidate",
-		currentUserCandidateCheck,
-		requireAuthCandidate,
+		checkCurrentUser,
+		auth(ROLES.CANDIDATE),
 		getAllPremiumPlansByCandidateController  
 	);
 

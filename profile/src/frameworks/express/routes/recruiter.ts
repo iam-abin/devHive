@@ -3,7 +3,7 @@ import express from "express"
 import { recruiterProfileControllers, candidateProfileControllers } from "../../../controllers";
 
 import { IDependenciesData } from "../../types/dependencyInterface";
-import { requireAuthRecruiter } from "@abijobportal/common";
+import { auth, ROLES } from "@abijobportal/common";
 
 export const recruiterRouter = (dependencies: IDependenciesData)=>{
     const router = express.Router();
@@ -12,7 +12,7 @@ export const recruiterRouter = (dependencies: IDependenciesData)=>{
     const { viewCandidateProfileController} = candidateProfileControllers(dependencies);
 
     // recruiter
-	router.use(requireAuthRecruiter)
+	router.use(auth(ROLES.RECRUITER))
 
 	// router.post("/createProfile", createRecruiterProfileController);
 	router.get("/viewProfile/:id", viewRecruiterProfileController);

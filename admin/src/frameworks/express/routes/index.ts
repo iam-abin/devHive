@@ -1,5 +1,5 @@
 import express from "express";
-import { currentUserAdminCheck, requireAuthAdmin } from "@abijobportal/common";
+import { checkCurrentUser, auth, ROLES } from "@abijobportal/common";
 
 import { dashboardRouter } from "./dashboard";
 import { candidateRouter } from "./candidate";
@@ -23,8 +23,8 @@ export const routes = (dependencies: IDependenciesData) => {
 	// currentUserAdmin extract current user from jwt, if user is present add it to req.currentUser
 	// here every routes are used by admin, so it is easy to understand for us when define it at the top.
 	
-	router.use(currentUserAdminCheck);
-	router.use(requireAuthAdmin);
+	router.use(checkCurrentUser);
+	router.use(auth(ROLES.ADMIN));
 
 	router.use("/dashboard", dashboard);
 	router.use("/candidate", candidate);
@@ -32,7 +32,7 @@ export const routes = (dependencies: IDependenciesData) => {
 	router.use("/membership", membershipPlan);
 	router.use("/job", job);
 	router.use("/payment", payment);
-	// router.use("/candidate",requireAuthAdmin, candidate);
+	// router.use("/candidate",auth, candidate);
 	
 	return router;
 };

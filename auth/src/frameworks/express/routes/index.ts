@@ -1,5 +1,5 @@
 import express from "express";
-import { currentUserAdminCheck, currentUserRecruiterCheck, currentUserCandidateCheck } from "@abijobportal/common";
+import { checkCurrentUser } from "@abijobportal/common";
 
 import { adminRouter } from "./admin";
 import { candidateRouter } from "./candidate";
@@ -18,9 +18,9 @@ export const routes = (dependencies: IDependenciesData) => {
 	const otp = otpRouter(dependencies);
 	const jwtRefresh  = jwtRouter(dependencies)
 
-	router.use("/admin",currentUserAdminCheck, admin); // currentUserAdmin extract current user from jwt, if user is present add it to req.currentUser
-	router.use("/candidate",currentUserCandidateCheck, candidate);
-	router.use("/recruiter",currentUserRecruiterCheck, recruiter);
+	router.use("/admin",checkCurrentUser, admin); // currentUserAdmin extract current user from jwt, if user is present add it to req.currentUser
+	router.use("/candidate",checkCurrentUser, candidate);
+	router.use("/recruiter",checkCurrentUser, recruiter);
 	router.use("/otp", otp); // forgot password nodemailer otps
 	router.use("/jwt-refresh", jwtRefresh);
 

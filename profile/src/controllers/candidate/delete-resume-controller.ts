@@ -8,7 +8,7 @@ export = (dependencies: IDependenciesData)=>{
     const { useCases: { deleteResumeUseCase }} = dependencies
 
     return async (req: Request, res: Response)=>{
-        const user = req.currentUserCandidate;
+        const user = req.currentUser;
         const {userId} = req.params;
         const candidate = await deleteResumeUseCase(dependencies).execute(userId);
         

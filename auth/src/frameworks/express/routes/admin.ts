@@ -1,5 +1,5 @@
 import express from "express"
-import { requireAuthAdmin } from "@abijobportal/common";
+import { auth, ROLES } from "@abijobportal/common";
 
 import { adminControllers } from "../../../controllers";
 import { signinRequestBodyValidatorMiddlewares } from "../../middlewares/signinValidation";
@@ -11,7 +11,7 @@ export const adminRouter = (dependencies: IDependenciesData)=>{
     const { adminSigninController, adminSignoutController } = adminControllers(dependencies)
     
     router.post("/signin", signinRequestBodyValidatorMiddlewares, adminSigninController);
-    router.post("/signout" ,requireAuthAdmin ,adminSignoutController);  
+    router.post("/signout" ,auth(ROLES.ADMIN) ,adminSignoutController);  
 
     return router
 }

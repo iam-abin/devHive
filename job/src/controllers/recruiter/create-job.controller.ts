@@ -10,13 +10,7 @@ export = (dependencies: IDependenciesData)=>{
 
     return async (req: Request, res: Response)=>{
         const data = req.body;
-
-        console.log("{{{{{{{{{{{{{{{{{{{{{{{{{{{");
-        console.log(data);
         
-        console.log("}}}}}}}}}}}}}}}}}}}}}}}}}}}");
-        
-
         if(!data.company_name || !data.company_location ) throw new BadRequestError('Add company details in the profile before creating a job!!');
         if(!data.salary_min || !data.salary_max) throw new BadRequestError('must add all salary fields!!'); 
         if(data.salary_min > data.salary_max ) throw new BadRequestError('min salary must be less than max salary!!');

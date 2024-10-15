@@ -8,9 +8,9 @@ export = (dependencies: IDependenciesData)=>{
     const { useCases: { uploadResumeUseCase }} = dependencies
 
     return async (req: Request, res: Response)=>{
-        const user = req.currentUserCandidate;
+        const user = req.currentUser;
         
-        const candidate = await uploadResumeUseCase(dependencies).execute(user?.id , req.body);
+        const candidate = await uploadResumeUseCase(dependencies).execute(user?.userId , req.body);
         
         const candidateProfileUpdatedEvent = new CandidateProfileUpdatedEventPublisher(kafkaClient)
         await candidateProfileUpdatedEvent.publish({

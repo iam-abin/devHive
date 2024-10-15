@@ -11,7 +11,7 @@ export = (dependencies: IDependenciesData) => {
 	return async (req: Request, res: Response) => {
 
 		const { membershipPlanId, amount } = req.body;
-		let candidateId = req.currentUserCandidate!.id;
+		let candidateId = req.currentUser!.userId;
 		
 		const paymentCreated = await createPaymentUseCase(dependencies).execute( candidateId, amount );
 		

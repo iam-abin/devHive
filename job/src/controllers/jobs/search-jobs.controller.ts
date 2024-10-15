@@ -6,7 +6,7 @@ export = (dependencies: IDependenciesData)=>{
     const { useCases: { getSearchResultUseCase, getSearchResultCountUseCase }} = dependencies 
 
     return async (req: Request, res: Response)=>{
-        // console.log(req?.currentUserCandidate,"<-------------+++++===>");
+        // console.log(req?.currentUser,"<-------------+++++===>");
         
         const page = Number(req.params.page) || 1;
 		const limit = Number(req.params.limit) || 2;

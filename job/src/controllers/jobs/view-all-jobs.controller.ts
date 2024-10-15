@@ -8,7 +8,7 @@ export = (dependencies: IDependenciesData) => {
 
 	return async (req: Request, res: Response) => {
 		
-		// const candidateId = req.currentUserCandidate!?.id || null;
+		// const candidateId = req.currentUser!?.id || null;
 		let candidateId
 		if (!req.currentUser!) {
 			// throw new NotAuthorizedError();
