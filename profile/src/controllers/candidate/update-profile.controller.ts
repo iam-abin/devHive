@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
-import { IDependenciesData } from "../../frameworks/types/dependencyInterface";
+import { IDependency } from "../../frameworks/types/dependencyInterface";
 import { kafkaClient } from "../../config/kafka-connection";
 import { CandidateProfileUpdatedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/candidate-profile-updated-publisher ";
 import { UserUpdatedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/user-updated-publisher";
 
-export = (dependencies: IDependenciesData)=>{
+export = (dependencies: IDependency)=>{
 
     const { useCases: { getCandidateProfileByUserIdUseCase, updateCandidateProfileUseCase }} = dependencies
 
@@ -38,7 +38,7 @@ export = (dependencies: IDependenciesData)=>{
             email: updatedData?.email,
             phone: updatedData?.phone,
             isActive: updatedData?.isActive,
-            userType: "candidate",
+            role: "candidate",
             userId: updatedData?.userId,
         })
 

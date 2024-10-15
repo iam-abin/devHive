@@ -8,8 +8,8 @@ export = {
 	 // these fn's are returning a promise as async so we can define return type as Promise<ICandidateData>
 
 	 createRecruiter: async (userData: any) => {
-		const {name, email, phone, userType, isActive, userId} = userData
-		const userObject = RecruiterModel.buildRecruiter({name, email, phone, userType, isActive, userId});
+		const {name, email, phone, role, isActive, userId} = userData
+		const userObject = RecruiterModel.buildRecruiter({name, email, phone, role, isActive, userId});
 
 		return await userObject.save();
 	},

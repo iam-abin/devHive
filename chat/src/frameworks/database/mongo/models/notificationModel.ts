@@ -5,7 +5,7 @@ interface NotificationAttributes {
 	targetUserId: string;
 	message: string;
 	// profileImgUrl: number;
-	// userType: string;
+	// role: string;
 }
 // 2. An interface that describes the properties ,that a User Document has
 interface NotificationDocument extends mongoose.Document {
@@ -13,7 +13,7 @@ interface NotificationDocument extends mongoose.Document {
 	targetUserId: mongoose.Schema.Types.ObjectId;
 	message: string;
 	// profileImgUrl: number;
-	// userType: string;
+	// role: string;
 	// isActive: boolean;
 	createdAt: string;
 	updatedAt: string;
@@ -26,7 +26,7 @@ const notificationSchema = new mongoose.Schema(
 		targetUserId: mongoose.Schema.Types.ObjectId,
 		message: String,
 		// profileImgUrl: String,
-		// userType: {
+		// role: {
 		// 	type: String,
 		// 	required: true,
 		// 	enum: ["candidate", "recruiter"],
@@ -64,7 +64,7 @@ notificationSchema.statics.buildNotification = (
 		targetUserId: attributes.targetUserId,
 		message: attributes.message,
 		// profileImgUrl: attributes.profileImgUrl,
-		// userType: attributes.userType,
+		// role: attributes.role,
 	});
 };
 

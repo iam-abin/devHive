@@ -1,9 +1,9 @@
-import { IDependenciesData } from "../../frameworks/types/dependencyInterface";
+import { IDependency } from "../../frameworks/types/dependencyInterface";
 
 import adminSigninController from "./signin.controller";
 import adminSignoutController from "./signout.controller";
 
-export = (dependencies: IDependenciesData) => {
+export = (dependencies: IDependency) => {
 	return {
 		adminSigninController: adminSigninController(dependencies),
 		adminSignoutController: adminSignoutController(dependencies),

@@ -6,9 +6,9 @@ import uploadRecruiterProfilePicController from "./upload-profile-pic.controller
 import viewAllCandidatesProfilesController from "./view-all-candidates-profiles-controller";
 
 
-import { IDependenciesData } from "../../frameworks/types/dependencyInterface";
+import { IDependency } from "../../frameworks/types/dependencyInterface";
 
-export = (dependencies: IDependenciesData)=>{
+export = (dependencies: IDependency)=>{
     return {
         viewRecruiterProfileController: viewRecruiterProfileController(dependencies),
         viewCompanyProfileController: viewCompanyProfileController(dependencies),

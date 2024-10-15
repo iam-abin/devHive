@@ -1,4 +1,4 @@
-export interface IDependenciesData {
+export interface IDependency {
     useCases: any;
     repositories: any
 }

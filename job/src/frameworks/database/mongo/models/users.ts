@@ -5,7 +5,7 @@ interface IUserAttributes {
 	name: string;
 	email: string;
 	profileImgUrl: number;
-	userType: string;
+	role: string;
 }
 // 2. An interface that describes the properties ,that a User Document has
 interface IUserDocument extends mongoose.Document {
@@ -13,7 +13,7 @@ interface IUserDocument extends mongoose.Document {
 	name: string;
 	email: string;
 	profileImgUrl: number;
-	userType: string;
+	role: string;
 	isActive: boolean;
 	createdAt: string;
 	updatedAt: string;
@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema(
 		name: String,
 		email: String,
 		profileImgUrl: String,
-		userType: {
+		role: {
 			type: String,
 			required: true,
 			enum: ["candidate", "recruiter"],
@@ -62,7 +62,7 @@ userSchema.statics.buildUser = (attributes: IUserAttributes) => {
 		name: attributes.name,
 		email: attributes.email,
 		profileImgUrl: attributes.profileImgUrl,
-		userType: attributes.userType,
+		role: attributes.role,
 	});
 };
 

@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
-import { IDependenciesData } from "../../frameworks/types/dependencyInterface";
+import { IDependency } from "../../frameworks/types/dependencyInterface";
 import { RecruiterProfileUpdatedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/recruiter-profile-updated-publisher";
 import { CompanyProfileCreatedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/company-profile-created-publisher";
 import { kafkaClient } from "../../config/kafka-connection";
 import { UserUpdatedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/user-updated-publisher";
 
-export = (dependencies: IDependenciesData) => {
+export = (dependencies: IDependency) => {
 	const {
 		useCases: {
 			getRecruiterProfileByUserIdUseCase,
@@ -50,7 +50,7 @@ export = (dependencies: IDependenciesData) => {
 			email: updatedData?.email,
 			phone: updatedData?.phone,
 			isActive: updatedData?.isActive,
-			userType: "recruiter",
+			role: "recruiter",
 			userId: updatedData?.userId,
 		});
 

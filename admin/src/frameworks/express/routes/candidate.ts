@@ -1,8 +1,8 @@
 import express, { Router } from "express";
 import { candidateControllers } from "../../../controllers";
-import { IDependenciesData } from "../../types/dependencyInterface";
+import { IDependency } from "../../types/dependencyInterface";
 
-export const candidateRouter = (dependencies: IDependenciesData) => {
+export const candidateRouter = (dependencies: IDependency) => {
 	const router: Router = express.Router();
 
 	const candidateController = candidateControllers(dependencies);

@@ -8,7 +8,7 @@ interface CandidateAttributes {
 	phone: number;
     profile_pic?: string;
 	isActive: boolean;
-	userType: string;
+	role: string;
 
 	gender?: string;
 	currentLocation?: string;
@@ -30,7 +30,7 @@ interface CandidateDocument extends mongoose.Document {
 	email: string;
 	phone: number;
     profile_pic?: string;
-	userType: string;
+	role: string;
 	isActive: boolean;
 
 	gender?: string;
@@ -68,7 +68,7 @@ const candidateSchema = new mongoose.Schema(
 			trim: true,
 		},
         profile_pic: String,
-		userType: {
+		role: {
 			type: String,
 			required: true,
 			enum: ["admin", "candidate", "recruiter"],
@@ -133,7 +133,7 @@ candidateSchema.statics.buildCandidate = (attributes: CandidateAttributes) => {
 		profile_pic: attributes.profile_pic,
         
 		phone: attributes.phone,
-		userType: attributes.userType,
+		role: attributes.role,
 		isActive: attributes.isActive,
 		// userId: new mongoose.Types.ObjectId(attributes.userId),
 	});

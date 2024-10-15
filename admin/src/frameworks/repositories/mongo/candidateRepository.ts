@@ -7,13 +7,13 @@ export = {
 	// these fn's are returning a promise as async so we can define return type as Promise<ICandidateData>
 
 	createCandidate: async (userData: any) => {
-		const { name, email, phone, userType, isActive, userId } = userData;
+		const { name, email, phone, role, isActive, userId } = userData;
 
 		const userObject = CandidateModel.buildCandidate({
 			name,
 			email,
 			phone,
-			userType,
+			role,
 			isActive,
 			userId,
 		});

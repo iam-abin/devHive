@@ -1,20 +1,19 @@
-export interface IUserDataSignup {
+interface User{
+	email: string;
+	password: string;
+	role: string;
+}
+
+export interface ISignup extends User {
 	name: string;
-	email: string;
 	phone: number;
-	password: string;
-	userType: string;
-	// isPremiumUser: boolean
-	otp: number
 }
 
-export interface IUserDataSignin {
-	email: string;
-	password: string;
-	userType: string;
-}
+export interface ISignin extends User{} 
 
-export interface IUpdatePasswordInput {
-	id: string;
+
+
+export interface IUpdatePassword {
+	userId: string;
 	password: string;
 }

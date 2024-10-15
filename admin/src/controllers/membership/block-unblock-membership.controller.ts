@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
-import { IDependenciesData } from "../../frameworks/types/dependencyInterface";
+import { IDependency } from "../../frameworks/types/dependencyInterface";
 import { kafkaClient } from "../../config/kafka-connection";
 // import { JobUpdatedEventPublisher } from "../../frameworks/services/kafka-events/publishers/job-updated-publisher";
 import { MemberShipPlanUpdatedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/membership-plan-updated-publisher ";
 import { NotAuthorizedError, NotFoundError } from "@abijobportal/common";
 // import { produceMessage } from "../../frameworks/services/kafka/producer";
 
-export = (dependencies: IDependenciesData) => {
+export = (dependencies: IDependency) => {
 	const {
 		useCases: {
 			getMemberShipPlanByIdUseCase,

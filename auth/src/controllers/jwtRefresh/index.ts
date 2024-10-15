@@ -1,8 +1,8 @@
 import jwtRefreshController from "./jwt-refresh.controller";
 
-import { IDependenciesData } from "../../frameworks/types/dependencyInterface";
+import { IDependency } from "../../frameworks/types/dependencyInterface";
 
-export = (dependencies: IDependenciesData) => {
+export = (dependencies: IDependency) => {
 	return {
         jwtRefreshController: jwtRefreshController(dependencies),
 	};

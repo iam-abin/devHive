@@ -4,9 +4,9 @@ import viewJobByJobIdController from "./getAJob.controller";
 import viewAllJobFieldsDistinctValuesController from "./view-all-job-fields-distinct-values.controller";
 import searchJobsController from "./search-jobs.controller"
 
-import { IDependenciesData } from "../../frameworks/types/dependencyInterface";
+import { IDependency } from "../../frameworks/types/dependencyInterface";
 
-export = (dependencies: IDependenciesData) => {
+export = (dependencies: IDependency) => {
 	return {
 		filterJobsController: filterJobsController(dependencies),
 		viewAllJobsController: viewAllJobsController(dependencies),

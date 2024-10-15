@@ -5,10 +5,10 @@ import {
     candidateProfileControllers,
 } from "../../../controllers";
 
-import { IDependenciesData } from "../../types/dependencyInterface";
+import { IDependency } from "../../types/dependencyInterface";
 import { auth, ROLES } from "@abijobportal/common";
 
-export const recruiterRouter = (dependencies: IDependenciesData) => {
+export const recruiterRouter = (dependencies: IDependency) => {
     const router = express.Router();
 
     const recruiterProfileController = recruiterProfileControllers(dependencies);

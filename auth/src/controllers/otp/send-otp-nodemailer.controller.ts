@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
 import { BadRequestError } from "@abijobportal/common";
 
-import { IDependenciesData } from "../../frameworks/types/dependencyInterface";
+import { IDependency } from "../../frameworks/types/dependencyInterface";
 import {
 	generateEmailVerificationOtp,
 	sendVerificationEmail,
 } from "../../frameworks/utils/sendEmail";
 
-export = (dependencies: IDependenciesData) => {
+export = (dependencies: IDependency) => {
 	const {
 		useCases: { getUserByEmailUseCase, setNodemailerOtpUseCase },
 	} = dependencies;
@@ -28,7 +28,7 @@ export = (dependencies: IDependenciesData) => {
 			);
 		}
 
-		const { otp, expiryTime } = generateEmailVerificationOtp();
+		const { otp } = generateEmailVerificationOtp();
 
 		
 		await setNodemailerOtpUseCase(dependencies).execute({ email, otp });

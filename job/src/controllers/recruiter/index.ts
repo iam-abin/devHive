@@ -9,9 +9,9 @@ import changeJobCloseStatusController from "./change-job-close-status.controller
 import recruiterDashboardCardsController from "./recruiter-dashboard-cards.controller";
 import recruiterDashboardGraphController from "./recruiter-dashboard-graph.controller";
 
-import { IDependenciesData } from "../../frameworks/types/dependencyInterface";
+import { IDependency } from "../../frameworks/types/dependencyInterface";
 
-export = (dependencies: IDependenciesData) => {
+export = (dependencies: IDependency) => {
 	return {
 		createJobController: createJobController(dependencies),
 		deleteJobController: deleteJobController(dependencies),

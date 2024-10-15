@@ -1,10 +1,10 @@
 import express from "express"
 
-import { IDependenciesData } from "../../types/dependencyInterface";
+import { IDependency } from "../../types/dependencyInterface";
 import { premiumRouter } from "./premium";
 import { paymentRouter } from "./payment";
 
-export const routes = (dependencies: IDependenciesData) =>{
+export const routes = (dependencies: IDependency) =>{
     const router = express.Router();
 
     const premium = premiumRouter(dependencies)

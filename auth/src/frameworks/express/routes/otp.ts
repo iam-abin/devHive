@@ -1,14 +1,14 @@
 import express from "express";
 
 import { otpControllers } from "../../../controllers";
-import { IDependenciesData } from "../../types/dependencyInterface";
+import { IDependency } from "../../types/dependencyInterface";
 
-export const otpRouter = (dependencies: IDependenciesData) => {
+export const otpRouter = (dependencies: IDependency) => {
     const router = express.Router();
 
     const otpController = otpControllers(dependencies);
 
-	
+
     router.post("/sendOtp", otpController.sendOtpNodemailerController);
 
     router.post(

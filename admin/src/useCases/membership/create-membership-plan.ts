@@ -1,8 +1,8 @@
 import { MembershipPlan } from "../../entities/membership-plan";
-import { IDependenciesData } from "../../frameworks/types/dependencyInterface";
+import { IDependency } from "../../frameworks/types/dependencyInterface";
 import { IMembershipPlanData } from "../../entities/membership-plan";
 
-export = (dependencies: IDependenciesData) => {
+export = (dependencies: IDependency) => {
 	const {
 		repositories: { membershipRepository },
 	} = dependencies;

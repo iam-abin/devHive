@@ -2,24 +2,24 @@ interface UserInterface {
 	userId: string;
 	name: string;
 	profileImgUrl?: string;
-	userType: string;
+	role: string;
 }
 
 export class User {
 	userId: string;
 	name: string;
 	profileImgUrl?: string;
-	userType: string;
+	role: string;
 
 	constructor({
 		userId,
 		name,
 		profileImgUrl,
-		userType,
+		role,
 	}: UserInterface) {
 		(this.userId = userId),
         (this.name = name),
         (this.profileImgUrl = profileImgUrl),
-        (this.userType = userType);
+        (this.role = role);
 	}
 }

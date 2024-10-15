@@ -2,9 +2,9 @@ import express from "express";
 
 import { auth, checkCurrentUser, ROLES } from "@abijobportal/common";
 import { jobsControllers, candidateJobControllers } from "../../../controllers";
-import { IDependenciesData } from "../../types/dependencyInterface";
+import { IDependency } from "../../types/dependencyInterface";
 
-export const candidateRouter = (dependencies: IDependenciesData) => {
+export const candidateRouter = (dependencies: IDependency) => {
     const router = express.Router();
 
     const jobsController = jobsControllers(dependencies);

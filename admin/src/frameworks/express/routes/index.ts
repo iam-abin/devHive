@@ -8,9 +8,9 @@ import { membershipPlanRouter } from "./membership-plan";
 import { jobRouter } from "./job";
 import { paymentRouter } from "./payment";
 
-import { IDependenciesData } from "../../types/dependencyInterface";
+import { IDependency } from "../../types/dependencyInterface";
 
-export const routes = (dependencies: IDependenciesData) => {
+export const routes = (dependencies: IDependency) => {
 	const router = express.Router();
 
 	const dashboard = dashboardRouter(dependencies);

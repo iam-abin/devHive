@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
-import { IDependenciesData } from "../../frameworks/types/dependencyInterface";
+import { IDependency } from "../../frameworks/types/dependencyInterface";
 import { kafkaClient } from "../../config/kafka-connection";
 import { JobDeletedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/job-deleted-publisher";
 import { NotAuthorizedError, NotFoundError } from "@abijobportal/common";
 
-export = (dependencies: IDependenciesData)=>{
+export = (dependencies: IDependency)=>{
 
     const { useCases: { deleteJobUseCase, getJobByIdUseCase, getRecruiterCreatedJobsUseCase }} = dependencies
 

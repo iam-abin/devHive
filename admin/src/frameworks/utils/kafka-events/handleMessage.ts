@@ -11,18 +11,18 @@ import paymentRepository from "../../repositories/mongo/paymentRepository";
 export const handleMessage = (data: any, topic: string, message: any) => {
 	switch (topic) {
 		case "USER-CREATED-TOPIC":
-			if (data.userType === "candidate") {
+			if (data.role === "candidate") {
 				candidateRepository.createCandidate(data);
-			} else if (data.userType === "recruiter") {
+			} else if (data.role === "recruiter") {
 				recruiterRepository.createRecruiter(data);
 			}
 			break;
 
 		case "USER-UPDATED-TOPIC":
 			
-			if (data.userType === "candidate") {
+			if (data.role === "candidate") {
 				candidateRepository.updateCandidateProfile(data.userId,data);
-			} else if (data.userType === "recruiter") {
+			} else if (data.role === "recruiter") {
 				recruiterRepository.updateRecruiterProfile(data.userId, data);
 			}
 

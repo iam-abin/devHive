@@ -2,7 +2,7 @@ export interface CandidateDataProfile{
     name: string;
 	email: string;
 	phone: number;
-	userType: string;
+	role: string;
 	isVarified: boolean;
 	isActive: boolean;
 	gender?: string;

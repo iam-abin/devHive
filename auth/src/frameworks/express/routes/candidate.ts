@@ -4,18 +4,18 @@ import { auth, ROLES } from "@abijobportal/common";
 import {
     candidateControllers,
     otpControllers,
-    passwordUpdateControllers,
+    passwordControllers,
 } from "../../../controllers";
 import { signupRequestBodyValidatorMiddlewares } from "../../middlewares/signupValidation";
 import { signinRequestBodyValidatorMiddlewares } from "../../middlewares/signinValidation";
-import { IDependenciesData } from "../../types/dependencyInterface";
+import { IDependency } from "../../types/dependencyInterface";
 
-export const candidateRouter = (dependencies: IDependenciesData) => {
+export const candidateRouter = (dependencies: IDependency) => {
     const router = express.Router();
 
     const adminControlle = candidateControllers(dependencies);
     const otpController = otpControllers(dependencies);
-    const passwordController = passwordUpdateControllers(dependencies);
+    const passwordController = passwordControllers(dependencies);
 
     router.post(
         "/signup",

@@ -1,16 +1,17 @@
 import { Request, Response } from "express";
-import { IDependenciesData } from "../../frameworks/types/dependencyInterface";
+import { IDependency } from "../../frameworks/types/dependencyInterface";
+import { IUpdatePassword } from "../../frameworks/types/userInterface";
 
-export = (dependencies: IDependenciesData)=>{
+export = (dependencies: IDependency)=>{
 
     const { useCases: { updatePasswordUseCase }} = dependencies
 
     return async (req: Request, res: Response)=>{
         
-        const {id, password} = req.body;
+        const {userId, password} = req.body as IUpdatePassword;
         
         const user = await updatePasswordUseCase(dependencies).execute({
-            id, password
+            userId, password
         });
 
         res.status(200).json({message: "password updated", data: user})

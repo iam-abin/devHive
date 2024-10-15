@@ -24,7 +24,7 @@ interface IRecruiterDocument extends mongoose.Document {
 	name: string;
 	email: string;
 	phone: number;
-	userType: string;
+	role: string;
 	isVarified: boolean;
 	isActive: boolean;
 	gender: string;
@@ -63,7 +63,7 @@ const recruiterSchema = new mongoose.Schema(
 			required: true,
 			trim: true,
 		},
-		userType: {
+		role: {
 			type: String,
 			default: "recruiter",
 		},

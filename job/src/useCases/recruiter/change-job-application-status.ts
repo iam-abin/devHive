@@ -1,7 +1,7 @@
 import { ForbiddenError } from "@abijobportal/common";
-import { IDependenciesData } from "../../frameworks/types/dependencyInterface";
+import { IDependency } from "../../frameworks/types/dependencyInterface";
 
-export = (dependencies: IDependenciesData) => {
+export = (dependencies: IDependency) => {
     const {
         repositories: { jobApplicationRepository },
     } = dependencies;

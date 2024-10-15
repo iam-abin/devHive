@@ -1,10 +1,10 @@
 import express from "express";
 
 import { chatControllers, notificationControllers } from "../../../controllers";
-import { IDependenciesData } from "../../types/dependencyInterface";
+import { IDependency } from "../../types/dependencyInterface";
 // import { auth } from "@abijobportal/common";
 
-export const candidateRouter = (dependencies: IDependenciesData) => {
+export const candidateRouter = (dependencies: IDependency) => {
 	const router = express.Router();
 
 	const chatController =

@@ -1,12 +1,12 @@
 import express from "express"
 
-import { IDependenciesData } from "../../types/dependencyInterface";
+import { IDependency } from "../../types/dependencyInterface";
 import { candidateRouter } from "./candidate";
 import { recruiterRouter } from "./recruiter";
 
 import { checkCurrentUser } from "@abijobportal/common";
 
-export const routes = (dependencies: IDependenciesData) =>{
+export const routes = (dependencies: IDependency) =>{
     const router = express.Router();
 
     const candidate = candidateRouter(dependencies)

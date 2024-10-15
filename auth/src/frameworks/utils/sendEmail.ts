@@ -1,8 +1,8 @@
 import nodemailer from "nodemailer";
 import otpGenerator from "otp-generator";
-import { otpNodemailerInterface } from "../types/otp-nodemailer-interface"; 
+import { IOtp } from "../types/otp-nodemailer-interface"; 
 
-export const generateEmailVerificationOtp = (): otpNodemailerInterface => {
+export const generateEmailVerificationOtp = (): Pick<IOtp, "otp"> => {
 	
 	const otpLength = 6;
 	const otp = otpGenerator.generate(otpLength, {
@@ -11,9 +11,9 @@ export const generateEmailVerificationOtp = (): otpNodemailerInterface => {
 		upperCaseAlphabets:false,
 		specialChars: false,
 	});
-	const expiryTime = Date.now() + 10 * 60 * 1000; // 10 minutes expiry
+	// const expiryTime = Date.now() + 10 * 60 * 1000; // 10 minutes expiry
 	
-	return { otp, expiryTime };
+	return { otp };
 };
 
 export const sendVerificationEmail = async (

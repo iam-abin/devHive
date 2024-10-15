@@ -1,11 +1,11 @@
 import express, { Router } from "express";
 
 import { candidateProfileControllers } from "../../../controllers";
-import { IDependenciesData } from "../../types/dependencyInterface";
+import { IDependency } from "../../types/dependencyInterface";
 import { auth, ROLES } from "@abijobportal/common";
 import { multerConfig } from "../../../config/multer";
 
-export const candidateRouter = (dependencies: IDependenciesData) => {
+export const candidateRouter = (dependencies: IDependency) => {
 	const router: Router = express.Router();
 
 	const profileController = candidateProfileControllers(dependencies);

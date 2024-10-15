@@ -1,8 +1,8 @@
 import streamifier from "streamifier";
 import { cloudinary } from "../../config/cloudinary";
-import { IDependenciesData } from "../../frameworks/types/dependencyInterface";
+import { IDependency } from "../../frameworks/types/dependencyInterface";
 
-export = (dependencies: IDependenciesData) => {
+export = (dependencies: IDependency) => {
 	const {
 		repositories: { candidateProfileRepository },
 	} = dependencies;

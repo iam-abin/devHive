@@ -1,8 +1,8 @@
 import { BadRequestError } from "@abijobportal/common";
 import { JobApplication, IJobApplication } from "../../entities/job-applications";
-import { IDependenciesData } from "../../frameworks/types/dependencyInterface";
+import { IDependency } from "../../frameworks/types/dependencyInterface";
 
-export = (dependencies: IDependenciesData) => {
+export = (dependencies: IDependency) => {
 	const { repositories: { jobRepository, jobApplicationRepository }} = dependencies;
 
 	if (!jobApplicationRepository) throw new Error("jobApplicationRepository should exist in dependencies");

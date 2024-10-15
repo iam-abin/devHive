@@ -1,8 +1,8 @@
 import { Job } from "../../entities/job";
-import { IDependenciesData } from "../../frameworks/types/dependencyInterface";
+import { IDependency } from "../../frameworks/types/dependencyInterface";
 import { IJob } from "../../frameworks/types/job-interface";
 
-export = (dependencies: IDependenciesData) => {
+export = (dependencies: IDependency) => {
 	const { repositories: { jobRepository } } = dependencies;
 
 	if (!jobRepository) throw new Error("jobRepository should exist in dependencies");

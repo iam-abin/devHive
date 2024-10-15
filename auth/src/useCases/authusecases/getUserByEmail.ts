@@ -1,8 +1,8 @@
-// import usersRepository from "../../frameworks/repositories/mongo/usersRepository";
+import { IDependency } from "../../frameworks/types/dependencyInterface";
 
-import { IDependenciesData } from "../../frameworks/types/dependencyInterface";
 
-export = (dependencies: IDependenciesData) => {
+
+export = (dependencies: IDependency) => {
 	const {
 		repositories: { usersRepository },
 	} = dependencies;

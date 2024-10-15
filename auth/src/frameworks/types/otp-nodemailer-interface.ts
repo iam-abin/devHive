@@ -1,4 +1,4 @@
-export interface otpNodemailerInterface {
+export interface IOtp {
 	otp: string;
-	expiryTime: any;
+	email: string;
 }

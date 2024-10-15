@@ -2,9 +2,9 @@ import getAllRecruitersController from "./view-recruiters.controller";
 import getRecruiterByIdController from "./view-recruiter-profile.controller";
 import recruiterBlockUnblockController from "./block-unblock-recruiter.controller";
 
-import { IDependenciesData } from "../../frameworks/types/dependencyInterface";
+import { IDependency } from "../../frameworks/types/dependencyInterface";
 
-export = (dependencies: IDependenciesData) => {
+export = (dependencies: IDependency) => {
 	return {
 		getAllRecruitersController: getAllRecruitersController(dependencies),
 		getRecruiterByIdController: getRecruiterByIdController(dependencies),

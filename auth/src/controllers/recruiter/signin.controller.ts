@@ -1,65 +1,23 @@
 import { Request, Response } from "express";
-import { BadRequestError } from "@abijobportal/common";
-import { comparePassword } from "../../frameworks/utils/password";
-import {
-	createJwtAccessToken,
-	createJwtRefreshToken,
-} from "../../frameworks/utils/jwtToken";
-import { IDependenciesData } from "../../frameworks/types/dependencyInterface";
+import { ROLES } from "@abijobportal/common";
+import { IDependency } from "../../frameworks/types/dependencyInterface";
 
-export = (dependencies: IDependenciesData) => {
+export = (dependencies: IDependency) => {
 	const {
-		useCases: { getUserByEmailUseCase },
+		useCases: { signInUseCase },
 	} = dependencies;
 
 	return async (req: Request, res: Response) => {
 		const { email, password } = req.body;
+        const { user, accessToken, refreshToken } = await signInUseCase(
+            dependencies
+        ).execute(email, password, ROLES.RECRUITER);
 
-		// check user exist
-		const isExistingUser = await getUserByEmailUseCase( dependencies ).execute(email);
-
-		if (!isExistingUser) {
-			// return res.status(400).json({message:"Invalid email or password"})
-			throw new BadRequestError("Invalid email or password");
-		}
-
-		// check password is correct
-		const isSamePassword = await comparePassword(
-			password,
-			isExistingUser.password
-		);
-
-		if (!isSamePassword) throw new BadRequestError("Invalid email or passwordd");
-
-		if (isExistingUser.userType !== "recruiter")  throw new BadRequestError("Invalid Recruiter");
-	
-		if (!isExistingUser.isActive)  throw new BadRequestError("This is a blocked user");
-
-		// Generate Jwt
-		const recruiterPayloadData = {
-			id: isExistingUser.id,
-			name: isExistingUser.name,
-			email: isExistingUser.email,
-			phone: isExistingUser.phone,
-			role: isExistingUser.userType,
-		};
-
-		// Generate Jwt key
-		const recruiterAccessToken = createJwtAccessToken(recruiterPayloadData);
-		const recruiterRefreshToken =
-			createJwtRefreshToken(recruiterPayloadData);
-
-		//    // Store it on session object
-		//    req.session!.recruiterToken = recruiterJWT;
-
-		// // Store it on cookie
-		// res.cookie('recruiterToken', recruiterJWT, { httpOnly: true })
-
-		res.status(200).json({
-			message: "Login successful",
-			data: isExistingUser,
-			recruiterAccessToken,
-			recruiterRefreshToken,
-		});
+        res.status(200).json({
+            message: "Login successful",
+            data: user,
+            recruiterAccessToken:accessToken,
+            recruiterRefreshToken: refreshToken,
+        });
 	};
 };

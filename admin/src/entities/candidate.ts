@@ -3,7 +3,7 @@ export interface ICandidateData{
 	email: string;
 	phone: string;
 	password: string;
-	userType: string;
+	role: string;
 	userId: string
 
 	gender?: string;
@@ -21,7 +21,7 @@ export class Candidate {
 	email: string;
 	phone: string;
 	password: string;
-	userType: string;
+	role: string;
 	userId: string;
 
 	gender?: string;
@@ -33,12 +33,12 @@ export class Candidate {
 	resume?: string;
 	experience?: string;
 
-	constructor({ name, email, phone, password, userType, userId }: ICandidateData) {
+	constructor({ name, email, phone, password, role, userId }: ICandidateData) {
 		this.name = name;
 		this.email = email;
 		this.phone = phone;
 		this.password = password;
-		this.userType = userType;
+		this.role = role;
 		this.userId = userId;
 	}
 }

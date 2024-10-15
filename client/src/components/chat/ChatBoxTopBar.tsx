@@ -34,7 +34,7 @@ const ChatBoxTopBar: React.FC<{
                                 src={
                                     receiver[0]?.profile_image
                                         ? receiver[0]?.profile_image
-                                        : receiver[0]?.userType === "candidate"
+                                        : receiver[0]?.role === "candidate"
                                         ? CONSTANTS.CANDIDATE_DEFAULT_PROFILE_IMAGE
                                         : CONSTANTS.RECRUITER_DEFAULT_PROFILE_IMAGE
                                 }

@@ -14,7 +14,7 @@ export class MembershipPlanCreatedEventConsumer extends KafkaConsumer<MEMBERSHIP
 
     async onMessage(data: MEMBERSHIP_PLAN_CREATED_EVENT['data'], topic: string, message: KafkaMessage): Promise<void> {
         
-			// dont need to check userType as every users are stored in one collection 
+			// dont need to check role as every users are stored in one collection 
 			handleMessage(data, topic, message )
         
     }

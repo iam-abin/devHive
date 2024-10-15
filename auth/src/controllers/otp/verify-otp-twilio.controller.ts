@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
 import { BadRequestError } from "@abijobportal/common";
 
-import { IDependenciesData } from "../../frameworks/types/dependencyInterface";
+import { IDependency } from "../../frameworks/types/dependencyInterface";
 import { verifyOtp } from "../../frameworks/utils/twilio";
 
-export = (dependencies: IDependenciesData) => {
+export = (dependencies: IDependency) => {
 	const {
 		useCases: { getUserByEmailUseCase },
 	} = dependencies;

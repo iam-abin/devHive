@@ -29,8 +29,8 @@ export const verifyResetPasswordOtpRecruiterApi = async (phone: string, otp:stri
 		return response.data;
 };
 
-export const resetPasswordRecruiterApi = async (id:string, password: string): Promise<any> => {
-	const response: any = await recruiterApiCalls("put", authApiUrlConfig.resetPasswordRecruiterUrl,  {id, password });
+export const resetPasswordRecruiterApi = async (userId:string, password: string): Promise<any> => {
+	const response: any = await recruiterApiCalls("put", authApiUrlConfig.resetPasswordRecruiterUrl,  {userId, password });
 	return response.data;	
 };
 
@@ -45,7 +45,7 @@ export const verifyForgotPasswordOtpRecruiterApi = async (otp:string, email: str
 };
 
 export const forgotPasswordRecruiterApi = async (userId:string, password: string): Promise<any> => {
-	const response: any = await recruiterApiCalls("put", authApiUrlConfig.forgotPasswordRecruiterUrl, {id: userId, password });
+	const response: any = await recruiterApiCalls("put", authApiUrlConfig.forgotPasswordRecruiterUrl, {userId, password });
 	return response.data;
 };
 

@@ -1,13 +1,9 @@
 import mongoose from "mongoose";
 import { generateHashedPassword } from "../../../utils/password";
+import { ISignup } from "../../../types/userInterface";
 
 // 1. An interface that describes the properties ,that are requried to create a new User
-export interface IUserAttributes {
-	name: string;
-	email: string;
-	phone: number;
-	password: string;
-	userType: string;
+export interface IUserAttributes extends ISignup{
 	otp: number
 }
 
@@ -17,7 +13,7 @@ interface UserDocument extends mongoose.Document {
 	email: string;
 	phone: number;
 	password: string;
-	userType: string;
+	role: string;
 	
 	isVarified:boolean;
 	isActive: boolean;
@@ -50,7 +46,7 @@ const userSchema = new mongoose.Schema(
 			required: true,
 			trim: true,
 		},
-		userType: {
+		role: {
 			type: String,
 			required: true,
 			enum: ["admin", "candidate", "recruiter"],
@@ -110,7 +106,7 @@ userSchema.statics.buildUser = (attributes: IUserAttributes) => {
 		email: attributes.email,
 		phone: attributes.phone,
 		password: attributes.password,
-		userType: attributes.userType,
+		role: attributes.role,
 		otp: attributes.otp,
 	});
 };

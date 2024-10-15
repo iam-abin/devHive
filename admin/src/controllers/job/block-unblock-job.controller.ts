@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
-import { IDependenciesData } from "../../frameworks/types/dependencyInterface";
+import { IDependency } from "../../frameworks/types/dependencyInterface";
 import { kafkaClient } from "../../config/kafka-connection";
 import { JobUpdatedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/job-updated-publisher";
 
-export = (dependencies: IDependenciesData)=>{
+export = (dependencies: IDependency)=>{
 
     const { useCases: { blockUnblockJobUseCase }} = dependencies
 

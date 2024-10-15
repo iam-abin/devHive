@@ -8,9 +8,9 @@ import viewRecruiterProfileController from "./view-recruiter-profile.controller"
 import updateSkillsController from "./update-skills.controller";
 import updatePreferredJobsController from "./update-preferred-jobs.controller";
 
-import { IDependenciesData } from "../../frameworks/types/dependencyInterface";
+import { IDependency } from "../../frameworks/types/dependencyInterface";
 
-export = (dependencies: IDependenciesData)=>{
+export = (dependencies: IDependency)=>{
     return {
         viewCandidateProfileController: viewCandidateProfileController(dependencies),
         // createCandidateProfileController: createCandidateProfileController(dependencies),
