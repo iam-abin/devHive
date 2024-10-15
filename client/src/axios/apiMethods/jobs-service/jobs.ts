@@ -53,8 +53,8 @@ export const deleteAJobApi = async (id: string): Promise<any> => {
     return response.data;
 };
 
-export const candidateApplyJobApi = async (data: any): Promise<any> => {
-    const response: any = await candidateApiCalls("post", jobApiUrlConfig.candidateApplyJobUrl, data);
+export const candidateApplyJobApi = async (jobId: string): Promise<any> => {
+    const response: any = await candidateApiCalls("post", jobApiUrlConfig.candidateApplyJobUrl, jobId);
     return response.data;
 
 };

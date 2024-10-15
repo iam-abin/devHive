@@ -7,8 +7,16 @@ export = (dependencies: IDependenciesData) => {
 		throw new Error("jobRepository should exist in dependencies");
 	}
 
-	const execute = (searchKey: string) => {
-		return jobRepository.getSearchResults(searchKey)
+	const execute = async (searchText: string, skip: number, limit: number) => {
+
+		 // Fetch the list of jobIds that the current user has already applied to
+
+		const searchResult = await jobRepository.getSearchResults(searchText, skip, limit);
+
+		// It is used to get the total number of pages
+		const searchResultCount = await jobRepository.getCountOfSearchResults(searchText);
+		return {searchResult, searchResultCount};
+
 	};
 
 	return { execute };

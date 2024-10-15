@@ -1,9 +1,10 @@
+import { IJobApplication } from "../../../entities/job-applications";
 import Models from "../../database/mongo/models";
 
 const { JobModel, jobApplicationModel, UserModel } = Models;
 
 export = {
-	applyJob: async (data: object) => {
+	applyJob: async (data: IJobApplication) => {
 		const newApplication = await jobApplicationModel.create(data);
 		
 		return newApplication;

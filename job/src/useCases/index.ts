@@ -2,7 +2,6 @@ import {
 	applyJobUseCase,
 	getAllAppliedJobsUseCase,
 	getNumberofCandidateAppliedJobsUseCase,
-	getAnAppliedJobUseCase,
 } from "./candidate";
 
 import {
@@ -12,7 +11,8 @@ import {
 	getNumberofJobsUseCase,
 	getAllJobFieldsDistinctValuesUseCase,
 	getSearchResultUseCase,
-	getSearchResultCountUseCase,
+	// getSearchResultCountUseCase,
+
 } from "./job";
 
 import {
@@ -33,7 +33,6 @@ export default {
 	applyJobUseCase,
 	getAllAppliedJobsUseCase,
 	getNumberofCandidateAppliedJobsUseCase,
-	getAnAppliedJobUseCase,
 
 	filterJobUseCase,
 	getAllJobsUseCase,
@@ -41,7 +40,7 @@ export default {
 	getNumberofJobsUseCase,
 	getAllJobFieldsDistinctValuesUseCase,
 	getSearchResultUseCase,
-	getSearchResultCountUseCase,
+	// getSearchResultCountUseCase,
 
 	createJobUseCase,
 	updateJobUseCase,

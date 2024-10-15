@@ -1,15 +1,25 @@
+import { BadRequestError } from "@abijobportal/common";
 import { JobApplication, IJobApplication } from "../../entities/job-applications";
 import { IDependenciesData } from "../../frameworks/types/dependencyInterface";
 
 export = (dependencies: IDependenciesData) => {
-	const { repositories: { jobApplicationRepository }} = dependencies;
+	const { repositories: { jobRepository, jobApplicationRepository }} = dependencies;
 
 	if (!jobApplicationRepository) throw new Error("jobApplicationRepository should exist in dependencies");
 		
-	const execute =(data: IJobApplication) => {
+	const execute = async(candidateId: string, jobId: string) => {
 		
-		const applicationData = new JobApplication(data)
-		return jobApplicationRepository.applyJob(applicationData);
+		const isApplicationExist = await jobApplicationRepository.getAnAppliedJobByCandidate(candidateId, jobId);
+		if (isApplicationExist) throw new BadRequestError("you have already applied for this job"); 
+
+		const job = await jobRepository.getAJob(jobId);
+
+		const application = {
+		 jobId, candidateId, recruiterId: job.recruiterId, applicationStatus: "Applied"
+		}
+		
+		const applicationData = new JobApplication(application)
+		return await jobApplicationRepository.applyJob(applicationData);
 	};
 
 	return { execute };

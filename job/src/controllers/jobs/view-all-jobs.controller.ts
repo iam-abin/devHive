@@ -10,11 +10,11 @@ export = (dependencies: IDependenciesData) => {
 		
 		// const candidateId = req.currentUserCandidate!?.id || null;
 		let candidateId
-		if (!req.currentUserCandidate) {
+		if (!req.currentUser!) {
 			// throw new NotAuthorizedError();
 			candidateId = null
 		}else{
-			candidateId =  req.currentUserCandidate!.id
+			candidateId =  req.currentUser.userId
 		}
 		
 		// pagination

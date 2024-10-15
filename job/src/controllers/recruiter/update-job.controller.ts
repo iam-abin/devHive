@@ -21,7 +21,7 @@ export = (dependencies: IDependenciesData)=>{
         const job = await getJobByIdUseCase(dependencies).execute(jobId);
         if(!job)  throw new NotFoundError();
 
-        if( job.recruiterId._id.toString() !== req.currentUserRecruiter?.id) throw new NotAuthorizedError();
+        if( job.recruiterId._id.toString() !== req.currentUser?.userId) throw new NotAuthorizedError();
 
         const updatedJob = await updateJobUseCase(dependencies).execute(jobId, data);
         //  // to produce a message to kafka topic

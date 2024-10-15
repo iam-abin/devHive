@@ -1,9 +1,7 @@
 import express from "express";
 
-import { requireAuthRecruiter } from "@abijobportal/common";
+import { auth, ROLES } from "@abijobportal/common";
 import { jobsController, recruiterJobControllers } from "../../../controllers";
-// import { signupRequestBodyValidatorMiddlewares } from "../middlewares/signupValidation";
-// import { signinRequestBodyValidatorMiddlewares } from "../middlewares/signinValidation";
 import { IDependenciesData } from "../../types/dependencyInterface";
 
 export const recruiterRouter = (dependencies: IDependenciesData) => {
@@ -35,7 +33,7 @@ export const recruiterRouter = (dependencies: IDependenciesData) => {
 	
 	router.post("/filter", filterJobsController);
 	
-	router.use(requireAuthRecruiter);
+	router.use(auth(ROLES.RECRUITER));
 
 	router.get("/getRecruiterDashboard/cardsDetails/:recruiterId", recruiterDashboardCardsController);
 

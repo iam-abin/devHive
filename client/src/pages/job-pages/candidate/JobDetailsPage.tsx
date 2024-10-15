@@ -3,14 +3,12 @@ import {
 	candidateApplyJobApi,
 	getAJobApi,
 } from "../../../axios/apiMethods/jobs-service/jobs";
-// import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import JobDetails from "../../../components/recruiter/JobDetails";
 import Swal from "sweetalert2";
 import { notify } from "../../../utils/toastMessage";
 import TopNavBarCandidate from "../../../components/navBar/TopNavBarCandidate";
 import Footer from "../../../components/footer/Footer";
-// import FooterCandidate from "../../../components/candidate/FooterCandidate";
 
 function JobDetailsPage() {
 	const [jobDetails, setJobDetails] = useState<any>(null);
@@ -33,18 +31,7 @@ function JobDetailsPage() {
 		fetchJobDetails();
 	}, [jobId]);
 
-	const handleApplyJob = async (
-		jobId: string,
-		candidateId: string,
-		recruiterId: string
-	) => {
-		
-		// navigate("/candidate/edit-job-details");
-		const jobApplicationData = {
-			jobId,
-			candidateId,
-			recruiterId,
-		};
+	const handleApplyJob = async (jobId: string) => {
 
 		Swal.fire({
 			title: "Do you want to Apply For this job?",
@@ -57,9 +44,7 @@ function JobDetailsPage() {
 		})
 			.then(async (result) => {
 				if (result.isConfirmed) {
-					const response = await candidateApplyJobApi(
-						jobApplicationData
-					);
+					const response = await candidateApplyJobApi(jobId);
 					
 					if (response) {
 						notify("Applied successfully", "success");
