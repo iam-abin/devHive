@@ -41,7 +41,7 @@ export = (dependencies: IDependenciesData) => {
 			name: isExistingUser.name,
 			email: isExistingUser.email,
 			phone: isExistingUser.phone,
-			userType: isExistingUser.userType,
+			role: isExistingUser.userType,
 		};
 
 		// Generate Jwt key

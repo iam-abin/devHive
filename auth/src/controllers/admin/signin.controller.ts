@@ -36,7 +36,7 @@ export = (dependencies: IDependenciesData) => {
 		const adminPayloadData = {
 			id: isExistingUser.id,
 			email: isExistingUser.email,
-			userType: isExistingUser.userType,
+			role: isExistingUser.userType,
 		};
 
 		// Generate a Jwt access token

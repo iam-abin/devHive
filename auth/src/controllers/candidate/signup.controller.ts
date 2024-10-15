@@ -33,7 +33,7 @@ export = (dependencies: IDependenciesData) => {
 				email,
 				phone,
 				password,
-				userType: "candidate",
+				role: "candidate",
 				otp: otp
 			});
 

@@ -5,7 +5,7 @@ export const createJwtAccessToken = (payload: {
 	name?: string;
 	email: string;
 	phone?: string;
-	userType: string;
+	role: string;
 	isActive?: boolean
 }) => {
 	
@@ -22,7 +22,7 @@ export const createJwtRefreshToken = (payload: {
 	name?: string;
 	email: string;
 	phone?: string;
-	userType: string;
+	role: string;
 	isActive?: boolean
 }) => {
 	

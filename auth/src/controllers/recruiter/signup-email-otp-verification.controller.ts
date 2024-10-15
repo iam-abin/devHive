@@ -53,7 +53,7 @@ export = (dependencies: IDependenciesData) => {
 		const recruiterPayloadData = {
 			id: user.id,
 			email: user.email,
-			userType: user.userType,
+			role: user.userType,
 		};
 
 		// Generate Jwt key
