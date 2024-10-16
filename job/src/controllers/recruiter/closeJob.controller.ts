@@ -14,7 +14,7 @@ export = (dependencies: IDependency) => {
 		).execute(jobId);
 		
 		res.status(200).json({
-			message: `close status updated to ${job?.isClosed? "Close": "Open"}`,
+			message: `close status updated to ${job?.isActive? "Close": "Open"}`,
 			data: job,
 		});
 	};

@@ -41,10 +41,10 @@ function AllJobsPage() {
 	const filteredJobs = jobs.filter(
 		(job: any) =>
 			job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-			job.employment_type
+			job.employmentType
 				.toLowerCase()
 				.includes(searchTerm.toLowerCase()) ||
-			job.company_location
+			job.companyLocation
 				.toLowerCase()
 				.includes(searchTerm.toLowerCase())
 	);

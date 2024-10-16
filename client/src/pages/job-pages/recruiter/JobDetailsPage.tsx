@@ -41,7 +41,7 @@ function JobDetailsPage() {
 			if (jobId) {
 				Swal.fire({
 					title: `Do you want to ${
-						jobDetails?.isClosed ? "open" : "close"
+						jobDetails?.isActive ? "open" : "close"
 					} this Job?`,
 					text: "Are you sure!",
 					icon: "warning",
@@ -49,7 +49,7 @@ function JobDetailsPage() {
 					confirmButtonColor: "#3085d6",
 					cancelButtonColor: "#d33",
 					confirmButtonText: `Yes, ${
-						jobDetails?.isClosed ? "open job" : "close job"
+						jobDetails?.isActive ? "open job" : "close job"
 					}`,
 				}).then(async (result) => {
 					if (result.isConfirmed) {
@@ -58,7 +58,7 @@ function JobDetailsPage() {
 							
 							setJobDetails({
 								...jobDetails,
-								isClosed: job.data.isClosed,
+								isActive: job.data.isActive,
 							});
 
 							notify(job.message, "success");

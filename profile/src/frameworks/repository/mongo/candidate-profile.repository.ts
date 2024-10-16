@@ -1,6 +1,5 @@
-import models from "../../database/mongo/models";
-
-const { CandidateProfileModel } = models;
+import { CandidateProfileModel } from "../../database/mongo/models/candidate-profile";
+import { IResume } from "../../types/candidate-profile-interface";
 
 // we want to export some closure
 export = {
@@ -21,10 +20,12 @@ export = {
 		return candidate;
 	},
 
+	// =======================================================================
+
 	// updating and block unblocking is also doing here
-	updateCandidateProfile: async (id: string, data: any): Promise<any> => {
-		const candidate = await CandidateProfileModel.findOneAndUpdate(
-			{ _id: id },
+	updateCandidateProfile: async (profileId: string, data: any): Promise<any> => {
+		const candidate = await CandidateProfileModel.findByIdAndUpdate(
+			profileId,
 			{ $set: data },
 			{ new: true }
 		);
@@ -32,10 +33,10 @@ export = {
 		return candidate;
 	},
 
-	uploadProfilePic: async (id: string, url: string): Promise<any> => {
-		const candidate = await CandidateProfileModel.findOneAndUpdate(
-			{ _id: id },
-			{ $set: { profile_image: url } },
+	uploadProfilePic: async (profileId: string, profile_image: string): Promise<any> => {
+		const candidate = await CandidateProfileModel.findByIdAndUpdate(
+			profileId,
+			{ $set: { profile_image } },
 			{ new: true }
 		);
 
@@ -43,13 +44,11 @@ export = {
 	},
 
 	uploadResume: async (
-		id: string,
-		url: string,
-		filename: string
+		profileId: string, resume: IResume
 	): Promise<any> => {
-		const candidate = await CandidateProfileModel.findOneAndUpdate(
-			{ _id: id },
-			{ $set: { resume: { filename, url } } },
+		const candidate = await CandidateProfileModel.findByIdAndUpdate(
+			profileId,
+			{ $set: { resume } },
 			{ new: true }
 		);
 
@@ -65,10 +64,10 @@ export = {
 		return candidate;
 	},
 
-	updateSkills: async (id: string, skills: string[]): Promise<any> => {
-		const profile = await CandidateProfileModel.findOneAndUpdate(
-			{ _id: id },
-			{ $set: { keySkills: skills } },
+	updateSkills: async (profileId: string, skills: string[]): Promise<any> => {
+		const profile = await CandidateProfileModel.findByIdAndUpdate(
+			profileId,
+			{ $set: { skills: skills } },
 			{ new: true }
 		);
 
@@ -76,19 +75,19 @@ export = {
 	},
 
 	updatePreferredJobs: async (
-		id: string,
+		profileId: string,
 		preferredJobs: string[]
 	): Promise<any> => {
-		const profile = await CandidateProfileModel.findOneAndUpdate(
-			{ _id: id },
-			{ $set: { preferredJobs: preferredJobs } },
+		const profile = await CandidateProfileModel.findByIdAndUpdate(
+			profileId,
+			{ $set: { preferredJobs } },
 			{ new: true }
 		);
 		return profile;
 	},
 
-	premiumPaymentDone: async (data: any): Promise<any> => {
-		const { candidateId, membershipPlanId } = data;
+	premiumPaymentDone: async (data: {candidateId: string}): Promise<any> => {
+		const { candidateId } = data;
 		const user = await CandidateProfileModel.findOneAndUpdate(
 			{ _id: candidateId },
 			{ $set: { isPremiumUser: true } },
@@ -97,6 +96,7 @@ export = {
 		return user;
 	},
 
+	// =========================================================
 	getAllCandidatesProfiles: async (
 		skip: number,
 		limit: number

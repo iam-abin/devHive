@@ -15,7 +15,6 @@ interface CandidateInterface {
 	email: string;
 	phone: string;
 	isActive: boolean;
-	userId: string;
 }
 
 function CandidateManagementPage() {

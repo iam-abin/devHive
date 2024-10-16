@@ -1,5 +1,5 @@
 import { BadRequestError } from "@abijobportal/common";
-import { JobApplication, IJobApplication } from "../../entities/job-applications";
+import { JobApplication } from "../../entities/jobApplications";
 import { IDependency } from "../../frameworks/types/dependencyInterface";
 
 export = (dependencies: IDependency) => {

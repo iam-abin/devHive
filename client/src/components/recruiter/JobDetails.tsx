@@ -60,7 +60,7 @@ const JobDetails: React.FC<{
 						<p className="w-3/5 font-extrabold">Company: </p>
 						<span className=" w-3/5">
 							{jobDetails
-								? jobDetails.company_name
+								? jobDetails.companyName
 								: "Loading..."}
 						</span>
 					</div>
@@ -68,7 +68,7 @@ const JobDetails: React.FC<{
 						<p className="w-3/5 font-extrabold">Location: </p>
 						<span className=" w-3/5">
 							{jobDetails
-								? jobDetails.company_location
+								? jobDetails.companyLocation
 								: "Loading..."}
 						</span>
 					</div>
@@ -79,7 +79,7 @@ const JobDetails: React.FC<{
 						</h2>
 						<p className="w-3/5">
 							{jobDetails
-								? jobDetails.job_descriptions
+								? jobDetails.jobDescription
 								: "Loading..."}
 						</p>
 					</div>
@@ -91,8 +91,8 @@ const JobDetails: React.FC<{
 									Skills Required
 								</h2>
 								<ul className="w-3/5">
-									{jobDetails.skills_required ? (
-										jobDetails.skills_required.map(
+									{jobDetails.skills ? (
+										jobDetails.skills.map(
 											(skill: string) => (
 												<div
 													key={skill}
@@ -112,13 +112,13 @@ const JobDetails: React.FC<{
 						)}
 					</div>
 
-					{jobDetails && jobDetails.education_required && (
+					{jobDetails && jobDetails.educationRequired && (
 						<div className="mb-4 flex items-center my-8 ">
 							<h2 className=" font-extrabold mb-2  w-3/5">
 								Education Required
 							</h2>
 							<p className=" w-3/5">
-								{jobDetails.education_required}
+								{jobDetails.educationRequired}
 							</p>
 						</div>
 					)}
@@ -162,13 +162,13 @@ const JobDetails: React.FC<{
 					)}
 					{/* </div> */}
 
-					{jobDetails && jobDetails.experience_required && (
+					{jobDetails && jobDetails.experienceRequired && (
 						<div className="mb-4 flex items-center my-8 ">
 							<h2 className="  w-3/5 font-extrabold mb-2">
 								Experience required
 							</h2>
 							<p className=" w-3/5">
-								{jobDetails.experience_required}
+								{jobDetails.experienceRequired}
 							</p>
 						</div>
 					)}
@@ -184,24 +184,24 @@ const JobDetails: React.FC<{
 						</div>
 					)}
 
-					{jobDetails && jobDetails.employment_type && (
+					{jobDetails && jobDetails.employmentType && (
 						<div className="mb-4 flex items-center my-8 ">
 							<h2 className=" font-extrabold mb-2  w-3/5">
 								Employment type
 							</h2>
 							<p className=" w-3/5">
-								{jobDetails.employment_type}
+								{jobDetails.employmentType}
 							</p>
 						</div>
 					)}
 
-					{jobDetails && jobDetails.available_position && (
+					{jobDetails && jobDetails.availablePosition && (
 						<div className="mb-4 flex items-center my-8 ">
 							<h2 className=" font-extrabold mb-2  w-3/5">
 								Available position
 							</h2>
 							<p className=" w-3/5">
-								{jobDetails.available_position}
+								{jobDetails.availablePosition}
 							</p>
 						</div>
 					)}
@@ -211,9 +211,9 @@ const JobDetails: React.FC<{
 							Salary Range
 						</h2>
 						<p className=" w-3/5">
-							₹{jobDetails ? jobDetails.salary_min : "Loading..."}{" "}
+							₹{jobDetails ? jobDetails.salaryMin : "Loading..."}{" "}
 							- ₹
-							{jobDetails ? jobDetails.salary_max : "Loading..."}
+							{jobDetails ? jobDetails.salaryMax : "Loading..."}
 						</p>
 					</div>
 
@@ -226,7 +226,7 @@ const JobDetails: React.FC<{
 
 								<button
 									className={`${
-										jobDetails?.isClosed
+										jobDetails?.isActive
 											? "bg-green-600"
 											: "bg-red-600"
 									} text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300`}
@@ -236,7 +236,7 @@ const JobDetails: React.FC<{
 										);
 									}}
 								>
-									{jobDetails?.isClosed
+									{jobDetails?.isActive
 										? "Open Jobe"
 										: "Close Jobe"}
 								</button>

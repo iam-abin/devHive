@@ -21,16 +21,16 @@ export = (dependencies: IDependency) => {
 
 	const execute = async (profileData: RecruiterDataProfile) => {
 		const {
-			company_name,
-			company_location,
+			companyName,
+			companyLocation,
 			company_state,
 			company_country,
 			userId,
 		} = profileData;
 
 		// dont need these info's when creating recruiter profile
-		delete profileData.company_name;
-		delete profileData.company_location;
+		delete profileData.companyName;
+		delete profileData.companyLocation;
 		delete profileData.company_state;
 		delete profileData.company_country;
 
@@ -41,8 +41,8 @@ export = (dependencies: IDependency) => {
 		// multiple recruiters can have same company
 		// to avoid creating a company again and again, Check if the company exists
 		const isCompanyExist = await companyProfileRepository.getCompany({
-			company_name,
-			company_location,
+			companyName,
+			companyLocation,
 			company_state,
 			company_country,
 		});
@@ -52,8 +52,8 @@ export = (dependencies: IDependency) => {
 			
 			const newCompany =
 				await companyProfileRepository.createCompanyProfile({
-					company_name,
-					company_location,
+					companyName,
+					companyLocation,
 					company_state,
 					company_country,
 					userId, // it is not working, need to solve

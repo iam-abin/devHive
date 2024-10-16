@@ -5,17 +5,17 @@ interface JobFormData {
 	title: string;
 	recruiterId: string;
 	// companyId?: string;
-	job_descriptions: string;
-	skills_required: string[];
-	available_position: number;
-	experience_required: string;
-	education_required: string;
-	employment_type: string;
-	salary_min: number;
-	salary_max: number;
+	jobDescription: string;
+	skills: string[];
+	availablePosition: number;
+	experienceRequired: string;
+	educationRequired: string;
+	employmentType: string;
+	salaryMin: number;
+	salaryMax: number;
 	deadline: string;
-	company_name: string;
-	company_location: string;
+	companyName: string;
+	companyLocation: string;
 }
 
 const CreateJobForm: React.FC<{
@@ -25,7 +25,7 @@ const CreateJobForm: React.FC<{
 }> = ({ initialJobValues, handleSubmit, recruiterData }) => {
 	const today = new Date().toISOString().split("T")[0];
 	const jobCreationSchema = yup.object().shape({
-		available_position: yup
+		availablePosition: yup
 			.number()
 			.min(1, "Available positions must be atleast 1")
 			.required("Available positions is required"),
@@ -35,11 +35,11 @@ const CreateJobForm: React.FC<{
 			initialValues={initialJobValues}
 			validationSchema={jobCreationSchema}
 			onSubmit={(values) => {
-				if (recruiterData?.company_name) {
-					values.company_name = recruiterData.company_name;
+				if (recruiterData?.companyName) {
+					values.companyName = recruiterData.companyName;
 				}
-				if (recruiterData?.company_location) {
-					values.company_location = recruiterData.company_location;
+				if (recruiterData?.companyLocation) {
+					values.companyLocation = recruiterData.companyLocation;
 				}
 				
 				values.recruiterId = recruiterData?.id;
@@ -83,24 +83,24 @@ const CreateJobForm: React.FC<{
 							{/* Job Descriptions field */}
 							<div className="form-control w-6/6">
 								<label
-									htmlFor="job_descriptions"
+									htmlFor="jobDescription"
 									className="label"
 								>
 									Job Descriptions
 								</label>
 								<Field
 									as="textarea"
-									id="job_descriptions"
-									name="job_descriptions"
+									id="jobDescription"
+									name="jobDescription"
 									className={`input input-primary w-full rounded-xl ${
-										errors.job_descriptions &&
-										touched.job_descriptions
+										errors.jobDescription &&
+										touched.jobDescription
 											? "input-error"
 											: ""
 									}`}
 								/>
 								<ErrorMessage
-									name="job_descriptions"
+									name="jobDescription"
 									component="div"
 									className="error label-text-alt"
 								/>
@@ -109,24 +109,24 @@ const CreateJobForm: React.FC<{
 							{/* Skills Required field */}
 							<div className="form-control w-6/6">
 								<label
-									htmlFor="skills_required"
+									htmlFor="skills"
 									className="label"
 								>
 									Skills Required (comma-separated)
 								</label>
 								<Field
 									type="text"
-									id="skills_required"
-									name="skills_required"
+									id="skills"
+									name="skills"
 									className={`input input-primary w-full rounded-xl ${
-										errors.skills_required &&
-										touched.skills_required
+										errors.skills &&
+										touched.skills
 											? "input-error"
 											: ""
 									}`}
 								/>
 								<ErrorMessage
-									name="skills_required"
+									name="skills"
 									component="div"
 									className="error label-text-alt"
 								/>
@@ -135,24 +135,24 @@ const CreateJobForm: React.FC<{
 							{/* Education Required field */}
 							<div className="form-control w-6/6">
 								<label
-									htmlFor="education_required"
+									htmlFor="educationRequired"
 									className="label"
 								>
 									Education Required
 								</label>
 								<Field
 									type="text"
-									id="education_required"
-									name="education_required"
+									id="educationRequired"
+									name="educationRequired"
 									className={`input input-primary w-full rounded-xl ${
-										errors.education_required &&
-										touched.education_required
+										errors.educationRequired &&
+										touched.educationRequired
 											? "input-error"
 											: ""
 									}`}
 								/>
 								<ErrorMessage
-									name="education_required"
+									name="educationRequired"
 									component="div"
 									className="error label-text-alt"
 								/>
@@ -162,24 +162,24 @@ const CreateJobForm: React.FC<{
 								{/* Experience Required field */}
 								<div className="form-control w-6/6">
 									<label
-										htmlFor="experience_required"
+										htmlFor="experienceRequired"
 										className="label"
 									>
 										Experience Required
 									</label>
 									<Field
 										type="text"
-										id="experience_required"
-										name="experience_required"
+										id="experienceRequired"
+										name="experienceRequired"
 										className={`input input-primary w-full rounded-xl ${
-											errors.experience_required &&
-											touched.experience_required
+											errors.experienceRequired &&
+											touched.experienceRequired
 												? "input-error"
 												: ""
 										}`}
 									/>
 									<ErrorMessage
-										name="experience_required"
+										name="experienceRequired"
 										component="div"
 										className="error label-text-alt"
 									/>
@@ -188,7 +188,7 @@ const CreateJobForm: React.FC<{
 								{/* Employment Type field */}
 								<div className="form-control w-5/12">
 									<label
-										htmlFor="employment_type"
+										htmlFor="employmentType"
 										className="label"
 									>
 										Employment Type
@@ -196,11 +196,11 @@ const CreateJobForm: React.FC<{
 
 									<Field
 										as="select" // Use the 'as' prop to render a select element
-										id="employment_type"
-										name="employment_type"
+										id="employmentType"
+										name="employmentType"
 										className={`select select-primary w-full max-w-xs ${
-											errors.employment_type &&
-											touched.employment_type
+											errors.employmentType &&
+											touched.employmentType
 												? "input-error"
 												: ""
 										}`}
@@ -213,7 +213,7 @@ const CreateJobForm: React.FC<{
 										</option>
 									</Field>
 									<ErrorMessage
-										name="employment_type"
+										name="employmentType"
 										component="div"
 										className="error label-text-alt"
 									/>
@@ -224,24 +224,24 @@ const CreateJobForm: React.FC<{
 								{/* Salary Min field */}
 								<div className="form-control w-5/12">
 									<label
-										htmlFor="salary_min"
+										htmlFor="salaryMin"
 										className="label"
 									>
 										Salary Min
 									</label>
 									<Field
 										type="number"
-										id="salary_min"
-										name="salary_min"
+										id="salaryMin"
+										name="salaryMin"
 										className={`input input-primary w-full rounded-xl ${
-											errors.salary_min &&
-											touched.salary_min
+											errors.salaryMin &&
+											touched.salaryMin
 												? "input-error"
 												: ""
 										}`}
 									/>
 									<ErrorMessage
-										name="salary_min"
+										name="salaryMin"
 										component="div"
 										className="error label-text-alt"
 									/>
@@ -250,24 +250,24 @@ const CreateJobForm: React.FC<{
 								{/* Salary Max field */}
 								<div className="form-control w-5/12">
 									<label
-										htmlFor="salary_max"
+										htmlFor="salaryMax"
 										className="label"
 									>
 										Salary Max
 									</label>
 									<Field
 										type="number"
-										id="salary_max"
-										name="salary_max"
+										id="salaryMax"
+										name="salaryMax"
 										className={`input input-primary w-full rounded-xl ${
-											errors.salary_max &&
-											touched.salary_max
+											errors.salaryMax &&
+											touched.salaryMax
 												? "input-error"
 												: ""
 										}`}
 									/>
 									<ErrorMessage
-										name="salary_max"
+										name="salaryMax"
 										component="div"
 										className="error label-text-alt"
 									/>
@@ -278,24 +278,24 @@ const CreateJobForm: React.FC<{
 								{/* Available Positions field */}
 								<div className="form-control w-6/6">
 									<label
-										htmlFor="available_position"
+										htmlFor="availablePosition"
 										className="label"
 									>
 										Available Positions
 									</label>
 									<Field
 										type="number"
-										id="available_position"
-										name="available_position"
+										id="availablePosition"
+										name="availablePosition"
 										className={`input input-primary w-full rounded-xl ${
-											errors.available_position &&
-											touched.available_position
+											errors.availablePosition &&
+											touched.availablePosition
 												? "input-error"
 												: ""
 										}`}
 									/>
 									<ErrorMessage
-										name="available_position"
+										name="availablePosition"
 										component="div"
 										className="error label-text-alt"
 									/>

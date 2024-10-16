@@ -14,34 +14,34 @@ const AdminViewJobDetailsCard: React.FC<{
 						</h2>
 						<div className=" mb-4 flex">
 							<p className="w-3/5">Company :</p>
-							<span className="w-3/5">{data.company_name}</span>
+							<span className="w-3/5">{data.companyName}</span>
 						</div>
 						<div className=" mb-4 flex">
 							<p className="w-3/5">Available positions :</p>
 							<span className="w-3/5">
-								{data.available_position}
+								{data.availablePosition}
 							</span>
 						</div>
 						<div className=" mb-4 flex">
 							<p className="w-3/5">Experience required :</p>
 							<span className="w-3/5">
-								{data.experience_required}
+								{data.experienceRequired}
 							</span>
 						</div>
 						<div className="mb-4 flex">
 							<p className="font-semibold w-3/5">Location:</p>{" "}
 							<span className="w-3/5">
-								{data.company_location}
+								{data.companyLocation}
 							</span>
 						</div>
 						<div className="mb-4 flex">
 							<p className="font-semibold w-3/5">Employment Type:</p>{" "}
-							<span className="w-3/5">{data.employment_type}</span>
+							<span className="w-3/5">{data.employmentType}</span>
 							
 						</div>
 						<div className="mb-4 flex">
 							<p className="font-semibold w-3/5">Salary:</p>{" "}
-							<span className="w-3/5">{`₹${data.salary_min} - ₹${data.salary_max}`}</span>
+							<span className="w-3/5">{`₹${data.salaryMin} - ₹${data.salaryMax}`}</span>
 							
 						</div>
 						<div className="mb-4 flex">
@@ -49,7 +49,7 @@ const AdminViewJobDetailsCard: React.FC<{
 								Job description:
 							</p>{" "}
 							<span className="mb-4 flex w-3/5">
-								{data.job_descriptions}
+								{data.jobDescription}
 							</span>
 						</div>
 						<div className="mb-4 flex">
@@ -57,8 +57,8 @@ const AdminViewJobDetailsCard: React.FC<{
 								Skills Required:
 							</p>{" "}
 								<ul className="w-3/5">
-									{data.skills_required ? (
-										data.skills_required.map(
+									{data.skills ? (
+										data.skills.map(
 											(skill: string) => (
 												<div
 													key={skill}

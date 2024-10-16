@@ -14,7 +14,6 @@ interface RecruiterInterface {
 	email: string;
 	phone: string;
 	isActive: boolean;
-	userId: string;
 }
 
 function RecruiterManagementPage() {

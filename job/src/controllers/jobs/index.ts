@@ -1,8 +1,8 @@
-import filterJobsController from "./filter-jobs.controller";
-import viewAllJobsController from "./view-all-jobs.controller";
-import viewJobByJobIdController from "./getAJob.controller";
-import viewAllJobFieldsDistinctValuesController from "./view-all-job-fields-distinct-values.controller";
-import searchJobsController from "./search-jobs.controller"
+import filterJobsController from "./filterJobs.controller";
+import viewAllJobsController from "./viewJobs.controller";
+import viewJobByJobIdController from "./viewJob.controller";
+import viewAllJobFieldsDistinctValuesController from "./viewDistinctFieldValues.controller";
+import searchJobsController from "./searchJobs.controller"
 
 import { IDependency } from "../../frameworks/types/dependencyInterface";
 

@@ -1,4 +1,5 @@
 import { IDependency } from "../../frameworks/types/dependencyInterface";
+import { APPLICATION_STATUS } from "../../frameworks/utils/constants";
 
 export = (dependencies: IDependency) => {
 	const {
@@ -15,9 +16,9 @@ export = (dependencies: IDependency) => {
 	const execute = async (recruiterId: string) => {
 		const [applied, shortlisted, rejected]: any =
 			await Promise.all([
-				jobApplicationRepository.numberOfAppliedStatusCount(recruiterId),
-				jobApplicationRepository.numberOfShortlistedStatusCount(recruiterId),
-				jobApplicationRepository.numberOfRejectedStatusCount(recruiterId),
+				jobApplicationRepository.getCountOfApplicationStatus(recruiterId, APPLICATION_STATUS.APPLIED),
+				jobApplicationRepository.getCountOfApplicationStatus(recruiterId, APPLICATION_STATUS.SHORTLISTED),
+				jobApplicationRepository.getCountOfApplicationStatus(recruiterId, APPLICATION_STATUS.REJECTED),
 			]);
 			
 		return { applied, shortlisted, rejected };

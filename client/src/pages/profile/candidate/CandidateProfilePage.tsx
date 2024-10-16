@@ -92,7 +92,7 @@ const CandidateProfilePage: React.FC = () => {
 			
 			setCandidateProfileData(candidateProfile.data);
 			dispatch(setCandidateProfileDetails(candidateProfile?.data));
-			setSkills([...candidateProfile?.data.keySkills]);
+			setSkills([...candidateProfile?.data.skills]);
 			setPreferredJobs([...candidateProfile?.data.preferredJobs]);
 		})();
 	}, [addSkillRerender]);
@@ -587,7 +587,7 @@ const CandidateProfilePage: React.FC = () => {
 								<ul className="list-none flex flex-wrap gap-2">
 									{/* Add more skills based on your data */}
 									{skills.length > 0 &&
-										candidateProfileData?.keySkills.map(
+										candidateProfileData?.skills.map(
 											(skill: string) => (
 												<div
 													key={skill}

@@ -1,13 +1,7 @@
 import mongoose from "mongoose";
+import { IJobApplication } from "../../../types/jobApplication";
 
-interface IJobApplicationAttributes {
-	jobId: string;
-	candidateId:string;
-	recruiterId:string;
-	applicationStatus: string;
-}
-
-interface IJobApplicationDocument extends mongoose.Document {
+export interface IJobApplicationDocument extends mongoose.Document {
 	jobId: mongoose.Schema.Types.ObjectId;
 	candidateId:mongoose.Schema.Types.ObjectId;
 	recruiterId:mongoose.Schema.Types.ObjectId;
@@ -15,6 +9,7 @@ interface IJobApplicationDocument extends mongoose.Document {
 	createdAt: string;
 	updatedAt: string;
 }
+
 const jobApplicationSchema = new mongoose.Schema ({
     jobId: {
         type: mongoose.Schema.Types.ObjectId,
@@ -23,12 +18,12 @@ const jobApplicationSchema = new mongoose.Schema ({
     },
     candidateId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Candidates',
+        ref: 'User',
         required: [true, 'Please add the candidate id']
     },
     recruiterId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Recruiters',
+        ref: 'User',
         required: [true, 'Please add the recruiter id']
     },
     applicationStatus: {
@@ -49,31 +44,18 @@ const jobApplicationSchema = new mongoose.Schema ({
 });
 
 interface jobApplicationModel extends mongoose.Model<IJobApplicationDocument> {
-	buildJob(attributes: IJobApplicationAttributes): IJobApplicationDocument;
+	buildJob(attributes: IJobApplication): IJobApplicationDocument;
 }
 
 
-jobApplicationSchema.statics.buildJob = (attributes: IJobApplicationAttributes) => {
-    
-    const jobId = new mongoose.Types.ObjectId(attributes.jobId);
-    const candidateId = new mongoose.Types.ObjectId(attributes.candidateId);
-    const recruiterId = new mongoose.Types.ObjectId(attributes.recruiterId);
+jobApplicationSchema.statics.buildJob = (attributes: IJobApplication) => {
 
     // Build the job application document
-    const jobApplication = new jobApplicationModel({
-        ...attributes,
-        jobId,
-        candidateId,
-        recruiterId
-    });
-
-    return jobApplication;
+    return new jobApplicationModel(attributes);
 };
 
 
-const jobApplicationModel = mongoose.model<IJobApplicationDocument, jobApplicationModel>(
+export const jobApplicationModel = mongoose.model<IJobApplicationDocument, jobApplicationModel>(
 	"jobApplication",
 	jobApplicationSchema
 );
-
-export { jobApplicationModel };

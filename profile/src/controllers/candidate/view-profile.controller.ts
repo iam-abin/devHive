@@ -6,11 +6,11 @@ export = (dependencies: IDependency)=>{
     const { useCases: { getCandidateProfileByUserIdUseCase}} = dependencies
 
     return async (req: Request, res: Response)=>{
-        const { userId } = req.params;
+        const { userId } = req.currentUser;
         
-        const candidate = await getCandidateProfileByUserIdUseCase(dependencies).execute(userId, req.file);
+        const candidate = await getCandidateProfileByUserIdUseCase(dependencies).execute(userId);
         
-        res.status(200).json({message: "candidate data", data: candidate })
+        res.status(200).json({message: "candidate profile feched successfully", data: candidate })
     };
 
 }

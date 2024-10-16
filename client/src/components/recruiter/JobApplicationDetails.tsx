@@ -88,14 +88,14 @@ const JobApplicationDetails: React.FC<{
 									Company:{" "}
 									{jobApplicationDetails
 										? jobApplicationDetails?.jobId
-												?.company_name
+												?.companyName
 										: "Loading..."}
 								</p>
 								<p className="text-gray-600 mb-4">
 									Location:{" "}
 									{jobApplicationDetails
 										? jobApplicationDetails?.jobId
-												?.company_location
+												?.companyLocation
 										: "Loading..."}
 								</p>
 							</div>
@@ -146,13 +146,13 @@ const JobApplicationDetails: React.FC<{
 							<p>
 								{jobApplicationDetails
 									? jobApplicationDetails?.jobId
-											?.job_descriptions
+											?.jobDescription
 									: "Loading..."}
 							</p>
 						</div>
 						{jobApplicationDetails &&
 							jobApplicationDetails?.jobId
-								?.experience_required && (
+								?.experienceRequired && (
 								<div className="mb-4">
 									<h2 className="text-xl font-semibold mb-2">
 										Job Status
@@ -160,12 +160,12 @@ const JobApplicationDetails: React.FC<{
 									<p
 										className={`${
 											jobApplicationDetails?.jobId
-												?.isClosed
+												?.isActive
 												? "text-red-600"
 												: "text-green-600"
 										}`}
 									>
-										{jobApplicationDetails?.jobId?.isClosed
+										{jobApplicationDetails?.jobId?.isActive
 											? "No longer accepting applications"
 											: "this job is open"}
 									</p>
@@ -179,8 +179,8 @@ const JobApplicationDetails: React.FC<{
 									</h2>
 									<ul className="list-disc pl-5">
 										{jobApplicationDetails?.jobId
-											?.skills_required ? (
-											jobApplicationDetails?.jobId?.skills_required.map(
+											?.skills ? (
+											jobApplicationDetails?.jobId?.skills.map(
 												(
 													skill: string,
 													index: number
@@ -198,7 +198,7 @@ const JobApplicationDetails: React.FC<{
 
 						{jobApplicationDetails &&
 							jobApplicationDetails?.jobId
-								?.education_required && (
+								?.educationRequired && (
 								<div className="mb-4">
 									<h2 className="text-xl font-semibold mb-2">
 										Education Required
@@ -206,7 +206,7 @@ const JobApplicationDetails: React.FC<{
 									<p>
 										{
 											jobApplicationDetails?.jobId
-												?.education_required
+												?.educationRequired
 										}
 									</p>
 								</div>
@@ -255,7 +255,7 @@ const JobApplicationDetails: React.FC<{
 
 						{jobApplicationDetails &&
 							jobApplicationDetails?.jobId
-								?.experience_required && (
+								?.experienceRequired && (
 								<div className="mb-4">
 									<h2 className="text-xl font-semibold mb-2">
 										Experience required
@@ -263,7 +263,7 @@ const JobApplicationDetails: React.FC<{
 									<p>
 										{
 											jobApplicationDetails?.jobId
-												?.experience_required
+												?.experienceRequired
 										}
 									</p>
 								</div>
@@ -286,7 +286,7 @@ const JobApplicationDetails: React.FC<{
 							)}
 
 						{jobApplicationDetails &&
-							jobApplicationDetails?.jobId?.employment_type && (
+							jobApplicationDetails?.jobId?.employmentType && (
 								<div className="mb-4">
 									<h2 className="text-xl font-semibold mb-2">
 										Employment type
@@ -294,7 +294,7 @@ const JobApplicationDetails: React.FC<{
 									<p>
 										{
 											jobApplicationDetails?.jobId
-												?.employment_type
+												?.employmentType
 										}
 									</p>
 								</div>
@@ -302,7 +302,7 @@ const JobApplicationDetails: React.FC<{
 
 						{jobApplicationDetails &&
 							jobApplicationDetails?.jobId
-								?.available_position && (
+								?.availablePosition && (
 								<div className="mb-4">
 									<h2 className="text-xl font-semibold mb-2">
 										Available position
@@ -310,7 +310,7 @@ const JobApplicationDetails: React.FC<{
 									<p>
 										{
 											jobApplicationDetails?.jobId
-												?.available_position
+												?.availablePosition
 										}
 									</p>
 								</div>
@@ -324,14 +324,14 @@ const JobApplicationDetails: React.FC<{
 								{jobApplicationDetails
 									? formatCurrency(
 											jobApplicationDetails?.jobId
-												?.salary_min
+												?.salaryMin
 									  )
 									: "Loading..."}{" "}
 								-
 								{jobApplicationDetails
 									? formatCurrency(
 											jobApplicationDetails?.jobId
-												?.salary_max
+												?.salaryMax
 									  )
 									: "Loading..."}
 							</p>

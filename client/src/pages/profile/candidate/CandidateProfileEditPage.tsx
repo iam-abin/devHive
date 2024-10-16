@@ -20,7 +20,7 @@ interface ProfileFormData {
 	gender: string;
 	currentLocation: string;
 	address: string;
-	keySkills: string[];
+	skills: string[];
 	profile_image: string;
 	about: string;
 	resume: string;
@@ -81,7 +81,7 @@ function CandidateProfileEditPage() {
 		gender: candidateProfileData?.gender ?? "",
 		currentLocation: candidateProfileData?.currentLocation ?? "",
 		address: candidateProfileData?.address ?? "",
-		keySkills: candidateProfileData?.keySkills ?? [],
+		skills: candidateProfileData?.skills ?? [],
 		profile_image: candidateProfileData?.profile_image ?? "",
 		about: candidateProfileData?.about ?? "",
 		resume: candidateProfileData?.resume ?? "",

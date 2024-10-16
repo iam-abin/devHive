@@ -7,8 +7,8 @@ export = (dependencies: IDependency) => {
 
 	if (!candidateProfileRepository) throw new Error("candidateProfileRepository should exist in dependencies");
 
-	const execute = async (userId: string) => {
-		const profile = await candidateProfileRepository.getProfileByUserId(userId);
+	const execute = async (candidateId: string) => {
+		const profile = await candidateProfileRepository.getProfileByUserId(candidateId);
 		return profile;
 	};
 

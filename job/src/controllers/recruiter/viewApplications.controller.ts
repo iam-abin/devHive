@@ -6,9 +6,9 @@ export = (dependencies: IDependency)=>{
     const { useCases: { getAllJobApplicationsUseCase }} = dependencies 
 
     return async (req: Request, res: Response)=>{
-        const {recruiterId} = req.params;
+        const {userId} = req.currentUser;
         
-        const applications = await getAllJobApplicationsUseCase(dependencies).execute(recruiterId, null);
+        const applications = await getAllJobApplicationsUseCase(dependencies).execute(userId, null);
         
         res.status(200).json({message: "Job applications are ", data: applications })
     };

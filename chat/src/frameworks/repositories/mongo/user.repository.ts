@@ -1,17 +1,16 @@
 import Models from "../../database/mongo/models";
+import { IUser } from "../../types/user";
 
 const { UserModel } = Models;
 
 export = {
-	createUser: async (userData: any) => {
-		
+	createUser: async (userData: IUser) => {
 		const newUser = UserModel.buildUser(userData);
-		
 		return await newUser.save();
 	},
 
-	updateUser: async (userId: string, data: any): Promise<any> => {
-		const user = await UserModel.findOneAndUpdate({ "_id": userId }, { $set: data }, {new: true});
+	updateUser: async (userId: string, data: Partial<IUser>): Promise<any> => {
+		const user = await UserModel.findByIdAndUpdate(userId, { $set: data }, {new: true});
 		return user;
 	},
 	

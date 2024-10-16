@@ -1,32 +1,67 @@
+import { BadRequestError, ForbiddenError } from "@abijobportal/common";
 import { CandidateDataProfile } from "../../frameworks/types/candidate-profile-interface";
 import { IDependency } from "../../frameworks/types/dependencyInterface";
+import { kafkaClient } from "../../config/kafka.connection";
+import { UserUpdatedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/user-updated-publisher";
+import { CandidateProfileUpdatedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/candidate-profile-updated-publisher ";
 
-export  = (dependencies: IDependency) => {
-	const { repositories:{candidateProfileRepository} } = dependencies;
+export = (dependencies: IDependency) => {
+    const {
+        repositories: { candidateProfileRepository },
+    } = dependencies;
 
-	if (!candidateProfileRepository) {
-		throw new Error("candidateProfileRepository should exist in dependencies");
-	}
+    if (!candidateProfileRepository) {
+        throw new Error(
+            "candidateProfileRepository should exist in dependencies"
+        );
+    }
 
-	const execute = async(existingData: any,updatedData: any) => {
+    const execute = async (candidateId: string, updatedData: any) => {
+        const profile = await candidateProfileRepository.getProfileByUserId(
+            candidateId
+        );
+        if (!profile) throw new BadRequestError("user does not exist");
 
-		// const modifiedFields: { [key: string]: any } = {};
-		// for (const field in updatedData) {
-		//   if (updatedData[field] !== existingData[field]) {
-		// 	modifiedFields[field] = updatedData[field];
-		//   }
-		// }
-		
-		if(updatedData.keySkills[1]){
+        if (profile.userId.toString() !== candidateId.toString())
+            throw new ForbiddenError("You cannot modify others profile");
 
-			if(!updatedData.keySkills[1]){
-				updatedData.keySkills = updatedData.keySkills[0].split(',')
-			}
-		}
+        const candidateProfileUpdatedEvent =
+            new CandidateProfileUpdatedEventPublisher(kafkaClient);
+        await candidateProfileUpdatedEvent.publish({
+            name: updatedData?.name,
+            email: updatedData?.email,
+            phone: updatedData?.phone,
+            isActive: updatedData?.isActive,
+            gender: updatedData?.gender,
+            currentLocation: updatedData?.currentLocation,
+            address: updatedData?.address,
+            skills: updatedData?.skills,
+            about: updatedData?.about,
+            experience: updatedData?.experience,
+            userId: updatedData?.userId,
+        });
 
+        await new UserUpdatedEventPublisher(kafkaClient).publish({
+            name: updatedData?.name,
+            email: updatedData?.email,
+            phone: updatedData?.phone,
+            isActive: updatedData?.isActive,
+            role: "candidate",
+            userId: updatedData?.userId,
+        });
 
-        return await candidateProfileRepository.updateCandidateProfile(existingData._id,updatedData);
-	};
+        if (updatedData.skills[1]) {
+            if (!updatedData.skills[1]) {
+                updatedData.skills = updatedData.skills[0].split(",");
+            }
+        }
 
-    return { execute }
+		const updatedProfile = await candidateProfileRepository.updateCandidateProfile(
+			profile._id,
+            updatedData
+        );
+		return updatedProfile
+    };
+
+    return { execute };
 };

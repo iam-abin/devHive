@@ -1,6 +1,6 @@
-import applyJobController from "./apply-job.controller";
-import appliedJobsController from "./applied-jobs.controller";
-import viewPliedJobApplicationController from "./view-applied-job-application.controller";
+import applyJobController from "./applyJob.controller";
+import appliedJobsController from "./appliedJobs.controller";
+import viewPliedJobApplicationController from "./viewApplication.controller";
 
 import { IDependency } from "../../frameworks/types/dependencyInterface";
 

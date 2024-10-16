@@ -21,15 +21,15 @@ const JobCard: React.FC<{ job: any; handleViewJob: any }> = ({
 					<div className="flex items-center gap-8">
 						<span className="flex items-center gap-1">
 							<FaShoppingBag />
-							{job?.employment_type}
+							{job?.employmentType}
 						</span>
 						<span className="flex items-center gap-1">
 							<IoLocationSharp />
-							{job?.company_location}
+							{job?.companyLocation}
 						</span>
 						<span className="flex items-center gap-1">
 							<HiMiniCurrencyRupee />
-							<span>{formatCurrency(job?.salary_max)}</span>
+							<span>{formatCurrency(job?.salaryMax)}</span>
 						</span>
 					</div>
 				</div>

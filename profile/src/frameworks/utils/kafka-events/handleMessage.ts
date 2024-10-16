@@ -1,13 +1,8 @@
 import candidateProfileRepository from "../../repository/mongo/candidate-profile.repository";
 import recruiterProfileRepository from "../../repository/mongo/recruiter-profile.repository";
-import companyProfileRepository from "../../repository/mongo/company-profile.repository";
+import { KafkaMessage } from "kafkajs";
 
-// interface handleMessageInterface {
-// 	data: any;
-// 	message: string;
-// }
-
-export const handleMessage = (data: any, topic: string, message: any) => {
+export const handleMessage = (data: any, topic: string, message: KafkaMessage) => {
 	switch (topic) {
 
 		case "USER-CREATED-TOPIC":
@@ -20,8 +15,10 @@ export const handleMessage = (data: any, topic: string, message: any) => {
 
 		case "USER-UPDATED-TOPIC": 
 			if (data.role === "candidate") {
+				console.log(data);
+				
 				candidateProfileRepository.updateCandidateProfile(
-					data.id,
+					data.userId,
 					data
 				);
 			} else if (data.role === "recruiter") {

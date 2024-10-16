@@ -1,8 +1,7 @@
 import { Request, Response } from "express";
 import { IDependency } from "../../frameworks/types/dependencyInterface";
 import { RecruiterProfileUpdatedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/recruiter-profile-updated-publisher";
-import { CompanyProfileCreatedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/company-profile-created-publisher";
-import { kafkaClient } from "../../config/kafka-connection";
+import { kafkaClient } from "../../config/kafka.connection";
 import { UserUpdatedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/user-updated-publisher";
 
 export = (dependencies: IDependency) => {
@@ -35,8 +34,8 @@ export = (dependencies: IDependency) => {
 			gender: updatedData?.gender,
 			profile_image: updatedData?.profile_image,
 			about: updatedData?.about,
-			company_name: updatedData.company_name,
-			company_location: updatedData.company_location,
+			companyName: updatedData.companyName,
+			companyLocation: updatedData.companyLocation,
 			company_website: updatedData.company_website,
 			company_state: updatedData.company_state,
 			company_country: updatedData.company_country,

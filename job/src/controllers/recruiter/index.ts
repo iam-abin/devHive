@@ -1,13 +1,13 @@
-import createJobController from "./create-job.controller";
-import deleteJobController from "./delete-job.controller";
-import updateJobController from "./update-job.controller";
-import createdJobsByRecruiterController from "./created-jobs-by-recruiter.controller";
-import viewJobApplicationsController from "./view-job-applications.controller";
-import viewJobApplicationController from "./view-job-application.controller";
-import changeJobApplicationStatusController from "./change-job-application-status.controller";
-import changeJobCloseStatusController from "./change-job-close-status.controller";
-import recruiterDashboardCardsController from "./recruiter-dashboard-cards.controller";
-import recruiterDashboardGraphController from "./recruiter-dashboard-graph.controller";
+import createJobController from "./createJob.controller";
+import deleteJobController from "./deleteJob.controller";
+import updateJobController from "./updateJob.controller";
+import createdJobsByRecruiterController from "./viewCreatedJobs.controller";
+import viewJobApplicationsController from "./viewApplications.controller";
+import viewJobApplicationController from "./viewApplication.controller";
+import changeJobApplicationStatusController from "./changeApplicationStatus.controller";
+import changeJobCloseStatusController from "./closeJob.controller";
+import recruiterDashboardCardsController from "./dashboardCardsData.controller";
+import recruiterDashboardGraphController from "./dashboardGraphData.controller";
 
 import { IDependency } from "../../frameworks/types/dependencyInterface";
 

@@ -12,18 +12,18 @@ const initialJobValues: JobFormData = {
 	title: "",
 	recruiterId: "",
 	// companyId: "",
-	job_descriptions: "",
-	skills_required: [],
-	available_position: 0,
-	experience_required: "",
-	education_required: "",
+	jobDescription: "",
+	skills: [],
+	availablePosition: 0,
+	experienceRequired: "",
+	educationRequired: "",
 	// location: "",
-	employment_type: "full-time",
-	salary_min: 0,
-	salary_max: 0,
+	employmentType: "full-time",
+	salaryMin: 0,
+	salaryMax: 0,
 	deadline: "",
-	company_name: "",
-	company_location: "",
+	companyName: "",
+	companyLocation: "",
 };
 
 function CreateJobPage() {
@@ -40,8 +40,8 @@ function CreateJobPage() {
 			);
 			
 			setecruiterProfileData(recruiterProfile.data);
-			initialJobValues.company_name = recruiterProfile.data.company_name;
-			initialJobValues.company_location = recruiterProfile.data.company_location;
+			initialJobValues.companyName = recruiterProfile.data.companyName;
+			initialJobValues.companyLocation = recruiterProfile.data.companyLocation;
 		})();
 	}, []);
 
@@ -50,7 +50,7 @@ function CreateJobPage() {
 	const handleSubmit = async (jobData: JobFormData) => {
 		try {
 			
-			if (!recruiterProfileData?.company_name) {
+			if (!recruiterProfileData?.companyName) {
 				notify(
 					"Please provide company details in your profile before creating a job!!!",
 					"warning"

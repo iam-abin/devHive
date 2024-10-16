@@ -1,5 +1,5 @@
 import { JobModel } from "./job";
-import { jobApplicationModel } from "./job-application";
-import { UserModel } from "./users";
+import { jobApplicationModel } from "./jobApplication";
+import { UserModel } from "./user";
 
 export default { JobModel, jobApplicationModel, UserModel };

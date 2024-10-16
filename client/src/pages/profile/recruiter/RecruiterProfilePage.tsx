@@ -150,12 +150,12 @@ const RecruiterProfilePage: React.FC = () => {
 										<li className="mb-4">
 											<h3 className="text-blue-500 font-semibold">
 												{recruiterProfileData?.data
-													?.company_name ??
+													?.companyName ??
 													""}
 											</h3>
 											<p className="text-gray-600">
 												{recruiterProfileData?.data
-													?.company_location ??
+													?.companyLocation ??
 													""}
 											</p>
 											<p className="text-gray-600">

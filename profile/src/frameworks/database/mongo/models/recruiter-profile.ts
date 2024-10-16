@@ -8,17 +8,8 @@ interface IRecruiterAttributes {
 	phone: number;
 	isVarified: boolean;
 	isActive: boolean;
-	// gender?: string;
-	// profile_image?: string;
-	// about?: string;
-	// // company_id?: string;
-	// company_name: string;
-	// company_website?: string;
-	// company_location: string;
-	// company_state?: string;
-	// company_country?: string;
-	// // isActive: boolean;
 }
+
 // 2. An interface that describes the properties ,that a Candidate Document has
 interface IRecruiterDocument extends mongoose.Document {
 	name: string;
@@ -32,10 +23,10 @@ interface IRecruiterDocument extends mongoose.Document {
 	about: string;
 
 	// company_id?: mongoose.Schema.Types.ObjectId;
-	company_name: string;
+	companyName: string;
 	// logo: string;
 	company_website: string;
-	company_location: string;
+	companyLocation: string;
 	company_state: string;
 	company_country: string;
 
@@ -80,7 +71,7 @@ const recruiterSchema = new mongoose.Schema(
 			type: String,
 			enum: ["Male", "Female", "Other"],
 		},
-		// company_name: {
+		// companyName: {
 		// 	type: mongoose.Schema.Types.ObjectId,
 		// 	ref: "Company",
 		// },
@@ -92,7 +83,7 @@ const recruiterSchema = new mongoose.Schema(
 		about: String,
 		// company_id: mongoose.Schema.Types.ObjectId,
 		// userId: mongoose.Schema.Types.ObjectId
-		company_name:{
+		companyName:{
 			type: String,
 			// required: true
 		},
@@ -101,7 +92,7 @@ const recruiterSchema = new mongoose.Schema(
 			type: String,
 			// required: false
 		},
-		company_location: {
+		companyLocation: {
 			type: String,
 			// required: true
 		},

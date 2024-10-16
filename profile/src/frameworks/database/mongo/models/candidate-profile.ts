@@ -11,7 +11,7 @@ interface ICandidateAttributes {
 	gender: string;
 	currentLocation: string;
 	address: object;
-	keySkills: object;
+	skills: object;
 	profile_image: string;
 	about: string;
 	resume: {
@@ -31,7 +31,7 @@ interface ICandidateDocument extends mongoose.Document {
 	gender: string;
 	currentLocation: string;
 	address: object;
-	keySkills: object;
+	skills: object;
 	profile_image: string;
 	about: string;
 	resume: string;
@@ -88,7 +88,7 @@ const candidateSchema = new mongoose.Schema(
 			country: String,
 			pinCode: String,
 		},
-		keySkills: Array,
+		skills: Array,
 		profile_image: {
 			type: String,
 			// default:

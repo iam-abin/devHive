@@ -9,9 +9,8 @@ export = (dependencies: IDependency) => {
 	} = dependencies;
 
 	if (!jobRepository) throw new Error("jobRepository should exist in dependencies");
-
 	if (!jobApplicationRepository) throw new Error("jobApplicationRepository should exist in dependencies");
-		
+
 	const execute = async (recruiterId: string) => {
 		
 		const [addedJobsCount, jobApplicationsCount]: any =

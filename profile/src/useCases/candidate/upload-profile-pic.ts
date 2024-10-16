@@ -1,6 +1,8 @@
 import streamifier from "streamifier";
 import { cloudinary } from "../../config/cloudinary";
 import { IDependency } from "../../frameworks/types/dependencyInterface";
+import { CandidateProfileUpdatedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/candidate-profile-updated-publisher ";
+import { kafkaClient } from "../../config/kafka.connection";
 
 export = (dependencies: IDependency) => {
 	const {
@@ -34,7 +36,15 @@ export = (dependencies: IDependency) => {
 				streamifier.createReadStream(file.buffer).pipe(cloudinary_upload_stream);
 			}); 
 
-			return await candidateProfileRepository.uploadProfilePic(id, uploadResult?.url);
+			const candidate = await candidateProfileRepository.uploadProfilePic(id, uploadResult?.url);
+			
+        
+			const candidateProfileUpdatedEvent = new CandidateProfileUpdatedEventPublisher(kafkaClient)
+			await candidateProfileUpdatedEvent.publish({
+				profile_image: candidate?.profile_image,
+				userId: candidate?._id,
+			})
+			return
 		} catch (error) {
 			console.error(error);
 			// Handle the error appropriately

@@ -8,7 +8,7 @@ export class CandidateProfile {
 	gender?: string;
 	currentLocation?: string;
 	address?: object;
-	keySkills?: string[];
+	skills?: string[];
 	profile_image?: string;
 	about?: string;
 	resume?: string;
@@ -22,7 +22,7 @@ export class CandidateProfile {
 		gender,
 		currentLocation,
 		address,
-		keySkills,
+		skills,
 		profile_image,
 		about,
 		resume,
@@ -36,7 +36,7 @@ export class CandidateProfile {
 		this.gender = gender;
 		this.currentLocation = currentLocation;
 		this.address = address;
-		this.keySkills = keySkills;
+		this.skills = skills;
 		this.profile_image = profile_image;
 		this.about = about;
 		this.resume = resume;

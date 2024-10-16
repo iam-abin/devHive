@@ -46,7 +46,7 @@ const start = async () => {
 	// it is used to listen to incomming message from kafka topics
 	const userUpdatedEvent = new UserUpdatedEventConsumer(kafkaClient)
 	
-	// await userUpdatedEvent.subscribe()
+	await userUpdatedEvent.subscribe()
 
 	app.listen(3000, () => {
 		console.log("auth Listening on port 3000....");

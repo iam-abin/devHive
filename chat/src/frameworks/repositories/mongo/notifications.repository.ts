@@ -4,16 +4,12 @@ const {  NotificationModel } = Models;
 
 export = {
 	createNotification: async (notificationData: any) => {
-		
 		const chatNotification = NotificationModel.buildNotification(notificationData);
-		
 		return await chatNotification.save();
 	},
 
 	getAllNotificationsCountByUserId: async (userId: string) => {
-		
 		const count = (await NotificationModel.find({targetUserId: userId})).length;
-		
 		return count;
 	},
 
@@ -39,7 +35,6 @@ export = {
 
 	getUnreadMessagesCount: async (senderId: string, receiverId: string) => {
 		const count = await NotificationModel.countDocuments({senderId, targetUserId: receiverId});
-		
 		return count;
 	},
 };

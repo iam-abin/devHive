@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { IDependency } from "../../frameworks/types/dependencyInterface";
 import { CandidateProfileUpdatedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/candidate-profile-updated-publisher ";
-import { kafkaClient } from "../../config/kafka-connection";
+import { kafkaClient } from "../../config/kafka.connection";
 
 export = (dependencies: IDependency)=>{
 
@@ -21,7 +21,7 @@ export = (dependencies: IDependency)=>{
             gender: candidate?.gender,
             currentLocation: candidate?.currentLocation,
             address: candidate?.address,
-            keySkills: candidate?.keySkills,
+            skills: candidate?.skills,
             profile_image: candidate?.profile_image,
             about: candidate?.about,
             resume: candidate?.resume,

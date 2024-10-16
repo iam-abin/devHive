@@ -21,9 +21,9 @@ interface ProfileFormData {
 	profile_image?: string;
 	about?: string;
 	userId: string;
-	company_name: string;
+	companyName: string;
 	company_website: string;
-	company_location: string;
+	companyLocation: string;
 	company_state: string;
 	company_country: string;
 }
@@ -80,9 +80,9 @@ function RecruiterProfileEditPage() {
 		profile_image: profileDetails?.profile_image ?? undefined,
 		about: profileDetails?.about ?? undefined,
 		userId: profileDetails?.id ?? undefined,
-		company_name: profileDetails?.company_name ?? undefined,
+		companyName: profileDetails?.companyName ?? undefined,
 		company_website: profileDetails?.company_website ?? undefined,
-		company_location: profileDetails?.company_location ?? undefined,
+		companyLocation: profileDetails?.companyLocation ?? undefined,
 		company_state: profileDetails?.company_state ?? undefined,
 		company_country: profileDetails?.company_country ?? undefined,
 	};
@@ -234,24 +234,24 @@ function RecruiterProfileEditPage() {
 									{/* Company Name field */}
 									<div className="form-control w-6/6">
 										<label
-											htmlFor="company_name"
+											htmlFor="companyName"
 											className="label"
 										>
 											Company Name
 										</label>
 										<Field
 											type="text"
-											id="company_name"
-											name="company_name"
+											id="companyName"
+											name="companyName"
 											className={`input input-primary w-full rounded-xl ${
-												errors.company_name &&
-												touched.company_name
+												errors.companyName &&
+												touched.companyName
 													? "input-error"
 													: ""
 											}`}
 										/>
 										<ErrorMessage
-											name="company_name"
+											name="companyName"
 											component="div"
 											className="error label-text-alt"
 										/>
@@ -286,24 +286,24 @@ function RecruiterProfileEditPage() {
 									{/* Company Location field */}
 									<div className="form-control w-6/6">
 										<label
-											htmlFor="company_location"
+											htmlFor="companyLocation"
 											className="label"
 										>
 											Company Location
 										</label>
 										<Field
 											type="text"
-											id="company_location"
-											name="company_location"
+											id="companyLocation"
+											name="companyLocation"
 											className={`input input-primary w-full rounded-xl ${
-												errors.company_location &&
-												touched.company_location
+												errors.companyLocation &&
+												touched.companyLocation
 													? "input-error"
 													: ""
 											}`}
 										/>
 										<ErrorMessage
-											name="company_location"
+											name="companyLocation"
 											component="div"
 											className="error label-text-alt"
 										/>

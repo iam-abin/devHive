@@ -11,11 +11,7 @@ interface MessageDocument extends mongoose.Document {
 	senderId: mongoose.Schema.Types.ObjectId;
 	roomId: mongoose.Schema.Types.ObjectId;
 	textMessage: string;
-	read: boolean
-	// image: {
-    //     type: String,
-    //     trim: true,
-    // }
+	read: boolean;
 	createdAt: string;
 	updatedAt: string;
 }

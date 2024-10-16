@@ -1,20 +1,19 @@
 import { Server, Socket } from "socket.io";
 import http from "http";
-// import { Server as SocketIo } from "socket.io";
+
 import { BadRequestError } from "@abijobportal/common";
 import userRepository from "../repositories/mongo/user.repository";
 import messageRepository from "../repositories/mongo/message.repository";
 import chatRoomRepository from "../repositories/mongo/chatRoom.repository";
-import { User } from "../../entities/users";
 import { ChatRoom } from "../../entities/chat-room";
 import notificationRepository from "../repositories/mongo/notifications.repository";
 
-interface activeUsersType {
+type activeUsers = {
 	userId: string;
 	socketId: string;
 }
 
-let activeUsers: activeUsersType[] = [];
+let activeUsers: activeUsers[] = [];
 
 const addUser = (userId: string, socketId: string) => {
 	!activeUsers.some((user) => user.userId === userId) &&

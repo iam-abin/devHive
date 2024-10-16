@@ -12,15 +12,15 @@ interface JobInterface {
 	title: string;
 	recruiter: string;
 	company: string;
-	job_descriptions?: string;
-	skills_required?: string | string[];
-	available_position?: string;
-	experience_required?: string;
-	education_required?: string;
+	jobDescription?: string;
+	skills?: string | string[];
+	availablePosition?: string;
+	experienceRequired?: string;
+	educationRequired?: string;
 	location?: string;
-	employment_type?: string;
-	salary_min?: number;
-	salary_max?: number;
+	employmentType?: string;
+	salaryMin?: number;
+	salaryMax?: number;
 	has_applied?: boolean;
 	isActive?: boolean;
 	deadline?: Date;
@@ -92,7 +92,7 @@ function JobsManagementPage() {
 		},
 		{
 			name: "Location",
-			selector: (row: { company_location: string }) => row.company_location,
+			selector: (row: { companyLocation: string }) => row.companyLocation,
 			sortable: true,
 		},
 

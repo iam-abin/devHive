@@ -171,7 +171,7 @@ function LandingPage() {
 							jobs.map(
 								(job: any) =>
 									job.isActive &&
-									!job.isClosed && (
+									!job.isActive && (
 										<JobCard
 											key={job?.id}
 											job={job}

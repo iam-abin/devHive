@@ -6,8 +6,8 @@ export interface RecruiterDataProfile{
 	isActive: boolean;
 	gender?: string;
 
-	company_name?: string;
-	company_location?: string;
+	companyName?: string;
+	companyLocation?: string;
 	company_state?: string;
 	company_country?: string;
 
