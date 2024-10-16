@@ -7,8 +7,8 @@ export = (dependencies: IDependency) => {
 		throw new Error("jobRepository should exist in dependencies");
 	}
 
-	const execute = () => {
-		return jobRepository.getAllJobs();
+	const execute = async() => {
+		return await jobRepository.getAllJobs();
 	};
 
 	return { execute };

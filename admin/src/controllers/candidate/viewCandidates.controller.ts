@@ -9,7 +9,7 @@ export = (dependencies: IDependency)=>{
         
         const candidates = await getAllCandidatesUseCase(dependencies).execute();
 
-        res.status(200).json({message: "all candidates", data: candidates })
+        res.status(200).json({message: "candidates fetched successfully", data: candidates })
     };
 
 }

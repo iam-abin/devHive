@@ -1,6 +1,6 @@
-import blockUnblockJobUseCase from "./block-unblock";
-import getJobByIdUseCase from "./get-jobs-by-id";
-import getAllJobsUseCase from "./get-all-jobs";
+import blockUnblockJobUseCase from "./blockUnblock";
+import getJobByIdUseCase from "./getJobById";
+import getAllJobsUseCase from "./getAllJobs";
 
 
 export { blockUnblockJobUseCase, getJobByIdUseCase, getAllJobsUseCase };

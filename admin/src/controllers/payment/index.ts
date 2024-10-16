@@ -1,6 +1,6 @@
 import { IDependency } from "../../frameworks/types/dependencyInterface";
 
-import getAllPaymentsController from "./get-all-payments.controller";
+import getAllPaymentsController from "./getPayments.controller";
 
 export = (dependencies: IDependency) => {
 	return {

@@ -9,7 +9,7 @@ export interface ICandidateData{
 	gender?: string;
 	currentLocation?: string;
 	address?: object;
-	keySkills?: string[];
+	skills?: string[];
 	profile_image?: string;
 	about?: string;
 	resume?: string;
@@ -27,7 +27,7 @@ export class Candidate {
 	gender?: string;
 	currentLocation?: string;
 	address?: object;
-	keySkills?: string[];
+	skills?: string[];
 	profile_image?: string;
 	about?: string;
 	resume?: string;

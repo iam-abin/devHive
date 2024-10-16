@@ -1,18 +1,17 @@
-import Models from "../../database/models";
-
-const { MembershipPlansModel } = Models;
+import { IMembershipPlanData } from "../../../entities/membership-plan";
+import { IMembershipPlansDocument, MembershipPlansModel } from "../../database/models";
 
 // we want to export some closure
 export = {
 	// these fn's are returning a promise as async so we can define return type as Promise<ICandidateData>
 
-	createMembershipPlan: async (membershipPlanData: any): Promise<any> => {
+	createMembershipPlan: async (membershipPlanData: IMembershipPlanData): Promise<IMembershipPlansDocument> => {
 		const membershipPlanObject =
 			MembershipPlansModel.buildMembershipPlan(membershipPlanData);
 		return await membershipPlanObject.save();
 	},
 
-	blockUnblock: async (membershipPlanId: string) => {
+	blockUnblock: async (membershipPlanId: string): Promise<IMembershipPlansDocument> => {
 		const membershipPlan = await MembershipPlansModel.findById(
 			membershipPlanId
 		);
@@ -23,10 +22,10 @@ export = {
 		return await membershipPlan.save();
 	},
 
-	updateMembershipPlan: async (membershipPlanId: string, data: object) => {
+	updateMembershipPlan: async (membershipPlanId: string, data: Partial<IMembershipPlanData>): Promise<IMembershipPlansDocument | null> => {
 		const updatedMembershipPlan =
-			await MembershipPlansModel.findOneAndUpdate(
-				{ _id: membershipPlanId },
+			await MembershipPlansModel.findByIdAndUpdate(
+				membershipPlanId,
 				{ $set: data },
 				{ new: true }
 			);
@@ -45,14 +44,14 @@ export = {
 		return membershipPlansName;
 	},
 
-	getById: async (membershipPlanId: string) => {
+	getById: async (membershipPlanId: string): Promise<IMembershipPlansDocument | null> => {
 		const membershipPlan = await MembershipPlansModel.findById(
 			membershipPlanId
 		);
 		return membershipPlan;
 	},
 
-	getAllMembershipPlans: async () => {
+	getAllMembershipPlans: async (): Promise<IMembershipPlansDocument[] | []> => {
 		const membershipPlans = await MembershipPlansModel.find({});
 		return membershipPlans;
 	},

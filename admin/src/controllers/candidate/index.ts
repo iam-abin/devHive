@@ -1,6 +1,6 @@
-import getAllCandidatesController from "./view-candidates.controller";
-import getCandidateByIdController from "./view-profile.controller";
-import candidateBlockUnblockController from "./block-unblock-candidate.controller";
+import getAllCandidatesController from "./viewCandidates.controller";
+import getCandidateByIdController from "./viewProfile.controller";
+import candidateBlockUnblockController from "./blockUnblock.controller";
 
 import { IDependency } from "../../frameworks/types/dependencyInterface";
 
@@ -9,6 +9,5 @@ export = (dependencies: IDependency) => {
 		getAllCandidatesController: getAllCandidatesController(dependencies),
 		getCandidateByIdController: getCandidateByIdController(dependencies),
 		candidateBlockUnblockController: candidateBlockUnblockController(dependencies),
-		
 	};
 };

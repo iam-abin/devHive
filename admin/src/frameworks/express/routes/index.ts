@@ -7,8 +7,8 @@ import { recruiterRouter } from "./recruiter";
 import { membershipPlanRouter } from "./membership-plan";
 import { jobRouter } from "./job";
 import { paymentRouter } from "./payment";
-
 import { IDependency } from "../../types/dependencyInterface";
+
 
 export const routes = (dependencies: IDependency) => {
 	const router = express.Router();
@@ -21,8 +21,7 @@ export const routes = (dependencies: IDependency) => {
 	const payment = paymentRouter(dependencies);
 
 	// currentUserAdmin extract current user from jwt, if user is present add it to req.currentUser
-	// here every routes are used by admin, so it is easy to understand for us when define it at the top.
-	
+	// In admin service every routes are protected for admin.
 	router.use(checkCurrentUser);
 	router.use(auth(ROLES.ADMIN));
 
@@ -32,7 +31,6 @@ export const routes = (dependencies: IDependency) => {
 	router.use("/membership", membershipPlan);
 	router.use("/job", job);
 	router.use("/payment", payment);
-	// router.use("/candidate",auth, candidate);
-	
+
 	return router;
 };

@@ -1,8 +1,8 @@
 import { IDependency } from "../../frameworks/types/dependencyInterface";
 
-import blockUnblockJobController from "./block-unblock-job.controller";
-import viewJobController from "./view-job.controller";
-import viewJobsController from "./view-jobs.controller";
+import blockUnblockJobController from "./blockUnblock.controller";
+import viewJobController from "./viewJob.controller";
+import viewJobsController from "./viewJobs.controller";
 
 export = (dependencies: IDependency) => {
 	return {

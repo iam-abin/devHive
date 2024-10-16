@@ -1,6 +1,6 @@
-import { connectDB } from "./config/db";
+import { connectDB } from "./config/db.connection";
 import { app } from "./frameworks/express/app";
-import { kafkaClient } from "./config/kafka-connection";
+import { kafkaClient } from "./config/kafka.connection";
 import { JobCreatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/job-created-consumer";
 import { JobUpdatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/job-updated-consumer";
 import { JobDeletedEventConsumer } from "./frameworks/utils/kafka-events/consumers/job-deleted-consumer";

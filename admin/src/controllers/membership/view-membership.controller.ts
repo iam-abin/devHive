@@ -11,8 +11,6 @@ export = (dependencies: IDependency)=>{
         
         const response = await getMemberShipPlanByIdUseCase(dependencies).execute(memberShipPlanId);
         
-        if(response == null) throw new BadRequestError("invalid memberShipPlan memberShipPlanId")
-        
         res.status(200).json({message: "memberShipPlan get successfully", data: response })
 
     };

@@ -7,8 +7,8 @@ export = (dependencies: IDependency) => {
 		throw new Error("recruiterRepository should exist in dependencies");
 	}
 
-	const execute = (userId: string) => {
-		return recruiterRepository.getById(userId);
+	const execute = async(userId: string) => {
+		return await recruiterRepository.getById(userId);
 	};
 
 	return { execute };

@@ -7,8 +7,8 @@ export = (dependencies: IDependency) => {
 		throw new Error("paymentRepository should exist in dependencies");
 	}
 
-	const execute = () => {
-		return paymentRepository.getAllPayments();
+	const execute = async() => {
+		return await paymentRepository.getAllPayments();
 	};
 
 	return { execute };

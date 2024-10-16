@@ -1,18 +1,18 @@
-export interface JobInterface {
-	title: string;
-	recruiter: string;
-	company_name?: string;
-	company_location?: string;
-	job_descriptions?: string;
-	skills_required?: string | string[];
-	available_position?: string;
-	experience_required?: string;
-	education_required?: string;
-	location?: string;
-	employment_type?: string;
-	salary_min?: number;
-	salary_max?: number;
-	isActive?: boolean;
-	deadline?: Date;
+export interface IJob {
 	jobId: string
+    title: string;
+    recruiter: string;
+    companyName: string;
+    companyLocation: string;
+    jobDescription?: string;
+    skills?: string[];
+    availablePosition?: string;
+    experienceRequired?: string;
+    educationRequired?: string;
+    employmentType?: string;
+    salaryMin?: number;
+    salaryMax?: number;
+    isActive?: boolean;
+    deadline?: Date;
 }
+

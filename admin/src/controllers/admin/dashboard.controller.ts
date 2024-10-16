@@ -9,7 +9,7 @@ export = (dependencies: IDependency)=>{
         
         const dashboardCardsDetails = await getAllDashboardCardsDetailsUseCase(dependencies).execute();
         
-        res.status(200).json({message: "dashboard card details", data: dashboardCardsDetails })
+        res.status(200).json({message: "dashboard card details fetched successfully", data: dashboardCardsDetails })
     };
 
 }

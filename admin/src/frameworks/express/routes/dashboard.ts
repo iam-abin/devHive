@@ -8,7 +8,7 @@ export const dashboardRouter = (dependencies: IDependency)=>{
     const dashboardController = dashboardControllers (dependencies);
 
     // dashboard
-    router.get("/data", dashboardController.dashboardController);
+    router.get("/data", dashboardController.dashboardDataController);
 
     router.get("/graph-data", dashboardController.getDashboardGraphDetailsController);
 

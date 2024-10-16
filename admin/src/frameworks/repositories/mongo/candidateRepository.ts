@@ -1,61 +1,50 @@
-import Models from "../../database/models";
-
-const { CandidateModel } = Models;
+import { CandidateModel, ICandidateDocument } from "../../database/models";
+import { IUser } from "../../types/candidateInterface";
 
 // we want to export some closure
 export = {
-	// these fn's are returning a promise as async so we can define return type as Promise<ICandidateData>
+    // these fn's are returning a promise as async so we can define return type as Promise<ICandidateData>
 
-	createCandidate: async (userData: any) => {
-		const { name, email, phone, role, isActive, userId } = userData;
+    createCandidate: async (userData: IUser): Promise<ICandidateDocument> => {
+        const candidate = CandidateModel.buildCandidate(userData);
+        return await candidate.save();
+    },
 
-		const userObject = CandidateModel.buildCandidate({
-			name,
-			email,
-			phone,
-			role,
-			isActive,
-			userId,
-		});
+    // updating and block unblocking is also doing here
+    updateCandidateProfile: async (userId: string, data: Partial<IUser>): Promise<ICandidateDocument | null> => {
+        const candidate = await CandidateModel.findByIdAndUpdate(
+            userId,
+            { $set: data },
+            { new: true }
+        );
 
-		return await userObject.save();
-	},
+        return candidate;
+    },
 
-	// updating and block unblocking is also doing here
-	updateCandidateProfile: async (userId: string, data: any): Promise<any> => {
-		const candidate = await CandidateModel.findOneAndUpdate(
-			{ _id: userId },
-			{ $set: data },
-			{ new: true }
-		);
+    blockUnblock: async (userId: string) => {
+        const candidate = await CandidateModel.findById(userId);
+        if (!candidate) throw new Error("Candidate not found");
 
-		return candidate;
-	},
+        candidate.isActive = !candidate.isActive;
 
-	blockUnblock: async (userId: string) => {
-		const candidate = await CandidateModel.findById(userId);
-		if (!candidate) throw new Error("Candidate not found");
+        return await candidate.save();
+    },
 
-		candidate.isActive = !candidate.isActive;
+    getById: async (userId: string) => {
+        const candidate = await CandidateModel.findById(userId);
 
-		return await candidate.save();
-	},
+        return candidate;
+    },
 
-	getById: async (userId: string) => {
-		const candidate = await CandidateModel.findById(userId);
+    getAllCandidates: async () => {
+        const candidates = await CandidateModel.find({});
+        return candidates;
+    },
 
-		return candidate;
-	},
-
-	getAllCandidates: async () => {
-		const candidates = await CandidateModel.find({});
-		return candidates;
-	},
-
-	numberOfCandidates: async () => {
-		const totalCandidates = await CandidateModel.countDocuments();
-		return totalCandidates;
-	},
+    numberOfCandidates: async () => {
+        const totalCandidates = await CandidateModel.countDocuments();
+        return totalCandidates;
+    },
 };
 
 // export default repository();

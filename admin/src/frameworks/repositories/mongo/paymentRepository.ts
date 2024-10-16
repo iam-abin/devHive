@@ -1,23 +1,20 @@
-import { Payment, IPaymentData } from "../../../entities/payment";
-import Models from "../../database/models";
-
-const { PaymentModel } = Models;
+import { Payment } from "../../../entities/payment";
+import { IPaymentDocument, PaymentModel } from "../../database/models";
+import { IPaymentData } from "../../types/payment";
 
 export = {
-	createPayment: async (data: IPaymentData): Promise<any> => {
-		
+	createPayment: async (data: IPaymentData): Promise<IPaymentDocument> => {
 		const paymentData = new Payment(data);
-		
 		const paymentObject = PaymentModel.buildPayment(paymentData);
 		return await paymentObject.save();
 	},
 
-	getById: async (paymentId: string) => {
+	getById: async (paymentId: string): Promise<IPaymentDocument| null> => {
 		const payment = await PaymentModel.findById(paymentId);
 		return payment;
 	},
 
-	totalRevenue: async () => {
+	totalRevenue: async (): Promise<number> => {
 		const totalAmount: any = await PaymentModel.aggregate([
 			{
 				$lookup: {
@@ -47,7 +44,7 @@ export = {
 
 	},
 
-	getAllPayments: async () => {
+	getAllPayments: async (): Promise<IPaymentDocument[] | []> => {
 		const payments = await PaymentModel.find({})
 			.populate({
 				path: "candidateId",

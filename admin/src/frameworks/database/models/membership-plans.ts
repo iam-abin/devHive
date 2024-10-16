@@ -1,23 +1,11 @@
 import mongoose from "mongoose";
-// 1. An interface that describes the properties ,that are requried to create a new Chat
-interface MembershipPlansAttributes {
-	name: String;
-	features: Array<string>;
-	description: string;
-	price: number;
-}
-// 2. An interface that describes the properties ,that a Chat Document has
-interface MembershipPlansDocument extends mongoose.Document {
-	name: string;
-	features: [string];
-	description: string;
-	price: number;
+import { IMembershipPlan } from "../../types/membership-plan-interface";
+
+export interface IMembershipPlansDocument extends mongoose.Document, IMembershipPlan {
 	isActive: boolean;
-	createdAt: Date;
-	updatedAt: Date;
 }
 
-// 3.
+
 const membershipPlansSchema = new mongoose.Schema(
 	{
 		name: {
@@ -42,7 +30,7 @@ const membershipPlansSchema = new mongoose.Schema(
 		},
 	},
 	{
-		// to reformat id and remove password,__v from response when converting to json (we can also use other approaches)
+
 		toJSON: {
 			transform(doc, ret) {
 				ret.id = ret._id;
@@ -54,24 +42,23 @@ const membershipPlansSchema = new mongoose.Schema(
 	}
 );
 
-// 4. An interface that describes the properties ,that a user model has
-interface MembershipPlansModel extends mongoose.Model<MembershipPlansDocument> {
-	buildMembershipPlan(attributes: MembershipPlansAttributes): MembershipPlansDocument;
+
+interface MembershipPlansModel extends mongoose.Model<IMembershipPlansDocument> {
+	buildMembershipPlan(attributes: IMembershipPlan): IMembershipPlansDocument;
 }
 
-// 5.In Mongoose, you can also add custom functions to a model using statics.
-membershipPlansSchema.statics.buildMembershipPlan = (attributes: MembershipPlansAttributes) => {
+
+membershipPlansSchema.statics.buildMembershipPlan = (attributes: IMembershipPlan) => {
 	return new MembershipPlansModel({
 		name: attributes.name,
 		features: attributes.features,
 		description: attributes.description,
 		price: attributes.price,
 	});
-};
-// 6. // 6.hover on 'Premium' ,we can see that 'Premium' is getting 'MembershipPlansModel', ie,a Second arg indicate returning type
-const MembershipPlansModel = mongoose.model<MembershipPlansDocument, MembershipPlansModel>(
+}; 
+
+
+export const MembershipPlansModel = mongoose.model<IMembershipPlansDocument, MembershipPlansModel>(
 	"MembershipPlan",
 	membershipPlansSchema
 );
-
-export { MembershipPlansModel };

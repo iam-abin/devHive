@@ -1,13 +1,5 @@
-import { CandidateModel } from "./candidate";
-import { RecruiterModel } from "./recruiter";
-import { JobModel } from "./job";
-import { MembershipPlansModel } from "./membership-plans";
-import { PaymentModel } from "./payments";
-
-export default {
-	CandidateModel,
-	RecruiterModel,
-	JobModel,
-	MembershipPlansModel,
-	PaymentModel,
-};
+export * from "./candidate";
+export * from "./recruiter";
+export * from "./job";
+export * from "./membership-plans";
+export * from "./payments";
