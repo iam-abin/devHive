@@ -7,7 +7,6 @@ import dependencies from "../../config/dependencies";
 import { NotFoundError, errorHandler } from "@abijobportal/common";
 
 const app: Express = express();
-// dotenv.config()
 
 const API_PREFIX: string = process.env.API_PREFIX || "/api/v1/admin";
 

@@ -115,7 +115,8 @@ const TopNavBarRecruiter: React.FC<{ toggleLeftNavBar: any }> = ({
 					// 	setrecruiterProfileDetails(notifications?.data)
 					// );
 				}
-			} catch (error) {
+			} catch (error: any) {
+				notify(error.response.data.errors[0].message, "error");
 				console.error("Error fetching recruiter profile:", error);
 			}
 		})();
@@ -168,7 +169,8 @@ const TopNavBarRecruiter: React.FC<{ toggleLeftNavBar: any }> = ({
 				// } else {
 				// 	setNotificationsCount(0);
 				// }
-			} catch (error) {
+			} catch (error: any) {
+				notify(error.response.data.errors[0].message, "error");
 				console.error("Error fetching candidate profile:", error);
 			}
 		})();

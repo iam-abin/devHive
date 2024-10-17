@@ -2,7 +2,7 @@ import express from "express";
 
 import { chatControllers, notificationControllers } from "../../../controllers";
 import { IDependency } from "../../types/dependencyInterface";
-// import { auth } from "@abijobportal/common";
+import { auth, ROLES } from "@abijobportal/common";
 
 export const candidateRouter = (dependencies: IDependency) => {
 	const router = express.Router();
@@ -12,6 +12,7 @@ export const candidateRouter = (dependencies: IDependency) => {
 
 	const notificationController = notificationControllers(dependencies);
 
+	router.use(auth(ROLES.CANDIDATE))
 	router.get("/chat-rooms/:userId", chatController.getAllChatRoomsByUserIDController);
 
 	router.get("/room-conversation/:chatRoomId", chatController.getConversationController);

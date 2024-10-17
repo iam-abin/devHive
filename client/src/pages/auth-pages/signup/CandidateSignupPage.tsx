@@ -31,7 +31,10 @@ function CandidateSignupPage() {
 	const handleSubmit = async (userData: any) => {
 		try {
 			dispatch(setLoading());
-			const response = await candidateSignupApi(userData);
+			console.log("userData",userData);
+			
+			const response = await candidateSignupApi({...userData, role: "candidate"});
+			
 			Swal.fire({
 				text: response?.message || "Email sendedddd",
 				confirmButtonText: "ok",

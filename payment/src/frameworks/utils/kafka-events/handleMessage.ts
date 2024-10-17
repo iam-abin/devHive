@@ -1,5 +1,5 @@
 
-import premiumRepository  from "../../repositories/mongo/membership-plan.repository";
+import premiumRepository  from "../../repositories/mongo/membershipPlan.repository";
 
 export const handleMessage = (data: any, topic: string, message: any) => {
 	switch (topic) {
@@ -9,7 +9,8 @@ export const handleMessage = (data: any, topic: string, message: any) => {
 			break;
 
 		case "MEMBERSHIP-PLAN-UPDATED-TOPIC":
-			premiumRepository.updateMembershipPlan(data.userId, data);
+			const {membershipPlanId, ...rest} = data
+			premiumRepository.updateMembershipPlan(membershipPlanId, rest);
 			break;
 
 		default:

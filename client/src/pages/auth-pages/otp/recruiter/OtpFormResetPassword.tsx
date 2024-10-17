@@ -46,8 +46,7 @@ function OtpFormResetPassword() {
 			console.error("Error during OTP submission:", error);
 
 			notify(
-				error.response.data.errors[0].messagee || "An error occurred during OTP submission",
-				"error"
+				error.response?.data.errors[0]?.message || "An error occurred during OTP submission", "error"
 			);
 		} finally {
 			dispatch(setLoaded());

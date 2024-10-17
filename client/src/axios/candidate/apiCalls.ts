@@ -5,6 +5,7 @@ import {
 } from "../../config/localStorage";
 import { candidateApi } from "./api";
 import { BASE_URL } from "../../config/baseUrl";
+import { notify } from "../../utils/toastMessage";
 
 const candidateApiCalls = async (
 	method: string,
@@ -43,9 +44,8 @@ const candidateApiCalls = async (
 				throw new Error(`Invalid method: ${method}`);
 		}
 		return response;
-	} catch (error) {
-		console.error("API call failed:", error);
-		throw error;
+	} catch (error: any) {
+		notify(error.response.data.errors[0].message, "error");
 	}
 };
 
@@ -63,8 +63,8 @@ candidateApi.interceptors.response.use(
 					originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
 					return candidateApi(originalRequest);
 				}
-			} catch (refreshError) {
-				console.error("Refresh token failed:", refreshError);
+			} catch (error: any) {
+				notify(error.response.data.errors[0].message, "error");
 				// clearCandidateFromLocal();
 			}
 		}
@@ -92,7 +92,8 @@ const refreshToken = async () => {
 			localStorage.setItem(candidateAccessToken, newAccessToken);
 			return response.data.accessToken;
 		}
-	} catch (error) {
+	} catch (error: any) {
+		notify(error.response.data.errors[0].message, "error");
 		console.error("Failed to refresh token", error);
 		// clearCandidateFromLocal(); // never call it
 	}

@@ -1,6 +1,6 @@
 import { RecruiterProfile } from "../../entities";
 import { IDependency } from "../../frameworks/types/dependencyInterface";
-import { RecruiterDataProfile } from "../../frameworks/types/recruiter-profile-interface";
+import { RecruiterDataProfile } from "../../frameworks/types/recruiterProfile";
 
 export = (dependencies: IDependency) => {
 	const {

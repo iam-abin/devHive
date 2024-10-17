@@ -1,11 +1,6 @@
 import { Request, Response } from "express";
-import { BadRequestError } from "@abijobportal/common";
 
 import { IDependency } from "../../frameworks/types/dependencyInterface";
-import {
-    generateEmailVerificationOtp,
-    sendVerificationEmail,
-} from "../../frameworks/utils/sendEmail";
 import { ISignup } from "../../frameworks/types/userInterface";
 
 export = (dependencies: IDependency) => {

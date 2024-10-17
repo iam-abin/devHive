@@ -3,7 +3,8 @@ import express from "express";
 import { chatControllers, notificationControllers } from "../../../controllers";
 import { IDependency } from "../../types/dependencyInterface";
 // import { auth, ROLES } from "@abijobportal/common";
-import getUnreadMessagesCountController from "../../../controllers/notification/get-unread-messages-count.controller";
+import getUnreadMessagesCountController from "../../../controllers/notification/getUnreadMessagesCount.controller";
+import { auth, ROLES } from "@abijobportal/common";
 
 export const recruiterRouter = (dependencies: IDependency) => {
     const router = express.Router();
@@ -11,6 +12,7 @@ export const recruiterRouter = (dependencies: IDependency) => {
     const chatController = chatControllers(dependencies);
     const notificationController = notificationControllers(dependencies);
 
+	router.use(auth(ROLES.RECRUITER))
 
     router.get(
         "/chat-rooms/:userId",

@@ -20,7 +20,7 @@ export const recruiterRouter = (dependencies: IDependency) => {
     router.get("/viewProfile/:id", recruiterProfileController.viewRecruiterProfileController);
     router.patch("/updateProfile", recruiterProfileController.updateRecruiterProfileController);
     router.put("/uploadProfilePic", recruiterProfileController.updateRecruiterProfileController);
-    router.get("/viewCandidateProfile/:userId", candidateProfileController.viewCandidateProfileController);
+    router.get("/candidate/Profile/:userId", candidateProfileController.viewCandidateProfileController);
     router.get(
         "/viewAllCandidatesProfiles/:page",
         recruiterProfileController.viewAllCandidatesProfilesController

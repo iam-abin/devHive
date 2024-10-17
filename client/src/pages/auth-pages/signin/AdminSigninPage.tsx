@@ -28,7 +28,7 @@ function AdminSigninPage() {
             notify(response.message, "success");
             navigate("/admin");
         } catch (error: any) {
-            notify(error.response.data.errors[0].message, "error");
+            notify(error.data.errors[0].message, "error");
         }
     };
 

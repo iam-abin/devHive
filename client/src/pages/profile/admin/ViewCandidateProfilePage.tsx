@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { viewCandidateProfileDetailsApi } from "../../../axios/apiMethods/admin-service/candidates";
 import CandidateProfile from "../../../components/admin/profile/CandidateProfile";
 import { setLoaded, setLoading } from "../../../redux/slice/loaderSlice/isLoading";
+import { notify } from "../../../utils/toastMessage";
 // import { getUserProfile } from "../../../redux/reducers/thunks/userThunks";
 
 const ViewCandidateProfilePage: React.FC = () => {
@@ -28,7 +29,8 @@ const ViewCandidateProfilePage: React.FC = () => {
 				const candidate = await viewCandidateProfileDetailsApi(userId);
 				setCandidateProfileData(candidate.data);
 
-			} catch (error) {
+			} catch (error: any) {
+				notify(error.response.data.errors[0].message, "error");
 				console.error("Error fetching profile details:", error);
 			}finally{
                 dispatch(setLoaded())

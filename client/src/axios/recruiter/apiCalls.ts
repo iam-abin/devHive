@@ -5,6 +5,7 @@ import {
 } from "../../config/localStorage";
 import { recruiterApi } from "./api";
 import { BASE_URL } from "../../config/baseUrl";
+import { notify } from "../../utils/toastMessage";
 
 const recruiterApiCalls = async (
 	method: string,
@@ -43,7 +44,8 @@ const recruiterApiCalls = async (
 				throw new Error(`Invalid method: ${method}`);
 		}
 		return response;
-	} catch (error) {
+	} catch (error: any) {
+		notify(error.response.data.errors[0].message, "error");
 		console.error("API call failed:", error);
 		throw error;
 	}
@@ -64,8 +66,9 @@ recruiterApi.interceptors.response.use(
 					originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
 					return recruiterApi(originalRequest);
 				}
-			} catch (refreshError) {
-				console.error("Refresh token failed:", refreshError);
+			} catch (error: any) {
+				notify(error.response.data.errors[0].message, "error");
+				console.error("Refresh token failed:", error);
 				// clearRecruiterFromLocal();
 			}
 		}
@@ -93,7 +96,8 @@ const refreshToken = async () => {
 			localStorage.setItem(recruiterAccessToken, newAccessToken);
 			return response.data.accessToken;
 		}
-	} catch (error) {
+	} catch (error: any) {
+		notify(error.response.data.errors[0].message, "error");
 		console.error("Failed to refresh token", error);
 		// clearRecruiterFromLocal(); never call it
 	}

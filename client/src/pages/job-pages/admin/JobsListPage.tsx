@@ -10,12 +10,12 @@ interface JobInterface {
 	id: string;
 	jobId: string;
 	title: string;
-	recruiter: string;
+	recruiterId: string;
 	company: string;
 	jobDescription?: string;
-	skills?: string | string[];
-	availablePosition?: string;
-	experienceRequired?: string;
+	skills?: string[];
+	availablePosition?: number;
+	experienceRequired?: number;
 	educationRequired?: string;
 	location?: string;
 	employmentType?: string;
@@ -38,6 +38,7 @@ function JobsManagementPage() {
 				const jobs = await getAllJobsAdminApi(); 
 				setJobsData(jobs.data);
 			} catch (error: any) {
+				notify(error.response.data.errors[0].message, "error");
 				console.error(error);
 			}
 		})();

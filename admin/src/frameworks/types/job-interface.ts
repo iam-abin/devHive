@@ -1,13 +1,13 @@
 export interface IJob {
 	jobId: string
     title: string;
-    recruiter: string;
+    recruiterId: string;
     companyName: string;
     companyLocation: string;
     jobDescription?: string;
     skills?: string[];
-    availablePosition?: string;
-    experienceRequired?: string;
+    availablePosition?: number;
+    experienceRequired?: number;
     educationRequired?: string;
     employmentType?: string;
     salaryMin?: number;

@@ -9,13 +9,13 @@ export interface IJobDocument extends mongoose.Document, Omit<IJobAttributes, "j
 const jobSchema = new mongoose.Schema(
     {
         title: { type: String, required: true },
-        recruiter: { type: String, required: true },
+        recruiterId: { type: String, required: true },
         companyName: { type: String, required: true },
         companyLocation: { type: String, required: true },
         jobDescription: String,
         skills: Array<String>,
-        availablePosition: String,
-        experienceRequired: String,
+        availablePosition: Number,
+        experienceRequired: Number,
         educationRequired: String,
         employmentType: String,
         salaryMin: Number,

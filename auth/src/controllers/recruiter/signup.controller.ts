@@ -9,6 +9,7 @@ export = (dependencies: IDependency) => {
     } = dependencies;
 
     return async (req: Request, res: Response) => {
+        console.log("req.body ",req.body);
         const message: { message: string } = await signupUseCase(
             dependencies
         ).execute(req.body as ISignup);

@@ -46,6 +46,7 @@ function JobApplicationsPage() {
 				
 				setJobApplicationsData(response.data);
 			} catch (error: any) {
+				notify(error.response.data.errors[0].message, "error");
 				console.error(error);
 			}
 		})();

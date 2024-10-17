@@ -6,10 +6,9 @@ import cors from 'cors'
 import { routes } from "./routes"
 import dependencies from "../../config/dependencies";
 import { NotFoundError, errorHandler } from "@abijobportal/common";
+import { config } from "../../config/appConfig";
 
 const app: Express = express();
-
-const API_PREFIX: string = process.env.API_PREFIX || '/api/v1/payment'
 
 app.set("trust proxy", true); // trust first proxy
 app.use(cors())
@@ -21,7 +20,7 @@ app.use(express.json()); // Set the maximum allowed request body size
 app.use(express.urlencoded({ extended: true }));
 
 // Routes
-app.use(API_PREFIX, routes(dependencies))
+app.use(config.API_PREFIX, routes(dependencies))
 
 app.all('*',async ()=>{
     throw new NotFoundError()

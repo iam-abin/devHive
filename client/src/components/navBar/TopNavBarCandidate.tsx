@@ -84,7 +84,8 @@ const TopNavBarCandidate = () => {
 						setCandidateProfileDetails(candidateProfileData?.data)
 					);
 				}
-			} catch (error) {
+			} catch (error: any) {
+				notify(error.response.data.errors[0].message, "error");
 				console.error("Error fetching candidate profile:", error);
 			}
 		})();
@@ -152,7 +153,8 @@ const TopNavBarCandidate = () => {
 					
 					setNotifications(filteredNotifications);
 				}
-			} catch (error) {
+			} catch (error: any) {
+				notify(error.response.data.errors[0].message, "error");
 				console.error("Error fetching candidate profile:", error);
 			}
 		})();
@@ -197,7 +199,8 @@ const TopNavBarCandidate = () => {
 
 					// dispatch(setCandidateProfileDetails(notifications?.data));
 				
-			} catch (error) {
+				} catch (error: any) {
+					notify(error.response.data.errors[0].message, "error");
 				console.error("Error fetching candidate profile:", error);
 			}
 		})();

@@ -1,23 +1,17 @@
 import { Request, Response } from "express";
-import { BadRequestError } from "@abijobportal/common";
-
-import {
-    createJwtAccessToken,
-    createJwtRefreshToken,
-} from "../../frameworks/utils/jwtToken";
 import { IDependency } from "../../frameworks/types/dependencyInterface";
-import { UserCreatedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/user-created-publisher";
-import { kafkaClient } from "../../config/kafka-connection";
 import { IOtp } from "../../frameworks/types/otpInterface";
 
 export = (dependencies: IDependency) => {
     const {
-        useCases: { checkEmailVerificationOtpUseCase, getUserByEmailUseCase },
+        useCases: { authEmailVerificationOtpUseCase, getUserByEmailUseCase },
     } = dependencies;
 
     return async (req: Request, res: Response) => {
+        console.log("req.body ",req.body);
+        
         const { userData, candidateAccessToken, candidateRefreshToken } =
-            await checkEmailVerificationOtpUseCase(dependencies).execute(
+            await authEmailVerificationOtpUseCase(dependencies).execute(
                 req.body as IOtp
             );
 

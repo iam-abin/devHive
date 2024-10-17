@@ -1,3 +1,2 @@
-import Models from "./models";
+export * from "./models";
 
-export default {  Models };

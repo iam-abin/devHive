@@ -61,7 +61,6 @@ function CreateJobPage() {
 			notify(response.message, "success");
 			navigate("/recruiter/recruiter-added-jobs");
 		} catch (error: any) {
-			
 			notify(error.response.data.errors[0].message, "warning");
 		}
 	};

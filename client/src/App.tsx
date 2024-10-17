@@ -10,10 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useSelector } from "react-redux";
 import { RootState } from "./redux/reducer/reducer";
 import NotFound from "./pages/Error/NotFound";
-// import { myFirebaseMessaging } from "./config/firebase";
-// import { getToken } from "firebase/messaging";
 import { Toaster } from "react-hot-toast";
-// import { ToastBar } from "react-hot-toast";
 
 export default function App() {
 	const isCandidateLoggedIn = useSelector(

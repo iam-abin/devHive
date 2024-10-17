@@ -2,6 +2,7 @@ import axios from "axios";
 import { adminAccessToken, adminRefreshToken } from "../../config/localStorage";
 import { adminApi } from "./api";
 import { BASE_URL } from "../../config/baseUrl";
+import { notify } from "../../utils/toastMessage";
 
 const adminApiCalls = async (method: string, url: string, data?: any) => {
 	try {
@@ -32,8 +33,8 @@ const adminApiCalls = async (method: string, url: string, data?: any) => {
 		}
 
 		return response;
-	} catch (error) {
-		console.error("API call failed:", error);
+	} catch (error: any) {
+		notify(error.response.data.errors[0].message, "error");
 		throw error;
 	}
 };
@@ -52,8 +53,8 @@ adminApi.interceptors.response.use(
 					originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
 					return adminApi(originalRequest);
 				}
-			} catch (refreshError) {
-				console.error("Refresh token failed:", refreshError);
+			} catch (error: any) {
+				notify(error.response.data.errors[0].message, "error");
 				clearCandidateFromLocal();
 			}
 		}
@@ -83,6 +84,10 @@ const refreshToken = async () => {
 		}
 	} catch (error) {
 		console.error("Failed to refresh token", error);
+		notify(
+			"Failed to refresh token",
+			"error"
+		);
 		clearCandidateFromLocal();
 	}
 	return null;

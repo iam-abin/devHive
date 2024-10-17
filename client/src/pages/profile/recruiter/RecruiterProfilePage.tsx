@@ -8,6 +8,7 @@ import { recruiterGetProfileApi } from "../../../axios/apiMethods/profile-servic
 import TopNavBarCandidate from "../../../components/navBar/TopNavBarCandidate";
 import Footer from "../../../components/footer/Footer";
 import { recruiterGetProfileByCandidateApi } from "../../../axios/apiMethods/profile-service/candidate";
+import { hotToastMessage } from "../../../utils/hotToastMessage";
 
 const RecruiterProfilePage: React.FC = () => {
 	const recruiterData: any = useSelector(
@@ -37,8 +38,9 @@ const RecruiterProfilePage: React.FC = () => {
 				}
 				
 				setRecruiterProfileData(recruiterProfile);
-			} catch (error) {
+			} catch (error: any) {
 				console.error("Error fetching recruiter profile:", error);
+				hotToastMessage(error.response.data.errors[0].message, "error");
 			}
 		})();
 	}, []);

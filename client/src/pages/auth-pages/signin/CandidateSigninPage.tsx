@@ -39,7 +39,7 @@ const CandidateSigninPage: React.FC = () => {
 		} catch (error: any) {
 			console.error("in signin form error", error);
 
-			notify(error.response.data.errors[0].message || "invalid email or password", "error");
+			// notify(error.data.errors[0].message || "invalid email or password", "error");
 		} finally {
 			// dispatch(setLoaded());
 		}

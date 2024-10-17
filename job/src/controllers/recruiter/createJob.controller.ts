@@ -15,7 +15,7 @@ export = (dependencies: IDependency)=>{
         const data = req.body as IJob;
         
         
-        const newJob = await createJobUseCase(dependencies).execute(data);
+        const newJob = await createJobUseCase(dependencies).execute(userId, data);
 
 
         res.status(201).json({message: "Job created successfully", data: newJob })

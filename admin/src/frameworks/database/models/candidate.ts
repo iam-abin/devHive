@@ -7,7 +7,6 @@ interface ICandidateAttributes extends IUser {}
 // 2. An interface that describes the properties ,that a Candidate Document has
 export interface ICandidateDocument extends mongoose.Document, Omit<IUser, "userId"> {
 	_id: mongoose.Schema.Types.ObjectId,
-    profile_pic?: string;
     gender?: string;
     currentLocation?: string;
     address?: object;

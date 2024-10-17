@@ -18,23 +18,30 @@ export = (dependencies: IDependency) => {
     }
 
     const execute = async ({ otp, email }: IOtp) => {
+        
         let parsedOtp: number;
         typeof otp == "string"
-            ? (parsedOtp = parseInt(otp))
-            : (parsedOtp = otp);
-
+        ? (parsedOtp = parseInt(otp))
+        : (parsedOtp = otp);
+        
         const user = await usersRepository.getByEmail(email);
-
+        
         if (!user) throw new BadRequestError("Invalid email");
+        
+        console.log(" parsedOtp ", parsedOtp);
+        console.log("user.otp  ", user.otp);
 
-        if (user.otp !== otp) throw new BadRequestError("Invalid Otp");
 
+        if (user.otp !== parsedOtp) throw new BadRequestError("Invalid Otp");
+        
         // delete otp
         await usersRepository.deleteOtp(email);
-
+        console.log("parsedOtp ", typeof parsedOtp);
+        
         // to update user verification status in users collection
         await usersRepository.updateVerification(email);
-
+        console.log("email ", typeof email);
+        
 		
         // to produce a message to kafka topic
         const userCreatedEvent = new UserCreatedEventPublisher(kafkaClient);

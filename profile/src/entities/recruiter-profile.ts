@@ -1,4 +1,4 @@
-import { RecruiterDataProfile } from "../frameworks/types/recruiter-profile-interface";
+import { RecruiterDataProfile } from "../frameworks/types/recruiterProfile";
 
 export class RecruiterProfile {
 	name: string;

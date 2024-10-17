@@ -46,6 +46,7 @@ function AllAddedJobs() {
 				
 				setJobsData(response.jobs);
 			} catch (error: any) {
+				notify(error.response.data.errors[0].message, "error");
 				console.error(error);
 			}
 		})();
@@ -91,6 +92,12 @@ function AllAddedJobs() {
 
 				setJobsData(deleteJobResponse.data);
 			}
+		}).catch((error)=>{
+			notify(
+				error.response.data.errors[0].message ||
+					"An error occurred during job deletion",
+				"error"
+			);
 		});
 	};
 

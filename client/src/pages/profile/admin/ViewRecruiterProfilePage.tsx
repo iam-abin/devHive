@@ -4,6 +4,7 @@ import { viewRecruiterProfileDetailsApi } from "../../../axios/apiMethods/admin-
 import RecruiterProfile from "../../../components/admin/profile/RecruiterProfile";
 import { setLoaded, setLoading } from "../../../redux/slice/loaderSlice/isLoading";
 import { useDispatch } from "react-redux";
+import { notify } from "../../../utils/toastMessage";
 
 function ViewRecruiterProfilePage() {
   const { userId } = useParams();
@@ -28,7 +29,8 @@ function ViewRecruiterProfilePage() {
         const recruiter = await viewRecruiterProfileDetailsApi(userId);
         
         setRecruiterProfileData(recruiter.data);
-      } catch (error) {
+      } catch (error: any) {
+        notify(error.response.data.errors[0].message, "error");
         console.error("Error fetching profile details:", error);
       }finally{
         dispatch(setLoaded())

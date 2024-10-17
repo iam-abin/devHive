@@ -8,11 +8,9 @@ import { paymentCreatedEventConsumer } from "./frameworks/utils/kafka-events/con
 const start = async () => {
 	console.log("Starting up profile....");
 
-	//if we do not set JWT_SECRET_KEY
 	if (!process.env.JWT_SECRET_KEY) 
 		throw new Error("JWT_SECRET_KEY must be defined");
 
-	// if we do not set JWT_REFRESH_SECRET_KEY
 	if (!process.env.JWT_REFRESH_SECRET_KEY) 
 		throw new Error("JWT_REFRESH_SECRET_KEY must be defined");
 
@@ -35,9 +33,9 @@ const start = async () => {
 	const userUpdatedEvent = new UserUpdatedEventConsumer(kafkaClient);
 	const paymentCreatedEvent = new paymentCreatedEventConsumer(kafkaClient)
 	
-	// await userCreatedEvent.subscribe();
-	// await userUpdatedEvent.subscribe();
-	// await paymentCreatedEvent.subscribe()
+	await userCreatedEvent.subscribe();
+	await userUpdatedEvent.subscribe();
+	await paymentCreatedEvent.subscribe()
 
 	app.listen(3000, () => {
 		console.log("profile Listening on port 3000....");

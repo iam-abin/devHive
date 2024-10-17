@@ -13,7 +13,7 @@ export = (dependencies: IDependency) => {
     if (!jobRepository)
         throw new Error("jobRepository should exist in dependencies");
 
-    const execute = async (jobData: IJob, recruiterId: string) => {
+    const execute = async ( recruiterId: string, jobData: IJob,) => {
         // Checks before creating a job
         if (!jobData.companyName || !jobData.companyLocation)
             throw new BadRequestError(
@@ -36,12 +36,12 @@ export = (dependencies: IDependency) => {
         if (jobData.deadline) {
             jobData.deadline = new Date(jobData.deadline);
         }
+        
         const job = new Job({ ...jobData, recruiterId });
 
         const newJob = await jobRepository.createJob(job);
 
         // // to produce a message to kafka topic
-
         // // isBlocked contains user data with 'isActive' value changed
         const jobCreatedEvent = new JobCreatedEventPublisher(kafkaClient);
         await jobCreatedEvent.publish({

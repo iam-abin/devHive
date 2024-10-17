@@ -39,6 +39,7 @@ const ViewJobDetailsPage: React.FC = () => {
 				const job = await viewJobDetailsApi(jobId);
 				setJobDetails(job.data);
 			} catch (error: any) {
+				notify(error.response.data.errors[0].message, "error");
 				console.error(error);
 			}
 		})();

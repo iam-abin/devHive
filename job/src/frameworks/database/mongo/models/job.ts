@@ -31,7 +31,7 @@ const jobSchema = new mongoose.Schema(
         deadline: Date,
         isActive: {
             type: Boolean,
-            default: false,
+            default: true,
         },
     },
     {

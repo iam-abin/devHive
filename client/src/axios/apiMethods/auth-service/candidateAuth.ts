@@ -3,8 +3,12 @@ import authApiUrlConfig from "../../../config/apiUrlsConfig/authApiUrlConfig";
 import candidateApiCalls from "../../candidate/apiCalls";
 
 
+
 export const candidateSigninApi = async (data: any): Promise<any> => {
+	console.log("a", data);
+	
 	const response: any = await candidateApiCalls("post", authApiUrlConfig.signinCandidateUrl, data);
+	console.log("b");
 	return response.data;
 };
 

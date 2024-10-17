@@ -36,6 +36,8 @@ export = (dependencies: IDependency) => {
         }
 
         const { otp } = generateEmailVerificationOtp();
+        console.log(otp);
+        
 
         const user = new User({
             name,
@@ -45,12 +47,14 @@ export = (dependencies: IDependency) => {
             role,
             otp: parseInt(otp),
         });
+        console.log(user);
+        
 
         await usersRepository.register(user);
 
         await sendVerificationEmail(
             email,
-            isExistingUser.otp,
+            otp,
             subject,
             topic
         );

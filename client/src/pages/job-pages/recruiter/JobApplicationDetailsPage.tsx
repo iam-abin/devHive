@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import {
 	getAJobApplicationApi,
 } from "../../../axios/apiMethods/jobs-service/jobs";
-import { useNavigate, useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 import JobApplicationDetails from "../../../components/recruiter/JobApplicationDetails";
+import { notify } from "../../../utils/toastMessage";
 
 function JobApplicationDetailsPage() {
 	const [jobApplicationDetails, setJobApplicationDetails] =
@@ -21,9 +22,11 @@ function JobApplicationDetailsPage() {
 					
 					setJobApplicationDetails(jobApplication.data);
 				}
-			} catch (error) {
+			} catch (error: any) {
+				notify(error.response.data.errors[0].message, "error");
 				// Handle error, e.g., log it or show an error message to the user
 				console.error("Error fetching job details:", error);
+
 			}
 		};
 

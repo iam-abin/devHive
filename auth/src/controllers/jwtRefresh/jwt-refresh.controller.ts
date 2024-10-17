@@ -1,12 +1,6 @@
 import { Request, Response } from "express";
 import { IDependency } from "../../frameworks/types/dependencyInterface";
-import {
-    IJwtPayload,
-    NotAuthorizedError,
-    NotFoundError,
-    verifyJwtToken,
-} from "@abijobportal/common";
-import { createJwtAccessToken } from "../../frameworks/utils/jwtToken";
+
 
 export = (dependencies: IDependency) => {
     const {

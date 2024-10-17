@@ -47,7 +47,8 @@ function CandidateProfileEditPage() {
 				const profile = await candidateGetProfileApi(id);
 				setProfileDetails(profile.data);
 				
-			} catch (error) {
+			} catch (error: any) {
+				notify(error.response.data.errors[0].message, "error");
 				console.error("Error fetching profile details:", error);
 			}
 		};

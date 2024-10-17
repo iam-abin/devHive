@@ -29,7 +29,7 @@ function RecruiterSignupPage() {
 	const handleSubmit = async (userData: any) => {
 		try {
 			dispatch(setLoading());
-			const response = await recruiterSignupApi(userData);
+			const response = await recruiterSignupApi({...userData, role: "recruiter"});
 			Swal.fire({
 				text: response?.message || "Email sendedddd",
 				confirmButtonText: "ok",

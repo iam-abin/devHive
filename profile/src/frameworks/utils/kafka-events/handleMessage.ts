@@ -1,4 +1,4 @@
-import candidateProfileRepository from "../../repository/mongo/candidate-profile.repository";
+import candidateProfileRepository from "../../repository/mongo/candidateProfile.repository";
 import recruiterProfileRepository from "../../repository/mongo/recruiter-profile.repository";
 import { KafkaMessage } from "kafkajs";
 
@@ -15,8 +15,6 @@ export const handleMessage = (data: any, topic: string, message: KafkaMessage) =
 
 		case "USER-UPDATED-TOPIC": 
 			if (data.role === "candidate") {
-				console.log(data);
-				
 				candidateProfileRepository.updateCandidateProfile(
 					data.userId,
 					data

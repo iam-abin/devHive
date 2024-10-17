@@ -1,5 +1,5 @@
 
-import getAllPremiumPlansByCandidateController from "./get-all-premium-plans-by-candidate-controller";
+import getAllPremiumPlansByCandidateController from "./getPremiumPlans.controller";
 
 import { IDependency } from "../../frameworks/types/dependencyInterface";
 

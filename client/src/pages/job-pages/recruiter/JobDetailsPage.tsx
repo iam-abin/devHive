@@ -21,7 +21,8 @@ function JobDetailsPage() {
 					
 					setJobDetails(job.data);
 				}
-			} catch (error) {
+			} catch (error: any) {
+				notify(error.response.data.errors[0].message, "error");
 				// Handle error, e.g., log it or show an error message to the user
 				console.error("Error fetching job details:", error);
 			}
@@ -66,7 +67,8 @@ function JobDetailsPage() {
 					}
 				});
 			}
-		} catch (error) {
+		} catch (error: any) {
+			notify(error.response.data.errors[0].message, "error");
 			// Handle error, e.g., log it or show an error message to the user
 			console.error("Error fetching job details:", error);
 		}

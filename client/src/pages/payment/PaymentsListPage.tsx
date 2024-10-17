@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import TableComponent from '../../components/table/TableComponent';
 import { useNavigate } from 'react-router-dom';
 import { getAllPaymentsApi } from '../../axios/apiMethods/payment-service/admin';
+import { notify } from '../../utils/toastMessage';
 // import Swal from 'sweetalert2';
 // import { notify } from '../../utils/toastMessage';
 
@@ -17,7 +18,7 @@ const PaymentsListPage: React.FC = () => {
 				const payments = await getAllPaymentsApi();
 				setPaymentsData(payments.data);
 			} catch (error: any) {
-				console.error(error);
+				notify(error.response.data.errors[0].message, "error");
 			}
 		})();
 	}, []);

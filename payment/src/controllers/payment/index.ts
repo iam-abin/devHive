@@ -1,4 +1,4 @@
-import cratePaymentController from "./create-payment.controller";
+import cratePaymentController from "./createPayment.controller";
 
 import { IDependency } from "../../frameworks/types/dependencyInterface";
 

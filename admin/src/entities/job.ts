@@ -1,15 +1,14 @@
-import { JobInterface } from "../frameworks/types/job-interface";
+import { IJob } from "../frameworks/types/job-interface";
 
 export class Job {
 	title: string;
-	recruiter: string;
-	// company: string;
+	recruiterId: string;
 	companyName?: string;
 	companyLocation?: string;
 	jobDescription?: string;
-	skills?: string | string[];
-	availablePosition?: string;
-	experienceRequired?: string;
+	skills?: string[];
+	availablePosition?: number;
+	experienceRequired?: number;
 	educationRequired?: string;
 	employmentType?: string;
 	salaryMin?: number;
@@ -19,8 +18,7 @@ export class Job {
 	jobId: string;
 	constructor({
 		title,
-		recruiter,
-		// company,
+		recruiterId,
 		companyName,
 		companyLocation,
 		jobDescription,
@@ -34,9 +32,9 @@ export class Job {
 		isActive,
 		deadline,
 		jobId,
-	}: JobInterface) {
+	}: IJob) {
 		(this.title = title),
-			(this.recruiter = recruiter),
+			(this.recruiterId = recruiterId),
 			(this.companyName = companyName),
 			(this.companyLocation = companyLocation),
 			(this.jobDescription = jobDescription),

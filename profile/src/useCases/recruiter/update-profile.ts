@@ -1,4 +1,4 @@
-import { CandidateDataProfile } from "../../frameworks/types/candidate-profile-interface";
+import { CandidateDataProfile } from "../../frameworks/types/candidateProfile";
 import { IDependency } from "../../frameworks/types/dependencyInterface";
 
 export = (dependencies: IDependency) => {

@@ -1,5 +1,5 @@
-import { connectDB } from "./config/db";
-import { kafkaClient } from "./config/kafka-connection";
+import { connectDB } from "./config/db.connection";
+import { kafkaClient } from "./config/kafka.connection";
 import { app, httpServer } from "./frameworks/express/app";
 import { CandidateProfileUpdatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/candidate-profile-updated-consumer";
 import { UserCreatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/user-created-consumer";
@@ -29,9 +29,9 @@ const start = async () => {
     const candidateProfileUpdatedEvent =
         new CandidateProfileUpdatedEventConsumer(kafkaClient);
 
-    // await userUpdatedEvent.subscribe();
-    // await userCreatedEvent.subscribe();
-    // await candidateProfileUpdatedEvent.subscribe();
+    await userUpdatedEvent.subscribe();
+    await userCreatedEvent.subscribe();
+    await candidateProfileUpdatedEvent.subscribe();
 
     httpServer
         .listen(3000, () => {

@@ -1,3 +1,4 @@
+import { NotFoundError } from "@abijobportal/common";
 import { IDependency } from "../../frameworks/types/dependencyInterface";
 
 export = (dependencies: IDependency) => {
@@ -8,7 +9,9 @@ export = (dependencies: IDependency) => {
 	}
 
 	const execute = async (jobId: string) => {
-		return await jobRepository.getAJob(jobId);
+		const job = await jobRepository.getAJob(jobId);
+		if(!job) throw new NotFoundError("job not found")
+		return job
 	};
 
 	return { execute };

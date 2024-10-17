@@ -89,6 +89,7 @@ const CandidateProfilePage: React.FC = () => {
 					candidateId ?? id
 				);
 			}
+			console.log(candidateProfile);
 			
 			setCandidateProfileData(candidateProfile.data);
 			dispatch(setCandidateProfileDetails(candidateProfile?.data));
@@ -116,11 +117,11 @@ const CandidateProfilePage: React.FC = () => {
 				const downloadURL = await getDownloadURL(uploadResume.ref);
 				
 				const response = await uploadCandidateResumeProfileApi(
-					candidateData.id,
 					{ filename: selectedFile.name, url: downloadURL }
 				);
+				console.log(response);
 				
-				if (response.data) {
+				if (response) {
 					
 					setCandidateProfileData({
 						...candidateProfileData,
@@ -216,7 +217,6 @@ const CandidateProfilePage: React.FC = () => {
 			
 			setImgLoading(true);
 			const response = await uploadCandidateImageProfileApi(
-				candidateData.id,
 				formData
 			);
 			

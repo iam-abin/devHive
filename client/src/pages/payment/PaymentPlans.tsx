@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { loadStripe } from "@stripe/stripe-js";
 import PaymentPlanCard from "../../components/cards/PaymentPlanCard";
 import { getAllMembershipPlansByCandidateApi } from "../../axios/apiMethods/premium-plans-service/candidate";
+import { notify } from "../../utils/toastMessage";
 
 const PaymentPlans: React.FC = () => {
 	const [membershipPlansData, setMembershipPlansData] = useState<[]>([]);
@@ -31,6 +32,7 @@ const PaymentPlans: React.FC = () => {
 				
 				setMembershipPlansData(recruiters.data);
 			} catch (error: any) {
+				notify(error.response.data.errors[0].message, "error");
 				console.error(error);
 			}
 		})();
@@ -57,7 +59,8 @@ const PaymentPlans: React.FC = () => {
 			await stripePromise?.redirectToCheckout({
 				sessionId: payment?.data?.stripeId,
 			});
-		} catch (error) {
+		} catch (error: any) {
+			notify(error.response.data.errors[0].message, "error");
 			console.error(error);
 		}
 	};

@@ -23,6 +23,7 @@ import TopNavBarCandidate from "../../components/navBar/TopNavBarCandidate";
 import Footer from "../../components/footer/Footer";
 import { candidateGetProfileApi } from "../../axios/apiMethods/profile-service/candidate";
 import { setCandidateProfileDetails } from "../../redux/slice/candidateSlice/candidateProfileSlice";
+import { notify } from "../../utils/toastMessage";
 
 function LandingPage() {
 	const dispatch = useDispatch();
@@ -81,7 +82,8 @@ function LandingPage() {
 						})
 					);
 				}
-			} catch (error) {
+			} catch (error: any) {
+				notify(error.response.data.errors[0].message, "error");
 				console.error("Error fetching jobs:", error);
 			}
 			return () => {
