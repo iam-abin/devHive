@@ -9,15 +9,16 @@ import { UserUpdatedEventConsumer } from "./frameworks/utils/kafka-events/consum
 import { CandidateProfileUpdatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/candidate-profile-updated-consumer";
 import { RecruiterProfileUpdatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/recruiter-profile-updated-consumer";
 import { PaymentcreatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/payment-created-consumer";
+import { appConfig } from "./config/appConfig";
 
 const start = async () => {
     console.log("Starting up....");
 
-    if (!process.env.JWT_SECRET_KEY)
+    if (!appConfig.JWT_SECRET_KEY)
         throw new Error("JWT_SECRET_KEY must be defined");
-    if (!process.env.JWT_REFRESH_SECRET_KEY)
+    if (!appConfig.JWT_REFRESH_SECRET_KEY)
         throw new Error("JWT_REFRESH_SECRET_KEY must be defined");
-    if (!process.env.MONGO_URL_ADMIN)
+    if (!appConfig.MONGO_URL_ADMIN)
         throw new Error("MONGO_URL_ADMIN must be defined");
 
     // to connect to mongodb
@@ -44,8 +45,8 @@ const start = async () => {
     await userCreatedEvent.subscribe();
     await paymentcreatedEvent.subscribe();
 
-    app.listen(3000, () => {
-        console.log("admin Listening on port 3000....");
+    app.listen(appConfig.PORT, () => {
+        console.log(`admin Listening on port ${appConfig.PORT}....`);
     })
 
         .on("error", async () => {

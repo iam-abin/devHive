@@ -4,26 +4,27 @@ import { UserCreatedEventConsumer } from "./frameworks/utils/kafka-events/consum
 import { UserUpdatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/user-updated-consumer";
 import { kafkaClient } from "./config/kafka.connection";
 import { paymentCreatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/payment-created-consumer";
+import { appConfig } from "./config/appConfig";
 
 const start = async () => {
 	console.log("Starting up profile....");
 
-	if (!process.env.JWT_SECRET_KEY) 
+	if (!appConfig.JWT_SECRET_KEY) 
 		throw new Error("JWT_SECRET_KEY must be defined");
 
-	if (!process.env.JWT_REFRESH_SECRET_KEY) 
+	if (!appConfig.JWT_REFRESH_SECRET_KEY) 
 		throw new Error("JWT_REFRESH_SECRET_KEY must be defined");
 
-	if (!process.env.MONGO_URL_PROFILE) 
+	if (!appConfig.MONGO_URL_PROFILE) 
 		throw new Error("MONGO_URL_PROFILE must be defined");
 	
-	if (!process.env.CLOUDINARY_API_KEY) 
+	if (!appConfig.CLOUDINARY_API_KEY) 
 		throw new Error("CLOUDINARY_API_KEY must be defined");
 
-	if (!process.env.CLOUDINARY_API_SECRET) 
+	if (!appConfig.CLOUDINARY_API_SECRET) 
 		throw new Error("CLOUDINARY_API_SECRET must be defined");
 
-	if (!process.env.CLOUDINARY_CLOUD_NAME) 
+	if (!appConfig.CLOUDINARY_CLOUD_NAME) 
 		throw new Error("CLOUDINARY_CLOUD_NAME must be defined");
 
 	await connectDB();
@@ -37,8 +38,8 @@ const start = async () => {
 	await userUpdatedEvent.subscribe();
 	await paymentCreatedEvent.subscribe()
 
-	app.listen(3000, () => {
-		console.log("profile Listening on port 3000....");
+	app.listen(appConfig.PORT, () => {
+		console.log(`profile Listening on port ${appConfig.PORT}....`);
 	})
 		.on("error", async () => {
 			await userCreatedEvent.disconnect();

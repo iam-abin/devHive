@@ -3,7 +3,7 @@ import { Job } from "../../entities/job";
 import { IDependency } from "../../frameworks/types/dependencyInterface";
 import { IJob } from "../../frameworks/types/job";
 import { JobCreatedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/job-created-publisher";
-import { kafkaClient } from "../../config/kafka-connection";
+import { kafkaClient } from "../../config/kafka.connection";
 
 export = (dependencies: IDependency) => {
     const {

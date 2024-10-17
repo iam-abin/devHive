@@ -6,7 +6,7 @@ import cors from 'cors'
 import { routes } from "./routes"
 import dependencies from "../../config/dependencies";
 import { NotFoundError, errorHandler } from "@abijobportal/common";
-import { config } from "../../config/appConfig";
+import { appConfig } from "../../config/appConfig";
 
 const app: Express = express();
 
@@ -20,7 +20,7 @@ app.use(express.json()); // Set the maximum allowed request body size
 app.use(express.urlencoded({ extended: true }));
 
 // Routes
-app.use(config.API_PREFIX, routes(dependencies))
+app.use(appConfig.API_PREFIX, routes(dependencies))
 
 app.all('*',async ()=>{
     throw new NotFoundError()

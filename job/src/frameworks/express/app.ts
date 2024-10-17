@@ -5,10 +5,9 @@ import morgan from "morgan";
 import { routes } from "./routes";
 import dependencies from "../../config/dependencies";
 import { NotFoundError, errorHandler } from "@abijobportal/common";
+import { appConfig } from "../../config/appConfig";
 
 const app: Express = express();
-
-const API_PREFIX: string = process.env.API_PREFIX || "/api/v1/job";
 
 app.set("trust proxy", true); // trust first proxy
 
@@ -19,7 +18,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Routes
-app.use(API_PREFIX, routes(dependencies));
+app.use(appConfig.API_PREFIX, routes(dependencies));
 
 app.all("*", async () => {
 	throw new NotFoundError();

@@ -1,7 +1,7 @@
 import { ForbiddenError, NotFoundError } from "@abijobportal/common";
 import { IDependency } from "../../frameworks/types/dependencyInterface";
 import { JobDeletedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/job-deleted-publisher";
-import { kafkaClient } from "../../config/kafka-connection";
+import { kafkaClient } from "../../config/kafka.connection";
 
 export = (dependencies: IDependency) => {
     const {

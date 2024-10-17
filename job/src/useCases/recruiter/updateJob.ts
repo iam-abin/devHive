@@ -1,7 +1,7 @@
 import { BadRequestError, ForbiddenError, NotFoundError } from "@abijobportal/common";
 import { IDependency } from "../../frameworks/types/dependencyInterface";
 import { JobUpdatedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/job-updated-publisher";
-import { kafkaClient } from "../../config/kafka-connection";
+import { kafkaClient } from "../../config/kafka.connection";
 import { IJob } from "../../frameworks/types/job";
 
 export = (dependencies: IDependency) => {

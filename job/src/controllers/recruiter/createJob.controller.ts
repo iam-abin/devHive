@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { IDependency } from "../../frameworks/types/dependencyInterface";
 import { BadRequestError, RequestValidationError } from "@abijobportal/common";
 import { JobCreatedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/job-created-publisher";
-import { kafkaClient } from "../../config/kafka-connection";
+import { kafkaClient } from "../../config/kafka.connection";
 import { IJob } from "../../frameworks/types/job";
 
 export = (dependencies: IDependency)=>{

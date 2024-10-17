@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { IDependency } from "../../frameworks/types/dependencyInterface";
 import { JobUpdatedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/job-updated-publisher";
-import { kafkaClient } from "../../config/kafka-connection";
+import { kafkaClient } from "../../config/kafka.connection";
 import { BadRequestError, NotAuthorizedError, NotFoundError } from "@abijobportal/common";
 import { IJob } from "../../frameworks/types/job";
 

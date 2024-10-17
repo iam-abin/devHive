@@ -1,7 +1,8 @@
-import { connectDB } from "./config/db"
+import { connectDB } from "./config/db.connection"
 import { app } from "./frameworks/express/app";
 import { UserUpdatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/user-updated-consumer";
-import { kafkaClient } from "./config/kafka-connection";
+import { kafkaClient } from "./config/kafka.connection";
+import { appConfig } from "./config/appConfig";
 
 
 const start = async () => {
@@ -10,19 +11,19 @@ const start = async () => {
 	if(!process.env.JWT_SECRET_KEY)
 		throw new Error("JWT_SECRET_KEY must be defined")
 
-	if(!process.env.JWT_REFRESH_SECRET_KEY)
+	if(!appConfig.JWT_REFRESH_SECRET_KEY)
 		throw new Error("JWT_REFRESH_SECRET_KEY must be defined")
 
-	if (!process.env.MONGO_URL_AUTH)
+	if (!appConfig.MONGO_URL_AUTH)
 		throw new Error("MONGO_URL_AUTH must be defined");
 
-	if (!process.env.TWILIO_AUTH_TOKEN) 
+	if (!appConfig.TWILIO_AUTH_TOKEN) 
 		throw new Error("TWILIO_AUTH_TOKEN must be defined");
 
-	if (!process.env.TWILIO_ACCOUNT_SID) 
+	if (!appConfig.TWILIO_ACCOUNT_SID) 
 		throw new Error("TWILIO_ACCOUNT_SID must be defined");
 
-	if (!process.env.TWILIO_SERVICE_SID)
+	if (!appConfig.TWILIO_SERVICE_SID)
 		throw new Error("TWILIO_SERVICE_SID must be defined");
 	
 	// to connect to mongodb
@@ -34,8 +35,8 @@ const start = async () => {
 	
 	await userUpdatedEvent.subscribe()
 
-	app.listen(3000, () => {
-		console.log("auth Listening on port 3000....");
+	app.listen(appConfig.PORT, () => {
+		console.log(`auth Listening on port ${appConfig.PORT}....`);
 	})
 	.on("error", async () => {
 		await userUpdatedEvent.disconnect();

@@ -1,10 +1,10 @@
 import { DatabaseConnectionError } from "@abijobportal/common";
 import mongoose from "mongoose";
-import { config } from "./appConfig";
+import { appConfig } from "./appConfig";
 
 const connectDB = async (): Promise<void> => {
 	try {
-        await mongoose.connect(config.MONGO_URL_PAYMENT as string)
+        await mongoose.connect(appConfig.MONGO_URL_PAYMENT)
         console.log("payment service connected to mongodb...");
 	} catch (error) {
 		console.error("payment service mongodb connection failed!!!!",error);
