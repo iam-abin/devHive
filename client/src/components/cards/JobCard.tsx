@@ -1,5 +1,4 @@
 import React from "react";
-import dayjs from "dayjs";
 import { FaShoppingBag } from "react-icons/fa";
 import { IoLocationSharp } from "react-icons/io5";
 import { HiMiniCurrencyRupee } from "react-icons/hi2";

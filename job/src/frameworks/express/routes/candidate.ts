@@ -31,7 +31,7 @@ export const candidateRouter = (dependencies: IDependency) => {
     router.use(checkCurrentUser);
     router.use(auth(ROLES.CANDIDATE));
 
-    router.post("/apply", candidateJobController.applyJobController);
+    router.post("/apply/:jobId", candidateJobController.applyJobController);
 
     router.get(
         "/applied-jobs/:candidateId/:page",

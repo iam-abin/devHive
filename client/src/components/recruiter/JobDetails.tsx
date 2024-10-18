@@ -260,8 +260,6 @@ const JobDetails: React.FC<{
 								onClick={() => {
 									return handleApplyJob(
 										jobDetails?.id,
-										candidateData.id,
-										jobDetails?.recruiterId
 									);
 								}}
 							>

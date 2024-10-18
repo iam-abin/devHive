@@ -1,6 +1,6 @@
 const CANDIDATE_JOB_URL = `job/candidate`;
 const RECRUITER_JOB_URL = `job/recruiter`;
-const JOB_URL = `/job`;
+
 
 const jobApiUrlConfig = {
 	// Common
@@ -10,7 +10,8 @@ const jobApiUrlConfig = {
 	getAJobUrl: (id: string) => `${RECRUITER_JOB_URL}/${id}`,
 	
 	// Candidate
-	candidateApplyJobUrl: `${CANDIDATE_JOB_URL}/apply`,
+	candidateApplyJobUrl:(jobId: string ) => `${CANDIDATE_JOB_URL}/apply/${jobId}`,
+
 	getAllCandidateAppliedJobsUrl: (candidateId: string, currentPage: number) =>
 	`${CANDIDATE_JOB_URL}/applied-jobs/${candidateId}/${currentPage}`,
 	

@@ -1,4 +1,4 @@
-import { config } from "../../config/appConfig";
+import { appConfig } from "../../config/appConfig";
 import { kafkaClient } from "../../config/kafka.connection";
 import { stripeInstance } from "../../config/stripe";
 import { IDependency } from "../../frameworks/types/dependencyInterface";
@@ -33,8 +33,8 @@ export = (dependencies: IDependency) => {
 				},
 			],
 			mode: "payment",
-			success_url: config.PAYMENT_SUCCESS_URL,
-			cancel_url: config.PAYMENT_CANCEL_URL,
+			success_url: appConfig.PAYMENT_SUCCESS_URL,
+			cancel_url: appConfig.PAYMENT_CANCEL_URL,
 		});
 
 		//   return session

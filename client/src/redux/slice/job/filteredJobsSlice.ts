@@ -10,7 +10,7 @@ interface Jobs {
 const initialState = {
 	loading: false,
 	searchDropdownData: [],
-	data: null as Jobs[] | null,
+	data: [],
 	totalNumberOfPages: 0,
 	currentPage: 1,
 	error: false,
@@ -21,7 +21,9 @@ const filteredJobsSlice = createSlice({
 	initialState,
 	reducers: {
 		setFilteredJobs: (state, action: PayloadAction<any>) => {
-			state.data = action.payload?.data;
+			console.log(action.payload);
+			
+			state.data = action.payload;
 		},
 
 		setTotalNumberOfPages: (state, action: PayloadAction<any>) => {
