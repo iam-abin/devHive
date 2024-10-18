@@ -1,8 +1,6 @@
 import mongoose from "mongoose";
 import { IUser } from "../../../types/user";
 
-interface IUserAttributes extends IUser {}
-
 export interface IUserDocument extends mongoose.Document, IUser {}
 
 const userSchema = new mongoose.Schema(
@@ -36,10 +34,10 @@ const userSchema = new mongoose.Schema(
 );
 
 interface UserModel extends mongoose.Model<IUserDocument> {
-    buildUser(attributes: IUserAttributes): IUserDocument;
+    buildUser(attributes: IUser): IUserDocument;
 }
 
-userSchema.statics.buildUser = (attributes: IUserAttributes) => {
+userSchema.statics.buildUser = (attributes: IUser) => {
     return new UserModel({
         // to create a new user document
         _id: attributes.userId,

@@ -1,4 +1,4 @@
-import usersRepository from "../../repositories/mongo/usersRepository";
+import usersRepository from "../../repositories/mongo/users.repository";
 
 // interface handleMessageInterface {
 // 	data: any;

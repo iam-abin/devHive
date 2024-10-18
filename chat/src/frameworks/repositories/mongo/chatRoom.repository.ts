@@ -10,8 +10,8 @@ export = {
         return await chatRoom.save();
     },
 
-    getAChatRoomById: async (chatRoomId: string): Promise<IChatRoomDocument | null> => {
-        const chatRoom = await ChatRoomModel.findById({ _id: chatRoomId });
+    getById: async (chatRoomId: string): Promise<IChatRoomDocument | null> => {
+        const chatRoom = await ChatRoomModel.findById(chatRoomId);
         return chatRoom;
     },
 

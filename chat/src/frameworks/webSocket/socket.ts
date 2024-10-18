@@ -30,6 +30,10 @@ const getUser = (userId: string): activeUser | undefined => {
     return activeUser;
 };
 
+const removeUserFromOnline = (socketId: string): void => {
+    activeUsers = activeUsers.filter((user) => user.socketId !== socketId);
+};
+
 const getRecepient = (
     currentUserId: string,
     room: IChatRoomDocument
@@ -39,10 +43,6 @@ const getRecepient = (
     );
     if (!recipient) throw new NotFoundError("Recipient not found");
     return recipient.toString();
-};
-
-const removeUserFromOnline = (socketId: string): void => {
-    activeUsers = activeUsers.filter((user) => user.socketId !== socketId);
 };
 
 export const setupSocketIO = (httpServer: http.Server): void => {
@@ -69,12 +69,12 @@ export const onSocketConnection = (io: Server, socket: Socket): void => {
         "createChatRoom",
         async (senderId: string, recepientId: string) => {
             try {
+                console.log("In createChatRoom event");
+
                 if (!senderId)
                     throw new BadRequestError("senderId should provide");
                 if (!recepientId)
                     throw new BadRequestError("recepientId should provide");
-                console.log("senderId ", senderId);
-                console.log("recepientId ", recepientId);
 
                 const sender: IUserDocument | null =
                     await userRepository.findUserById(senderId);
@@ -90,23 +90,20 @@ export const onSocketConnection = (io: Server, socket: Socket): void => {
                         recepientId
                     );
 
-                console.log(room);
-
-                if (senderId == recepientId) return;
+                // Create a chatroom If there is no chat room for the two users
                 if (!room) {
-                    console.log("Inside if not room");
+                    if (senderId !== recepientId) {
+                        // no room so creating room
+                        let chatRoomData = {
+                            users: [senderId, recepientId],
+                        };
+                        const chatRoom = new ChatRoom(chatRoomData);
 
-                    // no room so creating room
-                    let chatRoomData = {
-                        users: [senderId, recepientId],
-                    };
-                    const chatRoom = new ChatRoom(chatRoomData);
-
-                    await chatRoomRepository.createChatRoom(chatRoom);
+                        await chatRoomRepository.createChatRoom(chatRoom);
+                    }
                 }
 
-                console.log("this chatroom is already there ", room);
-
+                // get all chat rooms
                 const allChatRooms: IChatRoomDocument[] | [] =
                     await chatRoomRepository.getAllChatRoomsByUserId(senderId);
 
@@ -123,12 +120,15 @@ export const onSocketConnection = (io: Server, socket: Socket): void => {
 
     // adding a user to active list
     socket.on("addActiveUser", (userId: string) => {
+        console.log("In addActiveUser event");
+
         addUserToOnline(userId, socket.id);
         io.emit("getActiveUsers", activeUsers);
     });
 
     // send and get message
     socket.on("sendMessage", async (data: IMessage) => {
+        console.log("In sendMessage event");
         console.log("chat message received---->", data);
 
         try {
@@ -142,7 +142,7 @@ export const onSocketConnection = (io: Server, socket: Socket): void => {
             if (!sender) throw new BadRequestError("sender not found");
 
             const room: IChatRoomDocument | null =
-                await chatRoomRepository.getAChatRoomById(roomId);
+                await chatRoomRepository.getById(roomId);
             if (!room) throw new NotFoundError("Room not found");
 
             const result: IMessageDocument =
@@ -193,6 +193,7 @@ export const onSocketConnection = (io: Server, socket: Socket): void => {
     });
 
     socket.on("markAsRead", async (messageId: string) => {
+        console.log("In markAsRead event");
         await messageRepository.setReadMessage(messageId);
         io.emit("messageRead", messageId);
     });

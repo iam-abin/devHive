@@ -1,6 +1,5 @@
 import Models from "../../database/mongo/models";
-import { IUserAttributes } from "../../database/mongo/models/users";
-import { IUpdatePassword } from "../../types/user";
+import { ISignup, IUpdatePassword } from "../../types/user";
 
 const { UserModel } = Models;
 
@@ -10,7 +9,7 @@ const { UserModel } = Models;
 export = {
 	// these fn's are returning a promise as async so we can define return type as Promise<CandidateDataInterface>
 
-	register: async (userData: IUserAttributes): Promise<any> => {
+	register: async (userData: ISignup): Promise<any> => {
 		const userObject = UserModel.buildUser(userData);
 		return await userObject.save();
 	},

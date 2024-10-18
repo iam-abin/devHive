@@ -33,13 +33,13 @@ const ChatPageRecruiter = () => {
     const [selectedChatRoomMessages, setSelectedChatRoomMessages] =
         useState<any>([]);
 
-    console.log("selectedChatRoom >>", selectedChatRoom);
-    if (selectedChatRoom) {
-        console.log(
-            "getReceiver(selectedChatRoom)",
-            getReceiver(selectedChatRoom)[0].profile_image
-        );
-    }
+    // console.log("selectedChatRoom >>", selectedChatRoom);
+    // if (selectedChatRoom) {
+    //     console.log(
+    //         "getReceiver(selectedChatRoom)",
+    //         getReceiver(selectedChatRoom)[0].profile_image
+    //     );
+    // }
 
     const [isChatOpen, setIsChatOpen] = useState(false);
 
@@ -92,7 +92,11 @@ const ChatPageRecruiter = () => {
 
     useEffect(() => {
         socket.emit("createChatRoom", recruiterData.id, recepientId);
+        // console.log(rooms);
+        
         socket.on("getAllChatRooms", (rooms) => {
+            console.log(rooms);
+            
             setchatRooms(rooms);
         });
     }, [selectedChatRoom, selectedChatRoomMessages]);

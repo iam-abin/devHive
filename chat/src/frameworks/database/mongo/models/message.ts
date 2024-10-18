@@ -1,8 +1,6 @@
 import mongoose from "mongoose";
 import { IMessage } from "../../../types/message";
 
-interface IMessageAttributes extends IMessage {}
-
 export interface IMessageDocument extends mongoose.Document {
 	senderId: mongoose.Schema.Types.ObjectId;
 	roomId: mongoose.Schema.Types.ObjectId;
@@ -44,10 +42,10 @@ const messageSchema = new mongoose.Schema(
 );
 
 interface MessageModel extends mongoose.Model<IMessageDocument> {
-	buildMessage(attributes: IMessageAttributes): IMessageDocument;
+	buildMessage(attributes: IMessage): IMessageDocument;
 }
 
-messageSchema.statics.buildMessage = (attributes: IMessageAttributes) => {
+messageSchema.statics.buildMessage = (attributes: IMessage) => {
 	return new MessageModel({
 		senderId: attributes.senderId,
 		roomId: attributes.roomId,

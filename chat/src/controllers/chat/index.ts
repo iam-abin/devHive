@@ -1,5 +1,5 @@
-import getAllChatRoomsByUserIDController from "./get-all-chat-rooms.controller";
-import getConversationController from "./get-conversation.controller";
+import getAllChatRoomsByUserIDController from "./getChatRooms.controller";
+import getConversationController from "./getChatRoom.controller";
 
 import { IDependency } from "../../frameworks/types/dependencyInterface";
 
