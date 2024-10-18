@@ -5,7 +5,7 @@ import { INotification } from "../../types/notification";
 const {  NotificationModel } = Models;
 
 export = {
-	createNotification: async (notificationData: INotification): Promise<INotificationDocument> => {
+	create: async (notificationData: INotification): Promise<INotificationDocument> => {
 		const chatNotification = NotificationModel.buildNotification(notificationData);
 		return await chatNotification.save();
 	},

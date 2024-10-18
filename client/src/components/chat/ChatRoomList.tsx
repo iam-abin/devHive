@@ -34,7 +34,6 @@ const ChatRoomList: React.FC<ChatRoomListProps> = ({
             let count: any = 0;
             if (currentUser.role === "candidate") {
                 count = await getCandidatesUnreadMessagesCountApi(
-                    currentUser.id,
                     receiver[0]._id
                 );
             }

@@ -2,8 +2,6 @@ import express from "express";
 
 import { chatControllers, notificationControllers } from "../../../controllers";
 import { IDependency } from "../../types/dependencyInterface";
-// import { auth, ROLES } from "@abijobportal/common";
-import getUnreadMessagesCountController from "../../../controllers/notification/getUnreadMessagesCount.controller";
 import { auth, ROLES } from "@abijobportal/common";
 
 export const recruiterRouter = (dependencies: IDependency) => {
@@ -12,43 +10,44 @@ export const recruiterRouter = (dependencies: IDependency) => {
     const chatController = chatControllers(dependencies);
     const notificationController = notificationControllers(dependencies);
 
-	router.use(auth(ROLES.RECRUITER))
+    router.use(auth(ROLES.RECRUITER));
 
+    // Chat
     router.get(
         "/chat-rooms/:userId",
         chatController.getAllChatRoomsByUserIDController
     );
 
     router.get(
-        "/room-conversation/:chatRoomId",
+        "/room/conversation/:chatRoomId",
         chatController.getConversationController
     );
 
+    // Notification
     router.get(
-        "/notifications/:userId",
+        "/notifications",
         notificationController.getAllNotificationsController
     );
 
-    router.post("/create", notificationController.createNotificationController);
+    router.get(
+        "/notifications/count",
+        notificationController.getAllNotificationsCountController
+    );
 
     router.delete(
-        "/notifications/:userId",
+        "/notifications",
         notificationController.deleteAllNotificationsController
     );
 
     router.delete(
-        "/delete-notifications-by-senderId/:senderId/:receiverId",
+        "/notifications/sender/:senderId",
         notificationController.deleteAllNotificationsBySenderController
     );
 
+    // Message
     router.get(
-        "/unread-messages-count/:senderId/:receiverId",
-        getUnreadMessagesCountController
-    );
-
-    router.get(
-        "/notifications-count/:userId",
-        notificationController.getAllNotificationsCountController
+        "/messages/unread-count/:senderId",
+        notificationController.getUnreadMessagesCountController
     );
 
     return router;

@@ -77,11 +77,11 @@ export const onSocketConnection = (io: Server, socket: Socket): void => {
                     throw new BadRequestError("recepientId should provide");
 
                 const sender: IUserDocument | null =
-                    await userRepository.findUserById(senderId);
+                    await userRepository.getById(senderId);
                 if (!sender) throw new NotFoundError("sender not found");
 
                 const recipient: IUserDocument | null =
-                    await userRepository.findUserById(recepientId);
+                    await userRepository.getById(recepientId);
                 if (!recipient) throw new NotFoundError("recipient not found");
 
                 const room: IChatRoomDocument | null =
@@ -138,7 +138,7 @@ export const onSocketConnection = (io: Server, socket: Socket): void => {
                 throw new BadRequestError("please provide message");
 
             const sender: IUserDocument | null =
-                await userRepository.findUserById(senderId);
+                await userRepository.getById(senderId);
             if (!sender) throw new BadRequestError("sender not found");
 
             const room: IChatRoomDocument | null =
@@ -157,7 +157,7 @@ export const onSocketConnection = (io: Server, socket: Socket): void => {
 
             const recipient: string = getRecepient(senderId, room);
             const recipientExist: IUserDocument | null =
-                await userRepository.findUserById(recipient);
+                await userRepository.getById(recipient);
             if (!recipientExist)
                 throw new BadRequestError("Recepient not found");
 
@@ -168,20 +168,20 @@ export const onSocketConnection = (io: Server, socket: Socket): void => {
             };
 
             const notification: INotificationDocument =
-                await notificationRepository.createNotification({
+                await notificationRepository.create({
                     senderId,
                     targetUserId: recipient,
                     message: textMessage,
                 });
 
-            const activeUser1: activeUser | undefined = getUser(senderId);
-            const activeUser2: activeUser | undefined = getUser(recipient);
-            if (activeUser1 && activeUser1.socketId)
-                io.to(activeUser1.socketId).emit("receiveMessage", message);
+            const activeUserSender: activeUser | undefined = getUser(senderId);
+            const activeUserRecipient: activeUser | undefined = getUser(recipient);
+            if (activeUserSender && activeUserSender.socketId)
+                io.to(activeUserSender.socketId).emit("receiveMessage", message);
 
-            if (activeUser2 && activeUser2.socketId) {
-                io.to(activeUser2.socketId).emit("receiveMessage", message);
-                io.to(activeUser2.socketId).emit(
+            if (activeUserRecipient && activeUserRecipient.socketId) {
+                io.to(activeUserRecipient.socketId).emit("receiveMessage", message);
+                io.to(activeUserRecipient.socketId).emit(
                     "chatNotification",
                     notification
                 );

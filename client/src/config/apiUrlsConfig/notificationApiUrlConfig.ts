@@ -5,20 +5,20 @@ const RECRUITER_CHAT_URL = `chat/recruiter`;
 
 const notificationApiUrlConfig = {
 	// Candidate
-	getCandidatesNotificationCountUrl: (userId: string) => `${CANDIDATE_CHAT_URL}/notifications-count/${userId}`,
-	getCandidatesAllNotificationsUrl: (userId: string) => `${CANDIDATE_CHAT_URL}/notifications/${userId}`,//:userId
-	deleteCandidatesAllNotificationsUrl: (userId: string) => `${CANDIDATE_CHAT_URL}/notifications/${userId}`,
-	deleteCandidatesAllNotificationsBySenderIdUrl: (senderId: string, receiverId: string) => `${CANDIDATE_CHAT_URL}/delete-notifications-by-senderId/${senderId}/${receiverId}`,
-	getCandidatessUnreadMessagesCountUrl: (senderId: string, receiverId: string) => `${CANDIDATE_CHAT_URL}/unread-messages-count/${senderId}/${receiverId}`,
+	getCandidatesAllNotificationsUrl: `${CANDIDATE_CHAT_URL}/notifications`,
+	deleteCandidatesAllNotificationsUrl: `${CANDIDATE_CHAT_URL}/notifications`,
+	getCandidatesNotificationCountUrl: `${CANDIDATE_CHAT_URL}/notifications/count`,
+	deleteCandidatesAllNotificationsBySenderIdUrl: (senderId: string) => `${CANDIDATE_CHAT_URL}/notifications/sender/${senderId}`,
+	getCandidatessUnreadMessagesCountUrl: (senderId: string) => `${CANDIDATE_CHAT_URL}/messages/unread-count/${senderId}`,
 
 	
 
 	// recruiter
-	getRecruiterNotificationCountUrl: (userId: string) => `${RECRUITER_CHAT_URL}/notifications-count/${userId}`,
-	getRecruiterAllNotificationsUrl: (userId: string) => `${RECRUITER_CHAT_URL}/notifications/${userId}`,
-	deleteRecruiterAllNotificationsUrl: (userId: string) => `${RECRUITER_CHAT_URL}/notifications/${userId}`,
-	deleteRecruitersAllNotificationsBySenderIdUrl: (senderId: string, receiverId: string) => `${RECRUITER_CHAT_URL}/delete-notifications-by-senderId/${senderId}/${receiverId}`,
-	getRecruitersUnreadMessagesCountUrl: (senderId: string, receiverId: string) => `${RECRUITER_CHAT_URL}/unread-messages-count/${senderId}/${receiverId}`,
+	getRecruiterAllNotificationsUrl: `${RECRUITER_CHAT_URL}/notifications`,
+	deleteRecruiterAllNotificationsUrl: `${RECRUITER_CHAT_URL}/notifications`,
+	getRecruiterNotificationCountUrl: `${RECRUITER_CHAT_URL}/notifications-count`,
+	deleteRecruitersAllNotificationsBySenderIdUrl: (senderId: string ) => `${RECRUITER_CHAT_URL}/notifications/sender/${senderId}`,
+	getRecruitersUnreadMessagesCountUrl: (senderId: string ) => `${RECRUITER_CHAT_URL}/messages/unread-count/${senderId}`,
 
 };
 

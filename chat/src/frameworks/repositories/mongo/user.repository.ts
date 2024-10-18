@@ -15,7 +15,7 @@ export = {
 		return user;
 	},
 	
-	findUserById: async (userId: string): Promise<IUserDocument | null> => {
+	getById: async (userId: string): Promise<IUserDocument | null> => {
 		
 		const user = await UserModel.findById(userId);
 		return user;

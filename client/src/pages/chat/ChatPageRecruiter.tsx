@@ -166,7 +166,6 @@ const ChatPageRecruiter = () => {
         let senderId = getReceiver(room); // to find the other user
         await deleteRecruitersAllNotificationsBySenderIdApi(
             senderId[0]?._id,
-            recruiterData.id
         );
         setSelectedChatRoomMessages(conversations.data);
     };

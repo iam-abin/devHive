@@ -129,7 +129,7 @@ const TopNavBarCandidate = () => {
 				
 				if (openNotifications) {
 					
-					let fetchedNotifications = await getCandidatesAllNotificationsApi(candidate?.id);
+					let fetchedNotifications = await getCandidatesAllNotificationsApi();
 					
 					let currentChatRoomSender = getOtherUser(currentlySelectedChatRoom)
 					
@@ -147,7 +147,7 @@ const TopNavBarCandidate = () => {
 					}
 
 					if(filteredNotifications.length ==0){
-						await deleteCandidatesAllNotificationsApi(candidate.id)
+						await deleteCandidatesAllNotificationsApi()
 					}
 					
 					setNotifications(filteredNotifications);
@@ -171,11 +171,9 @@ const TopNavBarCandidate = () => {
 	useEffect(() => {
 		(async () => {
 			try {
-					let notificationsCount = await getCandidatesNotificationCountApi(
-						candidate?.id
-					);
+					let notificationsCount = await getCandidatesNotificationCountApi();
 
-					let fetchedNotifications = await getCandidatesAllNotificationsApi(candidate?.id);
+					let fetchedNotifications = await getCandidatesAllNotificationsApi();
 					
 					let currentChatRoomSender = getOtherUser(currentlySelectedChatRoom)
 					
@@ -208,7 +206,7 @@ const TopNavBarCandidate = () => {
 		// Implement logic to clear notifications
 		e.stopPropagation()
 		
-		await deleteCandidatesAllNotificationsApi(candidate.id)
+		await deleteCandidatesAllNotificationsApi()
 		setNotificationsCount(0)
 		setNotifications([])
 	};

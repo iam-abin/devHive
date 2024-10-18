@@ -160,8 +160,7 @@ const ChatPageCandidate = () => {
         const conversations = await getACandidateConversationApi(room._id);
         let senderId = getReceiver(room); // to find the other user
         await deleteCandidatesAllNotificationsBySenderIdApi(
-            senderId[0]?._id,
-            candidateData.id
+            senderId[0]?._id
         );
         setSelectedChatRoomMessages(conversations.data);
     };

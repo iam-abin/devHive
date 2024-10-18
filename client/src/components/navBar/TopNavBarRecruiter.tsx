@@ -11,8 +11,6 @@ import { IoMdNotifications } from "react-icons/io";
 import { useEffect, useState } from "react";
 import Notifications from "../notification/Notifications";
 
-// import { candidateGetProfileApi } from "../../axios/apiMethods/profile-service/candidate";
-
 import socket from "../../config/socket";
 import {
 	deleteRecruiterAllNotificationsApi,
@@ -77,7 +75,7 @@ const TopNavBarRecruiter: React.FC<{ toggleLeftNavBar: any }> = ({
 
 				if (openNotifications) {
 					let fetchedNotifications =
-						await getRecruiterAllNotificationsApi(recruiter?.id);
+						await getRecruiterAllNotificationsApi();
 				
 					// socket.on('notification', (data: any) => {
 
@@ -104,7 +102,7 @@ const TopNavBarRecruiter: React.FC<{ toggleLeftNavBar: any }> = ({
 					}
 
 					if (filteredNotifications.length == 0) {
-						await deleteRecruiterAllNotificationsApi(recruiter.id);
+						await deleteRecruiterAllNotificationsApi();
 					}
 					// if(sender[0]._id !== data?.senderId) setNotifications([...notifications, data]);
 
@@ -132,22 +130,17 @@ const TopNavBarRecruiter: React.FC<{ toggleLeftNavBar: any }> = ({
 				setNotifications([...notifications, data]);
 		});
 	}, []);
-	// dispatch(setCandidateProfileDetails(notifications?.data));setNotificationsCount(fetchedNotificationsCount)
 
 	useEffect(() => {
 		(async () => {
 			try {
 
 				let fetchedNotifications =
-					await getRecruiterAllNotificationsApi(recruiter?.id);
+					await getRecruiterAllNotificationsApi();
 				let currentChatRoomSender = getOtherUser(
 					currentlySelectedRecruiterChatRoom
 				);
-
-				// let filteredNotifications = fetchedNotifications?.data?.filter((notification: any) => {
-				// 	return currentChatRoomSender && currentChatRoomSender.length > 0 && currentChatRoomSender[0]?._id !== notification?.senderId;
-				// });
-
+				
 				let filteredNotifications = [];
 				if (currentlySelectedRecruiterChatRoom) {
 					filteredNotifications = fetchedNotifications.data.filter(
@@ -166,9 +159,7 @@ const TopNavBarRecruiter: React.FC<{ toggleLeftNavBar: any }> = ({
 
 				// if (filteredNotifications) {
 				setNotificationsCount(filteredNotifications.length);
-				// } else {
-				// 	setNotificationsCount(0);
-				// }
+				
 			} catch (error: any) {
 				notify(error.response.data.errors[0].message, "error");
 				console.error("Error fetching candidate profile:", error);
@@ -182,8 +173,7 @@ const TopNavBarRecruiter: React.FC<{ toggleLeftNavBar: any }> = ({
 	) => {
 		// Implement logic to clear notifications
 		e.stopPropagation();
-		// await deleteCandidatesAllNotificationsApi(recruiter.id)
-		await deleteRecruiterAllNotificationsApi(recruiter.id);
+		await deleteRecruiterAllNotificationsApi();
 		setNotificationsCount(0);
 		setNotifications([]);
 	};
