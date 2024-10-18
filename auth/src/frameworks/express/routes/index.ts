@@ -7,7 +7,7 @@ import { recruiterRouter } from "./recruiter";
 import { otpRouter } from "./otp"; 
 
 import { jwtRouter } from "./jwt-refresh";
-import { IDependency } from "../../types/dependencyInterface";
+import { IDependency } from "../../types/dependency";
 
 export const routes = (dependencies: IDependency) => {
 	const router = express.Router();

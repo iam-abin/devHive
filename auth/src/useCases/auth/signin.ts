@@ -1,5 +1,5 @@
 import { BadRequestError } from "@abijobportal/common";
-import { IDependency } from "../../frameworks/types/dependencyInterface";
+import { IDependency } from "../../frameworks/types/dependency";
 import { comparePassword } from "../../frameworks/utils/password";
 import {
     createJwtAccessToken,

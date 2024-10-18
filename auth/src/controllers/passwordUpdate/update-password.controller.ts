@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { IDependency } from "../../frameworks/types/dependencyInterface";
-import { IUpdatePassword } from "../../frameworks/types/userInterface";
+import { IDependency } from "../../frameworks/types/dependency";
+import { IUpdatePassword } from "../../frameworks/types/user";
 
 export = (dependencies: IDependency)=>{
 

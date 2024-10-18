@@ -14,9 +14,6 @@ export = (dependencies: IDependency)=>{
 		const skip = (page - 1) * limit;
         
         const {appliedJobs, appliedJobsCount} = await getAllAppliedJobsUseCase(dependencies).execute(userId, skip, limit);
-        console.log(appliedJobs);
-        
-
 		const numberOfPages = Math.ceil(appliedJobsCount/limit);
         
         res.status(200).json({message: "Applied Jobs are", data: appliedJobs, totalNumberOfPages: numberOfPages  })

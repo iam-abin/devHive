@@ -55,12 +55,13 @@ const PaymentPlans: React.FC = () => {
 			};
 			
 			const payment = await createPaymentApi(paymentData);
+			console.log(payment);
 			
 			await stripePromise?.redirectToCheckout({
 				sessionId: payment?.data?.stripeId,
 			});
 		} catch (error: any) {
-			notify(error.response.data.errors[0].message, "error");
+			// notify(error.response.data.errors[0].message, "error");
 			console.error(error);
 		}
 	};

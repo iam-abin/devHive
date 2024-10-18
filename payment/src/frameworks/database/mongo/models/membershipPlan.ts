@@ -1,14 +1,8 @@
 import mongoose from "mongoose";
 import { IMembershipPlan } from "../../../types/membershipPlan";
 
-export interface IMembershipPlanDocument extends mongoose.Document {
-	name: string;
-	features: [string];
-	description: string;
-	price: number;
-	isActive: boolean;
-	createdAt: Date;
-	updatedAt: Date;
+export interface IMembershipPlanDocument extends mongoose.Document, Omit<IMembershipPlan, "membershipPlanId">{
+	_id: mongoose.Schema.Types.ObjectId;
 }
 
 

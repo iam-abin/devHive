@@ -7,7 +7,6 @@
     "start": "ts-node-dev --poll src/index.ts",
     "dev": "nodemon src/index.ts"
   },
-  
   "author": "abin",
   "license": "ISC",
   "dependencies": {

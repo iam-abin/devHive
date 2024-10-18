@@ -1,5 +1,5 @@
 import {  IJwtPayload, NotAuthorizedError, NotFoundError, verifyJwtToken } from "@abijobportal/common";
-import { IDependency } from "../../frameworks/types/dependencyInterface";
+import { IDependency } from "../../frameworks/types/dependency";
 import {
     createJwtAccessToken,
 } from "../../frameworks/utils/jwtToken";

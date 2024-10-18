@@ -1,6 +1,6 @@
 import { BadRequestError } from "@abijobportal/common";
-import { IDependency } from "../../frameworks/types/dependencyInterface";
-import { IMobileOtp, IOtp } from "../../frameworks/types/otpInterface";
+import { IDependency } from "../../frameworks/types/dependency";
+import { IMobileOtp, IOtp } from "../../frameworks/types/otp";
 import { verifyOtp } from "../../frameworks/utils/twilio";
 
 // used in forgot password

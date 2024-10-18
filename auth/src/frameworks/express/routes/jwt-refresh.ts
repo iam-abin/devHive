@@ -1,7 +1,7 @@
 import express from "express";
 
 import { jwtRefreshControllers } from "../../../controllers";
-import { IDependency } from "../../types/dependencyInterface";
+import { IDependency } from "../../types/dependency";
 
 export const jwtRouter = (dependencies: IDependency) => {
     const router = express.Router();

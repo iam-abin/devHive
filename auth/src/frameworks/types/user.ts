@@ -1,15 +1,16 @@
-interface User{
+interface IUser{
 	email: string;
 	password: string;
 	role: string;
 }
 
-export interface ISignup extends User {
+export interface ISignup extends IUser {
 	name: string;
 	phone: number;
+	otp?: number;
 }
 
-export interface ISignin extends User{} 
+export interface ISignin extends IUser{} 
 
 
 

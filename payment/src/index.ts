@@ -1,7 +1,7 @@
 import { connectDB } from "./config/db.connection";
 import { app } from "./frameworks/express/app";
 import { kafkaClient } from "./config/kafka.connection";
-import { MembershipPlanCreatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/premium-plan-created-consumet";
+import { MembershipPlanCreatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/premiumPlanCreatedConsumer";
 import { appConfig } from "./config/appConfig";
 
 const start = async () => {

@@ -3,7 +3,7 @@ import { auth, ROLES } from "@abijobportal/common";
 
 import { adminControllers } from "../../../controllers";
 import { signinRequestBodyValidatorMiddlewares } from "../../middlewares/signinValidation";
-import { IDependency } from "../../types/dependencyInterface";
+import { IDependency } from "../../types/dependency";
 
 export const adminRouter = (dependencies: IDependency) => {
     const router = express.Router();

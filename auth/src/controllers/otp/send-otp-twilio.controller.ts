@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 
-import { IDependency } from "../../frameworks/types/dependencyInterface";
-import { IMobileOtp } from "../../frameworks/types/otpInterface";
+import { IDependency } from "../../frameworks/types/dependency";
+import { IMobileOtp } from "../../frameworks/types/otp";
 
 export = (dependencies: IDependency) => {
     const {

@@ -1,4 +1,4 @@
-import { IDependency } from "../../frameworks/types/dependencyInterface";
+import { IDependency } from "../../frameworks/types/dependency";
 
 export = (dependencies: IDependency) => {
 	const {
@@ -12,7 +12,6 @@ export = (dependencies: IDependency) => {
 	}
 
 	const execute = async () => {
-		
 		const membershipPlans = await membershipRepository.getAllMembershipPlans();
 		
 		return membershipPlans;

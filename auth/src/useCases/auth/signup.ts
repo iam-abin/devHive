@@ -1,7 +1,7 @@
 import { BadRequestError } from "@abijobportal/common";
 import { User } from "../../entities";
-import { IDependency } from "../../frameworks/types/dependencyInterface";
-import { ISignup } from "../../frameworks/types/userInterface";
+import { IDependency } from "../../frameworks/types/dependency";
+import { ISignup } from "../../frameworks/types/user";
 import { generateEmailVerificationOtp, sendVerificationEmail } from "../../frameworks/utils/sendEmail";
 
 export = (dependencies: IDependency) => {

@@ -1,6 +1,6 @@
 import Models from "../../database/mongo/models";
 import { IUserAttributes } from "../../database/mongo/models/users";
-import { IUpdatePassword } from "../../types/userInterface";
+import { IUpdatePassword } from "../../types/user";
 
 const { UserModel } = Models;
 

@@ -1,6 +1,6 @@
 import { BadRequestError } from "@abijobportal/common";
-import { IDependency } from "../../frameworks/types/dependencyInterface";
-import { IOtp } from "../../frameworks/types/otpInterface";
+import { IDependency } from "../../frameworks/types/dependency";
+import { IOtp } from "../../frameworks/types/otp";
 
 // used in forgot password
 export = (dependencies: IDependency)=>{

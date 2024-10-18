@@ -20,8 +20,8 @@ export = {
 		return await premium.save();
 	},
 
-	getMembershipPlan: async (id: string): Promise<IMembershipPlanDocument | null> => {
-		const chatMessages = await MembershipPlanModel.findById(id);
+	getById: async (planId: string): Promise<IMembershipPlanDocument | null> => {
+		const chatMessages = await MembershipPlanModel.findById(planId);
 		return chatMessages;
 	},
 

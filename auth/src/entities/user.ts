@@ -1,5 +1,4 @@
-import { IUserAttributes } from "../frameworks/database/mongo/models/users";
-import { ISignup } from "../frameworks/types/userInterface";
+import { ISignup } from "../frameworks/types/user";
 
 export class User {
 	name: string;
@@ -7,10 +6,9 @@ export class User {
 	phone: number;
 	password: string;
 	role: string;
-	// isPremiumUser: boolean
 	otp: number;
 
-	constructor({ name, email, phone, password, role, otp }: IUserAttributes) {
+	constructor({ name, email, phone, password, role, otp }: Required<ISignup>) {
 		this.name = name;
 		this.email = email;
 		this.phone = phone;

@@ -3,7 +3,7 @@ import recruiterSigninController from "./signin.controller";
 import recruiterSignoutController from "./signout.controller";
 import recruiterSignupEmailOtpVerificationController from "./signup-email-otp-verification.controller";
 
-import { IDependency } from "../../frameworks/types/dependencyInterface";
+import { IDependency } from "../../frameworks/types/dependency";
 
 export = (dependencies: IDependency) => {
 	return {

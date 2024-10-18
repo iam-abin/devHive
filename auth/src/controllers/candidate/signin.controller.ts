@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { ROLES } from "@abijobportal/common";
 
-import { IDependency } from "../../frameworks/types/dependencyInterface";
+import { IDependency } from "../../frameworks/types/dependency";
 
 export = (dependencies: IDependency) => {
     const {

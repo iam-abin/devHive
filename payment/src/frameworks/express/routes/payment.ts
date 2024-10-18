@@ -2,7 +2,7 @@ import express from "express";
 import { checkCurrentUser, auth, ROLES } from "@abijobportal/common";
 
 import { paymentControllers } from "../../../controllers";
-import { IDependency } from "../../types/dependencyInterface";
+import { IDependency } from "../../types/dependency";
 
 export const paymentRouter = (dependencies: IDependency) => {
     const router = express.Router();

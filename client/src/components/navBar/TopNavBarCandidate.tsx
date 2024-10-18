@@ -1,4 +1,3 @@
-// import React from "react";
 import { Link, useMatch, useNavigate } from "react-router-dom";
 import { RootState } from "../../redux/reducer/reducer";
 import { useDispatch, useSelector } from "react-redux";
@@ -162,9 +161,6 @@ const TopNavBarCandidate = () => {
 	// io.to(user2.socketId).emit("chatNotification", {sender: senderId,message: textMessage });
 	useEffect(()=>{
 		socket.on("chatNotification", (data: any) => {
-			let senderToChatRoom = getOtherUser(currentlySelectedChatRoom)
-
-			let currentChatRoomSender = getOtherUser(currentlySelectedChatRoom)
 					if(!currentlySelectedChatRoom){
 						setNotifications([...notifications, data]);
 					}

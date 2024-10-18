@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 
-import { IDependency } from "../../frameworks/types/dependencyInterface";
-import { ISignup } from "../../frameworks/types/userInterface";
+import { IDependency } from "../../frameworks/types/dependency";
+import { ISignup } from "../../frameworks/types/user";
 
 export = (dependencies: IDependency) => {
     const {

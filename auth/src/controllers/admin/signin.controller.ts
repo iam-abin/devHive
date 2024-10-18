@@ -6,7 +6,7 @@ import {
     createJwtRefreshToken,
 } from "../../frameworks/utils/jwtToken";
 
-import { IDependency } from "../../frameworks/types/dependencyInterface";
+import { IDependency } from "../../frameworks/types/dependency";
 
 export = (dependencies: IDependency) => {
     const {

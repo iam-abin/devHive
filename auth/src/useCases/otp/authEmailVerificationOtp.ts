@@ -1,6 +1,6 @@
 import { BadRequestError } from "@abijobportal/common";
-import { IDependency } from "../../frameworks/types/dependencyInterface";
-import { IOtp } from "../../frameworks/types/otpInterface";
+import { IDependency } from "../../frameworks/types/dependency";
+import { IOtp } from "../../frameworks/types/otp";
 import { UserCreatedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/user-created-publisher";
 import { kafkaClient } from "../../config/kafka.connection";
 import {
