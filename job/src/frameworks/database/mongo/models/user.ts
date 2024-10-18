@@ -1,15 +1,9 @@
 import mongoose from "mongoose";
 import { IUser } from "../../../types/user";
 
-export interface IUserDocument extends mongoose.Document, IUser {
+export interface IUserDocument extends mongoose.Document, Omit<IUser, "userId"> {
 	_id: mongoose.Schema.Types.ObjectId;
-	name: string;
-	email: string;
-	profileImgUrl: number;
-	role: string;
-	isActive: boolean;
-	createdAt: string;
-	updatedAt: string;
+	profileImgUrl?: number;
 }
 
 

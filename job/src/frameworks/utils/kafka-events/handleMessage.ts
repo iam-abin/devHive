@@ -23,8 +23,7 @@ export const handleMessage = (data: any, topic: string ,message: any) => {
 			break;
 	
 		case "PREMIUM-PAYMENT-TOPIC":
-			console.log(data.candidateId);
-			userRepository.premiumPaymentDone(data.candidateId, data);
+			userRepository.premiumPaymentDone(data.candidateId);
 			break;
 
 		default:

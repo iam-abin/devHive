@@ -13,7 +13,7 @@ const jobApiUrlConfig = {
 	candidateApplyJobUrl:(jobId: string ) => `${CANDIDATE_JOB_URL}/apply/${jobId}`,
 
 	getAllCandidateAppliedJobsUrl: (candidateId: string, currentPage: number) =>
-	`${CANDIDATE_JOB_URL}/applied-jobs/${candidateId}/${currentPage}`,
+	`${CANDIDATE_JOB_URL}/applied/${candidateId}/${currentPage}`,
 	
 	// Recruiter
 	
@@ -26,11 +26,11 @@ const jobApiUrlConfig = {
 	getAllRecruiterAddedJobsUrl: (recruiterId: string) =>
 		`${RECRUITER_JOB_URL}/created-jobs/${recruiterId}`,
 	getAllJobsApplicationsForRecruiterUrl: (recruiterId: string) =>
-		`${RECRUITER_JOB_URL}/job-applications/${recruiterId}`,
+		`${RECRUITER_JOB_URL}/applications/${recruiterId}`,
 	getAJobApplicationUrl: (jobApplicationId: string) =>
-		`${RECRUITER_JOB_URL}/job-application/${jobApplicationId}`,
+		`${RECRUITER_JOB_URL}/application/${jobApplicationId}`,
 	getAnAppliedJobUrl: (jobApplicationId: string) =>
-	`${CANDIDATE_JOB_URL}/job-application/${jobApplicationId}`,
+	`${CANDIDATE_JOB_URL}/application/${jobApplicationId}`,
 	changeJobApplicationStatusUrl: (jobApplicationId: string) =>
 		`${RECRUITER_JOB_URL}/change-application-status/${jobApplicationId}`,
 	};

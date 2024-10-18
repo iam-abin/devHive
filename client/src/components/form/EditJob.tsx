@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-// import { getAJobApi, updateJobApi } from "../../axios/admin2/jobs/jobs";
 import {
 	getAJobApi,
 	updateJobApi,
@@ -11,7 +10,6 @@ interface JobFormData {
 	jobId: string;
 	title: string;
 	recruiter: string;
-	// company: string;
 	companyName: string;
 	companyLocation: string;
 	jobDescription: string;
@@ -19,7 +17,6 @@ interface JobFormData {
 	availablePosition: number;
 	experienceRequired: string;
 	educationRequired: string;
-	// location: string;
 	employmentType: string;
 	salaryMin: number;
 	salaryMax: number;
@@ -27,13 +24,9 @@ interface JobFormData {
 }
 
 function EditJob() {
-	// const [updatedJobDetails, setupdatedJobDetails] = useState("");
 	const [jobDetails, setJobDetails] = useState<any>(null);
 	const navigate = useNavigate();
 	const { jobId } = useParams();
-	// const jobId = useSelector((state: RootState) => {
-	// 	return state.recruiterJobId.jobId;
-	// });
 
 	useEffect(() => {
 		const fetchJobDetails = async () => {
@@ -44,7 +37,6 @@ function EditJob() {
 				}
 			} catch (error: any) {
 				notify(error.response.data.errors[0].message, "error");
-				// Handle error, e.g., log it or show an error message to the user
 				console.error("Error fetching job details:", error);
 			}
 		};
@@ -74,13 +66,11 @@ function EditJob() {
 		jobId: "",
 		title: jobDetails?.title ?? "",
 		recruiter: jobDetails?.recruiter ?? "",
-		// company: jobDetails?.company ?? "",
 		jobDescription: jobDetails?.jobDescription ?? "",
 		skills: jobDetails?.skills ?? [],
 		availablePosition: jobDetails?.availablePosition ?? 0,
 		experienceRequired: jobDetails?.experienceRequired ?? "",
 		educationRequired: jobDetails?.educationRequired ?? "",
-		// location: jobDetails?.location ?? "",
 		companyName: jobDetails?.companyName ?? "",
 		companyLocation: jobDetails?.companyLocation ?? "",
 		employmentType: jobDetails?.employmentType,
@@ -90,13 +80,11 @@ function EditJob() {
 			new Date(jobDetails?.deadline).toLocaleDateString("en-CA") ?? "",
 	};
 
-	//   const jobCreationSchema: /* Define your validation schema here */ = /* ... */;
 	const today = new Date().toISOString().split("T")[0];
 
 	return (
 		<Formik
 			initialValues={initialJobValues}
-			// validationSchema={jobCreationSchema}
 			onSubmit={(values) => {
 				values.jobId = jobDetails.id;
 				handleSubmit(values);
@@ -135,50 +123,6 @@ function EditJob() {
 									className="error label-text-alt"
 								/>
 							</div>
-
-							{/* Recruiter field
-							<div className="form-control w-6/6">
-								<label htmlFor="recruiter" className="label">
-									Recruiter
-								</label>
-								<Field
-									type="text"
-									id="recruiter"
-									name="recruiter"
-									className={`input input-primary w-full rounded-xl ${
-										errors.recruiter && touched.recruiter
-											? "input-error"
-											: ""
-									}`}
-								/>
-								<ErrorMessage
-									name="recruiter"
-									component="div"
-									className="error label-text-alt"
-								/>
-							</div> */}
-
-							{/* Company field
-							<div className="form-control w-6/6">
-								<label htmlFor="company" className="label">
-									Company
-								</label>
-								<Field
-									type="text"
-									id="company"
-									name="company"
-									className={`input input-primary w-full rounded-xl ${
-										errors.company && touched.company
-											? "input-error"
-											: ""
-									}`}
-								/>
-								<ErrorMessage
-									name="company"
-									component="div"
-									className="error label-text-alt"
-								/>
-							</div> */}
 
 							{/* Job Descriptions field */}
 							<div className="form-control w-6/6">
@@ -257,29 +201,7 @@ function EditJob() {
 									className="error label-text-alt"
 								/>
 							</div>
-
-							{/* Location field */}
-							{/* <div className="form-control w-6/6">
-								<label htmlFor="location" className="label">
-									Location
-								</label>
-								<Field
-									type="text"
-									id="location"
-									name="location"
-									className={`input input-primary w-full rounded-xl ${
-										errors.location && touched.location
-											? "input-error"
-											: ""
-									}`}
-								/>
-								<ErrorMessage
-									name="location"
-									component="div"
-									className="error label-text-alt"
-								/>
-							</div> */}
-
+							
 							<div className="flex sm:flex-col justify-between">
 								{/* Experience Required field */}
 								<div className=" form-control w-6/6">
@@ -317,7 +239,6 @@ function EditJob() {
 									</label>
 
 									<Field
-										as="select" // Use the 'as' prop to render a select element
 										id="employmentType"
 										name="employmentType"
 										className={`select select-primary w-full max-w-xs ${

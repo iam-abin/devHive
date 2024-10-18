@@ -1,13 +1,10 @@
 import { useEffect, useState } from "react";
-import TableComponent from "../../../components/table/TableComponent";
 import { useNavigate } from "react-router-dom";
 import { getAllCandidateAppliedJobsApi } from "../../../axios/apiMethods/jobs-service/jobs";
 import { RootState } from "../../../redux/reducer/reducer";
 import { useSelector } from "react-redux";
-import JobCard from "../../../components/cards/JobCard";
 import JobAppliedCard from "../../../components/cards/JobAppliedCard";
 import TopNavBarCandidate from "../../../components/navBar/TopNavBarCandidate";
-// import FooterCandidate from "../../../components/candidate/FooterCandidate";
 import Paginate from "../../../components/pagination/Paginate";
 import Footer from "../../../components/footer/Footer";
 

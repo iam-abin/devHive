@@ -1,9 +1,9 @@
 import { connectDB } from "./config/db.connection";
 import { app } from "./frameworks/express/app";
 import { kafkaClient } from "./config/kafka.connection";
-import { jobUpdatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/job-updated-consumer";
-import { UserCreatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/user-created-consumer";
-import { UserUpdatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/user-updated-consumer";
+import { jobUpdatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/jobUpdatedConsumer";
+import { UserCreatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/userCreatedConsumer";
+import { UserUpdatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/userUpdatedConsumer";
 import { appConfig } from "./config/appConfig";
 
 const start = async () => {

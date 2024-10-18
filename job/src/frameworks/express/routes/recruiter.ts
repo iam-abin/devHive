@@ -40,12 +40,12 @@ export const recruiterRouter = (dependencies: IDependency) => {
     );
 
     router.get(
-        "/job-applications/:recruiterId",
+        "/applications/:recruiterId",
         recruiterJobController.viewJobApplicationsController
     );
 
     router.get(
-        "/job-application/:jobApplicationId",
+        "/application/:jobApplicationId",
         recruiterJobController.viewJobApplicationController
     );
 

@@ -53,8 +53,6 @@ function AllAddedJobs() {
 	}, []);
 
 	const viewJobDetails = async (id: string) => {
-		
-		// dispatch(setRecruiterId(id))
 		navigate(`/recruiter/job-details/${id}`);
 	};
 
@@ -78,17 +76,6 @@ function AllAddedJobs() {
 				if (deleteJobResponse) {
 					notify(deleteJobResponse.message, "success");
 				}
-
-				// const jobs = jobsData.map((job) => {
-				// 	if (job.id === id) {
-				// 		return {
-				// 			...job,
-				// 			isActive: updatedJob.data.isActive,
-				// 		};
-				// 	}
-
-				// 	return job;
-				// });
 
 				setJobsData(deleteJobResponse.data);
 			}

@@ -1,6 +1,6 @@
 import { BadRequestError, ForbiddenError, NotFoundError } from "@abijobportal/common";
 import { IDependency } from "../../frameworks/types/dependencyInterface";
-import { JobUpdatedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/job-updated-publisher";
+import { JobUpdatedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/jobUpdatedPublisher";
 import { kafkaClient } from "../../config/kafka.connection";
 import { IJob } from "../../frameworks/types/job";
 
@@ -11,7 +11,7 @@ export = (dependencies: IDependency) => {
 		throw new Error("jobRepository should exist in dependencies");
 	}
 
-	const execute = async(jobId: string, data: Partial<IJob>, recruiterId: string) => {
+	const execute = async(jobId: string,  recruiterId: string, data: Partial<IJob>) => {
 		
 		const job = await jobRepository.getAJob(jobId);
 		if(!job)  throw new NotFoundError();

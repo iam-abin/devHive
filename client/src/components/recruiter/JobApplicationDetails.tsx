@@ -15,6 +15,8 @@ const JobApplicationDetails: React.FC<{
 	handleChangeApplicationStatus: any;
 }> = ({ jobApplicationDetails }) => {
 	const location = useLocation();
+	console.log(jobApplicationDetails);
+	
 
 	const isRecruiterPage = location.pathname.includes("recruiter");
 	const isCandidatePage = location.pathname.includes("candidate");
@@ -35,14 +37,14 @@ const JobApplicationDetails: React.FC<{
 		}
 
 		navigate(
-			`/candidate/recruiter-profile/${jobApplicationDetails?.jobId?.recruiterId}`
+			`/candidate/recruiter-profile/${jobApplicationDetails?.recruiterId}`
 		);
 	};
 
 	const handleViewCandidate = () => {
 
 		navigate(
-			`/recruiter/candidate-profile/${jobApplicationDetails?.candidateId?.id}`
+			`/recruiter/candidate-profile/${jobApplicationDetails?.candidateId}`
 		);
 	};
 
@@ -161,13 +163,12 @@ const JobApplicationDetails: React.FC<{
 										className={`${
 											jobApplicationDetails?.jobId
 												?.isActive
-												? "text-red-600"
-												: "text-green-600"
+												? "text-green-600"
+												: "text-red-600"
 										}`}
 									>
 										{jobApplicationDetails?.jobId?.isActive
-											? "No longer accepting applications"
-											: "this job is open"}
+											? "this job is open":"No longer accepting applications"}
 									</p>
 								</div>
 							)}
@@ -240,7 +241,7 @@ const JobApplicationDetails: React.FC<{
 												<FaFacebookMessenger
 													onClick={() =>
 														navigate(
-															`/candidate/chat/${jobApplicationDetails?.recruiterId?.id}` // Add the path to your chat page
+															`/candidate/chat/${jobApplicationDetails?.recruiterId}` // Add the path to your chat page
 														)
 													}
 													className=" cursor-pointer"
@@ -343,6 +344,16 @@ const JobApplicationDetails: React.FC<{
 							/>
 						) : (
 							<div>
+								<div className="mb-4">
+								Applied on :
+								<p>
+									{jobApplicationDetails
+										? formatDate(
+												jobApplicationDetails?.createdAt
+										  )
+										: "Loading..."}
+								</p>
+							</div>
 								{jobApplicationDetails && (
 									<div
 										className={`badge ${

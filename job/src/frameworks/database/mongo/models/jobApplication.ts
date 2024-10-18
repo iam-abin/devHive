@@ -6,8 +6,6 @@ export interface IJobApplicationDocument extends mongoose.Document {
 	candidateId:mongoose.Schema.Types.ObjectId;
 	recruiterId:mongoose.Schema.Types.ObjectId;
 	applicationStatus: string;
-	createdAt: string;
-	updatedAt: string;
 }
 
 const jobApplicationSchema = new mongoose.Schema ({

@@ -11,13 +11,11 @@ import { recruiterGetProfileApi } from "../../../axios/apiMethods/profile-servic
 const initialJobValues: JobFormData = {
 	title: "",
 	recruiterId: "",
-	// companyId: "",
 	jobDescription: "",
 	skills: [],
 	availablePosition: 0,
 	experienceRequired: "",
 	educationRequired: "",
-	// location: "",
 	employmentType: "full-time",
 	salaryMin: 0,
 	salaryMax: 0,

@@ -3,7 +3,6 @@ import {
 	changeJobCloseStatusApi,
 	getAJobApi,
 } from "../../../axios/apiMethods/jobs-service/jobs";
-// import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import JobDetails from "../../../components/recruiter/JobDetails";
 import Swal from "sweetalert2";
@@ -23,7 +22,6 @@ function JobDetailsPage() {
 				}
 			} catch (error: any) {
 				notify(error.response.data.errors[0].message, "error");
-				// Handle error, e.g., log it or show an error message to the user
 				console.error("Error fetching job details:", error);
 			}
 		};
@@ -69,7 +67,6 @@ function JobDetailsPage() {
 			}
 		} catch (error: any) {
 			notify(error.response.data.errors[0].message, "error");
-			// Handle error, e.g., log it or show an error message to the user
 			console.error("Error fetching job details:", error);
 		}
 	};

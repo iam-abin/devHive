@@ -34,12 +34,12 @@ export const candidateRouter = (dependencies: IDependency) => {
     router.post("/apply/:jobId", candidateJobController.applyJobController);
 
     router.get(
-        "/applied-jobs/:candidateId/:page",
+        "/applied/:candidateId/:page",
         candidateJobController.appliedJobsController
     );
 
     router.get(
-        "/job-application/:jobApplicationId",
+        "/application/:jobApplicationId",
         candidateJobController.viewPliedJobApplicationController
     );
 

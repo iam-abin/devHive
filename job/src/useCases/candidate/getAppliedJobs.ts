@@ -11,7 +11,7 @@ export = (dependencies: IDependency) => {
 
 	const execute = async(candidateId: string, skip: number, limit: number) => {
 		const appliedJobsCount = await jobApplicationRepository.getCountOfCandidateAppliedJobs(candidateId);
-		const appliedJobs = jobApplicationRepository.getAllAppliedJobsByCandidateId(
+		const appliedJobs = await jobApplicationRepository.getAllAppliedJobsByCandidateId(
 			candidateId,
 			skip,
 			limit

@@ -2,7 +2,7 @@ import { BadRequestError } from "@abijobportal/common";
 import { Job } from "../../entities/job";
 import { IDependency } from "../../frameworks/types/dependencyInterface";
 import { IJob } from "../../frameworks/types/job";
-import { JobCreatedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/job-created-publisher";
+import { JobCreatedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/jobCreatedPublisher";
 import { kafkaClient } from "../../config/kafka.connection";
 
 export = (dependencies: IDependency) => {

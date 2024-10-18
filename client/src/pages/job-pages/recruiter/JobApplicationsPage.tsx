@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import TableComponent from "../../../components/table/TableComponent";
 import { notify } from "../../../utils/toastMessage";
-import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import {
 	getAllJobsApplicationsForRecruiterApi
@@ -53,7 +52,6 @@ function JobApplicationsPage() {
 	}, []);
 
 	const viewApplicationDetails = async (jobId: string) => {
-		// dispatch(setRecruiterId(id))
 		navigate(`/recruiter/application-details/${jobId}`);
 	};
 

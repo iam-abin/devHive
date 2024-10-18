@@ -1,5 +1,5 @@
 import applyJobUseCase from "./apply-job";
-import getAllAppliedJobsUseCase from "./get-all-applied-jobs";
+import getAllAppliedJobsUseCase from "./getAppliedJobs";
 
 export {
 	applyJobUseCase,

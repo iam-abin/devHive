@@ -3,7 +3,7 @@ import { IDependency } from "../../frameworks/types/dependencyInterface";
 
 export = (dependencies: IDependency) => {
     const {
-        useCases: { applyJobUseCase, getAnAppliedJobUseCase },
+        useCases: { applyJobUseCase },
     } = dependencies;
 
     return async (req: Request, res: Response) => {

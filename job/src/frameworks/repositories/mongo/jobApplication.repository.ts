@@ -15,18 +15,29 @@ export = {
     getAJobApplication: async (
         applicationId: string
     ): Promise<IJobApplicationDocument | null> => {
-        return await jobApplicationModel.findById(applicationId);
+        const application = await jobApplicationModel
+            .findById(applicationId)
+            .populate("jobId");
+        return application;
     },
 
     getAllAppliedJobsByCandidateId: async (
-        id: string,
+        candidateId: string,
         skip: number,
         limit: number
     ): Promise<IJobApplicationDocument[] | []> => {
         // use populate
         const appliedJobs = await jobApplicationModel
-            .find({ candidateId: id })
-            .populate({ path: "jobId", model: JobModel })
+            .find({ candidateId })
+            .populate("jobId", [
+                "_id",
+                "title",
+                "companyLocation",
+                "salaryMax",
+                "employmentType",
+                "createdAt",
+            ])
+            .select("jobId")
             .sort({ createdAt: -1 })
             .skip(skip)
             .limit(limit);
@@ -34,9 +45,11 @@ export = {
         return appliedJobs;
     },
 
-    getCountOfCandidateAppliedJobs: async (id: string): Promise<number> => {
+    getCountOfCandidateAppliedJobs: async (
+        candidateId: string
+    ): Promise<number> => {
         const totalJobs: number = await jobApplicationModel.countDocuments({
-            candidateId: id,
+            candidateId,
         });
 
         return totalJobs;

@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { IDependency } from "../../frameworks/types/dependencyInterface";
+import recruiter from ".";
 
 export = (dependencies: IDependency)=>{
 
@@ -8,7 +9,10 @@ export = (dependencies: IDependency)=>{
     return async (req: Request, res: Response)=>{
         const {jobApplicationId} = req.params;
         const { userId } = req.currentUser
-        const application = await getAJobApplicationUseCase(dependencies).execute(jobApplicationId, userId);
+        const application = await getAJobApplicationUseCase(dependencies).execute({
+            jobApplicationId,
+            recruiterId: userId,
+        });
         res.status(200).json({message: "Job applications are ", data: application })
     };
 

@@ -1,18 +1,13 @@
-// import React from "react";
-import TopNavBarCandidate from "../../../components/navBar/TopNavBarCandidate";
-// import FooterCandidate from "../../../components/candidate/FooterCandidate";
 
+import TopNavBarCandidate from "../../../components/navBar/TopNavBarCandidate";
 import { useEffect, useState } from "react";
 import { getAllJobsApi } from "../../../axios/apiMethods/jobs-service/jobs";
 import { useNavigate } from "react-router-dom";
-// import { useDispatch } from "react-redux";
 import Paginate from "../../../components/pagination/Paginate";
-// import JobCardAllJobs from "../../../components/cards/JobCardAllJobs";
 import Footer from "../../../components/footer/Footer";
 import JobCard from "../../../components/cards/JobCard";
 
 function AllJobsPage() {
-	// const dispatch = useDispatch();
 	const navigate = useNavigate();
 
 	const [currentPage, setCurrentPage] = useState(0);
@@ -26,7 +21,6 @@ function AllJobsPage() {
 	};
 
 	const handleView = async (jobId: string) => {
-		// dispatch(setRecruiterJobId(id))
 		navigate(`/candidate/job-details/${jobId}`);
 	};
 
