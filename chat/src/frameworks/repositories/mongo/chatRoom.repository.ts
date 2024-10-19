@@ -31,7 +31,7 @@ export = {
         return chatRooms;
     },
 
-    getAllChatRoomsByUserId: async (userId: string): Promise<IChatRoomDocument[] | []> => {
+    getAllChatRoomsByUserId: async (userId: string): Promise<any[] | []> => {
         const chatRooms = await ChatRoomModel.find({
             users: { $elemMatch: { $eq: userId } },
         })

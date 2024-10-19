@@ -1,7 +1,6 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { notify } from '../../utils/toastMessage';
 
 interface OtpFromSignupProps {
     email?: string;
@@ -22,7 +21,6 @@ const OtpEnterForm: React.FC<OtpFromSignupProps> = ({ email, phone, handleSubmit
     },
     validationSchema: otpSchema,
     onSubmit: async (values) => {
-      try {
         if (!values) {
           console.error('Form values are undefined.');
           return;

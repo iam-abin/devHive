@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
-        profile_image: String,
+        profileImage: String,
         role: {
             type: String,
             required: true,
@@ -42,7 +42,7 @@ userSchema.statics.buildUser = (attributes: IUser) => {
         // to create a new user document
         _id: attributes.userId,
         name: attributes.name,
-        profile_image: attributes.profile_image,
+        profileImage: attributes.profileImage,
         role: attributes.role,
     });
 };

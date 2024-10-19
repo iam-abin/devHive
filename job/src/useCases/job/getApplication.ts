@@ -34,8 +34,6 @@ export = (dependencies: IDependency) => {
 		if(!jobApplication) throw new NotFoundError("Job application not found")
 		
         if (!recruiterId && !candidateId){
-			console.log("jj");
-			
 			throw new BadRequestError(
 				"Should provide either candidateId or recruiterId"
 			);

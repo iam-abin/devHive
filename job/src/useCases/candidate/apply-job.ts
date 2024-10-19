@@ -23,8 +23,6 @@ export = (dependencies: IDependency) => {
 
         const job = await jobRepository.getAJob(jobId);
         if (!job) throw new NotFoundError("job not found");
-        console.log(job);
-
         const application = {
             jobId,
             candidateId,

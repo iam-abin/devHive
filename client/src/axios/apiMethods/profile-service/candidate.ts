@@ -1,6 +1,5 @@
 
 import profileApiUrlConfig from "../../../config/apiUrlsConfig/profileApiUrlConfig";
-import { notify } from "../../../utils/toastMessage";
 import candidateApiCalls from "../../candidate/apiCalls";
 
 
@@ -54,8 +53,6 @@ export const updateCandidatePreferredJobsProfileApi = async (userId: string,pref
 
 
 export const recruiterGetProfileByCandidateApi = async (userId: string): Promise<any> => {
-    try {
 		const response: any = await candidateApiCalls("get", profileApiUrlConfig.getRecruiterProfileUrl(userId), userId);
 		return response.data;
-	
 };

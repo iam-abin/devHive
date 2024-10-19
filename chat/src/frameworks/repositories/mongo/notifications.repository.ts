@@ -16,10 +16,7 @@ export = {
 	},
 
 	getAllNotificationsByUserId: async (userId: string): Promise<INotificationDocument[] | []> => {
-		const chatNotifications = await NotificationModel.find({targetUserId: userId}).populate({
-			path: "senderId",
-			model: "User",
-		})
+		const chatNotifications = await NotificationModel.find({targetUserId: userId}).populate("senderId")
 		.sort({createdAt: -1});
 		
 		return chatNotifications;

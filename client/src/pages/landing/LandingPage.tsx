@@ -23,7 +23,6 @@ import TopNavBarCandidate from "../../components/navBar/TopNavBarCandidate";
 import Footer from "../../components/footer/Footer";
 import { candidateGetProfileApi } from "../../axios/apiMethods/profile-service/candidate";
 import { setCandidateProfileDetails } from "../../redux/slice/candidateSlice/candidateProfileSlice";
-import { notify } from "../../utils/toastMessage";
 
 function LandingPage() {
     const dispatch = useDispatch();
@@ -48,13 +47,11 @@ function LandingPage() {
         (state: RootState) => state.filteredJobs.currentPage
     );
 
-    const jobs: any = useSelector(
-        (store: RootState) => {
-			console.log(store.filteredJobs.data);
-			
-			return store.filteredJobs.data
-		}
-    );
+    const jobs: any = useSelector((store: RootState) => {
+        console.log(store.filteredJobs.data);
+
+        return store.filteredJobs.data;
+    });
 
     const handleGetAllJobs = async (page: number) => {
         // dispatch(setLoading());
@@ -77,18 +74,17 @@ function LandingPage() {
 
     useEffect(() => {
         (async () => {
-            try {
-                const allJobs = await handleGetAllJobs(currentPage);
-                // Check if allJobs.data exists before accessing its properties
-                if (allJobs && allJobs.data) {
-                    dispatch(setFilteredJobs( allJobs.data ));
-					
-                    dispatch(
-                        setTotalNumberOfPages({
-                            totalNumberOfPages: allJobs.totalNumberOfPages,
-                        })
-                    );
-                }
+            const allJobs = await handleGetAllJobs(currentPage);
+            // Check if allJobs.data exists before accessing its properties
+            if (allJobs && allJobs.data) {
+                dispatch(setFilteredJobs(allJobs.data));
+
+                dispatch(
+                    setTotalNumberOfPages({
+                        totalNumberOfPages: allJobs.totalNumberOfPages,
+                    })
+                );
+            }
             return () => {
                 // This cleanup function will be called when the component is unmounted
                 dispatch(clearFilteredJobs());
@@ -97,19 +93,28 @@ function LandingPage() {
             };
         })();
     }, [currentPage]);
-	
+
     const handlePageChange = async ({ selected }: { selected: number }) => {
         dispatch(setCurrentPage({ currentPage: selected + 1 }));
     };
 
     const handleViewJob = async (jobId: string) => {
         console.log(isRecruiterUrl);
-		
+
         if (isRecruiterUrl) {
+            if(!recruiter){
+                return navigate(`/candidate/signin`);
+            }
             return navigate(`/recruiter/job-details/${jobId}`);
         }
 
-        navigate(`/candidate/job-details/${jobId}`);
+        if(isCandidateUrl){
+            if(!candidate){
+                return  navigate(`/candidate/signin`);
+            }
+            navigate(`/candidate/job-details/${jobId}`);
+        }
+
     };
 
     return (
@@ -167,7 +172,7 @@ function LandingPage() {
                         <SearchBar />
                     </div>
                     <div>
-						{jobs.toString()}
+                        {jobs.toString()}
                         {jobs && jobs.length > 0 ? (
                             jobs.map(
                                 (job: any) =>

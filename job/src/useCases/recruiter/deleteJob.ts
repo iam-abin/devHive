@@ -15,9 +15,6 @@ export = (dependencies: IDependency) => {
     const execute = async (jobId: string, recruiterId: string) => {
         const job = await jobRepository.getAJob(jobId);
         if (!job) throw new NotFoundError();
-        console.log(job);
-        console.log(recruiterId);
-
         if (recruiterId !== job.recruiterId._id.toString()) {
             throw new ForbiddenError("You cannot modify others job");
         }

@@ -13,7 +13,7 @@ export const handleMessage = (data: any, topic: string, message: any) => {
         case "CANDIDATE-PROFILE-UPDATED-TOPIC":
             const userData = {
                 name: data.name,
-                profile_image: data.profile_image,
+                profileImage: data.profileImage,
                 isActive: data.isActive,
             };
             

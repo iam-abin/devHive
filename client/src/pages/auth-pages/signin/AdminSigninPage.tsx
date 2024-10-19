@@ -21,13 +21,11 @@ function AdminSigninPage() {
     const dispatch = useDispatch();
 
     const handleSubmit = async (userData: any) => {
-        try {
-            const response = await adminSigninApi(userData);
-            dispatch(setAdmin(response));
+        const response = await adminSigninApi(userData);
+        dispatch(setAdmin(response));
 
-            notify(response.message, "success");
-            navigate("/admin");
-       
+        notify(response.message, "success");
+        navigate("/admin");
     };
 
     const adminData = useSelector((state: RootState) => {
@@ -35,7 +33,6 @@ function AdminSigninPage() {
     });
 
     useEffect(() => {
-
         if (adminData) {
             navigate("/");
         }
@@ -48,8 +45,9 @@ function AdminSigninPage() {
                     <div className="md:flex">
                         {/* Signin section */}
                         <div className="md:w-2/3 sm:w-full px-6 py-16 bg-white border-b border-r rounded-t-lg md:rounded-tr-lg md:rounded-bl-none md:rounded-br-none">
-
-                            <h2 className="text-3xl font-bold mb-2 text-sky-600 text-center">Sign in to admin account</h2>
+                            <h2 className="text-3xl font-bold mb-2 text-sky-600 text-center">
+                                Sign in to admin account
+                            </h2>
                             <Formik
                                 initialValues={initialSigninValues}
                                 validationSchema={signInSchema}
@@ -68,7 +66,11 @@ function AdminSigninPage() {
                                                         className="w-full py-2 pl-2 text-sm text-black bg-transparent border-b outline-none focus:outline-none"
                                                     />
                                                 </div>
-                                                <ErrorMessage name="email" component="div" className="text-red-500 text-sm ml-1" />
+                                                <ErrorMessage
+                                                    name="email"
+                                                    component="div"
+                                                    className="text-red-500 text-sm ml-1"
+                                                />
                                             </div>
                                             <div className="mb-4">
                                                 <div className="flex items-center bg-gray-100">
@@ -80,7 +82,11 @@ function AdminSigninPage() {
                                                         className="w-full py-2 pl-2 text-sm text-black bg-transparent border-b outline-none focus:outline-none"
                                                     />
                                                 </div>
-                                                <ErrorMessage name="password" component="div" className="text-red-500 text-sm ml-1" />
+                                                <ErrorMessage
+                                                    name="password"
+                                                    component="div"
+                                                    className="text-red-500 text-sm ml-1"
+                                                />
                                             </div>
                                         </div>
                                         <div>
@@ -97,8 +103,13 @@ function AdminSigninPage() {
                         </div>
                         {/* Right side*/}
                         <div className="hidden sm:block sm:w-1/2 p-8 py-24 bg-sky-600 text-white rounded-b-lg md:rounded-bl-lg md:rounded-tr-none md:rounded-br-none">
-                            <h2 className="text-3xl font-bold mb-2 text-center">Hello Admin!</h2>
-                            <p className="mb-4 text-center">Fill up personal information and start your journey with us</p>
+                            <h2 className="text-3xl font-bold mb-2 text-center">
+                                Hello Admin!
+                            </h2>
+                            <p className="mb-4 text-center">
+                                Fill up personal information and start your
+                                journey with us
+                            </p>
                         </div>
                     </div>
                 </div>
