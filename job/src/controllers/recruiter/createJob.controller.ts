@@ -1,8 +1,5 @@
 import { Request, Response } from "express";
 import { IDependency } from "../../frameworks/types/dependencyInterface";
-import { BadRequestError, RequestValidationError } from "@abijobportal/common";
-import { JobCreatedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/jobCreatedPublisher";
-import { kafkaClient } from "../../config/kafka.connection";
 import { IJob } from "../../frameworks/types/job";
 
 export = (dependencies: IDependency)=>{
@@ -11,13 +8,7 @@ export = (dependencies: IDependency)=>{
 
     return async (req: Request, res: Response)=>{
         const {userId} = req.currentUser
-
-        const data = req.body as IJob;
-        
-        
-        const newJob = await createJobUseCase(dependencies).execute(userId, data);
-
-
+        const newJob = await createJobUseCase(dependencies).execute(userId, req.body as IJob);
         res.status(201).json({message: "Job created successfully", data: newJob })
     };
 

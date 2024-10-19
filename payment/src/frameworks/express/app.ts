@@ -2,10 +2,11 @@ import "express-async-errors"
 import express, { Express } from "express";
 import morgan from "morgan";
 import cors from 'cors'
+import compression from "compression"
+import { NotFoundError, errorHandler } from "@abijobportal/common";
 
 import { routes } from "./routes"
 import dependencies from "../../config/dependencies";
-import { NotFoundError, errorHandler } from "@abijobportal/common";
 import { appConfig } from "../../config/appConfig";
 
 const app: Express = express();
@@ -18,6 +19,7 @@ app.use(morgan("dev"));
 
 app.use(express.json()); // Set the maximum allowed request body size
 app.use(express.urlencoded({ extended: true }));
+app.use(compression())
 
 // Routes
 app.use(appConfig.API_PREFIX, routes(dependencies))

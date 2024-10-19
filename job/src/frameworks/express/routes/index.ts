@@ -12,7 +12,7 @@ export const routes = (dependencies: IDependency) => {
     const candidate = candidateRouter(dependencies);
     const recruiter = recruiterRouter(dependencies);
 
-    router.use("/candidate", candidate);
+    router.use("/candidate", checkCurrentUser, candidate);
     router.use("/recruiter", checkCurrentUser, recruiter);
 
     return router;

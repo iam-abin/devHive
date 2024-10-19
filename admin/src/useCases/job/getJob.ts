@@ -1,4 +1,4 @@
-import { IDependency } from "../../frameworks/types/dependencyInterface";
+import { IDependency } from "../../frameworks/types/dependency";
 
 export = (dependencies: IDependency) => {
 	const { repositories:{jobRepository} } = dependencies;
@@ -7,8 +7,8 @@ export = (dependencies: IDependency) => {
 		throw new Error("jobRepository should exist in dependencies");
 	}
 
-	const execute = async() => {
-		return await jobRepository.getAllJobs();
+	const execute = async(jobId: string) => {
+		return await jobRepository.getById(jobId);
 	};
 
 	return { execute };

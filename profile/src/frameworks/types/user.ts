@@ -1,10 +1,8 @@
-export interface RecruiterDataProfile {
-    gender?: string;
+export interface IUser {
     userId: string;
     email: string;
     name: string;
     phone: number;
     role: string;
-    isVarified: boolean;
     isActive: boolean;
 }

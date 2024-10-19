@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { IDependency } from "../../frameworks/types/dependencyInterface";
+import { IDependency } from "../../frameworks/types/dependency";
 
 export = (dependencies: IDependency) => {
     const {
@@ -7,8 +7,7 @@ export = (dependencies: IDependency) => {
     } = dependencies;
 
     return async (req: Request, res: Response) => {
-        // const { userId } = req.params;
-        const { userId } = req.currentUser;
+        const { userId } = req.params;
 
         const candidate = await getCandidateProfileByuserIdUseCase(
             dependencies

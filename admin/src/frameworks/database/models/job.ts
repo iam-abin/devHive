@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { IJob } from "../../types/job-interface";
+import { IJob } from "../../types/job";
 
 
 interface IJobAttributes extends IJob{}

@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
-import { IDependency } from "../../frameworks/types/dependencyInterface";
+import { IDependency } from "../../frameworks/types/dependency";
 import { BadRequestError, RequestValidationError } from "@abijobportal/common";
 import { MemberShipPlanCreatedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/membership-plan-created-publisher";
 import { kafkaClient } from "../../config/kafka.connection";
-import { IMembershipPlan } from "../../frameworks/types/membership-plan-interface";
+import { IMembershipPlan } from "../../frameworks/types/membershipPlan";
 
 export = (dependencies: IDependency)=>{
 

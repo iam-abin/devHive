@@ -1,4 +1,4 @@
-import { IDependency } from "../../frameworks/types/dependencyInterface";
+import { IDependency } from "../../frameworks/types/dependency";
 
 export = (dependencies: IDependency) => {
 	const {
@@ -11,11 +11,12 @@ export = (dependencies: IDependency) => {
 		);
 	}
 
-	const execute = async() => {
-		const profile = await candidateProfileRepository.getCountOfCandidatesProfiles();
-		
-		return profile;
+	const execute = async(skip: number, limit: number) => {
+
+		const profiles = await candidateProfileRepository.getAllCandidatesProfiles(skip, limit);
+		return profiles;
 	};
+	
 
 	return { execute };
 };

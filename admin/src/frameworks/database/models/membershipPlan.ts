@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { IMembershipPlan } from "../../types/membership-plan-interface";
+import { IMembershipPlan } from "../../types/membershipPlan";
 
 export interface IMembershipPlansDocument extends mongoose.Document, IMembershipPlan {
 	isActive: boolean;

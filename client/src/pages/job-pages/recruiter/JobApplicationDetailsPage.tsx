@@ -4,7 +4,6 @@ import {
 } from "../../../axios/apiMethods/jobs-service/jobs";
 import {  useParams } from "react-router-dom";
 import JobApplicationDetails from "../../../components/recruiter/JobApplicationDetails";
-import { notify } from "../../../utils/toastMessage";
 
 function JobApplicationDetailsPage() {
 	const [jobApplicationDetails, setJobApplicationDetails] =
@@ -13,8 +12,6 @@ function JobApplicationDetailsPage() {
 	const { jobApplicationId } = useParams();
 	useEffect(() => {
 		const fetchJobDetails = async () => {
-			try {
-				
 				if (jobApplicationId) {
 					const jobApplication = await getAJobApplicationApi(
 						jobApplicationId
@@ -22,11 +19,7 @@ function JobApplicationDetailsPage() {
 					
 					setJobApplicationDetails(jobApplication.data);
 				}
-			} catch (error: any) {
-				notify(error.response.data.errors[0].message, "error");
-				console.error("Error fetching job details:", error);
-
-			}
+		
 		};
 
 		fetchJobDetails();

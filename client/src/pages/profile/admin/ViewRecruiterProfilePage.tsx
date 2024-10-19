@@ -29,10 +29,7 @@ function ViewRecruiterProfilePage() {
         const recruiter = await viewRecruiterProfileDetailsApi(userId);
         
         setRecruiterProfileData(recruiter.data);
-      } catch (error: any) {
-        notify(error.response.data.errors[0].message, "error");
-        console.error("Error fetching profile details:", error);
-      }finally{
+      } finally{
         dispatch(setLoaded())
       }
     };

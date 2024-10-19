@@ -7,11 +7,11 @@ export = (dependencies: IDependency)=>{
 
     return async (req: Request, res: Response)=>{
         const {id: jobId} = req.params;
-        const {userId} = req.currentUser
+        const {userId} = req.currentUser!
 
-        const deletedJob = await deleteJobUseCase(dependencies).execute(jobId, userId);
+        const remainingJobs = await deleteJobUseCase(dependencies).execute(jobId, userId);
 
-        return res.status(200).json({message: "Job deleted successfully", data: deletedJob })
+        return res.status(200).json({message: "Job deleted successfully", data: remainingJobs })
 
       
     };

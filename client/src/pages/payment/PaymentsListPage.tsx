@@ -13,9 +13,7 @@ const PaymentsListPage: React.FC = () => {
 			try {
 				const payments = await getAllPaymentsApi();
 				setPaymentsData(payments.data);
-			} catch (error: any) {
-				notify(error.response.data.errors[0].message, "error");
-			}
+			
 		})();
 	}, []);
 
@@ -23,6 +21,11 @@ const PaymentsListPage: React.FC = () => {
 		{
 			name: "Candidate",
 			selector: (row: { candidateId:   { name: string }  }) => row.candidateId?.name,
+			sortable: true,
+		  },
+		  {
+			name: "Email",
+			selector: (row: { candidateId:   { email: string }  }) => row.candidateId?.email,
 			sortable: true,
 		  },
 		  {

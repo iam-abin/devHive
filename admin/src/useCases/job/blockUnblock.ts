@@ -1,5 +1,5 @@
 import { NotFoundError } from "@abijobportal/common";
-import { IDependency } from "../../frameworks/types/dependencyInterface";
+import { IDependency } from "../../frameworks/types/dependency";
 import { JobUpdatedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/job-updated-publisher";
 import { kafkaClient } from "../../config/kafka.connection";
 
@@ -20,7 +20,10 @@ export = (dependencies: IDependency) => {
         // to produce a message to kafka topic
         // isBlocked contains user data with 'isActive' value changed
         const jobUpdatedEvent = new JobUpdatedEventPublisher(kafkaClient);
-        await jobUpdatedEvent.publish(isBlocked);
+        await jobUpdatedEvent.publish({
+            jobId: isBlocked.jobId,
+            isActive: isBlocked.isActive
+        });
 
         return isBlocked;
     };

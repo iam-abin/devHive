@@ -1,10 +1,10 @@
-import { IDependency } from "../../frameworks/types/dependencyInterface";
+import { IDependency } from "../../frameworks/types/dependency";
 
-import createMembershipController from "./createMembership.controller";
-import updateMembershipController from "./updateMembership.controller";
-import blockUnblockMembershipController from "./block-unblock-membership.controller";
-import viewAllMembershipsController from "./viewMemberships.controller";
-import viewMembershipController from "./view-membership.controller";
+import createMembershipController from "./create.controller";
+import updateMembershipController from "./update.controller";
+import blockUnblockMembershipController from "./blockUnblock.controller";
+import viewAllMembershipsController from "./getMemberships.controller";
+import viewMembershipController from "./getMembership.controller";
 
 export = (dependencies: IDependency) => {
 	return {

@@ -89,10 +89,6 @@ function LandingPage() {
                         })
                     );
                 }
-            } catch (error: any) {
-                notify(error.response.data.errors[0].message, "error");
-                console.error("Error fetching jobs:", error);
-            }
             return () => {
                 // This cleanup function will be called when the component is unmounted
                 dispatch(clearFilteredJobs());

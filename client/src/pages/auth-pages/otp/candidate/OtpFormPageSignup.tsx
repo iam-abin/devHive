@@ -28,10 +28,6 @@ function OtpFormPageSignup() {
 			dispatch(setCandidate(response));
 			notify(response.message, "success");
 			navigate("/candidate");
-		} catch (error: any) {
-			console.error("Error during OTP submission: mm", error);
-
-			notify(error.response.data.errors[0].message || "An error occurred during OTP submission", "error");
 		} finally {
 			dispatch(setLoaded());
 		}

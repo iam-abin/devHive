@@ -1,6 +1,5 @@
-import { BadRequestError, ForbiddenError, NotFoundError } from "@abijobportal/common";
-import { CandidateDataProfile } from "../../frameworks/types/candidateProfile";
-import { IDependency } from "../../frameworks/types/dependencyInterface";
+import { ForbiddenError, NotFoundError } from "@abijobportal/common";
+import { IDependency } from "../../frameworks/types/dependency";
 import { kafkaClient } from "../../config/kafka.connection";
 import { UserUpdatedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/user-updated-publisher";
 import { CandidateProfileUpdatedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/candidate-profile-updated-publisher ";

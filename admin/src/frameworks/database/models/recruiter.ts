@@ -1,9 +1,8 @@
 import mongoose from "mongoose";
-import { IUser } from "../../types/candidateInterface";
-
-interface IRecruiterAttributes extends IUser {}
+import { IUser } from "../../types/user";
 
 export interface IRecruiterDocument extends mongoose.Document, Omit<IUser, "userId"> {
+	_id: mongoose.Schema.Types.ObjectId;
 	companyName?: string;
 	companyLocation?: string;
 	bio?: string;
@@ -53,10 +52,10 @@ const recruiterSchema = new mongoose.Schema(
 );
 
 interface RecruiterModel extends mongoose.Model<IRecruiterDocument> {
-	buildRecruiter(attributes: IRecruiterAttributes): IRecruiterDocument;
+	buildRecruiter(attributes: IUser): IRecruiterDocument;
 }
 
-recruiterSchema.statics.buildRecruiter = (attributes: IRecruiterAttributes) => {
+recruiterSchema.statics.buildRecruiter = (attributes: IUser) => {
 	const {userId, ...rest} = attributes
     return new RecruiterModel({
 		...rest, _id: userId

@@ -1,7 +1,7 @@
 import streamifier from "streamifier";
 
 import { cloudinary } from "../../config/cloudinary";
-import { IFileData, IUploadResponse } from "../types/candidateProfile";
+import { IFileData, IUploadResponse } from "../types/candidate";
 
 
 export const uploadProfilePic = async(file: IFileData): Promise<IUploadResponse>=>{

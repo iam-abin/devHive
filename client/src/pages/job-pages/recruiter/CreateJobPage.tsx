@@ -46,8 +46,6 @@ function CreateJobPage() {
 	const navigate = useNavigate();
 
 	const handleSubmit = async (jobData: JobFormData) => {
-		try {
-			
 			if (!recruiterProfileData?.companyName) {
 				notify(
 					"Please provide company details in your profile before creating a job!!!",
@@ -58,9 +56,6 @@ function CreateJobPage() {
 			const response = await createJobApi(jobData);
 			notify(response.message, "success");
 			navigate("/recruiter/recruiter-added-jobs");
-		} catch (error: any) {
-			notify(error.response.data.errors[0].message, "warning");
-		}
 	};
 
 	return (

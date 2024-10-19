@@ -21,7 +21,9 @@ const jobApiUrlConfig = {
 	getRecruiterDashboadGraphUrl: (recruiterId: string) => `${RECRUITER_JOB_URL}/getRecruiterDashboard/graphDetails/${recruiterId}`,
 	getRecruiterDashboardCardsUrl: (recruiterId: string) => `${RECRUITER_JOB_URL}/getRecruiterDashboard/cardsDetails/${recruiterId}`,
 	changeJobCloseStatusUrl: (id: string) => `${RECRUITER_JOB_URL}/change-close-status/${id}`,
-	updateJobUrl: `${RECRUITER_JOB_URL}/update-job`,
+
+	updateJobUrl: `${RECRUITER_JOB_URL}/update`,
+
 	deleteAJobUrl: (id: string) => `${RECRUITER_JOB_URL}/${id}`,
 	getAllRecruiterAddedJobsUrl: (recruiterId: string) =>
 		`${RECRUITER_JOB_URL}/created-jobs/${recruiterId}`,

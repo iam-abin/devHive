@@ -1,4 +1,4 @@
-import { IDependency } from "../../frameworks/types/dependencyInterface";
+import { IDependency } from "../../frameworks/types/dependency";
 
 import getAllPaymentsController from "./getPayments.controller";
 

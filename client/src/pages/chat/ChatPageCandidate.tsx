@@ -159,6 +159,8 @@ const ChatPageCandidate = () => {
         dispatch(setCandidateCurrentlySelectedChatRoom(room));
         const conversations = await getACandidateConversationApi(room._id);
         let senderId = getReceiver(room); // to find the other user
+        console.log("senderId ==={} ",senderId);
+        
         await deleteCandidatesAllNotificationsBySenderIdApi(
             senderId[0]?._id
         );
@@ -231,9 +233,9 @@ const ChatPageCandidate = () => {
                                 <div>
                                     <ChatBoxTopBar
                                         userImage={
-                                            candidateProfile.profile_image
-                                                ? candidateProfile.profile_image
-                                                : CONSTANTS.CANDIDATE_DEFAULT_PROFILE_IMAGE
+                                            candidateProfile.profileImage
+                                                ? candidateProfile.profileImage
+                                                : CONSTANTS.CANDIDATE_DEFAULT_profileImage
                                         }
                                         // chatRoom={selectedChatRoom}
                                         isOnline={isUserOnline(
@@ -261,12 +263,12 @@ const ChatPageCandidate = () => {
                                             (message: any, index: number) => (
                                                 <Message
                                                     senderImage={
-														candidateProfile.profile_image
-                                                            ? candidateProfile.profile_image
-                                                            : CONSTANTS.CANDIDATE_DEFAULT_PROFILE_IMAGE
+														candidateProfile.profileImage
+                                                            ? candidateProfile.profileImage
+                                                            : CONSTANTS.CANDIDATE_DEFAULT_profileImage
                                                     }
                                                     receiverImage={
-                                                        CONSTANTS.RECRUITER_DEFAULT_PROFILE_IMAGE                                                        
+                                                        CONSTANTS.RECRUITER_DEFAULT_profileImage                                                        
                                                     }
                                                     key={index}
                                                     message={message}

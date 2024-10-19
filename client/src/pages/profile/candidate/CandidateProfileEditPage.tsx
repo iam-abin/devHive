@@ -21,7 +21,7 @@ interface ProfileFormData {
 	currentLocation: string;
 	address: string;
 	skills: string[];
-	profile_image: string;
+	profileImage: string;
 	about: string;
 	resume: string;
 	experience: string;
@@ -43,14 +43,10 @@ function CandidateProfileEditPage() {
 
 	useEffect(() => {
 		const fetchProfileDetails = async () => {
-			try {
 				const profile = await candidateGetProfileApi(id);
 				setProfileDetails(profile.data);
 				
-			} catch (error: any) {
-				notify(error.response.data.errors[0].message, "error");
-				console.error("Error fetching profile details:", error);
-			}
+		
 		};
 
 		fetchProfileDetails();
@@ -61,7 +57,6 @@ function CandidateProfileEditPage() {
 	}
 
 	const handleSubmit = async (profileData: ProfileFormData) => {
-		try {
 			const data = await updateCandidateProfileApi(profileData);
 			if (data.data) {
 				notify(data.message, "success");
@@ -69,9 +64,6 @@ function CandidateProfileEditPage() {
 			} else {
 				notify("Profile not updated", "error");
 			}
-		} catch (error: any) {
-			notify(error.response.data.errors[0].message, "error");
-		}
 	};
 
 	const initialProfileValues: ProfileFormData = {
@@ -83,7 +75,7 @@ function CandidateProfileEditPage() {
 		currentLocation: candidateProfileData?.currentLocation ?? "",
 		address: candidateProfileData?.address ?? "",
 		skills: candidateProfileData?.skills ?? [],
-		profile_image: candidateProfileData?.profile_image ?? "",
+		profileImage: candidateProfileData?.profileImage ?? "",
 		about: candidateProfileData?.about ?? "",
 		resume: candidateProfileData?.resume ?? "",
 		experience: candidateProfileData?.experience ?? "",

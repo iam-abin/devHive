@@ -31,9 +31,6 @@ function RecruiterSigninPage() {
 			
 			notify(response.message, "success");
 			navigate("/recruiter");
-		} catch (error: any) {
-			console.error("in signin form error", error);
-			notify(error.response.data.errors[0].message, "error");
 		}finally {
 			// dispatch(setLoaded());
 		}

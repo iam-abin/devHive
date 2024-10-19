@@ -1,5 +1,5 @@
 import { NotFoundError } from "@abijobportal/common";
-import { IDependency } from "../../frameworks/types/dependencyInterface";
+import { IDependency } from "../../frameworks/types/dependency";
 import { MemberShipPlanUpdatedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/membership-plan-updated-publisher ";
 import { kafkaClient } from "../../config/kafka.connection";
 

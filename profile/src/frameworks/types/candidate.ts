@@ -1,23 +1,21 @@
-export interface ICandidate {
-    userId: string;
-    email: string;
-    name: string;
-    phone: number;
-    role: string;
+import { IUser } from "./user";
+
+export interface ICandidateProfile extends IUser {
+    gender: string;
+    currentLocation: string;
+    skills: string[];
+    profileImage: string;
+    about: string;
+    resume: {
+        filename: string;
+        url: string;
+    };
+    experience: string;
+    preferredJobs: string[];
+    isPremiumUser: boolean;
     isActive: boolean;
 }
 
-export interface CandidateDataProfile extends ICandidate {
-    isVarified: boolean;
-    gender: string;
-    currentLocation: string;
-    address: object;
-    skills: string[];
-    profile_image: string;
-    about: string;
-    resume: string;
-    experience: string;
-}
 
 export interface IResume {
     filename: string;

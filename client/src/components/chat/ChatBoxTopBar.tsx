@@ -32,11 +32,11 @@ const ChatBoxTopBar: React.FC<{
                             <img
                                 alt="Tailwind CSS Navbar component"
                                 src={
-                                    receiver[0]?.profile_image
-                                        ? receiver[0]?.profile_image
+                                    receiver[0]?.profileImage
+                                        ? receiver[0]?.profileImage
                                         : receiver[0]?.role === "candidate"
-                                        ? CONSTANTS.CANDIDATE_DEFAULT_PROFILE_IMAGE
-                                        : CONSTANTS.RECRUITER_DEFAULT_PROFILE_IMAGE
+                                        ? CONSTANTS.CANDIDATE_DEFAULT_profileImage
+                                        : CONSTANTS.RECRUITER_DEFAULT_profileImage
                                 }
                             />
                         </div>

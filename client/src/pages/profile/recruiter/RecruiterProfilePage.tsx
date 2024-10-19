@@ -25,7 +25,6 @@ const RecruiterProfilePage: React.FC = () => {
 	const navigate = useNavigate(); 
 	useEffect(() => {
 		(async () => {
-			try {
 				let recruiterProfile = null;
 				if (isCandidate) {
 					recruiterProfile = await recruiterGetProfileByCandidateApi(
@@ -38,10 +37,7 @@ const RecruiterProfilePage: React.FC = () => {
 				}
 				
 				setRecruiterProfileData(recruiterProfile);
-			} catch (error: any) {
-				console.error("Error fetching recruiter profile:", error);
-				hotToastMessage(error.response.data.errors[0].message, "error");
-			}
+		
 		})();
 	}, []);
 	return (
@@ -162,17 +158,17 @@ const RecruiterProfilePage: React.FC = () => {
 											</p>
 											<p className="text-gray-600">
 												{recruiterProfileData?.data
-													?.company_state ??
+													?.companyState ??
 													""}
 											</p>
 											<p className="text-gray-600">
 												{recruiterProfileData?.data
-													?.company_country ??
+													?.companyCountry ??
 													" "}
 											</p>
 											<p className="text-gray-600">
 												{recruiterProfileData?.data
-													?.company_website ??
+													?.companyWebsite ??
 													""}
 											</p>
 										</li>

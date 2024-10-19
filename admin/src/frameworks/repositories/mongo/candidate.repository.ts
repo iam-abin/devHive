@@ -1,17 +1,21 @@
 import { CandidateModel, ICandidateDocument } from "../../database/models";
-import { IUser } from "../../types/candidateInterface";
+import { ICandidate, IUser } from "../../types/user";
 
-// we want to export some closure
 export = {
     // these fn's are returning a promise as async so we can define return type as Promise<ICandidateData>
 
-    createCandidate: async (userData: IUser): Promise<ICandidateDocument> => {
+    createCandidate: async (
+        userData: IUser
+    ): Promise<Partial<ICandidateDocument>> => {
         const candidate = CandidateModel.buildCandidate(userData);
         return await candidate.save();
     },
 
     // updating and block unblocking is also doing here
-    updateCandidateProfile: async (userId: string, data: Partial<IUser>): Promise<ICandidateDocument | null> => {
+    updateCandidateProfile: async (
+        userId: string,
+        data: Partial<ICandidate>
+    ): Promise<Partial<ICandidateDocument> | null> => {
         const candidate = await CandidateModel.findByIdAndUpdate(
             userId,
             { $set: data },
@@ -21,7 +25,7 @@ export = {
         return candidate;
     },
 
-    blockUnblock: async (userId: string) => {
+    blockUnblock: async (userId: string): Promise<ICandidateDocument> => {
         const candidate = await CandidateModel.findById(userId);
         if (!candidate) throw new Error("Candidate not found");
 
@@ -30,15 +34,17 @@ export = {
         return await candidate.save();
     },
 
-    getById: async (userId: string) => {
-        const candidate = await CandidateModel.findById(userId);
-
-        return candidate;
+    getById: async (userId: string): Promise<ICandidateDocument | null> => {
+        return await CandidateModel.findById(userId);
     },
 
     getAllCandidates: async () => {
-        const candidates = await CandidateModel.find({});
-        return candidates;
+        return await CandidateModel.find({}).select([
+            "name",
+            "email",
+            "phone",
+            "isActive",
+        ]);
     },
 
     numberOfCandidates: async () => {
@@ -46,5 +52,3 @@ export = {
         return totalCandidates;
     },
 };
-
-// export default repository();

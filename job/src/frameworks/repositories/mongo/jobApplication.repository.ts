@@ -2,7 +2,7 @@ import Models from "../../database/mongo/models";
 import { IJobApplicationDocument } from "../../database/mongo/models/jobApplication";
 import { IJobApplication } from "../../types/jobApplication";
 
-const { JobModel, jobApplicationModel } = Models;
+const { jobApplicationModel } = Models;
 
 export = {
     applyJob: async (
@@ -65,8 +65,8 @@ export = {
         if (recruiterId) {
             jobApplications = await jobApplicationModel
                 .find({ recruiterId })
-                .populate("jobId")
-                .populate("candidateId");
+                .populate("jobId",["title",""])
+                .populate("candidateId",["name","email"]);
         } else {
             jobApplications = await jobApplicationModel
                 .find({ candidateId })

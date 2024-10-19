@@ -7,7 +7,7 @@ import { recruiterRouter } from "./recruiter";
 import { membershipPlanRouter } from "./membership-plan";
 import { jobRouter } from "./job";
 import { paymentRouter } from "./payment";
-import { IDependency } from "../../types/dependencyInterface";
+import { IDependency } from "../../types/dependency";
 
 
 export const routes = (dependencies: IDependency) => {

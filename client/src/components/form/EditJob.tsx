@@ -10,8 +10,6 @@ interface JobFormData {
 	jobId: string;
 	title: string;
 	recruiter: string;
-	companyName: string;
-	companyLocation: string;
 	jobDescription: string;
 	skills: string[];
 	availablePosition: number;
@@ -30,15 +28,12 @@ function EditJob() {
 
 	useEffect(() => {
 		const fetchJobDetails = async () => {
-			try {
 				if (jobId) {
 					const job = await getAJobApi(jobId);
+					console.log(job);
+					
 					setJobDetails(job.data);
 				}
-			} catch (error: any) {
-				notify(error.response.data.errors[0].message, "error");
-				console.error("Error fetching job details:", error);
-			}
 		};
 
 		fetchJobDetails();
@@ -48,18 +43,13 @@ function EditJob() {
 	}
 
 	const handleSubmit = async (jobData: JobFormData) => {
-		try {
 			const data = await updateJobApi(jobData);
-
 			if (data.data) {
 				notify("updated successfully", "success");
 				navigate("/recruiter/recruiter-added-jobs");
 			} else {
 				notify("not updated", "error");
 			}
-		} catch (error: any) {
-			notify(error.response.data.errors[0].message, "error");
-		}
 	};
 
 	const initialJobValues: JobFormData = {
@@ -71,8 +61,6 @@ function EditJob() {
 		availablePosition: jobDetails?.availablePosition ?? 0,
 		experienceRequired: jobDetails?.experienceRequired ?? "",
 		educationRequired: jobDetails?.educationRequired ?? "",
-		companyName: jobDetails?.companyName ?? "",
-		companyLocation: jobDetails?.companyLocation ?? "",
 		employmentType: jobDetails?.employmentType,
 		salaryMin: jobDetails?.salaryMin ?? 0,
 		salaryMax: jobDetails?.salaryMax ?? 0,
@@ -80,6 +68,7 @@ function EditJob() {
 			new Date(jobDetails?.deadline).toLocaleDateString("en-CA") ?? "",
 	};
 
+	//   const jobCreationSchema: /* Define your validation schema here */ = /* ... */;
 	const today = new Date().toISOString().split("T")[0];
 
 	return (
@@ -124,6 +113,7 @@ function EditJob() {
 								/>
 							</div>
 
+							
 							{/* Job Descriptions field */}
 							<div className="form-control w-6/6">
 								<label
@@ -201,7 +191,29 @@ function EditJob() {
 									className="error label-text-alt"
 								/>
 							</div>
-							
+
+							{/* Location field */}
+							{/* <div className="form-control w-6/6">
+								<label htmlFor="location" className="label">
+									Location
+								</label>
+								<Field
+									type="text"
+									id="location"
+									name="location"
+									className={`input input-primary w-full rounded-xl ${
+										errors.location && touched.location
+											? "input-error"
+											: ""
+									}`}
+								/>
+								<ErrorMessage
+									name="location"
+									component="div"
+									className="error label-text-alt"
+								/>
+							</div> */}
+
 							<div className="flex sm:flex-col justify-between">
 								{/* Experience Required field */}
 								<div className=" form-control w-6/6">
@@ -239,6 +251,7 @@ function EditJob() {
 									</label>
 
 									<Field
+										as="select" // Use the 'as' prop to render a select element
 										id="employmentType"
 										name="employmentType"
 										className={`select select-primary w-full max-w-xs ${

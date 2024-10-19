@@ -46,16 +46,11 @@ export = {
 
 	getAllPayments: async (): Promise<IPaymentDocument[] | []> => {
 		const payments = await PaymentModel.find({})
-			.populate({
-				path: "candidateId",
-				model: "Candidate",
-			})
-			.populate({
-				path: "membershipPlanId",
-				model: "MembershipPlan",
-			});
+			.populate("candidateId", ["name","email"])
+			.populate("membershipPlanId", ["name", "price"]);
 		return payments;
 	},
+	
 
 	// populate graph data for admin
 	getGraphData: async () => {

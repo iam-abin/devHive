@@ -1,4 +1,4 @@
-import { IDependency } from "../../frameworks/types/dependencyInterface";
+import { IDependency } from "../../frameworks/types/dependency";
 
 import dashboardController from "./dashboard.controller";
 import getDashboardGraphDetailsController from "./dashboardGraph.controller";

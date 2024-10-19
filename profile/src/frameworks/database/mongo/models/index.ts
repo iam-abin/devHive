@@ -1,5 +1,5 @@
 import { CandidateProfileModel } from "./candidate";
-import { RecruiterProfileModel } from "./recruiter-profile";
+import { RecruiterProfileModel } from "./recruiter";
 
 export default {
 	CandidateProfileModel,

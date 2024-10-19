@@ -1,5 +1,5 @@
 import { NotFoundError } from "@abijobportal/common";
-import { IDependency } from "../../frameworks/types/dependencyInterface";
+import { IDependency } from "../../frameworks/types/dependency";
 
 export = (dependencies: IDependency) => {
 	const {

@@ -1,20 +1,24 @@
 import mongoose from "mongoose";
 import { IPayment } from "../../../types/payment";
 
-export interface IPaymentDocument extends mongoose.Document, IPayment {}
+export interface IPaymentDocument extends mongoose.Document {
+    candidateId: mongoose.Schema.Types.ObjectId;
+    membershipPlanId: mongoose.Schema.Types.ObjectId;
+    stripeId: mongoose.Schema.Types.ObjectId;
+}
 
 const paymentSchema = new mongoose.Schema(
     {
         candidateId: {
-            type: String,
+            type: mongoose.Schema.Types.ObjectId,
             required: true,
         },
         membershipPlanId: {
-            type: String,
+            type: mongoose.Schema.Types.ObjectId,
             required: true,
         },
         stripeId: {
-            type: String,
+            type: mongoose.Schema.Types.ObjectId,
             required: true,
         },
     },

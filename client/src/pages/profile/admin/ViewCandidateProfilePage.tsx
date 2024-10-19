@@ -29,10 +29,7 @@ const ViewCandidateProfilePage: React.FC = () => {
 				const candidate = await viewCandidateProfileDetailsApi(userId);
 				setCandidateProfileData(candidate.data);
 
-			} catch (error: any) {
-				notify(error.response.data.errors[0].message, "error");
-				console.error("Error fetching profile details:", error);
-			}finally{
+			} finally{
                 dispatch(setLoaded())
             }
 		};

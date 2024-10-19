@@ -1,4 +1,4 @@
-import { IJob } from "../frameworks/types/job-interface";
+import { IJob } from "../frameworks/types/job";
 
 export class Job {
 	title: string;

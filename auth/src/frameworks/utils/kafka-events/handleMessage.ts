@@ -8,6 +8,8 @@ import usersRepository from "../../repositories/mongo/users.repository";
 export const handleMessage = (data: any, topic: string, message: any) => {
 	switch (topic) {
 		case "USER-UPDATED-TOPIC":
+			console.log(data);
+			
 			usersRepository.updateUser(data.userId, data);
 			break;
 			

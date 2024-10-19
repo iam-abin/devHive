@@ -14,16 +14,11 @@ function JobDetailsPage() {
 	const { jobId } = useParams();
 	useEffect(() => {
 		const fetchJobDetails = async () => {
-			try {
 				if (jobId) {
 					const job = await getAJobApi(jobId);
 					
 					setJobDetails(job.data);
 				}
-			} catch (error: any) {
-				notify(error.response.data.errors[0].message, "error");
-				console.error("Error fetching job details:", error);
-			}
 		};
 
 		fetchJobDetails();
@@ -36,7 +31,6 @@ function JobDetailsPage() {
 
 	const handleChangeJobCloseStatus = async (jobId: string) => {
 		
-		try {
 			if (jobId) {
 				Swal.fire({
 					title: `Do you want to ${
@@ -65,10 +59,6 @@ function JobDetailsPage() {
 					}
 				});
 			}
-		} catch (error: any) {
-			notify(error.response.data.errors[0].message, "error");
-			console.error("Error fetching job details:", error);
-		}
 	};
 
 	const handleGoBack = () => {

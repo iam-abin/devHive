@@ -1,6 +1,7 @@
 import "express-async-errors";
 import express, { Express } from "express";
 import morgan from "morgan";
+import compression from "compression"
 import { NotFoundError, errorHandler } from "@abijobportal/common";
 
 import { routes } from "./routes"
@@ -16,6 +17,7 @@ app.set("trust proxy", true); // trust first proxy
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(compression())
 
 // Routes
 app.use(appConfig.API_PREFIX, routes(dependencies));

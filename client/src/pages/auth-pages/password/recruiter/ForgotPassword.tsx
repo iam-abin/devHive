@@ -24,14 +24,7 @@ const ForgotPassword: React.FC = () => {
 			);
 			notify(response.message, "success");
 			navigate("/recruiter/signin");
-		} catch (error: any) {
-			console.error("Error during reset password submission:", error);
-			notify(
-				error.response.data.errors[0].message ||
-					"An error occurred during reset password submission",
-				"error"
-			);
-		} finally {
+		}finally {
 			dispatch(setLoaded());
 		}
 	};

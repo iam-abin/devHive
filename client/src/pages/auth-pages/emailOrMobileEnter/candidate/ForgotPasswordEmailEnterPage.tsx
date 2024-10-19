@@ -53,14 +53,6 @@ function ForgotPasswordEmailEnterPage() {
 					navigate(`/candidate/forgotPasswordOtp/${values.email}`);
 				}
 			});
-		} catch (error: any) {
-			console.error("Error during email submission:", error);
-			// notify(error.response.data.errors[0].message, "error");
-			notify(
-				error.response.data.errors[0].message ||
-					"An error occurred during email submission",
-				"error"
-			);
 		} finally {
 			dispatch(setLoaded());
 		}

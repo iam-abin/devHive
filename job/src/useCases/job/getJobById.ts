@@ -9,6 +9,8 @@ export = (dependencies: IDependency) => {
 	}
 
 	const execute = async (jobId: string) => {
+		// console.log();
+		
 		const job = await jobRepository.getAJob(jobId);
 		if(!job) throw new NotFoundError("job not found")
 		return job

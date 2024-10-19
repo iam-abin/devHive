@@ -1,4 +1,4 @@
-import { IDependency } from "../../frameworks/types/dependencyInterface";
+import { IDependency } from "../../frameworks/types/dependency";
 
 import blockUnblockJobController from "./blockUnblock.controller";
 import viewJobController from "./viewJob.controller";

@@ -1,9 +1,10 @@
 import { cloudinary } from "../../config/cloudinary";
 import streamifier from "streamifier";
-import { IDependency } from "../../frameworks/types/dependencyInterface";
+import { IDependency } from "../../frameworks/types/dependency";
 import { CandidateProfileUpdatedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/candidate-profile-updated-publisher ";
 import { kafkaClient } from "../../config/kafka.connection";
-import { IResume } from "../../frameworks/types/candidateProfile";
+import { IResume } from "../../frameworks/types/candidate";
+import { NotFoundError } from "@abijobportal/common";
 
 export = (dependencies: IDependency) => {
     const {
@@ -18,7 +19,8 @@ export = (dependencies: IDependency) => {
     const execute = async (profileId: string, file: IResume) => {
         try {
             if (!file) return; // Return or handle accordingly
-
+            const profile = await candidateProfileRepository.findById(profileId);
+            if(!profile) throw new NotFoundError("profile not found")
             const updatedProfile = await candidateProfileRepository.uploadResume(
                 profileId,
                 { url: file?.url, filename: file?.filename }
@@ -28,8 +30,9 @@ export = (dependencies: IDependency) => {
                 new CandidateProfileUpdatedEventPublisher(kafkaClient);
 				
             await candidateProfileUpdatedEvent.publish({
-                resume: updatedProfile?.resume,
-                userId: updatedProfile?.userId,
+                resume: updatedProfile?.resume.filename,
+                userId: profile.id,
+                isActive: false
             });
             return updatedProfile;
         } catch (error) {

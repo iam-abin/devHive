@@ -37,7 +37,7 @@ const ChatPageRecruiter = () => {
     // if (selectedChatRoom) {
     //     console.log(
     //         "getReceiver(selectedChatRoom)",
-    //         getReceiver(selectedChatRoom)[0].profile_image
+    //         getReceiver(selectedChatRoom)[0].profileImage
     //     );
     // }
 
@@ -235,7 +235,7 @@ const ChatPageRecruiter = () => {
                                 <div>
                                     <ChatBoxTopBar
                                         userImage={
-                                            CONSTANTS.CANDIDATE_DEFAULT_PROFILE_IMAGE
+                                            CONSTANTS.CANDIDATE_DEFAULT_profileImage
                                         }
                                         // chatRoom={selectedChatRoom}
                                         isOnline={isUserOnline(
@@ -263,16 +263,16 @@ const ChatPageRecruiter = () => {
                                             (message: any, index: number) => (
                                                 <Message
                                                     senderImage={
-                                                        CONSTANTS.RECRUITER_DEFAULT_PROFILE_IMAGE
+                                                        CONSTANTS.RECRUITER_DEFAULT_profileImage
                                                     }
                                                     receiverImage={
                                                         getReceiver(
                                                             selectedChatRoom
-                                                        )[0].profile_image
+                                                        )[0].profileImage
                                                             ? getReceiver(
                                                                   selectedChatRoom
-                                                              )[0].profile_image
-                                                            : CONSTANTS.RECRUITER_DEFAULT_PROFILE_IMAGE
+                                                              )[0].profileImage
+                                                            : CONSTANTS.RECRUITER_DEFAULT_profileImage
                                                     }
                                                     key={index}
                                                     message={message}

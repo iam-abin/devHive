@@ -1,9 +1,8 @@
 import { IJobDocument, JobModel } from "../../database/models";
-import { IJob } from "../../types/job-interface";
+import { IJob } from "../../types/job";
 
-// we want to export some closure
+
 export = {
-	// these fn's are returning a promise as async so we can define return type as Promise<ICandidateData>
 
 	createJob: async (jobData: IJob): Promise<IJobDocument> => {
 		const jobObject = JobModel.buildJob(jobData);
@@ -50,4 +49,3 @@ export = {
 	},
 };
 
-// export default repository();

@@ -27,9 +27,7 @@ function AdminSigninPage() {
 
             notify(response.message, "success");
             navigate("/admin");
-        } catch (error: any) {
-            notify(error.data.errors[0].message, "error");
-        }
+       
     };
 
     const adminData = useSelector((state: RootState) => {

@@ -39,9 +39,7 @@ function RecruiterSignupPage() {
 					navigate(`/recruiter/otpSignupRecruiter/${userData.email}`);
 				}
 			});
-		} catch (error: any) {
-			notify(error.response.data.errors[0].message, "error");
-		} finally {
+		}finally {
 			dispatch(setLoaded());
 		}
 	};

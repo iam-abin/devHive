@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { IDependency } from "../../frameworks/types/dependencyInterface";
-import recruiter from ".";
 
 export = (dependencies: IDependency)=>{
 

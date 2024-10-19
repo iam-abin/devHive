@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { IDependency } from "../../frameworks/types/dependencyInterface";
+import { IDependency } from "../../frameworks/types/dependency";
 import { RecruiterProfileUpdatedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/recruiter-profile-updated-publisher";
 import { kafkaClient } from "../../config/kafka.connection";
 import { UserUpdatedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/user-updated-publisher";
@@ -32,13 +32,13 @@ export = (dependencies: IDependency) => {
 			phone: updatedData?.phone,
 			isActive: updatedData?.isActive,
 			gender: updatedData?.gender,
-			profile_image: updatedData?.profile_image,
+			profileImage: updatedData?.profileImage,
 			about: updatedData?.about,
 			companyName: updatedData.companyName,
 			companyLocation: updatedData.companyLocation,
-			company_website: updatedData.company_website,
-			company_state: updatedData.company_state,
-			company_country: updatedData.company_country,
+			companyWebsite: updatedData.companyWebsite,
+			companyState: updatedData.companyState,
+			companyCountry: updatedData.companyCountry,
 			// company_id: updatedData?.company_id,
 			userId: updatedData?.userId,
             

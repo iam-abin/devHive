@@ -5,7 +5,7 @@ import {
     candidateProfileControllers,
 } from "../../../controllers";
 
-import { IDependency } from "../../types/dependencyInterface";
+import { IDependency } from "../../types/dependency";
 import { auth, ROLES } from "@abijobportal/common";
 
 export const recruiterRouter = (dependencies: IDependency) => {

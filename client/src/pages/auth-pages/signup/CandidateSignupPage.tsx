@@ -43,8 +43,6 @@ function CandidateSignupPage() {
 					navigate(`/candidate/otpSignupCandidate/${userData.email}`);
 				}
 			});
-		} catch (error: any) {
-			notify(error.response.data.errors[0].message, "error");
 		} finally {
 			dispatch(setLoaded());
 		}

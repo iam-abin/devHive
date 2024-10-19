@@ -1,6 +1,6 @@
 import express, { Router } from "express"
 import { dashboardControllers } from "../../../controllers";
-import { IDependency } from "../../types/dependencyInterface";
+import { IDependency } from "../../types/dependency";
 
 export const dashboardRouter = (dependencies: IDependency)=>{
     const router: Router = express.Router();

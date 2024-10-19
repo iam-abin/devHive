@@ -64,8 +64,8 @@ const ChatRoomList: React.FC<ChatRoomListProps> = ({
                             alt="Tailwind CSS Navbar component"
                             src={
                                 receiver[0].role === "recruiter"
-                                    ? CONSTANTS.RECRUITER_DEFAULT_PROFILE_IMAGE
-                                    : receiver[0].role === "candidate" && receiver[0].profile_image? receiver[0].profile_image : CONSTANTS.CANDIDATE_DEFAULT_PROFILE_IMAGE
+                                    ? CONSTANTS.RECRUITER_DEFAULT_profileImage
+                                    : receiver[0].role === "candidate" && receiver[0].profileImage? receiver[0].profileImage : CONSTANTS.CANDIDATE_DEFAULT_profileImage
                             }
                         />
                         <span

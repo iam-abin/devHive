@@ -22,13 +22,6 @@ const ResetPassword: React.FC = () => {
       const response = await resetPasswordRecruiterApi(recruiterData.id, values.password);
       notify(response.message, 'success');
       navigate('/recruiter');
-    } catch (error: any) {
-      console.error('Error during reset password submission:', error);
-      notify(
-        error.response.data.errors[0].message ||
-          'An error occurred during reset password submission',
-        'error'
-      );
     }finally {
 			dispatch(setLoaded());
 		}

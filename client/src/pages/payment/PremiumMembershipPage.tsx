@@ -29,14 +29,10 @@ function PremiumMembershipPage() {
 
 	useEffect(() => {
 		(async () => {
-			try {
 				const recruiters = await getAllMembershipPlansApi();
 				
 				setMembershipPlansData(recruiters.data);
-			} catch (error: any) {
-				notify(error.response.data.errors[0].message, "error");
-				console.error(error);
-			}
+	
 		})();
 	}, []);
 

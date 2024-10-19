@@ -2,7 +2,7 @@ import getAllRecruitersController from "./viewRecruiters.controller";
 import getRecruiterByIdController from "./viewProfile.controller";
 import recruiterBlockUnblockController from "./blockUnblock.controller";
 
-import { IDependency } from "../../frameworks/types/dependencyInterface";
+import { IDependency } from "../../frameworks/types/dependency";
 
 export = (dependencies: IDependency) => {
 	return {

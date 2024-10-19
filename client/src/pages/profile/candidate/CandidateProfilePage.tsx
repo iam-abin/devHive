@@ -136,10 +136,6 @@ const CandidateProfilePage: React.FC = () => {
 					hotToastMessage("resume not uploaded", "error");
 				}
 			}
-		} catch (error: any) {
-			
-			// hotToastMessage("file is size is > 1mb", "error");
-			hotToastMessage(error.response.data.errors[0].message, "error");
 		} finally {
 			setPdfLoading(false);
 		}
@@ -173,7 +169,6 @@ const CandidateProfilePage: React.FC = () => {
 	};
 
 	const handleSavePreferredJobs = async () => {
-		try {
 			const response = await updateCandidatePreferredJobsProfileApi(
 				candidateData.id,
 				preferredJobs
@@ -186,13 +181,9 @@ const CandidateProfilePage: React.FC = () => {
 			} else {
 				hotToastMessage("preferredJobs not uploaded", "error");
 			}
-		} catch (error: any) {
-			hotToastMessage(error.response.data.errors[0].message, "error");
-		}
 	};
 
 	const handleSaveSkills = async () => {
-		try {
 			const response = await updateCandidateSkillsProfileApi(
 				candidateData.id,
 				skills
@@ -205,9 +196,7 @@ const CandidateProfilePage: React.FC = () => {
 			} else {
 				hotToastMessage("skills not uploaded", "error");
 			}
-		} catch (error: any) {
-			hotToastMessage(error.response.data.errors[0].message, "error");
-		}
+	
 	};
 
 	const handleImageUpload = async (selectedFile: File) => {
@@ -224,7 +213,7 @@ const CandidateProfilePage: React.FC = () => {
 				hotToastMessage(response.message, "success");
 				setCandidateProfileData({
 					...candidateProfileData,
-					profile_image: response.data.profile_image,
+					profileImage: response.data.profileImage,
 				});
 				dispatch(setCandidateProfileDetails(response?.data));
 				navigate("/candidate/profile");
@@ -232,9 +221,7 @@ const CandidateProfilePage: React.FC = () => {
 			} else {
 				hotToastMessage("resume not uploaded", "error");
 			}
-		} catch (error: any) {
-			hotToastMessage(error.response.data.errors[0].message, "error");
-		} finally {
+		}finally {
 			setImgLoading(false); // Set loading to false after upload completes (whether success or failure)
 		}
 	};
@@ -262,7 +249,7 @@ const CandidateProfilePage: React.FC = () => {
 									{!imgLoading && (
 										<img
 											src={
-												candidateProfileData?.profile_image
+												candidateProfileData?.profileImage
 											}
 											className="md:w-3/6  rounded-full shadow-2xl"
 										/>

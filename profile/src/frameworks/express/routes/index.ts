@@ -1,6 +1,6 @@
 import express from "express"
 
-import { IDependency } from "../../types/dependencyInterface";
+import { IDependency } from "../../types/dependency";
 import { candidateRouter } from "./candidate";
 import { recruiterRouter } from "./recruiter";
 import { checkCurrentUser } from "@abijobportal/common";

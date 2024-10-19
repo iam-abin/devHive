@@ -14,7 +14,7 @@ import { RootState } from "../../../redux/reducer/reducer";
 import Loading from "../../../components/loading/Loading";
 import candidateLoginImage from "../../../assets/candidate/candidate-login.svg";
 // import googleIcon from "../../../assets/google/google-icon.svg";
-import { gapi } from 'gapi-script';
+// import { gapi } from 'gapi-script';
 
 import React, { useEffect } from "react";
 // import { GoogleLogin, GoogleOAuthProvider, useGoogleLogin } from "@react-oauth/google";
@@ -36,10 +36,6 @@ const CandidateSigninPage: React.FC = () => {
 			dispatch(setCandidate(response));
 			notify(response.message, "success");
 			navigate("/candidate");
-		} catch (error: any) {
-			console.error("in signin form error", error);
-
-			// notify(error.data.errors[0].message || "invalid email or password", "error");
 		} finally {
 			// dispatch(setLoaded());
 		}
@@ -50,16 +46,16 @@ const CandidateSigninPage: React.FC = () => {
 	}
 
 
-	useEffect(()=>{
-		function start(){
-			gapi.client.init({
-				clientId: "489110239720-2e35usfdf9kavcchc93fbun2oeismh10.apps.googleusercontent.com",
-				scope: ""
-			})
-		};
+	// useEffect(()=>{
+	// 	function start(){
+	// 		gapi.client.init({
+	// 			clientId: "489110239720-2e35usfdf9kavcchc93fbun2oeismh10.apps.googleusercontent.com",
+	// 			scope: ""
+	// 		})
+	// 	};
 
-		gapi.load('client:auth2', start)
-	})
+	// 	gapi.load('client:auth2', start)
+	// })
 	return (
 		<div className="flex w-full h-screen">
 			<button onClick={()=>navigate('/candidate')} className="bg-slate-700 rounded-xl p-2 text-white w-20 flex justify-between items-center absolute m-10"><RiArrowLeftFill />home</button>

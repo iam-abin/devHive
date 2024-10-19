@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { IDependency } from "../../frameworks/types/dependencyInterface";
-import { NotFoundError } from "@abijobportal/common";
 
 export = (dependencies: IDependency)=>{
 
@@ -8,6 +7,8 @@ export = (dependencies: IDependency)=>{
 
     return async (req: Request, res: Response)=>{
         const {id} = req.params;
+        console.log(req.currentUser);
+        
         const job = await getJobByIdUseCase(dependencies).execute(id);
         res.status(200).json({message: "Job get successfully", data: job })
 

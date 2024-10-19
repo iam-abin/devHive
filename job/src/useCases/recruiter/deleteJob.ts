@@ -17,19 +17,22 @@ export = (dependencies: IDependency) => {
         if (!job) throw new NotFoundError();
         console.log(job);
         console.log(recruiterId);
-        
+
         if (recruiterId !== job.recruiterId._id.toString()) {
             throw new ForbiddenError("You cannot modify others job");
         }
         const deletedJob = await jobRepository.deleteJob(jobId);
-        if (deletedJob) {
-            // to produce a message to kafka topic
-            // isBlocked contains user data with 'isActive' value changed
-            // await produceMessage(deletedJob, 'JOB_DELETED_TOPIC')
-            const jobDeletedEvent = new JobDeletedEventPublisher(kafkaClient);
-            await jobDeletedEvent.publish({ jobId });
-        }
-        return deletedJob;
+
+        // to produce a message to kafka topic
+        // isBlocked contains user data with 'isActive' value changed
+        // await produceMessage(deletedJob, 'JOB_DELETED_TOPIC')
+        const jobDeletedEvent = new JobDeletedEventPublisher(kafkaClient);
+        await jobDeletedEvent.publish({ jobId });
+        const remainingJobs = await jobRepository.getAllJobsByRecruiterId(
+            recruiterId
+        );
+
+        return remainingJobs;
     };
 
     return { execute };

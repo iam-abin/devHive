@@ -1,7 +1,7 @@
 import express, { Router } from "express";
 
 import { candidateProfileControllers } from "../../../controllers";
-import { IDependency } from "../../types/dependencyInterface";
+import { IDependency } from "../../types/dependency";
 import {  auth, ROLES } from "@abijobportal/common";
 import { multerConfig } from "../../../config/multer";
 

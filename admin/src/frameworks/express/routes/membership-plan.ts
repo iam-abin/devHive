@@ -1,5 +1,5 @@
 import express, { Router } from "express";
-import { IDependency } from "../../types/dependencyInterface";
+import { IDependency } from "../../types/dependency";
 import { membershipControllers } from "../../../controllers";
 
 export const membershipPlanRouter = (dependencies: IDependency) => {

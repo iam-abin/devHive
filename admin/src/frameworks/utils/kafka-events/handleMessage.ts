@@ -1,7 +1,7 @@
-import candidateRepository from "../../repositories/mongo/candidateRepository";
-import recruiterRepository from "../../repositories/mongo/recruiterRepository";
-import jobRepository from "../../repositories/mongo/jobRepository";
-import paymentRepository from "../../repositories/mongo/paymentRepository";
+import candidateRepository from "../../repositories/mongo/candidate.repository";
+import recruiterRepository from "../../repositories/mongo/recruiter.repository";
+import jobRepository from "../../repositories/mongo/job.repository";
+import paymentRepository from "../../repositories/mongo/payment.repository";
 
 // interface handleMessageInterface {
 // 	data: any;

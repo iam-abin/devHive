@@ -1,4 +1,3 @@
-// import createCandidateProfileUseCase from "./create-profile";
 import updateCandidateProfileUseCase from "./updateProfile";
 import uploadResumeUseCase from "./uploadResume";
 import getCandidateProfileByUserIdUseCase from "./getProfileById"
@@ -9,7 +8,6 @@ import deleteResumeUseCase from "./deleteResume";
 import updatePreferredJobsUseCase from "./updatePreferredJobs";
 
 export {
-    // createCandidateProfileUseCase,
 	updateCandidateProfileUseCase,
 	uploadResumeUseCase,
 	deleteResumeUseCase,

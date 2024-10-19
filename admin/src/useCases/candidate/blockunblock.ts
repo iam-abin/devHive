@@ -1,7 +1,8 @@
 import { NotFoundError } from "@abijobportal/common";
 import { kafkaClient } from "../../config/kafka.connection";
-import { IDependency } from "../../frameworks/types/dependencyInterface";
+import { IDependency } from "../../frameworks/types/dependency";
 import { UserUpdatedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/user-updated-publisher";
+import { ICandidateDocument } from "../../frameworks/database";
 
 export = (dependencies: IDependency) => {
 	const { repositories:{candidateRepository} } = dependencies;
@@ -18,8 +19,11 @@ export = (dependencies: IDependency) => {
         // isBlocked contains user data with 'isActive' value changed
         const userUpdatedEvent = new UserUpdatedEventPublisher(kafkaClient)
         
-		const isBlocked = await candidateRepository.blockUnblock(userId);
-		await userUpdatedEvent.publish(isBlocked)
+		const isBlocked: Partial<ICandidateDocument> = await candidateRepository.blockUnblock(userId);
+		await userUpdatedEvent.publish({
+			userId: isBlocked.id,
+			isActive: isBlocked.isActive!,
+		})
 
 		return isBlocked
 	};

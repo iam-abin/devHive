@@ -21,10 +21,7 @@ function JobDetailsPage() {
 					
 					setJobDetails(job.data);
 				}
-			} catch (error: any) {
-				notify(error.response.data.errors[0].message, "error");
-				console.error("Error fetching job details:", error);
-			}
+			
 		};
 
 		fetchJobDetails();
@@ -51,13 +48,6 @@ function JobDetailsPage() {
 					}
 				}
 			})
-			.catch((error) => {
-				notify(
-					error.response.data.errors[0].message ||
-						"You already applied for this jobb",
-					"error"
-				);
-			});
 	};
 	return (
 		<div>

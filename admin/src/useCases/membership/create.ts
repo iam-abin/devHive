@@ -1,8 +1,9 @@
 import { MembershipPlan } from "../../entities/membership-plan";
-import { IDependency } from "../../frameworks/types/dependencyInterface";
+import { IDependency } from "../../frameworks/types/dependency";
 import { IMembershipPlanData } from "../../entities/membership-plan";
 import { MemberShipPlanCreatedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/membership-plan-created-publisher";
 import { kafkaClient } from "../../config/kafka.connection";
+import { BadRequestError } from "@abijobportal/common";
 
 export = (dependencies: IDependency) => {
     const {
@@ -14,10 +15,13 @@ export = (dependencies: IDependency) => {
     }
 
     const execute = async (premiumPlanData: IMembershipPlanData) => {
+        const isPlanExist = await membershipRepository.getByName(premiumPlanData.name);
+        if(isPlanExist) throw new BadRequestError("This plan already exist")
         const plan = new MembershipPlan(premiumPlanData);
         const membershipPlan = await membershipRepository.createMembershipPlan(
             plan
         );
+        
         // // to produce a message to kafka topic
         // // isBlocked contains user data with 'isActive' value changed
 

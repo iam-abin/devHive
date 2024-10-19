@@ -1,5 +1,5 @@
 import express, { Router } from "express"
-import { IDependency } from "../../types/dependencyInterface";
+import { IDependency } from "../../types/dependency";
 import { checkCurrentUser, auth, ROLES } from "@abijobportal/common";
 import { paymentControllers } from "../../../controllers";
 

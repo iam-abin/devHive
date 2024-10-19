@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { IDependency } from "../../frameworks/types/dependencyInterface";
-import { IFileData } from "../../frameworks/types/candidateProfile";
+import { IDependency } from "../../frameworks/types/dependency";
+import { IFileData } from "../../frameworks/types/candidate";
 
 export = (dependencies: IDependency)=>{
 

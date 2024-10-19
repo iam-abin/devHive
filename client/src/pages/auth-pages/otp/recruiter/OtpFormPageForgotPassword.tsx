@@ -32,12 +32,6 @@ function OtpFormPageForgotPassword() {
 			);
 			notify(response?.message, "success");
 			navigate(`/recruiter/forgotPassword/${response.data.id}`);
-		} catch (error: any) {
-			console.error("Error during OTP submission:", error);
-
-			notify(
-				error.response?.data.errors[0]?.message || "An error occurred during OTP submission", "error"
-			);
 		} finally {
 			dispatch(setLoaded());
 		}

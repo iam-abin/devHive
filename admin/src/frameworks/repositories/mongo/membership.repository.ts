@@ -1,7 +1,7 @@
 import { IMembershipPlanData } from "../../../entities/membership-plan";
 import { IMembershipPlansDocument, MembershipPlansModel } from "../../database/models";
 
-// we want to export some closure
+
 export = {
 	// these fn's are returning a promise as async so we can define return type as Promise<ICandidateData>
 
@@ -51,10 +51,16 @@ export = {
 		return membershipPlan;
 	},
 
+	getByName: async (membershipPlanName: string): Promise<IMembershipPlansDocument | null> => {
+		const membershipPlan = await MembershipPlansModel.findOne({
+			name: membershipPlanName
+		});
+		return membershipPlan;
+	},
+
 	getAllMembershipPlans: async (): Promise<IMembershipPlansDocument[] | []> => {
-		const membershipPlans = await MembershipPlansModel.find({});
+		const membershipPlans = await MembershipPlansModel.find({}).select(["name", "price"]);
 		return membershipPlans;
 	},
 };
 
-// export default repository();

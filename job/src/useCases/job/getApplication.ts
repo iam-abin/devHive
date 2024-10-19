@@ -9,9 +9,14 @@ type application = {
 
 export = (dependencies: IDependency) => {
     const {
-        repositories: { jobApplicationRepository },
+        repositories: { jobRepository, jobApplicationRepository },
     } = dependencies;
 
+    if (!jobRepository) {
+        throw new Error(
+            "jobRepository should exist in dependencies"
+        );
+    }
     if (!jobApplicationRepository) {
         throw new Error(
             "jobApplicationRepository should exist in dependencies"
@@ -25,8 +30,7 @@ export = (dependencies: IDependency) => {
     }: application) => {
 
 		
-		const jobApplication =
-		await jobApplicationRepository.getAJobApplication(jobApplicationId);
+		const jobApplication = await jobApplicationRepository.getAJobApplication(jobApplicationId);
 		if(!jobApplication) throw new NotFoundError("Job application not found")
 		
         if (!recruiterId && !candidateId){
@@ -36,10 +40,9 @@ export = (dependencies: IDependency) => {
 				"Should provide either candidateId or recruiterId"
 			);
 		}
-           
+        const job = await jobRepository.getAJob(jobApplication.jobId);
+		if(!job) throw new NotFoundError("job not found")
 
-		
-		console.log(jobApplication);
         // If current user is recruiter
         if (recruiterId) {
 			if (recruiterId !== jobApplication.recruiterId.toString()) {

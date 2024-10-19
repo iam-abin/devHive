@@ -1,4 +1,4 @@
-import { CandidateDataProfile } from "../frameworks/types/candidateProfile";
+import { CandidateDataProfile } from "../frameworks/types/candidate";
 
 export class CandidateProfile {
 	name: string;
@@ -9,7 +9,7 @@ export class CandidateProfile {
 	currentLocation?: string;
 	address?: object;
 	skills?: string[];
-	profile_image?: string;
+	profileImage?: string;
 	about?: string;
 	resume?: string;
 	experience?: string;
@@ -23,7 +23,7 @@ export class CandidateProfile {
 		currentLocation,
 		address,
 		skills,
-		profile_image,
+		profileImage,
 		about,
 		resume,
 		experience,
@@ -37,7 +37,7 @@ export class CandidateProfile {
 		this.currentLocation = currentLocation;
 		this.address = address;
 		this.skills = skills;
-		this.profile_image = profile_image;
+		this.profileImage = profileImage;
 		this.about = about;
 		this.resume = resume;
 		this.experience = experience;

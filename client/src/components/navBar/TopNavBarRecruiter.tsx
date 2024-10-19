@@ -113,10 +113,6 @@ const TopNavBarRecruiter: React.FC<{ toggleLeftNavBar: any }> = ({
 					// 	setrecruiterProfileDetails(notifications?.data)
 					// );
 				}
-			} catch (error: any) {
-				notify(error.response.data.errors[0].message, "error");
-				console.error("Error fetching recruiter profile:", error);
-			}
 		})();
 	}, [openNotifications]);
 
@@ -133,8 +129,6 @@ const TopNavBarRecruiter: React.FC<{ toggleLeftNavBar: any }> = ({
 
 	useEffect(() => {
 		(async () => {
-			try {
-
 				let fetchedNotifications =
 					await getRecruiterAllNotificationsApi();
 				let currentChatRoomSender = getOtherUser(
@@ -160,10 +154,6 @@ const TopNavBarRecruiter: React.FC<{ toggleLeftNavBar: any }> = ({
 				// if (filteredNotifications) {
 				setNotificationsCount(filteredNotifications.length);
 				
-			} catch (error: any) {
-				notify(error.response.data.errors[0].message, "error");
-				console.error("Error fetching candidate profile:", error);
-			}
 		})();
 	}, [notifications]);
 

@@ -1,5 +1,5 @@
 import blockUnblockMembershipPlanUseCase from "./blockUnblock";
-import createMemberShipPlanUseCase from "./createMembershipPlan";
+import createMemberShipPlanUseCase from "./create";
 import updateMembershipPlanUseCase from "./updatePlan";
 import getAllMembershipPlansUseCase from "./getPlans";
 import getMembershipPlanByIdUseCase from "./getPlan";

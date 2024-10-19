@@ -7,7 +7,7 @@ import viewRecruiterProfileController from "./viewRecruiterProfile.controller";
 import updateSkillsController from "./updateSkills.controller";
 import updatePreferredJobsController from "./updatePreferredJobs.controller";
 
-import { IDependency } from "../../frameworks/types/dependencyInterface";
+import { IDependency } from "../../frameworks/types/dependency";
 
 export = (dependencies: IDependency)=>{
     return {

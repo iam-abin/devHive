@@ -25,13 +25,8 @@ function CandidateManagementPage() {
 
 	useEffect(() => {
 		(async () => {
-			try {
 				const candidates = await getAllCandidatesApi();
 				setCandidatesData(candidates.data);
-			} catch (error: any) {
-				notify(error.response.data.errors[0].message, "error");
-				console.error(error);
-			}
 		})();
 	}, []);
 

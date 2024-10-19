@@ -38,7 +38,7 @@ export const createJobApi = async (data: any): Promise<any> => {
 };
 
 export const updateJobApi = async (data: any): Promise<any> => {
-    const response: any = await recruiterApiCalls("patch", jobApiUrlConfig.updateJobUrl, data);
+    const response: any = await recruiterApiCalls("put", jobApiUrlConfig.updateJobUrl, data);
     return response.data;
 };
 

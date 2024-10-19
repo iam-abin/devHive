@@ -44,10 +44,7 @@ function JobApplicationsPage() {
 				);
 				
 				setJobApplicationsData(response.data);
-			} catch (error: any) {
-				notify(error.response.data.errors[0].message, "error");
-				console.error(error);
-			}
+		
 		})();
 	}, []);
 
@@ -61,6 +58,11 @@ function JobApplicationsPage() {
 		{
 			name: "Candidate",
 			selector: (row?: {candidateId?: {name: string}} ) => row?.candidateId?.name,
+			sortable: true,
+		},
+		{
+			name: "Email",
+			selector: (row?: {candidateId?: {email: string}} ) => row?.candidateId?.email,
 			sortable: true,
 		},
 		{

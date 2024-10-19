@@ -1,5 +1,5 @@
 import { kafkaClient } from "../../config/kafka.connection";
-import { IDependency } from "../../frameworks/types/dependencyInterface";
+import { IDependency } from "../../frameworks/types/dependency";
 import { CandidateProfileUpdatedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/candidate-profile-updated-publisher ";
 
 export = (dependencies: IDependency) => {
@@ -26,7 +26,7 @@ export = (dependencies: IDependency) => {
             currentLocation: updatedProfile?.currentLocation,
             address: updatedProfile?.address,
             skills: updatedProfile?.skills,
-            profile_image: updatedProfile?.profile_image,
+            profileImage: updatedProfile?.profileImage,
             about: updatedProfile?.about,
             resume: updatedProfile?.resume,
             experience: updatedProfile?.experience,
