@@ -7,8 +7,7 @@ import { RiArrowLeftFill } from "react-icons/ri";
 import {
 	initialSignupValues,
 	signUpSchema,
-} from "../../../utils/signup-validation";
-import { notify } from "../../../utils/toastMessage";
+} from "../../../utils/validations/signup-validation";
 import { recruiterSignupApi } from "../../../axios/apiMethods/auth-service/recruiterAuth";
 
 import recruiterLoginImage from "../../../assets/recruiter/recruiter-login.svg"

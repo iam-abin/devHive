@@ -1,12 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-interface Jobs {
-	searchDropdownData: any,
-	data: any,
-	totalNumberOfPages: any,
-	currentPage: any
-}
-
 const initialState = {
 	loading: false,
 	searchDropdownData: [],

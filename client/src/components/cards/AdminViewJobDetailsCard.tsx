@@ -85,7 +85,7 @@ const AdminViewJobDetailsCard: React.FC<{
 						</div>
 						<div className="mb-4 flex justify-end">
 							<button
-								onClick={handleBlockUnblock}
+								onClick={()=>handleBlockUnblock(data.id)}
 								className={`${
 									data.isActive
 										? "bg-red-500 text-white"

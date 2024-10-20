@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/reducer/reducer";
 import { useNavigate } from "react-router-dom";
 import { notify } from "../../../utils/toastMessage";
-import { JobFormData } from "../../../types/JobCreationFormData";
+import { JobFormData } from "../../../types/Job";
 import CreateJobForm from "../../../components/form/CreateJobForm";
 import { useEffect, useState } from "react";
 import { recruiterGetProfileApi } from "../../../axios/apiMethods/profile-service/recruiter";

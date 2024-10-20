@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaFilePdf, FaPencilAlt, FaTrash } from 'react-icons/fa';
+import { FaPencilAlt, FaTrash } from 'react-icons/fa';
 
 interface ResumeProps {
   resumeFile: any

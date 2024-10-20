@@ -1,6 +1,7 @@
 import axios, { AxiosError, AxiosInstance } from "axios";
-import { candidateAccessToken } from "../../config/localStorage";
 import { BASE_URL } from "../../config/baseUrl";
+import { getItemFromLocalStorage } from "../../utils/localStorage";
+import { LOCAL_STORAGE } from "../../utils/constants";
 
 export const candidateApi: AxiosInstance = axios.create({
     baseURL: BASE_URL,
@@ -9,11 +10,10 @@ export const candidateApi: AxiosInstance = axios.create({
 // Request interceptor
 candidateApi.interceptors.request.use(
     async (config: any) => {
-        let tokenString = localStorage.getItem(candidateAccessToken);
+        
+        let token: string | null = getItemFromLocalStorage(LOCAL_STORAGE.CANDIDATE_ACCESS_TOKEN);
 
-        if (tokenString) {
-            const token = JSON.parse(tokenString);
-
+        if (token) {
             if (
                 config.headers["Content-Type"] &&
                 config.headers["Content-Type"].startsWith("multipart/form-data")

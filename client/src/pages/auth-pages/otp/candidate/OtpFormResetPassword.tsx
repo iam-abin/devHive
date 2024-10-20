@@ -9,8 +9,6 @@ import { notify } from "../../../../utils/toastMessage";
 import { RootState } from "../../../../redux/reducer/reducer";
 import Loading from "../../../../components/loading/Loading";
 import OtpEnterForm from "../../../../components/form/otpEnterForm";
-import Footer from "../../../../components/footer/Footer";
-import TopNavBarCandidate from "../../../../components/navBar/TopNavBarCandidate";
 
 function OtpFormResetPassword() {
 	const dispatch = useDispatch();

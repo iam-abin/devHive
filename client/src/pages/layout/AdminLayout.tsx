@@ -3,12 +3,12 @@ import { Outlet } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
-import dashboard from "../../assets/dashboard.svg";
-import finance from "../../assets/finance.svg";
-import companies from "../../assets/companies.svg";
-import candidates from "../../assets/candidates.svg";
-import membership from "../../assets/membership.svg";
-import logout from "../../assets/logout.svg";
+import dashboard from "../../assets/layoutItems/dashboard.svg";
+import finance from "../../assets/layoutItems/finance.svg";
+import companies from "../../assets/layoutItems/companies.svg";
+import candidates from "../../assets/layoutItems/candidates.svg";
+import membership from "../../assets/layoutItems/membership.svg";
+import logout from "../../assets/layoutItems/logout.svg";
 import { clearAdmin } from "../../redux/slice/adminSlice/adminDataSlice";
 import { adminSignoutApi } from "../../axios/apiMethods/auth-service/adminAuth";
 import { notify } from "../../utils/toastMessage";

@@ -35,6 +35,9 @@ const jobApiUrlConfig = {
 	`${CANDIDATE_JOB_URL}/application/${jobApplicationId}`,
 	changeJobApplicationStatusUrl: (jobApplicationId: string) =>
 		`${RECRUITER_JOB_URL}/change-application-status/${jobApplicationId}`,
+	
+	editJobUrl: (jobId: string) => `${RECRUITER_JOB_URL}/edit/${jobId}`
+
 	};
 
 

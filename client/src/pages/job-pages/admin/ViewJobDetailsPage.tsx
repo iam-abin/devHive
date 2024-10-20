@@ -35,7 +35,7 @@ const ViewJobDetailsPage: React.FC = () => {
 
 	useEffect(() => {
 		(async () => {
-				const job = await viewJobDetailsApi(jobId);
+				const job = await viewJobDetailsApi(jobId!);
 				setJobDetails(job.data);
 		})();
 	}, [jobId]);

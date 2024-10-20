@@ -1,41 +1,42 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { recruiterAccessToken, recruiterRefreshToken } from "../../../config/localStorage";
+import { LOCAL_STORAGE } from "../../../utils/constants";
+import { clearItemFromLocalStorage, setItemToLocalStorage } from "../../../utils/localStorage";
 
 interface Recruiter {
-	data: any;
-	recruiterAccessToken: string;
-	recruiterRefreshToken: string;
+    data: any;
+    accessToken: string;
+    refreshToken: string;
 }
 
 const initialState = {
-	loading: false,
-	data: null as Recruiter | null,
-	error: false,
+    loading: false,
+    data: null as Recruiter | null,
+    error: false,
 };
 
 const recruiterDataSlice = createSlice({
-	name: "recruiter-data",
-	initialState,
-	reducers: {
-		setRecruiter: (state, action: PayloadAction<Recruiter>) => {
-			state.data = action.payload?.data;
-			
-			localStorage.setItem(
-				recruiterAccessToken,
-				JSON.stringify(action.payload?.recruiterAccessToken)
-			);
+    name: "recruiter-data",
+    initialState,
+    reducers: {
+        setRecruiter: (state, action: PayloadAction<Recruiter>) => {
+            state.data = action.payload?.data;
 
-			localStorage.setItem(
-				recruiterRefreshToken,
-				JSON.stringify(action.payload?.recruiterRefreshToken)
-			);
-		},
-		clearRecruiter: (state) => {
-			state.data = null;
-			localStorage.removeItem(recruiterAccessToken);
-			localStorage.removeItem(recruiterRefreshToken);
-		},
-	},
+            setItemToLocalStorage(
+                LOCAL_STORAGE.RECRUITER_ACCESS_TOKEN,
+                JSON.stringify(action.payload?.accessToken)
+            );
+            setItemToLocalStorage(
+                LOCAL_STORAGE.RECRUITER_REFRESH_TOKEN,
+                JSON.stringify(action.payload?.refreshToken)
+            );
+        },
+        
+        clearRecruiter: (state) => {
+            state.data = null;
+            clearItemFromLocalStorage(LOCAL_STORAGE.RECRUITER_ACCESS_TOKEN);
+            clearItemFromLocalStorage(LOCAL_STORAGE.RECRUITER_REFRESH_TOKEN);
+        },
+    },
 });
 
 export const { setRecruiter, clearRecruiter } = recruiterDataSlice.actions; //we can use it in login page

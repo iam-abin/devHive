@@ -1,6 +1,7 @@
 import axios, { AxiosError, AxiosInstance } from "axios";
-import { recruiterAccessToken } from "../../config/localStorage";
 import { BASE_URL } from "../../config/baseUrl";
+import { LOCAL_STORAGE } from "../../utils/constants";
+import { getItemFromLocalStorage } from "../../utils/localStorage";
 
 export const recruiterApi: AxiosInstance = axios.create({
     baseURL: BASE_URL,
@@ -9,9 +10,10 @@ export const recruiterApi: AxiosInstance = axios.create({
 // Request interceptor
 recruiterApi.interceptors.request.use(
     async (config: any) => {
-        let tokenString = localStorage.getItem(recruiterAccessToken);
-        if (tokenString) {
-            const token = JSON.parse(tokenString);
+        
+        let token = getItemFromLocalStorage(LOCAL_STORAGE.RECRUITER_ACCESS_TOKEN);
+
+        if (token) {
             config.headers["Authorization"] = `Bearer ${token}`;
         }
         return config;

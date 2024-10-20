@@ -1,10 +1,8 @@
-import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/reducer/reducer";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useNavigate } from "react-router-dom";
 import {
-	candidateGetProfileApi,
 	updateCandidateProfileApi,
 } from "../../../axios/apiMethods/profile-service/candidate";
 import { notify } from "../../../utils/toastMessage";
@@ -29,28 +27,13 @@ interface ProfileFormData {
 }
 
 function CandidateProfileEditPage() {
-	const [profileDetails, setProfileDetails] = useState<any>(null);
 
 	const navigate = useNavigate();
-	const candidateData: any = useSelector(
-		(state: RootState) => state.candidateData.data
-	);
+	
 	const candidateProfileData: any = useSelector(
 		(state: RootState) => state.candidateProfile.candidateProfile
 	);
-	
-	const { id } = candidateData;
 
-	useEffect(() => {
-		const fetchProfileDetails = async () => {
-				const profile = await candidateGetProfileApi(id);
-				setProfileDetails(profile.data);
-				
-		
-		};
-
-		fetchProfileDetails();
-	}, [id]);
 
 	if (!candidateProfileData) {
 		return <div>Loading...</div>;

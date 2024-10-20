@@ -1,10 +1,10 @@
-import axios from "axios";
-import { adminAccessToken, adminRefreshToken } from "../../config/localStorage";
 import { adminApi } from "./api";
-import { BASE_URL } from "../../config/baseUrl";
 import { notify } from "../../utils/toastMessage";
+import { LOCAL_STORAGE } from "../../utils/constants";
+import { IResponse } from "../../types/api";
+import { refreshToken } from "../refresh";
 
-const adminApiCalls = async (method: string, url: string, data?: any) => {
+const adminApiCalls = async (method: string, url: string, data?: any): Promise<IResponse> => {
 	try {
 		let response;
 		switch (method.toLowerCase()) {
@@ -31,11 +31,11 @@ const adminApiCalls = async (method: string, url: string, data?: any) => {
 			default:
 				throw new Error(`Invalid method: ${method}`);
 		}
-
-		return response;
+				
+		return response.data
 	} catch (error: any) {
 		notify(error.response.data.errors[0].message, "error");
-		throw error;
+		throw error
 	}
 };
 
@@ -47,7 +47,7 @@ adminApi.interceptors.response.use(
 		if (error?.response?.status === 401 && !originalRequest._retry) {
 			originalRequest._retry = true;
 			try {
-				const newAccessToken = await refreshToken();
+				const newAccessToken = await refreshToken(LOCAL_STORAGE.ADMIN_ACCESS_TOKEN, LOCAL_STORAGE.ADMIN_REFRESH_TOKEN);
 
 				if (newAccessToken) {
 					originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
@@ -55,47 +55,11 @@ adminApi.interceptors.response.use(
 				}
 			} catch (error: any) {
 				notify(error.response.data.errors[0].message, "error");
-				clearCandidateFromLocal();
+				// clearCandidateFromLocal();
 			}
 		}
 		return Promise.reject(error);
 	}
 );
-
-const refreshToken = async () => {
-	const refreshTokenString: any = localStorage.getItem(adminRefreshToken);
-	try {
-		const refreshTokenObject = JSON.parse(refreshTokenString);
-
-		const response = await axios.post(
-			`${BASE_URL}/auth/jwt-refresh/refreshToken`,
-			null,
-			{
-				headers: {
-					Authorization: `Bearer ${refreshTokenObject}`,
-				},
-			}
-		);
-
-		if (response.data.accessToken) {
-			const newAccessToken = response.data.accessToken;
-			localStorage.setItem(adminAccessToken, newAccessToken);
-			return response.data.accessToken;
-		}
-	} catch (error) {
-		console.error("Failed to refresh token", error);
-		notify(
-			"Failed to refresh token",
-			"error"
-		);
-		clearCandidateFromLocal();
-	}
-	return null;
-};
-
-function clearCandidateFromLocal() {
-	localStorage.removeItem(adminAccessToken);
-	localStorage.removeItem(adminRefreshToken);
-}
 
 export default adminApiCalls;

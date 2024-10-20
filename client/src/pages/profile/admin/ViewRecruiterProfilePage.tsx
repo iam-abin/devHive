@@ -4,7 +4,6 @@ import { viewRecruiterProfileDetailsApi } from "../../../axios/apiMethods/admin-
 import RecruiterProfile from "../../../components/admin/profile/RecruiterProfile";
 import { setLoaded, setLoading } from "../../../redux/slice/loaderSlice/isLoading";
 import { useDispatch } from "react-redux";
-import { notify } from "../../../utils/toastMessage";
 
 function ViewRecruiterProfilePage() {
   const { userId } = useParams();

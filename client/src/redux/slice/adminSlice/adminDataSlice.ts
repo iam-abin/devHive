@@ -1,43 +1,45 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { LOCAL_STORAGE } from "../../../utils/constants";
 import {
-	adminAccessToken,
-	adminRefreshToken,
-} from "../../../config/localStorage";
+    clearItemFromLocalStorage,
+    setItemToLocalStorage,
+} from "../../../utils/localStorage";
 
 interface Admin {
-	data: any;
-	adminAccessToken: string;
-	adminRefreshToken: string;
+    data: any;
+    accessToken: string;
+    refreshToken: string;
 }
 
 const initialState = {
-	loading: false,
-	data: null as Admin | null,
-	error: false,
+    loading: false,
+    data: null as Admin | null,
+    error: false,
 };
 
 const adminDataSlice = createSlice({
-	name: "admin-data",
-	initialState,
-	reducers: {
-		setAdmin: (state, action: PayloadAction<Admin>) => {
-			state.data = action.payload?.data;
+    name: "admin-data",
+    initialState,
+    reducers: {
+        setAdmin: (state, action: PayloadAction<Admin>) => {
+            state.data = action.payload?.data;
 
-			localStorage.setItem(
-				adminAccessToken,
-				JSON.stringify(action.payload?.adminAccessToken)
-			);
-			localStorage.setItem(
-				adminRefreshToken,
-				JSON.stringify(action.payload?.adminRefreshToken)
-			);
-		},
-		clearAdmin: (state) => {
-			state.data = null;
-			localStorage.removeItem(adminAccessToken);
-			localStorage.removeItem(adminRefreshToken);
-		},
-	},
+            setItemToLocalStorage(
+                LOCAL_STORAGE.ADMIN_ACCESS_TOKEN,
+                JSON.stringify(action.payload?.accessToken)
+            );
+
+            setItemToLocalStorage(
+                LOCAL_STORAGE.ADMIN_REFRESH_TOKEN,
+                JSON.stringify(action.payload?.refreshToken)
+            );
+        },
+        clearAdmin: (state) => {
+            state.data = null;
+            clearItemFromLocalStorage(LOCAL_STORAGE.ADMIN_ACCESS_TOKEN);
+            clearItemFromLocalStorage(LOCAL_STORAGE.ADMIN_REFRESH_TOKEN);
+        },
+    },
 });
 
 export const { setAdmin, clearAdmin } = adminDataSlice.actions; //we can use it in login page

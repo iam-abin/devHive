@@ -39,12 +39,6 @@ const ChatPageCandidate = () => {
     const [selectedChatRoomMessages, setSelectedChatRoomMessages] =
         useState<any>([]);
 
-    const [isChatOpen, setIsChatOpen] = useState(false);
-
-    const handleChatVisibility = (isOpen: boolean) => {
-        setIsChatOpen(isOpen);
-    };
-
     const chatAreaRef = useRef<HTMLDivElement>(null);
     const scrollToBottom = () => {
         if (chatAreaRef.current) {
@@ -235,17 +229,14 @@ const ChatPageCandidate = () => {
                                         userImage={
                                             candidateProfile.profileImage
                                                 ? candidateProfile.profileImage
-                                                : CONSTANTS.CANDIDATE_DEFAULT_profileImage
+                                                : CONSTANTS.CANDIDATE_DEFAULT_PROFILE_IMAGE
                                         }
                                         // chatRoom={selectedChatRoom}
                                         isOnline={isUserOnline(
                                             selectedChatRoom
                                         )}
                                         receiver={getReceiver(selectedChatRoom)}
-                                        // if the chat topbar is there, the chat window will also be there
-                                        handleChatVisibility={
-                                            handleChatVisibility
-                                        }
+                                        
                                         handleBackButtonClick={undefined}
                                     />
                                 </div>
@@ -265,10 +256,10 @@ const ChatPageCandidate = () => {
                                                     senderImage={
 														candidateProfile.profileImage
                                                             ? candidateProfile.profileImage
-                                                            : CONSTANTS.CANDIDATE_DEFAULT_profileImage
+                                                            : CONSTANTS.CANDIDATE_DEFAULT_PROFILE_IMAGE
                                                     }
                                                     receiverImage={
-                                                        CONSTANTS.RECRUITER_DEFAULT_profileImage                                                        
+                                                        CONSTANTS.RECRUITER_DEFAULT_PROFILE_IMAGE                                                        
                                                     }
                                                     key={index}
                                                     message={message}

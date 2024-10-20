@@ -7,6 +7,7 @@ import {
 	blockUnblockCandidateApi,
 	getAllCandidatesApi,
 } from "../../axios/apiMethods/admin-service/candidates";
+import { IResponse } from "../../types/api";
 
 
 interface CandidateInterface {
@@ -25,7 +26,7 @@ function CandidateManagementPage() {
 
 	useEffect(() => {
 		(async () => {
-				const candidates = await getAllCandidatesApi();
+				const candidates: IResponse = await getAllCandidatesApi();
 				setCandidatesData(candidates.data);
 		})();
 	}, []);
@@ -49,7 +50,7 @@ function CandidateManagementPage() {
 			}`,
 		}).then(async (result) => {
 			if (result.isConfirmed) {
-				const updatedCandidate = await blockUnblockCandidateApi(userId);
+				const updatedCandidate: IResponse = await blockUnblockCandidateApi(userId);
 				if (updatedCandidate) {
 					notify(updatedCandidate.message, "success");
 				}

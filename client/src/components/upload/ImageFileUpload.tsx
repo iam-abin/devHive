@@ -1,9 +1,7 @@
-// FileUploadComponent.jsx
-import React, { useState } from "react";
+import React from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 
 const ImageFileUpload: React.FC<{uploadImage: any}> = ({uploadImage}) => {
-	// const [selectedFile, setSelectedFile] = useState<any>(null);
 
 	const handleFileChange = (e: any) => {
 		const file = e.target.files[0];
@@ -27,9 +25,6 @@ const ImageFileUpload: React.FC<{uploadImage: any}> = ({uploadImage}) => {
 					onChange={handleFileChange}
 				/>
 			</label>
-			{/* <span className="ml-2">
-        {selectedFile ? selectedFile?.name : 'No file selected'}
-      </span> */}
 		</div>
 	);
 };

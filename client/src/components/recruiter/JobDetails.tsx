@@ -26,9 +26,6 @@ const JobDetails: React.FC<{
 	const isRecruiterPage = location.pathname.includes("recruiter");
 	const isCandidatePage = location.pathname.includes("candidate");
 
-	const candidateData: any = useSelector(
-		(state: RootState) => state.candidateData.data
-	);
 
 	const recruiterData: any = useSelector(
 		(state: RootState) => state.recruiterData.data

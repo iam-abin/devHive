@@ -10,19 +10,28 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import {
     initialSigninValues,
     signInSchema,
-} from "../../../utils/signin-validation";
+} from "../../../utils/validations/signin-validation";
 import { adminSigninApi } from "../../../axios/apiMethods/auth-service/adminAuth";
 import { setAdmin } from "../../../redux/slice/adminSlice/adminDataSlice";
 import { notify } from "../../../utils/toastMessage";
 import { useEffect } from "react";
+import { ISignin } from "../../../types/user";
 
 function AdminSigninPage() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const handleSubmit = async (userData: any) => {
+    const handleSubmit = async (userData: ISignin) => {
         const response = await adminSigninApi(userData);
-        dispatch(setAdmin(response));
+        console.log(response);
+
+        dispatch(
+            setAdmin({
+                data: response.data,
+                accessToken: response.accessToken!,
+                refreshToken: response.refreshToken!,
+            })
+        );
 
         notify(response.message, "success");
         navigate("/admin");
@@ -53,7 +62,7 @@ function AdminSigninPage() {
                                 validationSchema={signInSchema}
                                 onSubmit={(values) => handleSubmit(values)}
                             >
-                                {(formik) => (
+                                {() => (
                                     <Form className="mt-8 space-y-6">
                                         <div className="rounded-md shadow-sm -space-y-px">
                                             <div className="mb-4">

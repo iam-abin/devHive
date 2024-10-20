@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 
-export const notify = (msg: any, type: string) => {
+export const notify = (msg: string, type: string): void => {
     let options = {
         position: toast.POSITION.TOP_RIGHT,
     };

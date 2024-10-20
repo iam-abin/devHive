@@ -1,23 +1,13 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { CONSTANTS } from "../../utils/constants";
 
 const ChatBoxTopBar: React.FC<{
     receiver: any;
     isOnline: any;
-    handleChatVisibility: any;
     handleBackButtonClick: any;
     userImage: string;
-}> = ({ receiver, isOnline, handleChatVisibility, userImage }) => {
-    // if the chat topbar is there, the chat window will also be there
-    useEffect(() => {
-        // Open the chat window when the component mounts
-        handleChatVisibility(true);
-
-        // Return a cleanup function to close the chat window when the component unmounts
-        return () => {
-            handleChatVisibility(false);
-        };
-    }, []);
+}> = ({ receiver, isOnline }) => {
+    
 
     return (
         <div>
@@ -35,8 +25,8 @@ const ChatBoxTopBar: React.FC<{
                                     receiver[0]?.profileImage
                                         ? receiver[0]?.profileImage
                                         : receiver[0]?.role === "candidate"
-                                        ? CONSTANTS.CANDIDATE_DEFAULT_profileImage
-                                        : CONSTANTS.RECRUITER_DEFAULT_profileImage
+                                        ? CONSTANTS.CANDIDATE_DEFAULT_PROFILE_IMAGE
+                                        : CONSTANTS.RECRUITER_DEFAULT_PROFILE_IMAGE
                                 }
                             />
                         </div>

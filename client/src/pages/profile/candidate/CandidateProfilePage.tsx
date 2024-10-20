@@ -89,7 +89,6 @@ const CandidateProfilePage: React.FC = () => {
 					candidateId ?? id
 				);
 			}
-			console.log(candidateProfile);
 			
 			setCandidateProfileData(candidateProfile.data);
 			dispatch(setCandidateProfileDetails(candidateProfile?.data));

@@ -2,7 +2,6 @@
 export interface JobFormData {
 	title: string;
 	recruiterId: string;
-	companyId?: string;
 	jobDescription: string;
 	skills: string[];
 	availablePosition: number;
@@ -14,4 +13,13 @@ export interface JobFormData {
 	deadline: string;
 	companyName: string;
 	companyLocation: string;
+}
+
+
+
+export interface IJobApplication {
+	jobId: string;
+	candidateId:string;
+	recruiterId:string;
+	applicationStatus: string;
 }

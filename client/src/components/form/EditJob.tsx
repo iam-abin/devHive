@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import {
+	editJobApi,
 	getAJobApi,
 	updateJobApi,
 } from "../../axios/apiMethods/jobs-service/jobs";
@@ -43,7 +44,12 @@ function EditJob() {
 	}
 
 	const handleSubmit = async (jobData: JobFormData) => {
-			const data = await updateJobApi(jobData);
+			// const data = await updateJobApi(jobData);
+			console.log("jobId ",jobId);
+			console.log("jobData ",jobData);
+			
+			const data = await editJobApi(jobId!, jobData);
+			
 			if (data.data) {
 				notify("updated successfully", "success");
 				navigate("/recruiter/recruiter-added-jobs");

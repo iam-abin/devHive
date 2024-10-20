@@ -33,20 +33,6 @@ const ChatPageRecruiter = () => {
     const [selectedChatRoomMessages, setSelectedChatRoomMessages] =
         useState<any>([]);
 
-    // console.log("selectedChatRoom >>", selectedChatRoom);
-    // if (selectedChatRoom) {
-    //     console.log(
-    //         "getReceiver(selectedChatRoom)",
-    //         getReceiver(selectedChatRoom)[0].profileImage
-    //     );
-    // }
-
-    const [isChatOpen, setIsChatOpen] = useState(false);
-
-    const handleChatVisibility = (isOpen: boolean) => {
-        setIsChatOpen(isOpen);
-    };
-
     const chatAreaRef = useRef<HTMLDivElement>(null);
     const scrollToBottom = () => {
         if (chatAreaRef.current) {
@@ -235,17 +221,14 @@ const ChatPageRecruiter = () => {
                                 <div>
                                     <ChatBoxTopBar
                                         userImage={
-                                            CONSTANTS.CANDIDATE_DEFAULT_profileImage
+                                            CONSTANTS.CANDIDATE_DEFAULT_PROFILE_IMAGE
                                         }
                                         // chatRoom={selectedChatRoom}
                                         isOnline={isUserOnline(
                                             selectedChatRoom
                                         )}
                                         receiver={getReceiver(selectedChatRoom)}
-                                        // if the chat topbar is there, the chat window will also be there
-                                        handleChatVisibility={
-                                            handleChatVisibility
-                                        }
+                                        
                                         handleBackButtonClick={undefined}
                                     />
                                 </div>
@@ -263,7 +246,7 @@ const ChatPageRecruiter = () => {
                                             (message: any, index: number) => (
                                                 <Message
                                                     senderImage={
-                                                        CONSTANTS.RECRUITER_DEFAULT_profileImage
+                                                        CONSTANTS.RECRUITER_DEFAULT_PROFILE_IMAGE
                                                     }
                                                     receiverImage={
                                                         getReceiver(
@@ -272,7 +255,7 @@ const ChatPageRecruiter = () => {
                                                             ? getReceiver(
                                                                   selectedChatRoom
                                                               )[0].profileImage
-                                                            : CONSTANTS.RECRUITER_DEFAULT_profileImage
+                                                            : CONSTANTS.RECRUITER_DEFAULT_PROFILE_IMAGE
                                                     }
                                                     key={index}
                                                     message={message}

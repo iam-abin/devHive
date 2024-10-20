@@ -1,6 +1,6 @@
 import toast from 'react-hot-toast';
 
-export const hotToastMessage = (msg: any, type: string) => {
+export const hotToastMessage = (msg: string, type: string): void => {
 
     switch (type) {
         case "success":

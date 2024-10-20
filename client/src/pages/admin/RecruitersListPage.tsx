@@ -7,6 +7,7 @@ import {
 import { notify } from "../../utils/toastMessage";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import { IResponse } from "../../types/api";
 
 interface RecruiterInterface {
 	id: string;
@@ -24,7 +25,7 @@ function RecruiterManagementPage() {
 
 	useEffect(() => {
 		(async () => {
-				const recruiters = await getAllRecruitersApi();
+				const recruiters: IResponse = await getAllRecruitersApi();
 				setRecruitersData(recruiters.data);
 		})();
 	}, []);
@@ -48,7 +49,7 @@ function RecruiterManagementPage() {
 			}`,
 		}).then(async (result) => {
 			if (result.isConfirmed) {
-				const updatedRecruiter = await blockUnblockRecruiterApi(userId);
+				const updatedRecruiter: IResponse = await blockUnblockRecruiterApi(userId);
 				if (updatedRecruiter) {
 					notify(updatedRecruiter.message, "success");
 				}

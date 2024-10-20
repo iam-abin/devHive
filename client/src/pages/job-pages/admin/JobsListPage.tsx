@@ -60,7 +60,7 @@ function JobsManagementPage() {
                 }
 
                 const jobs = jobsData.map((job) => {
-                    if (job.jobId === jobId) {
+                    if (job.id === jobId) {
                         return {
                             ...job,
                             isActive: updatedJob.data.isActive,
@@ -89,10 +89,10 @@ function JobsManagementPage() {
 
         {
             name: "View",
-            cell: (row: { jobId: string }) => (
+            cell: (row: { id: string }) => (
                 <button
                     onClick={() => {
-                        viewJobDetails(row.jobId);
+                        viewJobDetails(row.id);
                     }}
                     className="btn btn-info btn-sm w-24"
                 >
@@ -117,10 +117,10 @@ function JobsManagementPage() {
         },
         {
             name: "Action",
-            cell: (row: { jobId: string; isActive: boolean }) => (
+            cell: (row: { id: string; isActive: boolean }) => (
                 <button
                     onClick={() => {
-                        handleBlockUnblock(row.jobId, row.isActive);
+                        handleBlockUnblock(row.id, row.isActive);
                     }}
                     className={`btn ${
                         row.isActive

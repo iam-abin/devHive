@@ -1,7 +1,8 @@
 import { io, Socket } from "socket.io-client";
+import { DEVELOPMENT_ORIGIN } from "./baseUrl";
 
 
-// const socket: Socket = io("https://abinvarghese.online", {
+// const socket: Socket = io(PRODUCTION_ORIGIN, {
 //   transports: ["websocket"],
 //   path: "/api/v1/chat/socket.io",
 //   withCredentials: true,
@@ -10,7 +11,7 @@ import { io, Socket } from "socket.io-client";
 
 
 
-const socket: Socket = io("https://devhive.dev", {
+const socket: Socket = io(DEVELOPMENT_ORIGIN, {
   transports: ["websocket"],
   path: "/api/v1/chat/socket.io",
   withCredentials: true,

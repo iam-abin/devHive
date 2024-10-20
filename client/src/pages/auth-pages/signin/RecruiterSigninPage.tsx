@@ -6,13 +6,12 @@ import recruiterLoginImage from "../../../assets/recruiter/recruiter-login.svg"
 import {
 	initialSigninValues,
 	signInSchema,
-} from "../../../utils/signin-validation";
+} from "../../../utils/validations/signin-validation";
 import { notify } from "../../../utils/toastMessage";
 import { recruiterSigninApi } from "../../../axios/apiMethods/auth-service/recruiterAuth";
 import { setRecruiter } from "../../../redux/slice/recruiterSlice/recruiterDataSlice";
 import { RootState } from "../../../redux/reducer/reducer";
 import Loading from "../../../components/loading/Loading";
-import { setLoaded, setLoading } from "../../../redux/slice/loaderSlice/isLoading";
 import { RiArrowLeftFill } from "react-icons/ri";
 
 function RecruiterSigninPage() {
@@ -27,7 +26,11 @@ function RecruiterSigninPage() {
 		try {
 			// dispatch(setLoading());
 			const response = await recruiterSigninApi(userData);
-			dispatch(setRecruiter(response));
+			dispatch(setRecruiter({
+                data: response.data,
+                accessToken: response.accessToken!,
+                refreshToken: response.refreshToken!,
+            }));
 			
 			notify(response.message, "success");
 			navigate("/recruiter");
@@ -82,6 +85,7 @@ function RecruiterSigninPage() {
 											type="email"
 											placeholder="Email"
 											name="email"
+											autoComplete="email"
 											className={`w-full py-2 mt-2 text-black bg-transparent border-b border-black outline-none focus:outline-none ${
 												errors.email && touched.email
 													? "input-error border-red-500"
@@ -101,6 +105,7 @@ function RecruiterSigninPage() {
 											type="password"
 											name="password"
 											placeholder="Password"
+											autoComplete="current-password" 
 											className={`w-full py-2 mt-2 text-black bg-transparent border-b border-black outline-none focus:outline-none ${
 												errors.password &&
 												touched.password

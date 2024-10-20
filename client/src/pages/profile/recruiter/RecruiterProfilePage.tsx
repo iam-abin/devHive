@@ -8,7 +8,6 @@ import { recruiterGetProfileApi } from "../../../axios/apiMethods/profile-servic
 import TopNavBarCandidate from "../../../components/navBar/TopNavBarCandidate";
 import Footer from "../../../components/footer/Footer";
 import { recruiterGetProfileByCandidateApi } from "../../../axios/apiMethods/profile-service/candidate";
-import { hotToastMessage } from "../../../utils/hotToastMessage";
 
 const RecruiterProfilePage: React.FC = () => {
 	const recruiterData: any = useSelector(

@@ -1,12 +1,12 @@
 import { Routes, Route, Navigate } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import LandingPage from "./pages/landing/LandingPage";
 import CandidateRoutes from "./routes/CandidateRoutes";
 import RecruiterRouters from "./routes/RecruiterRouters";
 import AdminRoutes from "./routes/AdminRoutes";
 
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { useSelector } from "react-redux";
 import { RootState } from "./redux/reducer/reducer";
 import NotFound from "./pages/Error/NotFound";

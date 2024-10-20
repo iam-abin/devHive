@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import TableComponent from "../../../components/table/TableComponent";
-import { notify } from "../../../utils/toastMessage";
 import { useNavigate } from "react-router-dom";
 import { getAllJobsApplicationsForRecruiterApi } from "../../../axios/apiMethods/jobs-service/jobs";
 import { RootState } from "../../../redux/reducer/reducer";

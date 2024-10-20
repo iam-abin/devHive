@@ -5,8 +5,7 @@ import Swal from "sweetalert2";
 import {
 	initialSignupValues,
 	signUpSchema,
-} from "../../../utils/signup-validation";
-import { notify } from "../../../utils/toastMessage";
+} from "../../../utils/validations/signup-validation";
 import { candidateSignupApi } from "../../../axios/apiMethods/auth-service/candidateAuth";
 
 

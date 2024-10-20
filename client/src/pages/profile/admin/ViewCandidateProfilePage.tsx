@@ -5,15 +5,11 @@ import { useParams } from "react-router-dom";
 import { viewCandidateProfileDetailsApi } from "../../../axios/apiMethods/admin-service/candidates";
 import CandidateProfile from "../../../components/admin/profile/CandidateProfile";
 import { setLoaded, setLoading } from "../../../redux/slice/loaderSlice/isLoading";
-import { notify } from "../../../utils/toastMessage";
-// import { getUserProfile } from "../../../redux/reducers/thunks/userThunks";
+
 
 const ViewCandidateProfilePage: React.FC = () => {
 	const dispatch = useDispatch();
 	const { userId } = useParams();
-	// const loadingStatus = useSelector(
-	// 	(state: any) => state.userProfile?.loadingStatus
-	// );
 
     const loadingStatus = useSelector(
 		(state: any) => state.loading.isLoading

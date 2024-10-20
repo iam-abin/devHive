@@ -19,7 +19,6 @@ import socket from "../../config/socket";
 import {
     deleteCandidatesAllNotificationsApi,
     getCandidatesAllNotificationsApi,
-    getCandidatesNotificationCountApi,
 } from "../../axios/apiMethods/chat-service/notification";
 
 const TopNavBarCandidate = () => {
@@ -165,7 +164,7 @@ const TopNavBarCandidate = () => {
 
     useEffect(() => {
         (async () => {
-            let notificationsCount = await getCandidatesNotificationCountApi();
+            // let notificationsCount = await getCandidatesNotificationCountApi();
 
             let fetchedNotifications = await getCandidatesAllNotificationsApi();
 

@@ -1,60 +1,51 @@
 
 import notificationApiUrlConfig from "../../../config/apiUrlsConfig/notificationApiUrlConfig";
+import { IResponse } from "../../../types/api";
 import candidateApiCalls from "../../candidate/apiCalls";
 import recruiterApiCalls from "../../recruiter/apiCalls";
 
 
 // Candidate
-export const getCandidatesNotificationCountApi = async (): Promise<any> => {
-    const response: any = await candidateApiCalls("get", notificationApiUrlConfig.getCandidatesNotificationCountUrl);
-    return response.data;
+export const getCandidatesNotificationCountApi = async (): Promise<IResponse> => {
+    return await candidateApiCalls("get", notificationApiUrlConfig.getCandidatesNotificationCountUrl);
 };
 
-export const getCandidatesAllNotificationsApi = async (): Promise<any> => {
-    const response: any = await candidateApiCalls("get", notificationApiUrlConfig.getCandidatesAllNotificationsUrl);
-    return response.data;
+export const getCandidatesAllNotificationsApi = async (): Promise<IResponse> => {
+    return await candidateApiCalls("get", notificationApiUrlConfig.getCandidatesAllNotificationsUrl);
 };
 
-export const deleteCandidatesAllNotificationsApi = async (): Promise<any> => {
-    const response: any = await candidateApiCalls("delete", notificationApiUrlConfig.deleteCandidatesAllNotificationsUrl);
-    return response.data;
+export const deleteCandidatesAllNotificationsApi = async (): Promise<IResponse> => {
+    return await candidateApiCalls("delete", notificationApiUrlConfig.deleteCandidatesAllNotificationsUrl);
 };
 
-export const deleteCandidatesAllNotificationsBySenderIdApi = async (senderId: string): Promise<any> => {
-    const response: any = await candidateApiCalls("delete", notificationApiUrlConfig.deleteCandidatesAllNotificationsBySenderIdUrl(senderId));
-    return response.data;
+export const deleteCandidatesAllNotificationsBySenderIdApi = async (senderId: string): Promise<IResponse> => {
+    return await candidateApiCalls("delete", notificationApiUrlConfig.deleteCandidatesAllNotificationsBySenderIdUrl(senderId));
 };
 
 
-export const getCandidatesUnreadMessagesCountApi =  async (senderId: string): Promise<any> => {
-    const response: any = await candidateApiCalls("get", notificationApiUrlConfig.getCandidatessUnreadMessagesCountUrl(senderId));
-    return response.data;
+export const getCandidatesUnreadMessagesCountApi =  async (senderId: string): Promise<IResponse> => {
+    return await candidateApiCalls("get", notificationApiUrlConfig.getCandidatessUnreadMessagesCountUrl(senderId));
 };
 
 // Recruiter
-export const getRecruiterNotificationCountApi = async (): Promise<any> => {
-    const response: any = await recruiterApiCalls("get", notificationApiUrlConfig.getRecruiterNotificationCountUrl);
-    return response.data;
+export const getRecruiterNotificationCountApi = async (): Promise<IResponse> => {
+    return await recruiterApiCalls("get", notificationApiUrlConfig.getRecruiterNotificationCountUrl);
 };
 
 
-export const getRecruiterAllNotificationsApi = async (): Promise<any> => {
-    const response: any = await recruiterApiCalls("get", notificationApiUrlConfig.getRecruiterAllNotificationsUrl);
-    return response.data;
+export const getRecruiterAllNotificationsApi = async (): Promise<IResponse> => {
+    return await recruiterApiCalls("get", notificationApiUrlConfig.getRecruiterAllNotificationsUrl);
 };
 
-export const deleteRecruiterAllNotificationsApi = async (): Promise<any> => {
-    const response: any = await recruiterApiCalls("delete", notificationApiUrlConfig.deleteRecruiterAllNotificationsUrl);
-    return response.data;
+export const deleteRecruiterAllNotificationsApi = async (): Promise<IResponse> => {
+    return await recruiterApiCalls("delete", notificationApiUrlConfig.deleteRecruiterAllNotificationsUrl);
 };
 
 
-export const deleteRecruitersAllNotificationsBySenderIdApi = async (senderId: string): Promise<any> => {
-    const response: any = await recruiterApiCalls("delete", notificationApiUrlConfig.deleteRecruitersAllNotificationsBySenderIdUrl(senderId));
-    return response.data;
+export const deleteRecruitersAllNotificationsBySenderIdApi = async (senderId: string): Promise<IResponse> => {
+    return await recruiterApiCalls("delete", notificationApiUrlConfig.deleteRecruitersAllNotificationsBySenderIdUrl(senderId));
 };
 
-export const getRecruitersUnreadMessagesCountApi =  async (senderId: string): Promise<any> => {
-    const response: any = await recruiterApiCalls("get", notificationApiUrlConfig.getRecruitersUnreadMessagesCountUrl(senderId));
-    return response.data;
+export const getRecruitersUnreadMessagesCountApi =  async (senderId: string): Promise<IResponse> => {
+    return await recruiterApiCalls("get", notificationApiUrlConfig.getRecruitersUnreadMessagesCountUrl(senderId));
 };
