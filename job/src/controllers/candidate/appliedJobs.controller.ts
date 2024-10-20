@@ -1,22 +1,25 @@
 import { Request, Response } from "express";
 import { IDependency } from "../../frameworks/types/dependencyInterface";
 
-export = (dependencies: IDependency)=>{
+export = (dependencies: IDependency) => {
+    const {
+        useCases: { getAllAppliedJobsUseCase },
+    } = dependencies;
 
-    const { useCases: { getAllAppliedJobsUseCase }} = dependencies
-
-    return async (req: Request, res: Response)=>{
+    return async (req: Request, res: Response) => {
         const { userId } = req.currentUser!;
 
-        // pagination
-		const page = Number(req.params.page) || 1;
-		const limit = Number(req.params.limit) || 3;
-		const skip = (page - 1) * limit;
-        
-        const {appliedJobs, appliedJobsCount} = await getAllAppliedJobsUseCase(dependencies).execute(userId, skip, limit);
-		const numberOfPages = Math.ceil(appliedJobsCount/limit);
-        
-        res.status(200).json({message: "Applied Jobs are", data: appliedJobs, totalNumberOfPages: numberOfPages  })
-    };
+        const { appliedJobs, numberOfPages } =
+            await getAllAppliedJobsUseCase(dependencies).execute(
+                userId,
+                Number(req.params.page) || 1,
+            Number(req.params.limit) || 2
+            );
+            
 
-}
+        res.status(200).json({
+            message: "Applied Jobs are",
+            data: { appliedJobs, totalNumberOfPages: numberOfPages },
+        });
+    };
+};

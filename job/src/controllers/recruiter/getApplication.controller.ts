@@ -7,7 +7,7 @@ export = (dependencies: IDependency)=>{
 
     return async (req: Request, res: Response)=>{
         const {jobApplicationId} = req.params;
-        const { userId } = req.currentUser
+        const { userId } = req.currentUser!
         const application = await getAJobApplicationUseCase(dependencies).execute({
             jobApplicationId,
             recruiterId: userId,

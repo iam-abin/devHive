@@ -8,10 +8,10 @@ export = (dependencies: IDependency) => {
 
 	return async (req: Request, res: Response) => {
 		const { jobId } = req.params;
-		
+		const {userId} = req.currentUser!
 		const job = await changeClosejobStatusUseCase(
 			dependencies
-		).execute(jobId);
+		).execute(jobId, userId);
 		
 		res.status(200).json({
 			message: `close status updated to ${job?.isActive? "Close": "Open"}`,

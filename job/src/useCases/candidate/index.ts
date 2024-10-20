@@ -1,4 +1,4 @@
-import applyJobUseCase from "./apply-job";
+import applyJobUseCase from "./apply";
 import getAllAppliedJobsUseCase from "./getAppliedJobs";
 
 export {

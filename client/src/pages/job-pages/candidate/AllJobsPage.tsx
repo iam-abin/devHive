@@ -27,8 +27,8 @@ function AllJobsPage() {
 	useEffect(() => {
 		(async () => {
 			const allJobs = await getAllJobsApi(currentPage);
-			setJobs(allJobs.data);
-			setpageCount(allJobs.totalNumberOfPages);
+			setJobs(allJobs.data.jobs);
+			setpageCount(allJobs.data.totalNumberOfPages);
 		})();
 	}, [currentPage]);
 

@@ -6,7 +6,7 @@ export = (dependencies: IDependency)=>{
     const { useCases: { changeJobApplicationStatusUseCase }} = dependencies 
 
     return async (req: Request, res: Response)=>{
-        const {userId} = req.currentUser;
+        const {userId} = req.currentUser!;
         const {jobApplicationId} = req.params;
         const {jobApplicationStatus} = req.body
         

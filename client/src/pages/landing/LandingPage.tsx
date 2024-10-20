@@ -77,11 +77,11 @@ function LandingPage() {
             const allJobs = await handleGetAllJobs(currentPage);
             // Check if allJobs.data exists before accessing its properties
             if (allJobs && allJobs.data) {
-                dispatch(setFilteredJobs(allJobs.data));
+                dispatch(setFilteredJobs(allJobs.data.jobs));
 
                 dispatch(
                     setTotalNumberOfPages({
-                        totalNumberOfPages: allJobs.totalNumberOfPages,
+                        totalNumberOfPages: allJobs.data.totalNumberOfPages,
                     })
                 );
             }

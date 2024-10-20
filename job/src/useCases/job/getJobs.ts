@@ -9,12 +9,17 @@ export = (dependencies: IDependency) => {
 		throw new Error("jobRepository should exist in dependencies");
 
 	const execute = async(
-		skip: number,
+		page: number,
 		limit: number
 	) => {
+		// pagination
+        const skip = (page - 1) * limit;
+		
 		const jobs = await jobRepository.getAllJobs(skip, limit);
 		const jobCount = await jobRepository.getCountOfJobs()
-		return { jobs ,jobCount }
+
+        const numberOfPages = Math.ceil(jobCount / limit);
+		return { jobs ,numberOfPages }
 	};
 
 	return { execute };

@@ -5,7 +5,7 @@ import getRecruiterCreatedJobsUseCase from "./getCreatedJobs";
 import getAllJobApplicationsUseCase from "./getApplications";
 import getAJobApplicationUseCase from "../job/getApplication";
 import changeJobApplicationStatusUseCase from "./changeApplicationStatus";
-import changeClosejobStatusUseCase from "./change-closejob-status";
+import changeClosejobStatusUseCase from "./changeClosejobStatus";
 import recruiterDashboardCardsDetailsUseCase from "./dashboardCardsDetails";
 import recruiterDashboardGraphDetailsUseCase from "./dashboardGraphDetails";
 

@@ -50,8 +50,8 @@ function AppliedJobsPage() {
 				currentPage
 			);
 			
-			setAppliedJobsData(response.data);
-			setpageCount(response.totalNumberOfPages);
+			setAppliedJobsData(response.data.appliedJobs);
+			setpageCount(response.data.totalNumberOfPages);
 			// dispatch(setLoaded());
 		})();
 	}, [currentPage]);

@@ -1,8 +1,8 @@
-import getAllJobsUseCase from "./get-all-jobs";
-import filterJobUseCase from "./filter-job";
+import getAllJobsUseCase from "./getJobs";
+import filterJobUseCase from "./filterJob";
 import getJobByIdUseCase from "./getJobById";
-import getAllJobFieldsDistinctValuesUseCase from "./get-all-job-fields-distinct-values";
-import getSearchResultUseCase from "./get-search-result"
+import getAllJobFieldsDistinctValuesUseCase from "./getJobFieldsDistinctValues";
+import getSearchResultUseCase from "./search"
 
 export {
 	getAllJobsUseCase,

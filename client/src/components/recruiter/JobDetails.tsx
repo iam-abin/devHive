@@ -224,8 +224,8 @@ const JobDetails: React.FC<{
 								<button
 									className={`${
 										jobDetails?.isActive
-											? "bg-green-600"
-											: "bg-red-600"
+											? "bg-red-600"
+											: "bg-green-600"
 									} text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300`}
 									onClick={() => {
 										return handleChangeJobCloseStatus(
@@ -234,8 +234,8 @@ const JobDetails: React.FC<{
 									}}
 								>
 									{jobDetails?.isActive
-										? "Open Jobe"
-										: "Close Jobe"}
+										? "Close Job"
+										: "Open Job"}
 								</button>
 							</div>
 						)}

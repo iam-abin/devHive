@@ -12,7 +12,7 @@ export = (dependencies: IDependency) => {
 	const execute = async(jobId: string, recruiterId: string) => {
 		const job = await jobRepository.getAJob(jobId);
 		
-		if(recruiterId !== job.recruiterId.toString()){
+		if(recruiterId !== job.recruiterId.id.toString()){
 			throw new ForbiddenError("You cannot modify others job")
 		}
 
