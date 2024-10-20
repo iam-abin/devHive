@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { RootState } from "../../redux/reducer/reducer";
+import { RootState } from "../../redux/reducer";
 import { useDispatch, useSelector } from "react-redux";
 import { GiHamburgerMenu } from "react-icons/gi";
 
@@ -16,6 +16,7 @@ import {
     deleteRecruiterAllNotificationsApi,
     getRecruiterAllNotificationsApi,
 } from "../../axios/apiMethods/chat-service/notification";
+import { clearUser } from "../../redux/slice/user";
 
 const TopNavBarRecruiter: React.FC<{ toggleLeftNavBar: any }> = ({
     toggleLeftNavBar,
@@ -61,7 +62,7 @@ const TopNavBarRecruiter: React.FC<{ toggleLeftNavBar: any }> = ({
             if (result.isConfirmed) {
                 const response = await recruiterSignoutApi(recruiter);
                 if (response) {
-                    dispatch(clearRecruiter());
+                    dispatch(clearUser());
                     notify("Logged out successfully", "success");
                     navigate("/recruiter/signin");
                 }

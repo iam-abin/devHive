@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAllCandidateAppliedJobsApi } from "../../../axios/apiMethods/jobs-service/jobs";
-import { RootState } from "../../../redux/reducer/reducer";
+import { RootState } from "../../../redux/reducer";
 import { useSelector } from "react-redux";
 import JobAppliedCard from "../../../components/cards/JobAppliedCard";
 import TopNavBarCandidate from "../../../components/navBar/TopNavBarCandidate";

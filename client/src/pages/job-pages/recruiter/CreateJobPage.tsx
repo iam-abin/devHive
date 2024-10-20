@@ -1,6 +1,6 @@
 import { createJobApi } from "../../../axios/apiMethods/jobs-service/jobs";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../redux/reducer/reducer";
+import { RootState } from "../../../redux/reducer";
 import { useNavigate } from "react-router-dom";
 import { notify } from "../../../utils/toastMessage";
 import { JobFormData } from "../../../types/Job";

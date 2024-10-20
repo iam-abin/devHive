@@ -10,9 +10,10 @@ import {
 import { notify } from "../../../utils/toastMessage";
 import { recruiterSigninApi } from "../../../axios/apiMethods/auth-service/recruiterAuth";
 import { setRecruiter } from "../../../redux/slice/recruiterSlice/recruiterDataSlice";
-import { RootState } from "../../../redux/reducer/reducer";
+import { RootState } from "../../../redux/reducer";
 import Loading from "../../../components/loading/Loading";
 import { RiArrowLeftFill } from "react-icons/ri";
+import { setUser } from "../../../redux/slice/user";
 
 function RecruiterSigninPage() {
 	const dispatch = useDispatch();
@@ -32,6 +33,13 @@ function RecruiterSigninPage() {
                 refreshToken: response.refreshToken!,
             }));
 			
+			dispatch(
+				setUser({
+					data: response.data,
+					accessToken: response.accessToken!,
+					refreshToken: response.refreshToken!,
+				})
+			);
 			notify(response.message, "success");
 			navigate("/recruiter");
 		}finally {

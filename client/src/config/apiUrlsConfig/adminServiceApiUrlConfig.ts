@@ -1,7 +1,6 @@
 const JOB_ADMIN_URL = `admin/job`; // job management in admin service
 const RECRUITER_ADMIN_URL = `admin/recruiter`; // recruiter management in admin service
 const CANDIDATE_ADMIN_URL = `admin/candidate`;
-const COMPANY_ADMIN_URL = `admin/company`;
 const DASHBOARD_ADMIN_URL = `admin/dashboard`;
 const ADMIN_MEMBERSHIP_PLANS_URL = `admin/membership`;
 const ADMIN_PAYMENT_URL = `admin/payment`
@@ -29,13 +28,6 @@ const adminApiUrlConfig = {
 		`${CANDIDATE_ADMIN_URL}/blockUnblock/${userId}`,
 	viewCandidateProfileDetailsUrl: (userId: string) =>
 		`${CANDIDATE_ADMIN_URL}/viewProfile/${userId}`,
-
-
-	// Company
-	getAllCompaniesUrl: `${COMPANY_ADMIN_URL}/companies`,
-	blockUnblockCompanyUrl: (companyId: string) =>
-		`${COMPANY_ADMIN_URL}/company/blockUnblock/${companyId}`,
-	// viewCompanyProfileDetailsUrl: (companyId: string) => `${COMPANY_ADMIN_URL}/viewProfile/${companyId}`,
 
 
 	// Premium plans

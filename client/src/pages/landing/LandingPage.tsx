@@ -7,7 +7,7 @@ import { getAllJobsApi } from "../../axios/apiMethods/jobs-service/jobs";
 
 import { Link } from "react-scroll";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/reducer/reducer";
+import { RootState } from "../../redux/reducer";
 import { useLocation, useNavigate } from "react-router-dom";
 import Paginate from "../../components/pagination/Paginate";
 import TopNavBarRecruiter from "../../components/navBar/TopNavBarRecruiter";

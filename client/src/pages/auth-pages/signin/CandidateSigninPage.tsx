@@ -11,9 +11,10 @@ import {
 import { notify } from "../../../utils/toastMessage";
 import { candidateSigninApi } from "../../../axios/apiMethods/auth-service/candidateAuth";
 import { setCandidate } from "../../../redux/slice/candidateSlice/candidateDataSlice";
-import { RootState } from "../../../redux/reducer/reducer";
+import { RootState } from "../../../redux/reducer";
 import Loading from "../../../components/loading/Loading";
 import candidateLoginImage from "../../../assets/auth/candidate-login.svg";
+import { setUser } from "../../../redux/slice/user";
 
 
 const CandidateSigninPage: React.FC = () => {
@@ -32,6 +33,13 @@ const CandidateSigninPage: React.FC = () => {
                 accessToken: response.accessToken!,
                 refreshToken: response.refreshToken!,
             }));
+			dispatch(
+				setUser({
+					data: response.data,
+					accessToken: response.accessToken!,
+					refreshToken: response.refreshToken!,
+				})
+			);
 			notify(response.message, "success");
 			navigate("/candidate");
 		} finally {

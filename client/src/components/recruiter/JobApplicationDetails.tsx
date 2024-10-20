@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 import { formatDate } from "../../utils/date-functions";
 import { formatCurrency } from "../../utils/currency-format";
 import { FaFacebookMessenger, FaLock } from "react-icons/fa";
-import { RootState } from "../../redux/reducer/reducer";
+import { RootState } from "../../redux/reducer";
 import { useSelector } from "react-redux";
 
 const JobApplicationDetails: React.FC<{

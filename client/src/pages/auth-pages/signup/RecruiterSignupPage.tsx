@@ -11,7 +11,7 @@ import {
 import { recruiterSignupApi } from "../../../axios/apiMethods/auth-service/recruiterAuth";
 
 import recruiterLoginImage from "../../../assets/recruiter/recruiter-login.svg"
-import { RootState } from "../../../redux/reducer/reducer";
+import { RootState } from "../../../redux/reducer";
 import {
 	setLoaded,
 	setLoading,

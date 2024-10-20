@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { verifySignupOtpCandidateApi } from "../../../../axios/apiMethods/auth-service/candidateAuth";
 import { setCandidate } from "../../../../redux/slice/candidateSlice/candidateDataSlice";
 import { notify } from "../../../../utils/toastMessage";
-import { RootState } from "../../../../redux/reducer/reducer";
+import { RootState } from "../../../../redux/reducer";
 import Loading from "../../../../components/loading/Loading";
 import OtpEnterForm from "../../../../components/form/otpEnterForm";
 

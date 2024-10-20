@@ -8,7 +8,7 @@ import {
 import EmailOrMobile from "../../../../components/form/EmailOrMobile";
 import { forgotPasswordEmailCandidateApi } from "../../../../axios/apiMethods/auth-service/candidateAuth";
 import Swal from "sweetalert2";
-import { RootState } from "../../../../redux/reducer/reducer";
+import { RootState } from "../../../../redux/reducer";
 import Loading from "../../../../components/loading/Loading";
 import Footer from "../../../../components/footer/Footer";
 import TopNavBarCandidate from "../../../../components/navBar/TopNavBarCandidate";

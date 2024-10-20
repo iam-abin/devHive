@@ -6,6 +6,9 @@ export const CONSTANTS = Object.freeze({
 });
 
 export const LOCAL_STORAGE = Object.freeze({
+    ACCESS_TOKEN: "accessToken",
+    REFRESH_TOKEN: "refreshToken",
+
     ADMIN_ACCESS_TOKEN: "adminAccessToken",
     ADMIN_REFRESH_TOKEN: "adminRefreshToken",
 
@@ -14,4 +17,13 @@ export const LOCAL_STORAGE = Object.freeze({
 
     RECRUITER_ACCESS_TOKEN: "recruiterAccessToken",
     RECRUITER_REFRESH_TOKEN: "recruiterRefreshToken",
+});
+
+
+// import { IUserRole } from "../types/role";
+
+export const ROLES = Object.freeze({
+    ADMIN: "admin",
+    CANDIDATE: "candidate",
+    RECRUITER: "recruiter",
 });

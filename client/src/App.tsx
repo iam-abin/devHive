@@ -8,45 +8,42 @@ import RecruiterRouters from "./routes/RecruiterRouters";
 import AdminRoutes from "./routes/AdminRoutes";
 
 import { useSelector } from "react-redux";
-import { RootState } from "./redux/reducer/reducer";
+import { RootState } from "./redux/reducer";
 import NotFound from "./pages/Error/NotFound";
 import { Toaster } from "react-hot-toast";
+import { ROLES } from "./utils/constants";
 
 export default function App() {
-	const isCandidateLoggedIn = useSelector(
-		(state: RootState) => state.candidateData.data
-	);
-
-	const isRecruiterLoggedIn = useSelector(
-		(state: RootState) => state.recruiterData.data
-	);
 	
-	
-	return (
-		<>
-			<ToastContainer className="mt-10" />
-			<Toaster />
-			<Routes>
+    const loggedinUser = useSelector(
+        (store: RootState) => store.userReducer.authData
+    );
 
-				<Route
-					path="/"
-					element={
-						isCandidateLoggedIn ? (
-							<Navigate to="/candidate" />
-						) : isRecruiterLoggedIn ? (
-							<Navigate to="/recruiter" />
-						) : (
-							<LandingPage />
-						)
-					}
-				/>
+    console.log("loggedinUser", loggedinUser);
 
-				<Route path="/admin/*" element={<AdminRoutes />} />
-				<Route path="/candidate/*" element={<CandidateRoutes />} />
-				<Route path="/recruiter/*" element={<RecruiterRouters />} />
-				<Route path="*" element={<NotFound url="/" />} />
-				
-			</Routes>
-		</>
-	);
+    return (
+        <>
+            <ToastContainer className="mt-10" />
+            <Toaster />
+            <Routes>
+                <Route
+                    path="/"
+                    element={
+                        loggedinUser?.role === ROLES.CANDIDATE ? (
+                            <Navigate to="/candidate" />
+                        ) : loggedinUser?.role === ROLES.RECRUITER ? (
+                            <Navigate to="/recruiter" />
+                        ) : (
+                            <LandingPage />
+                        )
+                    }
+                />
+
+                <Route path="/admin/*" element={<AdminRoutes />} />
+                <Route path="/candidate/*" element={<CandidateRoutes />} />
+                <Route path="/recruiter/*" element={<RecruiterRouters />} />
+                <Route path="*" element={<NotFound url="/" />} />
+            </Routes>
+        </>
+    );
 }

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import TableComponent from "../../../components/table/TableComponent";
 import { useNavigate } from "react-router-dom";
 import { getAllJobsApplicationsForRecruiterApi } from "../../../axios/apiMethods/jobs-service/jobs";
-import { RootState } from "../../../redux/reducer/reducer";
+import { RootState } from "../../../redux/reducer";
 import { useSelector } from "react-redux";
 import { formatDate } from "../../../utils/date-functions";
 

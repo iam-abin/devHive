@@ -10,7 +10,7 @@ import {
     getARecrutierConversationApi,
     getAllRecruiterChatRoomsApi,
 } from "../../axios/apiMethods/chat-service/chat";
-import { RootState } from "../../redux/reducer/reducer";
+import { RootState } from "../../redux/reducer";
 import socket from "../../config/socket";
 import { deleteRecruitersAllNotificationsBySenderIdApi } from "../../axios/apiMethods/chat-service/notification";
 import {

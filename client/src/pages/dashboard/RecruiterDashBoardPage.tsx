@@ -5,7 +5,7 @@ import {
 	getRecruiterDashboadGraphApi,
 } from "../../axios/apiMethods/jobs-service/jobs";
 import { useSelector } from "react-redux";
-import { RootState } from "../../redux/reducer/reducer";
+import { RootState } from "../../redux/reducer";
 import ChartThree from "../../components/charts/ChartThree";
 
 const RecruiterDashBoardPage: React.FC = () => {

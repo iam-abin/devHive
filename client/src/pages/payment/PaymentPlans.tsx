@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import TopNavBarCandidate from "../../components/navBar/TopNavBarCandidate";
 import Footer from "../../components/footer/Footer";
 import { createPaymentApi } from "../../axios/apiMethods/payment-service/candidate";
-import { RootState } from "../../redux/reducer/reducer";
+import { RootState } from "../../redux/reducer";
 
 import { useSelector } from "react-redux";
 import { loadStripe } from "@stripe/stripe-js";

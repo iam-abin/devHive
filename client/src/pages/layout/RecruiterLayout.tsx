@@ -9,7 +9,7 @@ import membership from "../../assets/layoutItems/membership.svg";
 import TopNavBarRecruiter from "../../components/navBar/TopNavBarRecruiter";
 import LeftNavBarRecruiter from "../../components/navBar/LeftNavBarRecruiter";
 import { useSelector } from "react-redux";
-import { RootState } from "../../redux/reducer/reducer";
+import { RootState } from "../../redux/reducer";
 
 const RecruiterLayout = () => {
 	const recruiterProfile: any = useSelector(

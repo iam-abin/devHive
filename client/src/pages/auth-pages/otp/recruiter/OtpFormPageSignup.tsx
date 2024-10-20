@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import OtpEnterForm from "../../../../components/form/otpEnterForm";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../../redux/reducer/reducer";
+import { RootState } from "../../../../redux/reducer";
 import Loading from "../../../../components/loading/Loading";
 import {
 	setLoaded,

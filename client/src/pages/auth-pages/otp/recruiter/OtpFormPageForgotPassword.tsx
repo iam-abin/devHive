@@ -5,7 +5,7 @@ import {
 } from "../../../../redux/slice/loaderSlice/isLoading";
 import { useDispatch, useSelector } from "react-redux";
 import { notify } from "../../../../utils/toastMessage";
-import { RootState } from "../../../../redux/reducer/reducer";
+import { RootState } from "../../../../redux/reducer";
 import Loading from "../../../../components/loading/Loading";
 import OtpEnterForm from "../../../../components/form/otpEnterForm";
 import { verifyForgotPasswordOtpRecruiterApi } from "../../../../axios/apiMethods/auth-service/recruiterAuth";

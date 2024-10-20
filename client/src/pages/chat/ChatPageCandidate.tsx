@@ -12,7 +12,7 @@ import {
     getACandidateConversationApi,
     getAllCandidateChatRoomsApi,
 } from "../../axios/apiMethods/chat-service/chat";
-import { RootState } from "../../redux/reducer/reducer";
+import { RootState } from "../../redux/reducer";
 import socket from "../../config/socket";
 import { deleteCandidatesAllNotificationsBySenderIdApi } from "../../axios/apiMethods/chat-service/notification";
 import {
@@ -153,8 +153,6 @@ const ChatPageCandidate = () => {
         dispatch(setCandidateCurrentlySelectedChatRoom(room));
         const conversations = await getACandidateConversationApi(room._id);
         let senderId = getReceiver(room); // to find the other user
-        console.log("senderId ==={} ",senderId);
-        
         await deleteCandidatesAllNotificationsBySenderIdApi(
             senderId[0]?._id
         );

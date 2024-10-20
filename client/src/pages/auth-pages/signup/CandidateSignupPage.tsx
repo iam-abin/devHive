@@ -12,7 +12,7 @@ import { candidateSignupApi } from "../../../axios/apiMethods/auth-service/candi
 import candidateLoginImage from "../../../assets/candidate/candidate-login.svg"
 import googleIcon from "../../../assets/google/google-icon.svg"
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../redux/reducer/reducer";
+import { RootState } from "../../../redux/reducer";
 import {
 	setLoaded,
 	setLoading,

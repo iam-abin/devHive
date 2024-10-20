@@ -2,7 +2,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import { useSelector } from "react-redux";
 
-import { RootState } from "../redux/reducer/reducer";
+import { RootState } from "../redux/reducer";
 import Loading from "../components/loading/Loading";
 
 import AdminLayout from "../pages/layout/AdminLayout";
@@ -44,14 +44,15 @@ const AdminDashBoard = lazy(
 );
 
 import NotFound from "../pages/Error/NotFound";
+import { ROLES } from "../utils/constants";
 // const NotFound = lazy(
 // 	() => import("../pages/auth-pages/signin/AdminSigninPage")
 // );
 
 function AdminRoutes() {
-	const isAdminLoggedIn = useSelector(
-		(state: RootState) => state.adminData.data
-	);
+	const loggedinUser = useSelector(
+        (store: RootState) => store.userReducer.authData
+    );
 	return (
 		<>
 			<Suspense fallback={<Loading />}>
@@ -59,7 +60,7 @@ function AdminRoutes() {
 					<Route
 						path="/signin"
 						element={
-							isAdminLoggedIn ? (
+							loggedinUser?.role === ROLES.ADMIN ? (
 								<Navigate to="/admin" />
 							) : (
 								<AdminSigninPage />
@@ -69,7 +70,7 @@ function AdminRoutes() {
 					<Route
 						path="/"
 						element={
-							isAdminLoggedIn ? (
+							loggedinUser ? (
 								<AdminLayout />
 							) : (
 								<Navigate to="/admin/signin" />
@@ -79,7 +80,7 @@ function AdminRoutes() {
 						<Route
 							path="/"
 							element={
-								isAdminLoggedIn ? (
+								loggedinUser ? (
 									<AdminDashBoard />
 								) : (
 									<Navigate to="/admin" />
@@ -89,7 +90,7 @@ function AdminRoutes() {
 						<Route
 							path="/candidates"
 							element={
-								isAdminLoggedIn ? (
+								loggedinUser ? (
 									<CandidateManagementPage />
 								) : (
 									<Navigate to="/admin" />
@@ -100,7 +101,7 @@ function AdminRoutes() {
 						<Route
 							path="/candidate/viewProfileDetails/:userId"
 							element={
-								isAdminLoggedIn ? (
+								loggedinUser ? (
 									<ViewCandidateProfilePage />
 								) : (
 									<Navigate to="/admin" />
@@ -111,7 +112,7 @@ function AdminRoutes() {
 						<Route
 							path="/recruiter/viewProfileDetails/:userId"
 							element={
-								isAdminLoggedIn ? (
+								loggedinUser ? (
 									<ViewRecruiterProfilePage />
 								) : (
 									<Navigate to="/admin" />
@@ -122,7 +123,7 @@ function AdminRoutes() {
 						<Route
 							path="/recruiters"
 							element={
-								isAdminLoggedIn ? (
+								loggedinUser ? (
 									<RecruiterManagementPage />
 								) : (
 									<Navigate to="/admin" />
@@ -133,7 +134,7 @@ function AdminRoutes() {
 						<Route
 							path="/jobs"
 							element={
-								isAdminLoggedIn ? (
+								loggedinUser ? (
 									<JobsManagementPage />
 								) : (
 									<Navigate to="/admin" />
@@ -144,7 +145,7 @@ function AdminRoutes() {
 						<Route
 							path="/job/viewJobDetails/:jobId"
 							element={
-								isAdminLoggedIn ? (
+								loggedinUser ? (
 									<ViewJobDetailsPage />
 								) : (
 									<Navigate to="/admin" />
@@ -155,7 +156,7 @@ function AdminRoutes() {
 						<Route
 							path="/memberships"
 							element={
-								isAdminLoggedIn ? (
+								loggedinUser ? (
 									<PremiumMembershipPage />
 								) : (
 									<Navigate to="/admin" />
@@ -166,7 +167,7 @@ function AdminRoutes() {
 						<Route
 							path="/payments"
 							element={
-								isAdminLoggedIn ? (
+								loggedinUser ? (
 									<PaymentsListPage />
 								) : (
 									<Navigate to="/admin" />

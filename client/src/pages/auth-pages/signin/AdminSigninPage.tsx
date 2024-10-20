@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../redux/reducer/reducer";
+import { RootState } from "../../../redux/reducer";
 
 import { FaRegEnvelope } from "react-icons/fa";
 import { MdLockOutline } from "react-icons/md";
@@ -16,6 +16,7 @@ import { setAdmin } from "../../../redux/slice/adminSlice/adminDataSlice";
 import { notify } from "../../../utils/toastMessage";
 import { useEffect } from "react";
 import { ISignin } from "../../../types/user";
+import { setUser } from "../../../redux/slice/user";
 
 function AdminSigninPage() {
     const navigate = useNavigate();
@@ -32,6 +33,15 @@ function AdminSigninPage() {
                 refreshToken: response.refreshToken!,
             })
         );
+
+        dispatch(
+            setUser({
+                data: response.data,
+                accessToken: response.accessToken!,
+                refreshToken: response.refreshToken!,
+            })
+        );
+
 
         notify(response.message, "success");
         navigate("/admin");

@@ -13,6 +13,7 @@ import { clearAdmin } from "../../redux/slice/adminSlice/adminDataSlice";
 import { adminSignoutApi } from "../../axios/apiMethods/auth-service/adminAuth";
 import { notify } from "../../utils/toastMessage";
 import LeftNavBarAdmin from "../../components/navBar/LeftNavBarAdmin";
+import { clearUser } from "../../redux/slice/user";
 
 const AdminLayout = () => {
 	const dispatch = useDispatch();
@@ -31,7 +32,7 @@ const AdminLayout = () => {
 			if (result.isConfirmed) {
 				const response = await adminSignoutApi();
 				if (response) {
-					dispatch(clearAdmin());
+					dispatch(clearUser());
 					notify("Logged out successfully", "success");
 					navigate("/admin");
 				}

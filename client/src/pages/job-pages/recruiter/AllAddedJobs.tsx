@@ -7,7 +7,7 @@ import {
     deleteAJobApi,
     getAllRecruiterAddedJobsApi,
 } from "../../../axios/apiMethods/jobs-service/jobs";
-import { RootState } from "../../../redux/reducer/reducer";
+import { RootState } from "../../../redux/reducer";
 import { useSelector } from "react-redux";
 
 interface JobInterface {

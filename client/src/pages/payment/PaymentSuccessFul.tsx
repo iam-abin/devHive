@@ -5,7 +5,7 @@ import { Link, useLocation } from "react-router-dom";
 import CheckmarkSvg from "../../assets/payment/wired-flat-37-approve-checked-simple (3).gif";
 import { candidateGetProfileApi } from "../../axios/apiMethods/profile-service/candidate";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/reducer/reducer";
+import { RootState } from "../../redux/reducer";
 import { setCandidateProfileDetails } from "../../redux/slice/candidateSlice/candidateProfileSlice";
 
 const PaymentSuccessFul: React.FC = () => {

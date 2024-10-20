@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../../../redux/reducer/reducer';
+import { RootState } from '../../../../redux/reducer';
 import { useNavigate } from 'react-router-dom';
 import { resetPasswordCandidateApi } from '../../../../axios/apiMethods/auth-service/candidateAuth';
 import { notify } from '../../../../utils/toastMessage';

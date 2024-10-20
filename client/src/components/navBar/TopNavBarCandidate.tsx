@@ -1,5 +1,5 @@
 import { Link, useMatch, useNavigate } from "react-router-dom";
-import { RootState } from "../../redux/reducer/reducer";
+import { RootState } from "../../redux/reducer";
 import { useDispatch, useSelector } from "react-redux";
 
 import { candidateSignoutApi } from "../../axios/apiMethods/auth-service/candidateAuth";
@@ -20,6 +20,7 @@ import {
     deleteCandidatesAllNotificationsApi,
     getCandidatesAllNotificationsApi,
 } from "../../axios/apiMethods/chat-service/notification";
+import { clearUser } from "../../redux/slice/user";
 
 const TopNavBarCandidate = () => {
     const dispatch = useDispatch();
@@ -65,7 +66,8 @@ const TopNavBarCandidate = () => {
                 const response = await candidateSignoutApi(candidate);
 
                 if (response) {
-                    dispatch(clearCandidate());
+                    dispatch(clearUser());
+                    
                     dispatch(clearCandidateProfileDetails());
                     notify("Logged out successfully", "success");
                     navigate("/candidate/signin");
