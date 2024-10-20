@@ -14,13 +14,11 @@ export = (dependencies: IDependency) => {
             dependencies
         ).execute(email, password, ROLES.CANDIDATE);
 
-        console.log(accessToken);
-        
         res.status(200).json({
             message: "Login successful",
             data: user,
-            candidateAccessToken:accessToken,
-            candidateRefreshToken: refreshToken,
+            accessToken,
+            refreshToken,
         });
     };
 };

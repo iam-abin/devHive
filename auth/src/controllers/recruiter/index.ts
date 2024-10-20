@@ -1,7 +1,7 @@
 import recruiterSignupController from "./signup.controller";
 import recruiterSigninController from "./signin.controller";
 import recruiterSignoutController from "./signout.controller";
-import recruiterSignupEmailOtpVerificationController from "./signup-email-otp-verification.controller";
+import recruiterSignupEmailOtpVerificationController from "./signupEmailOtpVerification.controller";
 
 import { IDependency } from "../../frameworks/types/dependency";
 

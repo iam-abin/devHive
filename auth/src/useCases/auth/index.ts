@@ -1,4 +1,4 @@
-import refreshTokenUseCase from "./refreshTokenUseCase";
+import refreshTokenUseCase from "./refreshToken";
 import signupUseCase from "./signup";
 import updatePasswordUseCase from "./updatePassword";
 import getUserByEmailUseCase from "./getUserByEmail";

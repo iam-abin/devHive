@@ -1,4 +1,4 @@
-import jwtRefreshController from "./jwt-refresh.controller";
+import jwtRefreshController from "./jwtRefresh.controller";
 
 import { IDependency } from "../../frameworks/types/dependency";
 

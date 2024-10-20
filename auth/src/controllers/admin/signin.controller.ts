@@ -41,14 +41,14 @@ export = (dependencies: IDependency) => {
         };
 
         // Generate a Jwt access token
-        const adminAccessToken = createJwtAccessToken(adminPayloadData);
-        const adminRefreshToken = createJwtRefreshToken(adminPayloadData);
+        const accessToken = createJwtAccessToken(adminPayloadData);
+        const refreshToken = createJwtRefreshToken(adminPayloadData);
 
         res.status(200).json({
             message: "Login successfull",
             data: isExistingUser,
-            adminAccessToken,
-            adminRefreshToken,
+            accessToken,
+            refreshToken,
         });
     };
 };

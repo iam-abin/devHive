@@ -1,8 +1,11 @@
-import {  IJwtPayload, NotAuthorizedError, NotFoundError, verifyJwtToken } from "@abijobportal/common";
-import { IDependency } from "../../frameworks/types/dependency";
 import {
-    createJwtAccessToken,
-} from "../../frameworks/utils/jwtToken";
+    IJwtPayload,
+    NotAuthorizedError,
+    NotFoundError,
+    verifyJwtToken,
+} from "@abijobportal/common";
+import { IDependency } from "../../frameworks/types/dependency";
+import { createJwtAccessToken } from "../../frameworks/utils/jwtToken";
 
 export = (dependencies: IDependency) => {
     const {
@@ -12,10 +15,8 @@ export = (dependencies: IDependency) => {
     if (!usersRepository)
         throw new Error("usersRepository should exist in dependencies");
 
-    const execute = async(barerToken: string) => {
-
-    
-    if (barerToken) throw new NotAuthorizedError();
+    const execute = async (barerToken: string) => {
+        if (!barerToken) throw new NotAuthorizedError();
 
         let refreshToken: string = "";
         if (barerToken.startsWith("Bearer ")) {
@@ -24,12 +25,12 @@ export = (dependencies: IDependency) => {
 
         const jwtPayload: IJwtPayload = verifyJwtToken(refreshToken);
 
-        let user = await usersRepository.getByEmail(jwtPayload.email)
+        let user = await usersRepository.getByEmail(jwtPayload.email);
 
         if (!user) throw new NotFoundError("User not found");
 
         const accessToken = createJwtAccessToken(jwtPayload);
-        return { accessToken, refreshToken, user }
-    }
-    return {execute };
+        return { accessToken, refreshToken, user };
+    };
+    return { execute };
 };
