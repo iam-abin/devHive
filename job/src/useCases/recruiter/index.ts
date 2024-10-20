@@ -1,5 +1,5 @@
 import createJobUseCase from "./createJob";
-import updateJobUseCase from "./updateJob";
+import updateJobUseCase from "./update";
 import deleteJobUseCase from "./deleteJob";
 import getRecruiterCreatedJobsUseCase from "./getCreatedJobs";
 import getAllJobApplicationsUseCase from "./getApplications";

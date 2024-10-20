@@ -15,7 +15,7 @@ export = (dependencies: IDependency) => {
 		
 		const job = await jobRepository.getAJob(jobId);
 		if(!job)  throw new NotFoundError();
-		if(recruiterId !== job.recruiterId.toString()){
+		if(recruiterId !== job.recruiterId.id.toString()){
 			throw new ForbiddenError("You cannot modify others job")
 		}
 		
@@ -23,16 +23,14 @@ export = (dependencies: IDependency) => {
 			data.deadline = new Date(data.deadline)
 		}
 
-		if(!data.companyName || !data.companyLocation ) throw new BadRequestError('Add company details in the profile before creating a job!!');
+        console.log(data);
+        
         if(!data.salaryMin || !data.salaryMax) throw new BadRequestError('must add all salary fields!!'); 
         if(data.salaryMin > data.salaryMax ) throw new BadRequestError('min salary must be less than max salary!!');
         if(data.salaryMin <0 || data.salaryMax<0 ) throw new BadRequestError('cannot add negative values in the salary field!!');
         if(data.availablePosition && data.availablePosition<0 ) throw new BadRequestError('cannot add negative values in the available position field!!');
         
 		const updatedJob =  await jobRepository.updateJob(jobId, data);
-		 //  // to produce a message to kafka topic
-        // // isBlocked contains user data with 'isActive' value changed
-		// await produceMessage(updatedJob, 'JOB_UPDATED_TOPIC')
         const jobUpdatedEvent = new JobUpdatedEventPublisher(kafkaClient);
         await jobUpdatedEvent.publish({
             jobId: updatedJob.id,

@@ -30,8 +30,8 @@ export const recruiterRouter = (dependencies: IDependency) => {
 
     router.post("/create", recruiterJobController.createJobController);
 
-    router.put("/update", recruiterJobController.updateJobController);
-
+    router.patch("/edit/:jobId", recruiterJobController.editJobController);
+    
     router.delete("/:id", recruiterJobController.deleteJobController);
 
     router.get(

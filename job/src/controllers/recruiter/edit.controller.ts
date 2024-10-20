@@ -8,8 +8,7 @@ export = (dependencies: IDependency)=>{
 
     return async (req: Request, res: Response)=>{
         const { jobId } = req.params;
-        const {userId} = req.currentUser
-        
+        const {userId} = req.currentUser!
         const updatedJob = await updateJobUseCase(dependencies).execute(jobId, userId, req.body as Partial<IJob>);
        
 
