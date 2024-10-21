@@ -13,18 +13,15 @@ import {
 import { RootState } from "../../redux/reducer";
 import socket from "../../config/socket";
 import { deleteRecruitersAllNotificationsBySenderIdApi } from "../../axios/apiMethods/chat-service/notification";
-import {
-    clearRecruiterCurrentlySelectedChatRoom,
-    setRecruiterCurrentlySelectedChatRoom,
-} from "../../redux/slice/chat/recruiterCurrentlySelectedChatroomSlice";
 import { CONSTANTS } from "../../utils/constants";
+import { clearCurrentlySelectedChatRoom, setCurrentlySelectedChatRoom } from "../../redux/slice/chat";
 
 const ChatPageRecruiter = () => {
     const dispatch = useDispatch();
     const { recepientId } = useParams();
 
     const recruiterData: any = useSelector(
-        (state: RootState) => state.recruiterData.data
+        (store: RootState) => store.userReducer.authData
     );
 
     const [chatRooms, setchatRooms] = useState([]);
@@ -59,7 +56,7 @@ const ChatPageRecruiter = () => {
         const handleBeforeUnload = (event: any) => {
             event.preventDefault();
             // Dispatch the action to clear the currently selected chat room
-            dispatch(clearRecruiterCurrentlySelectedChatRoom());
+            dispatch(clearCurrentlySelectedChatRoom());
         };
 
         window.addEventListener("beforeunload", handleBeforeUnload);
@@ -100,7 +97,7 @@ const ChatPageRecruiter = () => {
         return () => {
             // Clean up the event listener when the component unmounts
             socket.off("chatNotification");
-            dispatch(clearRecruiterCurrentlySelectedChatRoom());
+            dispatch(clearCurrentlySelectedChatRoom());
         };
     }, []);
 
@@ -147,7 +144,7 @@ const ChatPageRecruiter = () => {
 
     const handleChatRoomClick = async (room: any) => {
         setSelectedChatRoom(room);
-        dispatch(setRecruiterCurrentlySelectedChatRoom(room));
+        dispatch(setCurrentlySelectedChatRoom(room));
         const conversations = await getARecrutierConversationApi(room._id);
         let senderId = getReceiver(room); // to find the other user
         await deleteRecruitersAllNotificationsBySenderIdApi(

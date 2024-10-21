@@ -6,13 +6,13 @@ import { useNavigate } from 'react-router-dom';
 import { resetPasswordCandidateApi } from '../../../../axios/apiMethods/auth-service/candidateAuth';
 import { notify } from '../../../../utils/toastMessage';
 import ForgotResetPasswordForm from '../../../../components/form/ForgotResetPasswordForm';
-import { setLoaded, setLoading } from '../../../../redux/slice/loaderSlice/isLoading';
+import { setLoaded, setLoading } from '../../../../redux/slice/isLoading';
 
 const ResetPassword: React.FC = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate();
 
-  const candidateData: any = useSelector((state: RootState) => state.candidateData.data);
+  const candidateData: any = useSelector((store: RootState) => store.userReducer.authData);
 
 
   const handleSubmit = async (values: any) => {

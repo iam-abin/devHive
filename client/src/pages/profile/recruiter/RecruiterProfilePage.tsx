@@ -11,7 +11,7 @@ import { recruiterGetProfileByCandidateApi } from "../../../axios/apiMethods/pro
 
 const RecruiterProfilePage: React.FC = () => {
 	const recruiterData: any = useSelector(
-		(state: RootState) => state.recruiterData.data
+		(state: RootState) => state.userReducer.authData
 	);
 
 	const { id } = useParams(); 

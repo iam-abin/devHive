@@ -2,7 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import {
     setLoaded,
     setLoading,
-} from "../../../../redux/slice/loaderSlice/isLoading";
+} from "../../../../redux/slice/isLoading";
 import { useDispatch, useSelector } from "react-redux";
 import { verifyForgotPasswordOtpCandidateApi } from "../../../../axios/apiMethods/auth-service/candidateAuth";
 import { notify } from "../../../../utils/toastMessage";

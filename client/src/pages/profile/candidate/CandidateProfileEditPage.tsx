@@ -31,7 +31,7 @@ function CandidateProfileEditPage() {
 	const navigate = useNavigate();
 	
 	const candidateProfileData: any = useSelector(
-		(state: RootState) => state.candidateProfile.candidateProfile
+		(store: RootState) => store.userReducer.myProfile
 	);
 
 

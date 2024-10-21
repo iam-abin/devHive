@@ -28,7 +28,7 @@ const JobDetails: React.FC<{
 
 
 	const recruiterData: any = useSelector(
-		(state: RootState) => state.recruiterData.data
+		(store: RootState) => store.userReducer.authData
 	);
 
 	if (isRecruiterPage) {

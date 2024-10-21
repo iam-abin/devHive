@@ -13,7 +13,7 @@ import { RootState } from "../../redux/reducer";
 
 const RecruiterLayout = () => {
 	const recruiterProfile: any = useSelector(
-		(state: RootState) => state.recruiterData.data
+		(store: RootState) => store.userReducer.authData
 	);
 
 	// State to manage visibility of left navbar on mobile

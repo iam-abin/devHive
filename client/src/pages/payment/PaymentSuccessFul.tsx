@@ -6,13 +6,13 @@ import CheckmarkSvg from "../../assets/payment/wired-flat-37-approve-checked-sim
 import { candidateGetProfileApi } from "../../axios/apiMethods/profile-service/candidate";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/reducer";
-import { setCandidateProfileDetails } from "../../redux/slice/candidateSlice/candidateProfileSlice";
+import { setMyProfileData } from "../../redux/slice/user";
 
 const PaymentSuccessFul: React.FC = () => {
 	const location = useLocation();
 	const dispatch = useDispatch();
 	const candidateData: any = useSelector(
-		(state: RootState) => state.candidateData.data
+		(state: RootState) => state.userReducer.authData
 	);
 	const candidateUrl = location.pathname.includes("candidate");
 	useEffect(() => {
@@ -21,7 +21,7 @@ const PaymentSuccessFul: React.FC = () => {
 				candidateData?.id
 			);
 			
-			dispatch(setCandidateProfileDetails(candidateProfileData?.data));
+			dispatch(setMyProfileData(candidateProfileData?.data));
 		})();
 	}, []);
 	return (

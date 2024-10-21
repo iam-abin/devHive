@@ -11,18 +11,11 @@ import { RootState } from "../../redux/reducer";
 import { useLocation, useNavigate } from "react-router-dom";
 import Paginate from "../../components/pagination/Paginate";
 import TopNavBarRecruiter from "../../components/navBar/TopNavBarRecruiter";
-import {
-    clearCurrentPage,
-    clearFilteredJobs,
-    clearTotalNumberOfPages,
-    setFilteredJobs,
-} from "../../redux/slice/job/filteredJobsSlice";
-import { setTotalNumberOfPages } from "../../redux/slice/job/filteredJobsSlice";
-import { setCurrentPage } from "../../redux/slice/job/filteredJobsSlice";
 import TopNavBarCandidate from "../../components/navBar/TopNavBarCandidate";
 import Footer from "../../components/footer/Footer";
 import { candidateGetProfileApi } from "../../axios/apiMethods/profile-service/candidate";
-import { setCandidateProfileDetails } from "../../redux/slice/candidateSlice/candidateProfileSlice";
+import { setMyProfileData } from "../../redux/slice/user";
+import { clearCurrentPage, clearJobs, clearTotalNumberOfPages, setCurrentPage, setJobs, setTotalNumberOfPages } from "../../redux/slice/job";
 
 function LandingPage() {
     const dispatch = useDispatch();
@@ -33,24 +26,24 @@ function LandingPage() {
     const isCandidateUrl = location.pathname.includes("candidate");
 
     const candidate: any = useSelector(
-        (state: RootState) => state.candidateData.data
+        (store: RootState) => store.userReducer.authData
     );
     const recruiter = useSelector(
-        (state: RootState) => state.recruiterData.data
+        (store: RootState) => store.userReducer.authData
     );
 
     const pageCount: any = useSelector(
-        (state: RootState) => state.filteredJobs.totalNumberOfPages
+        (store: RootState) => store.jobReducer.totalNumberOfPages
     );
 
     const currentPage: any = useSelector(
-        (state: RootState) => state.filteredJobs.currentPage
+        (store: RootState) => store.jobReducer.currentPage
     );
 
     const jobs: any = useSelector((store: RootState) => {
-        console.log(store.filteredJobs.data);
+        console.log(store.jobReducer.jobs);
 
-        return store.filteredJobs.data;
+        return store.jobReducer.jobs;
     });
 
     const handleGetAllJobs = async (page: number) => {
@@ -67,7 +60,7 @@ function LandingPage() {
             let candidateProfile;
             if (isCandidateUrl && candidate) {
                 candidateProfile = await candidateGetProfileApi(id);
-                dispatch(setCandidateProfileDetails(candidateProfile?.data));
+                dispatch(setMyProfileData(candidateProfile?.data));
             }
         })();
     }, []);
@@ -77,17 +70,16 @@ function LandingPage() {
             const allJobs = await handleGetAllJobs(currentPage);
             // Check if allJobs.data exists before accessing its properties
             if (allJobs && allJobs.data) {
-                dispatch(setFilteredJobs(allJobs.data.jobs));
+                dispatch(setJobs(allJobs.data.jobs));
 
                 dispatch(
-                    setTotalNumberOfPages({
-                        totalNumberOfPages: allJobs.data.totalNumberOfPages,
-                    })
+                    setTotalNumberOfPages(allJobs.data.totalNumberOfPages,
+                    )
                 );
             }
             return () => {
                 // This cleanup function will be called when the component is unmounted
-                dispatch(clearFilteredJobs());
+                dispatch(clearJobs());
                 dispatch(clearTotalNumberOfPages());
                 dispatch(clearCurrentPage());
             };
@@ -95,7 +87,7 @@ function LandingPage() {
     }, [currentPage]);
 
     const handlePageChange = async ({ selected }: { selected: number }) => {
-        dispatch(setCurrentPage({ currentPage: selected + 1 }));
+        dispatch(setCurrentPage(selected + 1 ));
     };
 
     const handleViewJob = async (jobId: string) => {

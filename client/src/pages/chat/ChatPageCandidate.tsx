@@ -15,22 +15,19 @@ import {
 import { RootState } from "../../redux/reducer";
 import socket from "../../config/socket";
 import { deleteCandidatesAllNotificationsBySenderIdApi } from "../../axios/apiMethods/chat-service/notification";
-import {
-    clearCandidateCurrentlySelectedChatRoom,
-    setCandidateCurrentlySelectedChatRoom,
-} from "../../redux/slice/chat/candidateCurrentlySelectedChatroomSlice";
 import { CONSTANTS } from "../../utils/constants";
+import { clearCurrentlySelectedChatRoom, setCurrentlySelectedChatRoom } from "../../redux/slice/chat";
 
 const ChatPageCandidate = () => {
     const dispatch = useDispatch();
     const { recepientId } = useParams();
 
     const candidateData: any = useSelector(
-        (state: RootState) => state.candidateData.data
+        (store: RootState) => store.userReducer.authData
     );
 
     const candidateProfile: any = useSelector((state: RootState) => {
-        return state.candidateProfile.candidateProfile;
+        return state.userReducer.myProfile;
     });
 
     const [chatRooms, setchatRooms] = useState([]);
@@ -65,7 +62,7 @@ const ChatPageCandidate = () => {
         const handleBeforeUnload = (event: any) => {
             event.preventDefault();
             // Dispatch the action to clear the currently selected chat room
-            dispatch(clearCandidateCurrentlySelectedChatRoom());
+            dispatch(clearCurrentlySelectedChatRoom());
         };
 
         window.addEventListener("beforeunload", handleBeforeUnload);
@@ -102,7 +99,7 @@ const ChatPageCandidate = () => {
         return () => {
             // Clean up the event listener when the component unmounts
             socket.off("chatNotification");
-            dispatch(clearCandidateCurrentlySelectedChatRoom());
+            dispatch(clearCurrentlySelectedChatRoom());
         };
     }, []);
 
@@ -150,7 +147,7 @@ const ChatPageCandidate = () => {
     const handleChatRoomClick = async (room: any) => {
         setSelectedChatRoom(room);
 
-        dispatch(setCandidateCurrentlySelectedChatRoom(room));
+        dispatch(setCurrentlySelectedChatRoom(room));
         const conversations = await getACandidateConversationApi(room._id);
         let senderId = getReceiver(room); // to find the other user
         await deleteCandidatesAllNotificationsBySenderIdApi(

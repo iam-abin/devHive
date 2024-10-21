@@ -10,7 +10,7 @@ import ForgotResetPasswordForm from "../../../../components/form/ForgotResetPass
 import {
 	setLoaded,
 	setLoading,
-} from "../../../../redux/slice/loaderSlice/isLoading";
+} from "../../../../redux/slice/isLoading";
 
 const ForgotPassword: React.FC = () => {
 	const dispatch = useDispatch();

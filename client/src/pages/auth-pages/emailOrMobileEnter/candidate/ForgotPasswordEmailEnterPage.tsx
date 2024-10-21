@@ -4,7 +4,7 @@ import * as yup from "yup";
 import {
 	setLoading,
 	setLoaded,
-} from "../../../../redux/slice/loaderSlice/isLoading";
+} from "../../../../redux/slice/isLoading";
 import EmailOrMobile from "../../../../components/form/EmailOrMobile";
 import { forgotPasswordEmailCandidateApi } from "../../../../axios/apiMethods/auth-service/candidateAuth";
 import Swal from "sweetalert2";
@@ -21,8 +21,8 @@ function ForgotPasswordEmailEnterPage() {
 		(state: RootState) => state.loading.isLoading
 	);
 
-	const candidateData: any = useSelector((state: RootState) => {
-		return state.candidateData.data;
+	const candidateData: any = useSelector((store: RootState) => {
+		return store.userReducer.authData
 	});
 
 	const emailSchema = yup.object().shape({

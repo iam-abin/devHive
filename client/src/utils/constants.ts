@@ -7,16 +7,7 @@ export const CONSTANTS = Object.freeze({
 
 export const LOCAL_STORAGE = Object.freeze({
     ACCESS_TOKEN: "accessToken",
-    REFRESH_TOKEN: "refreshToken",
-
-    ADMIN_ACCESS_TOKEN: "adminAccessToken",
-    ADMIN_REFRESH_TOKEN: "adminRefreshToken",
-
-    CANDIDATE_ACCESS_TOKEN: "candidateAccessToken",
-    CANDIDATE_REFRESH_TOKEN: "candidateRefreshToken",
-
-    RECRUITER_ACCESS_TOKEN: "recruiterAccessToken",
-    RECRUITER_REFRESH_TOKEN: "recruiterRefreshToken",
+    REFRESH_TOKEN: "refreshToken"
 });
 
 

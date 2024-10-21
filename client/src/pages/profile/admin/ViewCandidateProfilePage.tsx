@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { viewCandidateProfileDetailsApi } from "../../../axios/apiMethods/admin-service/candidates";
 import CandidateProfile from "../../../components/admin/profile/CandidateProfile";
-import { setLoaded, setLoading } from "../../../redux/slice/loaderSlice/isLoading";
+import { setLoaded, setLoading } from "../../../redux/slice/isLoading";
 
 
 const ViewCandidateProfilePage: React.FC = () => {
@@ -22,7 +22,7 @@ const ViewCandidateProfilePage: React.FC = () => {
 		const fetchProfileDetails = async () => {
 			try {
                 dispatch(setLoading())
-				const candidate = await viewCandidateProfileDetailsApi(userId);
+				const candidate = await viewCandidateProfileDetailsApi(userId!);
 				setCandidateProfileData(candidate.data);
 
 			} finally{

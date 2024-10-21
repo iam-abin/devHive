@@ -30,9 +30,9 @@ function JobApplicationsPage() {
     const [jobsApplicationsData, setJobApplicationsData] = useState<
         JobInterface[]
     >([]);
-
+    
     const recruiterData: any = useSelector(
-        (state: RootState) => state.recruiterData.data
+        (store: RootState) => store.userReducer.authData
     );
 
     useEffect(() => {

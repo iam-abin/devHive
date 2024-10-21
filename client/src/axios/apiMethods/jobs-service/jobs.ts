@@ -28,7 +28,7 @@ export const getAJobApi = async (id: string): Promise<IResponse> => {
     return await recruiterApiCalls("get", jobApiUrlConfig.getAJobUrl(id));
 };
 
-export const createJobApi = async (data: IResponse): Promise<IResponse> => {
+export const createJobApi = async (data: any): Promise<IResponse> => {
     return await recruiterApiCalls("post", jobApiUrlConfig.createJobUrl, data);
 };
 

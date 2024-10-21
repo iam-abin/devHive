@@ -32,8 +32,8 @@ function RecruiterProfileEditPage() {
     const [profileDetails, setProfileDetails] = useState<any>(null);
     const navigate = useNavigate();
     const recruiterData: any = useSelector(
-        (state: RootState) => state.recruiterData.data
-    );
+		(state: RootState) => state.userReducer.authData
+	);
     const { id } = recruiterData;
 
     useEffect(() => {

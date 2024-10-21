@@ -22,8 +22,8 @@ import { getACandidateProfileApi } from "../../../axios/apiMethods/profile-servi
 import { FaFacebookMessenger } from "react-icons/fa";
 import Swal from "sweetalert2";
 import CircleLoading from "../../../components/loading/CircleLoading";
-import { setCandidateProfileDetails } from "../../../redux/slice/candidateSlice/candidateProfileSlice";
 import { hotToastMessage } from "../../../utils/hotToastMessage";
+import { setMyProfileData } from "../../../redux/slice/user";
 
 const CandidateProfilePage: React.FC = () => {
 	const navigate = useNavigate();
@@ -31,7 +31,7 @@ const CandidateProfilePage: React.FC = () => {
 	const dispatch = useDispatch();
 
 	const candidateData: any = useSelector(
-		(state: RootState) => state.candidateData.data
+		(state: RootState) => state.userReducer.authData
 	);
 
 	const isRecruiterUrl = location.pathname.includes("recruiter");
@@ -91,7 +91,7 @@ const CandidateProfilePage: React.FC = () => {
 			}
 			
 			setCandidateProfileData(candidateProfile.data);
-			dispatch(setCandidateProfileDetails(candidateProfile?.data));
+			dispatch(setMyProfileData(candidateProfile?.data));
 			setSkills([...candidateProfile?.data.skills]);
 			setPreferredJobs([...candidateProfile?.data.preferredJobs]);
 		})();
@@ -127,7 +127,7 @@ const CandidateProfilePage: React.FC = () => {
 						resume: response.data.resume,
 					});
 
-					dispatch(setCandidateProfileDetails(response?.data));
+					dispatch(setMyProfileData(response?.data));
 					hotToastMessage(response.message, "success");
 
 					return response.data;
@@ -214,7 +214,7 @@ const CandidateProfilePage: React.FC = () => {
 					...candidateProfileData,
 					profileImage: response.data.profileImage,
 				});
-				dispatch(setCandidateProfileDetails(response?.data));
+				dispatch(setMyProfileData(response?.data));
 				navigate("/candidate/profile");
 				return response.data;
 			} else {

@@ -43,11 +43,11 @@ const AdminDashBoard = lazy(
 	() => import("../pages/dashboard/AdminDashBoard")
 );
 
-import NotFound from "../pages/Error/NotFound";
+const NotFound = lazy(
+	() => import("../pages/Error/NotFound")
+);
+
 import { ROLES } from "../utils/constants";
-// const NotFound = lazy(
-// 	() => import("../pages/auth-pages/signin/AdminSigninPage")
-// );
 
 function AdminRoutes() {
 	const loggedinUser = useSelector(

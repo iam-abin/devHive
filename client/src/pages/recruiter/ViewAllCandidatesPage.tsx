@@ -13,7 +13,7 @@ interface CandidateInterface {
 }
 
 function ViewAllCandidatesPage() {
-	const [currentPage, setCurrentPage] = useState(1);
+	const [currentPage, setCurrentPage] = useState(0);
 	const [pageCount, setpageCount] = useState(1);
 	const [searchTerm, setSearchTerm] = useState("");
 
@@ -23,6 +23,8 @@ function ViewAllCandidatesPage() {
 	);
 
 	const handlePageChange = async ({ selected }: { selected: number }) => {
+		console.log(selected);
+		
 		setCurrentPage(selected + 1);
 	};
 
@@ -30,8 +32,12 @@ function ViewAllCandidatesPage() {
 		(async () => {
 			// dispatch(setLoading());
 			const candidates = await getAllCandidatesProfilesApi(currentPage);
-			setCandidatesData(candidates.data);
-			setpageCount(candidates.totalNumberOfPages);
+			console.log(candidates);
+			
+			setCandidatesData(candidates.data.candidates);
+			setpageCount(candidates.data.totalNumberOfPages);
+			console.log("pageCount", pageCount);
+			
 			// dispatch(setLoaded());
 		})();
 	}, [currentPage]);

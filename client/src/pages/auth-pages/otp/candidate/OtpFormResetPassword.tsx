@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import {
 	setLoaded,
 	setLoading,
-} from "../../../../redux/slice/loaderSlice/isLoading";
+} from "../../../../redux/slice/isLoading";
 import { useDispatch, useSelector } from "react-redux";
 import { verifyResetPasswordOtpCandidateApi } from "../../../../axios/apiMethods/auth-service/candidateAuth";
 import { notify } from "../../../../utils/toastMessage";
@@ -19,7 +19,7 @@ function OtpFormResetPassword() {
 	);
 
 	const candidateData: any = useSelector(
-		(state: RootState) => state.candidateData.data
+		(store: RootState) => store.userReducer.authData
 	);
 
 	const handleSubmit = async (otp: string) => {

@@ -56,8 +56,8 @@ recruiterApi.interceptors.response.use(
             originalRequest._retry = true;
             try {
                 const newAccessToken = await refreshToken(
-                    LOCAL_STORAGE.RECRUITER_ACCESS_TOKEN,
-                    LOCAL_STORAGE.RECRUITER_REFRESH_TOKEN
+                    LOCAL_STORAGE.ACCESS_TOKEN,
+                    LOCAL_STORAGE.REFRESH_TOKEN
                 );
 
                 if (newAccessToken) {

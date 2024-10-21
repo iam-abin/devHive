@@ -9,14 +9,14 @@ import {
 import { candidateSignupApi } from "../../../axios/apiMethods/auth-service/candidateAuth";
 
 
-import candidateLoginImage from "../../../assets/candidate/candidate-login.svg"
+import candidateLoginImage from "../../../assets/auth/candidate-login.svg"
 import googleIcon from "../../../assets/google/google-icon.svg"
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/reducer";
 import {
 	setLoaded,
 	setLoading,
-} from "../../../redux/slice/loaderSlice/isLoading";
+} from "../../../redux/slice/isLoading";
 import Loading from "../../../components/loading/Loading";
 import { RiArrowLeftFill } from "react-icons/ri";
 

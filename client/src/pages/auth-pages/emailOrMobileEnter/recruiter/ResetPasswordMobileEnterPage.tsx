@@ -4,7 +4,7 @@ import * as yup from "yup";
 import {
 	setLoading,
 	setLoaded,
-} from "../../../../redux/slice/loaderSlice/isLoading";
+} from "../../../../redux/slice/isLoading";
 import EmailOrMobile from "../../../../components/form/EmailOrMobile";
 import { passwordResetMobileCandidateApi } from "../../../../axios/apiMethods/auth-service/candidateAuth";
 import Swal from "sweetalert2";
@@ -20,7 +20,7 @@ function ResetPasswordMobileEnterPage() {
 	);
 
 	const recruiterData: any = useSelector(
-		(state: RootState) => state.recruiterData.data
+		(store: RootState) => store.userReducer.authData
 	);
 
 	const mobileSchema = yup.object().shape({

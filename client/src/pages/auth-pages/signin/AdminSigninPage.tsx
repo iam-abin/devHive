@@ -12,7 +12,6 @@ import {
     signInSchema,
 } from "../../../utils/validations/signin-validation";
 import { adminSigninApi } from "../../../axios/apiMethods/auth-service/adminAuth";
-import { setAdmin } from "../../../redux/slice/adminSlice/adminDataSlice";
 import { notify } from "../../../utils/toastMessage";
 import { useEffect } from "react";
 import { ISignin } from "../../../types/user";
@@ -24,16 +23,6 @@ function AdminSigninPage() {
 
     const handleSubmit = async (userData: ISignin) => {
         const response = await adminSigninApi(userData);
-        console.log(response);
-
-        dispatch(
-            setAdmin({
-                data: response.data,
-                accessToken: response.accessToken!,
-                refreshToken: response.refreshToken!,
-            })
-        );
-
         dispatch(
             setUser({
                 data: response.data,
@@ -48,7 +37,7 @@ function AdminSigninPage() {
     };
 
     const adminData = useSelector((state: RootState) => {
-        return state.adminData.data;
+        return state.userReducer.authData;
     });
 
     useEffect(() => {

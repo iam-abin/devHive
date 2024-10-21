@@ -4,7 +4,7 @@ import * as yup from "yup";
 import {
 	setLoaded,
 	setLoading,
-} from "../../../../redux/slice/loaderSlice/isLoading";
+} from "../../../../redux/slice/isLoading";
 import { forgotPasswordEmailRecruiterApi } from "../../../../axios/apiMethods/auth-service/recruiterAuth";
 import EmailOrMobile from "../../../../components/form/EmailOrMobile";
 import Swal from "sweetalert2";

@@ -16,23 +16,23 @@ const NotificationSlice = createSlice({
 	name: "notification-data",
 	initialState,
 	reducers: {
-        setCandidateNotification: (state, action) => {
+        setNotification: (state, action) => {
 			state.notifications = action.payload
         },
 
-        clearCandidateNotification: (state) => {
+        clearNotification: (state) => {
 			state.notifications = []
         },
 
-        setCandidateNotificationsCount: (state, action) => {
+        setNotificationsCount: (state, action) => {
 			state.notificationsCount = action.payload
         },
 
-        clearCandidateNotificationsCount: (state) => {
+        clearNotificationsCount: (state) => {
 			state.notificationsCount = 0
         },
 	},
 });
 
-export const { setCandidateNotification, clearCandidateNotification, setCandidateNotificationsCount, clearCandidateNotificationsCount } = NotificationSlice.actions; //we can use it in job page
+export const { setNotification, clearNotification, setNotificationsCount, clearNotificationsCount } = NotificationSlice.actions; //we can use it in job page
 export default NotificationSlice.reducer;

@@ -34,7 +34,7 @@ function AllAddedJobs() {
     const [jobsData, setJobsData] = useState<JobInterface[]>([]);
 
     const recruiterData: any = useSelector(
-        (state: RootState) => state.recruiterData.data
+        (store: RootState) => store.userReducer.authData
     );
 
     useEffect(() => {
@@ -42,7 +42,9 @@ function AllAddedJobs() {
             const response = await getAllRecruiterAddedJobsApi(
                 recruiterData?.id
             );
-            setJobsData(response.jobs);
+            console.log("response ",response);
+            
+            setJobsData(response.data.jobs);
         })();
     }, []);
 

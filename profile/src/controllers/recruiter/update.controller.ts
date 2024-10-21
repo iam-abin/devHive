@@ -3,26 +3,22 @@ import { IDependency } from "../../frameworks/types/dependency";
 import { RecruiterProfileUpdatedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/recruiter-profile-updated-publisher";
 import { kafkaClient } from "../../config/kafka.connection";
 import { UserUpdatedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/user-updated-publisher";
+import { IRecruiterProfile } from "../../frameworks/types/recruiter";
 
 export = (dependencies: IDependency) => {
 	const {
 		useCases: {
-			getRecruiterProfileByUserIdUseCase,
 			updateRecruiterProfileUseCase,
 		},
 	} = dependencies;
 
 	return async (req: Request, res: Response) => {
-		const updatedData = req.body;
-		const { userId } = req.body;
-
-		const existingData = await getRecruiterProfileByUserIdUseCase(
-			dependencies
-		).execute(userId);
+		const updatedData = req.body as Partial<IRecruiterProfile>;
+		const { userId } = req.currentUser!;
 		
 		const recruiter = await updateRecruiterProfileUseCase(
 			dependencies
-		).execute(existingData, updatedData);
+		).execute(userId, updatedData);
 		
 		const recruiterProfileUpdatedEvent =
 			new RecruiterProfileUpdatedEventPublisher(kafkaClient);
@@ -39,8 +35,7 @@ export = (dependencies: IDependency) => {
 			companyWebsite: updatedData.companyWebsite,
 			companyState: updatedData.companyState,
 			companyCountry: updatedData.companyCountry,
-			// company_id: updatedData?.company_id,
-			userId: updatedData?.userId,
+			userId: userId,
             
 		});
 
@@ -48,9 +43,9 @@ export = (dependencies: IDependency) => {
 			name: updatedData?.name,
 			email: updatedData?.email,
 			phone: updatedData?.phone,
-			isActive: updatedData?.isActive,
 			role: "recruiter",
-			userId: updatedData?.userId,
+			userId: userId!,
+			isActive: updatedData?.isActive!,
 		});
 
 		res.status(200).json({ message: "recruiter data", data: recruiter });

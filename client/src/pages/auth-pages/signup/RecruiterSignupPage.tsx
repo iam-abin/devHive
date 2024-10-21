@@ -10,12 +10,12 @@ import {
 } from "../../../utils/validations/signup-validation";
 import { recruiterSignupApi } from "../../../axios/apiMethods/auth-service/recruiterAuth";
 
-import recruiterLoginImage from "../../../assets/recruiter/recruiter-login.svg"
+import recruiterLoginImage from "../../../assets/auth/recruiter-login.svg"
 import { RootState } from "../../../redux/reducer";
 import {
 	setLoaded,
 	setLoading,
-} from "../../../redux/slice/loaderSlice/isLoading";
+} from "../../../redux/slice/isLoading";
 import Loading from "../../../components/loading/Loading";
 
 function RecruiterSignupPage() {

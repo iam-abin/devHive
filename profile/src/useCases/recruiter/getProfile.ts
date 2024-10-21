@@ -1,3 +1,4 @@
+import { NotFoundError } from "@abijobportal/common";
 import { IDependency } from "../../frameworks/types/dependency";
 
 export = (dependencies: IDependency) => {
@@ -10,7 +11,7 @@ export = (dependencies: IDependency) => {
 	const execute = async (userId: string) => {
 		
 		const profile = await recruiterProfileRepository.getProfileByUserId(userId);
-		
+		if(!profile) throw new NotFoundError("profile not found")
 		return profile;
 	};
 

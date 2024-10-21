@@ -37,7 +37,7 @@ const UserSlice = createSlice({
             );
         },
         clearUser: (state) => {
-            state.authData = {};
+            state.authData = null;
             clearItemFromLocalStorage(LOCAL_STORAGE.ACCESS_TOKEN);
             clearItemFromLocalStorage(LOCAL_STORAGE.REFRESH_TOKEN);
         },
@@ -47,7 +47,7 @@ const UserSlice = createSlice({
 		},
 
         clearMyProfileData: (state) => {
-			state.myProfile = {};
+			state.myProfile = null;
 		}
     },
 });

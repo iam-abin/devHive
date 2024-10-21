@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { GiHamburgerMenu } from "react-icons/gi";
 
 import { recruiterSignoutApi } from "../../axios/apiMethods/auth-service/recruiterAuth";
-import { clearRecruiter } from "../../redux/slice/recruiterSlice/recruiterDataSlice";
 import Swal from "sweetalert2";
 import { notify } from "../../utils/toastMessage";
 import { IoMdNotifications } from "react-icons/io";
@@ -27,12 +26,12 @@ const TopNavBarRecruiter: React.FC<{ toggleLeftNavBar: any }> = ({
     const [notifications, setNotifications] = useState<any[]>([]);
     const [notificationsCount, setNotificationsCount] = useState<number>(0);
 
-    const isLoggedIn: any = useSelector((state: RootState) => {
-        return state.recruiterData.data;
+    const isLoggedIn: any = useSelector((store: RootState) => {
+        return store.userReducer.authData
     });
 
-    const recruiter: any = useSelector((state: RootState) => {
-        return state.recruiterData.data;
+    const recruiter: any = useSelector((store: RootState) => {
+        return store.userReducer.authData
     });
 
     // to get the other user
@@ -46,7 +45,7 @@ const TopNavBarRecruiter: React.FC<{ toggleLeftNavBar: any }> = ({
 
     // to avoid notification for current chatbox
     const currentlySelectedRecruiterChatRoom = useSelector(
-        (state: RootState) => state.recruiterCurrentlySelectedChatroom.data
+        (store: RootState) => store.chatReducer.roomData
     );
 
     const handleRecruiterLogout = async () => {

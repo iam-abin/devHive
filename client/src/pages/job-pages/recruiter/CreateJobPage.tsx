@@ -26,7 +26,7 @@ const initialJobValues: JobFormData = {
 
 function CreateJobPage() {
 	const recruiterData: any = useSelector(
-		(state: RootState) => state.recruiterData.data
+		(store: RootState) => store.userReducer.authData
 	);
 
 	const [recruiterProfileData, setecruiterProfileData] = useState<any>({});
@@ -53,7 +53,7 @@ function CreateJobPage() {
 				);
 				return;
 			}
-			const response = await createJobApi(jobData);
+			const response = await createJobApi(jobData!);
 			notify(response.message, "success");
 			navigate("/recruiter/recruiter-added-jobs");
 	};

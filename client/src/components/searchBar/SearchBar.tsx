@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { filterJobsApi, getJobFieldsValuesApi } from "../../axios/apiMethods/jobs-service/jobs";
-import { setFilteredJobs } from "../../redux/slice/job/filteredJobsSlice";
 import { useEffect, useState } from "react";
+import { setJobs } from "../../redux/slice/job";
 
 const SearchBar = () => {
     const dispatch = useDispatch();
@@ -40,7 +40,7 @@ const SearchBar = () => {
         }
 
         const filteredJobs = await filterJobsApi(jobCriteria);
-        dispatch(setFilteredJobs({data: filteredJobs.data}));
+        dispatch(setJobs({data: filteredJobs.data}));
     };
 
     return (

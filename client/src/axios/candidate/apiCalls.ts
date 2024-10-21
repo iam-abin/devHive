@@ -58,8 +58,8 @@ candidateApi.interceptors.response.use(
             originalRequest._retry = true;
             try {
                 const newAccessToken = await refreshToken(
-                    LOCAL_STORAGE.CANDIDATE_ACCESS_TOKEN,
-                    LOCAL_STORAGE.CANDIDATE_REFRESH_TOKEN
+                    LOCAL_STORAGE.ACCESS_TOKEN,
+                    LOCAL_STORAGE.REFRESH_TOKEN
                 );
 
                 if (newAccessToken) {

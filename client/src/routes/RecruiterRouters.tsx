@@ -5,21 +5,14 @@ import { useSelector } from "react-redux"
 
 import { RootState } from "../redux/reducer"
 import Loading from "../components/loading/Loading";
-import NotFound from "../pages/Error/NotFound";
 
 import RecruiterLayout from "../pages/layout/RecruiterLayout";
 
-// import socket from "../config/socket";
-
-
-
-// const RecruiterHomePage = lazy(()=> import("../pages/home/RecruiterHomePage"))
 const RecruiterDashBoard = lazy(()=> import("../pages/dashboard/RecruiterDashBoardPage"))
 const CandidateProfilePage = lazy(()=> import("../pages/profile/candidate/CandidateProfilePage"))
 const RecruiterSignupPage = lazy(()=> import("../pages/auth-pages/signup/RecruiterSignupPage"))
 const LandingPage = lazy(()=> import("../pages/landing/LandingPage"))
 const RecruiterSigninPage = lazy(()=> import("../pages/auth-pages/signin/RecruiterSigninPage"))
-// const AllJobsPage = lazy(()=> import("../pages/job-pages/recruiter/AllJobsPage"))
 const CreateJobPage = lazy(()=> import("../pages/job-pages/recruiter/CreateJobPage"))
 const EditJobPage = lazy(()=> import("../pages/job-pages/recruiter/EditJobPage"))
 const OtpFormPageSignup = lazy(()=> import("../pages/auth-pages/otp/recruiter/OtpFormPageSignup"))
@@ -35,9 +28,10 @@ const JobDetailsPage = lazy(()=> import("../pages/job-pages/recruiter/JobDetails
 const AllAddedJobs = lazy(()=> import("../pages/job-pages/recruiter/AllAddedJobs"))
 const JobApplicationsPage = lazy(()=> import("../pages/job-pages/recruiter/JobApplicationsPage"))
 const JobApplicationDetailsPage = lazy(()=> import("../pages/job-pages/recruiter/JobApplicationDetailsPage"))
-// const CandidateProfileDetailsPage = lazy(()=> import("../pages/profile/recruiter/CandidateProfileDetailsPage"))
 const ChatPageRecruiter = lazy(()=> import("../pages/chat/ChatPageRecruiter"))
 const ViewAllCandidatesPage = lazy(()=> import("../pages/recruiter/ViewAllCandidatesPage"))
+const NotFound = lazy(()=> import("../pages/Error/NotFound"))
+
 
 function RecruiterRouters() {
 	

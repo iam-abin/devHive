@@ -1,12 +1,12 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { setLoaded, setLoading } from "../../../../redux/slice/loaderSlice/isLoading";
+import { setLoaded, setLoading } from "../../../../redux/slice/isLoading";
 import { useDispatch, useSelector } from "react-redux";
 import { verifySignupOtpCandidateApi } from "../../../../axios/apiMethods/auth-service/candidateAuth";
-import { setCandidate } from "../../../../redux/slice/candidateSlice/candidateDataSlice";
 import { notify } from "../../../../utils/toastMessage";
 import { RootState } from "../../../../redux/reducer";
 import Loading from "../../../../components/loading/Loading";
 import OtpEnterForm from "../../../../components/form/otpEnterForm";
+import { setUser } from "../../../../redux/slice/user";
 
 function OtpFormPageSignup() {
 	const dispatch = useDispatch();
@@ -25,7 +25,7 @@ function OtpFormPageSignup() {
 
 			dispatch(setLoading());
 			const response = await verifySignupOtpCandidateApi(otp, userEmail);
-			dispatch(setCandidate(response));
+			dispatch(setUser(response));
 			notify(response.message, "success");
 			navigate("/candidate");
 		} finally {

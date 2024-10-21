@@ -13,11 +13,11 @@ const PaymentPlans: React.FC = () => {
     const [membershipPlansData, setMembershipPlansData] = useState<[]>([]);
 
     const candidateData: any = useSelector(
-        (state: RootState) => state.candidateData.data
+        (store: RootState) => store.userReducer.authData
     );
 
     const candidateProfileData: any = useSelector(
-        (state: RootState) => state.candidateProfile.candidateProfile
+        (store: RootState) => store.userReducer.myProfile
     );
 
     if (!import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY) {

@@ -35,7 +35,7 @@ function AppliedJobsPage() {
 	const [appliedJobsData, setAppliedJobsData] = useState<JobInterface[]>([]);
 
 	const candidateData: any = useSelector(
-		(state: RootState) => state.candidateData.data
+		(store: RootState) => store.userReducer.authData
 	);
 
 	const handlePageChange = async ({ selected }: { selected: number }) => {

@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import {
 	editJobApi,
 	getAJobApi,
-	updateJobApi,
 } from "../../axios/apiMethods/jobs-service/jobs";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useNavigate, useParams } from "react-router-dom";

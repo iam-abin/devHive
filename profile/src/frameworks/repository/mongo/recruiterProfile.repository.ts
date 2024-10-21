@@ -1,4 +1,7 @@
 import models from "../../database/mongo/models";
+import { IRecruiterDocument } from "../../database/mongo/models/recruiter";
+import { IRecruiterProfile } from "../../types/recruiter";
+import { IUser } from "../../types/user";
 
 const { RecruiterProfileModel } = models;
 
@@ -7,23 +10,18 @@ export = {
 	// These fn's are returning a promise as async so we can defile return type as Promise<CandidateDataInterface>
 	// CreateRecruiterProfile is calling when the user is signed in, and then creates a basic profile
 
-	createRecruiterProfile: async (userData: any): Promise<any> => {
+	createRecruiterProfile: async (userData: IUser): Promise<any> => {
 		const userObject = RecruiterProfileModel.buildRecruiter(userData);
 		return await userObject.save();
 	},
 
-	getProfileByUserId: async (userId: string): Promise<any> => {
+	getProfileByUserId: async (userId: string): Promise<IRecruiterDocument | null> => {
 		const recruiter = await RecruiterProfileModel.findById(userId);
 		return recruiter;
 	},
 
-	getProfileByEmail: async (email: string): Promise<any> => {
-		const candidate = await RecruiterProfileModel.findOne({ email });
-		return candidate;
-	},
-
 	// updating and block unblocking is also doing here
-	updateRecruiterProfile: async (profileId: string, data: any): Promise<any> => {
+	updateRecruiterProfile: async (profileId: string, data: Partial<IRecruiterProfile>): Promise<IRecruiterDocument | null> => {
 		const recruiter = await RecruiterProfileModel.findByIdAndUpdate(
 			profileId,
 			{ $set: data },
@@ -32,7 +30,7 @@ export = {
 		return recruiter;
 	},
 
-	getCandidateResume: async (id: string): Promise<any> => {
+	getCandidateResume: async (id: string): Promise<IRecruiterDocument | null> => {
 		const candidate = await RecruiterProfileModel.findById(id);
 		return candidate;
 	},

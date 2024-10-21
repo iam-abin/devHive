@@ -6,10 +6,10 @@ import Loading from "../../../../components/loading/Loading";
 import {
 	setLoaded,
 	setLoading,
-} from "../../../../redux/slice/loaderSlice/isLoading";
+} from "../../../../redux/slice/isLoading";
 import { notify } from "../../../../utils/toastMessage";
 import { verifySignupOtpRecruiterApi } from "../../../../axios/apiMethods/auth-service/recruiterAuth";
-import { setRecruiter } from "../../../../redux/slice/recruiterSlice/recruiterDataSlice";
+import { setUser } from "../../../../redux/slice/user";
 
 function OtpFormPageSignup() {
 	const dispatch = useDispatch();
@@ -27,7 +27,7 @@ function OtpFormPageSignup() {
 		try {
 			dispatch(setLoading());
 			const response = await verifySignupOtpRecruiterApi(otp, userEmail);
-			dispatch(setRecruiter(response));
+			dispatch(setUser(response));
 			notify(response.message, "success");
 			navigate("/recruiter");
 		} finally {

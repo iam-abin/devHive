@@ -3,15 +3,10 @@ import { RootState } from "../../redux/reducer";
 import { useDispatch, useSelector } from "react-redux";
 
 import { candidateSignoutApi } from "../../axios/apiMethods/auth-service/candidateAuth";
-import { clearCandidate } from "../../redux/slice/candidateSlice/candidateDataSlice";
 import Swal from "sweetalert2";
 import { notify } from "../../utils/toastMessage";
 import { IoMdNotifications } from "react-icons/io";
 import { useEffect, useState } from "react";
-import {
-    clearCandidateProfileDetails,
-    setCandidateProfileDetails,
-} from "../../redux/slice/candidateSlice/candidateProfileSlice";
 import { candidateGetProfileApi } from "../../axios/apiMethods/profile-service/candidate";
 import { FaCrown } from "react-icons/fa";
 import Notifications from "../notification/Notifications";
@@ -20,7 +15,9 @@ import {
     deleteCandidatesAllNotificationsApi,
     getCandidatesAllNotificationsApi,
 } from "../../axios/apiMethods/chat-service/notification";
-import { clearUser } from "../../redux/slice/user";
+import { clearMyProfileData, clearUser, setMyProfileData } from "../../redux/slice/user";
+import { clearJob, clearJobs } from "../../redux/slice/job";
+import { clearNotification, clearNotificationsCount } from "../../redux/slice/notification";
 
 const TopNavBarCandidate = () => {
     const dispatch = useDispatch();
@@ -29,17 +26,17 @@ const TopNavBarCandidate = () => {
     const [notifications, setNotifications] = useState<any[]>([]);
     const [notificationsCount, setNotificationsCount] = useState<number>(0);
 
-    const candidate: any = useSelector((state: RootState) => {
-        return state.candidateData.data;
+    const candidate: any = useSelector((store: RootState) => {
+        return store.userReducer.authData;
     });
 
     // to avoid notification for current chatbox
     const currentlySelectedChatRoom = useSelector(
-        (state: RootState) => state.candidateCurrentlySelectedChatroom.data
+        (store: RootState) => store.chatReducer.roomData
     );
 
-    const candidateProfile: any = useSelector((state: RootState) => {
-        return state.candidateProfile.candidateProfile;
+    const candidateProfile: any = useSelector((store: RootState) => {
+        return store.userReducer.myProfile;
     });
     // to get the other user
     const getOtherUser = (chatRoom: any) => {
@@ -68,7 +65,11 @@ const TopNavBarCandidate = () => {
                 if (response) {
                     dispatch(clearUser());
                     
-                    dispatch(clearCandidateProfileDetails());
+                    dispatch(clearMyProfileData());
+                    dispatch(clearJobs());
+                    dispatch(clearJob());
+                    dispatch(clearNotification());
+                    dispatch(clearNotificationsCount());
                     notify("Logged out successfully", "success");
                     navigate("/candidate/signin");
                 }
@@ -83,7 +84,7 @@ const TopNavBarCandidate = () => {
                     candidate?.id
                 );
                 dispatch(
-                    setCandidateProfileDetails(candidateProfileData?.data)
+                    setMyProfileData(candidateProfileData?.data)
                 );
             }
         })();

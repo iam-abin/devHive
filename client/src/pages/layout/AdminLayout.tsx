@@ -9,7 +9,6 @@ import companies from "../../assets/layoutItems/companies.svg";
 import candidates from "../../assets/layoutItems/candidates.svg";
 import membership from "../../assets/layoutItems/membership.svg";
 import logout from "../../assets/layoutItems/logout.svg";
-import { clearAdmin } from "../../redux/slice/adminSlice/adminDataSlice";
 import { adminSignoutApi } from "../../axios/apiMethods/auth-service/adminAuth";
 import { notify } from "../../utils/toastMessage";
 import LeftNavBarAdmin from "../../components/navBar/LeftNavBarAdmin";

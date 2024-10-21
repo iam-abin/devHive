@@ -94,11 +94,11 @@ export = {
 		return user;
 	},
 
-	getAllCandidatesProfiles: async (
+	getAllCandidates: async (
 		skip: number,
 		limit: number
 	): Promise<ICandidateDocument[] | []> => {
-		const jobs = await CandidateProfileModel.find()
+		const jobs = await CandidateProfileModel.find().select(['name', "email", "phone", "isActive"])
 			.sort({ createdAt: -1 })
 			.skip(skip)
 			.limit(limit);

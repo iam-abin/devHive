@@ -11,7 +11,7 @@ export const recruiterApi: AxiosInstance = axios.create({
 recruiterApi.interceptors.request.use(
     async (config: any) => {
         
-        let token = getItemFromLocalStorage(LOCAL_STORAGE.RECRUITER_ACCESS_TOKEN);
+        let token = getItemFromLocalStorage(LOCAL_STORAGE.ACCESS_TOKEN);
 
         if (token) {
             config.headers["Authorization"] = `Bearer ${token}`;

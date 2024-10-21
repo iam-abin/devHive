@@ -1,3 +1,4 @@
+import { NotFoundError } from "@abijobportal/common";
 import { IDependency } from "../../frameworks/types/dependency";
 
 export = (dependencies: IDependency) => {
@@ -11,10 +12,15 @@ export = (dependencies: IDependency) => {
 		);
 	}
 
-	const execute = async(skip: number, limit: number) => {
+	const execute = async(page: number, limit: number, recruiterId: string) => {
+		const skip = (page - 1) * limit;
+		const profile = await recruiterProfileRepository.getProfileByUserId(recruiterId);
+		if(!profile) throw new NotFoundError("profile not found")
 
-		const profiles = await candidateProfileRepository.getAllCandidatesProfiles(skip, limit);
-		return profiles;
+		const profiles = await candidateProfileRepository.getAllCandidates(skip, limit);
+		const totalJobs = await candidateProfileRepository.getCountOfCandidatesProfiles();
+		const totalNumberOfPages = Math.ceil(totalJobs/limit);
+		return{ candidates: profiles, totalNumberOfPages };
 	};
 	
 

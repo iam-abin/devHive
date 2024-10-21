@@ -22,7 +22,7 @@ const JobApplicationDetails: React.FC<{
 	const isCandidatePage = location.pathname.includes("candidate");
 
 	const candidateProfileData: any = useSelector(
-		(state: RootState) => state.candidateProfile.candidateProfile
+		(store: RootState) => store.userReducer.myProfile
 	);
 
 	if (isRecruiterPage) {

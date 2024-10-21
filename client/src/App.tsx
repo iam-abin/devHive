@@ -1,17 +1,18 @@
+import { lazy } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import LandingPage from "./pages/landing/LandingPage";
 import CandidateRoutes from "./routes/CandidateRoutes";
 import RecruiterRouters from "./routes/RecruiterRouters";
 import AdminRoutes from "./routes/AdminRoutes";
 
 import { useSelector } from "react-redux";
 import { RootState } from "./redux/reducer";
-import NotFound from "./pages/Error/NotFound";
 import { Toaster } from "react-hot-toast";
 import { ROLES } from "./utils/constants";
+const NotFound = lazy(()=> import("./pages/Error/NotFound"));
+const LandingPage = lazy(()=> import("./pages/landing/LandingPage"));
 
 export default function App() {
 	

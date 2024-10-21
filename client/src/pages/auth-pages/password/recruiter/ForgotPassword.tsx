@@ -7,7 +7,7 @@ import ForgotResetPasswordForm from "../../../../components/form/ForgotResetPass
 import {
 	setLoaded,
 	setLoading,
-} from "../../../../redux/slice/loaderSlice/isLoading";
+} from "../../../../redux/slice/isLoading";
 import { forgotPasswordRecruiterApi } from "../../../../axios/apiMethods/auth-service/recruiterAuth";
 
 const ForgotPassword: React.FC = () => {

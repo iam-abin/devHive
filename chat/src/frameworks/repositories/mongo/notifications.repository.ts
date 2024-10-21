@@ -11,14 +11,18 @@ export = {
 	},
 
 	getAllNotificationsCountByUserId: async (userId: string): Promise<number> => {
-		const count = (await NotificationModel.countDocuments({targetUserId: userId}));
+		const count = await NotificationModel.countDocuments({targetUserId: userId});
 		return count;
 	},
 
 	getAllNotificationsByUserId: async (userId: string): Promise<INotificationDocument[] | []> => {
-		const chatNotifications = await NotificationModel.find({targetUserId: userId}).populate("senderId")
-		.sort({createdAt: -1});
-		
+		const chatNotifications = await NotificationModel.find({
+            targetUserId: userId,
+        })
+            .select("message")
+            .populate("senderId", ["name"])
+            .sort({ createdAt: -1 });
+
 		return chatNotifications;
 	},
 	
@@ -29,8 +33,6 @@ export = {
 
 	clearAllNotificationsBySenderId: async (senderId: string, receiverId: string) => {
         const response = await NotificationModel.deleteMany({senderId , targetUserId: receiverId});
-		console.log("clearAllNotificationsBySenderId ",response);
-		
 		return response;
 	},
 

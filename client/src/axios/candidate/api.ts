@@ -11,7 +11,7 @@ export const candidateApi: AxiosInstance = axios.create({
 candidateApi.interceptors.request.use(
     async (config: any) => {
         
-        let token: string | null = getItemFromLocalStorage(LOCAL_STORAGE.CANDIDATE_ACCESS_TOKEN);
+        let token: string | null = getItemFromLocalStorage(LOCAL_STORAGE.ACCESS_TOKEN);
 
         if (token) {
             if (

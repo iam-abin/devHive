@@ -47,7 +47,7 @@ adminApi.interceptors.response.use(
 		if (error?.response?.status === 401 && !originalRequest._retry) {
 			originalRequest._retry = true;
 			try {
-				const newAccessToken = await refreshToken(LOCAL_STORAGE.ADMIN_ACCESS_TOKEN, LOCAL_STORAGE.ADMIN_REFRESH_TOKEN);
+				const newAccessToken = await refreshToken(LOCAL_STORAGE.ACCESS_TOKEN, LOCAL_STORAGE.REFRESH_TOKEN);
 
 				if (newAccessToken) {
 					originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;

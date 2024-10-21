@@ -1,5 +1,5 @@
 import candidateProfileRepository from "../../repository/mongo/candidateProfile.repository";
-import recruiterProfileRepository from "../../repository/mongo/recruiter-profile.repository";
+import recruiterProfileRepository from "../../repository/mongo/recruiterProfile.repository";
 import { KafkaMessage } from "kafkajs";
 
 export const handleMessage = (data: any, topic: string, message: KafkaMessage) => {

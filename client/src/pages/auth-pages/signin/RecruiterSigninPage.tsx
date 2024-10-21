@@ -1,7 +1,7 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import recruiterLoginImage from "../../../assets/recruiter/recruiter-login.svg"
+import recruiterLoginImage from "../../../assets/auth/recruiter-login.svg"
 
 import {
 	initialSigninValues,
@@ -9,7 +9,6 @@ import {
 } from "../../../utils/validations/signin-validation";
 import { notify } from "../../../utils/toastMessage";
 import { recruiterSigninApi } from "../../../axios/apiMethods/auth-service/recruiterAuth";
-import { setRecruiter } from "../../../redux/slice/recruiterSlice/recruiterDataSlice";
 import { RootState } from "../../../redux/reducer";
 import Loading from "../../../components/loading/Loading";
 import { RiArrowLeftFill } from "react-icons/ri";
@@ -27,12 +26,6 @@ function RecruiterSigninPage() {
 		try {
 			// dispatch(setLoading());
 			const response = await recruiterSigninApi(userData);
-			dispatch(setRecruiter({
-                data: response.data,
-                accessToken: response.accessToken!,
-                refreshToken: response.refreshToken!,
-            }));
-			
 			dispatch(
 				setUser({
 					data: response.data,

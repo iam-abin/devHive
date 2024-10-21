@@ -10,7 +10,6 @@ import {
 } from "../../../utils/validations/signin-validation";
 import { notify } from "../../../utils/toastMessage";
 import { candidateSigninApi } from "../../../axios/apiMethods/auth-service/candidateAuth";
-import { setCandidate } from "../../../redux/slice/candidateSlice/candidateDataSlice";
 import { RootState } from "../../../redux/reducer";
 import Loading from "../../../components/loading/Loading";
 import candidateLoginImage from "../../../assets/auth/candidate-login.svg";
@@ -28,7 +27,7 @@ const CandidateSigninPage: React.FC = () => {
 	const handleSubmit = async (userData: any) => {
 		try {
 			const response = await candidateSigninApi(userData);
-			dispatch(setCandidate({
+			dispatch(setUser({
                 data: response.data,
                 accessToken: response.accessToken!,
                 refreshToken: response.refreshToken!,

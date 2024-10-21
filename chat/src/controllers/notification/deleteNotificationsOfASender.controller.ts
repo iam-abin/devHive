@@ -6,10 +6,10 @@ export = (dependencies: IDependency)=>{
     const { useCases: { deleteAllNotificationsBySenderIdUseCase }} = dependencies 
 
     return async (req: Request, res: Response)=>{
-        const { userId } = req.currentUser;
-        const {receiverId} = req.params;
+        const { userId: receiverId } = req.currentUser!;
+        const { senderId } = req.params;
 
-        const response = await deleteAllNotificationsBySenderIdUseCase(dependencies).execute( userId, receiverId );
+        const response = await deleteAllNotificationsBySenderIdUseCase(dependencies).execute( receiverId, senderId );
         
         res.status(200).json({message: "response is ", data: response })
     };

@@ -11,7 +11,7 @@ export const adminApi: AxiosInstance = axios.create({
 adminApi.interceptors.request.use(
     async (config: InternalAxiosRequestConfig<any>) => {
         
-        let token: string | null = getItemFromLocalStorage(LOCAL_STORAGE.ADMIN_ACCESS_TOKEN)
+        let token: string | null = getItemFromLocalStorage(LOCAL_STORAGE.ACCESS_TOKEN)
 
         if (token) {
             config.headers["Authorization"] = `Bearer ${token}`;

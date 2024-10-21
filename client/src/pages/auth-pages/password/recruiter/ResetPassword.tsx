@@ -5,14 +5,14 @@ import { RootState } from '../../../../redux/reducer';
 import { useNavigate } from 'react-router-dom';
 import { notify } from '../../../../utils/toastMessage';
 import ForgotResetPasswordForm from '../../../../components/form/ForgotResetPasswordForm';
-import { setLoaded, setLoading } from '../../../../redux/slice/loaderSlice/isLoading';
+import { setLoaded, setLoading } from '../../../../redux/slice/isLoading';
 import { resetPasswordRecruiterApi } from '../../../../axios/apiMethods/auth-service/recruiterAuth';
 
 const ResetPassword: React.FC = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate();
 
-  const recruiterData: any = useSelector((state: RootState) => state.recruiterData.data);
+  const recruiterData: any = useSelector((store: RootState) => store.userReducer.authData);
 
 
   const handleSubmit = async (values: any) => {
