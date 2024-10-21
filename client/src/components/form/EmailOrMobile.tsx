@@ -1,34 +1,32 @@
-import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-
 import { useLocation } from "react-router-dom";
 
-interface EmailOrMobileProps {
-	handleSubmit: any; // Adjust the type as needed
-	initialValues: any;
-	validationSchema: any;
-}
+import { IEmailOrMobileProps } from "../../types/otp";
+import { emailSchema, mobileSchema } from "../../utils/validations/otp";
 
-const EmailOrMobile: React.FC<EmailOrMobileProps> = ({
+
+
+const EmailOrMobile = ({
 	handleSubmit,
-	initialValues,
-	validationSchema,
-}) => {
+	initialValue
+}: IEmailOrMobileProps) => {
 	const locationUrl = useLocation();
 
 	// Check if the path contains the word "otpEmail"
-	const isEmailEnterPage = locationUrl.pathname.includes(
+	const isEmailEnterPage: boolean = locationUrl.pathname.includes(
 		"forgotPasswordEmail"
 	);
+
 	return (
 		<Formik
-			initialValues={initialValues}
-			validationSchema={validationSchema}
+			initialValues={initialValue}
+			validationSchema={isEmailEnterPage ? emailSchema: mobileSchema}
 			onSubmit={(values) => {
 				if (!values) {
 					console.error("Form values are undefined.");
 					return;
 				}
+
 				handleSubmit(values);
 			}}
 		>
@@ -54,6 +52,7 @@ const EmailOrMobile: React.FC<EmailOrMobileProps> = ({
 											type="text"
 											id="email"
 											name="email"
+											autoComplete = "email"
 											placeholder="Enter Email"
 											className={`input input-primary w-full rounded-xl ${
 												touched.email && errors.email
@@ -87,6 +86,7 @@ const EmailOrMobile: React.FC<EmailOrMobileProps> = ({
 											type="tel" // Use type "tel" for mobile numbers
 											id="mobile"
 											name="mobile"
+											autoComplete = "mobile"
 											placeholder="Enter Mobile Number"
 											className={`input input-primary w-full rounded-xl ${
 												touched.mobile && errors.mobile

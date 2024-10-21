@@ -1,25 +1,47 @@
+import { JobFormSchemaType } from "../utils/validations/createJob";
+import {  IRecruiterProfileResponse } from "./profile";
 
-export interface JobFormData {
-	title: string;
-	recruiterId: string;
-	jobDescription: string;
-	skills: string[];
-	availablePosition: number;
-	experienceRequired: string;
-	educationRequired: string;
-	employmentType: string;
-	salaryMin: number;
-	salaryMax: number;
-	deadline: string;
-	companyName: string;
-	companyLocation: string;
+interface IOptionalProperties {
+    jobDescription: string;
+    skills: string[];
+    availablePosition: number;
+    experienceRequired: number;
+    educationRequired: string;
+    employmentType: string;
+    salaryMin: number;
+    salaryMax: number;
+    deadline: string;
+}
+
+export interface IJob extends Partial<IOptionalProperties> {
+    title: string;
+    recruiterId: string ;
+    companyName: string;
+    companyLocation: string;
+}
+
+export interface IJobResponse extends IJob {
+	id: string
+}
+
+export interface IEditJobProps {
+    initialJobValues: Partial<IJob>;
+	handleSubmit: (values: Partial<IJob>) => void;
 }
 
 
 
+export interface IJobProps {
+	initialJobValues: IJob;
+    handleSubmit: (values: IJob) => void;
+	recruiterData: IRecruiterProfileResponse
+	jobSchema :JobFormSchemaType
+}
+
+
 export interface IJobApplication {
-	jobId: string;
-	candidateId:string;
-	recruiterId:string;
-	applicationStatus: string;
+    jobId: string;
+    candidateId: string;
+    recruiterId: string;
+    applicationStatus: string;
 }

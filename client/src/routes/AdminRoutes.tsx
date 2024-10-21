@@ -10,7 +10,7 @@ import AdminLayout from "../pages/layout/AdminLayout";
 
 
 const AdminSigninPage = lazy(
-	() => import("../pages/auth-pages/signin/AdminSigninPage")
+	() => import("../pages/auth/signin/AdminSigninPage")
 );
 const CandidateManagementPage = lazy(
 	() => import("../pages/admin/CandidatesListPage")
@@ -19,7 +19,7 @@ const RecruiterManagementPage = lazy(
 	() => import("../pages/admin/RecruitersListPage")
 );
 const JobsManagementPage = lazy(
-	() => import("../pages/job-pages/admin/JobsListPage")
+	() => import("../pages/job/admin/JobsListPage")
 );
 const ViewCandidateProfilePage = lazy(
 	() => import("../pages/profile/admin/ViewCandidateProfilePage")
@@ -28,7 +28,7 @@ const ViewRecruiterProfilePage = lazy(
 	() => import("../pages/profile/admin/ViewRecruiterProfilePage")
 );
 const ViewJobDetailsPage = lazy(
-	() => import("../pages/job-pages/admin/ViewJobDetailsPage")
+	() => import("../pages/job/admin/ViewJobDetailsPage")
 );
 
 const PremiumMembershipPage = lazy(

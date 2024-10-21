@@ -1,28 +1,30 @@
-export interface IUserProfile {
-    userId: string;
-    email: string;
-    name: string;
-    phone: number;
-    // role: string;
-    isActive: boolean;
-}
-
+import { SigninFormSchemaType } from "../utils/validations/signin";
+import { SignupFormSchemaType } from "../utils/validations/signup";
 
 interface IUser{
 	email: string;
 	password: string;
-	// role: string;
 }
 
 
 export interface ISignup extends IUser {
 	name: string;
-	phone: number;
-	otp?: number;
+	phone: number | string;
 }
 
 export interface ISignin extends IUser{} 
 
+export interface ISigninProps {
+    handleSubmit: (values: ISignin) => void;
+    signinSchema: SigninFormSchemaType;
+    initialSigninValues: ISignin;
+}
+
+export interface ISignupProps {
+    handleSubmit: (values: ISignup) => void;
+    signupSchema: SignupFormSchemaType;
+    initialSignupValues: ISignup;
+}
 
 
 export interface IUpdatePassword {

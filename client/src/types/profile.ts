@@ -1,4 +1,11 @@
-import { IUserProfile } from "./user";
+
+export interface IUserProfile {
+    userId: string;
+    email: string;
+    name: string;
+    phone: number;
+    isActive: boolean;
+}
 
 
 export interface ICandidateProfile extends IUserProfile {
@@ -27,6 +34,10 @@ export interface IRecruiterProfile extends IUserProfile {
 	companyLocation: string;
 	companyState: string;
 	companyCountry: string;
+}
+
+export interface IRecruiterProfileResponse extends Omit<IRecruiterProfile, "userId"> {
+	id: string
 }
 
 

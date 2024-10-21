@@ -8,22 +8,18 @@ import Loading from "../components/loading/Loading";
 
 
 const PaymentFailed = lazy(()=> import("../pages/payment/PaymentFailed"))
-const CandidateSigninPage = lazy(()=> import("../pages/auth-pages/signin/CandidateSigninPage"))
-const CandidateSignupPage = lazy(()=> import("../pages/auth-pages/signup/CandidateSignupPage"))
+const CandidateSigninPage = lazy(()=> import("../pages/auth/signin/CandidateSigninPage"))
+const CandidateSignupPage = lazy(()=> import("../pages/auth/signup/CandidateSignupPage"))
 const LandingPage = lazy(()=> import("../pages/landing/LandingPage"))
 const CandidateProfilePage = lazy(()=> import("../pages/profile/candidate/CandidateProfilePage"))
-const AllJobsPage = lazy(()=> import("../pages/job-pages/candidate/AllJobsPage"))
-const JobDetailsPage = lazy(()=> import("../pages/job-pages/candidate/JobDetailsPage"))
-const OtpFormPageSignup = lazy(()=> import("../pages/auth-pages/otp/candidate/OtpFormPageSignup"))
-const ResetPassword = lazy(()=> import("../pages/auth-pages/password/candidate/ResetPassword"))
-const OtpFormResetPassword = lazy(()=> import("../pages/auth-pages/otp/candidate/OtpFormResetPassword"))
-const ForgotPasswordEmailEnterPage = lazy(()=> import("../pages/auth-pages/emailOrMobileEnter/candidate/ForgotPasswordEmailEnterPage"))
-const ForgotPassword = lazy(()=> import("../pages/auth-pages/password/candidate/ForgotPassword"))
-const ResetPasswordMobileEnterPage = lazy(()=> import("../pages/auth-pages/emailOrMobileEnter/candidate/ResetPasswordMobileEnterPage"))
-const OtpFormPageForgotPassword = lazy(()=> import("../pages/auth-pages/otp/candidate/OtpFormPageForgotPassword"))
+const AllJobsPage = lazy(()=> import("../pages/job/candidate/AllJobsPage"))
+const JobDetailsPage = lazy(()=> import("../pages/job/candidate/JobDetailsPage"))
+const OtpFormPage = lazy(()=> import("../pages/auth/otp/OtpFormPage"))
+const EmailOrMobileEnterPage = lazy(()=> import("../pages/auth/emailOrMobileEnter/EnterEmailOrMobilePage"))
+const UpdatePassword = lazy(()=> import("../pages/auth/password/UpdatePassword"))
 const CandidateProfileEditPage = lazy(()=> import("../pages/profile/candidate/CandidateProfileEditPage"))
-const AppliedJobsPage = lazy(()=> import("../pages/job-pages/candidate/AppliedJobsPage"))
-const JobApplicationDetailsPage = lazy(()=> import("../pages/job-pages/candidate/JobApplicationDetailsPage"));
+const AppliedJobsPage = lazy(()=> import("../pages/job/candidate/AppliedJobsPage"))
+const JobApplicationDetailsPage = lazy(()=> import("../pages/job/candidate/JobApplicationDetailsPage"));
 
 const RecruiterProfilePage = lazy(()=> import("../pages/profile/recruiter/RecruiterProfilePage"))
 const ChatPageCandidate = lazy(()=> import("../pages/chat/ChatPageCandidate"))
@@ -50,18 +46,18 @@ function CandidateRoutes() {
 					<Route path="/payment-failed" element={loggedinUser? <PaymentFailed />: <Navigate to={"/candidate/landing"} />} />
 					<Route path="/edit-profile/" element={loggedinUser? <CandidateProfileEditPage />: <Navigate to={"/candidate/landing"} />} />
 
-					<Route path="/passwordResetMobile" element={loggedinUser? <ResetPasswordMobileEnterPage />: <Navigate to={"/candidate/landing"} />} />
-					<Route path="/passwordResetOtp" element={loggedinUser? <OtpFormResetPassword />: <Navigate to={"/candidate/landing"} />} />
-					<Route path="/passwordReset" element={loggedinUser? <ResetPassword />: <Navigate to={"/candidate/landing"} />} />
+					<Route path="/passwordResetMobile" element={loggedinUser? <EmailOrMobileEnterPage />: <Navigate to={"/candidate/landing"} />} />
+					<Route path="/passwordResetOtp" element={loggedinUser? <OtpFormPage />: <Navigate to={"/candidate/landing"} />} />
+					<Route path="/passwordReset" element={loggedinUser? <UpdatePassword />: <Navigate to={"/candidate/landing"} />} />
 
-					<Route path="/forgotPasswordEmail" element={!loggedinUser? <ForgotPasswordEmailEnterPage />: <Navigate to={"/candidate/landing"} />} />
-					<Route path="/forgotPasswordOtp/:email" element={!loggedinUser? <OtpFormPageForgotPassword />: <Navigate to={"/candidate/landing"} />} />
-					<Route path="/forgotPassword/:userId" element={!loggedinUser? <ForgotPassword />: <Navigate to={"/candidate/landing"} />} />
+					<Route path="/forgotPasswordEmail" element={!loggedinUser? <EmailOrMobileEnterPage />: <Navigate to={"/candidate/landing"} />} />
+					<Route path="/forgotPasswordOtp/:email" element={!loggedinUser? <OtpFormPage />: <Navigate to={"/candidate/landing"} />} />
+					<Route path="/forgotPassword/:userId" element={!loggedinUser? <UpdatePassword />: <Navigate to={"/candidate/landing"} />} />
 					
 					<Route path="/landing" element={loggedinUser?<Navigate to={"/candidate"} />: <LandingPage /> } />
 					<Route path="/signin" element={loggedinUser?<Navigate to={"/candidate"} />:<CandidateSigninPage /> } />
 					<Route path="/signup" element={loggedinUser? <Navigate to={"/candidate"} />:<CandidateSignupPage />} />
-					<Route path="/otpSignupCandidate/:email" element={!loggedinUser? <OtpFormPageSignup /> :<Navigate to={"/candidate"} />} />
+					<Route path="/otpSignupCandidate/:email" element={!loggedinUser? <OtpFormPage /> :<Navigate to={"/candidate"} />} />
 
 					<Route path="/all-jobs" element={loggedinUser?<AllJobsPage />:<Navigate to={"/candidate/signin"} />} />
 					<Route path="/job-details/:jobId" element={loggedinUser?<JobDetailsPage />:<Navigate to={"/candidate/signin"} />} />

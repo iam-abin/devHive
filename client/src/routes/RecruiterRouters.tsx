@@ -10,24 +10,20 @@ import RecruiterLayout from "../pages/layout/RecruiterLayout";
 
 const RecruiterDashBoard = lazy(()=> import("../pages/dashboard/RecruiterDashBoardPage"))
 const CandidateProfilePage = lazy(()=> import("../pages/profile/candidate/CandidateProfilePage"))
-const RecruiterSignupPage = lazy(()=> import("../pages/auth-pages/signup/RecruiterSignupPage"))
+const RecruiterSignupPage = lazy(()=> import("../pages/auth/signup/RecruiterSignupPage"))
 const LandingPage = lazy(()=> import("../pages/landing/LandingPage"))
-const RecruiterSigninPage = lazy(()=> import("../pages/auth-pages/signin/RecruiterSigninPage"))
-const CreateJobPage = lazy(()=> import("../pages/job-pages/recruiter/CreateJobPage"))
-const EditJobPage = lazy(()=> import("../pages/job-pages/recruiter/EditJobPage"))
-const OtpFormPageSignup = lazy(()=> import("../pages/auth-pages/otp/recruiter/OtpFormPageSignup"))
+const RecruiterSigninPage = lazy(()=> import("../pages/auth/signin/RecruiterSigninPage"))
+const CreateJobPage = lazy(()=> import("../pages/job/recruiter/CreateJobPage"))
+const EditJobPage = lazy(()=> import("../pages/job/recruiter/EditJobPage"))
+const OtpFormPage = lazy(()=> import("../pages/auth/otp/OtpFormPage"))
 const RecruiterProfilePage = lazy(()=> import("../pages/profile/recruiter/RecruiterProfilePage"))
-const OtpFormResetPassword = lazy(()=> import("../pages/auth-pages/otp/recruiter/OtpFormResetPassword"))
-const ResetPassword = lazy(()=> import("../pages/auth-pages/password/recruiter/ResetPassword"))
-const OtpFormPageForgotPassword = lazy(()=> import("../pages/auth-pages/otp/recruiter/OtpFormPageForgotPassword"))
-const ForgotPassword = lazy(()=> import("../pages/auth-pages/password/recruiter/ForgotPassword"))
+const UpdatePassword = lazy(()=> import("../pages/auth/password/UpdatePassword"))
 const RecruiterProfileEditPage = lazy(()=> import("../pages/profile/recruiter/RecruiterProfileEditPage"))
-const ResetPasswordMobileEnterPage = lazy(()=> import("../pages/auth-pages/emailOrMobileEnter/recruiter/ResetPasswordMobileEnterPage"))
-const ForgotPasswordEmailEnterPage = lazy(()=> import("../pages/auth-pages/emailOrMobileEnter/recruiter/ForgotPasswordEmailEnterPage"))
-const JobDetailsPage = lazy(()=> import("../pages/job-pages/recruiter/JobDetailsPage"))
-const AllAddedJobs = lazy(()=> import("../pages/job-pages/recruiter/AllAddedJobs"))
-const JobApplicationsPage = lazy(()=> import("../pages/job-pages/recruiter/JobApplicationsPage"))
-const JobApplicationDetailsPage = lazy(()=> import("../pages/job-pages/recruiter/JobApplicationDetailsPage"))
+const EmailOrMobileEnterPage = lazy(()=> import("../pages/auth/emailOrMobileEnter/EnterEmailOrMobilePage"))
+const JobDetailsPage = lazy(()=> import("../pages/job/recruiter/JobDetailsPage"))
+const AllAddedJobs = lazy(()=> import("../pages/job/recruiter/AllAddedJobs"))
+const JobApplicationsPage = lazy(()=> import("../pages/job/recruiter/JobApplicationsPage"))
+const JobApplicationDetailsPage = lazy(()=> import("../pages/job/recruiter/JobApplicationDetailsPage"))
 const ChatPageRecruiter = lazy(()=> import("../pages/chat/ChatPageRecruiter"))
 const ViewAllCandidatesPage = lazy(()=> import("../pages/recruiter/ViewAllCandidatesPage"))
 const NotFound = lazy(()=> import("../pages/Error/NotFound"))
@@ -51,19 +47,19 @@ function RecruiterRouters() {
 				<Route path="/signin" element={loggedinUser?<Navigate to={"/recruiter"} />:<RecruiterSigninPage /> } />
 				<Route path="/signup" element={loggedinUser? <Navigate to={"/recruiter"} />:<RecruiterSignupPage />} />
 				
-				<Route path="/otpSignupRecruiter/:email" element={!loggedinUser? <OtpFormPageSignup /> :<Navigate to={"/recruiter"} />} />
-				<Route path="/forgotPasswordEmail" element={!loggedinUser? <ForgotPasswordEmailEnterPage />: <Navigate to={"/recruiter/landing"} />} />
-				<Route path="/forgotPasswordOtp/:email" element={!loggedinUser? <OtpFormPageForgotPassword />: <Navigate to={"/recruiter/landing"} />} />
-				<Route path="/forgotPassword/:userId" element={!loggedinUser? <ForgotPassword />: <Navigate to={"/recruiter/landing"} />} />
+				<Route path="/otpSignupRecruiter/:email" element={!loggedinUser? <OtpFormPage /> :<Navigate to={"/recruiter"} />} />
+				<Route path="/forgotPasswordEmail" element={!loggedinUser? <EmailOrMobileEnterPage />: <Navigate to={"/recruiter/landing"} />} />
+				<Route path="/forgotPasswordOtp/:email" element={!loggedinUser? <OtpFormPage />: <Navigate to={"/recruiter/landing"} />} />
+				<Route path="/forgotPassword/:userId" element={!loggedinUser? <UpdatePassword />: <Navigate to={"/recruiter/landing"} />} />
 				
 				<Route path="/" element={loggedinUser? <RecruiterLayout />: <Navigate to={"/recruiter/landing"} />} >
 				<Route index={true} element={loggedinUser? <RecruiterDashBoard />: <Navigate to={"/candidate/landing"} />} />
 					<Route path="/profile" element={ <RecruiterProfilePage />} />
 					<Route path="/edit-profile" element={ <RecruiterProfileEditPage />} />
 
-					<Route path="/passwordResetMobile" element={ <ResetPasswordMobileEnterPage />} />
-					<Route path="/passwordResetOtp" element={ <OtpFormResetPassword />} />
-					<Route path="/passwordReset" element={ <ResetPassword />} />
+					<Route path="/passwordResetMobile" element={ <EmailOrMobileEnterPage />} />
+					<Route path="/passwordResetOtp" element={ <OtpFormPage />} />
+					<Route path="/passwordReset" element={ <UpdatePassword />} />
 
 
 					<Route path="/all-candidates" element={<ViewAllCandidatesPage />} />
