@@ -3,7 +3,6 @@ import {
 	changeJobCloseStatusApi,
 	getAJobApi,
 } from "../../../axios/apiMethods/jobs-service/jobs";
-// import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import JobDetails from "../../../components/recruiter/JobDetails";
 import Swal from "sweetalert2";
@@ -15,16 +14,11 @@ function JobDetailsPage() {
 	const { jobId } = useParams();
 	useEffect(() => {
 		const fetchJobDetails = async () => {
-			try {
 				if (jobId) {
 					const job = await getAJobApi(jobId);
 					
 					setJobDetails(job.data);
 				}
-			} catch (error) {
-				// Handle error, e.g., log it or show an error message to the user
-				console.error("Error fetching job details:", error);
-			}
 		};
 
 		fetchJobDetails();
@@ -37,11 +31,10 @@ function JobDetailsPage() {
 
 	const handleChangeJobCloseStatus = async (jobId: string) => {
 		
-		try {
 			if (jobId) {
 				Swal.fire({
 					title: `Do you want to ${
-						jobDetails?.isClosed ? "open" : "close"
+						jobDetails?.isActive ? "open" : "close"
 					} this Job?`,
 					text: "Are you sure!",
 					icon: "warning",
@@ -49,7 +42,7 @@ function JobDetailsPage() {
 					confirmButtonColor: "#3085d6",
 					cancelButtonColor: "#d33",
 					confirmButtonText: `Yes, ${
-						jobDetails?.isClosed ? "open job" : "close job"
+						jobDetails?.isActive ? "open job" : "close job"
 					}`,
 				}).then(async (result) => {
 					if (result.isConfirmed) {
@@ -58,7 +51,7 @@ function JobDetailsPage() {
 							
 							setJobDetails({
 								...jobDetails,
-								isClosed: job.data.isClosed,
+								isActive: job.data.isActive,
 							});
 
 							notify(job.message, "success");
@@ -66,10 +59,6 @@ function JobDetailsPage() {
 					}
 				});
 			}
-		} catch (error) {
-			// Handle error, e.g., log it or show an error message to the user
-			console.error("Error fetching job details:", error);
-		}
 	};
 
 	const handleGoBack = () => {

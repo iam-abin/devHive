@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { viewRecruiterProfileDetailsApi } from "../../../axios/apiMethods/admin-service/recruiters";
 import RecruiterProfile from "../../../components/admin/profile/RecruiterProfile";
-import { setLoaded, setLoading } from "../../../redux/slice/loaderSlice/isLoading";
+import { setLoaded, setLoading } from "../../../redux/slice/isLoading";
 import { useDispatch } from "react-redux";
 
 function ViewRecruiterProfilePage() {
@@ -25,12 +25,10 @@ function ViewRecruiterProfilePage() {
     const fetchProfileDetails = async () => {
       try {
         dispatch(setLoading())
-        const recruiter = await viewRecruiterProfileDetailsApi(userId);
+        const recruiter = await viewRecruiterProfileDetailsApi(userId!);
         
         setRecruiterProfileData(recruiter.data);
-      } catch (error) {
-        console.error("Error fetching profile details:", error);
-      }finally{
+      } finally{
         dispatch(setLoaded())
       }
     };

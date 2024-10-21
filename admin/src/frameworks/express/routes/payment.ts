@@ -1,14 +1,14 @@
 import express, { Router } from "express"
-import { IDependenciesData } from "../../types/dependencyInterface";
-import { currentUserAdminCheck, requireAuthAdmin } from "@abijobportal/common";
+import { IDependency } from "../../types/dependency";
+import { checkCurrentUser, auth, ROLES } from "@abijobportal/common";
 import { paymentControllers } from "../../../controllers";
 
-export const paymentRouter = (dependencies: IDependenciesData)=>{
+export const paymentRouter = (dependencies: IDependency)=>{
     const router: Router = express.Router();
 
-    const { getAllPaymentsController } = paymentControllers(dependencies);
+    const paymentController = paymentControllers(dependencies);
     
-    router.get("/get-all-payments", getAllPaymentsController);
+    router.get("/get-all-payments", paymentController.getAllPaymentsController);
     
     return router
 }

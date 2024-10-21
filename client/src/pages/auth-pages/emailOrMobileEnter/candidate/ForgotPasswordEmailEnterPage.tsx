@@ -1,15 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { notify } from "../../../../utils/toastMessage";
 import * as yup from "yup";
 import {
 	setLoading,
 	setLoaded,
-} from "../../../../redux/slice/loaderSlice/isLoading";
+} from "../../../../redux/slice/isLoading";
 import EmailOrMobile from "../../../../components/form/EmailOrMobile";
 import { forgotPasswordEmailCandidateApi } from "../../../../axios/apiMethods/auth-service/candidateAuth";
 import Swal from "sweetalert2";
-import { RootState } from "../../../../redux/reducer/reducer";
+import { RootState } from "../../../../redux/reducer";
 import Loading from "../../../../components/loading/Loading";
 import Footer from "../../../../components/footer/Footer";
 import TopNavBarCandidate from "../../../../components/navBar/TopNavBarCandidate";
@@ -22,8 +21,8 @@ function ForgotPasswordEmailEnterPage() {
 		(state: RootState) => state.loading.isLoading
 	);
 
-	const candidateData: any = useSelector((state: RootState) => {
-		return state.candidateData.data;
+	const candidateData: any = useSelector((store: RootState) => {
+		return store.userReducer.authData
 	});
 
 	const emailSchema = yup.object().shape({
@@ -53,14 +52,6 @@ function ForgotPasswordEmailEnterPage() {
 					navigate(`/candidate/forgotPasswordOtp/${values.email}`);
 				}
 			});
-		} catch (error: any) {
-			console.error("Error during email submission:", error);
-			// notify(error.response.data.errors[0].message, "error");
-			notify(
-				error.response.data.errors[0].message ||
-					"An error occurred during email submission",
-				"error"
-			);
 		} finally {
 			dispatch(setLoaded());
 		}

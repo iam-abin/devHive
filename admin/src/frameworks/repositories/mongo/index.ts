@@ -1,7 +1,7 @@
-import candidateRepository from "./candidateRepository";
-import recruiterRepository from "./recruiterRepository"
-import jobRepository from "./jobRepository";
-import membershipRepository from "./membershipRepository";
-import paymentRepository from "./paymentRepository";
+import candidateRepository from "./candidate.repository";
+import recruiterRepository from "./recruiter.repository"
+import jobRepository from "./job.repository";
+import membershipRepository from "./membership.repository";
+import paymentRepository from "./payment.repository";
 
 export = { candidateRepository, recruiterRepository, jobRepository, membershipRepository, paymentRepository }

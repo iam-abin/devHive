@@ -1,9 +1,9 @@
-import getAllChatRoomsByUserIDController from "./get-all-chat-rooms.controller";
-import getConversationController from "./get-conversation.controller";
+import getAllChatRoomsByUserIDController from "./getChatRooms.controller";
+import getConversationController from "./getChatRoom.controller";
 
-import { IDependenciesData } from "../../frameworks/types/dependencyInterface";
+import { IDependency } from "../../frameworks/types/dependencyInterface";
 
-export = (dependencies: IDependenciesData) => {
+export = (dependencies: IDependency) => {
 	return {
 		getAllChatRoomsByUserIDController: getAllChatRoomsByUserIDController(dependencies),
 		getConversationController: getConversationController(dependencies),

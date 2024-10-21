@@ -17,15 +17,15 @@ const ViewJobDetailsPage: React.FC = () => {
 		title: string;
 		recruiter: string;
 		company: string;
-		job_descriptions?: string;
-		skills_required?: string | string[];
-		available_position?: string;
-		experience_required?: string;
-		education_required?: string;
+		jobDescription?: string;
+		skills?: string | string[];
+		availablePosition?: string;
+		experienceRequired?: string;
+		educationRequired?: string;
 		location?: string;
-		employment_type?: string;
-		salary_min?: number;
-		salary_max?: number;
+		employmentType?: string;
+		salaryMin?: number;
+		salaryMax?: number;
 		has_applied?: boolean;
 		isActive?: boolean;
 		deadline?: Date;
@@ -35,12 +35,8 @@ const ViewJobDetailsPage: React.FC = () => {
 
 	useEffect(() => {
 		(async () => {
-			try {
-				const job = await viewJobDetailsApi(jobId);
+				const job = await viewJobDetailsApi(jobId!);
 				setJobDetails(job.data);
-			} catch (error: any) {
-				console.error(error);
-			}
 		})();
 	}, [jobId]);
 

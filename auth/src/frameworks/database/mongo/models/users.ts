@@ -1,29 +1,13 @@
 import mongoose from "mongoose";
 import { generateHashedPassword } from "../../../utils/password";
+import { ISignup } from "../../../types/user";
 
 // 1. An interface that describes the properties ,that are requried to create a new User
-export interface IUserAttributes {
-	name: string;
-	email: string;
-	phone: number;
-	password: string;
-	userType: string;
-	otp: number
-}
 
 // 2. An interface that describes the properties ,that a User Document has
-interface UserDocument extends mongoose.Document {
-	name: string;
-	email: string;
-	phone: number;
-	password: string;
-	userType: string;
-	
+interface UserDocument extends mongoose.Document, ISignup {
 	isVarified:boolean;
 	isActive: boolean;
-	otp?: number
-	createdAt: string;
-	updatedAt: string;
 }
 
 // 3.
@@ -50,14 +34,10 @@ const userSchema = new mongoose.Schema(
 			required: true,
 			trim: true,
 		},
-		userType: {
+		role: {
 			type: String,
 			required: true,
 			enum: ["admin", "candidate", "recruiter"],
-		},
-		isPremiumUser: {
-			type: Boolean,
-			default: false
 		},
 		isVarified: {  // field for signup email verificetion
 			type: Boolean,
@@ -92,25 +72,40 @@ userSchema.pre("save", async function (next) {
 		const hashedPassword = await generateHashedPassword(this.password);
 		this.password = hashedPassword;
 		next();
-	} catch (error) {
-		console.error(error);
+	} catch (error: unknown) {
+		next(error as Error)
 	}
 });
 
+// To hash password before saving the updated password to db
+userSchema.pre('findOneAndUpdate', async function (next) {
+    const update = this.getUpdate() as Partial<ISignup>;
+    if (!update.password) return next();
+
+    try {
+        const hashedPassword: string = await generateHashedPassword(update.password);
+        this.setUpdate({ ...update, password: hashedPassword });
+        next();
+    } catch (error: unknown) {
+        next(error as Error);
+    }
+});
+
+
 // 4. An interface that describes the properties ,that a user model has
 interface UserModel extends mongoose.Model<UserDocument> {
-	buildUser(attributes: IUserAttributes): UserDocument;
+	buildUser(attributes: ISignup): UserDocument;
 }
 
 // 5.In Mongoose, you can also add custom functions to a model using statics.
-userSchema.statics.buildUser = (attributes: IUserAttributes) => {
+userSchema.statics.buildUser = (attributes: ISignup) => {
 	return new UserModel({
 		// to create a new user document
 		name: attributes.name,
 		email: attributes.email,
 		phone: attributes.phone,
 		password: attributes.password,
-		userType: attributes.userType,
+		role: attributes.role,
 		otp: attributes.otp,
 	});
 };

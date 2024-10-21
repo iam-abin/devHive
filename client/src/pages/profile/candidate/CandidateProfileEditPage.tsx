@@ -1,10 +1,8 @@
-import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../redux/reducer/reducer";
+import { RootState } from "../../../redux/reducer";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useNavigate } from "react-router-dom";
 import {
-	candidateGetProfileApi,
 	updateCandidateProfileApi,
 } from "../../../axios/apiMethods/profile-service/candidate";
 import { notify } from "../../../utils/toastMessage";
@@ -20,8 +18,8 @@ interface ProfileFormData {
 	gender: string;
 	currentLocation: string;
 	address: string;
-	keySkills: string[];
-	profile_image: string;
+	skills: string[];
+	profileImage: string;
 	about: string;
 	resume: string;
 	experience: string;
@@ -29,38 +27,19 @@ interface ProfileFormData {
 }
 
 function CandidateProfileEditPage() {
-	const [profileDetails, setProfileDetails] = useState<any>(null);
 
 	const navigate = useNavigate();
-	const candidateData: any = useSelector(
-		(state: RootState) => state.candidateData.data
-	);
-	const candidateProfileData: any = useSelector(
-		(state: RootState) => state.candidateProfile.candidateProfile
-	);
 	
-	const { id } = candidateData;
+	const candidateProfileData: any = useSelector(
+		(store: RootState) => store.userReducer.myProfile
+	);
 
-	useEffect(() => {
-		const fetchProfileDetails = async () => {
-			try {
-				const profile = await candidateGetProfileApi(id);
-				setProfileDetails(profile.data);
-				
-			} catch (error) {
-				console.error("Error fetching profile details:", error);
-			}
-		};
-
-		fetchProfileDetails();
-	}, [id]);
 
 	if (!candidateProfileData) {
 		return <div>Loading...</div>;
 	}
 
 	const handleSubmit = async (profileData: ProfileFormData) => {
-		try {
 			const data = await updateCandidateProfileApi(profileData);
 			if (data.data) {
 				notify(data.message, "success");
@@ -68,9 +47,6 @@ function CandidateProfileEditPage() {
 			} else {
 				notify("Profile not updated", "error");
 			}
-		} catch (error: any) {
-			notify(error.response.data.errors[0].message, "error");
-		}
 	};
 
 	const initialProfileValues: ProfileFormData = {
@@ -81,8 +57,8 @@ function CandidateProfileEditPage() {
 		gender: candidateProfileData?.gender ?? "",
 		currentLocation: candidateProfileData?.currentLocation ?? "",
 		address: candidateProfileData?.address ?? "",
-		keySkills: candidateProfileData?.keySkills ?? [],
-		profile_image: candidateProfileData?.profile_image ?? "",
+		skills: candidateProfileData?.skills ?? [],
+		profileImage: candidateProfileData?.profileImage ?? "",
 		about: candidateProfileData?.about ?? "",
 		resume: candidateProfileData?.resume ?? "",
 		experience: candidateProfileData?.experience ?? "",

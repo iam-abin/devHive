@@ -3,12 +3,8 @@ import "react-responsive-modal/styles.css";
 
 import { useEffect, useState } from "react";
 import TableComponent from "../../components/table/TableComponent";
-// import {
-// 	blockUnblockRecruiterApi,
-// } from "../../axios/apiMethods/admin-service/recruiters";
+
 import { notify } from "../../utils/toastMessage";
-// import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import {
@@ -26,20 +22,17 @@ interface RecruiterInterface {
 }
 
 function PremiumMembershipPage() {
-	const navigate = useNavigate();
+
 	const [membershipPlansData, setMembershipPlansData] = useState<
 		RecruiterInterface[]
 	>([]);
 
 	useEffect(() => {
 		(async () => {
-			try {
 				const recruiters = await getAllMembershipPlansApi();
 				
 				setMembershipPlansData(recruiters.data);
-			} catch (error: any) {
-				console.error(error);
-			}
+	
 		})();
 	}, []);
 
@@ -53,53 +46,7 @@ function PremiumMembershipPage() {
 			name: "Price",
 			selector: (row: { price: number }) => row.price,
 			sortable: true,
-		},
-
-		// {
-		// 	name: "View",
-		// 	cell: (row: { id: string }) => (
-		// 		<button
-		// 			onClick={() => {
-		// 				viewProfileDetails(row.id);
-		// 			}}
-		// 			className="btn btn-info btn-sm w-24"
-		// 		>
-		// 			view details
-		// 		</button>
-		// 	),
-		// },
-
-		// {
-		// 	name: "Status",
-		// 	cell: (row: { isActive: string }) => (
-		// 		<div
-		// 			className={`badge ${
-		// 				row.isActive
-		// 					? "badge badge-success gap-2 w-20"
-		// 					: "badge badge-error gap-2 w-20"
-		// 			} `}
-		// 		>
-		// 			{row.isActive ? "active" : "inActive"}
-		// 		</div>
-		// 	),
-		// },
-		// {
-		// 	name: "Action",
-		// 	cell: (row: { id: string; isActive: boolean }) => (
-		// 		<button
-		// 			onClick={() => {
-		// 				handleBlockUnblock(row.id, row.isActive);
-		// 			}}
-		// 			className={`btn ${
-		// 				row.isActive
-		// 					? "btn-success btn-sm w-24 bg-green-600"
-		// 					: "btn btn-error btn-sm w-24 bg-red-600"
-		// 			} `}
-		// 		>
-		// 			{row.isActive ? "Block" : "unBlock"}
-		// 		</button>
-		// 	),
-		// },
+		}
 	];
 
 	const [modalIsOpen, setModalIsOpen] = useState(false);

@@ -28,11 +28,11 @@ const RecruiterProfile: React.FC<{ data: any }> = ({ data }) => {
 						</p>
 						<p className="my-7">
 							<span className="font-semibold">Company name:</span>{" "}
-							{data?.company_name}
+							{data?.companyName}
 						</p>
 						<p className="my-7">
 							<span className="font-semibold">Company location:</span>{" "}
-							{data?.company_location}
+							{data?.companyLocation}
 						</p>
 					</div>
 				) : (

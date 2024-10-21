@@ -9,21 +9,6 @@ const PaymentFailed: React.FC = () => {
 	return (
 		<>
 			{candidateUrl && <TopNavBarCandidate />}
-			{/* <div className="flex flex-col justify-center items-center h-screen">
-			<div className="text-center">
-				<h1 className="text-3xl font-bold">Payment Failed</h1>
-				<p className="text-gray-500 mt-4">
-					We were unable to process your payment. Please try again or
-					contact customer support.
-				</p>
-				<Link
-					to="/candidate"
-					className="px-12 bg-indigo-500 hover:bg-indigo-700 rounded-md text-white font-semibold py-3"
-				>
-					GO TO HOME
-				</Link>
-			</div>
-		</div> */}
 			<div className="min-h-screen flex items-center justify-center bg-gray-100">
 				<div className="bg-white p-8  rounded-2xl shadow-lg max-w-md w-full">
 					<h2 className="text-3xl text-center font-semibold text-red-600 mb-4">

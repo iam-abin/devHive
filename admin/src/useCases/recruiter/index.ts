@@ -1,6 +1,6 @@
-import blockUnblockRecruiterUseCase from "./block-unblock";
-import getRecruiterProfileByuserIdUseCase from "./get-recruiter-by-id";
-import getAllRecruitersUseCase from "./get-all-recruiters";
+import blockUnblockRecruiterUseCase from "./blockUnblock";
+import getRecruiterProfileByuserIdUseCase from "./getRecruiter";
+import getAllRecruitersUseCase from "./getRecruiters";
 
 export {
 	blockUnblockRecruiterUseCase,

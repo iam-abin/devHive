@@ -1,5 +1,4 @@
 import React from "react";
-import dayjs from "dayjs";
 import { FaShoppingBag } from "react-icons/fa";
 import { IoLocationSharp } from "react-icons/io5";
 import { HiMiniCurrencyRupee } from "react-icons/hi2";
@@ -10,8 +9,6 @@ const JobCard: React.FC<{ job: any; handleViewJob: any }> = ({
 	job,
 	handleViewJob,
 }) => {
-	// const date1 = dayjs(Date.now());
-	// const diffInDays = date1.diff(job.createdAt, "day");
 	const diffInDays = dateFormatHumanized(job.createdAt);
 	return (
 		<div className="mx-4 lg:mx-40 pb-4" key={job.id}>
@@ -21,15 +18,15 @@ const JobCard: React.FC<{ job: any; handleViewJob: any }> = ({
 					<div className="flex items-center gap-8">
 						<span className="flex items-center gap-1">
 							<FaShoppingBag />
-							{job?.employment_type}
+							{job?.employmentType}
 						</span>
 						<span className="flex items-center gap-1">
 							<IoLocationSharp />
-							{job?.company_location}
+							{job?.companyLocation}
 						</span>
 						<span className="flex items-center gap-1">
 							<HiMiniCurrencyRupee />
-							<span>{formatCurrency(job?.salary_max)}</span>
+							<span>{formatCurrency(job?.salaryMax)}</span>
 						</span>
 					</div>
 				</div>

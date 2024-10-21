@@ -1,13 +1,10 @@
 import { useEffect, useState } from "react";
-import TableComponent from "../../../components/table/TableComponent";
 import { useNavigate } from "react-router-dom";
 import { getAllCandidateAppliedJobsApi } from "../../../axios/apiMethods/jobs-service/jobs";
-import { RootState } from "../../../redux/reducer/reducer";
+import { RootState } from "../../../redux/reducer";
 import { useSelector } from "react-redux";
-import JobCard from "../../../components/cards/JobCard";
 import JobAppliedCard from "../../../components/cards/JobAppliedCard";
 import TopNavBarCandidate from "../../../components/navBar/TopNavBarCandidate";
-// import FooterCandidate from "../../../components/candidate/FooterCandidate";
 import Paginate from "../../../components/pagination/Paginate";
 import Footer from "../../../components/footer/Footer";
 
@@ -16,15 +13,15 @@ interface JobInterface {
 	title: string;
 	recruiter: string;
 	company: string;
-	job_descriptions?: string;
-	skills_required?: string | string[];
-	available_position?: string;
-	experience_required?: string;
-	education_required?: string;
+	jobDescription?: string;
+	skills?: string | string[];
+	availablePosition?: string;
+	experienceRequired?: string;
+	educationRequired?: string;
 	location?: string;
-	employment_type?: string;
-	salary_min?: number;
-	salary_max?: number;
+	employmentType?: string;
+	salaryMin?: number;
+	salaryMax?: number;
 	has_applied?: boolean;
 	isActive?: boolean;
 	deadline?: Date;
@@ -38,7 +35,7 @@ function AppliedJobsPage() {
 	const [appliedJobsData, setAppliedJobsData] = useState<JobInterface[]>([]);
 
 	const candidateData: any = useSelector(
-		(state: RootState) => state.candidateData.data
+		(store: RootState) => store.userReducer.authData
 	);
 
 	const handlePageChange = async ({ selected }: { selected: number }) => {
@@ -53,8 +50,8 @@ function AppliedJobsPage() {
 				currentPage
 			);
 			
-			setAppliedJobsData(response.data);
-			setpageCount(response.totalNumberOfPages);
+			setAppliedJobsData(response.data.appliedJobs);
+			setpageCount(response.data.totalNumberOfPages);
 			// dispatch(setLoaded());
 		})();
 	}, [currentPage]);

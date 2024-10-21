@@ -2,14 +2,14 @@ import "express-async-errors"
 import express, { Express } from "express";
 import morgan from "morgan";
 import cors from 'cors'
+import compression from "compression"
+import { NotFoundError, errorHandler } from "@abijobportal/common";
 
 import { routes } from "./routes"
 import dependencies from "../../config/dependencies";
-import { NotFoundError, errorHandler } from "@abijobportal/common";
+import { appConfig } from "../../config/appConfig";
 
 const app: Express = express();
-
-const API_PREFIX: string = process.env.API_PREFIX || '/api/v1/payment'
 
 app.set("trust proxy", true); // trust first proxy
 app.use(cors())
@@ -19,9 +19,10 @@ app.use(morgan("dev"));
 
 app.use(express.json()); // Set the maximum allowed request body size
 app.use(express.urlencoded({ extended: true }));
+app.use(compression())
 
 // Routes
-app.use(API_PREFIX, routes(dependencies))
+app.use(appConfig.API_PREFIX, routes(dependencies))
 
 app.all('*',async ()=>{
     throw new NotFoundError()

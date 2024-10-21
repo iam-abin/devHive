@@ -1,19 +1,19 @@
 import { Outlet } from "react-router-dom";
 import { useState } from "react"; // Import useState hook
 
-import dashboard from "../../assets/dashboard.svg";
-import finance from "../../assets/finance.svg";
-import companies from "../../assets/companies.svg";
-import candidates from "../../assets/candidates.svg";
-import membership from "../../assets/membership.svg";
+import dashboard from "../../assets/layoutItems/dashboard.svg";
+import finance from "../../assets/layoutItems/finance.svg";
+import companies from "../../assets/layoutItems/companies.svg";
+import candidates from "../../assets/layoutItems/candidates.svg";
+import membership from "../../assets/layoutItems/membership.svg";
 import TopNavBarRecruiter from "../../components/navBar/TopNavBarRecruiter";
 import LeftNavBarRecruiter from "../../components/navBar/LeftNavBarRecruiter";
 import { useSelector } from "react-redux";
-import { RootState } from "../../redux/reducer/reducer";
+import { RootState } from "../../redux/reducer";
 
 const RecruiterLayout = () => {
 	const recruiterProfile: any = useSelector(
-		(state: RootState) => state.recruiterData.data
+		(store: RootState) => store.userReducer.authData
 	);
 
 	// State to manage visibility of left navbar on mobile

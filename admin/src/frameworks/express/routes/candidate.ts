@@ -1,20 +1,16 @@
 import express, { Router } from "express";
 import { candidateControllers } from "../../../controllers";
-import { IDependenciesData } from "../../types/dependencyInterface";
+import { IDependency } from "../../types/dependency";
 
-export const candidateRouter = (dependencies: IDependenciesData) => {
+export const candidateRouter = (dependencies: IDependency) => {
 	const router: Router = express.Router();
 
-	const {
-		getAllCandidatesController,
-		getCandidateByIdController,
-		candidateBlockUnblockController,
-	} = candidateControllers(dependencies);
+	const candidateController = candidateControllers(dependencies);
 
 	// candidate
-	router.get("/candidates", getAllCandidatesController);
-	router.get("/viewProfile/:userId", getCandidateByIdController);
-	router.put("/blockUnblock/:userId", candidateBlockUnblockController);
+	router.get("/candidates", candidateController.getAllCandidatesController);
+	router.get("/viewProfile/:userId", candidateController.getCandidateByIdController);
+	router.put("/blockUnblock/:userId", candidateController.candidateBlockUnblockController);
 
 	return router;
 };

@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { IDependenciesData } from "../../frameworks/types/dependencyInterface";
+import { IDependency } from "../../frameworks/types/dependency";
 
-export = (dependencies: IDependenciesData)=>{
+export = (dependencies: IDependency)=>{
 
     const { useCases: { getAllDashboardCardsDetailsUseCase }} = dependencies
 
@@ -9,7 +9,7 @@ export = (dependencies: IDependenciesData)=>{
         
         const dashboardCardsDetails = await getAllDashboardCardsDetailsUseCase(dependencies).execute();
         
-        res.status(200).json({message: "dashboard card details", data: dashboardCardsDetails })
+        res.status(200).json({message: "dashboard card details fetched successfully", data: dashboardCardsDetails })
     };
 
 }

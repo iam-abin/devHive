@@ -1,47 +1,20 @@
 import { Request, Response } from "express";
-// import { BadRequestError } from "@abijobportal/common";
 
-import { IDependenciesData } from "../../frameworks/types/dependencyInterface";
-import { BadRequestError } from "@abijobportal/common";
+import { IDependency } from "../../frameworks/types/dependency";
+import { IOtp } from "../../frameworks/types/otp";
 
-export = (dependencies: IDependenciesData) => {
-	const {
-		useCases: {
-			checkEmailVerificationOtpUseCase,
-			getUserByEmailUseCase,
-		},
-	} = dependencies;
+export = (dependencies: IDependency) => {
+    const {
+        useCases: { verifyEmailOtpUseCase },
+    } = dependencies;
 
-	return async (req: Request, res: Response) => {
-		const { email, otp } = req.body;
-		
-		let parsedOtp;
-		if(typeof otp == "string"){
-			parsedOtp = parseInt(otp)
-		}else{
-			// no change
-			parsedOtp = otp
-		}
-		
+    return async (req: Request, res: Response) => {
+        const { email, otp } = req.body as IOtp;
 
+        const user = await verifyEmailOtpUseCase(dependencies).execute({ email, otp });
 
-		const user = await getUserByEmailUseCase(dependencies).execute(email);
-		if (!user) throw new BadRequestError("Invalid email");
-			
-		const checkOtp = await checkEmailVerificationOtpUseCase(
-			dependencies
-		).execute({ otp: parsedOtp, email });
-		
-		if(!checkOtp){
-
-			return res.status(403).json({
-				message: "invalid otp"
-			});
-		}
-		
-		res.status(200).json({
-			message: "user is verified successfully",
-			data: user,
-		});
-	};
+        return res
+            .status(200)
+            .json({ message: `Otp Verified successfully`, data: user });
+    };
 };

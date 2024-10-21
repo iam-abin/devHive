@@ -1,44 +1,25 @@
-export interface ICandidateData{
-    name: string;
-	email: string;
-	phone: string;
-	password: string;
-	userType: string;
-	userId: string
+import { IUser } from "../frameworks/types/user";
 
-	gender?: string;
-	currentLocation?: string;
-	address?: object;
-	keySkills?: string[];
-	profile_image?: string;
-	about?: string;
-	resume?: string;
-	experience?: string;
-}
-
-export class Candidate {
-	name: string;
-	email: string;
-	phone: string;
-	password: string;
-	userType: string;
+export class CandidateProfile {
 	userId: string;
-
-	gender?: string;
-	currentLocation?: string;
-	address?: object;
-	keySkills?: string[];
-	profile_image?: string;
-	about?: string;
-	resume?: string;
-	experience?: string;
-
-	constructor({ name, email, phone, password, userType, userId }: ICandidateData) {
-		this.name = name;
-		this.email = email;
-		this.phone = phone;
-		this.password = password;
-		this.userType = userType;
-		this.userId = userId;
+    name: string;
+    email: string;
+    phone: number;
+    role: string;
+    isActive: boolean;
+	constructor({
+		userId,
+		name,
+		email,
+		phone,
+		role,
+		isActive,
+	}: IUser) {
+		(this.userId = userId),
+		(this.name = name),
+			(this.email = email),
+			(this.phone = phone),
+			(this.role = role);
+			(this.isActive = isActive)
 	}
 }

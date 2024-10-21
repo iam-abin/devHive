@@ -13,7 +13,7 @@ const CandidateCard: React.FC<{ candidate: any; handleViewCandidate: any }> = ({
 					<h1 className="text-lg font-semibold">{candidate?.name}</h1>
 					<p>{candidate?.email}</p>
 					<p>{candidate?.phone}</p>
-					{/* <p>{candidate?.userType}</p> */}
+					{/* <p>{candidate?.role}</p> */}
 					<p>
 						{candidate?.isActive ? "Active" : "Inactive"}
 						{candidate?.isVerified && " • Verified"}

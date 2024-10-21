@@ -1,17 +1,13 @@
-import getAllJobsUseCase from "./get-all-jobs";
-import filterJobUseCase from "./filter-job";
-import getJobByIdUseCase from "./get-job-by-id";
-import getNumberofJobsUseCase from "./get-numberof-Jobs";
-import getAllJobFieldsDistinctValuesUseCase from "./get-all-job-fields-distinct-values";
-import getSearchResultUseCase from "./get-search-result"
-import getSearchResultCountUseCase from "./get-search-result-count";
+import getAllJobsUseCase from "./getJobs";
+import filterJobUseCase from "./filterJob";
+import getJobByIdUseCase from "./getJobById";
+import getAllJobFieldsDistinctValuesUseCase from "./getJobFieldsDistinctValues";
+import getSearchResultUseCase from "./search"
 
 export {
 	getAllJobsUseCase,
 	filterJobUseCase,
 	getJobByIdUseCase,
-	getNumberofJobsUseCase,
 	getAllJobFieldsDistinctValuesUseCase,
 	getSearchResultUseCase,
-	getSearchResultCountUseCase,
 };

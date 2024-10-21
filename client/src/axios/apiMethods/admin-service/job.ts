@@ -1,19 +1,17 @@
 
 import adminApiUrlConfig from "../../../config/apiUrlsConfig/adminServiceApiUrlConfig";
 import jobApiUrlConfig from "../../../config/apiUrlsConfig/jobApiUrlConfig";
+import { IResponse } from "../../../types/api";
 import adminApiCalls from "../../admin/apiCalls";
 
-export const getAllJobsAdminApi = async (): Promise<any> => { // for admin from job in admin service
-    const response: any = await adminApiCalls("get", adminApiUrlConfig.getAllJobsUrl);
-    return response.data;
+export const getAllJobsAdminApi = async (): Promise<IResponse> => { // for admin from job in admin service
+    return await adminApiCalls("get", adminApiUrlConfig.getAllJobsUrl);
 };
 
-export const blockUnblockJobApi = async (jobId: string): Promise<any> => {
-    const response: any = await adminApiCalls("put", adminApiUrlConfig.blockUnblockJobUrl(jobId));
-    return response.data;
+export const blockUnblockJobApi = async (jobId: string): Promise<IResponse> => {
+    return await adminApiCalls("put", adminApiUrlConfig.blockUnblockJobUrl(jobId));
 };
 
-export const viewJobDetailsApi = async (jobId: any): Promise<any> => {
-    const response: any = await adminApiCalls("get", jobApiUrlConfig.getAJobUrl(jobId));
-    return response.data;
+export const viewJobDetailsApi = async (jobId: string): Promise<IResponse> => {
+    return await adminApiCalls("get", jobApiUrlConfig.getAJobUrl(jobId));
 };

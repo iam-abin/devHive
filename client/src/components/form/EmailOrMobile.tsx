@@ -20,8 +20,6 @@ const EmailOrMobile: React.FC<EmailOrMobileProps> = ({
 	const isEmailEnterPage = locationUrl.pathname.includes(
 		"forgotPasswordEmail"
 	);
-	// const isMobileEnterPage = locationUrl.pathname.includes("forgotPasswordEmail");
-
 	return (
 		<Formik
 			initialValues={initialValues}

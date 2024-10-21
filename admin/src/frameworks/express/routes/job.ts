@@ -1,15 +1,15 @@
 import express, { Router } from "express"
 import { jobControllers } from "../../../controllers";
-import { IDependenciesData } from "../../types/dependencyInterface";
+import { IDependency } from "../../types/dependency";
 
-export const jobRouter = (dependencies: IDependenciesData)=>{
+export const jobRouter = (dependencies: IDependency)=>{
     const router: Router = express.Router();
 
-    const { blockUnblockJobController, viewJobController, viewJobsController  } = jobControllers(dependencies);
+    const jobController = jobControllers(dependencies);
 
-    router.get("/jobs", viewJobsController);
-    router.get("/viewJob/:jobId", viewJobController);
-    router.put("/blockUnblock/:jobId", blockUnblockJobController);
+    router.get("/jobs", jobController.viewJobsController);
+    router.get("/viewJob/:jobId", jobController.viewJobController);
+    router.put("/blockUnblock/:jobId", jobController.blockUnblockJobController);
 
     return router
 }

@@ -1,26 +1,21 @@
+import React from "react";
+import { RiArrowLeftFill } from "react-icons/ri";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+
 import {
 	initialSigninValues,
 	signInSchema,
-} from "../../../utils/signin-validation";
+} from "../../../utils/validations/signin-validation";
 import { notify } from "../../../utils/toastMessage";
 import { candidateSigninApi } from "../../../axios/apiMethods/auth-service/candidateAuth";
-// import { setLoaded, setLoading } from "../../../redux/slice/loaderSlice/isLoading";
-import { setCandidate } from "../../../redux/slice/candidateSlice/candidateDataSlice";
-import { RootState } from "../../../redux/reducer/reducer";
+import { RootState } from "../../../redux/reducer";
 import Loading from "../../../components/loading/Loading";
-import candidateLoginImage from "../../../assets/candidate/candidate-login.svg";
-// import googleIcon from "../../../assets/google/google-icon.svg";
-import { gapi } from 'gapi-script';
+import candidateLoginImage from "../../../assets/auth/candidate-login.svg";
+import { setUser } from "../../../redux/slice/user";
 
-import React, { useEffect } from "react";
-// import { GoogleLogin, GoogleOAuthProvider, useGoogleLogin } from "@react-oauth/google";
-// import axios from "axios";
-import { RiArrowLeftFill } from "react-icons/ri";
-// import { GoogleLogin } from "@react-oauth/google";
+
 const CandidateSigninPage: React.FC = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
@@ -31,15 +26,21 @@ const CandidateSigninPage: React.FC = () => {
 
 	const handleSubmit = async (userData: any) => {
 		try {
-			// dispatch(setLoading());
 			const response = await candidateSigninApi(userData);
-			dispatch(setCandidate(response));
+			dispatch(setUser({
+                data: response.data,
+                accessToken: response.accessToken!,
+                refreshToken: response.refreshToken!,
+            }));
+			dispatch(
+				setUser({
+					data: response.data,
+					accessToken: response.accessToken!,
+					refreshToken: response.refreshToken!,
+				})
+			);
 			notify(response.message, "success");
 			navigate("/candidate");
-		} catch (error: any) {
-			console.error("in signin form error", error);
-
-			notify(error.response.data.errors[0].message || "invalid email or password", "error");
 		} finally {
 			// dispatch(setLoaded());
 		}
@@ -49,17 +50,6 @@ const CandidateSigninPage: React.FC = () => {
 		return <Loading />;
 	}
 
-
-	useEffect(()=>{
-		function start(){
-			gapi.client.init({
-				clientId: "489110239720-2e35usfdf9kavcchc93fbun2oeismh10.apps.googleusercontent.com",
-				scope: ""
-			})
-		};
-
-		gapi.load('client:auth2', start)
-	})
 	return (
 		<div className="flex w-full h-screen">
 			<button onClick={()=>navigate('/candidate')} className="bg-slate-700 rounded-xl p-2 text-white w-20 flex justify-between items-center absolute m-10"><RiArrowLeftFill />home</button>
@@ -89,6 +79,7 @@ const CandidateSigninPage: React.FC = () => {
 											type="email"
 											name="email"
 											placeholder="Email"
+											autoComplete="email"
 											className={`input input-primary w-full rounded-xl ${
 												errors.email && touched.email
 													? "input-error"
@@ -110,6 +101,7 @@ const CandidateSigninPage: React.FC = () => {
 											type="password"
 											name="password"
 											placeholder="Password"
+											autoComplete="password"
 											className={`input input-primary w-full rounded-xl ${
 												errors.password &&
 												touched.password
@@ -160,23 +152,6 @@ const CandidateSigninPage: React.FC = () => {
 									</div>
 								</Form>
 								<div className="flex items-center justify-center gap-3">
-										{/* <GoogleOAuthProvider clientId="489110239720-2e35usfdf9kavcchc93fbun2oeismh10.apps.googleusercontent.com">
-										<GoogleLogin
-											onSuccess={responseMessage}
-											onError={errorMessage}
-										/> */}
-									{/* <button
-									
-									onClick={() => login()}
-									className="btn border-gray-600 w-60">
-										<img
-											src={googleIcon}
-											className="w-7"
-											alt=""
-										/>
-										Sign in With Google
-									</button> */}
-									{/* </GoogleOAuthProvider> */}
 								</div>
 
 								<div className="w-full mt-5 items-center justify-center flex">

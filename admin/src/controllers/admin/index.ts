@@ -1,11 +1,11 @@
-import { IDependenciesData } from "../../frameworks/types/dependencyInterface";
+import { IDependency } from "../../frameworks/types/dependency";
 
 import dashboardController from "./dashboard.controller";
-import getDashboardGraphDetailsController from "./get-dashboard-graph-details.controller";
+import getDashboardGraphDetailsController from "./dashboardGraph.controller";
 
-export = (dependencies: IDependenciesData) => {
+export = (dependencies: IDependency) => {
 	return {
-		dashboardController: dashboardController(dependencies),
+		dashboardDataController: dashboardController(dependencies),
 		getDashboardGraphDetailsController: getDashboardGraphDetailsController(dependencies),
 	};
 };

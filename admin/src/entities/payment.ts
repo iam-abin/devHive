@@ -1,17 +1,11 @@
-export interface IPaymentData {
-	candidateId: string;
-	membershipPlanId: string;
-	stripeId?: string;
-}
+import { IPaymentData } from "../frameworks/types/payment";
 
 export class Payment {
 	candidateId: string;
 	membershipPlanId: string;
-	stripeId?: string;
 
-	constructor({ candidateId, membershipPlanId, stripeId }: IPaymentData) {
+	constructor({ candidateId, membershipPlanId }: IPaymentData) {
 		this.candidateId = candidateId;
 		this.membershipPlanId = membershipPlanId;
-		this.stripeId = stripeId;
 	}
 }

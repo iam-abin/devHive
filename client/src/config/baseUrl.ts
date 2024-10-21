@@ -1,4 +1,4 @@
+export const PRODUCTION_ORIGIN = "https://abinvarghese.online"
+export const DEVELOPMENT_ORIGIN = "https://devhive.dev"
 
-// export const BASE_URL = "https://abinvarghese.online/api/v1"
-
-export const BASE_URL = "https://devhive.dev/api/v1"
+export const BASE_URL = `${DEVELOPMENT_ORIGIN}/api/v1`

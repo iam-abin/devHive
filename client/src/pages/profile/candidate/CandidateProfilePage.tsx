@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../redux/reducer/reducer";
+import { RootState } from "../../../redux/reducer";
 import {
 	candidateGetProfileApi,
 	deleteResumeApi,
@@ -22,8 +22,8 @@ import { getACandidateProfileApi } from "../../../axios/apiMethods/profile-servi
 import { FaFacebookMessenger } from "react-icons/fa";
 import Swal from "sweetalert2";
 import CircleLoading from "../../../components/loading/CircleLoading";
-import { setCandidateProfileDetails } from "../../../redux/slice/candidateSlice/candidateProfileSlice";
 import { hotToastMessage } from "../../../utils/hotToastMessage";
+import { setMyProfileData } from "../../../redux/slice/user";
 
 const CandidateProfilePage: React.FC = () => {
 	const navigate = useNavigate();
@@ -31,7 +31,7 @@ const CandidateProfilePage: React.FC = () => {
 	const dispatch = useDispatch();
 
 	const candidateData: any = useSelector(
-		(state: RootState) => state.candidateData.data
+		(state: RootState) => state.userReducer.authData
 	);
 
 	const isRecruiterUrl = location.pathname.includes("recruiter");
@@ -91,8 +91,8 @@ const CandidateProfilePage: React.FC = () => {
 			}
 			
 			setCandidateProfileData(candidateProfile.data);
-			dispatch(setCandidateProfileDetails(candidateProfile?.data));
-			setSkills([...candidateProfile?.data.keySkills]);
+			dispatch(setMyProfileData(candidateProfile?.data));
+			setSkills([...candidateProfile?.data.skills]);
 			setPreferredJobs([...candidateProfile?.data.preferredJobs]);
 		})();
 	}, [addSkillRerender]);
@@ -116,18 +116,18 @@ const CandidateProfilePage: React.FC = () => {
 				const downloadURL = await getDownloadURL(uploadResume.ref);
 				
 				const response = await uploadCandidateResumeProfileApi(
-					candidateData.id,
 					{ filename: selectedFile.name, url: downloadURL }
 				);
+				console.log(response);
 				
-				if (response.data) {
+				if (response) {
 					
 					setCandidateProfileData({
 						...candidateProfileData,
 						resume: response.data.resume,
 					});
 
-					dispatch(setCandidateProfileDetails(response?.data));
+					dispatch(setMyProfileData(response?.data));
 					hotToastMessage(response.message, "success");
 
 					return response.data;
@@ -135,10 +135,6 @@ const CandidateProfilePage: React.FC = () => {
 					hotToastMessage("resume not uploaded", "error");
 				}
 			}
-		} catch (error: any) {
-			
-			// hotToastMessage("file is size is > 1mb", "error");
-			hotToastMessage(error.response.data.errors[0].message, "error");
 		} finally {
 			setPdfLoading(false);
 		}
@@ -172,7 +168,6 @@ const CandidateProfilePage: React.FC = () => {
 	};
 
 	const handleSavePreferredJobs = async () => {
-		try {
 			const response = await updateCandidatePreferredJobsProfileApi(
 				candidateData.id,
 				preferredJobs
@@ -185,13 +180,9 @@ const CandidateProfilePage: React.FC = () => {
 			} else {
 				hotToastMessage("preferredJobs not uploaded", "error");
 			}
-		} catch (error: any) {
-			hotToastMessage(error.response.data.errors[0].message, "error");
-		}
 	};
 
 	const handleSaveSkills = async () => {
-		try {
 			const response = await updateCandidateSkillsProfileApi(
 				candidateData.id,
 				skills
@@ -204,9 +195,7 @@ const CandidateProfilePage: React.FC = () => {
 			} else {
 				hotToastMessage("skills not uploaded", "error");
 			}
-		} catch (error: any) {
-			hotToastMessage(error.response.data.errors[0].message, "error");
-		}
+	
 	};
 
 	const handleImageUpload = async (selectedFile: File) => {
@@ -216,7 +205,6 @@ const CandidateProfilePage: React.FC = () => {
 			
 			setImgLoading(true);
 			const response = await uploadCandidateImageProfileApi(
-				candidateData.id,
 				formData
 			);
 			
@@ -224,17 +212,15 @@ const CandidateProfilePage: React.FC = () => {
 				hotToastMessage(response.message, "success");
 				setCandidateProfileData({
 					...candidateProfileData,
-					profile_image: response.data.profile_image,
+					profileImage: response.data.profileImage,
 				});
-				dispatch(setCandidateProfileDetails(response?.data));
+				dispatch(setMyProfileData(response?.data));
 				navigate("/candidate/profile");
 				return response.data;
 			} else {
 				hotToastMessage("resume not uploaded", "error");
 			}
-		} catch (error: any) {
-			hotToastMessage(error.response.data.errors[0].message, "error");
-		} finally {
+		}finally {
 			setImgLoading(false); // Set loading to false after upload completes (whether success or failure)
 		}
 	};
@@ -262,7 +248,7 @@ const CandidateProfilePage: React.FC = () => {
 									{!imgLoading && (
 										<img
 											src={
-												candidateProfileData?.profile_image
+												candidateProfileData?.profileImage
 											}
 											className="md:w-3/6  rounded-full shadow-2xl"
 										/>
@@ -587,7 +573,7 @@ const CandidateProfilePage: React.FC = () => {
 								<ul className="list-none flex flex-wrap gap-2">
 									{/* Add more skills based on your data */}
 									{skills.length > 0 &&
-										candidateProfileData?.keySkills.map(
+										candidateProfileData?.skills.map(
 											(skill: string) => (
 												<div
 													key={skill}

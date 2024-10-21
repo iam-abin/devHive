@@ -1,31 +1,28 @@
 
 import chatApiUrlConfig from "../../../config/apiUrlsConfig/chatApiUrlConfig";
+import { IResponse } from "../../../types/api";
 import candidateApiCalls from "../../candidate/apiCalls";
 import recruiterApiCalls from "../../recruiter/apiCalls";
 
 
 
-export const getAllCandidateChatRoomsApi = async (senderId: string): Promise<any> => {
-    const response: any = await candidateApiCalls("get", chatApiUrlConfig.getAllCandidateRoomsUrl(senderId));
-    return response.data;
+export const getAllCandidateChatRoomsApi = async (senderId: string): Promise<IResponse> => {
+    return await candidateApiCalls("get", chatApiUrlConfig.getAllCandidateRoomsUrl(senderId));
 };
 
 
-export const getACandidateConversationApi = async (roomId: string): Promise<any> => {
-    const response: any = await candidateApiCalls("get", chatApiUrlConfig.getACandidateConversationUrl(roomId));
-    return response.data;
-};
-
-
-
-export const getAllRecruiterChatRoomsApi = async (senderId: string): Promise<any> => {
-    const response: any = await recruiterApiCalls("get", chatApiUrlConfig.getAllRecruiterRoomsUrl(senderId));
-    return response.data;
+export const getACandidateConversationApi = async (roomId: string): Promise<IResponse> => {
+    return await candidateApiCalls("get", chatApiUrlConfig.getACandidateConversationUrl(roomId));
 };
 
 
 
-export const getARecrutierConversationApi = async (roomId: string): Promise<any> => {
-    const response: any = await recruiterApiCalls("get", chatApiUrlConfig.getARecruiterConversationUrl(roomId));
-    return response.data;
+export const getAllRecruiterChatRoomsApi = async (senderId: string): Promise<IResponse> => {
+    return await recruiterApiCalls("get", chatApiUrlConfig.getAllRecruiterRoomsUrl(senderId));
+};
+
+
+
+export const getARecrutierConversationApi = async (roomId: string): Promise<IResponse> => {
+    return await recruiterApiCalls("get", chatApiUrlConfig.getARecruiterConversationUrl(roomId));
 };

@@ -1,29 +1,28 @@
 import Models from "../../database/mongo/models";
+import { INotificationDocument } from "../../database/mongo/models/notification";
+import { INotification } from "../../types/notification";
 
 const {  NotificationModel } = Models;
 
 export = {
-	createNotification: async (notificationData: any) => {
-		
+	create: async (notificationData: INotification): Promise<INotificationDocument> => {
 		const chatNotification = NotificationModel.buildNotification(notificationData);
-		
 		return await chatNotification.save();
 	},
 
-	getAllNotificationsCountByUserId: async (userId: string) => {
-		
-		const count = (await NotificationModel.find({targetUserId: userId})).length;
-		
+	getAllNotificationsCountByUserId: async (userId: string): Promise<number> => {
+		const count = await NotificationModel.countDocuments({targetUserId: userId});
 		return count;
 	},
 
-	getAllNotificationsByUserId: async (userId: string) => {
-		const chatNotifications = await NotificationModel.find({targetUserId: userId}).populate({
-			path: "senderId",
-			model: "User",
-		})
-		.sort({createdAt: -1});
-		
+	getAllNotificationsByUserId: async (userId: string): Promise<INotificationDocument[] | []> => {
+		const chatNotifications = await NotificationModel.find({
+            targetUserId: userId,
+        })
+            .select("message")
+            .populate("senderId", ["name"])
+            .sort({ createdAt: -1 });
+
 		return chatNotifications;
 	},
 	
@@ -37,9 +36,8 @@ export = {
 		return response;
 	},
 
-	getUnreadMessagesCount: async (senderId: string, receiverId: string) => {
-		const count = await NotificationModel.countDocuments({senderId, targetUserId: receiverId});
-		
+	getUnreadMessagesCount: async (receiverId: string,  senderId: string ): Promise<number> => {
+		const count = await NotificationModel.countDocuments({ senderId, targetUserId: receiverId });
 		return count;
 	},
 };

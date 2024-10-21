@@ -3,7 +3,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import { useSelector } from "react-redux";
 
-import { RootState } from "../redux/reducer/reducer";
+import { RootState } from "../redux/reducer";
 import Loading from "../components/loading/Loading";
 
 
@@ -34,44 +34,43 @@ const NotFound = lazy(()=> import("../pages/Error/NotFound"))
 
 
 function CandidateRoutes() {
-	const isCandidateLoggedIn = useSelector(
-		(state: RootState) => state.candidateData.data
-	);
+	const loggedinUser = useSelector(
+        (store: RootState) => store.userReducer.authData
+    );
 
 	return (
 		<>
 			<Suspense fallback={<Loading />}>
 				
 				<Routes>
-					<Route path="/" element={isCandidateLoggedIn? <LandingPage />: <Navigate to={"/candidate/landing"} />} />
-					<Route path="/profile" element={isCandidateLoggedIn? <CandidateProfilePage />: <Navigate to={"/candidate/landing"} />} />
-					<Route path="/payment-plans" element={isCandidateLoggedIn? <PaymentPlans />: <Navigate to={"/candidate/landing"} />} />
-					<Route path="/payment-success" element={isCandidateLoggedIn? <PaymentSuccessFul />: <Navigate to={"/candidate/landing"} />} />
-					<Route path="/payment-failed" element={isCandidateLoggedIn? <PaymentFailed />: <Navigate to={"/candidate/landing"} />} />
-					<Route path="/edit-profile/" element={isCandidateLoggedIn? <CandidateProfileEditPage />: <Navigate to={"/candidate/landing"} />} />
+					<Route path="/" element={loggedinUser? <LandingPage />: <Navigate to={"/candidate/landing"} />} />
+					<Route path="/profile" element={loggedinUser? <CandidateProfilePage />: <Navigate to={"/candidate/landing"} />} />
+					<Route path="/payment-plans" element={loggedinUser? <PaymentPlans />: <Navigate to={"/candidate/landing"} />} />
+					<Route path="/payment-success" element={loggedinUser? <PaymentSuccessFul />: <Navigate to={"/candidate/landing"} />} />
+					<Route path="/payment-failed" element={loggedinUser? <PaymentFailed />: <Navigate to={"/candidate/landing"} />} />
+					<Route path="/edit-profile/" element={loggedinUser? <CandidateProfileEditPage />: <Navigate to={"/candidate/landing"} />} />
 
-					<Route path="/passwordResetMobile" element={isCandidateLoggedIn? <ResetPasswordMobileEnterPage />: <Navigate to={"/candidate/landing"} />} />
-					<Route path="/passwordResetOtp" element={isCandidateLoggedIn? <OtpFormResetPassword />: <Navigate to={"/candidate/landing"} />} />
-					<Route path="/passwordReset" element={isCandidateLoggedIn? <ResetPassword />: <Navigate to={"/candidate/landing"} />} />
+					<Route path="/passwordResetMobile" element={loggedinUser? <ResetPasswordMobileEnterPage />: <Navigate to={"/candidate/landing"} />} />
+					<Route path="/passwordResetOtp" element={loggedinUser? <OtpFormResetPassword />: <Navigate to={"/candidate/landing"} />} />
+					<Route path="/passwordReset" element={loggedinUser? <ResetPassword />: <Navigate to={"/candidate/landing"} />} />
 
-					<Route path="/forgotPasswordEmail" element={!isCandidateLoggedIn? <ForgotPasswordEmailEnterPage />: <Navigate to={"/candidate/landing"} />} />
-					<Route path="/forgotPasswordOtp/:email" element={!isCandidateLoggedIn? <OtpFormPageForgotPassword />: <Navigate to={"/candidate/landing"} />} />
-					<Route path="/forgotPassword/:userId" element={!isCandidateLoggedIn? <ForgotPassword />: <Navigate to={"/candidate/landing"} />} />
+					<Route path="/forgotPasswordEmail" element={!loggedinUser? <ForgotPasswordEmailEnterPage />: <Navigate to={"/candidate/landing"} />} />
+					<Route path="/forgotPasswordOtp/:email" element={!loggedinUser? <OtpFormPageForgotPassword />: <Navigate to={"/candidate/landing"} />} />
+					<Route path="/forgotPassword/:userId" element={!loggedinUser? <ForgotPassword />: <Navigate to={"/candidate/landing"} />} />
 					
-					<Route path="/landing" element={isCandidateLoggedIn?<Navigate to={"/candidate"} />: <LandingPage /> } />
-					<Route path="/signin" element={isCandidateLoggedIn?<Navigate to={"/candidate"} />:<CandidateSigninPage /> } />
-					<Route path="/signup" element={isCandidateLoggedIn? <Navigate to={"/candidate"} />:<CandidateSignupPage />} />
-					<Route path="/otpSignupCandidate/:email" element={!isCandidateLoggedIn? <OtpFormPageSignup /> :<Navigate to={"/candidate"} />} />
+					<Route path="/landing" element={loggedinUser?<Navigate to={"/candidate"} />: <LandingPage /> } />
+					<Route path="/signin" element={loggedinUser?<Navigate to={"/candidate"} />:<CandidateSigninPage /> } />
+					<Route path="/signup" element={loggedinUser? <Navigate to={"/candidate"} />:<CandidateSignupPage />} />
+					<Route path="/otpSignupCandidate/:email" element={!loggedinUser? <OtpFormPageSignup /> :<Navigate to={"/candidate"} />} />
 
-					<Route path="/all-jobs" element={isCandidateLoggedIn?<AllJobsPage />:<Navigate to={"/candidate/signin"} />} />
-					{/* <Route path="/job-details" element={isCandidateLoggedIn?<JobDetailsPage />:<Navigate to={"/candidate/signin"} />} /> */}
-					<Route path="/job-details/:jobId" element={isCandidateLoggedIn?<JobDetailsPage />:<Navigate to={"/candidate/signin"} />} />
-					<Route path="/applied-jobs" element={isCandidateLoggedIn?<AppliedJobsPage />:<Navigate to={"/candidate/signin"} />} />
-					<Route path="/application-details/:jobApplicationId" element={isCandidateLoggedIn?<JobApplicationDetailsPage />:<Navigate to={"/candidate/signin"} />} />
+					<Route path="/all-jobs" element={loggedinUser?<AllJobsPage />:<Navigate to={"/candidate/signin"} />} />
+					<Route path="/job-details/:jobId" element={loggedinUser?<JobDetailsPage />:<Navigate to={"/candidate/signin"} />} />
+					<Route path="/applied-jobs" element={loggedinUser?<AppliedJobsPage />:<Navigate to={"/candidate/signin"} />} />
+					<Route path="/application-details/:jobApplicationId" element={loggedinUser?<JobApplicationDetailsPage />:<Navigate to={"/candidate/signin"} />} />
 				
-					{/* <Route path="/applied-jobs-details/:jobId" element={isCandidateLoggedIn?<JobDetailsPage />:<Navigate to={"/candidate/signin"} />} /> */}
-					<Route path="/recruiter-profile/:id" element={isCandidateLoggedIn? <RecruiterProfilePage />: <Navigate to={"/candidate/signin"} />} />
-					<Route path="/chat/:recepientId" element={isCandidateLoggedIn?<ChatPageCandidate />:<Navigate to={"/candidate/signin"} />} />
+					<Route path="/recruiter-profile/:id" element={loggedinUser? <RecruiterProfilePage />: <Navigate to={"/candidate/signin"} />} />
+					<Route path="/chat/:recepientId" element={loggedinUser?<ChatPageCandidate />:<Navigate to={"/candidate/signin"} />} />
+					
 					<Route path="*" element={<NotFound url={"/candidate"} />} />
 				</Routes>
 				

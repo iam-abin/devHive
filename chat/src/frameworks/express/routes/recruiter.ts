@@ -1,42 +1,54 @@
 import express from "express";
 
 import { chatControllers, notificationControllers } from "../../../controllers";
-import { IDependenciesData } from "../../types/dependencyInterface";
-import { requireAuthRecruiter } from "@abijobportal/common";
-import getUnreadMessagesCountController from "../../../controllers/notification/get-unread-messages-count.controller";
+import { IDependency } from "../../types/dependencyInterface";
+import { auth, ROLES } from "@abijobportal/common";
 
-export const recruiterRouter = (dependencies: IDependenciesData) => {
-	const router = express.Router();
+export const recruiterRouter = (dependencies: IDependency) => {
+    const router = express.Router();
 
-	const { getAllChatRoomsByUserIDController, getConversationController } =
-		chatControllers(dependencies);
+    const chatController = chatControllers(dependencies);
+    const notificationController = notificationControllers(dependencies);
 
-	const {
-		getAllNotificationsController,
-		createNotificationController,
-		deleteAllNotificationsController,
-		getAllNotificationsCountController,
-		deleteAllNotificationsBySenderController,
-	} = notificationControllers(dependencies);
+    router.use(auth(ROLES.RECRUITER));
 
-	router.get("/chat-rooms/:userId", getAllChatRoomsByUserIDController);
+    // Chat
+    router.get(
+        "/chat-rooms/:userId",
+        chatController.getAllChatRoomsByUserIDController
+    );
 
-	router.get("/room-conversation/:chatRoomId", getConversationController);
+    router.get(
+        "/room/conversation/:chatRoomId",
+        chatController.getConversationController
+    );
 
-	router.get("/notifications/:userId", getAllNotificationsController);
+    // Notification
+    router.get(
+        "/notifications",
+        notificationController.getAllNotificationsController
+    );
 
-	router.post("/create", createNotificationController);
+    router.get(
+        "/notifications/count",
+        notificationController.getAllNotificationsCountController
+    );
 
-	router.delete("/notifications/:userId", deleteAllNotificationsController);
+    router.delete(
+        "/notifications",
+        notificationController.deleteAllNotificationsController
+    );
 
-	router.delete("/delete-notifications-by-senderId/:senderId/:receiverId", deleteAllNotificationsBySenderController);
+    router.delete(
+        "/notifications/sender/:senderId",
+        notificationController.deleteAllNotificationsBySenderController
+    );
 
-	router.get("/unread-messages-count/:senderId/:receiverId", getUnreadMessagesCountController);
+    // Message
+    router.get(
+        "/messages/unread-count/:senderId",
+        notificationController.getUnreadMessagesCountController
+    );
 
-	router.get(
-		"/notifications-count/:userId",
-		getAllNotificationsCountController
-	);
-
-	return router;
+    return router;
 };

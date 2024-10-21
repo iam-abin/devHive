@@ -8,18 +8,15 @@ export const handleMessage = (data: any, topic: string, message: any) => {
 
         case "USER-UPDATED-TOPIC":
             userRepository.updateUser(data.userId, data);
-            console.log(data);
-
             break;
 
         case "CANDIDATE-PROFILE-UPDATED-TOPIC":
-            console.log(data);
             const userData = {
                 name: data.name,
-                profile_image: data.profile_image,
+                profileImage: data.profileImage,
                 isActive: data.isActive,
             };
-            console.log(userData);
+            
             userRepository.updateUser(data.userId, userData);
 
             break;

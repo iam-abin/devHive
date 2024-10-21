@@ -1,29 +1,23 @@
 import express, { Router } from "express";
-import { IDependenciesData } from "../../types/dependencyInterface";
+import { IDependency } from "../../types/dependency";
 import { membershipControllers } from "../../../controllers";
 
-export const membershipPlanRouter = (dependencies: IDependenciesData) => {
+export const membershipPlanRouter = (dependencies: IDependency) => {
 	const router: Router = express.Router();
 
-	const {
-		blockUnblockMembershipController,
-		createMembershipController,
-		updateMembershipController,
-		viewAllMembershipsController,
-		viewMembershipController,
-	} = membershipControllers(dependencies);
+	const membershipController = membershipControllers(dependencies);
 
-	router.post("/create-membership-plan", createMembershipController);
-	router.get("/view-membership-plans", viewAllMembershipsController);
+	router.post("/create-membership-plan", membershipController.createMembershipController);
+	router.get("/view-membership-plans", membershipController.viewAllMembershipsController);
 	router.get(
 		"/view-membership-plan/:membershipPlanId",
-		viewMembershipController
+		membershipController.viewMembershipController
 	);
 	router.put(
 		"/block-unblock-membership-plan/:membershipPlanId",
-		blockUnblockMembershipController
+		membershipController.blockUnblockMembershipController
 	);
-	router.patch("/update-membership-plan", updateMembershipController);
+	router.patch("/update-membership-plan", membershipController.updateMembershipController);
 
 	return router;
 };

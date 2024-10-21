@@ -10,7 +10,7 @@ import ForgotResetPasswordForm from "../../../../components/form/ForgotResetPass
 import {
 	setLoaded,
 	setLoading,
-} from "../../../../redux/slice/loaderSlice/isLoading";
+} from "../../../../redux/slice/isLoading";
 
 const ForgotPassword: React.FC = () => {
 	const dispatch = useDispatch();
@@ -26,14 +26,7 @@ const ForgotPassword: React.FC = () => {
 			);
 			notify(response.message, "success");
 			navigate("/candidate/signin");
-		} catch (error: any) {
-			console.error("Error during reset password submission:", error);
-			notify(
-				error.response.data.errors[0].message ||
-					"An error occurred during reset password submission",
-				"error"
-			);
-		} finally {
+		}finally {
 			dispatch(setLoaded());
 		}
 	};

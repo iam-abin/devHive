@@ -1,20 +1,20 @@
 import express from "express";
+import { checkCurrentUser, auth, ROLES } from "@abijobportal/common";
 
 import { paymentControllers } from "../../../controllers";
-import { IDependenciesData } from "../../types/dependencyInterface";
-import {
-	currentUserCandidateCheck,
-} from "@abijobportal/common";
-import { requireAuthCandidate } from "@abijobportal/common";
+import { IDependency } from "../../types/dependency";
 
-export const paymentRouter = (dependencies: IDependenciesData) => {
-	const router = express.Router();
+export const paymentRouter = (dependencies: IDependency) => {
+    const router = express.Router();
 
-	const {
-		cratePaymentController,
-	} = paymentControllers(dependencies);
-	
-	router.post("/create-payment", currentUserCandidateCheck, requireAuthCandidate, cratePaymentController);
-	
-	return router;
+    const paymentController = paymentControllers(dependencies);
+
+    router.post(
+        "/create-payment",
+        checkCurrentUser,
+        auth(ROLES.CANDIDATE),
+        paymentController.cratePaymentController
+    );
+
+    return router;
 };

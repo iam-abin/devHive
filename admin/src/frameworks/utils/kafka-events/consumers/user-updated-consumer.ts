@@ -12,7 +12,7 @@ export class UserUpdatedEventConsumer extends KafkaConsumer<USER_UPDATED_EVENT>{
     }
 
     async onMessage(data: USER_UPDATED_EVENT['data'], topic: string, message: KafkaMessage): Promise<void> {
-			// dont need to check userType as every users are stored in one collection 
+			// dont need to check role as every users are stored in one collection 
 			handleMessage(data, topic, message )
         
     }

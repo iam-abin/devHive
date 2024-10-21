@@ -1,6 +1,6 @@
 const CANDIDATE_JOB_URL = `job/candidate`;
 const RECRUITER_JOB_URL = `job/recruiter`;
-const JOB_URL = `/job`;
+
 
 const jobApiUrlConfig = {
 	// Common
@@ -10,9 +10,10 @@ const jobApiUrlConfig = {
 	getAJobUrl: (id: string) => `${RECRUITER_JOB_URL}/${id}`,
 	
 	// Candidate
-	candidateApplyJobUrl: `${CANDIDATE_JOB_URL}/apply`,
+	candidateApplyJobUrl:(jobId: string ) => `${CANDIDATE_JOB_URL}/apply/${jobId}`,
+
 	getAllCandidateAppliedJobsUrl: (candidateId: string, currentPage: number) =>
-	`${CANDIDATE_JOB_URL}/applied-jobs/${candidateId}/${currentPage}`,
+	`${CANDIDATE_JOB_URL}/applied/${candidateId}/${currentPage}`,
 	
 	// Recruiter
 	
@@ -20,18 +21,23 @@ const jobApiUrlConfig = {
 	getRecruiterDashboadGraphUrl: (recruiterId: string) => `${RECRUITER_JOB_URL}/getRecruiterDashboard/graphDetails/${recruiterId}`,
 	getRecruiterDashboardCardsUrl: (recruiterId: string) => `${RECRUITER_JOB_URL}/getRecruiterDashboard/cardsDetails/${recruiterId}`,
 	changeJobCloseStatusUrl: (id: string) => `${RECRUITER_JOB_URL}/change-close-status/${id}`,
-	updateJobUrl: `${RECRUITER_JOB_URL}/update-job`,
+
+	updateJobUrl: `${RECRUITER_JOB_URL}/update`,
+
 	deleteAJobUrl: (id: string) => `${RECRUITER_JOB_URL}/${id}`,
 	getAllRecruiterAddedJobsUrl: (recruiterId: string) =>
 		`${RECRUITER_JOB_URL}/created-jobs/${recruiterId}`,
 	getAllJobsApplicationsForRecruiterUrl: (recruiterId: string) =>
-		`${RECRUITER_JOB_URL}/job-applications/${recruiterId}`,
+		`${RECRUITER_JOB_URL}/applications/${recruiterId}`,
 	getAJobApplicationUrl: (jobApplicationId: string) =>
-		`${RECRUITER_JOB_URL}/job-application/${jobApplicationId}`,
+		`${RECRUITER_JOB_URL}/application/${jobApplicationId}`,
 	getAnAppliedJobUrl: (jobApplicationId: string) =>
-	`${CANDIDATE_JOB_URL}/job-application/${jobApplicationId}`,
+	`${CANDIDATE_JOB_URL}/application/${jobApplicationId}`,
 	changeJobApplicationStatusUrl: (jobApplicationId: string) =>
 		`${RECRUITER_JOB_URL}/change-application-status/${jobApplicationId}`,
+	
+	editJobUrl: (jobId: string) => `${RECRUITER_JOB_URL}/edit/${jobId}`
+
 	};
 
 

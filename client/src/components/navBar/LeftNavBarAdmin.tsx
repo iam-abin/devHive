@@ -1,6 +1,6 @@
 import { useState } from "react";
-import arrow from "../../assets/left-arrow.svg";
-import logo from "../../assets/favicon-32x32.png";
+import arrow from "../../assets/layoutItems/left-arrow.svg";
+import logo from "../../assets/layoutItems/favicon-32x32.png";
 
 import { Link, useLocation, useNavigate } from "react-router-dom";
 

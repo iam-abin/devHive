@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-// import { getAJobApi, updateJobApi } from "../../axios/admin2/jobs/jobs";
 import {
+	editJobApi,
 	getAJobApi,
-	updateJobApi,
 } from "../../axios/apiMethods/jobs-service/jobs";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useNavigate, useParams } from "react-router-dom";
@@ -11,41 +10,30 @@ interface JobFormData {
 	jobId: string;
 	title: string;
 	recruiter: string;
-	// company: string;
-	company_name: string;
-	company_location: string;
-	job_descriptions: string;
-	skills_required: string[];
-	available_position: number;
-	experience_required: string;
-	education_required: string;
-	// location: string;
-	employment_type: string;
-	salary_min: number;
-	salary_max: number;
+	jobDescription: string;
+	skills: string[];
+	availablePosition: number;
+	experienceRequired: string;
+	educationRequired: string;
+	employmentType: string;
+	salaryMin: number;
+	salaryMax: number;
 	deadline: string;
 }
 
 function EditJob() {
-	// const [updatedJobDetails, setupdatedJobDetails] = useState("");
 	const [jobDetails, setJobDetails] = useState<any>(null);
 	const navigate = useNavigate();
 	const { jobId } = useParams();
-	// const jobId = useSelector((state: RootState) => {
-	// 	return state.recruiterJobId.jobId;
-	// });
 
 	useEffect(() => {
 		const fetchJobDetails = async () => {
-			try {
 				if (jobId) {
 					const job = await getAJobApi(jobId);
+					console.log(job);
+					
 					setJobDetails(job.data);
 				}
-			} catch (error) {
-				// Handle error, e.g., log it or show an error message to the user
-				console.error("Error fetching job details:", error);
-			}
 		};
 
 		fetchJobDetails();
@@ -55,36 +43,32 @@ function EditJob() {
 	}
 
 	const handleSubmit = async (jobData: JobFormData) => {
-		try {
-			const data = await updateJobApi(jobData);
-
+			// const data = await updateJobApi(jobData);
+			console.log("jobId ",jobId);
+			console.log("jobData ",jobData);
+			
+			const data = await editJobApi(jobId!, jobData);
+			
 			if (data.data) {
 				notify("updated successfully", "success");
 				navigate("/recruiter/recruiter-added-jobs");
 			} else {
 				notify("not updated", "error");
 			}
-		} catch (error: any) {
-			notify(error.response.data.errors[0].message, "error");
-		}
 	};
 
 	const initialJobValues: JobFormData = {
 		jobId: "",
 		title: jobDetails?.title ?? "",
 		recruiter: jobDetails?.recruiter ?? "",
-		// company: jobDetails?.company ?? "",
-		job_descriptions: jobDetails?.job_descriptions ?? "",
-		skills_required: jobDetails?.skills_required ?? [],
-		available_position: jobDetails?.available_position ?? 0,
-		experience_required: jobDetails?.experience_required ?? "",
-		education_required: jobDetails?.education_required ?? "",
-		// location: jobDetails?.location ?? "",
-		company_name: jobDetails?.company_name ?? "",
-		company_location: jobDetails?.company_location ?? "",
-		employment_type: jobDetails?.employment_type,
-		salary_min: jobDetails?.salary_min ?? 0,
-		salary_max: jobDetails?.salary_max ?? 0,
+		jobDescription: jobDetails?.jobDescription ?? "",
+		skills: jobDetails?.skills ?? [],
+		availablePosition: jobDetails?.availablePosition ?? 0,
+		experienceRequired: jobDetails?.experienceRequired ?? "",
+		educationRequired: jobDetails?.educationRequired ?? "",
+		employmentType: jobDetails?.employmentType,
+		salaryMin: jobDetails?.salaryMin ?? 0,
+		salaryMax: jobDetails?.salaryMax ?? 0,
 		deadline:
 			new Date(jobDetails?.deadline).toLocaleDateString("en-CA") ?? "",
 	};
@@ -95,7 +79,6 @@ function EditJob() {
 	return (
 		<Formik
 			initialValues={initialJobValues}
-			// validationSchema={jobCreationSchema}
 			onSubmit={(values) => {
 				values.jobId = jobDetails.id;
 				handleSubmit(values);
@@ -135,71 +118,28 @@ function EditJob() {
 								/>
 							</div>
 
-							{/* Recruiter field
-							<div className="form-control w-6/6">
-								<label htmlFor="recruiter" className="label">
-									Recruiter
-								</label>
-								<Field
-									type="text"
-									id="recruiter"
-									name="recruiter"
-									className={`input input-primary w-full rounded-xl ${
-										errors.recruiter && touched.recruiter
-											? "input-error"
-											: ""
-									}`}
-								/>
-								<ErrorMessage
-									name="recruiter"
-									component="div"
-									className="error label-text-alt"
-								/>
-							</div> */}
-
-							{/* Company field
-							<div className="form-control w-6/6">
-								<label htmlFor="company" className="label">
-									Company
-								</label>
-								<Field
-									type="text"
-									id="company"
-									name="company"
-									className={`input input-primary w-full rounded-xl ${
-										errors.company && touched.company
-											? "input-error"
-											: ""
-									}`}
-								/>
-								<ErrorMessage
-									name="company"
-									component="div"
-									className="error label-text-alt"
-								/>
-							</div> */}
-
+							
 							{/* Job Descriptions field */}
 							<div className="form-control w-6/6">
 								<label
-									htmlFor="job_descriptions"
+									htmlFor="jobDescription"
 									className="label"
 								>
 									Job Descriptions
 								</label>
 								<Field
 									as="textarea"
-									id="job_descriptions"
-									name="job_descriptions"
+									id="jobDescription"
+									name="jobDescription"
 									className={`input input-primary w-full rounded-xl ${
-										errors.job_descriptions &&
-										touched.job_descriptions
+										errors.jobDescription &&
+										touched.jobDescription
 											? "input-error"
 											: ""
 									}`}
 								/>
 								<ErrorMessage
-									name="job_descriptions"
+									name="jobDescription"
 									component="div"
 									className="error label-text-alt"
 								/>
@@ -208,24 +148,24 @@ function EditJob() {
 							{/* Skills Required field */}
 							<div className="form-control w-6/6">
 								<label
-									htmlFor="skills_required"
+									htmlFor="skills"
 									className="label"
 								>
 									Skills Required (comma-separated)
 								</label>
 								<Field
 									type="text"
-									id="skills_required"
-									name="skills_required"
+									id="skills"
+									name="skills"
 									className={`input input-primary w-full rounded-xl ${
-										errors.skills_required &&
-										touched.skills_required
+										errors.skills &&
+										touched.skills
 											? "input-error"
 											: ""
 									}`}
 								/>
 								<ErrorMessage
-									name="skills_required"
+									name="skills"
 									component="div"
 									className="error label-text-alt"
 								/>
@@ -234,24 +174,24 @@ function EditJob() {
 							{/* Education Required field */}
 							<div className="form-control w-6/6">
 								<label
-									htmlFor="education_required"
+									htmlFor="educationRequired"
 									className="label"
 								>
 									Education Required
 								</label>
 								<Field
 									type="text"
-									id="education_required"
-									name="education_required"
+									id="educationRequired"
+									name="educationRequired"
 									className={`input input-primary w-full rounded-xl ${
-										errors.education_required &&
-										touched.education_required
+										errors.educationRequired &&
+										touched.educationRequired
 											? "input-error"
 											: ""
 									}`}
 								/>
 								<ErrorMessage
-									name="education_required"
+									name="educationRequired"
 									component="div"
 									className="error label-text-alt"
 								/>
@@ -283,24 +223,24 @@ function EditJob() {
 								{/* Experience Required field */}
 								<div className=" form-control w-6/6">
 									<label
-										htmlFor="experience_required"
+										htmlFor="experienceRequired"
 										className="label"
 									>
 										Experience Required
 									</label>
 									<Field
 										type="text"
-										id="experience_required"
-										name="experience_required"
+										id="experienceRequired"
+										name="experienceRequired"
 										className={`input input-primary w-full rounded-xl ${
-											errors.experience_required &&
-											touched.experience_required
+											errors.experienceRequired &&
+											touched.experienceRequired
 												? "input-error"
 												: ""
 										}`}
 									/>
 									<ErrorMessage
-										name="experience_required"
+										name="experienceRequired"
 										component="div"
 										className="error label-text-alt"
 									/>
@@ -309,7 +249,7 @@ function EditJob() {
 								{/* Employment Type field */}
 								<div className="form-control w-5/12 md:w-full">
 									<label
-										htmlFor="employment_type"
+										htmlFor="employmentType"
 										className="label"
 									>
 										Employment Type
@@ -317,11 +257,11 @@ function EditJob() {
 
 									<Field
 										as="select" // Use the 'as' prop to render a select element
-										id="employment_type"
-										name="employment_type"
+										id="employmentType"
+										name="employmentType"
 										className={`select select-primary w-full max-w-xs ${
-											errors.employment_type &&
-											touched.employment_type
+											errors.employmentType &&
+											touched.employmentType
 												? "input-error"
 												: ""
 										}`}
@@ -334,7 +274,7 @@ function EditJob() {
 										</option>
 									</Field>
 									<ErrorMessage
-										name="employment_type"
+										name="employmentType"
 										component="div"
 										className="error label-text-alt"
 									/>
@@ -345,24 +285,24 @@ function EditJob() {
 								{/* Salary Min field */}
 								<div className="form-control w-5/12">
 									<label
-										htmlFor="salary_min"
+										htmlFor="salaryMin"
 										className="label"
 									>
 										Salary Min
 									</label>
 									<Field
 										type="number"
-										id="salary_min"
-										name="salary_min"
+										id="salaryMin"
+										name="salaryMin"
 										className={`input input-primary w-full rounded-xl ${
-											errors.salary_min &&
-											touched.salary_min
+											errors.salaryMin &&
+											touched.salaryMin
 												? "input-error"
 												: ""
 										}`}
 									/>
 									<ErrorMessage
-										name="salary_min"
+										name="salaryMin"
 										component="div"
 										className="error label-text-alt"
 									/>
@@ -371,24 +311,24 @@ function EditJob() {
 								{/* Salary Max field */}
 								<div className="form-control w-5/12">
 									<label
-										htmlFor="salary_max"
+										htmlFor="salaryMax"
 										className="label"
 									>
 										Salary Max
 									</label>
 									<Field
 										type="number"
-										id="salary_max"
-										name="salary_max"
+										id="salaryMax"
+										name="salaryMax"
 										className={`input input-primary w-full rounded-xl ${
-											errors.salary_max &&
-											touched.salary_max
+											errors.salaryMax &&
+											touched.salaryMax
 												? "input-error"
 												: ""
 										}`}
 									/>
 									<ErrorMessage
-										name="salary_max"
+										name="salaryMax"
 										component="div"
 										className="error label-text-alt"
 									/>
@@ -399,25 +339,25 @@ function EditJob() {
 								{/* Available Positions field */}
 								<div className="form-control w-6/6">
 									<label
-										htmlFor="available_position"
+										htmlFor="availablePosition"
 										className="label"
 									>
 										Available Positions
 									</label>
 									<Field
 										type="number"
-										id="available_position"
-										name="available_position"
+										id="availablePosition"
+										name="availablePosition"
 										className={`input input-primary w-full rounded-xl ${
-											errors.available_position &&
-											touched.available_position
+											errors.availablePosition &&
+											touched.availablePosition
 												? "input-error"
 												: ""
 										}`}
 									/>
 									<span className="label-text-alt text-red-500">
 										<ErrorMessage
-											name="available_position"
+											name="availablePosition"
 											component="div"
 											className="error label-text-alt"
 										/>

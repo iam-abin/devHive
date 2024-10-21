@@ -1,15 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { notify } from "../../../../utils/toastMessage";
 import * as yup from "yup";
 import {
 	setLoaded,
 	setLoading,
-} from "../../../../redux/slice/loaderSlice/isLoading";
+} from "../../../../redux/slice/isLoading";
 import { forgotPasswordEmailRecruiterApi } from "../../../../axios/apiMethods/auth-service/recruiterAuth";
 import EmailOrMobile from "../../../../components/form/EmailOrMobile";
 import Swal from "sweetalert2";
-import { RootState } from "../../../../redux/reducer/reducer";
+import { RootState } from "../../../../redux/reducer";
 import Loading from "../../../../components/loading/Loading";
 
 function ForgotPasswordEmailEnterPage() {
@@ -46,15 +45,6 @@ function ForgotPasswordEmailEnterPage() {
 				  navigate(`/recruiter/forgotPasswordOtp/${values.email}`);
 				}
 			  });
-
-		} catch (error: any) {
-			console.error("Error during email submission:", error);
-			// notify(error.response.data.errors[0].message, "error");
-			notify(
-				error.response.data.errors[0].message ||
-					"An error occurred during email submission",
-				"error"
-			);
 		} finally {
 			dispatch(setLoaded());
 		}

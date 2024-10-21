@@ -1,6 +1,7 @@
-import { connectDB } from "./config/db";
-import { kafkaClient } from "./config/kafka-connection";
-import { app, httpServer } from "./frameworks/express/app";
+import { appConfig } from "./config/appConfig";
+import { connectDB } from "./config/db.connection";
+import { kafkaClient } from "./config/kafka.connection";
+import { httpServer } from "./frameworks/express/app";
 import { CandidateProfileUpdatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/candidate-profile-updated-consumer";
 import { UserCreatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/user-created-consumer";
 import { UserUpdatedEventConsumer } from "./frameworks/utils/kafka-events/consumers/user-updated-consumer";
@@ -9,11 +10,11 @@ import { setupSocketIO } from "./frameworks/webSocket/socket";
 const start = async () => {
     console.log("chat service Starting up....");
 
-    if (!process.env.MONGO_URL_CHAT)
+    if (!appConfig.MONGO_URL_CHAT)
         throw new Error("MONGO_URL_CHAT must be defined");
-    if (!process.env.JWT_SECRET_KEY)
+    if (!appConfig.JWT_SECRET_KEY)
         throw new Error("JWT_SECRET_KEY must be defined");
-    if (!process.env.JWT_REFRESH_SECRET_KEY)
+    if (!appConfig.JWT_REFRESH_SECRET_KEY)
         throw new Error("JWT_REFRESH_SECRET_KEY must be defined");
 
     console.log("before socket instance");
@@ -34,8 +35,8 @@ const start = async () => {
     await candidateProfileUpdatedEvent.subscribe();
 
     httpServer
-        .listen(3000, () => {
-            console.log("chat service Listening on port 3000....");
+        .listen(appConfig.PORT, () => {
+            console.log(`chat service Listening on port ${appConfig.PORT}....`);
         })
         .on("error", async () => {
             await userUpdatedEvent.disconnect();

@@ -1,9 +1,9 @@
 
-import getAllPremiumPlansByCandidateController from "./get-all-premium-plans-by-candidate-controller";
+import getAllPremiumPlansByCandidateController from "./getPremiumPlans.controller";
 
-import { IDependenciesData } from "../../frameworks/types/dependencyInterface";
+import { IDependency } from "../../frameworks/types/dependency";
 
-export = (dependencies: IDependenciesData) => {
+export = (dependencies: IDependency) => {
 	return {
 		getAllPremiumPlansByCandidateController: getAllPremiumPlansByCandidateController(dependencies),
 	};

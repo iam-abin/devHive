@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-const NotFound: React.FC<{ url: string }> = ({ url }) => {
+const NotFound: React.FC<{ url: string }> = () => {
 	const navigate = useNavigate();
 	return (
 		<div>
@@ -16,12 +16,6 @@ const NotFound: React.FC<{ url: string }> = ({ url }) => {
 							removed or its name changed or is temporarily
 							unavailable
 						</p>
-						{/* <Link
-							to={url}
-							className="uppercase border-2 border-gray-900 hover:bg-white hover:text-gray-900 bg-gray-900 px-5 py-1 rounded-xl font-semibold text-gray-50"
-						>
-							Go to homepage
-						</Link> */}
 						<button
 							className="uppercase border-2 border-gray-900 hover:bg-white hover:text-gray-900 bg-gray-900 px-5 py-1 rounded-xl font-semibold text-gray-50"
 							onClick={() => navigate(-1)}

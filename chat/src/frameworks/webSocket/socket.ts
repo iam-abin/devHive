@@ -1,191 +1,207 @@
 import { Server, Socket } from "socket.io";
 import http from "http";
-// import { Server as SocketIo } from "socket.io";
-import { BadRequestError } from "@abijobportal/common";
+
+import { BadRequestError, NotFoundError } from "@abijobportal/common";
 import userRepository from "../repositories/mongo/user.repository";
 import messageRepository from "../repositories/mongo/message.repository";
 import chatRoomRepository from "../repositories/mongo/chatRoom.repository";
-import { User } from "../../entities/users";
 import { ChatRoom } from "../../entities/chat-room";
 import notificationRepository from "../repositories/mongo/notifications.repository";
+import { IChatRoomDocument } from "../database/mongo/models/chatRoom";
+import { IUserDocument } from "../database/mongo/models/user";
+import { IMessage } from "../types/message";
+import { IMessageDocument } from "../database/mongo/models/message";
+import { INotificationDocument } from "../database/mongo/models/notification";
 
-interface activeUsersType {
-	userId: string;
-	socketId: string;
-}
-
-let activeUsers: activeUsersType[] = [];
-
-const addUser = (userId: string, socketId: string) => {
-	!activeUsers.some((user) => user.userId === userId) &&
-		activeUsers.push({ userId, socketId });
+type activeUser = {
+    userId: string;
+    socketId: string;
 };
 
-const getUser = (userId: string) => {
-	return activeUsers.find((user) => user.userId === userId);
+let activeUsers: activeUser[] = [];
+
+const addUserToOnline = (userId: string, socketId: string): void => {
+    const isActiveUser = activeUsers.some((user) => user.userId === userId);
+    if (!isActiveUser) activeUsers.push({ userId, socketId });
 };
 
-const removeUser = (socketId: string) => {
-	activeUsers = activeUsers.filter((user) => user.socketId !== socketId);
+const getUser = (userId: string): activeUser | undefined => {
+    const activeUser = activeUsers.find((user) => user.userId === userId);
+    return activeUser;
 };
 
-export const setupSocketIO = (httpServer: http.Server) => {
-	
-	const io = new Server(httpServer, {
-		path: "/api/v1/chat/socket.io",
-		cors: {
-			origin: "*",
-			allowedHeaders: ["Authentication"],
-			credentials: true,
-			methods: ["GET", "POST"],
-		},
-	});
-
-	io.on("connection", (socket: Socket) => {
-		onSocketConnection(io, socket);
-	});
+const removeUserFromOnline = (socketId: string): void => {
+    activeUsers = activeUsers.filter((user) => user.socketId !== socketId);
 };
 
-export const onSocketConnection = (io: Server, socket: Socket) => {
-	console.log(
-		`|||||| New user connected ,socket id is: ${socket.id}...|||||| `
-	);
+const getRecepient = (
+    currentUserId: string,
+    room: IChatRoomDocument
+): string => {
+    const recipient = room.users.find(
+        (userId) => userId.toString() !== currentUserId
+    );
+    if (!recipient) throw new NotFoundError("Recipient not found");
+    return recipient.toString();
+};
 
-	// to get or create the rooms of user
-	socket.on(
-		"createChatRoom",
-		async (senderId: string, recepientId: string) => {
-			try {
-			
-				const senderData = await userRepository.findUserById(senderId);
-				
-				const recipientData = await userRepository.findUserById(
-					recepientId
-				);
+export const setupSocketIO = (httpServer: http.Server): void => {
+    const io = new Server(httpServer, {
+        path: "/api/v1/chat/socket.io",
+        cors: {
+            origin: "*",
+            allowedHeaders: ["Authentication"],
+            credentials: true,
+            methods: ["GET", "POST"],
+        },
+    });
 
-				if (!senderData)
-					throw new BadRequestError("sender is not in user db");
-				if (!recipientData)
-					throw new BadRequestError("recipient is not in user db");
-				
-				const room = await chatRoomRepository.getAChatRoom(
-					senderId,
-					recepientId
-				);
-				
-				if (room.length === 0 && senderId !== recepientId) {
-					// no room so creating room
-					let chatRoomData = {
-						users: [senderId, recepientId],
-					};
-					const chatRoom = new ChatRoom(chatRoomData);
-					
-					await chatRoomRepository.createChatRoom(chatRoom);
-				}
+    io.on("connection", (socket: Socket) => {
+        onSocketConnection(io, socket);
+    });
+};
 
-				if (room.length > 0) {
-					console.log("this chatroom is already there ", room);
-				}
+export const onSocketConnection = (io: Server, socket: Socket): void => {
+    console.log(`||| A New user connected ,socket id is: ${socket.id} ||| `);
 
-				const user: any = getUser(senderId);
-				const allChatRooms =
-					await chatRoomRepository.getAllChatRoomsByUserId(senderId);
-				io.to(user.socketId).emit("getAllChatRooms", allChatRooms);
-			} catch (error) {
-				console.error("Error processing message:", error);
-			}
-		}
-	);
+    // to get or create the rooms of user
+    socket.on(
+        "createChatRoom",
+        async (senderId: string, recepientId: string) => {
+            try {
+                console.log("In createChatRoom event");
 
-	// adding a user to active list
-	socket.on("addActiveUser", (userId: string) => {
-		console.log(userId, "new user added to active list");
-		addUser(userId, socket.id);
-		io.emit("getActiveUsers", activeUsers);
-	});
+                if (!senderId)
+                    throw new BadRequestError("senderId should provide");
+                if (!recepientId)
+                    throw new BadRequestError("recepientId should provide");
 
-	// send and get message
-	socket.on("sendMessage", async (data: any) => {
-		console.log("Message received---->", data);
+                const sender: IUserDocument | null =
+                    await userRepository.getById(senderId);
+                if (!sender) throw new NotFoundError("sender not found");
 
-		try {
-			const { senderId, roomId, textMessage } = data;
-			
-			if (!textMessage)
-				throw new BadRequestError("please provide message");
+                const recipient: IUserDocument | null =
+                    await userRepository.getById(recepientId);
+                if (!recipient) throw new NotFoundError("recipient not found");
 
-			const senderData = await userRepository.findUserById(senderId);
+                const room: IChatRoomDocument | null =
+                    await chatRoomRepository.getAChatRoom(
+                        senderId,
+                        recepientId
+                    );
 
-			if (!senderData)
-				throw new BadRequestError("sender is not in user db");
+                // Create a chatroom If there is no chat room for the two users
+                if (!room) {
+                    if (senderId !== recepientId) {
+                        // no room so creating room
+                        let chatRoomData = {
+                            users: [senderId, recepientId],
+                        };
+                        const chatRoom = new ChatRoom(chatRoomData);
 
-			const room = await chatRoomRepository.getAChatRoomById(roomId);
+                        await chatRoomRepository.createChatRoom(chatRoom);
+                    }
+                }
 
-			if (room) {
-				console.log("this chatroom is already there : ", room);
-			}
+                // get all chat rooms
+                const allChatRooms: IChatRoomDocument[] | [] =
+                    await chatRoomRepository.getAllChatRoomsByUserId(senderId);
 
-			const result = await messageRepository.createMessage({
-				senderId,
-				roomId,
-				textMessage,
-			});
-			
-			let chatroomResult = await chatRoomRepository.updateAChatRoom(
-				roomId,
-				textMessage
-			);
-			
-			const user1: any = getUser(senderId);
+                const user: activeUser | undefined = getUser(senderId);
+                if (user) {
+                    io.to(user.socketId).emit("getAllChatRooms", allChatRooms);
+                }
+            } catch (error: unknown) {
+                console.log(error);
+                throw new Error("Error processing message:");
+            }
+        }
+    );
 
-			const recipient: any = room?.users.filter(
-				(user) => user.toString() !== senderId
-			);
+    // adding a user to active list
+    socket.on("addActiveUser", (userId: string) => {
+        console.log("In addActiveUser event");
 
-			const recipientData = await userRepository.findUserById(
-				recipient[0].toString()
-			);
+        addUserToOnline(userId, socket.id);
+        io.emit("getActiveUsers", activeUsers);
+    });
 
-			if (!recipientData)
-				throw new BadRequestError("recipient is not in user db");
-			
-			const user2: any = getUser(recipient[0].toString());
+    // send and get message
+    socket.on("sendMessage", async (data: IMessage) => {
+        console.log("In sendMessage event");
+        console.log("chat message received---->", data);
 
-			const message = {
-				result,
-				senderId: senderId,
-				recipient: recipient.toString(),
-			};
+        try {
+            const { senderId, roomId, textMessage } = data;
 
-			const notification = await notificationRepository.createNotification({	
-				senderId,
-				targetUserId: recipient.toString(),
-				message: textMessage,
-			})
-			
-			if (user1?.socketId) io.to(user1.socketId).emit("receiveMessage", message);
+            if (!textMessage)
+                throw new BadRequestError("please provide message");
 
-			if (user2?.socketId) {
-				io.to(user2.socketId).emit("receiveMessage", message);
-				io.to(user2.socketId).emit("chatNotification", notification);
-			}
+            const sender: IUserDocument | null =
+                await userRepository.getById(senderId);
+            if (!sender) throw new BadRequestError("sender not found");
 
-		} catch (error) {
-			console.error("Error processing message:", error);
-		}
-	});
+            const room: IChatRoomDocument | null =
+                await chatRoomRepository.getById(roomId);
+            if (!room) throw new NotFoundError("Room not found");
 
-	socket.on("markAsRead", async (messageId: string) => {
-		
-		const result = await messageRepository.setReadMessage(messageId);
-		
-		io.emit("messageRead", messageId);
-	});
+            const result: IMessageDocument =
+                await messageRepository.createMessage({
+                    senderId,
+                    roomId,
+                    textMessage,
+                });
 
-	// when a user disconnect
-	socket.on("disconnect", () => {
-		console.log("a user disconnected!!!");
-		removeUser(socket.id);
-		io.emit("getActiveUsers", activeUsers);
-	});
+            // update last message in chat room
+            await chatRoomRepository.updateAChatRoom(roomId, textMessage);
+
+            const recipient: string = getRecepient(senderId, room);
+            const recipientExist: IUserDocument | null =
+                await userRepository.getById(recipient);
+            if (!recipientExist)
+                throw new BadRequestError("Recepient not found");
+
+            const message = {
+                result,
+                senderId: senderId,
+                recipient: recipient,
+            };
+
+            const notification: INotificationDocument =
+                await notificationRepository.create({
+                    senderId,
+                    targetUserId: recipient,
+                    message: textMessage,
+                });
+
+            const activeUserSender: activeUser | undefined = getUser(senderId);
+            const activeUserRecipient: activeUser | undefined = getUser(recipient);
+            if (activeUserSender && activeUserSender.socketId)
+                io.to(activeUserSender.socketId).emit("receiveMessage", message);
+
+            if (activeUserRecipient && activeUserRecipient.socketId) {
+                io.to(activeUserRecipient.socketId).emit("receiveMessage", message);
+                io.to(activeUserRecipient.socketId).emit(
+                    "chatNotification",
+                    notification
+                );
+            }
+        } catch (error) {
+            console.error("Error processing message:", error);
+            throw new Error("Error processing message");
+        }
+    });
+
+    socket.on("markAsRead", async (messageId: string) => {
+        console.log("In markAsRead event");
+        await messageRepository.setReadMessage(messageId);
+        io.emit("messageRead", messageId);
+    });
+
+    // when a user disconnect
+    socket.on("disconnect", () => {
+        console.log("a user disconnected!!!");
+        removeUserFromOnline(socket.id);
+        io.emit("getActiveUsers", activeUsers);
+    });
 };

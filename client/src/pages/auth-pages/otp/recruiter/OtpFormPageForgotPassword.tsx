@@ -2,10 +2,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import {
 	setLoaded,
 	setLoading,
-} from "../../../../redux/slice/loaderSlice/isLoading";
+} from "../../../../redux/slice/isLoading";
 import { useDispatch, useSelector } from "react-redux";
 import { notify } from "../../../../utils/toastMessage";
-import { RootState } from "../../../../redux/reducer/reducer";
+import { RootState } from "../../../../redux/reducer";
 import Loading from "../../../../components/loading/Loading";
 import OtpEnterForm from "../../../../components/form/otpEnterForm";
 import { verifyForgotPasswordOtpRecruiterApi } from "../../../../axios/apiMethods/auth-service/recruiterAuth";
@@ -32,13 +32,6 @@ function OtpFormPageForgotPassword() {
 			);
 			notify(response?.message, "success");
 			navigate(`/recruiter/forgotPassword/${response.data.id}`);
-		} catch (error: any) {
-			console.error("Error during OTP submission:", error);
-
-			notify(
-				error.response.data.errors[0].message || "An error occurred during OTP submission",
-				"error"
-			);
 		} finally {
 			dispatch(setLoaded());
 		}

@@ -1,5 +1,5 @@
 
-import getAllPremiumPlansCandidateUseCase from "./get-all-premium-plans-candidate";
+import getAllPremiumPlansCandidateUseCase from "./getPremiumPlans";
 
 export {
 	getAllPremiumPlansCandidateUseCase,

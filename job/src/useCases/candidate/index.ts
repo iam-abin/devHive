@@ -1,11 +1,7 @@
-import applyJobUseCase from "./apply-job";
-import getAllAppliedJobsUseCase from "./get-all-applied-jobs";
-import getNumberofCandidateAppliedJobsUseCase from "./get-numberof-candidate-applied-jobs";
-import getAnAppliedJobUseCase from "./get-an-applied-job";
+import applyJobUseCase from "./apply";
+import getAllAppliedJobsUseCase from "./getAppliedJobs";
 
 export {
 	applyJobUseCase,
 	getAllAppliedJobsUseCase,
-	getNumberofCandidateAppliedJobsUseCase,
-	getAnAppliedJobUseCase,
 };

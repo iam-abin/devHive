@@ -1,15 +1,15 @@
 import { useNavigate, useParams } from "react-router-dom";
 import OtpEnterForm from "../../../../components/form/otpEnterForm";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../../redux/reducer/reducer";
+import { RootState } from "../../../../redux/reducer";
 import Loading from "../../../../components/loading/Loading";
 import {
 	setLoaded,
 	setLoading,
-} from "../../../../redux/slice/loaderSlice/isLoading";
+} from "../../../../redux/slice/isLoading";
 import { notify } from "../../../../utils/toastMessage";
 import { verifySignupOtpRecruiterApi } from "../../../../axios/apiMethods/auth-service/recruiterAuth";
-import { setRecruiter } from "../../../../redux/slice/recruiterSlice/recruiterDataSlice";
+import { setUser } from "../../../../redux/slice/user";
 
 function OtpFormPageSignup() {
 	const dispatch = useDispatch();
@@ -27,13 +27,9 @@ function OtpFormPageSignup() {
 		try {
 			dispatch(setLoading());
 			const response = await verifySignupOtpRecruiterApi(otp, userEmail);
-			dispatch(setRecruiter(response));
+			dispatch(setUser(response));
 			notify(response.message, "success");
 			navigate("/recruiter");
-		} catch (error: any) {
-			console.error("Error during OTP submission:", error);
-
-			notify(error.response.data?.message || "An error occurred during OTP submission", "error");
 		} finally {
 			dispatch(setLoaded());
 		}

@@ -1,25 +1,21 @@
-interface UserInterface {
-	userId: string;
-	name: string;
-	profileImgUrl?: string;
-	userType: string;
-}
+import { IUser } from "../frameworks/types/user";
+
 
 export class User {
 	userId: string;
 	name: string;
-	profileImgUrl?: string;
-	userType: string;
+	profileImage: string;
+	role: string;
 
 	constructor({
 		userId,
 		name,
-		profileImgUrl,
-		userType,
-	}: UserInterface) {
+		profileImage,
+		role,
+	}: IUser) {
 		(this.userId = userId),
         (this.name = name),
-        (this.profileImgUrl = profileImgUrl),
-        (this.userType = userType);
+        (this.profileImage = profileImage),
+        (this.role = role);
 	}
 }

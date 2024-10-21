@@ -1,8 +1,8 @@
-import blockUnblockMembershipPlanUseCase from "./block-unblock-membership-plan";
-import createMemberShipPlanUseCase from "./create-membership-plan";
-import updateMembershipPlanUseCase from "./update-membership-plan";
-import getAllMembershipPlansUseCase from "./get-all-membership-plans";
-import getMembershipPlanByIdUseCase from "./get-membership-plan-by-id";
+import blockUnblockMembershipPlanUseCase from "./blockUnblock";
+import createMemberShipPlanUseCase from "./create";
+import updateMembershipPlanUseCase from "./updatePlan";
+import getAllMembershipPlansUseCase from "./getPlans";
+import getMembershipPlanByIdUseCase from "./getPlan";
 
 export {
 	blockUnblockMembershipPlanUseCase,

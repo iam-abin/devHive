@@ -4,15 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { viewCandidateProfileDetailsApi } from "../../../axios/apiMethods/admin-service/candidates";
 import CandidateProfile from "../../../components/admin/profile/CandidateProfile";
-import { setLoaded, setLoading } from "../../../redux/slice/loaderSlice/isLoading";
-// import { getUserProfile } from "../../../redux/reducers/thunks/userThunks";
+import { setLoaded, setLoading } from "../../../redux/slice/isLoading";
+
 
 const ViewCandidateProfilePage: React.FC = () => {
 	const dispatch = useDispatch();
 	const { userId } = useParams();
-	// const loadingStatus = useSelector(
-	// 	(state: any) => state.userProfile?.loadingStatus
-	// );
 
     const loadingStatus = useSelector(
 		(state: any) => state.loading.isLoading
@@ -25,12 +22,10 @@ const ViewCandidateProfilePage: React.FC = () => {
 		const fetchProfileDetails = async () => {
 			try {
                 dispatch(setLoading())
-				const candidate = await viewCandidateProfileDetailsApi(userId);
+				const candidate = await viewCandidateProfileDetailsApi(userId!);
 				setCandidateProfileData(candidate.data);
 
-			} catch (error) {
-				console.error("Error fetching profile details:", error);
-			}finally{
+			} finally{
                 dispatch(setLoaded())
             }
 		};

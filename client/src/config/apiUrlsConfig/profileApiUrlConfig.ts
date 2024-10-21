@@ -22,7 +22,7 @@ const profileApiUrlConfig = {
 	getAllCandidatesProfilesUrl: (page: number) =>
 		`${RECRUITER_PROFILE_URL}/viewAllCandidatesProfiles/${page}`,
 	getACandidateProfileUrl: (userId: string) =>
-		`${RECRUITER_PROFILE_URL}/viewCandidateProfile/${userId}`,
+		`${RECRUITER_PROFILE_URL}/candidate/Profile/${userId}`,
 };
 
 export default profileApiUrlConfig;

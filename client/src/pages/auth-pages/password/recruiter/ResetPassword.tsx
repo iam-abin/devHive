@@ -1,18 +1,18 @@
 import React from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../../../redux/reducer/reducer';
+import { RootState } from '../../../../redux/reducer';
 import { useNavigate } from 'react-router-dom';
 import { notify } from '../../../../utils/toastMessage';
 import ForgotResetPasswordForm from '../../../../components/form/ForgotResetPasswordForm';
-import { setLoaded, setLoading } from '../../../../redux/slice/loaderSlice/isLoading';
+import { setLoaded, setLoading } from '../../../../redux/slice/isLoading';
 import { resetPasswordRecruiterApi } from '../../../../axios/apiMethods/auth-service/recruiterAuth';
 
 const ResetPassword: React.FC = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate();
 
-  const recruiterData: any = useSelector((state: RootState) => state.recruiterData.data);
+  const recruiterData: any = useSelector((store: RootState) => store.userReducer.authData);
 
 
   const handleSubmit = async (values: any) => {
@@ -22,13 +22,6 @@ const ResetPassword: React.FC = () => {
       const response = await resetPasswordRecruiterApi(recruiterData.id, values.password);
       notify(response.message, 'success');
       navigate('/recruiter');
-    } catch (error: any) {
-      console.error('Error during reset password submission:', error);
-      notify(
-        error.response.data.errors[0].message ||
-          'An error occurred during reset password submission',
-        'error'
-      );
     }finally {
 			dispatch(setLoaded());
 		}

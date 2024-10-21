@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
-import { RootState } from "../../../redux/reducer/reducer";
+import { RootState } from "../../../redux/reducer";
 import { recruiterGetProfileApi } from "../../../axios/apiMethods/profile-service/recruiter";
 import TopNavBarCandidate from "../../../components/navBar/TopNavBarCandidate";
 import Footer from "../../../components/footer/Footer";
@@ -11,7 +11,7 @@ import { recruiterGetProfileByCandidateApi } from "../../../axios/apiMethods/pro
 
 const RecruiterProfilePage: React.FC = () => {
 	const recruiterData: any = useSelector(
-		(state: RootState) => state.recruiterData.data
+		(state: RootState) => state.userReducer.authData
 	);
 
 	const { id } = useParams(); 
@@ -24,7 +24,6 @@ const RecruiterProfilePage: React.FC = () => {
 	const navigate = useNavigate(); 
 	useEffect(() => {
 		(async () => {
-			try {
 				let recruiterProfile = null;
 				if (isCandidate) {
 					recruiterProfile = await recruiterGetProfileByCandidateApi(
@@ -37,11 +36,7 @@ const RecruiterProfilePage: React.FC = () => {
 				}
 				
 				setRecruiterProfileData(recruiterProfile);
-				console.log(recruiterProfile, "recruiter profile data");
-				
-			} catch (error) {
-				console.error("Error fetching recruiter profile:", error);
-			}
+		
 		})();
 	}, []);
 	return (
@@ -152,27 +147,27 @@ const RecruiterProfilePage: React.FC = () => {
 										<li className="mb-4">
 											<h3 className="text-blue-500 font-semibold">
 												{recruiterProfileData?.data
-													?.company_name ??
+													?.companyName ??
 													""}
 											</h3>
 											<p className="text-gray-600">
 												{recruiterProfileData?.data
-													?.company_location ??
+													?.companyLocation ??
 													""}
 											</p>
 											<p className="text-gray-600">
 												{recruiterProfileData?.data
-													?.company_state ??
+													?.companyState ??
 													""}
 											</p>
 											<p className="text-gray-600">
 												{recruiterProfileData?.data
-													?.company_country ??
+													?.companyCountry ??
 													" "}
 											</p>
 											<p className="text-gray-600">
 												{recruiterProfileData?.data
-													?.company_website ??
+													?.companyWebsite ??
 													""}
 											</p>
 										</li>

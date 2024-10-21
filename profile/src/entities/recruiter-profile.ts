@@ -1,4 +1,4 @@
-import { RecruiterDataProfile } from "../frameworks/types/recruiter-profile-interface";
+import { RecruiterDataProfile } from "../frameworks/types/recruiter";
 
 export class RecruiterProfile {
 	name: string;
@@ -6,7 +6,7 @@ export class RecruiterProfile {
 	phone: number;
 	isActive: boolean;
 	gender?: string;
-	profile_image?: string;
+	profileImage?: string;
 	about?: string;
 	company_id?: string;
 	userId?: string;
@@ -18,7 +18,7 @@ export class RecruiterProfile {
 		phone,
 		isActive,
 		gender,
-		profile_image,
+		profileImage,
 		about,
 		company_id,
 		userId,
@@ -28,7 +28,7 @@ export class RecruiterProfile {
 			(this.phone = phone),
 			(this.isActive = isActive),
 			(this.gender = gender),
-			(this.profile_image = profile_image),
+			(this.profileImage = profileImage),
 			(this.about = about),
 			(this.company_id = company_id),
 			(this.userId = userId);

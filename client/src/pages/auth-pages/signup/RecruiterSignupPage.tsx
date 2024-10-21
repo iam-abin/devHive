@@ -7,16 +7,15 @@ import { RiArrowLeftFill } from "react-icons/ri";
 import {
 	initialSignupValues,
 	signUpSchema,
-} from "../../../utils/signup-validation";
-import { notify } from "../../../utils/toastMessage";
+} from "../../../utils/validations/signup-validation";
 import { recruiterSignupApi } from "../../../axios/apiMethods/auth-service/recruiterAuth";
 
-import recruiterLoginImage from "../../../assets/recruiter/recruiter-login.svg"
-import { RootState } from "../../../redux/reducer/reducer";
+import recruiterLoginImage from "../../../assets/auth/recruiter-login.svg"
+import { RootState } from "../../../redux/reducer";
 import {
 	setLoaded,
 	setLoading,
-} from "../../../redux/slice/loaderSlice/isLoading";
+} from "../../../redux/slice/isLoading";
 import Loading from "../../../components/loading/Loading";
 
 function RecruiterSignupPage() {
@@ -29,7 +28,7 @@ function RecruiterSignupPage() {
 	const handleSubmit = async (userData: any) => {
 		try {
 			dispatch(setLoading());
-			const response = await recruiterSignupApi(userData);
+			const response = await recruiterSignupApi({...userData, role: "recruiter"});
 			Swal.fire({
 				text: response?.message || "Email sendedddd",
 				confirmButtonText: "ok",
@@ -39,9 +38,7 @@ function RecruiterSignupPage() {
 					navigate(`/recruiter/otpSignupRecruiter/${userData.email}`);
 				}
 			});
-		} catch (error: any) {
-			notify(error.response.data.errors[0].message, "error");
-		} finally {
+		}finally {
 			dispatch(setLoaded());
 		}
 	};

@@ -1,25 +1,24 @@
-import axios, { AxiosError, AxiosInstance } from "axios";
-import { adminAccessToken } from "../../config/localStorage";
+import axios, { AxiosError, AxiosInstance, InternalAxiosRequestConfig } from "axios";
 import { BASE_URL } from "../../config/baseUrl";
+import { LOCAL_STORAGE } from "../../utils/constants";
+import { getItemFromLocalStorage } from "../../utils/localStorage";
 
 export const adminApi: AxiosInstance = axios.create({
-	baseURL: BASE_URL,
+    baseURL: BASE_URL,
 });
 
 // Request interceptor
 adminApi.interceptors.request.use(
-	async (config: any) => {
-		let tokenString = localStorage.getItem(adminAccessToken);
-		
-		if (tokenString) {
-			// const token = JSON.parse(tokenString);
-			// No need to parse if the token is already a string
-		const token = tokenString;
-			config.headers["Authorization"] = `Bearer ${token}`;
-		}
-		return config;
-	},
-	(error: AxiosError) => {
-		return Promise.reject(error);
-	}
+    async (config: InternalAxiosRequestConfig<any>) => {
+        
+        let token: string | null = getItemFromLocalStorage(LOCAL_STORAGE.ACCESS_TOKEN)
+
+        if (token) {
+            config.headers["Authorization"] = `Bearer ${token}`;
+        }
+        return config;
+    },
+    (error: AxiosError) => {
+        return Promise.reject(error);
+    }
 );

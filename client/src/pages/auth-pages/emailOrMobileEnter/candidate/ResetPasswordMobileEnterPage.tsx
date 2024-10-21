@@ -1,15 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { notify } from "../../../../utils/toastMessage";
 import * as yup from "yup";
 import {
 	setLoading,
 	setLoaded,
-} from "../../../../redux/slice/loaderSlice/isLoading";
+} from "../../../../redux/slice/isLoading";
 import EmailOrMobile from "../../../../components/form/EmailOrMobile";
 import { passwordResetMobileCandidateApi } from "../../../../axios/apiMethods/auth-service/candidateAuth";
 import Swal from "sweetalert2";
-import { RootState } from "../../../../redux/reducer/reducer";
+import { RootState } from "../../../../redux/reducer";
 import Loading from "../../../../components/loading/Loading";
 import TopNavBarCandidate from "../../../../components/navBar/TopNavBarCandidate";
 import Footer from "../../../../components/footer/Footer";
@@ -23,7 +22,7 @@ function ResetPasswordMobileEnterPage() {
 	);
 
 	const candidateData: any = useSelector(
-		(state: RootState) => state.candidateData.data
+		(store: RootState) => store.userReducer.authData
 	);
 
 	const mobileSchema = yup.object().shape({
@@ -54,14 +53,6 @@ function ResetPasswordMobileEnterPage() {
 					navigate("/candidate/passwordResetOtp");
 				}
 			});
-		} catch (error: any) {
-			console.error("Error during mobile number submission:", error);
-			// notify(error.response.data.errors[0].message, "error");
-			notify(
-				error.response.data.errors[0].message ||
-					"An error occurred during mobile number submission",
-				"error"
-			);
 		} finally {
 			dispatch(setLoaded());
 		}

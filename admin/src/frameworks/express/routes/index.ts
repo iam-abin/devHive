@@ -1,5 +1,5 @@
 import express from "express";
-import { currentUserAdminCheck, requireAuthAdmin } from "@abijobportal/common";
+import { checkCurrentUser, auth, ROLES } from "@abijobportal/common";
 
 import { dashboardRouter } from "./dashboard";
 import { candidateRouter } from "./candidate";
@@ -7,10 +7,10 @@ import { recruiterRouter } from "./recruiter";
 import { membershipPlanRouter } from "./membership-plan";
 import { jobRouter } from "./job";
 import { paymentRouter } from "./payment";
+import { IDependency } from "../../types/dependency";
 
-import { IDependenciesData } from "../../types/dependencyInterface";
 
-export const routes = (dependencies: IDependenciesData) => {
+export const routes = (dependencies: IDependency) => {
 	const router = express.Router();
 
 	const dashboard = dashboardRouter(dependencies);
@@ -21,10 +21,9 @@ export const routes = (dependencies: IDependenciesData) => {
 	const payment = paymentRouter(dependencies);
 
 	// currentUserAdmin extract current user from jwt, if user is present add it to req.currentUser
-	// here every routes are used by admin, so it is easy to understand for us when define it at the top.
-	
-	router.use(currentUserAdminCheck);
-	router.use(requireAuthAdmin);
+	// In admin service every routes are protected for admin.
+	router.use(checkCurrentUser);
+	router.use(auth(ROLES.ADMIN));
 
 	router.use("/dashboard", dashboard);
 	router.use("/candidate", candidate);
@@ -32,7 +31,6 @@ export const routes = (dependencies: IDependenciesData) => {
 	router.use("/membership", membershipPlan);
 	router.use("/job", job);
 	router.use("/payment", payment);
-	// router.use("/candidate",requireAuthAdmin, candidate);
-	
+
 	return router;
 };

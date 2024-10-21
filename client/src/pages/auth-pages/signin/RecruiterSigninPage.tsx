@@ -1,19 +1,18 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import recruiterLoginImage from "../../../assets/recruiter/recruiter-login.svg"
+import recruiterLoginImage from "../../../assets/auth/recruiter-login.svg"
 
 import {
 	initialSigninValues,
 	signInSchema,
-} from "../../../utils/signin-validation";
+} from "../../../utils/validations/signin-validation";
 import { notify } from "../../../utils/toastMessage";
 import { recruiterSigninApi } from "../../../axios/apiMethods/auth-service/recruiterAuth";
-import { setRecruiter } from "../../../redux/slice/recruiterSlice/recruiterDataSlice";
-import { RootState } from "../../../redux/reducer/reducer";
+import { RootState } from "../../../redux/reducer";
 import Loading from "../../../components/loading/Loading";
-import { setLoaded, setLoading } from "../../../redux/slice/loaderSlice/isLoading";
 import { RiArrowLeftFill } from "react-icons/ri";
+import { setUser } from "../../../redux/slice/user";
 
 function RecruiterSigninPage() {
 	const dispatch = useDispatch();
@@ -27,13 +26,15 @@ function RecruiterSigninPage() {
 		try {
 			// dispatch(setLoading());
 			const response = await recruiterSigninApi(userData);
-			dispatch(setRecruiter(response));
-			
+			dispatch(
+				setUser({
+					data: response.data,
+					accessToken: response.accessToken!,
+					refreshToken: response.refreshToken!,
+				})
+			);
 			notify(response.message, "success");
 			navigate("/recruiter");
-		} catch (error: any) {
-			console.error("in signin form error", error);
-			notify(error.response.data.errors[0].message, "error");
 		}finally {
 			// dispatch(setLoaded());
 		}
@@ -85,6 +86,7 @@ function RecruiterSigninPage() {
 											type="email"
 											placeholder="Email"
 											name="email"
+											autoComplete="email"
 											className={`w-full py-2 mt-2 text-black bg-transparent border-b border-black outline-none focus:outline-none ${
 												errors.email && touched.email
 													? "input-error border-red-500"
@@ -104,6 +106,7 @@ function RecruiterSigninPage() {
 											type="password"
 											name="password"
 											placeholder="Password"
+											autoComplete="current-password" 
 											className={`w-full py-2 mt-2 text-black bg-transparent border-b border-black outline-none focus:outline-none ${
 												errors.password &&
 												touched.password

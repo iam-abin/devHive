@@ -1,21 +1,19 @@
-import createJobUseCase from "./create-job";
-import updateJobUseCase from "./update-job";
-import deleteJobUseCase from "./delete-job";
-import updateJobApplicationStatusUseCase from "./update-job-application-status";
-import getRecruiterCreatedJobsUseCase from "./get-recruiter-created-jobs";
-import getAllJobApplicationsUseCase from "./get-all-job-applications";
-import getAJobApplicationUseCase from "./get-a-job-application";
-import changeJobApplicationStatusUseCase from "./change-job-application-status";
-import changeClosejobStatusUseCase from "./change-closejob-status";
-import recruiterDashboardCardsDetailsUseCase from "./recruiter-dashboard-cards-details";
-import recruiterDashboardGraphDetailsUseCase from "./recruiter-dashboard-graph-details";
+import createJobUseCase from "./createJob";
+import updateJobUseCase from "./update";
+import deleteJobUseCase from "./deleteJob";
+import getRecruiterCreatedJobsUseCase from "./getCreatedJobs";
+import getAllJobApplicationsUseCase from "./getApplications";
+import getAJobApplicationUseCase from "../job/getApplication";
+import changeJobApplicationStatusUseCase from "./changeApplicationStatus";
+import changeClosejobStatusUseCase from "./changeClosejobStatus";
+import recruiterDashboardCardsDetailsUseCase from "./dashboardCardsDetails";
+import recruiterDashboardGraphDetailsUseCase from "./dashboardGraphDetails";
 
 export {
 	createJobUseCase,
 	updateJobUseCase,
 	deleteJobUseCase,
 	getAllJobApplicationsUseCase,
-	updateJobApplicationStatusUseCase,
 	getRecruiterCreatedJobsUseCase,
 	getAJobApplicationUseCase,
 	changeJobApplicationStatusUseCase,

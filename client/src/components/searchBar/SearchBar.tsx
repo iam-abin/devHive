@@ -1,28 +1,28 @@
-import React,{ useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { filterJobsApi, getJobFieldsValuesApi } from "../../axios/apiMethods/jobs-service/jobs";
-import { setFilteredJobs } from "../../redux/slice/job/filteredJobsSlice";
 import { useEffect, useState } from "react";
+import { setJobs } from "../../redux/slice/job";
 
 const SearchBar = () => {
     const dispatch = useDispatch();
     const [jobFieldsValues, setJobFieldsValues] = useState({
         title: [],
-        company_location: [],
-        employment_type: [],
+        companyLocation: [],
+        employmentType: [],
         experience: [],
     });
 
     useEffect(() => {
         (async () => {
-            const jobFieldsValues = await getJobFieldsValuesApi(["title", "company_location", "employment_type"]);
+            const jobFieldsValues = await getJobFieldsValuesApi(["title", "companyLocation", "employmentType"]);
             setJobFieldsValues(jobFieldsValues.data);
         })();
     }, []);
 
     const [jobCriteria, setJobCriteria] = useState({
         title: "",
-        company_location: "",
-        employment_type: "",
+        companyLocation: "",
+        employmentType: "",
         experience: "",
     });
     
@@ -35,12 +35,12 @@ const SearchBar = () => {
     };
 
     const handleJobFilter = async () => {
-        if (jobCriteria.title === "" && jobCriteria.company_location === "" && jobCriteria.employment_type === "") {
+        if (jobCriteria.title === "" && jobCriteria.companyLocation === "" && jobCriteria.employmentType === "") {
             return;
         }
 
         const filteredJobs = await filterJobsApi(jobCriteria);
-        dispatch(setFilteredJobs({data: filteredJobs.data}));
+        dispatch(setJobs({data: filteredJobs.data}));
     };
 
     return (
@@ -54,7 +54,7 @@ const SearchBar = () => {
                 <option  value="" disabled hidden>
                     Job Role
                 </option>
-                {jobFieldsValues.title?.map((title, index) => (
+                {jobFieldsValues?.title?.map((title, index) => (
                     <option className="md:max-w-sm" key={index} value={title}>
                         {title}
                     </option>
@@ -63,32 +63,32 @@ const SearchBar = () => {
 
             <select
                 onChange={handleChange}
-                name="company_location"
-                value={jobCriteria.company_location}
+                name="companyLocation"
+                value={jobCriteria?.companyLocation}
                 className="select select-primary text-center font-semibold rounded-md py-3 md:max-w-sm"
             >
                 <option value="" disabled hidden>
                     Location
                 </option>
-                {jobFieldsValues.company_location?.map((company_location, index) => (
-                    <option key={index} value={company_location}>
-                        {company_location}
+                {jobFieldsValues?.companyLocation?.map((companyLocation, index) => (
+                    <option key={index} value={companyLocation}>
+                        {companyLocation}
                     </option>
                 ))}
             </select>
 
             <select
                 onChange={handleChange}
-                name="employment_type"
-                value={jobCriteria.employment_type}
+                name="employmentType"
+                value={jobCriteria?.employmentType}
                 className="select select-primary text-center font-semibold rounded-md py-3 md:max-w-sm"
             >
                 <option value="" disabled hidden>
                     Job Type
                 </option>
-                {jobFieldsValues.employment_type?.map((employment_type, index) => (
-                    <option key={index} value={employment_type}>
-                        {employment_type}
+                {jobFieldsValues?.employmentType?.map((employmentType, index) => (
+                    <option key={index} value={employmentType}>
+                        {employmentType}
                     </option>
                 ))}
             </select>

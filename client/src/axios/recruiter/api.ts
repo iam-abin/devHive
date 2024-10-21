@@ -1,24 +1,24 @@
 import axios, { AxiosError, AxiosInstance } from "axios";
-import { recruiterAccessToken } from "../../config/localStorage";
 import { BASE_URL } from "../../config/baseUrl";
+import { LOCAL_STORAGE } from "../../utils/constants";
+import { getItemFromLocalStorage } from "../../utils/localStorage";
 
 export const recruiterApi: AxiosInstance = axios.create({
-	baseURL: BASE_URL,
+    baseURL: BASE_URL,
 });
 
 // Request interceptor
 recruiterApi.interceptors.request.use(
-	async (config: any) => {
-		let tokenString = localStorage.getItem(recruiterAccessToken);
-		if (tokenString) {
-			// const token = JSON.parse(tokenString)
-			// No need to parse if the token is already a string
-			const token = tokenString;
-			config.headers["Authorization"] = `Bearer ${token}`;
-		}
-		return config;
-	},
-	(error: AxiosError) => {
-		return Promise.reject(error);
-	}
+    async (config: any) => {
+        
+        let token = getItemFromLocalStorage(LOCAL_STORAGE.ACCESS_TOKEN);
+
+        if (token) {
+            config.headers["Authorization"] = `Bearer ${token}`;
+        }
+        return config;
+    },
+    (error: AxiosError) => {
+        return Promise.reject(error);
+    }
 );

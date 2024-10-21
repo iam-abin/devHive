@@ -32,9 +32,8 @@ const ChatRoomList: React.FC<ChatRoomListProps> = ({
     useEffect(() => {
         const fetchUnreadCount = async () => {
             let count: any = 0;
-            if (currentUser.userType === "candidate") {
+            if (currentUser.role === "candidate") {
                 count = await getCandidatesUnreadMessagesCountApi(
-                    currentUser.id,
                     receiver[0]._id
                 );
             }
@@ -64,9 +63,9 @@ const ChatRoomList: React.FC<ChatRoomListProps> = ({
                         <img
                             alt="Tailwind CSS Navbar component"
                             src={
-                                receiver[0].userType === "recruiter"
+                                receiver[0].role === "recruiter"
                                     ? CONSTANTS.RECRUITER_DEFAULT_PROFILE_IMAGE
-                                    : receiver[0].userType === "candidate" && receiver[0].profile_image? receiver[0].profile_image : CONSTANTS.CANDIDATE_DEFAULT_PROFILE_IMAGE
+                                    : receiver[0].role === "candidate" && receiver[0].profileImage? receiver[0].profileImage : CONSTANTS.CANDIDATE_DEFAULT_PROFILE_IMAGE
                             }
                         />
                         <span

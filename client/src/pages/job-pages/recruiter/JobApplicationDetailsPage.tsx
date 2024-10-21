@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import {
 	getAJobApplicationApi,
 } from "../../../axios/apiMethods/jobs-service/jobs";
-import { useNavigate, useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 import JobApplicationDetails from "../../../components/recruiter/JobApplicationDetails";
 
 function JobApplicationDetailsPage() {
@@ -12,8 +12,6 @@ function JobApplicationDetailsPage() {
 	const { jobApplicationId } = useParams();
 	useEffect(() => {
 		const fetchJobDetails = async () => {
-			try {
-				
 				if (jobApplicationId) {
 					const jobApplication = await getAJobApplicationApi(
 						jobApplicationId
@@ -21,10 +19,7 @@ function JobApplicationDetailsPage() {
 					
 					setJobApplicationDetails(jobApplication.data);
 				}
-			} catch (error) {
-				// Handle error, e.g., log it or show an error message to the user
-				console.error("Error fetching job details:", error);
-			}
+		
 		};
 
 		fetchJobDetails();

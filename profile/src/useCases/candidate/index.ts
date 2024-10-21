@@ -1,15 +1,13 @@
-// import createCandidateProfileUseCase from "./create-profile";
-import updateCandidateProfileUseCase from "./update-profile";
-import uploadResumeUseCase from "./upload-resume";
-import getCandidateProfileByUserIdUseCase from "./get-profile-by-candidate-id"
-import getCandidateProfileByEmailUseCase from "./get-profile-by-email";
-import uploadCandidateProfilePicUseCase from "./upload-profile-pic";
-import updateSkillsUseCase from "./update-skills";
-import deleteResumeUseCase from "./delete-resume";
-import updatePreferredJobsUseCase from "./update-preferred-jobs";
+import updateCandidateProfileUseCase from "./updateProfile";
+import uploadResumeUseCase from "./uploadResume";
+import getCandidateProfileByUserIdUseCase from "./getProfileById"
+import getCandidateProfileByEmailUseCase from "./getProfileByEmail";
+import uploadCandidateProfilePicUseCase from "./uploadProfilePic";
+import updateSkillsUseCase from "./updateSkills";
+import deleteResumeUseCase from "./deleteResume";
+import updatePreferredJobsUseCase from "./updatePreferredJobs";
 
 export {
-    // createCandidateProfileUseCase,
 	updateCandidateProfileUseCase,
 	uploadResumeUseCase,
 	deleteResumeUseCase,

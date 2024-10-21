@@ -1,44 +1,45 @@
 import express from "express";
+import { auth, ROLES } from "@abijobportal/common";
 
-import { currentUserCandidateCheck, requireAuthCandidate } from "@abijobportal/common";
-import { jobsController, candidateJobControllers } from "../../../controllers";
-// import { signupRequestBodyValidatorMiddlewares } from "../middlewares/signupValidation";
-// import { signinRequestBodyValidatorMiddlewares } from "../middlewares/signinValidation";
-import { IDependenciesData } from "../../types/dependencyInterface";
+import { jobsControllers, candidateJobControllers } from "../../../controllers";
+import { IDependency } from "../../types/dependencyInterface";
 
+export const candidateRouter = (dependencies: IDependency) => {
+    const router = express.Router();
 
-export const candidateRouter = (dependencies: IDependenciesData) => {
-	const router = express.Router();
-	
-	const {
-		viewAllJobsController,
-		filterJobsController,
-		viewJobByJobIdController,
-		viewAllJobFieldsDistinctValuesController,
-		searchJobsController,
-	} = jobsController(dependencies);
+    const jobsController = jobsControllers(dependencies);
+    const candidateJobController = candidateJobControllers(dependencies);
 
-	const { applyJobController, appliedJobsController, viewPliedJobApplicationController } =
-		candidateJobControllers(dependencies);
+    router.get("/all-jobs/:page", jobsController.viewAllJobsController);
 
-	// This route is to get all jobs. It's a post req because i am passing some data to server.
-	router.get("/all-jobs/:page", currentUserCandidateCheck, viewAllJobsController);
+    router.post(
+        "/all-job-fields-distinct-values",
+        jobsController.viewAllJobFieldsDistinctValuesController
+    );
 
-	router.post("/all-job-fields-distinct-values", viewAllJobFieldsDistinctValuesController);
+    router.get(
+        "/:id",
+        auth(ROLES.CANDIDATE),
+        jobsController.viewJobByJobIdController
+    );
 
-	router.get("/:id", viewJobByJobIdController);
+    router.post("/filter", jobsController.filterJobsController);
 
-	router.post("/filter", filterJobsController);
+    router.post("/search/:page", jobsController.searchJobsController);
 
-	router.post("/search/:page", searchJobsController);
+    router.use(auth(ROLES.CANDIDATE));
 
-	router.use(requireAuthCandidate);
+    router.post("/apply/:jobId", candidateJobController.applyJobController);
 
-	router.post("/apply", applyJobController);
+    router.get(
+        "/applied/:candidateId/:page",
+        candidateJobController.appliedJobsController
+    );
 
-	router.get("/applied-jobs/:candidateId/:page", appliedJobsController);
+    router.get(
+        "/application/:jobApplicationId",
+        candidateJobController.viewPliedJobApplicationController
+    );
 
-	router.get("/job-application/:jobApplicationId", viewPliedJobApplicationController);
-
-	return router;
+    return router;
 };

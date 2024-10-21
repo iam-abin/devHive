@@ -1,5 +1,5 @@
-import getChatRoomsUseCase from "./get-chat-rooms";
-import getConversationUseCase from "./get-conversation"
+import getChatRoomsUseCase from "./getChatRooms";
+import getConversationUseCase from "./getChatRoom"
 
 export {
 	getChatRoomsUseCase,

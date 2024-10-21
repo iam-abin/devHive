@@ -1,13 +1,13 @@
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { RootState } from "../../redux/reducer/reducer";
+import { RootState } from "../../redux/reducer";
 
 function NavBarLanding() {
-	const recruiter: any = useSelector((state: RootState) => {
-		return state.recruiterData.data;
+	const recruiter: any = useSelector((store: RootState) => {
+		return store.userReducer.authData
 	});
-	const candidate: any = useSelector((state: RootState) => {
-		return state.candidateData.data;
+	const candidate: any = useSelector((store: RootState) => {
+		return store.userReducer.authData
 	});
 	return (
 		<nav className="sticky top-0 z-50  navbar bg-gradient-to-r from-slate-900 via-purple-900 to-slate-900">

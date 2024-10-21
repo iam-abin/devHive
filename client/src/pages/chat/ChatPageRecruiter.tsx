@@ -10,21 +10,18 @@ import {
     getARecrutierConversationApi,
     getAllRecruiterChatRoomsApi,
 } from "../../axios/apiMethods/chat-service/chat";
-import { RootState } from "../../redux/reducer/reducer";
+import { RootState } from "../../redux/reducer";
 import socket from "../../config/socket";
 import { deleteRecruitersAllNotificationsBySenderIdApi } from "../../axios/apiMethods/chat-service/notification";
-import {
-    clearRecruiterCurrentlySelectedChatRoom,
-    setRecruiterCurrentlySelectedChatRoom,
-} from "../../redux/slice/chat/recruiterCurrentlySelectedChatroomSlice";
 import { CONSTANTS } from "../../utils/constants";
+import { clearCurrentlySelectedChatRoom, setCurrentlySelectedChatRoom } from "../../redux/slice/chat";
 
 const ChatPageRecruiter = () => {
     const dispatch = useDispatch();
     const { recepientId } = useParams();
 
     const recruiterData: any = useSelector(
-        (state: RootState) => state.recruiterData.data
+        (store: RootState) => store.userReducer.authData
     );
 
     const [chatRooms, setchatRooms] = useState([]);
@@ -32,20 +29,6 @@ const ChatPageRecruiter = () => {
     const [onlineUsers, setOnlineUsers] = useState<any>([]);
     const [selectedChatRoomMessages, setSelectedChatRoomMessages] =
         useState<any>([]);
-
-    console.log("selectedChatRoom [[[[[[[", selectedChatRoom);
-    if (selectedChatRoom) {
-        console.log(
-            "getReceiver(selectedChatRoom)",
-            getReceiver(selectedChatRoom)[0].profile_image
-        );
-    }
-
-    const [isChatOpen, setIsChatOpen] = useState(false);
-
-    const handleChatVisibility = (isOpen: boolean) => {
-        setIsChatOpen(isOpen);
-    };
 
     const chatAreaRef = useRef<HTMLDivElement>(null);
     const scrollToBottom = () => {
@@ -73,7 +56,7 @@ const ChatPageRecruiter = () => {
         const handleBeforeUnload = (event: any) => {
             event.preventDefault();
             // Dispatch the action to clear the currently selected chat room
-            dispatch(clearRecruiterCurrentlySelectedChatRoom());
+            dispatch(clearCurrentlySelectedChatRoom());
         };
 
         window.addEventListener("beforeunload", handleBeforeUnload);
@@ -92,7 +75,11 @@ const ChatPageRecruiter = () => {
 
     useEffect(() => {
         socket.emit("createChatRoom", recruiterData.id, recepientId);
+        // console.log(rooms);
+        
         socket.on("getAllChatRooms", (rooms) => {
+            console.log(rooms);
+            
             setchatRooms(rooms);
         });
     }, [selectedChatRoom, selectedChatRoomMessages]);
@@ -110,7 +97,7 @@ const ChatPageRecruiter = () => {
         return () => {
             // Clean up the event listener when the component unmounts
             socket.off("chatNotification");
-            dispatch(clearRecruiterCurrentlySelectedChatRoom());
+            dispatch(clearCurrentlySelectedChatRoom());
         };
     }, []);
 
@@ -157,12 +144,11 @@ const ChatPageRecruiter = () => {
 
     const handleChatRoomClick = async (room: any) => {
         setSelectedChatRoom(room);
-        dispatch(setRecruiterCurrentlySelectedChatRoom(room));
+        dispatch(setCurrentlySelectedChatRoom(room));
         const conversations = await getARecrutierConversationApi(room._id);
         let senderId = getReceiver(room); // to find the other user
         await deleteRecruitersAllNotificationsBySenderIdApi(
             senderId[0]?._id,
-            recruiterData.id
         );
         setSelectedChatRoomMessages(conversations.data);
     };
@@ -239,10 +225,7 @@ const ChatPageRecruiter = () => {
                                             selectedChatRoom
                                         )}
                                         receiver={getReceiver(selectedChatRoom)}
-                                        // if the chat topbar is there, the chat window will also be there
-                                        handleChatVisibility={
-                                            handleChatVisibility
-                                        }
+                                        
                                         handleBackButtonClick={undefined}
                                     />
                                 </div>
@@ -265,10 +248,10 @@ const ChatPageRecruiter = () => {
                                                     receiverImage={
                                                         getReceiver(
                                                             selectedChatRoom
-                                                        )[0].profile_image
+                                                        )[0].profileImage
                                                             ? getReceiver(
                                                                   selectedChatRoom
-                                                              )[0].profile_image
+                                                              )[0].profileImage
                                                             : CONSTANTS.RECRUITER_DEFAULT_PROFILE_IMAGE
                                                     }
                                                     key={index}

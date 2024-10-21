@@ -1,9 +1,3 @@
-import { createPaymentUseCase } from "./payment";
+export * from "./payment";
 
-import { getAllPremiumPlansCandidateUseCase } from "./premium";
-
-
-export default {
-	createPaymentUseCase,
-	getAllPremiumPlansCandidateUseCase,
-};
+export * from "./premium";

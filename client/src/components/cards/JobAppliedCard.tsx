@@ -11,6 +11,8 @@ const JobAppliedCard: React.FC<{ job: any; handleViewJob: any }> = ({
 }) => {
 	const date1 = dayjs(Date.now());
 	const diffInDays = date1.diff(job.createdAt, "day");
+	console.log(job);
+	
 	return (
 		<div className="mx-4 md:mx-40 pb-4" key={job.id}>
 			<div className="flex flex-col sm:flex-row justify-between items-center sm:px-6 py-4 bg-zinc-200 rounded-md border border-black shadow-lg hover:border-blue-500 hover:translate-y-1 hover:scale-103">
@@ -21,15 +23,15 @@ const JobAppliedCard: React.FC<{ job: any; handleViewJob: any }> = ({
 					<div className="flex items-center gap-8">
 						<span className="flex items-center gap-1">
 							<FaShoppingBag />
-							{job?.jobId.employment_type}
+							{job?.jobId.employmentType}
 						</span>
 						<span className="flex items-center gap-1">
 							<IoLocationSharp />
-							{job?.jobId.location}
+							{job?.jobId.companyLocation}
 						</span>
 						<span className="flex items-center gap-1">
 							<HiMiniCurrencyRupee />
-							<span>{formatCurrency(job?.jobId.salary_max)}</span>
+							<span>{formatCurrency(job?.jobId.salaryMax)}</span>
 						</span>
 					</div>
 				</div>

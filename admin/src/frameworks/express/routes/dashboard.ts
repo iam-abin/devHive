@@ -1,16 +1,16 @@
 import express, { Router } from "express"
 import { dashboardControllers } from "../../../controllers";
-import { IDependenciesData } from "../../types/dependencyInterface";
+import { IDependency } from "../../types/dependency";
 
-export const dashboardRouter = (dependencies: IDependenciesData)=>{
+export const dashboardRouter = (dependencies: IDependency)=>{
     const router: Router = express.Router();
 
-    const { dashboardController, getDashboardGraphDetailsController } = dashboardControllers (dependencies);
+    const dashboardController = dashboardControllers (dependencies);
 
     // dashboard
-    router.get("/data", dashboardController);
+    router.get("/data", dashboardController.dashboardDataController);
 
-    router.get("/graph-data", getDashboardGraphDetailsController);
+    router.get("/graph-data", dashboardController.getDashboardGraphDetailsController);
 
     return router
 }

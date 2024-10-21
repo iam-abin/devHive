@@ -1,11 +1,10 @@
-export interface ChatRoomInterface {
-	users: string[];
-}
+import { IChatRoom } from "../frameworks/types/chatRoom";
+
 
 export class ChatRoom {
 	users: string[];
 
-	constructor({ users }: ChatRoomInterface) {
+	constructor({ users }: IChatRoom) {
 		this.users = users;
 	}
 }

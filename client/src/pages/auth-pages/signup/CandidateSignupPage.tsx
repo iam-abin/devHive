@@ -5,19 +5,18 @@ import Swal from "sweetalert2";
 import {
 	initialSignupValues,
 	signUpSchema,
-} from "../../../utils/signup-validation";
-import { notify } from "../../../utils/toastMessage";
+} from "../../../utils/validations/signup-validation";
 import { candidateSignupApi } from "../../../axios/apiMethods/auth-service/candidateAuth";
 
 
-import candidateLoginImage from "../../../assets/candidate/candidate-login.svg"
+import candidateLoginImage from "../../../assets/auth/candidate-login.svg"
 import googleIcon from "../../../assets/google/google-icon.svg"
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../redux/reducer/reducer";
+import { RootState } from "../../../redux/reducer";
 import {
 	setLoaded,
 	setLoading,
-} from "../../../redux/slice/loaderSlice/isLoading";
+} from "../../../redux/slice/isLoading";
 import Loading from "../../../components/loading/Loading";
 import { RiArrowLeftFill } from "react-icons/ri";
 
@@ -31,7 +30,10 @@ function CandidateSignupPage() {
 	const handleSubmit = async (userData: any) => {
 		try {
 			dispatch(setLoading());
-			const response = await candidateSignupApi(userData);
+			console.log("userData",userData);
+			
+			const response = await candidateSignupApi({...userData, role: "candidate"});
+			
 			Swal.fire({
 				text: response?.message || "Email sendedddd",
 				confirmButtonText: "ok",
@@ -40,8 +42,6 @@ function CandidateSignupPage() {
 					navigate(`/candidate/otpSignupCandidate/${userData.email}`);
 				}
 			});
-		} catch (error: any) {
-			notify(error.response.data.errors[0].message, "error");
 		} finally {
 			dispatch(setLoaded());
 		}

@@ -12,13 +12,13 @@ const JobCardAllJobs: React.FC<{
             <h2 className="text-lg font-semibold">{job.title}</h2>
             <div className="flex flex-wrap items-center gap-2 sm:gap-8">
                 <span className="flex items-center gap-1">
-                    {job.employment_type}
+                    {job.employmentType}
                 </span>
                 <span className="flex items-center gap-1">
                     {job.location}
                 </span>
                 <span className="flex items-center gap-1">
-                    {job.salary_max}
+                    {job.salaryMax}
                 </span>
                 <span className="text-gray-500 text-sm">
                     Created on {formatDateFn(job.createdAt)}

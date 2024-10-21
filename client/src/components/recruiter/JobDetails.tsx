@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { CiCalendarDate } from "react-icons/ci";
-import { RootState } from "../../redux/reducer/reducer";
+import { RootState } from "../../redux/reducer";
 import { formatDate } from "../../utils/date-functions";
 import { FaFacebookMessenger } from "react-icons/fa";
 import { BsFillBagDashFill } from "react-icons/bs";
@@ -26,12 +26,9 @@ const JobDetails: React.FC<{
 	const isRecruiterPage = location.pathname.includes("recruiter");
 	const isCandidatePage = location.pathname.includes("candidate");
 
-	const candidateData: any = useSelector(
-		(state: RootState) => state.candidateData.data
-	);
 
 	const recruiterData: any = useSelector(
-		(state: RootState) => state.recruiterData.data
+		(store: RootState) => store.userReducer.authData
 	);
 
 	if (isRecruiterPage) {
@@ -60,7 +57,7 @@ const JobDetails: React.FC<{
 						<p className="w-3/5 font-extrabold">Company: </p>
 						<span className=" w-3/5">
 							{jobDetails
-								? jobDetails.company_name
+								? jobDetails.companyName
 								: "Loading..."}
 						</span>
 					</div>
@@ -68,7 +65,7 @@ const JobDetails: React.FC<{
 						<p className="w-3/5 font-extrabold">Location: </p>
 						<span className=" w-3/5">
 							{jobDetails
-								? jobDetails.company_location
+								? jobDetails.companyLocation
 								: "Loading..."}
 						</span>
 					</div>
@@ -79,7 +76,7 @@ const JobDetails: React.FC<{
 						</h2>
 						<p className="w-3/5">
 							{jobDetails
-								? jobDetails.job_descriptions
+								? jobDetails.jobDescription
 								: "Loading..."}
 						</p>
 					</div>
@@ -91,8 +88,8 @@ const JobDetails: React.FC<{
 									Skills Required
 								</h2>
 								<ul className="w-3/5">
-									{jobDetails.skills_required ? (
-										jobDetails.skills_required.map(
+									{jobDetails.skills ? (
+										jobDetails.skills.map(
 											(skill: string) => (
 												<div
 													key={skill}
@@ -112,13 +109,13 @@ const JobDetails: React.FC<{
 						)}
 					</div>
 
-					{jobDetails && jobDetails.education_required && (
+					{jobDetails && jobDetails.educationRequired && (
 						<div className="mb-4 flex items-center my-8 ">
 							<h2 className=" font-extrabold mb-2  w-3/5">
 								Education Required
 							</h2>
 							<p className=" w-3/5">
-								{jobDetails.education_required}
+								{jobDetails.educationRequired}
 							</p>
 						</div>
 					)}
@@ -162,13 +159,13 @@ const JobDetails: React.FC<{
 					)}
 					{/* </div> */}
 
-					{jobDetails && jobDetails.experience_required && (
+					{jobDetails && jobDetails.experienceRequired && (
 						<div className="mb-4 flex items-center my-8 ">
 							<h2 className="  w-3/5 font-extrabold mb-2">
 								Experience required
 							</h2>
 							<p className=" w-3/5">
-								{jobDetails.experience_required}
+								{jobDetails.experienceRequired}
 							</p>
 						</div>
 					)}
@@ -184,24 +181,24 @@ const JobDetails: React.FC<{
 						</div>
 					)}
 
-					{jobDetails && jobDetails.employment_type && (
+					{jobDetails && jobDetails.employmentType && (
 						<div className="mb-4 flex items-center my-8 ">
 							<h2 className=" font-extrabold mb-2  w-3/5">
 								Employment type
 							</h2>
 							<p className=" w-3/5">
-								{jobDetails.employment_type}
+								{jobDetails.employmentType}
 							</p>
 						</div>
 					)}
 
-					{jobDetails && jobDetails.available_position && (
+					{jobDetails && jobDetails.availablePosition && (
 						<div className="mb-4 flex items-center my-8 ">
 							<h2 className=" font-extrabold mb-2  w-3/5">
 								Available position
 							</h2>
 							<p className=" w-3/5">
-								{jobDetails.available_position}
+								{jobDetails.availablePosition}
 							</p>
 						</div>
 					)}
@@ -211,9 +208,9 @@ const JobDetails: React.FC<{
 							Salary Range
 						</h2>
 						<p className=" w-3/5">
-							₹{jobDetails ? jobDetails.salary_min : "Loading..."}{" "}
+							₹{jobDetails ? jobDetails.salaryMin : "Loading..."}{" "}
 							- ₹
-							{jobDetails ? jobDetails.salary_max : "Loading..."}
+							{jobDetails ? jobDetails.salaryMax : "Loading..."}
 						</p>
 					</div>
 
@@ -226,9 +223,9 @@ const JobDetails: React.FC<{
 
 								<button
 									className={`${
-										jobDetails?.isClosed
-											? "bg-green-600"
-											: "bg-red-600"
+										jobDetails?.isActive
+											? "bg-red-600"
+											: "bg-green-600"
 									} text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300`}
 									onClick={() => {
 										return handleChangeJobCloseStatus(
@@ -236,9 +233,9 @@ const JobDetails: React.FC<{
 										);
 									}}
 								>
-									{jobDetails?.isClosed
-										? "Open Jobe"
-										: "Close Jobe"}
+									{jobDetails?.isActive
+										? "Close Job"
+										: "Open Job"}
 								</button>
 							</div>
 						)}
@@ -260,8 +257,6 @@ const JobDetails: React.FC<{
 								onClick={() => {
 									return handleApplyJob(
 										jobDetails?.id,
-										candidateData.id,
-										jobDetails?.recruiterId
 									);
 								}}
 							>

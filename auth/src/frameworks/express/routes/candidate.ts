@@ -1,48 +1,64 @@
 import express from "express";
+import { auth, ROLES } from "@abijobportal/common";
 
-import { requireAuthCandidate } from "@abijobportal/common";
-import { candidateControllers, otpControllers, passwordUpdateControllers } from "../../../controllers";
+import {
+    candidateControllers,
+    otpControllers,
+    passwordControllers,
+} from "../../../controllers";
 import { signupRequestBodyValidatorMiddlewares } from "../../middlewares/signupValidation";
 import { signinRequestBodyValidatorMiddlewares } from "../../middlewares/signinValidation";
-import { IDependenciesData } from "../../types/dependencyInterface";
+import { IDependency } from "../../types/dependency";
 
-export const candidateRouter = (dependencies: IDependenciesData) => {
-	const router = express.Router();
+export const candidateRouter = (dependencies: IDependency) => {
+    const router = express.Router();
 
-	const {
-		candidateSignupController,
-		candidateSigninController,
-		candidateSignoutController,
-		candidateSignupEmailOtpVerificationController,
-	} = candidateControllers(dependencies);
+    const adminControlle = candidateControllers(dependencies);
+    const otpController = otpControllers(dependencies);
+    const passwordController = passwordControllers(dependencies);
 
-	const { sendOtpTwilioController, verifyOtpTwilioController} = otpControllers(dependencies);
+    router.post(
+        "/signup",
+        signupRequestBodyValidatorMiddlewares,
+        adminControlle.candidateSignupController
+    );
 
-	const { updatePasswordController } = passwordUpdateControllers(dependencies)
+    router.post(
+        "/verifyEmail",
+        adminControlle.candidateSignupEmailOtpVerificationController
+    );
 
-	router.post(
-		"/signup",
-		signupRequestBodyValidatorMiddlewares,
-		candidateSignupController
-	);
-	
-	router.post("/verifyEmail",candidateSignupEmailOtpVerificationController)
+    router.post(
+        "/signin",
+        signinRequestBodyValidatorMiddlewares,
+        adminControlle.candidateSigninController
+    );
 
-	router.post(
-		"/signin",
-		signinRequestBodyValidatorMiddlewares,
-		candidateSigninController
-	);
+    router.put("/forgotPassword", passwordController.updatePasswordController);
 
-	router.put("/forgotPassword", updatePasswordController);
+    router.post(
+        "/sendOtp",
+        auth(ROLES.CANDIDATE),
+        otpController.sendOtpTwilioController
+    );
 
-	router.post("/sendOtp",requireAuthCandidate, sendOtpTwilioController);
+    router.post(
+        "/verifyOtp",
+        auth(ROLES.CANDIDATE),
+        otpController.verifyOtpTwilioController
+    );
 
-	router.post("/verifyOtp",requireAuthCandidate, verifyOtpTwilioController);
-	
-	router.put("/resetPassword", requireAuthCandidate, updatePasswordController);
+    router.put(
+        "/resetPassword",
+        auth(ROLES.CANDIDATE),
+        passwordController.updatePasswordController
+    );
 
-	router.post("/signout", requireAuthCandidate, candidateSignoutController);
+    router.post(
+        "/signout",
+        auth(ROLES.CANDIDATE),
+        adminControlle.candidateSignoutController
+    );
 
-	return router;
+    return router;
 };

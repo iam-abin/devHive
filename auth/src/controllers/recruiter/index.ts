@@ -1,11 +1,11 @@
 import recruiterSignupController from "./signup.controller";
 import recruiterSigninController from "./signin.controller";
 import recruiterSignoutController from "./signout.controller";
-import recruiterSignupEmailOtpVerificationController from "./signup-email-otp-verification.controller";
+import recruiterSignupEmailOtpVerificationController from "./signupEmailOtpVerification.controller";
 
-import { IDependenciesData } from "../../frameworks/types/dependencyInterface";
+import { IDependency } from "../../frameworks/types/dependency";
 
-export = (dependencies: IDependenciesData) => {
+export = (dependencies: IDependency) => {
 	return {
 		recruiterSignupController: recruiterSignupController(dependencies),
 		recruiterSigninController: recruiterSigninController(dependencies),

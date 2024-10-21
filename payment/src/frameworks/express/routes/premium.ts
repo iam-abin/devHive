@@ -1,24 +1,20 @@
 import express from "express";
+import { checkCurrentUser, auth, ROLES } from "@abijobportal/common";
 
 import { premiumControllers } from "../../../controllers";
-import { IDependenciesData } from "../../types/dependencyInterface";
-import {
-	currentUserCandidateCheck,
-	requireAuthCandidate,
-} from "@abijobportal/common";
+import { IDependency } from "../../types/dependency";
 
-export const premiumRouter = (dependencies: IDependenciesData) => {
-	const router = express.Router();
+export const premiumRouter = (dependencies: IDependency) => {
+    const router = express.Router();
 
-	const { getAllPremiumPlansByCandidateController, } = premiumControllers(dependencies);
-	
-	router.get(
-		"/get-all-premium-plans-candidate",
-		currentUserCandidateCheck,
-		requireAuthCandidate,
-		getAllPremiumPlansByCandidateController  
-	);
+    const premiumController = premiumControllers(dependencies);
 
+    router.get(
+        "/get-all-premium-plans-candidate",
+        checkCurrentUser,
+        auth(ROLES.CANDIDATE),
+        premiumController.getAllPremiumPlansByCandidateController
+    );
 
-	return router;
+    return router;
 };

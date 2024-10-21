@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 import { formatDate } from "../../utils/date-functions";
 import { formatCurrency } from "../../utils/currency-format";
 import { FaFacebookMessenger, FaLock } from "react-icons/fa";
-import { RootState } from "../../redux/reducer/reducer";
+import { RootState } from "../../redux/reducer";
 import { useSelector } from "react-redux";
 
 const JobApplicationDetails: React.FC<{
@@ -15,12 +15,14 @@ const JobApplicationDetails: React.FC<{
 	handleChangeApplicationStatus: any;
 }> = ({ jobApplicationDetails }) => {
 	const location = useLocation();
+	console.log(jobApplicationDetails);
+	
 
 	const isRecruiterPage = location.pathname.includes("recruiter");
 	const isCandidatePage = location.pathname.includes("candidate");
 
 	const candidateProfileData: any = useSelector(
-		(state: RootState) => state.candidateProfile.candidateProfile
+		(store: RootState) => store.userReducer.myProfile
 	);
 
 	if (isRecruiterPage) {
@@ -35,14 +37,14 @@ const JobApplicationDetails: React.FC<{
 		}
 
 		navigate(
-			`/candidate/recruiter-profile/${jobApplicationDetails?.jobId?.recruiterId}`
+			`/candidate/recruiter-profile/${jobApplicationDetails?.recruiterId}`
 		);
 	};
 
 	const handleViewCandidate = () => {
 
 		navigate(
-			`/recruiter/candidate-profile/${jobApplicationDetails?.candidateId?.id}`
+			`/recruiter/candidate-profile/${jobApplicationDetails?.candidateId}`
 		);
 	};
 
@@ -88,14 +90,14 @@ const JobApplicationDetails: React.FC<{
 									Company:{" "}
 									{jobApplicationDetails
 										? jobApplicationDetails?.jobId
-												?.company_name
+												?.companyName
 										: "Loading..."}
 								</p>
 								<p className="text-gray-600 mb-4">
 									Location:{" "}
 									{jobApplicationDetails
 										? jobApplicationDetails?.jobId
-												?.company_location
+												?.companyLocation
 										: "Loading..."}
 								</p>
 							</div>
@@ -146,13 +148,13 @@ const JobApplicationDetails: React.FC<{
 							<p>
 								{jobApplicationDetails
 									? jobApplicationDetails?.jobId
-											?.job_descriptions
+											?.jobDescription
 									: "Loading..."}
 							</p>
 						</div>
 						{jobApplicationDetails &&
 							jobApplicationDetails?.jobId
-								?.experience_required && (
+								?.experienceRequired && (
 								<div className="mb-4">
 									<h2 className="text-xl font-semibold mb-2">
 										Job Status
@@ -160,14 +162,13 @@ const JobApplicationDetails: React.FC<{
 									<p
 										className={`${
 											jobApplicationDetails?.jobId
-												?.isClosed
-												? "text-red-600"
-												: "text-green-600"
+												?.isActive
+												? "text-green-600"
+												: "text-red-600"
 										}`}
 									>
-										{jobApplicationDetails?.jobId?.isClosed
-											? "No longer accepting applications"
-											: "this job is open"}
+										{jobApplicationDetails?.jobId?.isActive
+											? "this job is open":"No longer accepting applications"}
 									</p>
 								</div>
 							)}
@@ -179,8 +180,8 @@ const JobApplicationDetails: React.FC<{
 									</h2>
 									<ul className="list-disc pl-5">
 										{jobApplicationDetails?.jobId
-											?.skills_required ? (
-											jobApplicationDetails?.jobId?.skills_required.map(
+											?.skills ? (
+											jobApplicationDetails?.jobId?.skills.map(
 												(
 													skill: string,
 													index: number
@@ -198,7 +199,7 @@ const JobApplicationDetails: React.FC<{
 
 						{jobApplicationDetails &&
 							jobApplicationDetails?.jobId
-								?.education_required && (
+								?.educationRequired && (
 								<div className="mb-4">
 									<h2 className="text-xl font-semibold mb-2">
 										Education Required
@@ -206,7 +207,7 @@ const JobApplicationDetails: React.FC<{
 									<p>
 										{
 											jobApplicationDetails?.jobId
-												?.education_required
+												?.educationRequired
 										}
 									</p>
 								</div>
@@ -240,7 +241,7 @@ const JobApplicationDetails: React.FC<{
 												<FaFacebookMessenger
 													onClick={() =>
 														navigate(
-															`/candidate/chat/${jobApplicationDetails?.recruiterId?.id}` // Add the path to your chat page
+															`/candidate/chat/${jobApplicationDetails?.recruiterId}` // Add the path to your chat page
 														)
 													}
 													className=" cursor-pointer"
@@ -255,7 +256,7 @@ const JobApplicationDetails: React.FC<{
 
 						{jobApplicationDetails &&
 							jobApplicationDetails?.jobId
-								?.experience_required && (
+								?.experienceRequired && (
 								<div className="mb-4">
 									<h2 className="text-xl font-semibold mb-2">
 										Experience required
@@ -263,7 +264,7 @@ const JobApplicationDetails: React.FC<{
 									<p>
 										{
 											jobApplicationDetails?.jobId
-												?.experience_required
+												?.experienceRequired
 										}
 									</p>
 								</div>
@@ -286,7 +287,7 @@ const JobApplicationDetails: React.FC<{
 							)}
 
 						{jobApplicationDetails &&
-							jobApplicationDetails?.jobId?.employment_type && (
+							jobApplicationDetails?.jobId?.employmentType && (
 								<div className="mb-4">
 									<h2 className="text-xl font-semibold mb-2">
 										Employment type
@@ -294,7 +295,7 @@ const JobApplicationDetails: React.FC<{
 									<p>
 										{
 											jobApplicationDetails?.jobId
-												?.employment_type
+												?.employmentType
 										}
 									</p>
 								</div>
@@ -302,7 +303,7 @@ const JobApplicationDetails: React.FC<{
 
 						{jobApplicationDetails &&
 							jobApplicationDetails?.jobId
-								?.available_position && (
+								?.availablePosition && (
 								<div className="mb-4">
 									<h2 className="text-xl font-semibold mb-2">
 										Available position
@@ -310,7 +311,7 @@ const JobApplicationDetails: React.FC<{
 									<p>
 										{
 											jobApplicationDetails?.jobId
-												?.available_position
+												?.availablePosition
 										}
 									</p>
 								</div>
@@ -324,14 +325,14 @@ const JobApplicationDetails: React.FC<{
 								{jobApplicationDetails
 									? formatCurrency(
 											jobApplicationDetails?.jobId
-												?.salary_min
+												?.salaryMin
 									  )
 									: "Loading..."}{" "}
 								-
 								{jobApplicationDetails
 									? formatCurrency(
 											jobApplicationDetails?.jobId
-												?.salary_max
+												?.salaryMax
 									  )
 									: "Loading..."}
 							</p>
@@ -343,6 +344,16 @@ const JobApplicationDetails: React.FC<{
 							/>
 						) : (
 							<div>
+								<div className="mb-4">
+								Applied on :
+								<p>
+									{jobApplicationDetails
+										? formatDate(
+												jobApplicationDetails?.createdAt
+										  )
+										: "Loading..."}
+								</p>
+							</div>
 								{jobApplicationDetails && (
 									<div
 										className={`badge ${
