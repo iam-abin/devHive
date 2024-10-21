@@ -8,11 +8,10 @@ metadata:
     nginx.ingress.kubernetes.io/use-regex: 'true'
     nginx.ingress.kubernetes.io/proxy-body-size: '50m' # Set the maximum allowed request body size
     nginx.ingress.kubernetes.io/websocket-services: "chat-srv"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"  # Disable automatic HTTP to HTTPS redirection
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "false"  # Ensure SSL is not enforced
+
 spec:
-  tls:
-  - hosts:
-    - devhive.dev
-    secretName: devhive-tls-development
   rules:
     - host: devhive.dev
       http:

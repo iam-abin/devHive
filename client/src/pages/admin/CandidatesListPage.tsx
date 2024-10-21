@@ -1,26 +1,20 @@
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
+
 import TableComponent from "../../components/table/TableComponent";
 import { notify } from "../../utils/toastMessage";
-import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
 import {
 	blockUnblockCandidateApi,
 	getAllCandidatesApi,
 } from "../../axios/apiMethods/admin-service/candidates";
 import { IResponse } from "../../types/api";
+import { IUserData } from "../../types/user";
 
-
-interface CandidateInterface {
-	id: string;
-	name: string;
-	email: string;
-	phone: string;
-	isActive: boolean;
-}
 
 function CandidateManagementPage() {
 	const navigate = useNavigate();
-	const [candidatesData, setCandidatesData] = useState<CandidateInterface[]>(
+	const [candidatesData, setCandidatesData] = useState<IUserData[]>(
 		[]
 	);
 

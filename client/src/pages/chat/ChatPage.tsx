@@ -1,28 +1,46 @@
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+
 import ChatImage from "../../assets/chat/double-chat-bubble-icon.svg";
+import TopNavBarCandidate from "../../components/navBar/TopNavBarCandidate";
 import ChatRoomList from "../../components/chat/ChatRoomList";
 import Message from "../../components/chat/Message";
 import ChatBoxTopBar from "../../components/chat/ChatBoxTopBar";
 import ChatInputBox from "../../components/chat/ChatInputBox";
+import {
+    getACandidateConversationApi,
+    getAllCandidateChatRoomsApi,
+} from "../../axios/apiMethods/chat-service/chat";
 import {
     getARecrutierConversationApi,
     getAllRecruiterChatRoomsApi,
 } from "../../axios/apiMethods/chat-service/chat";
 import { RootState } from "../../redux/reducer";
 import socket from "../../config/socket";
+import { deleteCandidatesAllNotificationsBySenderIdApi } from "../../axios/apiMethods/chat-service/notification";
 import { deleteRecruitersAllNotificationsBySenderIdApi } from "../../axios/apiMethods/chat-service/notification";
 import { CONSTANTS } from "../../utils/constants";
-import { clearCurrentlySelectedChatRoom, setCurrentlySelectedChatRoom } from "../../redux/slice/chat";
+import {
+    clearCurrentlySelectedChatRoom,
+    setCurrentlySelectedChatRoom,
+} from "../../redux/slice/chat";
 
-const ChatPageRecruiter = () => {
+const ChatPage = () => {
     const dispatch = useDispatch();
     const { recepientId } = useParams();
 
-    const recruiterData: any = useSelector(
+    const userData: any = useSelector(
         (store: RootState) => store.userReducer.authData
     );
+
+    const myProfile: any = useSelector((state: RootState) => {
+        return state.userReducer.myProfile;
+    });
+
+    // const otherUserProfile: any = useSelector((state: RootState) => {
+    //     return state.userReducer.otherUserProfile;
+    // });
 
     const [chatRooms, setchatRooms] = useState([]);
     const [selectedChatRoom, setSelectedChatRoom] = useState<any>(null);
@@ -67,19 +85,15 @@ const ChatPageRecruiter = () => {
     }, []);
 
     useEffect(() => {
-        socket.emit("addActiveUser", recruiterData.id);
+        socket.emit("addActiveUser", userData.id);
         socket.on("getActiveUsers", (users) => {
             setOnlineUsers(users);
         });
-    }, [recruiterData?._id]);
+    }, [userData?._id]);
 
     useEffect(() => {
-        socket.emit("createChatRoom", recruiterData.id, recepientId);
-        // console.log(rooms);
-        
+        socket.emit("createChatRoom", userData.id, recepientId);
         socket.on("getAllChatRooms", (rooms) => {
-            console.log(rooms);
-            
             setchatRooms(rooms);
         });
     }, [selectedChatRoom, selectedChatRoomMessages]);
@@ -87,10 +101,16 @@ const ChatPageRecruiter = () => {
     useEffect(() => {
         socket.on("chatNotification", () => {
             (async () => {
-                const rooms = await getAllRecruiterChatRoomsApi(
-                    recruiterData.id
-                );
-                setchatRooms(rooms.data);
+                let rooms = null;
+                if (userData && userData.role === "candidate") {
+                    rooms = await getAllCandidateChatRoomsApi(userData.id);
+                }
+
+                if (userData && userData.role === "recruiter") {
+                    rooms = await getAllRecruiterChatRoomsApi(userData.id);
+                }
+
+                if (rooms) setchatRooms(rooms.data);
             })();
         });
 
@@ -108,7 +128,7 @@ const ChatPageRecruiter = () => {
                 // console.error("no chat rooms are selected");
             }
             if (message.result.roomId.toString() === selectedChatRoom?._id) {
-                if (message.result.senderId.toString() != recruiterData.id) {
+                if (message.result.senderId.toString() != userData.id) {
                     socket.emit("markAsRead", message.result.id);
                 }
                 setSelectedChatRoomMessages([
@@ -135,26 +155,38 @@ const ChatPageRecruiter = () => {
 
     const sendMessage = (message: string) => {
         const messageToSend = {
-            senderId: recruiterData?.id,
+            senderId: userData?.id,
             roomId: selectedChatRoom?._id,
             textMessage: message,
         };
+
         socket.emit("sendMessage", messageToSend);
     };
 
     const handleChatRoomClick = async (room: any) => {
         setSelectedChatRoom(room);
+
         dispatch(setCurrentlySelectedChatRoom(room));
-        const conversations = await getARecrutierConversationApi(room._id);
+        const conversations =
+            userData.role === "candidate"
+                ? await getACandidateConversationApi(room._id)
+                : await getARecrutierConversationApi(room._id);
+
         let senderId = getReceiver(room); // to find the other user
-        await deleteRecruitersAllNotificationsBySenderIdApi(
-            senderId[0]?._id,
-        );
+        userData.role === "candidate"
+            ? await deleteCandidatesAllNotificationsBySenderIdApi(
+                  senderId?._id
+              )
+            : await deleteRecruitersAllNotificationsBySenderIdApi(
+                  senderId?._id
+              );
+
         setSelectedChatRoomMessages(conversations.data);
     };
+
     const isUserOnline = (chatRoom: any) => {
         const otherValue = chatRoom.users.filter(
-            (value: any) => value._id !== recruiterData.id
+            (value: any) => value._id !== userData.id
         );
 
         for (let i = 0; i < onlineUsers.length; i++) {
@@ -165,15 +197,18 @@ const ChatPageRecruiter = () => {
         return false;
     };
 
-    function getReceiver(chatRoom: any) {
-        const otherUser = chatRoom.users.filter(
-            (value: any) => value._id !== recruiterData?.id
+    const getReceiver = (chatRoom: any) => {
+        const otherUser = chatRoom.users.find(
+            (value: any) => value._id !== userData?.id
         );
         return otherUser;
-    }
+    };
 
     return (
         <>
+            {userData && userData.role === "candidate" && (
+                <TopNavBarCandidate />
+            )}
             <div className="bg-white  h-[92vh] flex justify-center items-center">
                 <div className="bg-slate-200 h-max-[88vh] w-[90vw] flex rounded-md">
                     {/* Left */}
@@ -188,7 +223,7 @@ const ChatPageRecruiter = () => {
                                     (chatRoom: any, index: number) => (
                                         <ChatRoomList
                                             key={index}
-                                            currentUser={recruiterData}
+                                            currentUser={userData}
                                             receiver={getReceiver(chatRoom)}
                                             isOnline={isUserOnline(chatRoom)}
                                             lastMessage={chatRoom?.lastMessage}
@@ -218,20 +253,21 @@ const ChatPageRecruiter = () => {
                                 <div>
                                     <ChatBoxTopBar
                                         userImage={
-                                            CONSTANTS.CANDIDATE_DEFAULT_PROFILE_IMAGE
+                                            myProfile && myProfile.profileImage
+                                                ? myProfile.profileImage
+                                                : CONSTANTS.CANDIDATE_DEFAULT_PROFILE_IMAGE
                                         }
                                         // chatRoom={selectedChatRoom}
                                         isOnline={isUserOnline(
                                             selectedChatRoom
                                         )}
                                         receiver={getReceiver(selectedChatRoom)}
-                                        
                                         handleBackButtonClick={undefined}
                                     />
                                 </div>
                                 {/* chat box message area */}
                                 <div
-                                    className="bg-blue-200 min-h-[58vh] max-h-[58vh] p-5 overflow-x-scroll "
+                                    className="bg-red-300 min-h-[58vh] max-h-[58vh] p-5 overflow-x-scroll "
                                     ref={chatAreaRef}
                                 >
                                     {selectedChatRoomMessages.length == 0 ? (
@@ -243,20 +279,15 @@ const ChatPageRecruiter = () => {
                                             (message: any, index: number) => (
                                                 <Message
                                                     senderImage={
-                                                        CONSTANTS.RECRUITER_DEFAULT_PROFILE_IMAGE
+                                                        myProfile &&
+                                                        myProfile.profileImage
+                                                            ? myProfile.profileImage
+                                                            :  userData.role === "candidate"? CONSTANTS.CANDIDATE_DEFAULT_PROFILE_IMAGE:  CONSTANTS.RECRUITER_DEFAULT_PROFILE_IMAGE
                                                     }
-                                                    receiverImage={
-                                                        getReceiver(
-                                                            selectedChatRoom
-                                                        )[0].profileImage
-                                                            ? getReceiver(
-                                                                  selectedChatRoom
-                                                              )[0].profileImage
-                                                            : CONSTANTS.RECRUITER_DEFAULT_PROFILE_IMAGE
-                                                    }
+                                                    receiver={getReceiver(selectedChatRoom)}
                                                     key={index}
                                                     message={message}
-                                                    userId={recruiterData.id}
+                                                    userId={userData.id}
                                                 />
                                             )
                                         )
@@ -275,4 +306,4 @@ const ChatPageRecruiter = () => {
     );
 };
 
-export default ChatPageRecruiter;
+export default ChatPage;

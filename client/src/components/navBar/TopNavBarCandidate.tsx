@@ -64,12 +64,13 @@ const TopNavBarCandidate = () => {
 
                 if (response) {
                     dispatch(clearUser());
-                    
                     dispatch(clearMyProfileData());
+                    
                     dispatch(clearJobs());
                     dispatch(clearJob());
                     dispatch(clearNotification());
                     dispatch(clearNotificationsCount());
+
                     notify("Logged out successfully", "success");
                     navigate("/candidate/signin");
                 }
@@ -88,7 +89,7 @@ const TopNavBarCandidate = () => {
                 );
             }
         })();
-    }, [candidate]);
+    }, [candidate, isCandidateUrl, dispatch]);
 
     const menus = [
         { title: "Jobs", to: "/candidate/all-jobs" },

@@ -1,25 +1,20 @@
+import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
+
 import TableComponent from "../../components/table/TableComponent";
 import {
 	blockUnblockRecruiterApi,
 	getAllRecruitersApi,
 } from "../../axios/apiMethods/admin-service/recruiters";
 import { notify } from "../../utils/toastMessage";
-import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { IResponse } from "../../types/api";
+import { IUserData } from "../../types/user";
 
-interface RecruiterInterface {
-	id: string;
-	name: string;
-	email: string;
-	phone: string;
-	isActive: boolean;
-}
 
 function RecruiterManagementPage() {
 	const navigate = useNavigate();
-	const [recruitersData, setRecruitersData] = useState<RecruiterInterface[]>(
+	const [recruitersData, setRecruitersData] = useState<IUserData[]>(
 		[]
 	);
 
@@ -137,7 +132,6 @@ function RecruiterManagementPage() {
 
 	return (
 		<div className="text-center mx-10">
-			{/* <SideNavBar /> */}
 			<h1 className="font-semibold text-5xl mt-4 mb-10">
 				Recruiters Management
 			</h1>

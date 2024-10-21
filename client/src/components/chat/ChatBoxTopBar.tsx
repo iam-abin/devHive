@@ -22,9 +22,9 @@ const ChatBoxTopBar: React.FC<{
                             <img
                                 alt="Tailwind CSS Navbar component"
                                 src={
-                                    receiver[0]?.profileImage
-                                        ? receiver[0]?.profileImage
-                                        : receiver[0]?.role === "candidate"
+                                    receiver && receiver?.profileImage
+                                        ? receiver?.profileImage
+                                        : receiver?.role === "candidate"
                                         ? CONSTANTS.CANDIDATE_DEFAULT_PROFILE_IMAGE
                                         : CONSTANTS.RECRUITER_DEFAULT_PROFILE_IMAGE
                                 }
@@ -32,7 +32,7 @@ const ChatBoxTopBar: React.FC<{
                         </div>
                     </div>
                     <div className="flex flex-row w-full justify-between">
-                        <h5>{receiver[0]?.name}</h5>
+                        <h5>{receiver?.name}</h5>
                         <p>{isOnline ? "online" : "offline"}</p>
                     </div>
                 </div>

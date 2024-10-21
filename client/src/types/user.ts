@@ -6,13 +6,13 @@ interface IUser{
 	password: string;
 }
 
+export interface ISignin extends IUser{} 
 
 export interface ISignup extends IUser {
 	name: string;
 	phone: number | string;
 }
 
-export interface ISignin extends IUser{} 
 
 export interface ISigninProps {
     handleSubmit: (values: ISignin) => void;
@@ -30,4 +30,12 @@ export interface ISignupProps {
 export interface IUpdatePassword {
 	userId: string;
 	password: string;
+}
+
+export interface IUserData {
+	id: string;
+	name: string;
+	email: string;
+	phone: string;
+	isActive: boolean;
 }
