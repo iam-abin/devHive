@@ -57,7 +57,7 @@ function PremiumMembershipPage() {
 
 	// Handle creating premium membership plan
 	const handleCreatePremium = async (values: any) => {
-		let arr: Array<string> = [];
+		const arr: Array<string> = [];
 		
 		values.features = values.features.split(",").map((element: string) => {
 			arr.push(element.trim());

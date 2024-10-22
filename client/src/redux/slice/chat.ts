@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { IChatRoom } from "../../types/chat";
 
 interface ICurrentChatRoom {
-    roomData: any;
+    roomData: IChatRoom | null;
 }
 
 const initialState: ICurrentChatRoom = {

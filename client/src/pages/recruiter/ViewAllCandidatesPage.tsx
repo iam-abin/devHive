@@ -66,9 +66,7 @@ function ViewAllCandidatesPage() {
 						</div>
 					</div>
 				</div>
-				{/* <SideNavBar /> */}
-				{/* <TableComponent columns={columns} data={candidatesData} /> */}
-
+				
 				{filteredCandidated.length <= 0 ? (
 					<div>No Candidates are registered yet</div>
 				) : (

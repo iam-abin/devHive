@@ -17,7 +17,7 @@ const PaymentSuccessFul: React.FC = () => {
 	const candidateUrl = location.pathname.includes("candidate");
 	useEffect(() => {
 		(async () => {
-			let candidateProfileData = await candidateGetProfileApi(
+			const candidateProfileData = await candidateGetProfileApi(
 				candidateData?.id
 			);
 			

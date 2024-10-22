@@ -56,7 +56,7 @@ function LandingPage() {
 
     useEffect(() => {
         (async () => {
-            let id = candidate?.id;
+            const id = candidate?.id;
             let candidateProfile;
             if (isCandidateUrl && candidate) {
                 candidateProfile = await candidateGetProfileApi(id);

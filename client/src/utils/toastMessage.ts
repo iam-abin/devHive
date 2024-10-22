@@ -1,7 +1,7 @@
 import { toast } from "react-toastify";
 
 export const notify = (msg: string, type: string): void => {
-    let options = {
+    const options = {
         position: toast.POSITION.TOP_RIGHT,
     };
 

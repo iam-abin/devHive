@@ -19,11 +19,8 @@ const RecruiterManagementPage = lazy(
 const JobsManagementPage = lazy(
     () => import("../pages/job/admin/JobsListPage")
 );
-const ViewCandidateProfilePage = lazy(
-    () => import("../pages/profile/admin/ViewCandidateProfilePage")
-);
-const ViewRecruiterProfilePage = lazy(
-    () => import("../pages/profile/admin/ViewRecruiterProfilePage")
+const ViewProfilePage = lazy(
+    () => import("../pages/profile/admin/ViewProfile")
 );
 const ViewJobDetailsPage = lazy(
     () => import("../pages/job/admin/ViewJobDetailsPage")
@@ -99,7 +96,7 @@ function AdminRoutes() {
                             path="/candidate/viewProfileDetails/:userId"
                             element={
                                 isAdmin ? (
-                                    <ViewCandidateProfilePage />
+                                    <ViewProfilePage />
                                 ) : (
                                     <Navigate to="/admin" />
                                 )
@@ -110,7 +107,7 @@ function AdminRoutes() {
                             path="/recruiter/viewProfileDetails/:userId"
                             element={
                                 isAdmin ? (
-                                    <ViewRecruiterProfilePage />
+                                    <ViewProfilePage />
                                 ) : (
                                     <Navigate to="/admin" />
                                 )

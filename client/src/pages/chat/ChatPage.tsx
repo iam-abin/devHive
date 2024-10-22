@@ -172,7 +172,7 @@ const ChatPage = () => {
                 ? await getACandidateConversationApi(room._id)
                 : await getARecrutierConversationApi(room._id);
 
-        let senderId = getReceiver(room); // to find the other user
+        const senderId = getReceiver(room); // to find the other user
         userData.role === "candidate"
             ? await deleteCandidatesAllNotificationsBySenderIdApi(
                   senderId?._id

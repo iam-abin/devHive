@@ -81,7 +81,7 @@ const TopNavBarCandidate = () => {
     useEffect(() => {
         (async () => {
             if (isCandidateUrl && candidate) {
-                let candidateProfileData = await candidateGetProfileApi(
+                const candidateProfileData = await candidateGetProfileApi(
                     candidate?.id
                 );
                 dispatch(
@@ -126,10 +126,10 @@ const TopNavBarCandidate = () => {
     useEffect(() => {
         (async () => {
             if (openNotifications) {
-                let fetchedNotifications =
+                const fetchedNotifications =
                     await getCandidatesAllNotificationsApi();
 
-                let currentChatRoomSender = getOtherUser(
+                const currentChatRoomSender = getOtherUser(
                     currentlySelectedChatRoom
                 );
 
@@ -170,9 +170,9 @@ const TopNavBarCandidate = () => {
         (async () => {
             // let notificationsCount = await getCandidatesNotificationCountApi();
 
-            let fetchedNotifications = await getCandidatesAllNotificationsApi();
+            const fetchedNotifications = await getCandidatesAllNotificationsApi();
 
-            let currentChatRoomSender = getOtherUser(currentlySelectedChatRoom);
+            const currentChatRoomSender = getOtherUser(currentlySelectedChatRoom);
 
             let filteredNotifications = [];
             if (currentlySelectedChatRoom) {

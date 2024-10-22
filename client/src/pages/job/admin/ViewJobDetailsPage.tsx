@@ -31,7 +31,7 @@ const ViewJobDetailsPage: React.FC = () => {
 		deadline?: Date;
 	}
 
-	const [jobDetails, setJobDetails] = useState<JobInterface | Object>({});
+	const [jobDetails, setJobDetails] = useState<JobInterface | {}>();
 
 	useEffect(() => {
 		(async () => {

@@ -72,12 +72,12 @@ const TopNavBarRecruiter: React.FC<{ toggleLeftNavBar: any }> = ({
     useEffect(() => {
         (async () => {
             if (openNotifications) {
-                let fetchedNotifications =
+                const fetchedNotifications =
                     await getRecruiterAllNotificationsApi();
 
                 // socket.on('notification', (data: any) => {
 
-                let currentChatRoomSender = getOtherUser(
+                const currentChatRoomSender = getOtherUser(
                     currentlySelectedRecruiterChatRoom
                 );
 
@@ -108,7 +108,7 @@ const TopNavBarRecruiter: React.FC<{ toggleLeftNavBar: any }> = ({
 
     useEffect(() => {
         socket.on("chatNotification", (data: any) => {
-            let senderToChatRoom = getOtherUser(
+            const senderToChatRoom = getOtherUser(
                 currentlySelectedRecruiterChatRoom
             );
             if (senderToChatRoom[0]._id !== data?.senderId)
@@ -118,8 +118,8 @@ const TopNavBarRecruiter: React.FC<{ toggleLeftNavBar: any }> = ({
 
     useEffect(() => {
         (async () => {
-            let fetchedNotifications = await getRecruiterAllNotificationsApi();
-            let currentChatRoomSender = getOtherUser(
+            const fetchedNotifications = await getRecruiterAllNotificationsApi();
+            const currentChatRoomSender = getOtherUser(
                 currentlySelectedRecruiterChatRoom
             );
 
