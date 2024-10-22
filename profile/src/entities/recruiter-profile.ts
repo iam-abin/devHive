@@ -1,4 +1,4 @@
-import { RecruiterDataProfile } from "../frameworks/types/recruiter";
+import { IRecruiterProfile } from "../frameworks/types/recruiter";
 
 export class RecruiterProfile {
 	name: string;
@@ -8,10 +8,7 @@ export class RecruiterProfile {
 	gender?: string;
 	profileImage?: string;
 	about?: string;
-	company_id?: string;
 	userId?: string;
-	// membership?: string;
-	// company_size?: number;
 	constructor({
 		name,
 		email,
@@ -20,9 +17,8 @@ export class RecruiterProfile {
 		gender,
 		profileImage,
 		about,
-		company_id,
 		userId,
-	}: RecruiterDataProfile) {
+	}: IRecruiterProfile) {
 		(this.name = name),
 			(this.email = email),
 			(this.phone = phone),
@@ -30,7 +26,6 @@ export class RecruiterProfile {
 			(this.gender = gender),
 			(this.profileImage = profileImage),
 			(this.about = about),
-			(this.company_id = company_id),
 			(this.userId = userId);
 	}
 }

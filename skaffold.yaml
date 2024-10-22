@@ -11,7 +11,7 @@ build:
     - image: abinv/auth
       context: auth
       docker:
-        dockerfile: Dockerfile
+        dockerfile: Dockerfile.prod
       sync:
         manual:
           - src: 'src/**/*.ts'
@@ -19,7 +19,7 @@ build:
     - image: abinv/admin
       context: admin
       docker:
-        dockerfile: Dockerfile
+        dockerfile: Dockerfile.prod
       sync:
         manual:
           - src: 'src/**/*.ts'
@@ -27,7 +27,7 @@ build:
     - image: abinv/job
       context: job
       docker:
-        dockerfile: Dockerfile
+        dockerfile: Dockerfile.prod
       sync:
         manual:
           - src: 'src/**/*.ts'
@@ -35,7 +35,7 @@ build:
     - image: abinv/profile
       context: profile
       docker:
-        dockerfile: Dockerfile
+        dockerfile: Dockerfile.prod
       sync:
         manual:
           - src: 'src/**/*.ts'
@@ -43,7 +43,7 @@ build:
     - image: abinv/chat
       context: chat
       docker:
-        dockerfile: Dockerfile
+        dockerfile: Dockerfile.prod
       sync:
         manual:
           - src: 'src/**/*.ts'
@@ -51,7 +51,7 @@ build:
     - image: abinv/payment
       context: payment
       docker:
-        dockerfile: Dockerfile
+        dockerfile: Dockerfile.prod
       sync:
         manual:
           - src: 'src/**/*.ts'
@@ -59,7 +59,7 @@ build:
     - image: abinv/client-devhive
       context: client
       docker:
-        dockerfile: Dockerfile
+        dockerfile: Dockerfile.prod
       sync:
         manual:
           - src: "src/**/*.tsx"

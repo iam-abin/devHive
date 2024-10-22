@@ -4,8 +4,9 @@
   "description": "this is payment service",
   "main": "index.ts",
   "scripts": {
-    "start": "ts-node-dev --poll src/index.ts",
-    "dev": "nodemon src/index.ts"
+    "dev": "ts-node-dev --poll src/index.ts",
+		"build": "tsc",
+    "start": "node build/index.js"
   },
   "author": "abin",
   "license": "ISC",

@@ -1,4 +1,4 @@
-import { CandidateDataProfile } from "../frameworks/types/candidate";
+import { ICandidateProfile } from "../frameworks/types/candidate";
 
 export class CandidateProfile {
 	name: string;
@@ -7,11 +7,9 @@ export class CandidateProfile {
 	isActive: boolean;
 	gender?: string;
 	currentLocation?: string;
-	address?: object;
 	skills?: string[];
 	profileImage?: string;
 	about?: string;
-	resume?: string;
 	experience?: string;
 	userId: string;
 	constructor({
@@ -21,25 +19,21 @@ export class CandidateProfile {
 		isActive,
 		gender,
 		currentLocation,
-		address,
 		skills,
 		profileImage,
 		about,
-		resume,
 		experience,
 		userId
-	}: CandidateDataProfile) {
+	}: ICandidateProfile) {
 		this.name = name;
 		this.email = email;
 		this.phone = phone;
 		this.isActive = isActive;
 		this.gender = gender;
 		this.currentLocation = currentLocation;
-		this.address = address;
 		this.skills = skills;
 		this.profileImage = profileImage;
 		this.about = about;
-		this.resume = resume;
 		this.experience = experience;
 		this.userId = userId;
 	}

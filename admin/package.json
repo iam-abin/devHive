@@ -4,8 +4,9 @@
   "description": "this is admin service",
   "main": "index.ts",
   "scripts": {
-    "start": "ts-node-dev --poll src/index.ts",
-    "dev": "node --watch src/index.ts"
+    "dev": "ts-node-dev --poll src/index.ts",
+		"build": "tsc",
+    "start": "node build/index.js"
   },
   "author": "abin",
   "license": "ISC",
