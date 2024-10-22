@@ -11,25 +11,6 @@ import { RootState } from "../../../redux/reducer";
 import { useSelector } from "react-redux";
 import { IJob } from "../../../types/Job";
 
-// interface JobInterfaceR {
-//     id: string;
-//     title: string;
-//     recruiter: string;
-//     company: string;
-//     jobDescription?: string;
-//     skills?: string | string[];
-//     availablePosition?: string;
-//     experienceRequired?: string;
-//     educationRequired?: string;
-//     companyLocation?: string;
-//     employmentType?: string;
-//     salaryMin?: number;
-//     salaryMax?: number;
-//     has_applied?: boolean;
-//     isActive?: boolean;
-//     deadline?: Date;
-// }
-
 function AllAddedJobs() {
     const navigate = useNavigate();
     const [jobsData, setJobsData] = useState<IJob[]>([]);

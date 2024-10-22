@@ -47,7 +47,10 @@ export const deleteAJobApi = async (id: string): Promise<IResponse> => {
 
 export const candidateApplyJobApi = async (jobId: string): Promise<IResponse> => {
     return await candidateApiCalls("post", jobApiUrlConfig.candidateApplyJobUrl(jobId));
+};
 
+export const checkJobAppliedApi = async (jobId: string): Promise<IResponse> => {
+    return await candidateApiCalls("get", jobApiUrlConfig.checkAppliedUrl(jobId));
 };
 
 export const getAllJobsApplicationsForRecruiterApi = async (recruiterId: string): Promise<IResponse> => {

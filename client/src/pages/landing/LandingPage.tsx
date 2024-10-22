@@ -25,22 +25,22 @@ function LandingPage() {
     const isRecruiterUrl = location.pathname.includes("recruiter");
     const isCandidateUrl = location.pathname.includes("candidate");
 
-    const candidate: any = useSelector(
+    const candidate = useSelector(
         (store: RootState) => store.userReducer.authData
     );
     const recruiter = useSelector(
         (store: RootState) => store.userReducer.authData
     );
 
-    const pageCount: any = useSelector(
+    const pageCount = useSelector(
         (store: RootState) => store.jobReducer.totalNumberOfPages
     );
 
-    const currentPage: any = useSelector(
+    const currentPage = useSelector(
         (store: RootState) => store.jobReducer.currentPage
     );
 
-    const jobs: any = useSelector((store: RootState) => {
+    const jobs = useSelector((store: RootState) => {
         console.log(store.jobReducer.jobs);
 
         return store.jobReducer.jobs;

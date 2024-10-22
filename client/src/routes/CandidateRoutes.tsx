@@ -9,12 +9,11 @@ import { ROLES } from "../utils/constants";
 
 
 const PaymentFailed = lazy(()=> import("../pages/payment/PaymentFailed"))
-const CandidateSigninPage = lazy(()=> import("../pages/auth/signin/CandidateSigninPage"))
-const CandidateSignupPage = lazy(()=> import("../pages/auth/signup/CandidateSignupPage"))
+const AuthCandidate = lazy(()=> import("../pages/auth/authUser/AuthCandidate"))
 const LandingPage = lazy(()=> import("../pages/landing/LandingPage"))
 const CandidateProfilePage = lazy(()=> import("../pages/profile/candidate/CandidateProfilePage"))
 const AllJobsPage = lazy(()=> import("../pages/job/candidate/AllJobsPage"))
-const JobDetailsPage = lazy(()=> import("../pages/job/candidate/JobDetailsPage"))
+const JobDetailsPage = lazy(()=> import("../pages/job/JobDetailsPage"))
 const OtpFormPage = lazy(()=> import("../pages/auth/otp/OtpFormPage"))
 const EmailOrMobileEnterPage = lazy(()=> import("../pages/auth/emailOrMobileEnter/EnterEmailOrMobilePage"))
 const UpdatePassword = lazy(()=> import("../pages/auth/password/UpdatePassword"))
@@ -57,8 +56,8 @@ function CandidateRoutes() {
 					<Route path="/forgotPassword/:userId" element={!isCandidate? <UpdatePassword />: <Navigate to={"/candidate/landing"} />} />
 					
 					<Route path="/landing" element={isCandidate?<Navigate to={"/candidate"} />: <LandingPage /> } />
-					<Route path="/signin" element={isCandidate?<Navigate to={"/candidate"} />:<CandidateSigninPage /> } />
-					<Route path="/signup" element={isCandidate? <Navigate to={"/candidate"} />:<CandidateSignupPage />} />
+					<Route path="/signin" element={isCandidate?<Navigate to={"/candidate"} />:<AuthCandidate /> } />
+					<Route path="/signup" element={isCandidate? <Navigate to={"/candidate"} />:<AuthCandidate />} />
 					<Route path="/otpSignupCandidate/:email" element={!isCandidate? <OtpFormPage /> :<Navigate to={"/candidate"} />} />
 
 					<Route path="/all-jobs" element={isCandidate?<AllJobsPage />:<Navigate to={"/candidate/signin"} />} />

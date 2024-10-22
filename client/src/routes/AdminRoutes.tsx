@@ -8,7 +8,7 @@ import Loading from "../components/loading/Loading";
 import AdminLayout from "../pages/layout/AdminLayout";
 
 const AdminSigninPage = lazy(
-    () => import("../pages/auth/signin/AdminSigninPage")
+    () => import("../pages/auth/authUser/AdminSigninPage")
 );
 const CandidateManagementPage = lazy(
     () => import("../pages/admin/CandidatesListPage")

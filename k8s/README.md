@@ -9,6 +9,10 @@
 - in ubuntu,
 1. install docker (refer any documents)
 2. install minikube (refer any documents)
+- start minikube if already installed
+```
+ minikube start
+```
 3. enable ingress, 
 ```
  minikube addons enable ingress

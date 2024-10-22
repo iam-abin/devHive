@@ -8,7 +8,7 @@ interface IUser{
 
 export interface ISignin extends IUser{} 
 
-export interface ISignup extends IUser {
+export interface IAuth extends IUser {
 	name: string;
 	phone: number | string;
 }
@@ -20,10 +20,11 @@ export interface ISigninProps {
     initialSigninValues: ISignin;
 }
 
-export interface ISignupProps {
-    handleSubmit: (values: ISignup) => void;
-    signupSchema: SignupFormSchemaType;
-    initialSignupValues: ISignup;
+export interface IAuthProps {
+    handleSubmit: (values: IAuth) => void;
+    schemaValues: SignupFormSchemaType | SigninFormSchemaType;
+    initialValues: IAuth;
+	authType: "signin"|"signup"
 }
 
 

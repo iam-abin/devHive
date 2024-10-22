@@ -11,9 +11,8 @@ import { ROLES } from "../utils/constants";
 
 const RecruiterDashBoard = lazy(()=> import("../pages/dashboard/RecruiterDashBoardPage"))
 const CandidateProfilePage = lazy(()=> import("../pages/profile/candidate/CandidateProfilePage"))
-const RecruiterSignupPage = lazy(()=> import("../pages/auth/signup/RecruiterSignupPage"))
+const AuthRecruiter = lazy(()=> import("../pages/auth/authUser/AuthRecruiter"))
 const LandingPage = lazy(()=> import("../pages/landing/LandingPage"))
-const RecruiterSigninPage = lazy(()=> import("../pages/auth/signin/RecruiterSigninPage"))
 const CreateJobPage = lazy(()=> import("../pages/job/recruiter/CreateJobPage"))
 const EditJobPage = lazy(()=> import("../pages/job/recruiter/EditJobPage"))
 const OtpFormPage = lazy(()=> import("../pages/auth/otp/OtpFormPage"))
@@ -21,7 +20,7 @@ const RecruiterProfilePage = lazy(()=> import("../pages/profile/recruiter/Recrui
 const UpdatePassword = lazy(()=> import("../pages/auth/password/UpdatePassword"))
 const RecruiterProfileEditPage = lazy(()=> import("../pages/profile/recruiter/RecruiterProfileEditPage"))
 const EmailOrMobileEnterPage = lazy(()=> import("../pages/auth/emailOrMobileEnter/EnterEmailOrMobilePage"))
-const JobDetailsPage = lazy(()=> import("../pages/job/recruiter/JobDetailsPage"))
+const JobDetailsPage = lazy(()=> import("../pages/job/JobDetailsPage"))
 const AllAddedJobs = lazy(()=> import("../pages/job/recruiter/AllAddedJobs"))
 const JobApplicationsPage = lazy(()=> import("../pages/job/recruiter/JobApplicationsPage"))
 const JobApplicationDetailsPage = lazy(()=> import("../pages/job/recruiter/JobApplicationDetailsPage"))
@@ -44,8 +43,8 @@ function RecruiterRouters() {
 				
 			<Routes>
 				<Route path="/landing" element={isRecruiter?<Navigate to={"/recruiter"} />: <LandingPage /> } />
-				<Route path="/signin" element={isRecruiter?<Navigate to={"/recruiter"} />:<RecruiterSigninPage /> } />
-				<Route path="/signup" element={isRecruiter? <Navigate to={"/recruiter"} />:<RecruiterSignupPage />} />
+				<Route path="/signin" element={isRecruiter?<Navigate to={"/recruiter"} />:<AuthRecruiter /> } />
+				<Route path="/signup" element={isRecruiter? <Navigate to={"/recruiter"} />:<AuthRecruiter />} />
 				
 				<Route path="/otpSignupRecruiter/:email" element={!isRecruiter? <OtpFormPage /> :<Navigate to={"/recruiter"} />} />
 				<Route path="/forgotPasswordEmail" element={!isRecruiter? <EmailOrMobileEnterPage />: <Navigate to={"/recruiter/landing"} />} />
