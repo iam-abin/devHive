@@ -11,6 +11,9 @@ const jobApiUrlConfig = {
 	
 	// Candidate
 	candidateApplyJobUrl:(jobId: string ) => `${CANDIDATE_JOB_URL}/apply/${jobId}`,
+	
+	checkAppliedUrl:(jobId: string ) => `${CANDIDATE_JOB_URL}/hasApplied/${jobId}`,
+
 
 	getAllCandidateAppliedJobsUrl: (candidateId: string, currentPage: number) =>
 	`${CANDIDATE_JOB_URL}/applied/${candidateId}/${currentPage}`,

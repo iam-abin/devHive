@@ -37,8 +37,13 @@ export const candidateRouter = (dependencies: IDependency) => {
     );
 
     router.get(
+        "/hasApplied/:jobId",
+        candidateJobController.checkAppliedController
+    );
+
+    router.get(
         "/application/:jobApplicationId",
-        candidateJobController.viewPliedJobApplicationController
+        candidateJobController.getAppliedJobApplicationController
     );
 
     return router;

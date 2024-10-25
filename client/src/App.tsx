@@ -10,15 +10,19 @@ import AdminRoutes from "./routes/AdminRoutes";
 import { useSelector } from "react-redux";
 import { RootState } from "./redux/reducer";
 import { Toaster } from "react-hot-toast";
-import { ROLES } from "./utils/constants";
-const NotFound = lazy(()=> import("./pages/Error/NotFound"));
-const LandingPage = lazy(()=> import("./pages/landing/LandingPage"));
+import { SocketProvider } from "./context/socketContext";
+import { checkUserRole } from "./utils/checkRole";
+import TopNavBar from "./components/navBar/TopNavBar";
+import CandidateLayout from "./pages/layout/CandidateLayout";
+const NotFound = lazy(() => import("./pages/Error/NotFound"));
+const LandingPage = lazy(() => import("./pages/landing/LandingPage"));
 
 export default function App() {
-	
     const loggedinUser = useSelector(
         (store: RootState) => store.userReducer.authData
     );
+
+    const { isCandidate, isRecruiter } = checkUserRole(loggedinUser);
 
     console.log("loggedinUser", loggedinUser);
 
@@ -30,9 +34,9 @@ export default function App() {
                 <Route
                     path="/"
                     element={
-                        loggedinUser?.role === ROLES.CANDIDATE ? (
+                        isCandidate ? (
                             <Navigate to="/candidate" />
-                        ) : loggedinUser?.role === ROLES.RECRUITER ? (
+                        ) : isRecruiter ? (
                             <Navigate to="/recruiter" />
                         ) : (
                             <LandingPage />
@@ -41,8 +45,32 @@ export default function App() {
                 />
 
                 <Route path="/admin/*" element={<AdminRoutes />} />
-                <Route path="/candidate/*" element={<CandidateRoutes />} />
-                <Route path="/recruiter/*" element={<RecruiterRouters />} />
+                <Route
+                    path="/candidate/*"
+                    element={
+                        isCandidate ? (
+                            <SocketProvider currentUserId={loggedinUser.id}>
+                                <CandidateLayout>
+                                    <CandidateRoutes />
+                                </CandidateLayout>
+                            </SocketProvider>
+                        ) : (
+                            <CandidateRoutes />
+                        )
+                    }
+                />
+                <Route
+                    path="/recruiter/*"
+                    element={
+                        isRecruiter ? (
+                            <SocketProvider currentUserId={loggedinUser.id}>
+                                <RecruiterRouters />
+                            </SocketProvider>
+                        ) : (
+                            <RecruiterRouters />
+                        )
+                    }
+                />
                 <Route path="*" element={<NotFound url="/" />} />
             </Routes>
         </>

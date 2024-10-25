@@ -3,7 +3,7 @@ import profileApiUrlConfig from "../../../config/apiUrlsConfig/profileApiUrlConf
 import candidateApiCalls from "../../candidate/apiCalls";
 
 
-export const candidateGetProfileApi = async (userId: string): Promise<any> => {
+export const getCandidateProfileApi = async (userId: string): Promise<any> => {
     return candidateApiCalls("get", profileApiUrlConfig.getCandidateProfileUrl(userId), userId);
 };
 
@@ -24,7 +24,7 @@ export const deleteResumeApi = async (candidateId: string): Promise<any> => {
 };
 
 export const updateCandidateSkillsProfileApi = async (userId: string,skills: Array<string>): Promise<any> => {
-    let data = {
+    const data = {
         id: userId,
         skills
     }
@@ -32,7 +32,7 @@ export const updateCandidateSkillsProfileApi = async (userId: string,skills: Arr
 };
 
 export const updateCandidatePreferredJobsProfileApi = async (userId: string,preferredJobs: Array<string>): Promise<any> => {
-    let data = {
+    const data = {
         id: userId,
         preferredJobs
     }

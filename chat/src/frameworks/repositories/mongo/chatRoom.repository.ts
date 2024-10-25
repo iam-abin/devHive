@@ -31,12 +31,13 @@ export = {
         return chatRooms;
     },
 
+
     getAllChatRoomsByUserId: async (userId: string): Promise<any[] | []> => {
         const chatRooms = await ChatRoomModel.find({
             users: { $elemMatch: { $eq: userId } },
         })
+        .populate("users")
             .sort({ updatedAt: -1 })
-            .populate("users")
             .lean();
 
         return chatRooms;

@@ -1,86 +1,15 @@
-import { useEffect, useState } from "react";
-import {
-	editJobApi,
-	getAJobApi,
-} from "../../axios/apiMethods/jobs-service/jobs";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { useNavigate, useParams } from "react-router-dom";
-import { notify } from "../../utils/toastMessage";
-interface JobFormData {
-	jobId: string;
-	title: string;
-	recruiter: string;
-	jobDescription: string;
-	skills: string[];
-	availablePosition: number;
-	experienceRequired: string;
-	educationRequired: string;
-	employmentType: string;
-	salaryMin: number;
-	salaryMax: number;
-	deadline: string;
-}
+import { IEditJobProps } from "../../types/Job";
 
-function EditJob() {
-	const [jobDetails, setJobDetails] = useState<any>(null);
-	const navigate = useNavigate();
-	const { jobId } = useParams();
 
-	useEffect(() => {
-		const fetchJobDetails = async () => {
-				if (jobId) {
-					const job = await getAJobApi(jobId);
-					console.log(job);
-					
-					setJobDetails(job.data);
-				}
-		};
-
-		fetchJobDetails();
-	}, [jobId]);
-	if (!jobDetails) {
-		return <div>Loading...</div>;
-	}
-
-	const handleSubmit = async (jobData: JobFormData) => {
-			// const data = await updateJobApi(jobData);
-			console.log("jobId ",jobId);
-			console.log("jobData ",jobData);
-			
-			const data = await editJobApi(jobId!, jobData);
-			
-			if (data.data) {
-				notify("updated successfully", "success");
-				navigate("/recruiter/recruiter-added-jobs");
-			} else {
-				notify("not updated", "error");
-			}
-	};
-
-	const initialJobValues: JobFormData = {
-		jobId: "",
-		title: jobDetails?.title ?? "",
-		recruiter: jobDetails?.recruiter ?? "",
-		jobDescription: jobDetails?.jobDescription ?? "",
-		skills: jobDetails?.skills ?? [],
-		availablePosition: jobDetails?.availablePosition ?? 0,
-		experienceRequired: jobDetails?.experienceRequired ?? "",
-		educationRequired: jobDetails?.educationRequired ?? "",
-		employmentType: jobDetails?.employmentType,
-		salaryMin: jobDetails?.salaryMin ?? 0,
-		salaryMax: jobDetails?.salaryMax ?? 0,
-		deadline:
-			new Date(jobDetails?.deadline).toLocaleDateString("en-CA") ?? "",
-	};
-
-	//   const jobCreationSchema: /* Define your validation schema here */ = /* ... */;
+function EditJob({initialJobValues, handleSubmit}: IEditJobProps ) {
+	
 	const today = new Date().toISOString().split("T")[0];
 
 	return (
 		<Formik
 			initialValues={initialJobValues}
 			onSubmit={(values) => {
-				values.jobId = jobDetails.id;
 				handleSubmit(values);
 			}}
 		>
@@ -196,28 +125,6 @@ function EditJob() {
 									className="error label-text-alt"
 								/>
 							</div>
-
-							{/* Location field */}
-							{/* <div className="form-control w-6/6">
-								<label htmlFor="location" className="label">
-									Location
-								</label>
-								<Field
-									type="text"
-									id="location"
-									name="location"
-									className={`input input-primary w-full rounded-xl ${
-										errors.location && touched.location
-											? "input-error"
-											: ""
-									}`}
-								/>
-								<ErrorMessage
-									name="location"
-									component="div"
-									className="error label-text-alt"
-								/>
-							</div> */}
 
 							<div className="flex sm:flex-col justify-between">
 								{/* Experience Required field */}

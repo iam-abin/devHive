@@ -1,8 +1,9 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { IJob } from "../../types/Job";
 
 interface IJobSlice {
-    job: any;
-    jobs: any;
+    job: IJob | null;
+    jobs: IJob[];
     currentPage: number;
     totalNumberOfPages: number;
 }

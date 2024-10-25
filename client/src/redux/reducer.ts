@@ -1,24 +1,18 @@
 import { combineReducers } from "@reduxjs/toolkit";
 
-
 import apiCallLoadingSlice from "./slice/isLoading";
-
-import userSlice from "./slice/user"
-import jobSlice from "./slice/job"
 import chatSlice from "./slice/chat"
+import jobSlice from "./slice/job"
 import notificationSlice from "./slice/notification"
-
-// ============================================================================================
+import userSlice from "./slice/user"
 
 
 const rootRedcucer = combineReducers({
     loading: apiCallLoadingSlice,
-
-    // ============================================================================================
-    userReducer: userSlice,
-    jobReducer: jobSlice,
     chatReducer: chatSlice,
+    jobReducer: jobSlice,
     notificationReducer: notificationSlice,
+    userReducer: userSlice,
 });
 
 export type RootState = ReturnType<typeof rootRedcucer>;

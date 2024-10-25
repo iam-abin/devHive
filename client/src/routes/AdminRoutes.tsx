@@ -7,180 +7,174 @@ import Loading from "../components/loading/Loading";
 
 import AdminLayout from "../pages/layout/AdminLayout";
 
-
-
 const AdminSigninPage = lazy(
-	() => import("../pages/auth-pages/signin/AdminSigninPage")
+    () => import("../pages/auth/authUser/AdminSigninPage")
 );
 const CandidateManagementPage = lazy(
-	() => import("../pages/admin/CandidatesListPage")
+    () => import("../pages/admin/CandidatesListPage")
 );
 const RecruiterManagementPage = lazy(
-	() => import("../pages/admin/RecruitersListPage")
+    () => import("../pages/admin/RecruitersListPage")
 );
 const JobsManagementPage = lazy(
-	() => import("../pages/job-pages/admin/JobsListPage")
+    () => import("../pages/job/admin/JobsListPage")
 );
-const ViewCandidateProfilePage = lazy(
-	() => import("../pages/profile/admin/ViewCandidateProfilePage")
-);
-const ViewRecruiterProfilePage = lazy(
-	() => import("../pages/profile/admin/ViewRecruiterProfilePage")
+const ViewProfilePage = lazy(
+    () => import("../pages/profile/admin/ViewProfile")
 );
 const ViewJobDetailsPage = lazy(
-	() => import("../pages/job-pages/admin/ViewJobDetailsPage")
+    () => import("../pages/job/admin/ViewJobDetailsPage")
 );
 
 const PremiumMembershipPage = lazy(
-	() => import("../pages/payment/PremiumMembershipPage")
+    () => import("../pages/payment/PremiumMembershipPage")
 );
 
 const PaymentsListPage = lazy(
-	() => import("../pages/payment/PaymentsListPage")
+    () => import("../pages/payment/PaymentsListPage")
 );
 
-const AdminDashBoard = lazy(
-	() => import("../pages/dashboard/AdminDashBoard")
-);
+const AdminDashBoard = lazy(() => import("../pages/dashboard/AdminDashBoard"));
 
-const NotFound = lazy(
-	() => import("../pages/Error/NotFound")
-);
+const NotFound = lazy(() => import("../pages/Error/NotFound"));
 
-import { ROLES } from "../utils/constants";
+import { checkUserRole } from "../utils/checkRole";
 
 function AdminRoutes() {
-	const loggedinUser = useSelector(
+    const loggedinUser = useSelector(
         (store: RootState) => store.userReducer.authData
     );
-	return (
-		<>
-			<Suspense fallback={<Loading />}>
-				<Routes>
-					<Route
-						path="/signin"
-						element={
-							loggedinUser?.role === ROLES.ADMIN ? (
-								<Navigate to="/admin" />
-							) : (
-								<AdminSigninPage />
-							)
-						}
-					/>
-					<Route
-						path="/"
-						element={
-							loggedinUser ? (
-								<AdminLayout />
-							) : (
-								<Navigate to="/admin/signin" />
-							)
-						}
-					>
-						<Route
-							path="/"
-							element={
-								loggedinUser ? (
-									<AdminDashBoard />
-								) : (
-									<Navigate to="/admin" />
-								)
-							}
-						/>
-						<Route
-							path="/candidates"
-							element={
-								loggedinUser ? (
-									<CandidateManagementPage />
-								) : (
-									<Navigate to="/admin" />
-								)
-							}
-						/>
+    const {isAdmin} = checkUserRole(loggedinUser)
+    return (
+        <>
+            <Suspense fallback={<Loading />}>
+                <Routes>
+                    <Route
+                        path="/signin"
+                        element={
+                            isAdmin ? (
+                                <Navigate to="/admin" />
+                            ) : (
+                                <AdminSigninPage />
+                            )
+                        }
+                    />
 
-						<Route
-							path="/candidate/viewProfileDetails/:userId"
-							element={
-								loggedinUser ? (
-									<ViewCandidateProfilePage />
-								) : (
-									<Navigate to="/admin" />
-								)
-							}
-						/>
+                    {/* Protected Admin Routes */}
+                    <Route
+                        path="/"
+                        element={
+                            isAdmin ? (
+                                <AdminLayout />
+                            ) : (
+                                <Navigate to="/admin/signin" />
+                            )
+                        }
+                    >
+                        <Route
+                            path="/"
+                            element={
+                                isAdmin ? (
+                                    <AdminDashBoard />
+                                ) : (
+                                    <Navigate to="/admin" />
+                                )
+                            }
+                        />
+                        <Route
+                            path="/candidates"
+                            element={
+                                isAdmin ? (
+                                    <CandidateManagementPage />
+                                ) : (
+                                    <Navigate to="/admin" />
+                                )
+                            }
+                        />
 
-						<Route
-							path="/recruiter/viewProfileDetails/:userId"
-							element={
-								loggedinUser ? (
-									<ViewRecruiterProfilePage />
-								) : (
-									<Navigate to="/admin" />
-								)
-							}
-						/>
+                        <Route
+                            path="/candidate/viewProfileDetails/:userId"
+                            element={
+                                isAdmin ? (
+                                    <ViewProfilePage />
+                                ) : (
+                                    <Navigate to="/admin" />
+                                )
+                            }
+                        />
 
-						<Route
-							path="/recruiters"
-							element={
-								loggedinUser ? (
-									<RecruiterManagementPage />
-								) : (
-									<Navigate to="/admin" />
-								)
-							}
-						/>
+                        <Route
+                            path="/recruiter/viewProfileDetails/:userId"
+                            element={
+                                isAdmin ? (
+                                    <ViewProfilePage />
+                                ) : (
+                                    <Navigate to="/admin" />
+                                )
+                            }
+                        />
 
-						<Route
-							path="/jobs"
-							element={
-								loggedinUser ? (
-									<JobsManagementPage />
-								) : (
-									<Navigate to="/admin" />
-								)
-							}
-						/>
+                        <Route
+                            path="/recruiters"
+                            element={
+                                isAdmin ? (
+                                    <RecruiterManagementPage />
+                                ) : (
+                                    <Navigate to="/admin" />
+                                )
+                            }
+                        />
 
-						<Route
-							path="/job/viewJobDetails/:jobId"
-							element={
-								loggedinUser ? (
-									<ViewJobDetailsPage />
-								) : (
-									<Navigate to="/admin" />
-								)
-							}
-						/>
+                        <Route
+                            path="/jobs"
+                            element={
+                                isAdmin ? (
+                                    <JobsManagementPage />
+                                ) : (
+                                    <Navigate to="/admin" />
+                                )
+                            }
+                        />
 
-						<Route
-							path="/memberships"
-							element={
-								loggedinUser ? (
-									<PremiumMembershipPage />
-								) : (
-									<Navigate to="/admin" />
-								)
-							}
-						/>
+                        <Route
+                            path="/job/viewJobDetails/:jobId"
+                            element={
+                                isAdmin ? (
+                                    <ViewJobDetailsPage />
+                                ) : (
+                                    <Navigate to="/admin" />
+                                )
+                            }
+                        />
 
-						<Route
-							path="/payments"
-							element={
-								loggedinUser ? (
-									<PaymentsListPage />
-								) : (
-									<Navigate to="/admin" />
-								)
-							}
-						/>
-					</Route>
-					
-					<Route path="*" element={<NotFound url={"/admin"} />} />
-				</Routes>
-			</Suspense>
-		</>
-	);
+                        <Route
+                            path="/memberships"
+                            element={
+                                isAdmin ? (
+                                    <PremiumMembershipPage />
+                                ) : (
+                                    <Navigate to="/admin" />
+                                )
+                            }
+                        />
+
+                        <Route
+                            path="/payments"
+                            element={
+                                isAdmin ? (
+                                    <PaymentsListPage />
+                                ) : (
+                                    <Navigate to="/admin" />
+                                )
+                            }
+                        />
+                    </Route>
+
+                    <Route path="*" element={<NotFound url={"/admin"} />} />
+                </Routes>
+            </Suspense>
+        </>
+    );
 }
 
 export default AdminRoutes;

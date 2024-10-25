@@ -8,36 +8,41 @@ const Notifications: React.FC<{
 	return (
 		<div
 			onClick={(e) => e.stopPropagation()}
-			className="absolute top-full right-0 w-80 h-80  border bg-gray-200 border-gray-300 rounded-2xl mt-2  shadow-md p-4"
+			className="absolute top-full right-0 w-80 h-80 border bg-gray-200 border-gray-300 rounded-2xl mt-2 shadow-md p-4"
 		>
-			<div className="mb-2 font-bold text-center ">
-				chat notifications are
-			</div>
+			<div className="mb-2 font-bold text-center">Chat Notifications</div>
 			<div className="w-full-400 h-4/5 overflow-auto">
 				<ul>
-					{notifications.length > 0 ? (
-						notifications?.map((notification: any) => (
-							<li className="my-4 p-2 text-sm shadow-lg flex flex-row justify-between" key={notification.id}>
-								<p>{ notification?.message?.length > 17 ? notification.message.substring(0, 17) + "..." : notification.message}</p>
+					{notifications && notifications.length > 0 ? (
+						notifications.map((notification: any, index: number) => (
+							<li
+								className="my-4 p-2 text-sm shadow-lg flex flex-row justify-between"
+								key={index}
+							>
+								<p>
+									{notification?.message?.length > 17
+										? notification.message.substring(0, 17) + "..."
+										: notification.message}
+								</p>
 								<p>{notification?.senderId?.name}</p>
 							</li>
 						))
 					) : (
-						<div className=" flex flex-col items-center justify-center ">
-							<span className="my-aut">No Notifications</span>
+						<div className="flex flex-col items-center justify-center">
+							<span className="my-auto">No Notifications</span>
 						</div>
 					)}
 				</ul>
 			</div>
 			<div className="flex justify-between">
 				<label
-					className="bg-gray-400 hover: cursor-pointer text-white rounded-full p-1  text-xs mt-2"
+					className="bg-gray-400 hover: cursor-pointer text-white rounded-full p-1 text-xs mt-2"
 					onClick={() => setOpenNotificationFn(false)}
 				>
-					close
+					Close
 				</label>
 				<label
-					className="bg-gray-400 hover: cursor-pointer text-white rounded-full p-1  text-xs mt-2"
+					className="bg-gray-400 hover: cursor-pointer text-white rounded-full p-1 text-xs mt-2"
 					onClick={clearNotifications}
 				>
 					Clear Notifications

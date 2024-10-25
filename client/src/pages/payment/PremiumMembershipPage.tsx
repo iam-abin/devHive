@@ -57,7 +57,7 @@ function PremiumMembershipPage() {
 
 	// Handle creating premium membership plan
 	const handleCreatePremium = async (values: any) => {
-		let arr: Array<string> = [];
+		const arr: Array<string> = [];
 		
 		values.features = values.features.split(",").map((element: string) => {
 			arr.push(element.trim());
@@ -93,7 +93,6 @@ function PremiumMembershipPage() {
 
 	return (
 		<div className="text-center mx-10">
-			{/* <SideNavBar /> */}
 			<div className="font-semibold text-5xl mt-4 mb-10">
 				Premium Membership Plans
 			</div>
@@ -105,7 +104,6 @@ function PremiumMembershipPage() {
 					Create Premium
 				</button>
 			</div>
-			{/* ReactModal */}
 
 			<Modal open={modalIsOpen} onClose={handleModalClose} center>
 				<div className="p-6 bg-white rounded-lg shadow-md">

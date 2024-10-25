@@ -1,6 +1,6 @@
 export interface IMembershipPlan {
 	membershipPlanId: string,
-	name: String;
+	name: string;
 	features: string[];
 	description: string;
 	price: number;

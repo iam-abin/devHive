@@ -11,7 +11,7 @@ export = (dependencies: IDependency) => {
 	}
 
 	const execute =async (userId: string) => {
-		const user = await userRepository.findUserById(userId);
+		const user = await userRepository.getById(userId);
 		if(!user) throw new NotFoundError("user not found")
 		const chatRooms = await chatRoomRepository.getAllChatRoomsByUserId(userId);
 		return chatRooms

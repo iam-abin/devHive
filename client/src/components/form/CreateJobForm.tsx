@@ -1,39 +1,13 @@
-import { ErrorMessage, Field, Form, Formik } from "formik";
-import * as yup from "yup";
+import { ErrorMessage, Field, Form, Formik, FormikProps } from "formik";
+import { IJob, IJobProps } from "../../types/Job";
 
-interface JobFormData {
-	title: string;
-	recruiterId: string;
-	// companyId?: string;
-	jobDescription: string;
-	skills: string[];
-	availablePosition: number;
-	experienceRequired: string;
-	educationRequired: string;
-	employmentType: string;
-	salaryMin: number;
-	salaryMax: number;
-	deadline: string;
-	companyName: string;
-	companyLocation: string;
-}
-
-const CreateJobForm: React.FC<{
-	initialJobValues: JobFormData;
-	handleSubmit: any;
-	recruiterData: any;
-}> = ({ initialJobValues, handleSubmit, recruiterData }) => {
+const CreateJobForm: React.FC< IJobProps > = ({ initialJobValues, handleSubmit, recruiterData, jobSchema }) => {
 	const today = new Date().toISOString().split("T")[0];
-	const jobCreationSchema = yup.object().shape({
-		availablePosition: yup
-			.number()
-			.min(1, "Available positions must be atleast 1")
-			.required("Available positions is required"),
-	});
+	
 	return (
 		<Formik
 			initialValues={initialJobValues}
-			validationSchema={jobCreationSchema}
+			validationSchema={jobSchema}
 			onSubmit={(values) => {
 				if (recruiterData?.companyName) {
 					values.companyName = recruiterData.companyName;
@@ -42,11 +16,11 @@ const CreateJobForm: React.FC<{
 					values.companyLocation = recruiterData.companyLocation;
 				}
 				
-				values.recruiterId = recruiterData?.id;
+				values.recruiterId = recruiterData?.id!;
 				handleSubmit(values);
 			}}
 		>
-			{(formik) => {
+			{(formik: FormikProps<IJob>) => {
 				const { errors, touched } = formik;
 				return (
 					<div className="md:w-6/12 p-6 h-full">

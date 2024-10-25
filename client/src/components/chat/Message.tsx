@@ -1,13 +1,17 @@
 import React from "react";
 import { formatDateWithTime } from "../../utils/date-functions";
 import { TiTick } from "react-icons/ti";
+import { CONSTANTS } from "../../utils/constants";
 
 const Message: React.FC<{
     message: any;
     userId: string;
     senderImage: string;
-	receiverImage: string;
-}> = ({ message, userId, senderImage, receiverImage }) => {
+	receiver: any;
+}> = ({ message, userId, senderImage, receiver }) => {
+    // console.log(message);
+    // console.log(userId);
+    
     return (
         <>
             {message.senderId === userId ? (
@@ -49,7 +53,10 @@ const Message: React.FC<{
                         <div className="w-10 rounded-full">
                             <img
                                 alt="Tailwind CSS chat bubble component"
-                                src={`${receiverImage }`}
+                                src={`${receiver &&
+                                    receiver.profileImage
+                                        ? receiver.profileImage
+                                        :  receiver.role === "candidate"? CONSTANTS.CANDIDATE_DEFAULT_PROFILE_IMAGE:  CONSTANTS.RECRUITER_DEFAULT_PROFILE_IMAGE }`}
                             />
                         </div>
                     </div>

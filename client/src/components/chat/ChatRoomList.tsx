@@ -25,8 +25,6 @@ const ChatRoomList: React.FC<ChatRoomListProps> = ({
 }) => {
     // Use useState to manage the unReadCount state
     const [unReadCount, setUnReadCount] = useState<number>(0);
-	console.log("receiver ========>",receiver);
-	
 
     // Use useEffect to fetch the unread message count asynchronously
     useEffect(() => {
@@ -34,7 +32,7 @@ const ChatRoomList: React.FC<ChatRoomListProps> = ({
             let count: any = 0;
             if (currentUser.role === "candidate") {
                 count = await getCandidatesUnreadMessagesCountApi(
-                    receiver[0]._id
+                    receiver._id
                 );
             }
 
@@ -63,9 +61,9 @@ const ChatRoomList: React.FC<ChatRoomListProps> = ({
                         <img
                             alt="Tailwind CSS Navbar component"
                             src={
-                                receiver[0].role === "recruiter"
+                                receiver.role === "recruiter"
                                     ? CONSTANTS.RECRUITER_DEFAULT_PROFILE_IMAGE
-                                    : receiver[0].role === "candidate" && receiver[0].profileImage? receiver[0].profileImage : CONSTANTS.CANDIDATE_DEFAULT_PROFILE_IMAGE
+                                    : receiver.role === "candidate" && receiver.profileImage? receiver.profileImage : CONSTANTS.CANDIDATE_DEFAULT_PROFILE_IMAGE
                             }
                         />
                         <span
@@ -77,7 +75,7 @@ const ChatRoomList: React.FC<ChatRoomListProps> = ({
                 </div>
                 <div className="flex flex-col w-full justify-between">
                     <h5 className="text-gray-600 font-semibold text-sm">
-                        {receiver[0]?.name}
+                        {receiver?.name}
                     </h5>
                     <span className="flex flex-row items-center">
                         <p>

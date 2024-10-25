@@ -16,7 +16,7 @@ const ChartThree: React.FC<{ graphData: any }> = ({ graphData }) => {
 
 	useEffect(() => {
 		if (graphData) {
-			let arr = graphData
+			const arr = graphData
 				? Object.values(graphData).map((item) => Number(item))
 				: [0, 0, 0];
 			setState((prevState: any) => ({

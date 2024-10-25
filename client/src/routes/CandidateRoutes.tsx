@@ -5,28 +5,24 @@ import { useSelector } from "react-redux";
 
 import { RootState } from "../redux/reducer";
 import Loading from "../components/loading/Loading";
+import { checkUserRole } from "../utils/checkRole";
 
 
 const PaymentFailed = lazy(()=> import("../pages/payment/PaymentFailed"))
-const CandidateSigninPage = lazy(()=> import("../pages/auth-pages/signin/CandidateSigninPage"))
-const CandidateSignupPage = lazy(()=> import("../pages/auth-pages/signup/CandidateSignupPage"))
+const AuthCandidate = lazy(()=> import("../pages/auth/authUser/AuthCandidate"))
 const LandingPage = lazy(()=> import("../pages/landing/LandingPage"))
 const CandidateProfilePage = lazy(()=> import("../pages/profile/candidate/CandidateProfilePage"))
-const AllJobsPage = lazy(()=> import("../pages/job-pages/candidate/AllJobsPage"))
-const JobDetailsPage = lazy(()=> import("../pages/job-pages/candidate/JobDetailsPage"))
-const OtpFormPageSignup = lazy(()=> import("../pages/auth-pages/otp/candidate/OtpFormPageSignup"))
-const ResetPassword = lazy(()=> import("../pages/auth-pages/password/candidate/ResetPassword"))
-const OtpFormResetPassword = lazy(()=> import("../pages/auth-pages/otp/candidate/OtpFormResetPassword"))
-const ForgotPasswordEmailEnterPage = lazy(()=> import("../pages/auth-pages/emailOrMobileEnter/candidate/ForgotPasswordEmailEnterPage"))
-const ForgotPassword = lazy(()=> import("../pages/auth-pages/password/candidate/ForgotPassword"))
-const ResetPasswordMobileEnterPage = lazy(()=> import("../pages/auth-pages/emailOrMobileEnter/candidate/ResetPasswordMobileEnterPage"))
-const OtpFormPageForgotPassword = lazy(()=> import("../pages/auth-pages/otp/candidate/OtpFormPageForgotPassword"))
+const AllJobsPage = lazy(()=> import("../pages/job/candidate/AllJobsPage"))
+const JobDetailsPage = lazy(()=> import("../pages/job/JobDetailsPage"))
+const OtpFormPage = lazy(()=> import("../pages/auth/OtpFormPage"))
+const EmailOrMobileEnterPage = lazy(()=> import("../pages/auth/EnterEmailOrMobilePage"))
+const UpdatePassword = lazy(()=> import("../pages/auth/UpdatePassword"))
 const CandidateProfileEditPage = lazy(()=> import("../pages/profile/candidate/CandidateProfileEditPage"))
-const AppliedJobsPage = lazy(()=> import("../pages/job-pages/candidate/AppliedJobsPage"))
-const JobApplicationDetailsPage = lazy(()=> import("../pages/job-pages/candidate/JobApplicationDetailsPage"));
+const AppliedJobsPage = lazy(()=> import("../pages/job/candidate/AppliedJobsPage"))
+const JobApplicationDetailsPage = lazy(()=> import("../pages/job/candidate/JobApplicationDetailsPage"));
 
 const RecruiterProfilePage = lazy(()=> import("../pages/profile/recruiter/RecruiterProfilePage"))
-const ChatPageCandidate = lazy(()=> import("../pages/chat/ChatPageCandidate"))
+const ChatPageCandidate = lazy(()=> import("../pages/chat/ChatPage"))
 
 const PaymentPlans = lazy(()=> import("../pages/payment/PaymentPlans"))
 const PaymentSuccessFul = lazy(()=> import("../pages/payment/PaymentSuccessFul"))
@@ -37,45 +33,43 @@ function CandidateRoutes() {
 	const loggedinUser = useSelector(
         (store: RootState) => store.userReducer.authData
     );
+	
+	const { isCandidate } = checkUserRole(loggedinUser)
 
 	return (
-		<>
-			<Suspense fallback={<Loading />}>
-				
-				<Routes>
-					<Route path="/" element={loggedinUser? <LandingPage />: <Navigate to={"/candidate/landing"} />} />
-					<Route path="/profile" element={loggedinUser? <CandidateProfilePage />: <Navigate to={"/candidate/landing"} />} />
-					<Route path="/payment-plans" element={loggedinUser? <PaymentPlans />: <Navigate to={"/candidate/landing"} />} />
-					<Route path="/payment-success" element={loggedinUser? <PaymentSuccessFul />: <Navigate to={"/candidate/landing"} />} />
-					<Route path="/payment-failed" element={loggedinUser? <PaymentFailed />: <Navigate to={"/candidate/landing"} />} />
-					<Route path="/edit-profile/" element={loggedinUser? <CandidateProfileEditPage />: <Navigate to={"/candidate/landing"} />} />
+		<Suspense fallback={<Loading />}>
+			<Routes>
+				<Route path="/" element={isCandidate? <LandingPage />: <Navigate to={"/candidate/landing"} />} />
+				<Route path="/profile" element={isCandidate? <CandidateProfilePage />: <Navigate to={"/candidate/landing"} />} />
+				<Route path="/payment-plans" element={isCandidate? <PaymentPlans />: <Navigate to={"/candidate/landing"} />} />
+				<Route path="/payment-success" element={isCandidate? <PaymentSuccessFul />: <Navigate to={"/candidate/landing"} />} />
+				<Route path="/payment-failed" element={isCandidate? <PaymentFailed />: <Navigate to={"/candidate/landing"} />} />
+				<Route path="/edit-profile/" element={isCandidate? <CandidateProfileEditPage />: <Navigate to={"/candidate/landing"} />} />
 
-					<Route path="/passwordResetMobile" element={loggedinUser? <ResetPasswordMobileEnterPage />: <Navigate to={"/candidate/landing"} />} />
-					<Route path="/passwordResetOtp" element={loggedinUser? <OtpFormResetPassword />: <Navigate to={"/candidate/landing"} />} />
-					<Route path="/passwordReset" element={loggedinUser? <ResetPassword />: <Navigate to={"/candidate/landing"} />} />
+				<Route path="/passwordResetMobile" element={isCandidate? <EmailOrMobileEnterPage />: <Navigate to={"/candidate/landing"} />} />
+				<Route path="/passwordResetOtp" element={isCandidate? <OtpFormPage />: <Navigate to={"/candidate/landing"} />} />
+				<Route path="/passwordReset" element={isCandidate? <UpdatePassword />: <Navigate to={"/candidate/landing"} />} />
 
-					<Route path="/forgotPasswordEmail" element={!loggedinUser? <ForgotPasswordEmailEnterPage />: <Navigate to={"/candidate/landing"} />} />
-					<Route path="/forgotPasswordOtp/:email" element={!loggedinUser? <OtpFormPageForgotPassword />: <Navigate to={"/candidate/landing"} />} />
-					<Route path="/forgotPassword/:userId" element={!loggedinUser? <ForgotPassword />: <Navigate to={"/candidate/landing"} />} />
-					
-					<Route path="/landing" element={loggedinUser?<Navigate to={"/candidate"} />: <LandingPage /> } />
-					<Route path="/signin" element={loggedinUser?<Navigate to={"/candidate"} />:<CandidateSigninPage /> } />
-					<Route path="/signup" element={loggedinUser? <Navigate to={"/candidate"} />:<CandidateSignupPage />} />
-					<Route path="/otpSignupCandidate/:email" element={!loggedinUser? <OtpFormPageSignup /> :<Navigate to={"/candidate"} />} />
+				<Route path="/forgotPasswordEmail" element={!isCandidate? <EmailOrMobileEnterPage />: <Navigate to={"/candidate/landing"} />} />
+				<Route path="/forgotPasswordOtp/:email" element={!isCandidate? <OtpFormPage />: <Navigate to={"/candidate/landing"} />} />
+				<Route path="/forgotPassword/:userId" element={!isCandidate? <UpdatePassword />: <Navigate to={"/candidate/landing"} />} />
+				
+				<Route path="/landing" element={isCandidate?<Navigate to={"/candidate"} />: <LandingPage /> } />
+				<Route path="/signin" element={isCandidate?<Navigate to={"/candidate"} />:<AuthCandidate /> } />
+				<Route path="/signup" element={isCandidate? <Navigate to={"/candidate"} />:<AuthCandidate />} />
+				<Route path="/otpSignupCandidate/:email" element={!isCandidate? <OtpFormPage /> :<Navigate to={"/candidate"} />} />
 
-					<Route path="/all-jobs" element={loggedinUser?<AllJobsPage />:<Navigate to={"/candidate/signin"} />} />
-					<Route path="/job-details/:jobId" element={loggedinUser?<JobDetailsPage />:<Navigate to={"/candidate/signin"} />} />
-					<Route path="/applied-jobs" element={loggedinUser?<AppliedJobsPage />:<Navigate to={"/candidate/signin"} />} />
-					<Route path="/application-details/:jobApplicationId" element={loggedinUser?<JobApplicationDetailsPage />:<Navigate to={"/candidate/signin"} />} />
+				<Route path="/all-jobs" element={isCandidate?<AllJobsPage />:<Navigate to={"/candidate/signin"} />} />
+				<Route path="/job-details/:jobId" element={isCandidate?<JobDetailsPage />:<Navigate to={"/candidate/signin"} />} />
+				<Route path="/applied-jobs" element={isCandidate?<AppliedJobsPage />:<Navigate to={"/candidate/signin"} />} />
+				<Route path="/application-details/:jobApplicationId" element={isCandidate?<JobApplicationDetailsPage />:<Navigate to={"/candidate/signin"} />} />
+			
+				<Route path="/recruiter-profile/:id" element={isCandidate? <RecruiterProfilePage />: <Navigate to={"/candidate/signin"} />} />
+				<Route path="/chat/:recepientId" element={isCandidate?<ChatPageCandidate />:<Navigate to={"/candidate/signin"} />} />
 				
-					<Route path="/recruiter-profile/:id" element={loggedinUser? <RecruiterProfilePage />: <Navigate to={"/candidate/signin"} />} />
-					<Route path="/chat/:recepientId" element={loggedinUser?<ChatPageCandidate />:<Navigate to={"/candidate/signin"} />} />
-					
-					<Route path="*" element={<NotFound url={"/candidate"} />} />
-				</Routes>
-				
-			</Suspense>
-		</>
+				<Route path="*" element={<NotFound url={"/candidate"} />} />
+			</Routes>
+		</Suspense>
 	);
 }
 

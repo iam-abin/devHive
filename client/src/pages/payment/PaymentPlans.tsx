@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import TopNavBarCandidate from "../../components/navBar/TopNavBarCandidate";
-import Footer from "../../components/footer/Footer";
 import { createPaymentApi } from "../../axios/apiMethods/payment-service/candidate";
 import { RootState } from "../../redux/reducer";
 
@@ -54,42 +52,37 @@ const PaymentPlans: React.FC = () => {
     };
 
     return (
-        <>
-            <TopNavBarCandidate />
-
-            <section className="flex flex-col gap-12 bg-white dark:bg-gray-900 ">
-                <div className="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
-                    <div className="mx-auto max-w-screen-md text-center mb-8 lg:mb-12">
-                        <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
-                            Premium Plans
-                        </h2>
-                        <p className="mb-5 font-light text-gray-500 sm:text-xl dark:text-gray-400">
-                            Unlock premium access to view recruiter profiles by
-                            choosing our affordable payment plan and elevate
-                            your job search experience.
-                        </p>
-                    </div>
-                    <div className="flex md:flex-row gap-5 sm:flex-col flex-wrap justify-center">
-                        {/* Pricing Card */}
-                        {membershipPlansData.length > 0
-                            ? membershipPlansData.map((plan: any) => {
-                                  return (
-                                      <PaymentPlanCard
-                                          key={plan?.id}
-                                          makePayment={makePayment}
-                                          planData={plan}
-                                          candidateProfileData={
-                                              candidateProfileData
-                                          }
-                                      />
-                                  );
-                              })
-                            : "No plans are avaiable"}
-                    </div>
+        <div className="flex flex-col gap-12 bg-white dark:bg-gray-900 ">
+            <div className="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
+                <div className="mx-auto max-w-screen-md text-center mb-8 lg:mb-12">
+                    <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
+                        Premium Plans
+                    </h2>
+                    <p className="mb-5 font-light text-gray-500 sm:text-xl dark:text-gray-400">
+                        Unlock premium access to view recruiter profiles by
+                        choosing our affordable payment plan and elevate your
+                        job search experience.
+                    </p>
                 </div>
-            </section>
-            <Footer />
-        </>
+                <div className="flex md:flex-row gap-5 sm:flex-col flex-wrap justify-center">
+                    {/* Pricing Card */}
+                    {membershipPlansData.length > 0
+                        ? membershipPlansData.map((plan: any) => {
+                              return (
+                                  <PaymentPlanCard
+                                      key={plan?.id}
+                                      makePayment={makePayment}
+                                      planData={plan}
+                                      candidateProfileData={
+                                          candidateProfileData
+                                      }
+                                  />
+                              );
+                          })
+                        : "No plans are avaiable"}
+                </div>
+            </div>
+        </div>
     );
 };
 
