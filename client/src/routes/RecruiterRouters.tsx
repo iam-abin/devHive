@@ -53,6 +53,7 @@ function RecruiterRouters() {
 				
 				<Route path="/" element={isRecruiter? <RecruiterLayout />: <Navigate to={"/recruiter/landing"} />} >
 				<Route index={true} element={isRecruiter? <RecruiterDashBoard />: <Navigate to={"/recruiter/landing"} />} />
+
 					<Route path="/profile" element={  isRecruiter? <RecruiterProfilePage />: <Navigate to={"/candidate/signin"} />} />
 					<Route path="/edit-profile" element={  isRecruiter? <RecruiterProfileEditPage />: <Navigate to={"/candidate/signin"} />} />
 

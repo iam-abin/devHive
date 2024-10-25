@@ -40,7 +40,7 @@ const AuthCandidate: React.FC = () => {
         (state: RootState) => state.loading.isLoading
     );
 
-    const handleSubmit = async (userData: IAuth) => {
+    const handleSubmit = async (userData: Partial<IAuth>) => {
         try {
             if (authType === "signin") {
                 dispatch(setLoading());

@@ -12,7 +12,6 @@ import { RootState } from "./redux/reducer";
 import { Toaster } from "react-hot-toast";
 import { SocketProvider } from "./context/socketContext";
 import { checkUserRole } from "./utils/checkRole";
-import TopNavBar from "./components/navBar/TopNavBar";
 import CandidateLayout from "./pages/layout/CandidateLayout";
 const NotFound = lazy(() => import("./pages/Error/NotFound"));
 const LandingPage = lazy(() => import("./pages/landing/LandingPage"));

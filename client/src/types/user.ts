@@ -21,9 +21,9 @@ export interface ISigninProps {
 }
 
 export interface IAuthProps {
-    handleSubmit: (values: IAuth) => void;
+    handleSubmit: (values: Partial<IAuth>) => void;
     schemaValues: SignupFormSchemaType | SigninFormSchemaType;
-    initialValues: IAuth;
+    initialValues: Partial<IAuth>;
 	authType: "signin"|"signup"
 }
 

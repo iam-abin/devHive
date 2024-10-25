@@ -11,7 +11,7 @@ import { RootState } from "../../redux/reducer";
 import TopNavBar from "../../components/navBar/TopNavBar";
 
 const RecruiterLayout = () => {
-	const recruiterProfile: any = useSelector(
+	const recruiterData: any = useSelector(
 		(store: RootState) => store.userReducer.authData
 	);
 
@@ -36,7 +36,7 @@ const RecruiterLayout = () => {
 		{
 			title: "Chats",
 			src: candidates,
-			to: `/recruiter/chat/${recruiterProfile?.id!}`,
+			to: `/recruiter/chat/${recruiterData?.id!}`,
 		},
 		{ title: "Profile", src: membership, to: "/recruiter/profile" },
 	];
@@ -48,11 +48,11 @@ const RecruiterLayout = () => {
 
 			<div className="flex">
 				{/* left-nav-bar for screens larger >=md */}
-				<div
+				{<div
 					className={`sticky hidden md:block top-0  overflow-y-auto `} // Hide on small screens, show on medium and larger screens
 				>
 					<LeftNavBarRecruiter menus={menus} />
-				</div>
+				</div>}
 
 				{/* right-side */}
 				<div className="flex-1 sm:h-screen overflow-auto pt-16 bg-slate-400">

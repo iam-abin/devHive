@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import ChatImage from "../../assets/chat/double-chat-bubble-icon.svg";
-import TopNavBarCandidate from "../../components/navBar/TopNavBar";
 import ChatRoomList from "../../components/chat/ChatRoomList";
 import Message from "../../components/chat/Message";
 import ChatBoxTopBar from "../../components/chat/ChatBoxTopBar";

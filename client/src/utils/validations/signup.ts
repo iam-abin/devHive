@@ -1,7 +1,7 @@
 import * as Yup from "yup";
-import { ISignup } from "../../types/user";
+import { IAuth } from "../../types/user";
 
-export const initialSignupValues: ISignup = {
+export const initialSignupValues: IAuth = {
 	name: "",
 	email: "",
 	phone: "",
@@ -15,4 +15,4 @@ export const signupSchema = Yup.object().shape({
 	password: Yup.string().min(4).required(),
 });
 
-export type SignupFormSchemaType = Yup.ObjectSchema<ISignup>;
+export type SignupFormSchemaType = Yup.ObjectSchema<IAuth>;
