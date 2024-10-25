@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
-import TopNavBarCandidate from "../../components/navBar/TopNavBarCandidate";
+import TopNavBarCandidate from "../../components/navBar/TopNavBar";
 import Footer from "../../components/footer/Footer";
 import { Link, useLocation } from "react-router-dom";
 import CheckmarkSvg from "../../assets/payment/wired-flat-37-approve-checked-simple (3).gif";
-import { candidateGetProfileApi } from "../../axios/apiMethods/profile-service/candidate";
+import { getCandidateProfileApi } from "../../axios/apiMethods/profile-service/candidate";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/reducer";
 import { setMyProfileData } from "../../redux/slice/user";
@@ -17,7 +17,7 @@ const PaymentSuccessFul: React.FC = () => {
 	const candidateUrl = location.pathname.includes("candidate");
 	useEffect(() => {
 		(async () => {
-			const candidateProfileData = await candidateGetProfileApi(
+			const candidateProfileData = await getCandidateProfileApi(
 				candidateData?.id
 			);
 			

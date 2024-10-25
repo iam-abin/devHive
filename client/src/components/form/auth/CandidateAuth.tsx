@@ -1,7 +1,7 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { IAuthProps , IAuth } from "../../../types/user";
 // import googleIcon from "../../../assets/google/google-icon.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const CandidateAuth = ({
     handleSubmit,
@@ -9,6 +9,7 @@ const CandidateAuth = ({
     initialValues,
     authType,
 }: IAuthProps) => {
+    const navigate = useNavigate()
     return (
         <Formik<IAuth>
             initialValues={initialValues as IAuth}
@@ -35,6 +36,7 @@ const CandidateAuth = ({
                                         type="text"
                                         name="name"
                                         placeholder="Name"
+                                        autoComplete="name"
                                         className={`input input-primary w-full rounded-xl ${
                                             errors?.name && touched?.name
                                                 ? "input-error"
@@ -57,6 +59,7 @@ const CandidateAuth = ({
                                     type="email"
                                     name="email"
                                     placeholder="Email"
+                                    autoComplete="email"
                                     className={`input input-primary w-full rounded-xl ${
                                         errors.email && touched.email
                                             ? "input-error"
@@ -78,6 +81,7 @@ const CandidateAuth = ({
                                         type="text"
                                         name="phone"
                                         placeholder="Phone"
+                                    autoComplete="phone"
                                         className={`input input-primary w-full rounded-xl ${
                                             errors.phone && touched.phone
                                                 ? "input-error border-red-500"
@@ -100,6 +104,8 @@ const CandidateAuth = ({
                                         type="password"
                                         name="password"
                                         placeholder="Password"
+                                    autoComplete="password"
+
                                         className={`input input-primary w-full rounded-xl ${
                                             errors.password && touched.password
                                                 ? "input-error border-red-500"
@@ -115,6 +121,20 @@ const CandidateAuth = ({
                                         </span>
                                     </label>
                                 </div>
+                                {authType === "signin" && (
+                                    <label
+                                        className="label flex justify-end"
+                                        onClick={() =>
+                                            navigate(
+                                               "/candidate/forgotPasswordEmail"
+                                            )
+                                        }
+                                    >
+                                        <span className="label-text-alt cursor-pointer">
+                                            Forgot Password?
+                                        </span>
+                                    </label>
+                                )}
                             <div className="flex items-center justify-between mb-5">
                                 <div className="w-full mt-5 items-center justify-center flex">
                                     {authType === "signin" ? (

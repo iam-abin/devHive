@@ -1,15 +1,14 @@
 import { Outlet } from "react-router-dom";
-import { useState } from "react"; // Import useState hook
 
 import dashboard from "../../assets/layoutItems/dashboard.svg";
 import finance from "../../assets/layoutItems/finance.svg";
 import companies from "../../assets/layoutItems/companies.svg";
 import candidates from "../../assets/layoutItems/candidates.svg";
 import membership from "../../assets/layoutItems/membership.svg";
-import TopNavBarRecruiter from "../../components/navBar/TopNavBarRecruiter";
 import LeftNavBarRecruiter from "../../components/navBar/LeftNavBarRecruiter";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/reducer";
+import TopNavBar from "../../components/navBar/TopNavBar";
 
 const RecruiterLayout = () => {
 	const recruiterProfile: any = useSelector(
@@ -17,13 +16,13 @@ const RecruiterLayout = () => {
 	);
 
 	// State to manage visibility of left navbar on mobile
-	const [isLeftNavBarVisible, setIsLeftNavBarVisible] =
-		useState<boolean>(false);
+	// const [isLeftNavBarVisible, setIsLeftNavBarVisible] =
+	// 	useState<boolean>(false);
 
-	const toggleLeftNavBar = () => {
+	// const toggleLeftNavBar = () => {
 		
-		setIsLeftNavBarVisible(!isLeftNavBarVisible);
-	};
+	// 	setIsLeftNavBarVisible(!isLeftNavBarVisible);
+	// };
 
 	const menus = [
 		{ title: "Dashboard", src: dashboard, to: "/recruiter" },
@@ -54,16 +53,16 @@ const RecruiterLayout = () => {
 	return (
 		<>
 			{/*top-nav-bar */}
-			<TopNavBarRecruiter toggleLeftNavBar={toggleLeftNavBar} />
+			<TopNavBar />
 
 			{/*left-nav-bar sm screens*/}
-			<div
+			{/* <div
 				className={`absolute md:hidden overflow-y-auto ${
 					!isLeftNavBarVisible ? "hidden " : "block z-30"
 				}`} // Hide on small screens, show on medium and larger screens
 			>
 				{isLeftNavBarVisible && <LeftNavBarRecruiter menus={menus} />}
-			</div>
+			</div> */}
 
 			<div className="flex">
 				{/* left-nav-bar for screens larger >=md */}

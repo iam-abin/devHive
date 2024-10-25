@@ -38,13 +38,13 @@ const AdminDashBoard = lazy(() => import("../pages/dashboard/AdminDashBoard"));
 
 const NotFound = lazy(() => import("../pages/Error/NotFound"));
 
-import { ROLES } from "../utils/constants";
+import { checkUserRole } from "../utils/checkRole";
 
 function AdminRoutes() {
     const loggedinUser = useSelector(
         (store: RootState) => store.userReducer.authData
     );
-    const isAdmin = loggedinUser?.role === ROLES.ADMIN;
+    const {isAdmin} = checkUserRole(loggedinUser)
     return (
         <>
             <Suspense fallback={<Loading />}>

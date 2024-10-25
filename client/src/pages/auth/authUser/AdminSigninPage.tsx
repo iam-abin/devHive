@@ -11,7 +11,7 @@ import { notify } from "../../../utils/toastMessage";
 import { useEffect } from "react";
 import { ISignin } from "../../../types/user";
 import { setUser } from "../../../redux/slice/user";
-import AdminSignin from "../../../components/form/signin/AdminSignin";
+import AdminSignin from "../../../components/form/auth/AdminSignin";
 import { IResponse } from "../../../types/api";
 
 function AdminSigninPage() {

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import TableComponent from "../../../components/table/TableComponent";
 import { notify } from "../../../utils/toastMessage";
-import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import {
     deleteAJobApi,
@@ -10,6 +9,7 @@ import {
 import { RootState } from "../../../redux/reducer";
 import { useSelector } from "react-redux";
 import { IJob } from "../../../types/Job";
+import { swal } from "../../../utils/swal";
 
 function AllAddedJobs() {
     const navigate = useNavigate();
@@ -24,7 +24,7 @@ function AllAddedJobs() {
             const response = await getAllRecruiterAddedJobsApi(
                 recruiterData?.id
             );
-            
+
             setJobsData(response.data.jobs);
         })();
     }, []);
@@ -38,16 +38,8 @@ function AllAddedJobs() {
     };
 
     const handleDelete = async (id: string) => {
-        Swal.fire({
-            title: `Do you want to Delete this Job?`,
-            text: "Are you sure!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, Delete",
-        })
-            .then(async (result) => {
+        swal(`Do you want to Delete this Job?`, "Yes, Delete").then(
+            async (result) => {
                 if (result.isConfirmed) {
                     const deleteJobResponse = await deleteAJobApi(id);
                     if (deleteJobResponse) {
@@ -55,7 +47,8 @@ function AllAddedJobs() {
                     }
                     setJobsData(deleteJobResponse.data);
                 }
-            })
+            }
+        );
     };
 
     const columns = [
@@ -125,7 +118,6 @@ function AllAddedJobs() {
             ),
         },
     ];
-
 
     return (
         <div>

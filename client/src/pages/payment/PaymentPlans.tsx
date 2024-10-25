@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import TopNavBarCandidate from "../../components/navBar/TopNavBarCandidate";
+import TopNavBarCandidate from "../../components/navBar/TopNavBar";
 import Footer from "../../components/footer/Footer";
 import { createPaymentApi } from "../../axios/apiMethods/payment-service/candidate";
 import { RootState } from "../../redux/reducer";

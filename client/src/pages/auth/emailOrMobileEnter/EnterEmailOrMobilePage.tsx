@@ -6,13 +6,16 @@ import {
     forgotPasswordEmailCandidateApi,
     passwordResetMobileCandidateApi,
 } from "../../../axios/apiMethods/auth-service/candidateAuth";
-import Swal from "sweetalert2";
 import Loading from "../../../components/loading/Loading";
-import TopNavBarCandidate from "../../../components/navBar/TopNavBarCandidate";
+import TopNavBarCandidate from "../../../components/navBar/TopNavBar";
 import EmailOrMobile from "../../../components/form/EmailOrMobile";
 import Footer from "../../../components/footer/Footer";
-import { forgotPasswordEmailRecruiterApi } from "../../../axios/apiMethods/auth-service/recruiterAuth";
+import {
+    forgotPasswordEmailRecruiterApi,
+    passwordResetMobileRecruiterApi,
+} from "../../../axios/apiMethods/auth-service/recruiterAuth";
 import { IEmailOrMobile } from "../../../types/otp";
+import { swal } from "../../../utils/swal";
 
 function EnterEmailOrMobilePage() {
     const navigate = useNavigate();
@@ -61,12 +64,15 @@ function EnterEmailOrMobilePage() {
                     break;
 
                 case "recruiter":
+                    console.log("recruiter ====== ", valueType);
+                    console.log("userData ====== ", userData);
+
                     if (valueType === "email") {
                         response = await forgotPasswordEmailRecruiterApi(
                             values.email!
                         );
                     } else {
-                        response = await passwordResetMobileCandidateApi(
+                        response = await passwordResetMobileRecruiterApi(
                             userData.email,
                             values.mobile!
                         );
@@ -77,14 +83,16 @@ function EnterEmailOrMobilePage() {
                     throw new Error("Invalid user type");
             }
 
-            Swal.fire({
-                text:
-                    response?.message ||
+            console.log(response);
+            
+            swal(
+                response?.message ||
                     `OTP sent to ${valueType} ${
                         values[valueType === "email" ? "email" : "mobile"]
                     }`,
-                confirmButtonText: "Ok",
-            }).then((res) => {
+                "Ok",
+                true
+            ).then((res) => {
                 if (res) {
                     if (valueType === "email") {
                         navigate(
@@ -106,7 +114,9 @@ function EnterEmailOrMobilePage() {
 
     return (
         <>
-            {userData && userData.role === "candidate" && <TopNavBarCandidate />}
+            {userData && userData.role === "candidate" && (
+                <TopNavBarCandidate />
+            )}
             <EmailOrMobile
                 handleSubmit={handleSubmit}
                 initialValue={initialValue}

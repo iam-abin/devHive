@@ -3,7 +3,7 @@ import profileApiUrlConfig from "../../../config/apiUrlsConfig/profileApiUrlConf
 import candidateApiCalls from "../../candidate/apiCalls";
 
 
-export const candidateGetProfileApi = async (userId: string): Promise<any> => {
+export const getCandidateProfileApi = async (userId: string): Promise<any> => {
     return candidateApiCalls("get", profileApiUrlConfig.getCandidateProfileUrl(userId), userId);
 };
 

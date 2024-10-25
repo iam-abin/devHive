@@ -16,14 +16,15 @@ const NotificationSlice = createSlice({
 	name: "notification-data",
 	initialState,
 	reducers: {
-        setNotification: (state, action) => {
+        setNotifications: (state, action) => {
 			state.notifications = action.payload
         },
 
-        clearNotification: (state) => {
+        clearNotifications: (state) => {
 			state.notifications = []
         },
 
+        // Increment the count by 1
         setNotificationsCount: (state, action) => {
 			state.notificationsCount = action.payload
         },
@@ -34,5 +35,5 @@ const NotificationSlice = createSlice({
 	},
 });
 
-export const { setNotification, clearNotification, setNotificationsCount, clearNotificationsCount } = NotificationSlice.actions; //we can use it in job page
+export const { setNotifications, clearNotifications, setNotificationsCount, clearNotificationsCount } = NotificationSlice.actions; //we can use it in job page
 export default NotificationSlice.reducer;

@@ -5,7 +5,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { RootState } from "../../../redux/reducer";
 import { recruiterGetProfileApi } from "../../../axios/apiMethods/profile-service/recruiter";
-import TopNavBarCandidate from "../../../components/navBar/TopNavBarCandidate";
+import TopNavBarCandidate from "../../../components/navBar/TopNavBar";
 import Footer from "../../../components/footer/Footer";
 import { recruiterGetProfileByCandidateApi } from "../../../axios/apiMethods/profile-service/candidate";
 

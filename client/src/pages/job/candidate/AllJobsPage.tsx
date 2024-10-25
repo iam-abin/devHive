@@ -1,5 +1,5 @@
 
-import TopNavBarCandidate from "../../../components/navBar/TopNavBarCandidate";
+import TopNavBarCandidate from "../../../components/navBar/TopNavBar";
 import { useEffect, useState } from "react";
 import { getAllJobsApi } from "../../../axios/apiMethods/jobs-service/jobs";
 import { useNavigate } from "react-router-dom";
@@ -68,10 +68,12 @@ function AllJobsPage() {
 							)}
 						</div>
 						<div>
-							<Paginate
-								pageCount={pageCount}
-								handlePageChange={handlePageChange}
-							/>
+						{pageCount > 1 && (
+                        <Paginate
+                            pageCount={pageCount}
+                            handlePageChange={handlePageChange}
+                        />
+                    )}
 						</div>
 					</>
 				) : (

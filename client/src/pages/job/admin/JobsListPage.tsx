@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
+
 import TableComponent from "../../../components/table/TableComponent";
 import { notify } from "../../../utils/toastMessage";
-import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import {
     blockUnblockJobApi,
     getAllJobsAdminApi,
 } from "../../../axios/apiMethods/admin-service/job";
+import { swal } from "../../../utils/swal";
 
 interface JobInterface {
     id: string;
@@ -44,15 +45,10 @@ function JobsManagementPage() {
     };
 
     const handleBlockUnblock = async (jobId: string, isActive: boolean) => {
-        Swal.fire({
-            title: `Do you want to ${isActive ? "block" : "unblock"} this Job?`,
-            text: "Are you sure!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: `Yes, ${isActive ? "block" : "unblock"}`,
-        }).then(async (result) => {
+        swal(
+            `Do you want to ${isActive ? "block" : "unblock"} this Job?`,
+            `Yes, ${isActive ? "block" : "unblock"}`
+        ).then(async (result) => {
             if (result.isConfirmed) {
                 const updatedJob = await blockUnblockJobApi(jobId);
                 if (updatedJob) {

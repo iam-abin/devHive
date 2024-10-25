@@ -7,7 +7,7 @@ import {
 } from "../../../axios/apiMethods/profile-service/candidate";
 import { notify } from "../../../utils/toastMessage";
 import Footer from "../../../components/footer/Footer";
-import TopNavBarCandidate from "../../../components/navBar/TopNavBarCandidate";
+import TopNavBarCandidate from "../../../components/navBar/TopNavBar";
 
 
 interface ProfileFormData {

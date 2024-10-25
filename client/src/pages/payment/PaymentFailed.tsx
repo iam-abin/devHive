@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import Footer from "../../components/footer/Footer";
-import TopNavBarCandidate from "../../components/navBar/TopNavBarCandidate";
+import TopNavBarCandidate from "../../components/navBar/TopNavBar";
 
 const PaymentFailed: React.FC = () => {
 	const location = useLocation();

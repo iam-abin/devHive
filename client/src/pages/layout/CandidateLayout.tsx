@@ -1,5 +1,5 @@
 import React, {  ReactNode } from "react";
-import TopNavBarCandidate from "../../components/navBar/TopNavBarCandidate";
+import TopNavBarCandidate from "../../components/navBar/TopNavBar";
 import Footer from "../../components/footer/Footer";
 
 const CandidateLayout: React.FC<{ children: ReactNode }> = ({ children }) => {

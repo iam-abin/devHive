@@ -25,7 +25,7 @@ const addUserToOnline = (userId: string, socketId: string): void => {
     if (!isActiveUser) activeUsers.push({ userId, socketId });
 };
 
-const getUser = (userId: string): activeUser | undefined => {
+const getOnlineUser = (userId: string): activeUser | undefined => {
     const activeUser = activeUsers.find((user) => user.userId === userId);
     return activeUser;
 };
@@ -107,7 +107,7 @@ export const onSocketConnection = (io: Server, socket: Socket): void => {
                 const allChatRooms: IChatRoomDocument[] | [] =
                     await chatRoomRepository.getAllChatRoomsByUserId(senderId);
 
-                const user: activeUser | undefined = getUser(senderId);
+                const user: activeUser | undefined = getOnlineUser(senderId);
                 if (user) {
                     io.to(user.socketId).emit("getAllChatRooms", allChatRooms);
                 }
@@ -120,7 +120,7 @@ export const onSocketConnection = (io: Server, socket: Socket): void => {
 
     // adding a user to active list
     socket.on("addActiveUser", (userId: string) => {
-        console.log("In addActiveUser event");
+        console.log("In addActiveUser event", userId);
 
         addUserToOnline(userId, socket.id);
         io.emit("getActiveUsers", activeUsers);
@@ -129,7 +129,7 @@ export const onSocketConnection = (io: Server, socket: Socket): void => {
     // send and get message
     socket.on("sendMessage", async (data: IMessage) => {
         console.log("In sendMessage event");
-        console.log("chat message received---->", data);
+        console.log("chat message received in server ---->", data);
 
         try {
             const { senderId, roomId, textMessage } = data;
@@ -145,7 +145,7 @@ export const onSocketConnection = (io: Server, socket: Socket): void => {
                 await chatRoomRepository.getById(roomId);
             if (!room) throw new NotFoundError("Room not found");
 
-            const result: IMessageDocument =
+            const messageData: IMessageDocument =
                 await messageRepository.createMessage({
                     senderId,
                     roomId,
@@ -162,7 +162,7 @@ export const onSocketConnection = (io: Server, socket: Socket): void => {
                 throw new BadRequestError("Recepient not found");
 
             const message = {
-                result,
+                messageData,
                 senderId: senderId,
                 recipient: recipient,
             };
@@ -174,8 +174,8 @@ export const onSocketConnection = (io: Server, socket: Socket): void => {
                     message: textMessage,
                 });
 
-            const activeUserSender: activeUser | undefined = getUser(senderId);
-            const activeUserRecipient: activeUser | undefined = getUser(recipient);
+            const activeUserSender: activeUser | undefined = getOnlineUser(senderId);
+            const activeUserRecipient: activeUser | undefined = getOnlineUser(recipient);
             if (activeUserSender && activeUserSender.socketId)
                 io.to(activeUserSender.socketId).emit("receiveMessage", message);
 

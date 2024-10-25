@@ -3,12 +3,12 @@ import { useLocation, useNavigate } from "react-router-dom";
 import StatusChangeForm from "../dropDown/StatusChangeForm";
 import { changeJobApplicationStatusApi } from "../../axios/apiMethods/jobs-service/jobs";
 import { notify } from "../../utils/toastMessage";
-import Swal from "sweetalert2";
 import { formatDate } from "../../utils/date-functions";
 import { formatCurrency } from "../../utils/currency-format";
 import { FaFacebookMessenger, FaLock } from "react-icons/fa";
 import { RootState } from "../../redux/reducer";
 import { useSelector } from "react-redux";
+import { swal } from "../../utils/swal";
 
 const JobApplicationDetails: React.FC<{
     jobApplicationDetails: any;
@@ -51,15 +51,10 @@ const JobApplicationDetails: React.FC<{
             jobApplicationStatus: applicationStatus,
         };
 
-        Swal.fire({
-            title: `Do you want to change status to ${applicationStatus}?`,
-            text: "Are you sure!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, Change",
-        }).then(async (result) => {
+        swal(
+            `Do you want to change status to ${applicationStatus}?`,
+            "Yes, Change"
+        ).then(async (result) => {
             if (result.isConfirmed) {
                 const response = await changeJobApplicationStatusApi(
                     jobApplicationDetails?.id,

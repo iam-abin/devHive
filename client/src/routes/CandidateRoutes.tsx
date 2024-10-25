@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 
 import { RootState } from "../redux/reducer";
 import Loading from "../components/loading/Loading";
-import { ROLES } from "../utils/constants";
+import { checkUserRole } from "../utils/checkRole";
 
 
 const PaymentFailed = lazy(()=> import("../pages/payment/PaymentFailed"))
@@ -33,7 +33,8 @@ function CandidateRoutes() {
 	const loggedinUser = useSelector(
         (store: RootState) => store.userReducer.authData
     );
-	const isCandidate = loggedinUser?.role === ROLES.CANDIDATE;
+	
+	const { isCandidate } = checkUserRole(loggedinUser)
 
 	return (
 		<>

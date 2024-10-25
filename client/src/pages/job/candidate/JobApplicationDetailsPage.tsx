@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getAnAppliedJobApi } from "../../../axios/apiMethods/jobs-service/jobs";
 import { useParams } from "react-router-dom";
 import JobApplicationDetails from "../../../components/recruiter/JobApplicationDetails";
-import TopNavBarCandidate from "../../../components/navBar/TopNavBarCandidate";
+import TopNavBarCandidate from "../../../components/navBar/TopNavBar";
 import Footer from "../../../components/footer/Footer";
 
 function JobApplicationDetailsPage() {

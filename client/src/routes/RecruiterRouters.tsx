@@ -7,7 +7,7 @@ import { RootState } from "../redux/reducer"
 import Loading from "../components/loading/Loading";
 
 import RecruiterLayout from "../pages/layout/RecruiterLayout";
-import { ROLES } from "../utils/constants";
+import { checkUserRole } from "../utils/checkRole";
 
 const RecruiterDashBoard = lazy(()=> import("../pages/dashboard/RecruiterDashBoardPage"))
 const CandidateProfilePage = lazy(()=> import("../pages/profile/candidate/CandidateProfilePage"))
@@ -35,7 +35,7 @@ function RecruiterRouters() {
         (store: RootState) => store.userReducer.authData
     );
 
-	const isRecruiter = loggedinUser?.role === ROLES.RECRUITER;
+	const { isRecruiter } = checkUserRole(loggedinUser) 
 
   return (
     <>

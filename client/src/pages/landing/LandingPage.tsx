@@ -10,12 +10,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/reducer";
 import { useLocation, useNavigate } from "react-router-dom";
 import Paginate from "../../components/pagination/Paginate";
-import TopNavBarRecruiter from "../../components/navBar/TopNavBarRecruiter";
-import TopNavBarCandidate from "../../components/navBar/TopNavBarCandidate";
+import TopNavBar from "../../components/navBar/TopNavBar";
 import Footer from "../../components/footer/Footer";
-import { candidateGetProfileApi } from "../../axios/apiMethods/profile-service/candidate";
+import { getCandidateProfileApi } from "../../axios/apiMethods/profile-service/candidate";
 import { setMyProfileData } from "../../redux/slice/user";
-import { clearCurrentPage, clearJobs, clearTotalNumberOfPages, setCurrentPage, setJobs, setTotalNumberOfPages } from "../../redux/slice/job";
+import {
+    clearCurrentPage,
+    clearJobs,
+    clearTotalNumberOfPages,
+    setCurrentPage,
+    setJobs,
+    setTotalNumberOfPages,
+} from "../../redux/slice/job";
+import { recruiterGetProfileApi } from "../../axios/apiMethods/profile-service/recruiter";
+import { IResponse } from "../../types/api";
+import { setLoaded, setLoading } from "../../redux/slice/isLoading";
+import { checkUserRole } from "../../utils/checkRole";
 
 function LandingPage() {
     const dispatch = useDispatch();
@@ -25,12 +35,11 @@ function LandingPage() {
     const isRecruiterUrl = location.pathname.includes("recruiter");
     const isCandidateUrl = location.pathname.includes("candidate");
 
-    const candidate = useSelector(
+    const currentUser = useSelector(
         (store: RootState) => store.userReducer.authData
     );
-    const recruiter = useSelector(
-        (store: RootState) => store.userReducer.authData
-    );
+
+    const {isCandidate, isRecruiter} = checkUserRole(currentUser)
 
     const pageCount = useSelector(
         (store: RootState) => store.jobReducer.totalNumberOfPages
@@ -41,27 +50,28 @@ function LandingPage() {
     );
 
     const jobs = useSelector((store: RootState) => {
-        console.log(store.jobReducer.jobs);
-
         return store.jobReducer.jobs;
     });
 
     const handleGetAllJobs = async (page: number) => {
-        // dispatch(setLoading());
+        dispatch(setLoading());
         const allJobs = await getAllJobsApi(page);
 
-        // dispatch(setLoaded());
+        dispatch(setLoaded());
         return allJobs;
     };
 
     useEffect(() => {
         (async () => {
-            const id = candidate?.id;
-            let candidateProfile;
-            if (isCandidateUrl && candidate) {
-                candidateProfile = await candidateGetProfileApi(id);
-                dispatch(setMyProfileData(candidateProfile?.data));
+            const id = currentUser?.id;
+            let currentUserProfile: IResponse | null = null;
+            if (isCandidateUrl && isCandidate) {
+                currentUserProfile = await getCandidateProfileApi(id);
+                dispatch(setMyProfileData(currentUserProfile?.data));
+            } else if (isRecruiterUrl && isRecruiter) {
+                currentUserProfile = await recruiterGetProfileApi(id);
             }
+            dispatch(setMyProfileData(currentUserProfile?.data));
         })();
     }, []);
 
@@ -73,8 +83,7 @@ function LandingPage() {
                 dispatch(setJobs(allJobs.data.jobs));
 
                 dispatch(
-                    setTotalNumberOfPages(allJobs.data.totalNumberOfPages,
-                    )
+                    setTotalNumberOfPages(allJobs.data.totalNumberOfPages)
                 );
             }
             return () => {
@@ -87,36 +96,31 @@ function LandingPage() {
     }, [currentPage]);
 
     const handlePageChange = async ({ selected }: { selected: number }) => {
-        dispatch(setCurrentPage(selected + 1 ));
+        dispatch(setCurrentPage(selected + 1));
     };
 
     const handleViewJob = async (jobId: string) => {
-        console.log(isRecruiterUrl);
 
-        if (isRecruiterUrl) {
-            if(!recruiter){
-                return navigate(`/candidate/signin`);
-            }
+        if (currentUser && isRecruiter) {
             return navigate(`/recruiter/job-details/${jobId}`);
         }
 
-        if(isCandidateUrl){
-            if(!candidate){
-                return  navigate(`/candidate/signin`);
-            }
-            navigate(`/candidate/job-details/${jobId}`);
+        if (currentUser && isCandidate) {
+            return navigate(`/candidate/job-details/${jobId}`);
         }
 
+        navigate(`/candidate/signin`);
     };
+
 
     return (
         <>
             {/* <GiHamburgerMenu /> */}
 
-            {candidate && isCandidateUrl ? (
-                <TopNavBarCandidate />
-            ) : recruiter && isRecruiterUrl ? (
-                <TopNavBarRecruiter toggleLeftNavBar={undefined} />
+            {isCandidate && isCandidateUrl ? (
+                <TopNavBar />
+            ) : isRecruiter && isRecruiterUrl ? (
+                <TopNavBar />
             ) : (
                 <NavBarLanding />
             )}
@@ -146,9 +150,9 @@ function LandingPage() {
                                     offset={-60} // Adjust this value based on the height of your navigation bar
                                     className="btn btn-primary"
                                 >
-                                    {candidate && isCandidateUrl
+                                    {isCandidate && isCandidateUrl
                                         ? "Start searching"
-                                        : recruiter && isRecruiterUrl
+                                        : isRecruiter && isRecruiterUrl
                                         ? "Start searching"
                                         : "Get Started"}
                                 </Link>
@@ -164,7 +168,6 @@ function LandingPage() {
                         <SearchBar />
                     </div>
                     <div>
-                        {jobs.toString()}
                         {jobs && jobs.length > 0 ? (
                             jobs.map(
                                 (job: any) =>
@@ -186,7 +189,7 @@ function LandingPage() {
                             </div>
                         )}
                     </div>
-                    {jobs?.length > 0 && (
+                    {pageCount > 1 && (
                         <Paginate
                             pageCount={pageCount}
                             handlePageChange={handlePageChange}

@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import ChatImage from "../../assets/chat/double-chat-bubble-icon.svg";
-import TopNavBarCandidate from "../../components/navBar/TopNavBarCandidate";
+import TopNavBarCandidate from "../../components/navBar/TopNavBar";
 import ChatRoomList from "../../components/chat/ChatRoomList";
 import Message from "../../components/chat/Message";
 import ChatBoxTopBar from "../../components/chat/ChatBoxTopBar";
@@ -20,11 +20,15 @@ import { RootState } from "../../redux/reducer";
 import socket from "../../config/socket";
 import { deleteCandidatesAllNotificationsBySenderIdApi } from "../../axios/apiMethods/chat-service/notification";
 import { deleteRecruitersAllNotificationsBySenderIdApi } from "../../axios/apiMethods/chat-service/notification";
-import { CONSTANTS } from "../../utils/constants";
+import { CONSTANTS, ROLES } from "../../utils/constants";
 import {
-    clearCurrentlySelectedChatRoom,
-    setCurrentlySelectedChatRoom,
+    clearChatRooms,
+    clearSelectedChatRoom,
+    setChatRooms,
+    setSelectedChatRoom,
 } from "../../redux/slice/chat";
+import { IChatRoom, IMessage } from "../../types/chat";
+import { checkUserRole } from "../../utils/checkRole";
 
 const ChatPage = () => {
     const dispatch = useDispatch();
@@ -34,19 +38,19 @@ const ChatPage = () => {
         (store: RootState) => store.userReducer.authData
     );
 
+    const {isCandidate, isRecruiter} = checkUserRole(userData)
+
     const myProfile: any = useSelector((state: RootState) => {
         return state.userReducer.myProfile;
     });
 
-    // const otherUserProfile: any = useSelector((state: RootState) => {
-    //     return state.userReducer.otherUserProfile;
-    // });
-
-    const [chatRooms, setchatRooms] = useState([]);
-    const [selectedChatRoom, setSelectedChatRoom] = useState<any>(null);
     const [onlineUsers, setOnlineUsers] = useState<any>([]);
     const [selectedChatRoomMessages, setSelectedChatRoomMessages] =
-        useState<any>([]);
+        useState<IMessage[]>([]);
+
+    const selectedChatRoom = useSelector(
+        (store: RootState) => store.chatReducer.roomData
+    );
 
     const chatAreaRef = useRef<HTMLDivElement>(null);
     const scrollToBottom = () => {
@@ -59,30 +63,6 @@ const ChatPage = () => {
         scrollToBottom();
     }, [selectedChatRoomMessages]);
 
-    useEffect(() => {
-        // Establish the connection when the component mounts
-        socket.connect();
-
-        // Clean up the connection when the component unmounts
-        return () => {
-            socket.disconnect();
-        };
-    }, []);
-
-    useEffect(() => {
-        // Check if the page is being refreshed
-        const handleBeforeUnload = (event: any) => {
-            event.preventDefault();
-            // Dispatch the action to clear the currently selected chat room
-            dispatch(clearCurrentlySelectedChatRoom());
-        };
-
-        window.addEventListener("beforeunload", handleBeforeUnload);
-
-        return () => {
-            window.removeEventListener("beforeunload", handleBeforeUnload);
-        };
-    }, []);
 
     useEffect(() => {
         socket.emit("addActiveUser", userData.id);
@@ -92,66 +72,92 @@ const ChatPage = () => {
     }, [userData?._id]);
 
     useEffect(() => {
+        // Check if the page is being refreshed
+        const handleBeforeUnload = (event: any) => {
+            event.preventDefault();
+            // Dispatch the action to clear the currently selected chat room
+            dispatch(clearSelectedChatRoom());
+        };
+
+        window.addEventListener("beforeunload", handleBeforeUnload);
+
+        return () => {
+            window.removeEventListener("beforeunload", handleBeforeUnload);
+        };
+    }, []);
+
+    const location = useLocation();
+    useEffect(() => {
+        return () => {
+            // When the component unmounts, clear the selected chat room
+            dispatch(clearSelectedChatRoom());
+        };
+    }, [location.pathname]); // This will run when the route/path changes
+
+    useEffect(() => {
         socket.emit("createChatRoom", userData.id, recepientId);
         socket.on("getAllChatRooms", (rooms) => {
-            setchatRooms(rooms);
+
+            dispatch(setChatRooms(rooms));
         });
+
+        return () => {
+            dispatch(clearChatRooms());
+        };
     }, [selectedChatRoom, selectedChatRoomMessages]);
 
     useEffect(() => {
         socket.on("chatNotification", () => {
             (async () => {
                 let rooms = null;
-                if (userData && userData.role === "candidate") {
+                if (isCandidate) {
                     rooms = await getAllCandidateChatRoomsApi(userData.id);
                 }
 
-                if (userData && userData.role === "recruiter") {
+                if (isRecruiter) {
                     rooms = await getAllRecruiterChatRoomsApi(userData.id);
                 }
 
-                if (rooms) setchatRooms(rooms.data);
+                if (rooms) dispatch(setChatRooms(rooms.data));
             })();
         });
 
         return () => {
             // Clean up the event listener when the component unmounts
             socket.off("chatNotification");
-            dispatch(clearCurrentlySelectedChatRoom());
+            dispatch(clearSelectedChatRoom());
         };
     }, []);
 
     useEffect(() => {
-        // Listen for "selectedChatRoomMessages" events and update the selectedChatRoomMessages state
-        socket.on("receiveMessage", (message) => {
-            if (selectedChatRoom?._id != message.result.roomId.toString()) {
-                // console.error("no chat rooms are selected");
-            }
-            if (message.result.roomId.toString() === selectedChatRoom?._id) {
-                if (message.result.senderId.toString() != userData.id) {
-                    socket.emit("markAsRead", message.result.id);
-                }
-                setSelectedChatRoomMessages([
-                    ...selectedChatRoomMessages,
-                    message.result,
-                ]);
-            } else {
-                setSelectedChatRoomMessages([...selectedChatRoomMessages]);
-            }
-        });
-
         socket.on("connect_error", (error) => {
-            console.error("Socket.IO connection error:", error);
+          console.error("Socket.IO connection error:", error);
         });
-
-        // Clean up the event listener when the component unmounts
+      
         return () => {
-            socket.off("sendMessage");
-            // socket.off("receiveMessage");
+          socket.off("connect_error");
         };
-        // Include 'selectedChatRoomMessages' in the dependency array to update the effect when
-        // 'selectedChatRoomMessages' changes
-    }, [selectedChatRoomMessages]);
+      }, []);
+      
+    useEffect(() => {
+        socket.on("receiveMessage", (message) => {
+          if (message.messageData.roomId.toString() === selectedChatRoom?._id) {
+            if (message.messageData.senderId.toString() !== userData.id) {
+              socket.emit("markAsRead", message.messageData.id);
+            }
+      
+            setSelectedChatRoomMessages((prevMessages) => [
+              ...prevMessages,
+              message.messageData,
+            ]);
+          }
+        });
+      
+        return () => {
+          socket.off("receiveMessage");
+        };
+      }, [selectedChatRoom, userData.id]);
+
 
     const sendMessage = (message: string) => {
         const messageToSend = {
@@ -159,24 +165,24 @@ const ChatPage = () => {
             roomId: selectedChatRoom?._id,
             textMessage: message,
         };
+console.log("Before sending");
+console.log("message", messageToSend);
 
-        socket.emit("sendMessage", messageToSend);
+socket.emit("sendMessage", messageToSend);
+console.log("After sending");
     };
 
     const handleChatRoomClick = async (room: any) => {
         setSelectedChatRoom(room);
 
-        dispatch(setCurrentlySelectedChatRoom(room));
-        const conversations =
-            userData.role === "candidate"
-                ? await getACandidateConversationApi(room._id)
-                : await getARecrutierConversationApi(room._id);
+        dispatch(setSelectedChatRoom(room));
+        const conversations = isCandidate
+            ? await getACandidateConversationApi(room._id)
+            : await getARecrutierConversationApi(room._id);
 
         const senderId = getReceiver(room); // to find the other user
-        userData.role === "candidate"
-            ? await deleteCandidatesAllNotificationsBySenderIdApi(
-                  senderId?._id
-              )
+        isCandidate
+            ? await deleteCandidatesAllNotificationsBySenderIdApi(senderId?._id)
             : await deleteRecruitersAllNotificationsBySenderIdApi(
                   senderId?._id
               );
@@ -196,6 +202,10 @@ const ChatPage = () => {
         }
         return false;
     };
+
+    const chatRooms = useSelector(
+        (store: RootState) => store.chatReducer.rooms
+    );
 
     const getReceiver = (chatRoom: any) => {
         const otherUser = chatRoom.users.find(
@@ -278,16 +288,20 @@ const ChatPage = () => {
                                         selectedChatRoomMessages.map(
                                             (message: any, index: number) => (
                                                 <Message
-                                                    senderImage={
-                                                        myProfile &&
-                                                        myProfile.profileImage
-                                                            ? myProfile.profileImage
-                                                            :  userData.role === "candidate"? CONSTANTS.CANDIDATE_DEFAULT_PROFILE_IMAGE:  CONSTANTS.RECRUITER_DEFAULT_PROFILE_IMAGE
-                                                    }
-                                                    receiver={getReceiver(selectedChatRoom)}
-                                                    key={index}
                                                     message={message}
                                                     userId={userData.id}
+                                                    senderImage={
+                                                        isRecruiter
+                                                            ? CONSTANTS.RECRUITER_DEFAULT_PROFILE_IMAGE
+                                                            : isCandidate &&
+                                                              myProfile.profileImage
+                                                            ? myProfile.profileImage
+                                                            : CONSTANTS.CANDIDATE_DEFAULT_PROFILE_IMAGE
+                                                    }
+                                                    receiver={getReceiver(
+                                                        selectedChatRoom
+                                                    )}
+                                                    key={index}
                                                 />
                                             )
                                         )

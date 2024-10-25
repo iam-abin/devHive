@@ -1,4 +1,3 @@
-import Swal from "sweetalert2";
 import { Outlet } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -13,21 +12,14 @@ import { adminSignoutApi } from "../../axios/apiMethods/auth-service/adminAuth";
 import { notify } from "../../utils/toastMessage";
 import LeftNavBarAdmin from "../../components/navBar/LeftNavBarAdmin";
 import { clearUser } from "../../redux/slice/user";
+import { swal } from "../../utils/swal";
 
 const AdminLayout = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
 	const handleLogout = async () => {
-		Swal.fire({
-			title: "Do you want to Logout?",
-			text: "Are you sure!",
-			icon: "warning",
-			showCancelButton: true,
-			confirmButtonColor: "#3085d6",
-			cancelButtonColor: "#d33",
-			confirmButtonText: "Yes, Logout",
-		}).then(async (result) => {
+		swal("Do you want to Logout?", "Yes, Logout").then(async (result) => {
 			if (result.isConfirmed) {
 				const response = await adminSignoutApi();
 				if (response) {

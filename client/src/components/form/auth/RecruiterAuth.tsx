@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 
 import { IAuthProps } from "../../../types/user";
@@ -9,6 +9,7 @@ const RecruiterAuth = ({
     initialValues,
     authType,
 }: IAuthProps) => {
+    const navigate = useNavigate();
     return (
         <Formik
             initialValues={initialValues}
@@ -45,6 +46,7 @@ const RecruiterAuth = ({
                                                 type="text"
                                                 name="name"
                                                 placeholder="Name"
+                                                autoComplete="name"
                                                 className={`w-full py-2 mt-2 text-black bg-transparent border-b border-black outline-none focus:outline-none ${
                                                     errors.name && touched.name
                                                         ? "input-error border-red-500"
@@ -66,6 +68,7 @@ const RecruiterAuth = ({
                                         type="email"
                                         name="email"
                                         placeholder="Email"
+                                        autoComplete="email"
                                         className={`w-full py-2 mt-2 text-black bg-transparent border-b border-black outline-none focus:outline-none ${
                                             errors.email && touched.email
                                                 ? "input-error border-red-500"
@@ -87,6 +90,7 @@ const RecruiterAuth = ({
                                                 type="text"
                                                 name="phone"
                                                 placeholder="Phone"
+                                                autoComplete="phone"
                                                 className={`w-full py-2 mt-2 text-black bg-transparent border-b border-black outline-none focus:outline-none ${
                                                     errors.phone &&
                                                     touched.phone
@@ -125,7 +129,7 @@ const RecruiterAuth = ({
                                         </span>
                                     </label>
                                 </div>
-                                <div className="w-full flex flex-col my-4">
+                                <div className="w-full flex flex-col mt-4">
                                     <button
                                         type="submit"
                                         className="w-full text-white bg-black rounded-md p-4 my-2 text-center flex items-center justify-center"
@@ -135,6 +139,20 @@ const RecruiterAuth = ({
                                             : "Sign Up"}
                                     </button>
                                 </div>
+                                {authType === "signin" && (
+                                    <label
+                                        className="label text-end flex justify-end"
+                                        onClick={() =>
+                                            navigate(
+                                                "/recruiter/forgotPasswordEmail"
+                                            )
+                                        }
+                                    >
+                                        <span className="label-text-alt cursor-pointer">
+                                            Forgot Password?
+                                        </span>
+                                    </label>
+                                )}
                                 <div className="w-full items-center justify-center flex">
                                     {authType === "signin" ? (
                                         <p className="text-sm font-normal">

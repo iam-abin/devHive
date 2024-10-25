@@ -2,7 +2,6 @@ import React from "react";
 import { RiArrowLeftFill } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
 
 import {
     initialSigninValues,
@@ -24,9 +23,10 @@ import Loading from "../../../components/loading/Loading";
 import candidateLoginImage from "../../../assets/auth/candidate-login.svg";
 import { setUser } from "../../../redux/slice/user";
 
-import { IAuth  } from "../../../types/user";
+import { IAuth } from "../../../types/user";
 import { IResponse } from "../../../types/api";
-import CandidateAuth from "../../../components/form/signup/CandidateAuth";
+import CandidateAuth from "../../../components/form/auth/CandidateAuth";
+import { swal } from "../../../utils/swal";
 
 const AuthCandidate: React.FC = () => {
     const dispatch = useDispatch();
@@ -39,9 +39,8 @@ const AuthCandidate: React.FC = () => {
     const isLoading = useSelector(
         (state: RootState) => state.loading.isLoading
     );
-    
+
     const handleSubmit = async (userData: IAuth) => {
-        
         try {
             if (authType === "signin") {
                 dispatch(setLoading());
@@ -68,16 +67,15 @@ const AuthCandidate: React.FC = () => {
                     role: "candidate",
                 });
 
-                Swal.fire({
-                    text: response?.message || "Email sendedddd",
-                    confirmButtonText: "ok",
-                }).then((res) => {
-                    if (res) {
-                        navigate(
-                            `/candidate/otpSignupCandidate/${userData.email}`
-                        );
+                swal(response?.message || "Email sendedddd", "ok", true).then(
+                    (res) => {
+                        if (res) {
+                            navigate(
+                                `/candidate/otpSignupCandidate/${userData.email}`
+                            );
+                        }
                     }
-                });
+                );
             }
         } finally {
             dispatch(setLoaded());
@@ -100,8 +98,8 @@ const AuthCandidate: React.FC = () => {
 
             <div
                 className={`w-full ${
-                    authType === "signin" ? "lg:w-6/12" : "lg:w-7/12"
-                } flex items-center justify-center`}
+                    authType === "signup" ? "lg:w-6/12" : "lg:w-7/12"
+                } p-11 flex items-center justify-center`}
             >
                 <CandidateAuth
                     handleSubmit={handleSubmit}

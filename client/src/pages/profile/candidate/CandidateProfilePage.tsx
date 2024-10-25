@@ -2,7 +2,7 @@ import React, { ChangeEvent, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/reducer";
 import {
-    candidateGetProfileApi,
+    getCandidateProfileApi,
     deleteResumeApi,
     updateCandidatePreferredJobsProfileApi,
     updateCandidateSkillsProfileApi,
@@ -11,7 +11,7 @@ import {
 } from "../../../axios/apiMethods/profile-service/candidate";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import ImageFileUpload from "../../../components/upload/ImageFileUpload";
-import TopNavBarCandidate from "../../../components/navBar/TopNavBarCandidate";
+import TopNavBarCandidate from "../../../components/navBar/TopNavBar";
 import Footer from "../../../components/footer/Footer";
 import { FaEdit, FaEye } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
@@ -20,10 +20,10 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
 import { getACandidateProfileApi } from "../../../axios/apiMethods/profile-service/recruiter";
 import { FaFacebookMessenger } from "react-icons/fa";
-import Swal from "sweetalert2";
 import CircleLoading from "../../../components/loading/CircleLoading";
 import { hotToastMessage } from "../../../utils/hotToastMessage";
 import { setMyProfileData } from "../../../redux/slice/user";
+import { swal } from "../../../utils/swal";
 
 const CandidateProfilePage: React.FC = () => {
     const navigate = useNavigate();
@@ -85,7 +85,7 @@ const CandidateProfilePage: React.FC = () => {
                     candidateId ?? id
                 );
             } else {
-                candidateProfile = await candidateGetProfileApi(
+                candidateProfile = await getCandidateProfileApi(
                     candidateId ?? id
                 );
             }
@@ -141,29 +141,23 @@ const CandidateProfilePage: React.FC = () => {
     };
 
     const handleResumeDelete = () => {
-        Swal.fire({
-            title: `Do you want to delete this resume`,
-            text: "Are you sure!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: `Yes, delete`,
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                const updatedCandidate = await deleteResumeApi(
-                    candidateData.id
-                );
+        swal(`Do you want to delete this resume`, `Yes, delete`).then(
+            async (result) => {
+                if (result.isConfirmed) {
+                    const updatedCandidate = await deleteResumeApi(
+                        candidateData.id
+                    );
 
-                if (updatedCandidate) {
-                    setCandidateProfileData({
-                        ...candidateProfileData,
-                        resume: updatedCandidate.data.resume,
-                    });
-                    hotToastMessage(updatedCandidate.message, "success");
+                    if (updatedCandidate) {
+                        setCandidateProfileData({
+                            ...candidateProfileData,
+                            resume: updatedCandidate.data.resume,
+                        });
+                        hotToastMessage(updatedCandidate.message, "success");
+                    }
                 }
             }
-        });
+        );
     };
 
     const handleSavePreferredJobs = async () => {

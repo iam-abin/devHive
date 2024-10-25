@@ -30,9 +30,9 @@ const start = async () => {
     const candidateProfileUpdatedEvent =
         new CandidateProfileUpdatedEventConsumer(kafkaClient);
 
-    await userUpdatedEvent.subscribe();
-    await userCreatedEvent.subscribe();
-    await candidateProfileUpdatedEvent.subscribe();
+    // await userUpdatedEvent.subscribe();
+    // await userCreatedEvent.subscribe();
+    // await candidateProfileUpdatedEvent.subscribe();
 
     httpServer
         .listen(appConfig.PORT, () => {

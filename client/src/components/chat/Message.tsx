@@ -9,6 +9,9 @@ const Message: React.FC<{
     senderImage: string;
 	receiver: any;
 }> = ({ message, userId, senderImage, receiver }) => {
+    // console.log(message);
+    // console.log(userId);
+    
     return (
         <>
             {message.senderId === userId ? (

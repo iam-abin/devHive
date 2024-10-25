@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import {  useLocation, useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import recruiterLoginImage from "../../../assets/auth/recruiter-login.svg";
 import { notify } from "../../../utils/toastMessage";
@@ -13,7 +12,7 @@ import { setUser } from "../../../redux/slice/user";
 
 import { setLoaded, setLoading } from "../../../redux/slice/isLoading";
 
-import RecruiterSignup from "../../../components/form/signup/RecruiterAuth";
+import RecruiterSignup from "../../../components/form/auth/RecruiterAuth";
 import {
     initialSignupValues,
     signupSchema,
@@ -23,6 +22,7 @@ import {
     initialSigninValues,
     signinSchema,
 } from "../../../utils/validations/signin";
+import { swal } from "../../../utils/swal";
 
 function AuthRecruiter() {
     const dispatch = useDispatch();
@@ -57,16 +57,15 @@ function AuthRecruiter() {
                     ...userData,
                     role: "recruiter",
                 });
-                Swal.fire({
-                    text: response?.message || "Email sendedddd",
-                    confirmButtonText: "ok",
-                }).then((res) => {
-                    if (res) {
-                        navigate(
-                            `/recruiter/otpSignupRecruiter/${userData.email}`
-                        );
+                swal(response?.message || "Email sendedddd", "ok", true).then(
+                    (res) => {
+                        if (res) {
+                            navigate(
+                                `/recruiter/otpSignupRecruiter/${userData.email}`
+                            );
+                        }
                     }
-                });
+                );
             }
         } finally {
             dispatch(setLoaded());
@@ -96,18 +95,18 @@ function AuthRecruiter() {
             </div>
 
             {/* right */}
-			{/* right */}
+            {/* right */}
             <RecruiterSignup
                 handleSubmit={handleSubmit}
-				schemaValues={
-					authType === "signin" ? signinSchema : signupSchema
-				}
-				initialValues={
-					authType === "signin"
-						? initialSigninValues
-						: initialSignupValues
-				}
-				authType={authType}
+                schemaValues={
+                    authType === "signin" ? signinSchema : signupSchema
+                }
+                initialValues={
+                    authType === "signin"
+                        ? initialSigninValues
+                        : initialSignupValues
+                }
+                authType={authType}
             />
         </main>
     );
