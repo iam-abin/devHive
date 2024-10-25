@@ -2,15 +2,12 @@ import mongoose from "mongoose";
 import { generateHashedPassword } from "../../../utils/password";
 import { ISignup } from "../../../types/user";
 
-// 1. An interface that describes the properties ,that are requried to create a new User
 
-// 2. An interface that describes the properties ,that a User Document has
 interface UserDocument extends mongoose.Document, ISignup {
 	isVarified:boolean;
 	isActive: boolean;
 }
 
-// 3.
 const userSchema = new mongoose.Schema(
 	{
 		name: {
@@ -39,7 +36,7 @@ const userSchema = new mongoose.Schema(
 			required: true,
 			enum: ["admin", "candidate", "recruiter"],
 		},
-		isVarified: {  // field for signup email verificetion
+		isVarified: { 
 			type: Boolean,
 			default: false,
 		},
@@ -50,7 +47,6 @@ const userSchema = new mongoose.Schema(
 		otp: Number,
 	},
 	{
-		// to reformat id and remove password,__v from response when converting to json (we can also use other approaches)
 		toJSON: {
 			transform(doc, ret) {
 				ret.id = ret._id;
@@ -77,11 +73,12 @@ userSchema.pre("save", async function (next) {
 	}
 });
 
-// To hash password before saving the updated password to db
 userSchema.pre('findOneAndUpdate', async function (next) {
     const update = this.getUpdate() as Partial<ISignup>;
     if (!update.password) return next();
-
+	console.log("updated password ===================", update.password);
+	
+	
     try {
         const hashedPassword: string = await generateHashedPassword(update.password);
         this.setUpdate({ ...update, password: hashedPassword });
@@ -92,15 +89,12 @@ userSchema.pre('findOneAndUpdate', async function (next) {
 });
 
 
-// 4. An interface that describes the properties ,that a user model has
 interface UserModel extends mongoose.Model<UserDocument> {
 	buildUser(attributes: ISignup): UserDocument;
 }
 
-// 5.In Mongoose, you can also add custom functions to a model using statics.
 userSchema.statics.buildUser = (attributes: ISignup) => {
 	return new UserModel({
-		// to create a new user document
 		name: attributes.name,
 		email: attributes.email,
 		phone: attributes.phone,
@@ -110,7 +104,6 @@ userSchema.statics.buildUser = (attributes: ISignup) => {
 	});
 };
 
-// 6. // 6.hover on 'User' ,we can see that 'User' is getting 'UserMdel', ie,a Second arg indicate returning type
 const UserModel = mongoose.model<UserDocument, UserModel>("User", userSchema);
 
 export { UserModel };

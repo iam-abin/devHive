@@ -46,13 +46,15 @@ export = {
         applicationJobIds?: string[]
     ): Promise<IJobDocument[] | []> => {
         let jobs;
+        // console.log("applicationJobIds ",applicationJobIds);
+        
         if (applicationJobIds) {
             jobs = await JobModel.find({ _id: { $nin: applicationJobIds } })
                 .sort({ createdAt: -1 })
                 .skip(skip)
                 .limit(limit);
         } else {
-            jobs = await JobModel.find()
+            jobs = await JobModel.find({isActive: true})
                 .sort({ createdAt: -1 })
                 .skip(skip)
                 .limit(limit);
@@ -66,6 +68,7 @@ export = {
         if (applicationJobIds) {
             totalJobs = await JobModel.countDocuments({
                 _id: { $nin: applicationJobIds },
+                isActive: true
             });
         } else {
             totalJobs = await JobModel.countDocuments();

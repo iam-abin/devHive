@@ -15,15 +15,6 @@ const RecruiterLayout = () => {
 		(store: RootState) => store.userReducer.authData
 	);
 
-	// State to manage visibility of left navbar on mobile
-	// const [isLeftNavBarVisible, setIsLeftNavBarVisible] =
-	// 	useState<boolean>(false);
-
-	// const toggleLeftNavBar = () => {
-		
-	// 	setIsLeftNavBarVisible(!isLeftNavBarVisible);
-	// };
-
 	const menus = [
 		{ title: "Dashboard", src: dashboard, to: "/recruiter" },
 		{
@@ -54,15 +45,6 @@ const RecruiterLayout = () => {
 		<>
 			{/*top-nav-bar */}
 			<TopNavBar />
-
-			{/*left-nav-bar sm screens*/}
-			{/* <div
-				className={`absolute md:hidden overflow-y-auto ${
-					!isLeftNavBarVisible ? "hidden " : "block z-30"
-				}`} // Hide on small screens, show on medium and larger screens
-			>
-				{isLeftNavBarVisible && <LeftNavBarRecruiter menus={menus} />}
-			</div> */}
 
 			<div className="flex">
 				{/* left-nav-bar for screens larger >=md */}

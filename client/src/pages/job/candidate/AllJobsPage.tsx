@@ -10,7 +10,7 @@ import JobCard from "../../../components/cards/JobCard";
 function AllJobsPage() {
 	const navigate = useNavigate();
 
-	const [currentPage, setCurrentPage] = useState(0);
+	const [currentPage, setCurrentPage] = useState(1);
 	const [pageCount, setpageCount] = useState(1);
 	const [jobs, setJobs] = useState([]);
 

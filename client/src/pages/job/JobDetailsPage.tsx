@@ -40,7 +40,7 @@ function JobDetailsPage() {
 
     // Candidate
     const handleApplyJob = async (jobId: string) => {
-        swal("Do you want to Apply For this job?").then(async (result) => {
+        swal("Do you want to Apply For this job?", "Are you sure!").then(async (result) => {
             if (result.isConfirmed) {
                 const response = await candidateApplyJobApi(jobId);
 

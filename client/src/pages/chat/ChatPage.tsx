@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import ChatImage from "../../assets/chat/double-chat-bubble-icon.svg";
@@ -20,14 +20,14 @@ import { RootState } from "../../redux/reducer";
 import socket from "../../config/socket";
 import { deleteCandidatesAllNotificationsBySenderIdApi } from "../../axios/apiMethods/chat-service/notification";
 import { deleteRecruitersAllNotificationsBySenderIdApi } from "../../axios/apiMethods/chat-service/notification";
-import { CONSTANTS, ROLES } from "../../utils/constants";
+import { CONSTANTS } from "../../utils/constants";
 import {
-    clearChatRooms,
-    clearSelectedChatRoom,
     setChatRooms,
+    clearChatRooms,
     setSelectedChatRoom,
+    clearSelectedChatRoom,
 } from "../../redux/slice/chat";
-import { IChatRoom, IMessage } from "../../types/chat";
+import { IMessage } from "../../types/chat";
 import { checkUserRole } from "../../utils/checkRole";
 
 const ChatPage = () => {
@@ -38,15 +38,16 @@ const ChatPage = () => {
         (store: RootState) => store.userReducer.authData
     );
 
-    const {isCandidate, isRecruiter} = checkUserRole(userData)
+    const { isCandidate, isRecruiter } = checkUserRole(userData);
 
     const myProfile: any = useSelector((state: RootState) => {
         return state.userReducer.myProfile;
     });
 
     const [onlineUsers, setOnlineUsers] = useState<any>([]);
-    const [selectedChatRoomMessages, setSelectedChatRoomMessages] =
-        useState<IMessage[]>([]);
+    const [selectedChatRoomMessages, setSelectedChatRoomMessages] = useState<
+        IMessage[]
+    >([]);
 
     const selectedChatRoom = useSelector(
         (store: RootState) => store.chatReducer.roomData
@@ -63,7 +64,6 @@ const ChatPage = () => {
         scrollToBottom();
     }, [selectedChatRoomMessages]);
 
-
     useEffect(() => {
         socket.emit("addActiveUser", userData.id);
         socket.on("getActiveUsers", (users) => {
@@ -72,32 +72,23 @@ const ChatPage = () => {
     }, [userData?._id]);
 
     useEffect(() => {
-        // Check if the page is being refreshed
-        const handleBeforeUnload = (event: any) => {
-            event.preventDefault();
-            // Dispatch the action to clear the currently selected chat room
+        // Function to clear the selected chat room
+        const clearRoom = () => {
             dispatch(clearSelectedChatRoom());
         };
 
-        window.addEventListener("beforeunload", handleBeforeUnload);
+        // Add event listener for beforeunload
+        window.addEventListener('beforeunload', clearRoom);
 
+        // Return a cleanup function to remove the event listener
         return () => {
-            window.removeEventListener("beforeunload", handleBeforeUnload);
+            window.removeEventListener('beforeunload', clearRoom);
         };
-    }, []);
-
-    const location = useLocation();
-    useEffect(() => {
-        return () => {
-            // When the component unmounts, clear the selected chat room
-            dispatch(clearSelectedChatRoom());
-        };
-    }, [location.pathname]); // This will run when the route/path changes
+    }, [dispatch]);
 
     useEffect(() => {
         socket.emit("createChatRoom", userData.id, recepientId);
         socket.on("getAllChatRooms", (rooms) => {
-
             dispatch(setChatRooms(rooms));
         });
 
@@ -123,41 +114,42 @@ const ChatPage = () => {
         });
 
         return () => {
-            // Clean up the event listener when the component unmounts
-            socket.off("chatNotification");
+            // // Clean up the event listener when the component unmounts
+            // socket.off("chatNotification");
             dispatch(clearSelectedChatRoom());
         };
     }, []);
 
     useEffect(() => {
         socket.on("connect_error", (error) => {
-          console.error("Socket.IO connection error:", error);
+            console.error("Socket.IO connection error:", error);
         });
-      
+
         return () => {
-          socket.off("connect_error");
+            socket.off("connect_error");
         };
-      }, []);
-      
+    }, []);
+
     useEffect(() => {
         socket.on("receiveMessage", (message) => {
-          if (message.messageData.roomId.toString() === selectedChatRoom?._id) {
-            if (message.messageData.senderId.toString() !== userData.id) {
-              socket.emit("markAsRead", message.messageData.id);
-            }
-      
-            setSelectedChatRoomMessages((prevMessages) => [
-              ...prevMessages,
-              message.messageData,
-            ]);
-          }
-        });
-      
-        return () => {
-          socket.off("receiveMessage");
-        };
-      }, [selectedChatRoom, userData.id]);
+            if (
+                message.messageData.roomId.toString() === selectedChatRoom?._id
+            ) {
+                if (message.messageData.senderId.toString() !== userData.id) {
+                    socket.emit("markAsRead", message.messageData.id);
+                }
 
+                setSelectedChatRoomMessages((prevMessages) => [
+                    ...prevMessages,
+                    message.messageData,
+                ]);
+            }
+        });
+
+        return () => {
+            socket.off("receiveMessage");
+        };
+    }, [selectedChatRoom, userData.id]);
 
     const sendMessage = (message: string) => {
         const messageToSend = {
@@ -165,11 +157,7 @@ const ChatPage = () => {
             roomId: selectedChatRoom?._id,
             textMessage: message,
         };
-console.log("Before sending");
-console.log("message", messageToSend);
-
-socket.emit("sendMessage", messageToSend);
-console.log("After sending");
+        socket.emit("sendMessage", messageToSend);
     };
 
     const handleChatRoomClick = async (room: any) => {

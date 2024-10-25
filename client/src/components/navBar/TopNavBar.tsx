@@ -309,9 +309,9 @@ const TopNavBar = () => {
                         />
                     )}
                 </div>
-                {myProfile && myProfile?.name}
                 {isCandidate && menus && (
                     <div className="flex-none ">
+                        {myProfile && myProfile?.name}
                         <div className="dropdown dropdown-end">
                             <div
                                 tabIndex={0}
@@ -350,7 +350,7 @@ const TopNavBar = () => {
                                         </li>
                                     );
                                 })}
-                                {/* +++++++++ */}
+                                
                                 <li onClick={handleLogout}>
                                     <a>Logout</a>
                                 </li>

@@ -36,7 +36,6 @@ const JobDetails: React.FC<{
         // Do something specific for the "recruiter" page
     }
 
-    console.log(hasApplied, "hasapplieddd");
 
     return (
         <div>
@@ -121,15 +120,6 @@ const JobDetails: React.FC<{
                         </div>
                     )}
 
-                    {/* {jobDetails && jobDetails.recruiterId && (
-						<div className="mb-4">
-							<h2 className=" font-extrabold mb-2">
-								recruiter
-							</h2>
-							<p>{jobDetails.recruiterId}</p>
-						</div>
-					)} */}
-                    {/* <div className="my-3 "> */}
                     {jobDetails && jobDetails.recruiterId && (
                         <div className="flex items-center my-8 ">
                             <h2 className=" font-extrabold mb-2  w-3/5">
@@ -257,8 +247,8 @@ const JobDetails: React.FC<{
                                 <div className={`badge badge-accent w-24"} `}>
                                     Applied
                                 </div>
-                            ) : (
-                                <button
+                            ) : jobDetails && jobDetails.isActive && 
+                                    <button
                                     className="bg-primary text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300"
                                     onClick={() => {
                                         return handleApplyJob(jobDetails?.id);
@@ -266,7 +256,7 @@ const JobDetails: React.FC<{
                                 >
                                     Apply Now
                                 </button>
-                            )
+                           
                         ) : (
                             <button
                                 className="bg-primary text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300"

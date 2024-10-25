@@ -1,22 +1,22 @@
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../redux/reducer";
-import { setLoaded, setLoading } from "../../../redux/slice/isLoading";
+import { RootState } from "../../redux/reducer";
+import { setLoaded, setLoading } from "../../redux/slice/isLoading";
 import {
     verifyForgotPasswordOtpCandidateApi,
     verifyResetPasswordOtpCandidateApi,
     verifySignupOtpCandidateApi,
-} from "../../../axios/apiMethods/auth-service/candidateAuth";
-import { setUser } from "../../../redux/slice/user";
+} from "../../axios/apiMethods/auth-service/candidateAuth";
+import { setUser } from "../../redux/slice/user";
 import {
     verifyForgotPasswordOtpRecruiterApi,
     verifyResetPasswordOtpRecruiterApi,
     verifySignupOtpRecruiterApi,
-} from "../../../axios/apiMethods/auth-service/recruiterAuth";
-import { notify } from "../../../utils/toastMessage";
-import OtpEnterForm from "../../../components/form/otpEnterForm";
-import Loading from "../../../components/loading/Loading";
-import { IResponse } from "../../../types/api";
+} from "../../axios/apiMethods/auth-service/recruiterAuth";
+import { notify } from "../../utils/toastMessage";
+import OtpEnterForm from "../../components/form/otpEnterForm";
+import Loading from "../../components/loading/Loading";
+import { IResponse } from "../../types/api";
 
 function OtpFormPage() {
     const dispatch = useDispatch();
@@ -39,10 +39,10 @@ function OtpFormPage() {
     const isLoading = useSelector(
         (state: RootState) => state.loading.isLoading
     );
-    const candidateData: any = useSelector(
+    const candidateData = useSelector(
         (store: RootState) => store.userReducer.authData
     );
-    const recruiterData: any = useSelector(
+    const recruiterData = useSelector(
         (store: RootState) => store.userReducer.authData
     );
 
@@ -116,8 +116,6 @@ function OtpFormPage() {
             if (response) {
                 notify(response?.message, "success");
             }
-        } catch (error: any) {
-            notify("An error occurred: " + error.message, "error");
         } finally {
             dispatch(setLoaded());
         }

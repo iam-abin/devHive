@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../redux/reducer";
 import Loading from "../components/loading/Loading";
 import { checkUserRole } from "../utils/checkRole";
+import CandidateLayout from "../pages/layout/CandidateLayout";
 
 
 const PaymentFailed = lazy(()=> import("../pages/payment/PaymentFailed"))
@@ -14,9 +15,9 @@ const LandingPage = lazy(()=> import("../pages/landing/LandingPage"))
 const CandidateProfilePage = lazy(()=> import("../pages/profile/candidate/CandidateProfilePage"))
 const AllJobsPage = lazy(()=> import("../pages/job/candidate/AllJobsPage"))
 const JobDetailsPage = lazy(()=> import("../pages/job/JobDetailsPage"))
-const OtpFormPage = lazy(()=> import("../pages/auth/otp/OtpFormPage"))
-const EmailOrMobileEnterPage = lazy(()=> import("../pages/auth/emailOrMobileEnter/EnterEmailOrMobilePage"))
-const UpdatePassword = lazy(()=> import("../pages/auth/password/UpdatePassword"))
+const OtpFormPage = lazy(()=> import("../pages/auth/OtpFormPage"))
+const EmailOrMobileEnterPage = lazy(()=> import("../pages/auth/EnterEmailOrMobilePage"))
+const UpdatePassword = lazy(()=> import("../pages/auth/UpdatePassword"))
 const CandidateProfileEditPage = lazy(()=> import("../pages/profile/candidate/CandidateProfileEditPage"))
 const AppliedJobsPage = lazy(()=> import("../pages/job/candidate/AppliedJobsPage"))
 const JobApplicationDetailsPage = lazy(()=> import("../pages/job/candidate/JobApplicationDetailsPage"));
@@ -40,6 +41,7 @@ function CandidateRoutes() {
 		<>
 			<Suspense fallback={<Loading />}>
 				
+					{/* <CandidateLayout> */}
 				<Routes>
 					<Route path="/" element={isCandidate? <LandingPage />: <Navigate to={"/candidate/landing"} />} />
 					<Route path="/profile" element={isCandidate? <CandidateProfilePage />: <Navigate to={"/candidate/landing"} />} />
@@ -71,6 +73,7 @@ function CandidateRoutes() {
 					
 					<Route path="*" element={<NotFound url={"/candidate"} />} />
 				</Routes>
+					{/* </CandidateLayout> */}
 				
 			</Suspense>
 		</>

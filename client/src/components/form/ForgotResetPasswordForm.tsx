@@ -26,8 +26,6 @@ function ForgotResetPasswordForm({ handleSubmit }: { handleSubmit: any }) {
                     console.error("Form values are undefined.");
                     return;
                 }
-                // console.log("reset values ", values);
-
                 handleSubmit(values);
             }}
         >
@@ -66,6 +64,7 @@ function ForgotResetPasswordForm({ handleSubmit }: { handleSubmit: any }) {
                                             : ""
                                     }`}
                                 />
+                                {/* icon */}
                                 <button
                                     type="button"
                                     className="absolute inset-y-0 right-0 px-3 flex items-center"
@@ -141,6 +140,7 @@ function ForgotResetPasswordForm({ handleSubmit }: { handleSubmit: any }) {
                                             : ""
                                     }`}
                                 />
+                                {/* icon */}
                                 <button
                                     type="button"
                                     className="absolute inset-y-0 right-0 px-3 flex items-center"
@@ -200,19 +200,6 @@ function ForgotResetPasswordForm({ handleSubmit }: { handleSubmit: any }) {
                             </button>
                         </div>
 
-                        {formik.errors.password !== "Passwords must match" &&
-                            formik.touched.password && (
-                                <p className="text-red-500 text-xs mt-1">
-                                    {formik.errors.password}
-                                </p>
-                            )}
-
-                        {formik.errors.confirmPassword &&
-                            formik.touched.confirmPassword && (
-                                <p className="text-red-500 text-xs mt-1">
-                                    {formik.errors.confirmPassword}
-                                </p>
-                            )}
                     </div>
                 </Form>
             )}
