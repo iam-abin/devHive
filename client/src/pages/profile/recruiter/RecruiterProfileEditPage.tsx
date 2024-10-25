@@ -32,8 +32,8 @@ function RecruiterProfileEditPage() {
     const [profileDetails, setProfileDetails] = useState<any>(null);
     const navigate = useNavigate();
     const recruiterData: any = useSelector(
-		(state: RootState) => state.userReducer.authData
-	);
+        (state: RootState) => state.userReducer.authData
+    );
     const { id } = recruiterData;
 
     useEffect(() => {
@@ -50,14 +50,14 @@ function RecruiterProfileEditPage() {
     }
 
     const handleSubmit = async (profileData: ProfileFormData) => {
-            const data = await updateRecruiterProfileApi(profileData);
+        const data = await updateRecruiterProfileApi(profileData);
 
-            if (data.data) {
-                notify("Profile updated successfully", "success");
-                navigate("/recruiter/profile");
-            } else {
-                notify("Profile not updated", "error");
-            }
+        if (data.data) {
+            notify("Profile updated successfully", "success");
+            navigate("/recruiter/profile");
+        } else {
+            notify("Profile not updated", "error");
+        }
     };
 
     const initialProfileValues: ProfileFormData = {
@@ -79,294 +79,280 @@ function RecruiterProfileEditPage() {
     };
 
     return (
-        <div>
-            <main className="h-full flex items-center justify-center">
-                <Formik
-                    initialValues={initialProfileValues}
-                    onSubmit={(values) => {
-                        handleSubmit(values);
-                    }}
-                >
-                    {(formik) => {
-                        const { errors, touched } = formik;
-                        return (
-                            <div className="md:w-6/12 p-6">
-                                <div className="mb-5">
-                                    <h1 className="text-center sm:text-5xl font-bold">
-                                        Edit Profile
-                                    </h1>
-                                    <div className="w-16 h-1 bg-black mx-auto my-4"></div>
+        <div className="flex items-center justify-center">
+            <Formik
+                initialValues={initialProfileValues}
+                onSubmit={(values) => {
+                    handleSubmit(values);
+                }}
+            >
+                {(formik) => {
+                    const { errors, touched } = formik;
+                    return (
+                        <div className="md:w-6/12 p-6">
+                            <div className="mb-5">
+                                <h1 className="text-center sm:text-5xl font-bold">
+                                    Edit Profile
+                                </h1>
+                                <div className="w-16 h-1 bg-black mx-auto my-4"></div>
+                            </div>
+
+                            <Form noValidate className="bg-slate-300 p-6">
+                                {/* Name field */}
+                                <div className="form-control w-6/6">
+                                    <label htmlFor="name" className="label">
+                                        Name
+                                    </label>
+                                    <Field
+                                        type="text"
+                                        id="name"
+                                        name="name"
+                                        className={`input input-primary w-full rounded-xl ${
+                                            errors.name && touched.name
+                                                ? "input-error"
+                                                : ""
+                                        }`}
+                                    />
+                                    <ErrorMessage
+                                        name="name"
+                                        component="div"
+                                        className="error label-text-alt"
+                                    />
                                 </div>
 
-                                <Form noValidate className="bg-slate-300 p-6">
-                                    {/* Name field */}
-                                    <div className="form-control w-6/6">
-                                        <label htmlFor="name" className="label">
-                                            Name
-                                        </label>
-                                        <Field
-                                            type="text"
-                                            id="name"
-                                            name="name"
-                                            className={`input input-primary w-full rounded-xl ${
-                                                errors.name && touched.name
-                                                    ? "input-error"
-                                                    : ""
-                                            }`}
-                                        />
-                                        <ErrorMessage
-                                            name="name"
-                                            component="div"
-                                            className="error label-text-alt"
-                                        />
-                                    </div>
+                                {/* Email field */}
+                                <div className="form-control w-6/6">
+                                    <label htmlFor="email" className="label">
+                                        Email
+                                    </label>
+                                    <Field
+                                        type="email"
+                                        id="email"
+                                        name="email"
+                                        className={`input input-primary w-full rounded-xl ${
+                                            errors.email && touched.email
+                                                ? "input-error"
+                                                : ""
+                                        }`}
+                                    />
+                                    <ErrorMessage
+                                        name="email"
+                                        component="div"
+                                        className="error label-text-alt"
+                                    />
+                                </div>
 
-                                    {/* Email field */}
-                                    <div className="form-control w-6/6">
-                                        <label
-                                            htmlFor="email"
-                                            className="label"
-                                        >
-                                            Email
-                                        </label>
-                                        <Field
-                                            type="email"
-                                            id="email"
-                                            name="email"
-                                            className={`input input-primary w-full rounded-xl ${
-                                                errors.email && touched.email
-                                                    ? "input-error"
-                                                    : ""
-                                            }`}
-                                        />
-                                        <ErrorMessage
-                                            name="email"
-                                            component="div"
-                                            className="error label-text-alt"
-                                        />
-                                    </div>
+                                {/* Phone field */}
+                                <div className="form-control w-6/6">
+                                    <label htmlFor="phone" className="label">
+                                        Phone
+                                    </label>
+                                    <Field
+                                        type="tel"
+                                        id="phone"
+                                        name="phone"
+                                        className={`input input-primary w-full rounded-xl ${
+                                            errors.phone && touched.phone
+                                                ? "input-error"
+                                                : ""
+                                        }`}
+                                    />
+                                    <ErrorMessage
+                                        name="phone"
+                                        component="div"
+                                        className="error label-text-alt"
+                                    />
+                                </div>
 
-                                    {/* Phone field */}
-                                    <div className="form-control w-6/6">
-                                        <label
-                                            htmlFor="phone"
-                                            className="label"
-                                        >
-                                            Phone
-                                        </label>
-                                        <Field
-                                            type="tel"
-                                            id="phone"
-                                            name="phone"
-                                            className={`input input-primary w-full rounded-xl ${
-                                                errors.phone && touched.phone
-                                                    ? "input-error"
-                                                    : ""
-                                            }`}
-                                        />
-                                        <ErrorMessage
-                                            name="phone"
-                                            component="div"
-                                            className="error label-text-alt"
-                                        />
-                                    </div>
+                                {/* Gender field */}
+                                <div className="form-control w-6/6">
+                                    <label htmlFor="gender" className="label">
+                                        Gender
+                                    </label>
+                                    <Field
+                                        type="text"
+                                        id="gender"
+                                        name="gender"
+                                        className={`input input-primary w-full rounded-xl ${
+                                            errors.gender && touched.gender
+                                                ? "input-error"
+                                                : ""
+                                        }`}
+                                    />
+                                    <ErrorMessage
+                                        name="gender"
+                                        component="div"
+                                        className="error label-text-alt"
+                                    />
+                                </div>
 
-                                    {/* Gender field */}
-                                    <div className="form-control w-6/6">
-                                        <label
-                                            htmlFor="gender"
-                                            className="label"
-                                        >
-                                            Gender
-                                        </label>
-                                        <Field
-                                            type="text"
-                                            id="gender"
-                                            name="gender"
-                                            className={`input input-primary w-full rounded-xl ${
-                                                errors.gender && touched.gender
-                                                    ? "input-error"
-                                                    : ""
-                                            }`}
-                                        />
-                                        <ErrorMessage
-                                            name="gender"
-                                            component="div"
-                                            className="error label-text-alt"
-                                        />
-                                    </div>
+                                {/* About field */}
+                                <div className="form-control w-6/6">
+                                    <label htmlFor="about" className="label">
+                                        About
+                                    </label>
+                                    <Field
+                                        as="textarea"
+                                        id="about"
+                                        name="about"
+                                        className={`input input-primary w-full rounded-xl ${
+                                            errors.about && touched.about
+                                                ? "input-error"
+                                                : ""
+                                        }`}
+                                    />
+                                    <ErrorMessage
+                                        name="about"
+                                        component="div"
+                                        className="error label-text-alt"
+                                    />
+                                </div>
+                                <div className="h-1 w-full bg-black my-5"></div>
+                                {/* ======================== */}
+                                {/* Company Name field */}
+                                <div className="form-control w-6/6">
+                                    <label
+                                        htmlFor="companyName"
+                                        className="label"
+                                    >
+                                        Company Name
+                                    </label>
+                                    <Field
+                                        type="text"
+                                        id="companyName"
+                                        name="companyName"
+                                        className={`input input-primary w-full rounded-xl ${
+                                            errors.companyName &&
+                                            touched.companyName
+                                                ? "input-error"
+                                                : ""
+                                        }`}
+                                    />
+                                    <ErrorMessage
+                                        name="companyName"
+                                        component="div"
+                                        className="error label-text-alt"
+                                    />
+                                </div>
 
-                                    {/* About field */}
-                                    <div className="form-control w-6/6">
-                                        <label
-                                            htmlFor="about"
-                                            className="label"
-                                        >
-                                            About
-                                        </label>
-                                        <Field
-                                            as="textarea"
-                                            id="about"
-                                            name="about"
-                                            className={`input input-primary w-full rounded-xl ${
-                                                errors.about && touched.about
-                                                    ? "input-error"
-                                                    : ""
-                                            }`}
-                                        />
-                                        <ErrorMessage
-                                            name="about"
-                                            component="div"
-                                            className="error label-text-alt"
-                                        />
-                                    </div>
-                                    <div className="h-1 w-full bg-black my-5"></div>
-                                    {/* ======================== */}
-                                    {/* Company Name field */}
-                                    <div className="form-control w-6/6">
-                                        <label
-                                            htmlFor="companyName"
-                                            className="label"
-                                        >
-                                            Company Name
-                                        </label>
-                                        <Field
-                                            type="text"
-                                            id="companyName"
-                                            name="companyName"
-                                            className={`input input-primary w-full rounded-xl ${
-                                                errors.companyName &&
-                                                touched.companyName
-                                                    ? "input-error"
-                                                    : ""
-                                            }`}
-                                        />
-                                        <ErrorMessage
-                                            name="companyName"
-                                            component="div"
-                                            className="error label-text-alt"
-                                        />
-                                    </div>
+                                {/* Website field */}
+                                <div className="form-control w-6/6">
+                                    <label
+                                        htmlFor="companyWebsite"
+                                        className="label"
+                                    >
+                                        Company Website
+                                    </label>
+                                    <Field
+                                        type="text"
+                                        id="companyWebsite"
+                                        name="companyWebsite"
+                                        className={`input input-primary w-full rounded-xl ${
+                                            errors.companyWebsite &&
+                                            touched.companyWebsite
+                                                ? "input-error"
+                                                : ""
+                                        }`}
+                                    />
+                                    <ErrorMessage
+                                        name="companyWebsite"
+                                        component="div"
+                                        className="error label-text-alt"
+                                    />
+                                </div>
 
-                                    {/* Website field */}
-                                    <div className="form-control w-6/6">
-                                        <label
-                                            htmlFor="companyWebsite"
-                                            className="label"
-                                        >
-                                            Company Website
-                                        </label>
-                                        <Field
-                                            type="text"
-                                            id="companyWebsite"
-                                            name="companyWebsite"
-                                            className={`input input-primary w-full rounded-xl ${
-                                                errors.companyWebsite &&
-                                                touched.companyWebsite
-                                                    ? "input-error"
-                                                    : ""
-                                            }`}
-                                        />
-                                        <ErrorMessage
-                                            name="companyWebsite"
-                                            component="div"
-                                            className="error label-text-alt"
-                                        />
-                                    </div>
+                                {/* Company Location field */}
+                                <div className="form-control w-6/6">
+                                    <label
+                                        htmlFor="companyLocation"
+                                        className="label"
+                                    >
+                                        Company Location
+                                    </label>
+                                    <Field
+                                        type="text"
+                                        id="companyLocation"
+                                        name="companyLocation"
+                                        className={`input input-primary w-full rounded-xl ${
+                                            errors.companyLocation &&
+                                            touched.companyLocation
+                                                ? "input-error"
+                                                : ""
+                                        }`}
+                                    />
+                                    <ErrorMessage
+                                        name="companyLocation"
+                                        component="div"
+                                        className="error label-text-alt"
+                                    />
+                                </div>
 
-                                    {/* Company Location field */}
-                                    <div className="form-control w-6/6">
-                                        <label
-                                            htmlFor="companyLocation"
-                                            className="label"
-                                        >
-                                            Company Location
-                                        </label>
-                                        <Field
-                                            type="text"
-                                            id="companyLocation"
-                                            name="companyLocation"
-                                            className={`input input-primary w-full rounded-xl ${
-                                                errors.companyLocation &&
-                                                touched.companyLocation
-                                                    ? "input-error"
-                                                    : ""
-                                            }`}
-                                        />
-                                        <ErrorMessage
-                                            name="companyLocation"
-                                            component="div"
-                                            className="error label-text-alt"
-                                        />
-                                    </div>
+                                {/* Company State field */}
+                                <div className="form-control w-6/6">
+                                    <label
+                                        htmlFor="companyState"
+                                        className="label"
+                                    >
+                                        Company State
+                                    </label>
+                                    <Field
+                                        type="text"
+                                        id="companyState"
+                                        name="companyState"
+                                        className={`input input-primary w-full rounded-xl ${
+                                            errors.companyState &&
+                                            touched.companyState
+                                                ? "input-error"
+                                                : ""
+                                        }`}
+                                    />
+                                    <ErrorMessage
+                                        name="companyState"
+                                        component="div"
+                                        className="error label-text-alt"
+                                    />
+                                </div>
 
-                                    {/* Company State field */}
-                                    <div className="form-control w-6/6">
-                                        <label
-                                            htmlFor="companyState"
-                                            className="label"
-                                        >
-                                            Company State
-                                        </label>
-                                        <Field
-                                            type="text"
-                                            id="companyState"
-                                            name="companyState"
-                                            className={`input input-primary w-full rounded-xl ${
-                                                errors.companyState &&
-                                                touched.companyState
-                                                    ? "input-error"
-                                                    : ""
-                                            }`}
-                                        />
-                                        <ErrorMessage
-                                            name="companyState"
-                                            component="div"
-                                            className="error label-text-alt"
-                                        />
-                                    </div>
+                                {/* Company Country field */}
+                                <div className="form-control w-6/6">
+                                    <label
+                                        htmlFor="companyCountry"
+                                        className="label"
+                                    >
+                                        Company Country
+                                    </label>
+                                    <Field
+                                        type="text"
+                                        id="companyCountry"
+                                        name="companyCountry"
+                                        className={`input input-primary w-full rounded-xl ${
+                                            errors.companyCountry &&
+                                            touched.companyCountry
+                                                ? "input-error"
+                                                : ""
+                                        }`}
+                                    />
+                                    <ErrorMessage
+                                        name="companyCountry"
+                                        component="div"
+                                        className="error label-text-alt"
+                                    />
+                                </div>
+                                {/* ======================== */}
 
-                                    {/* Company Country field */}
-                                    <div className="form-control w-6/6">
-                                        <label
-                                            htmlFor="companyCountry"
-                                            className="label"
-                                        >
-                                            Company Country
-                                        </label>
-                                        <Field
-                                            type="text"
-                                            id="companyCountry"
-                                            name="companyCountry"
-                                            className={`input input-primary w-full rounded-xl ${
-                                                errors.companyCountry &&
-                                                touched.companyCountry
-                                                    ? "input-error"
-                                                    : ""
-                                            }`}
-                                        />
-                                        <ErrorMessage
-                                            name="companyCountry"
-                                            component="div"
-                                            className="error label-text-alt"
-                                        />
-                                    </div>
-                                    {/* ======================== */}
-
-                                    <div className="flex items-center justify-center mt-3 mb-3">
-                                        <button
-                                            type="submit"
-                                            className="btn w-60 btn-primary"
-                                        >
-                                            Update Profile
-                                        </button>
-                                    </div>
-                                </Form>
-                            </div>
-                        );
-                    }}
-                </Formik>
-            </main>
+                                <div className="flex items-center justify-center mt-3 mb-3">
+                                    <button
+                                        type="submit"
+                                        className="btn w-60 btn-primary"
+                                    >
+                                        Update Profile
+                                    </button>
+                                </div>
+                            </Form>
+                        </div>
+                    );
+                }}
+            </Formik>
         </div>
     );
 }

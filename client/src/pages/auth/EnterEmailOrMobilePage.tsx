@@ -1,33 +1,29 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import { RootState } from "../../../redux/reducer";
-import { setLoaded, setLoading } from "../../../redux/slice/isLoading";
+import { RootState } from "../../redux/reducer";
+import { setLoaded, setLoading } from "../../redux/slice/isLoading";
 import {
     forgotPasswordEmailCandidateApi,
     passwordResetMobileCandidateApi,
-} from "../../../axios/apiMethods/auth-service/candidateAuth";
-import Loading from "../../../components/loading/Loading";
-import TopNavBarCandidate from "../../../components/navBar/TopNavBar";
-import EmailOrMobile from "../../../components/form/EmailOrMobile";
-import Footer from "../../../components/footer/Footer";
+} from "../../axios/apiMethods/auth-service/candidateAuth";
+import Loading from "../../components/loading/Loading";
+import EmailOrMobile from "../../components/form/EmailOrMobile";
 import {
     forgotPasswordEmailRecruiterApi,
     passwordResetMobileRecruiterApi,
-} from "../../../axios/apiMethods/auth-service/recruiterAuth";
-import { IEmailOrMobile } from "../../../types/otp";
-import { swal } from "../../../utils/swal";
+} from "../../axios/apiMethods/auth-service/recruiterAuth";
+import { IEmailOrMobile } from "../../types/otp";
+import { swal } from "../../utils/swal";
 
 function EnterEmailOrMobilePage() {
     const navigate = useNavigate();
     const locationUrl = useLocation();
     const dispatch = useDispatch();
 
-    // Check if the path contains the word "otpEmail"
     const isEmailEnterPage: boolean = locationUrl.pathname.includes(
         "forgotPasswordEmail"
     );
 
-    // Check if the path contains the word "otpEmail"
     const isCandidateUrl: boolean = locationUrl.pathname.includes("candidate");
 
     const userType = isCandidateUrl ? "candidate" : "recruiter";
@@ -84,7 +80,7 @@ function EnterEmailOrMobilePage() {
             }
 
             console.log(response);
-            
+
             swal(
                 response?.message ||
                     `OTP sent to ${valueType} ${
@@ -113,16 +109,10 @@ function EnterEmailOrMobilePage() {
     }
 
     return (
-        <>
-            {userData && userData.role === "candidate" && (
-                <TopNavBarCandidate />
-            )}
-            <EmailOrMobile
-                handleSubmit={handleSubmit}
-                initialValue={initialValue}
-            />
-            {userData && userData.role === "candidate" && <Footer />}
-        </>
+        <EmailOrMobile
+            handleSubmit={handleSubmit}
+            initialValue={initialValue}
+        />
     );
 }
 

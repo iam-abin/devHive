@@ -55,7 +55,7 @@ const RecruiterLayout = () => {
 				</div>
 
 				{/* right-side */}
-				<div className="flex-1 sm:h-screen overflow-auto bg-slate-400">
+				<div className="flex-1 sm:h-screen overflow-auto pt-16 bg-slate-400">
 					{<Outlet />}
 				</div>
 			</div>

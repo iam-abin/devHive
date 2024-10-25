@@ -121,13 +121,13 @@ function AllAddedJobs() {
 
     return (
         <div>
-            <div className="flex items-center justify-center">
+            <div className="flex items-center justify-center pt-5">
                 <h1 className="text-3xl font-bold">My Jobs</h1>
             </div>
             <div className="navbar">
                 <div className="flex-1">
                     <button
-                        className="btn btn-accent"
+                        className="btn btn-accent ml-10"
                         onClick={() => navigate("/recruiter/create-job")}
                     >
                         {" "}

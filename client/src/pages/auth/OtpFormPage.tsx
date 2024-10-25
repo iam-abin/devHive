@@ -26,7 +26,6 @@ function OtpFormPage() {
     const { email } = useParams();
     const userEmail = email || "";
 
-    // Check if the path contains the word "otpEmail"
     const isCandidateUrl: boolean = locationUrl.pathname.includes("candidate");
 
     const userType = isCandidateUrl ? "candidate" : "recruiter";
@@ -125,11 +124,7 @@ function OtpFormPage() {
         return <Loading />;
     }
 
-    return (
-        <div>
-            <OtpEnterForm email={userEmail} handleSubmit={handleSubmit} />
-        </div>
-    );
+    return <OtpEnterForm email={userEmail} handleSubmit={handleSubmit} />;
 }
 
 export default OtpFormPage;

@@ -12,6 +12,8 @@ import { RootState } from "./redux/reducer";
 import { Toaster } from "react-hot-toast";
 import { SocketProvider } from "./context/socketContext";
 import { checkUserRole } from "./utils/checkRole";
+import TopNavBar from "./components/navBar/TopNavBar";
+import CandidateLayout from "./pages/layout/CandidateLayout";
 const NotFound = lazy(() => import("./pages/Error/NotFound"));
 const LandingPage = lazy(() => import("./pages/landing/LandingPage"));
 
@@ -47,8 +49,10 @@ export default function App() {
                     path="/candidate/*"
                     element={
                         isCandidate ? (
-                            <SocketProvider currentUserId ={loggedinUser.id}>
-                                <CandidateRoutes />
+                            <SocketProvider currentUserId={loggedinUser.id}>
+                                <CandidateLayout>
+                                    <CandidateRoutes />
+                                </CandidateLayout>
                             </SocketProvider>
                         ) : (
                             <CandidateRoutes />
@@ -59,7 +63,7 @@ export default function App() {
                     path="/recruiter/*"
                     element={
                         isRecruiter ? (
-                            <SocketProvider currentUserId ={loggedinUser.id}>
+                            <SocketProvider currentUserId={loggedinUser.id}>
                                 <RecruiterRouters />
                             </SocketProvider>
                         ) : (

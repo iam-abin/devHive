@@ -43,7 +43,6 @@ const ViewProfile: React.FC = () => {
 
     return (
         <>
-            {" "}
             {isCandidateUrl ? (
                 <CandidateProfile data={profileData} />
             ) : (

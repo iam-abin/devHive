@@ -107,7 +107,7 @@ function JobApplicationsPage() {
 
     return (
         <div>
-            <div className="flex items-center justify-center">
+            <div className="flex items-center justify-center p-5">
                 <h1 className="text-3xl font-bold">Job Applicants</h1>
             </div>
 
@@ -120,7 +120,7 @@ function JobApplicationsPage() {
                 </div>
             ) : (
                 <div className="text-center text-7xl my-60 font-bold text-orange-800">
-                    You haven't got any job applications yet
+                    You haven't received any job applications yet
                 </div>
             )}
         </div>

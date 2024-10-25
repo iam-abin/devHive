@@ -51,6 +51,8 @@ const TopNavBar = () => {
     });
 
     const { isCandidate, isRecruiter } = checkUserRole(currentUser);
+    console.log(currentUser);
+    
 
     const handleLogout = async () => {
         swal("Do you want to Logout?", "Yes, Logout").then(async (result) => {
@@ -276,7 +278,7 @@ const TopNavBar = () => {
         <>
             {/* <nav className="navbar sticky top-0 z-50 bg-base-100 bg-primary"> */}
             <nav
-                className={`navbar sticky top-0 z-50 ${
+                className={`navbar fixed top-0 z-50 ${
                     isCandidateUrl && isCandidate ? "bg-primary" : "bg-cyan-700"
                 }`}
             >
@@ -309,7 +311,8 @@ const TopNavBar = () => {
                         />
                     )}
                 </div>
-                {isCandidate && menus && (
+                
+                {isCandidate && (
                     <div className="flex-none ">
                         {myProfile && myProfile?.name}
                         <div className="dropdown dropdown-end">

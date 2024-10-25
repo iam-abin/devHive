@@ -44,7 +44,7 @@ function AdminSigninPage() {
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-violet-600 to-indigo-600">
-            <main className="w-full flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8">
+            <div className="w-full flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8">
                 <div className="w-full max-w-4xl bg-sky-600 rounded-lg shadow-xl overflow-hidden">
                     <div className="md:flex">
                         {/* Signin section */}
@@ -70,7 +70,7 @@ function AdminSigninPage() {
                         </div>
                     </div>
                 </div>
-            </main>
+            </div>
         </div>
     );
 }

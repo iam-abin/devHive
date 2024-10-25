@@ -1,29 +1,27 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { RootState } from "../../../redux/reducer";
-import { setLoaded, setLoading } from "../../../redux/slice/isLoading";
-import { notify } from "../../../utils/toastMessage";
-import ForgotResetPasswordForm from "../../../components/form/ForgotResetPasswordForm";
+// import { RootState } from "../../../redux/reducer";
+import { RootState } from "../../redux/reducer";
+import { setLoaded, setLoading } from "../../redux/slice/isLoading";
+import { notify } from "../../utils/toastMessage";
+import ForgotResetPasswordForm from "../../components/form/ForgotResetPasswordForm";
 
 // API Methods
 import {
     forgotPasswordCandidateApi,
     resetPasswordCandidateApi,
-} from "../../../axios/apiMethods/auth-service/candidateAuth";
+} from "../../axios/apiMethods/auth-service/candidateAuth";
 import {
     forgotPasswordRecruiterApi,
     resetPasswordRecruiterApi,
-} from "../../../axios/apiMethods/auth-service/recruiterAuth";
-import { IResponse } from "../../../types/api";
-
-
-
+} from "../../axios/apiMethods/auth-service/recruiterAuth";
+import { IResponse } from "../../types/api";
 
 const UpdatePassword = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const locationUrl = useLocation();
-    
+
     const { userId } = useParams();
 
     // Check if the path contains the word "otpEmail"
@@ -32,9 +30,7 @@ const UpdatePassword = () => {
 
     const urlType = locationUrl.pathname.includes("forgotPassword")
         ? "forgot"
-        : "reset"
-
-
+        : "reset";
 
     const authData: any = useSelector(
         (store: RootState) => store.userReducer.authData

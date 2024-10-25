@@ -8,8 +8,6 @@ import {
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import JobDetails from "../../components/recruiter/JobDetails";
 import { notify } from "../../utils/toastMessage";
-import TopNavBarCandidate from "../../components/navBar/TopNavBar";
-import Footer from "../../components/footer/Footer";
 import { swal } from "../../utils/swal";
 
 function JobDetailsPage() {
@@ -40,15 +38,17 @@ function JobDetailsPage() {
 
     // Candidate
     const handleApplyJob = async (jobId: string) => {
-        swal("Do you want to Apply For this job?", "Are you sure!").then(async (result) => {
-            if (result.isConfirmed) {
-                const response = await candidateApplyJobApi(jobId);
+        swal("Do you want to Apply For this job?", "Are you sure!").then(
+            async (result) => {
+                if (result.isConfirmed) {
+                    const response = await candidateApplyJobApi(jobId);
 
-                if (response) {
-                    notify("Applied successfully", "success");
+                    if (response) {
+                        notify("Applied successfully", "success");
+                    }
                 }
             }
-        });
+        );
     };
 
     // Recruiter
@@ -82,18 +82,14 @@ function JobDetailsPage() {
         navigate(-1);
     };
     return (
-        <div>
-            {userType === "candidate" && <TopNavBarCandidate />}
-            <JobDetails
-                jobDetails={jobDetails}
-                hasApplied={hasApplied}
-                handleApplyJob={handleApplyJob}
-                handleEditJob={handleEditJob}
-                handleChangeJobCloseStatus={handleChangeJobCloseStatus}
-                handleGoBack={handleGoBack}
-            />
-            {userType === "candidate" && <Footer />}
-        </div>
+        <JobDetails
+            jobDetails={jobDetails}
+            hasApplied={hasApplied}
+            handleApplyJob={handleApplyJob}
+            handleEditJob={handleEditJob}
+            handleChangeJobCloseStatus={handleChangeJobCloseStatus}
+            handleGoBack={handleGoBack}
+        />
     );
 }
 

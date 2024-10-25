@@ -6,7 +6,6 @@ import { useSelector } from "react-redux";
 import { RootState } from "../redux/reducer";
 import Loading from "../components/loading/Loading";
 import { checkUserRole } from "../utils/checkRole";
-import CandidateLayout from "../pages/layout/CandidateLayout";
 
 
 const PaymentFailed = lazy(()=> import("../pages/payment/PaymentFailed"))
@@ -38,45 +37,39 @@ function CandidateRoutes() {
 	const { isCandidate } = checkUserRole(loggedinUser)
 
 	return (
-		<>
-			<Suspense fallback={<Loading />}>
-				
-					{/* <CandidateLayout> */}
-				<Routes>
-					<Route path="/" element={isCandidate? <LandingPage />: <Navigate to={"/candidate/landing"} />} />
-					<Route path="/profile" element={isCandidate? <CandidateProfilePage />: <Navigate to={"/candidate/landing"} />} />
-					<Route path="/payment-plans" element={isCandidate? <PaymentPlans />: <Navigate to={"/candidate/landing"} />} />
-					<Route path="/payment-success" element={isCandidate? <PaymentSuccessFul />: <Navigate to={"/candidate/landing"} />} />
-					<Route path="/payment-failed" element={isCandidate? <PaymentFailed />: <Navigate to={"/candidate/landing"} />} />
-					<Route path="/edit-profile/" element={isCandidate? <CandidateProfileEditPage />: <Navigate to={"/candidate/landing"} />} />
+		<Suspense fallback={<Loading />}>
+			<Routes>
+				<Route path="/" element={isCandidate? <LandingPage />: <Navigate to={"/candidate/landing"} />} />
+				<Route path="/profile" element={isCandidate? <CandidateProfilePage />: <Navigate to={"/candidate/landing"} />} />
+				<Route path="/payment-plans" element={isCandidate? <PaymentPlans />: <Navigate to={"/candidate/landing"} />} />
+				<Route path="/payment-success" element={isCandidate? <PaymentSuccessFul />: <Navigate to={"/candidate/landing"} />} />
+				<Route path="/payment-failed" element={isCandidate? <PaymentFailed />: <Navigate to={"/candidate/landing"} />} />
+				<Route path="/edit-profile/" element={isCandidate? <CandidateProfileEditPage />: <Navigate to={"/candidate/landing"} />} />
 
-					<Route path="/passwordResetMobile" element={isCandidate? <EmailOrMobileEnterPage />: <Navigate to={"/candidate/landing"} />} />
-					<Route path="/passwordResetOtp" element={isCandidate? <OtpFormPage />: <Navigate to={"/candidate/landing"} />} />
-					<Route path="/passwordReset" element={isCandidate? <UpdatePassword />: <Navigate to={"/candidate/landing"} />} />
+				<Route path="/passwordResetMobile" element={isCandidate? <EmailOrMobileEnterPage />: <Navigate to={"/candidate/landing"} />} />
+				<Route path="/passwordResetOtp" element={isCandidate? <OtpFormPage />: <Navigate to={"/candidate/landing"} />} />
+				<Route path="/passwordReset" element={isCandidate? <UpdatePassword />: <Navigate to={"/candidate/landing"} />} />
 
-					<Route path="/forgotPasswordEmail" element={!isCandidate? <EmailOrMobileEnterPage />: <Navigate to={"/candidate/landing"} />} />
-					<Route path="/forgotPasswordOtp/:email" element={!isCandidate? <OtpFormPage />: <Navigate to={"/candidate/landing"} />} />
-					<Route path="/forgotPassword/:userId" element={!isCandidate? <UpdatePassword />: <Navigate to={"/candidate/landing"} />} />
-					
-					<Route path="/landing" element={isCandidate?<Navigate to={"/candidate"} />: <LandingPage /> } />
-					<Route path="/signin" element={isCandidate?<Navigate to={"/candidate"} />:<AuthCandidate /> } />
-					<Route path="/signup" element={isCandidate? <Navigate to={"/candidate"} />:<AuthCandidate />} />
-					<Route path="/otpSignupCandidate/:email" element={!isCandidate? <OtpFormPage /> :<Navigate to={"/candidate"} />} />
+				<Route path="/forgotPasswordEmail" element={!isCandidate? <EmailOrMobileEnterPage />: <Navigate to={"/candidate/landing"} />} />
+				<Route path="/forgotPasswordOtp/:email" element={!isCandidate? <OtpFormPage />: <Navigate to={"/candidate/landing"} />} />
+				<Route path="/forgotPassword/:userId" element={!isCandidate? <UpdatePassword />: <Navigate to={"/candidate/landing"} />} />
+				
+				<Route path="/landing" element={isCandidate?<Navigate to={"/candidate"} />: <LandingPage /> } />
+				<Route path="/signin" element={isCandidate?<Navigate to={"/candidate"} />:<AuthCandidate /> } />
+				<Route path="/signup" element={isCandidate? <Navigate to={"/candidate"} />:<AuthCandidate />} />
+				<Route path="/otpSignupCandidate/:email" element={!isCandidate? <OtpFormPage /> :<Navigate to={"/candidate"} />} />
 
-					<Route path="/all-jobs" element={isCandidate?<AllJobsPage />:<Navigate to={"/candidate/signin"} />} />
-					<Route path="/job-details/:jobId" element={isCandidate?<JobDetailsPage />:<Navigate to={"/candidate/signin"} />} />
-					<Route path="/applied-jobs" element={isCandidate?<AppliedJobsPage />:<Navigate to={"/candidate/signin"} />} />
-					<Route path="/application-details/:jobApplicationId" element={isCandidate?<JobApplicationDetailsPage />:<Navigate to={"/candidate/signin"} />} />
+				<Route path="/all-jobs" element={isCandidate?<AllJobsPage />:<Navigate to={"/candidate/signin"} />} />
+				<Route path="/job-details/:jobId" element={isCandidate?<JobDetailsPage />:<Navigate to={"/candidate/signin"} />} />
+				<Route path="/applied-jobs" element={isCandidate?<AppliedJobsPage />:<Navigate to={"/candidate/signin"} />} />
+				<Route path="/application-details/:jobApplicationId" element={isCandidate?<JobApplicationDetailsPage />:<Navigate to={"/candidate/signin"} />} />
+			
+				<Route path="/recruiter-profile/:id" element={isCandidate? <RecruiterProfilePage />: <Navigate to={"/candidate/signin"} />} />
+				<Route path="/chat/:recepientId" element={isCandidate?<ChatPageCandidate />:<Navigate to={"/candidate/signin"} />} />
 				
-					<Route path="/recruiter-profile/:id" element={isCandidate? <RecruiterProfilePage />: <Navigate to={"/candidate/signin"} />} />
-					<Route path="/chat/:recepientId" element={isCandidate?<ChatPageCandidate />:<Navigate to={"/candidate/signin"} />} />
-					
-					<Route path="*" element={<NotFound url={"/candidate"} />} />
-				</Routes>
-					{/* </CandidateLayout> */}
-				
-			</Suspense>
-		</>
+				<Route path="*" element={<NotFound url={"/candidate"} />} />
+			</Routes>
+		</Suspense>
 	);
 }
 

@@ -39,7 +39,7 @@ function LandingPage() {
         (store: RootState) => store.userReducer.authData
     );
 
-    const {isCandidate, isRecruiter} = checkUserRole(currentUser)
+    const { isCandidate, isRecruiter } = checkUserRole(currentUser);
 
     const pageCount = useSelector(
         (store: RootState) => store.jobReducer.totalNumberOfPages
@@ -100,7 +100,6 @@ function LandingPage() {
     };
 
     const handleViewJob = async (jobId: string) => {
-
         if (currentUser && isRecruiter) {
             return navigate(`/recruiter/job-details/${jobId}`);
         }
@@ -112,13 +111,10 @@ function LandingPage() {
         navigate(`/candidate/signin`);
     };
 
-
     return (
         <>
-            {/* <GiHamburgerMenu /> */}
-
             {isCandidate && isCandidateUrl ? (
-                <TopNavBar />
+                <></>
             ) : isRecruiter && isRecruiterUrl ? (
                 <TopNavBar />
             ) : (
@@ -128,7 +124,7 @@ function LandingPage() {
             <div>
                 <div>
                     <div
-                        className="hero min-h-screen"
+                        className="hero mt-0 min-h-screen"
                         style={{
                             backgroundImage: `url(${homeImage})`,
                         }}
@@ -197,9 +193,7 @@ function LandingPage() {
                     )}
                 </div>
             </div>
-            <div>
-                <Footer />
-            </div>
+            <div>{!currentUser && <Footer />}</div>
         </>
     );
 }

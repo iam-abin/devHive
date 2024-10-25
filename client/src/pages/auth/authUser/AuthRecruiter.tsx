@@ -77,7 +77,7 @@ function AuthRecruiter() {
     }
 
     return (
-        <main className="w-full h-screen flex items-center  ">
+        <div className="w-full h-screen flex items-center  ">
             {/* left */}
             <div className="hidden lg:flex relative flex-col w-1/2 h-full  ">
                 <button
@@ -108,7 +108,7 @@ function AuthRecruiter() {
                 }
                 authType={authType}
             />
-        </main>
+        </div>
     );
 }
 

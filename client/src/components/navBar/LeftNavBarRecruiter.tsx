@@ -3,7 +3,7 @@ import { NavLink, useMatch } from "react-router-dom";
 
 const LeftNavBarRecruiter: React.FC<{ menus: any }> = ({ menus }) => {
 	return (
-		<div className="w-56 sm:z-50 duration-200 h-screen p-5 bg-primary ">
+		<div className="w-56 sm:z-50 duration-200 h-screen p-5 pt-20 bg-primary ">
 			<ul>
 				{menus.map((menu: any, index: number) => {
 					const isActive = useMatch(menu.to);
