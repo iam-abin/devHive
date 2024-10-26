@@ -19,12 +19,12 @@ export const recruiterRouter = (dependencies: IDependency) => {
     router.use(auth(ROLES.RECRUITER));
 
     router.get(
-        "/getRecruiterDashboard/cardsDetails/:recruiterId",
+        "/dashboard/cardsDetails",
         recruiterJobController.recruiterDashboardCardsController
     );
 
     router.get(
-        "/getRecruiterDashboard/graphDetails/:recruiterId",
+        "/dashboard/graphDetails",
         recruiterJobController.recruiterDashboardGraphController
     );
 
@@ -35,12 +35,12 @@ export const recruiterRouter = (dependencies: IDependency) => {
     router.delete("/:id", recruiterJobController.deleteJobController);
 
     router.get(
-        "/created-jobs/:recruiterId",
+        "/created-jobs/:page/:limit",
         recruiterJobController.createdJobsByRecruiterController
     );
 
     router.get(
-        "/applications/:recruiterId",
+        "/applications/:page/:limit",
         recruiterJobController.viewJobApplicationsController
     );
 

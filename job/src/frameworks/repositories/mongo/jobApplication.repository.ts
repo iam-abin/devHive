@@ -45,19 +45,11 @@ export = {
         return appliedJobs;
     },
 
-    getCountOfCandidateAppliedJobs: async (
-        candidateId: string
-    ): Promise<number> => {
-        const totalJobs: number = await jobApplicationModel.countDocuments({
-            candidateId,
-        });
-
-        return totalJobs;
-    },
-
     getAllJobApplicationsByUserId: async (
         recruiterId: string,
-        candidateId: string
+        candidateId: string,
+        skip: number,
+        limit: number
     ) => {
         // use populate
         // const jobApplications = await jobApplicationModel.find({},{recruiterId:id});
@@ -65,11 +57,15 @@ export = {
         if (recruiterId) {
             jobApplications = await jobApplicationModel
                 .find({ recruiterId })
-                .populate("jobId",["title",""])
-                .populate("candidateId",["name","email"]);
+                .skip(skip)
+                .limit(limit)
+                .populate("jobId", ["title"])
+                .populate("candidateId", ["name", "email"]);
         } else {
             jobApplications = await jobApplicationModel
                 .find({ candidateId })
+                .skip(skip)
+                .limit(limit)
                 .populate("jobId")
                 .populate("candidateId");
         }
@@ -122,16 +118,28 @@ export = {
 
         return jobApplications;
     },
-
-    numberOfJobApplicationsToMe: async (id: string): Promise<number> => {
+    
+    getCountOfAppliedJobs: async (
+        candidateId: string
+    ): Promise<number> => {
         const totalJobs: number = await jobApplicationModel.countDocuments({
-            recruiterId: id,
+            candidateId
         });
 
         return totalJobs;
     },
 
-    getCountOfApplicationStatus: async (
+    getCountOfApplications: async (
+        recruiterId: string,
+    ): Promise<number> => {
+        const totalJobs: number = await jobApplicationModel.countDocuments({
+            recruiterId
+        });
+
+        return totalJobs;
+    },
+
+    getCountOfApplicationsStatus: async (
         recruiterId: string,
         applicationStatus: string
     ): Promise<number> => {

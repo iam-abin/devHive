@@ -7,9 +7,16 @@ export = (dependencies: IDependency) => {
 		throw new Error("candidateRepository should exist in dependencies");
 	}
 
-	const execute = async() => {
-		const candidates = await candidateRepository.getAllCandidates(); 
-		return candidates
+	const execute = async(page: number, limit: number) => {
+
+		// pagination
+        const skip = (page - 1) * limit;
+		
+		const candidates = await candidateRepository.getAllCandidates(skip, limit); 
+		const candidatesCount = await candidateRepository.getCountOfCandidates();
+        const numberOfPages = Math.ceil(candidatesCount / limit);
+
+		return { candidates, numberOfPages } 
 	};
 
 	return { execute };

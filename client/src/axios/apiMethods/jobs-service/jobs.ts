@@ -15,8 +15,8 @@ export const filterJobsApi = async (filterData: any): Promise<IResponse> => {
 
 
 
-export const getAllRecruiterAddedJobsApi = async (recruiterId: string): Promise<IResponse> => {
-    return await recruiterApiCalls("get", jobApiUrlConfig.getAllRecruiterAddedJobsUrl(recruiterId));
+export const getAllRecruiterAddedJobsApi = async ( page: number, limit: number): Promise<IResponse> => {
+    return await recruiterApiCalls("get", jobApiUrlConfig.getAllRecruiterAddedJobsUrl(page, limit));
 };
 
 export const getJobFieldsValuesApi = async (fields: any): Promise<IResponse> => {
@@ -53,8 +53,8 @@ export const checkJobAppliedApi = async (jobId: string): Promise<IResponse> => {
     return await candidateApiCalls("get", jobApiUrlConfig.checkAppliedUrl(jobId));
 };
 
-export const getAllJobsApplicationsForRecruiterApi = async (recruiterId: string): Promise<IResponse> => {
-    return await recruiterApiCalls("get", jobApiUrlConfig.getAllJobsApplicationsForRecruiterUrl(recruiterId));
+export const getAllJobsApplicationsForRecruiterApi = async ( page: number, limit: number): Promise<IResponse> => {
+    return await recruiterApiCalls("get", jobApiUrlConfig.getAllJobsApplicationsForRecruiterUrl(page, limit));
 };
 
 
@@ -75,12 +75,12 @@ export const changeJobApplicationStatusApi = async (jobApplicationId: string, jo
     return await recruiterApiCalls("post", jobApiUrlConfig.changeJobApplicationStatusUrl(jobApplicationId), jobApplicationStatus);
 };
 
-export const getRecruiterDashboadGraphApi = async (recruiterId: string): Promise<IResponse>=>{
-    return  await recruiterApiCalls("get", jobApiUrlConfig.getRecruiterDashboadGraphUrl(recruiterId))
+export const getRecruiterDashboadGraphApi = async (): Promise<IResponse>=>{
+    return  await recruiterApiCalls("get", jobApiUrlConfig.getRecruiterDashboadGraphUrl())
 }
 
-export const getRecruiterDashboardCardsApi = async (recruiterId: string): Promise<IResponse> => {
-    return await recruiterApiCalls("get", jobApiUrlConfig.getRecruiterDashboardCardsUrl(recruiterId));
+export const getRecruiterDashboardCardsApi = async (): Promise<IResponse> => {
+    return await recruiterApiCalls("get", jobApiUrlConfig.getRecruiterDashboardCardsUrl());
 };
 
 export const editJobApi = async (jobId: string, jobData: any): Promise<IResponse> => {

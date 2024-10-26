@@ -33,19 +33,21 @@ export = {
 		return job;
 	},
 
-	getAllJobs: async (): Promise<IJobDocument[] | []> => {
-		const jobs = await JobModel.find({});
-		return jobs;
-	},
-
 	deleteJob: async (jobId: string): Promise<IJobDocument | null> => {
 		const deletedJob = await JobModel.findByIdAndDelete(jobId, {new: true});
 		return deletedJob;
 	},
+	
+	getAllJobs: async (
+		skip: number,
+		limit: number
+	):  Promise<IJobDocument[] | []> => {
+		return await JobModel.find({})  .skip(skip)
+		.limit(limit);
+	},
 
-	numberOfJobs: async (): Promise<number> => {
-		const totalJobs = await JobModel.countDocuments();
-		return totalJobs;
+	getCountOfJobs: async (): Promise<number> => {
+		return await JobModel.countDocuments();
 	},
 };
 

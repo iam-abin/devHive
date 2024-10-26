@@ -2,10 +2,10 @@ import adminApiUrlConfig from "../../../config/apiUrlsConfig/adminServiceApiUrlC
 import { IResponse } from "../../../types/api";
 import adminApiCalls from "../../admin/apiCalls";
 
-export const getAllRecruitersApi = async (): Promise<IResponse> => {
+export const getAllRecruitersApi = async (page: number, limit: number): Promise<IResponse> => {
 	return await adminApiCalls(
 		"get",
-		adminApiUrlConfig.getAllRecruitersUrl
+		adminApiUrlConfig.getAllRecruitersUrl(page, limit)
 	);
 };
 

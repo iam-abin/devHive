@@ -9,9 +9,10 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import JobDetails from "../../components/recruiter/JobDetails";
 import { notify } from "../../utils/toastMessage";
 import { swal } from "../../utils/swal";
+import { IJob } from "../../types/Job";
 
 function JobDetailsPage() {
-    const [jobDetails, setJobDetails] = useState<any>(null);
+    const [jobDetails, setJobDetails] = useState<IJob | null>(null);
     const [hasApplied, setHasApplied] = useState<any>(false);
     const navigate = useNavigate();
     const { jobId } = useParams();
@@ -67,10 +68,10 @@ function JobDetailsPage() {
                 if (result.isConfirmed) {
                     const job = await changeJobCloseStatusApi(jobId);
                     if (job) {
-                        setJobDetails({
-                            ...jobDetails,
-                            isActive: job.data.isActive,
-                        });
+                        setJobDetails((prevDetails: IJob | null) => ({
+                            ...prevDetails,
+                            ...job.data,
+                        }));
 
                         notify(job.message, "success");
                     }

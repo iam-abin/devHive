@@ -7,7 +7,7 @@ export const jobRouter = (dependencies: IDependency)=>{
 
     const jobController = jobControllers(dependencies);
 
-    router.get("/jobs", jobController.viewJobsController);
+    router.get("/jobs/:page/:limit", jobController.viewJobsController);
     router.get("/viewJob/:jobId", jobController.viewJobController);
     router.put("/blockUnblock/:jobId", jobController.blockUnblockJobController);
 

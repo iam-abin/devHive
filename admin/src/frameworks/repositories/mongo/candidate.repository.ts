@@ -2,7 +2,6 @@ import { CandidateModel, ICandidateDocument } from "../../database/models";
 import { ICandidate, IUser } from "../../types/user";
 
 export = {
-    // these fn's are returning a promise as async so we can define return type as Promise<ICandidateData>
 
     createCandidate: async (
         userData: IUser
@@ -38,17 +37,14 @@ export = {
         return await CandidateModel.findById(userId);
     },
 
-    getAllCandidates: async () => {
-        return await CandidateModel.find({}).select([
-            "name",
-            "email",
-            "phone",
-            "isActive",
-        ]);
+    getAllCandidates: async (skip: number, limit: number): Promise<ICandidateDocument[] | null> => {
+        return await CandidateModel.find({})
+            .skip(skip)
+            .limit(limit)
+            .select(["name", "email", "phone", "isActive"]);
     },
 
-    numberOfCandidates: async () => {
-        const totalCandidates = await CandidateModel.countDocuments();
-        return totalCandidates;
+    getCountOfCandidates: async (): Promise<number> => {
+        return await CandidateModel.countDocuments();
     },
 };

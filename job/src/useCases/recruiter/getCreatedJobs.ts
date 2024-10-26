@@ -1,15 +1,34 @@
 import { IDependency } from "../../frameworks/types/dependencyInterface";
 
 export = (dependencies: IDependency) => {
-	const { repositories: { jobRepository } } = dependencies;
+    const {
+        repositories: { jobRepository },
+    } = dependencies;
 
-	if (!jobRepository) {
-		throw new Error("jobRepository should exist in dependencies");
-	}
+    if (!jobRepository) {
+        throw new Error("jobRepository should exist in dependencies");
+    }
 
-	const execute = async (recruiterId: string) => {
-		return await jobRepository.getAllJobsByRecruiterId(recruiterId);
-	};
+    const execute = async (
+        recruiterId: string,
+        page: number,
+        limit: number
+    ) => {
+        // pagination
+        const skip = (page - 1) * limit;
 
-	return { execute };
+        const jobs = await jobRepository.getAllJobsByRecruiterId(
+            recruiterId,
+            skip,
+            limit
+        );
+        const jobsCount = await jobRepository.getCountOfCreatedJobs(
+            recruiterId
+        );
+        const numberOfPages = Math.ceil(jobsCount / limit);
+
+        return { jobs, numberOfPages };
+    };
+
+    return { execute };
 };

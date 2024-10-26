@@ -88,17 +88,13 @@ export = {
     },
 
     getAllJobsByRecruiterId: async (id: string): Promise<IJobDocument[] | []> => {
-        const jobs = await JobModel.find({ recruiterId: id }).sort({
+        return await JobModel.find({ recruiterId: id }).sort({
             createdAt: -1,
         });
-
-        return jobs;
     },
 
-    numberOfCreatedJobsByMe: async (id: string): Promise<number> => {
-        const jobs = await JobModel.countDocuments({ recruiterId: id });
-
-        return jobs;
+    getCountOfCreatedJobs: async (recruiterId: string): Promise<number> => {
+        return await JobModel.countDocuments({ recruiterId });
     },
 
     getSearchResults: async (
@@ -116,19 +112,15 @@ export = {
     },
 
     getCountOfSearchResults: async (searchKey: string): Promise<number> => {
-        const searchedJobsCount: number = await JobModel.countDocuments({
+        return await JobModel.countDocuments({
             jobTitle: { $regex: new RegExp(searchKey, "i") },
         })
-
-        return searchedJobsCount;
     },
 
     getAJob: async (jobId: string): Promise<IJobDocument | null> => {
-        const job = await JobModel.findById(jobId).populate({
+        return await JobModel.findById(jobId).populate({
             path: "recruiterId",
             model: "User", // Assuming your User model is named 'User'
         });
-
-        return job;
     },
 };

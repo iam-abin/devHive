@@ -10,11 +10,8 @@ import AdminLayout from "../pages/layout/AdminLayout";
 const AdminSigninPage = lazy(
     () => import("../pages/auth/authUser/AdminSigninPage")
 );
-const CandidateManagementPage = lazy(
-    () => import("../pages/admin/CandidatesListPage")
-);
-const RecruiterManagementPage = lazy(
-    () => import("../pages/admin/RecruitersListPage")
+const UsersManagementPage = lazy(
+    () => import("../pages/admin/UsersListPage")
 );
 const JobsManagementPage = lazy(
     () => import("../pages/job/admin/JobsListPage")
@@ -85,7 +82,7 @@ function AdminRoutes() {
                             path="/candidates"
                             element={
                                 isAdmin ? (
-                                    <CandidateManagementPage />
+                                    <UsersManagementPage />
                                 ) : (
                                     <Navigate to="/admin" />
                                 )
@@ -118,7 +115,7 @@ function AdminRoutes() {
                             path="/recruiters"
                             element={
                                 isAdmin ? (
-                                    <RecruiterManagementPage />
+                                    <UsersManagementPage />
                                 ) : (
                                     <Navigate to="/admin" />
                                 )

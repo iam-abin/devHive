@@ -2,6 +2,7 @@ import { JobFormSchemaType } from "../utils/validations/createJob";
 import {  IRecruiterProfileResponse } from "./profile";
 
 interface IOptionalProperties {
+    id: string;
     jobDescription: string;
     skills: string[];
     availablePosition: number;
@@ -11,7 +12,9 @@ interface IOptionalProperties {
     salaryMin: number;
     salaryMax: number;
     deadline: string;
+    isActive: boolean
 }
+
 
 export interface IJob extends Partial<IOptionalProperties> {
     title: string;

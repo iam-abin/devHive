@@ -15,8 +15,8 @@ export = (dependencies: IDependency) => {
 		
 		const [addedJobsCount, jobApplicationsCount]: any =
 			await Promise.all([
-				jobRepository.numberOfCreatedJobsByMe(recruiterId),
-				jobApplicationRepository.numberOfJobApplicationsToMe(recruiterId),
+				jobRepository.getCountOfCreatedJobs(recruiterId),
+				jobApplicationRepository.getCountOfApplications(recruiterId),
 			]);
 			
 		return { addedJobsCount, jobApplicationsCount };

@@ -1,4 +1,4 @@
-import getAllRecruitersController from "./viewRecruiters.controller";
+import getAllRecruitersController from "./getRecruiters.controller";
 import getRecruiterByIdController from "./viewProfile.controller";
 import recruiterBlockUnblockController from "./blockUnblock.controller";
 

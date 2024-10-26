@@ -12,7 +12,7 @@ const Table = ({
     fetchData: (page: number) => Promise<void>;
 }) => {
     const [currentPage, setCurrentPage] = useState(1);
-    
+
     const getNestedValue = (nestedObj: any, path: any) => {
         return path
             .split(".")
@@ -25,60 +25,68 @@ const Table = ({
     };
 
     useEffect(() => {
-        // Reset to first page when data changes
         setCurrentPage(currentPage);
     }, [data]);
 
     console.log("Payments Data:", data);
 
     return (
-        <div className="overflow-x-auto">
-            <table className="min-w-full bg-white border border-gray-200 shadow-xl">
-                <thead>
-                    <tr className="border-b bg-gray-700">
-                        {columns.map((col: any) => (
-                            <th
-                                key={col.accessor}
-                                className="py-3 px-6 text-left text-sm font-medium text-white uppercase tracking-wider"
-                            >
-                                {col.Header}
-                            </th>
-                        ))}
-                    </tr>
-                </thead>
-                <tbody>
-                    {data && data.length > 0 ? (
-                        data.map((row: any, rowIndex: number) => (
-                            <tr
-                                key={rowIndex}
-                                className={`${
-                                    rowIndex % 2 === 0
-                                        ? "bg-white"
-                                        : "bg-gray-200"
-                                } border-b`}
-                            >
-                                {columns.map((col: any) => (
-                                    <td
-                                        key={col.accessor}
-                                        className="py-4 px-6 text-sm text-gray-700"
-                                    >
-                                        {getNestedValue(row, col.accessor)}
-                                    </td>
-                                ))}
-                            </tr>
-                        ))
-                    ) : (
-                        <tr>
-                            <td
-                                colSpan={columns.length}
-                                className="py-4 text-center text-gray-700"
-                            >
-                                No data available
-                            </td>
+        <>
+            <div className="overflow-x-auto">
+                <table className="min-w-full bg-white border border-gray-200 shadow-xl">
+                    <thead>
+                        <tr className="border-b bg-gray-700">
+                            {columns.map((col: any, index: number) => (
+                                <th
+                                    key={index}
+                                    className="py-3 px-6 text-left text-sm font-medium text-white uppercase tracking-wider"
+                                >
+                                    {col.Header}
+                                </th>
+                            ))}
                         </tr>
-                    )}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {data && data.length > 0 ? (
+                            data.map((row: any, rowIndex: number) => (
+                                <tr
+                                    key={rowIndex}
+                                    className={`${
+                                        rowIndex % 2 === 0
+                                            ? "bg-white"
+                                            : "bg-gray-200"
+                                    } border-b`}
+                                >
+                                    {columns.map((col: any, index: number) => (
+                                        <td
+                                            key={index}
+                                            className="py-4 px-6 text-sm text-gray-700"
+                                        >
+                                            {col.button
+                                                ? col.button(row) // Use custom Cell if defined
+                                                : getNestedValue(
+                                                      row,
+                                                      col.accessor
+                                                  )}{" "}
+                                            {/* Default to accessor */}
+                                        </td>
+                                    ))}
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td
+                                    colSpan={columns.length}
+                                    className="py-4 text-center text-gray-700"
+                                >
+                                    No data available
+                                </td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+            </div>
+
             <div className="flex justify-between items-center mt-4">
                 <button
                     onClick={() => handlePageChange(currentPage - 1)}
@@ -98,7 +106,7 @@ const Table = ({
                     Next
                 </button>
             </div>
-        </div>
+        </>
     );
 };
 

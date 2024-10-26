@@ -1,32 +1,33 @@
 import { useEffect, useState } from "react";
-import TableComponent from "../../../components/table/TableComponent";
 import { notify } from "../../../utils/toastMessage";
 import { useNavigate } from "react-router-dom";
 import {
     deleteAJobApi,
     getAllRecruiterAddedJobsApi,
 } from "../../../axios/apiMethods/jobs-service/jobs";
-import { RootState } from "../../../redux/reducer";
-import { useSelector } from "react-redux";
 import { IJob } from "../../../types/Job";
 import { swal } from "../../../utils/swal";
+import Table from "../../../components/table/Table";
+import { IResponse } from "../../../types/api";
 
 function AllAddedJobs() {
     const navigate = useNavigate();
     const [jobsData, setJobsData] = useState<IJob[]>([]);
+    const [numberOfPages, setNumberOfPages] = useState(0);
 
-    const recruiterData: any = useSelector(
-        (store: RootState) => store.userReducer.authData
-    );
+    const JOBS_PER_PAGE: number = 2;
+
+    const fetchJobs = async (currentPage: number) => {
+        const jobsData: IResponse = await getAllRecruiterAddedJobsApi(
+            currentPage,
+            JOBS_PER_PAGE
+        );
+        setJobsData(jobsData.data.jobs);
+        setNumberOfPages(jobsData.data.numberOfPages);
+    };
 
     useEffect(() => {
-        (async () => {
-            const response = await getAllRecruiterAddedJobsApi(
-                recruiterData?.id
-            );
-
-            setJobsData(response.data.jobs);
-        })();
+        fetchJobs(1); // Fetch initial data for the first page
     }, []);
 
     const viewJobDetails = async (id: string) => {
@@ -52,20 +53,11 @@ function AllAddedJobs() {
     };
 
     const columns = [
+        { Header: "Title", accessor: "title" },
+        { Header: "Location", accessor: "companyLocation" },
         {
-            name: "Title",
-            selector: (row: { title: string }) => row.title,
-            sortable: true,
-        },
-        {
-            name: "Location",
-            selector: (row: { companyLocation: string }) => row.companyLocation,
-            sortable: true,
-        },
-
-        {
-            name: "View",
-            cell: (row: { id: string }) => (
+            Header: "View",
+            button: (row: { id: string }) => (
                 <button
                     onClick={() => {
                         viewJobDetails(row.id);
@@ -76,10 +68,9 @@ function AllAddedJobs() {
                 </button>
             ),
         },
-
         {
-            name: "Status",
-            cell: (row: { isActive: string }) => (
+            Header: "Status",
+            button: (row: { isActive: string }) => (
                 <div
                     className={`badge ${
                         row.isActive
@@ -92,8 +83,8 @@ function AllAddedJobs() {
             ),
         },
         {
-            name: "Edit",
-            cell: (row: { id: string }) => (
+            Header: "Edit",
+            button: (row: { id: string }) => (
                 <button
                     onClick={() => {
                         handleEdit(row.id);
@@ -105,8 +96,8 @@ function AllAddedJobs() {
             ),
         },
         {
-            name: "Delete",
-            cell: (row: { id: string }) => (
+            Header: "Delete",
+            button: (row: { id: string }) => (
                 <button
                     onClick={() => {
                         handleDelete(row.id);
@@ -118,6 +109,7 @@ function AllAddedJobs() {
             ),
         },
     ];
+
 
     return (
         <div>
@@ -137,7 +129,12 @@ function AllAddedJobs() {
             </div>
             {jobsData.length > 0 ? (
                 <div className="mx-14">
-                    <TableComponent columns={columns} data={jobsData} />
+                    <Table
+                        columns={columns}
+                        data={jobsData}
+                        numberOfPages={numberOfPages}
+                        fetchData={fetchJobs}
+                    />
                 </div>
             ) : (
                 <div className="text-center text-7xl my-60 font-bold text-orange-800">

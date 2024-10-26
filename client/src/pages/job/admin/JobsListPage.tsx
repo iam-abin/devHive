@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 
-import TableComponent from "../../../components/table/TableComponent";
 import { notify } from "../../../utils/toastMessage";
 import { useNavigate } from "react-router-dom";
 import {
@@ -8,37 +7,28 @@ import {
     getAllJobsAdminApi,
 } from "../../../axios/apiMethods/admin-service/job";
 import { swal } from "../../../utils/swal";
-
-interface JobInterface {
-    id: string;
-    jobId: string;
-    title: string;
-    recruiterId: string;
-    company: string;
-    jobDescription?: string;
-    skills?: string[];
-    availablePosition?: number;
-    experienceRequired?: number;
-    educationRequired?: string;
-    location?: string;
-    employmentType?: string;
-    salaryMin?: number;
-    salaryMax?: number;
-    has_applied?: boolean;
-    isActive?: boolean;
-    deadline?: Date;
-}
+import { IResponse } from "../../../types/api";
+import Table from "../../../components/table/Table";
+import { IJob } from "../../../types/Job";
 
 function JobsManagementPage() {
     const navigate = useNavigate();
-    const [jobsData, setJobsData] = useState<JobInterface[]>([]);
+    const [jobsData, setJobsData] = useState<IJob[]>([]);
+    const [numberOfPages, setNumberOfPages] = useState(0);
+
+    const JOBS_PER_PAGE: number = 2;
+
+    const fetchJobs = async (currentPage: number) => {
+        const jobsData: IResponse  = await getAllJobsAdminApi(currentPage, JOBS_PER_PAGE);
+        setJobsData(jobsData.data.jobs);
+            setNumberOfPages(jobsData.data.numberOfPages);
+        
+    };
 
     useEffect(() => {
-        (async () => {
-            const jobs = await getAllJobsAdminApi();
-            setJobsData(jobs.data);
-        })();
+        fetchJobs(1); // Fetch initial data for the first page
     }, []);
+
 
     const viewJobDetails = async (jobId: string) => {
         navigate(`/admin/job/viewJobDetails/${jobId}`);
@@ -72,20 +62,11 @@ function JobsManagementPage() {
     };
 
     const columns = [
+        { Header: "Title", accessor: "title" },
+        { Header: "Location", accessor: "companyLocation" },
         {
-            name: "Title",
-            selector: (row: { title: string }) => row.title,
-            sortable: true,
-        },
-        {
-            name: "Location",
-            selector: (row: { companyLocation: string }) => row.companyLocation,
-            sortable: true,
-        },
-
-        {
-            name: "View",
-            cell: (row: { id: string }) => (
+            Header: "View",
+            button: (row: { id: string }) => (
                 <button
                     onClick={() => {
                         viewJobDetails(row.id);
@@ -96,10 +77,9 @@ function JobsManagementPage() {
                 </button>
             ),
         },
-
         {
-            name: "Status",
-            cell: (row: { isActive: string }) => (
+            Header: "Status",
+            button: (row: { isActive: string }) => (
                 <div
                     className={`badge ${
                         row.isActive
@@ -112,8 +92,8 @@ function JobsManagementPage() {
             ),
         },
         {
-            name: "Action",
-            cell: (row: { id: string; isActive: boolean }) => (
+            Header: "Action",
+            button: (row: { id: string; isActive: boolean }) => (
                 <button
                     onClick={() => {
                         handleBlockUnblock(row.id, row.isActive);
@@ -130,15 +110,18 @@ function JobsManagementPage() {
         },
     ];
 
-    // const data = []
 
     return (
         <div className="text-center mx-10">
-            {/* <SideNavBar /> */}
             <h1 className="font-semibold text-5xl mt-4 mb-10">
                 Jobs Management
             </h1>
-            <TableComponent columns={columns} data={jobsData} />
+            <Table
+                columns={columns}
+                data={jobsData}
+                numberOfPages={numberOfPages}
+                fetchData={fetchJobs}
+            />
         </div>
     );
 }

@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import TableComponent from "../../../components/table/TableComponent";
 import { useNavigate } from "react-router-dom";
 import { getAllJobsApplicationsForRecruiterApi } from "../../../axios/apiMethods/jobs-service/jobs";
-import { RootState } from "../../../redux/reducer";
-import { useSelector } from "react-redux";
 import { formatDate } from "../../../utils/date-functions";
+import { IJob } from "../../../types/Job";
+import Table from "../../../components/table/Table";
+import { IResponse } from "../../../types/api";
 
 interface JobInterface {
     id: string;
@@ -28,71 +28,54 @@ interface JobInterface {
 function JobApplicationsPage() {
     const navigate = useNavigate();
     const [jobsApplicationsData, setJobApplicationsData] = useState<
-        JobInterface[]
+    IJob[]
     >([]);
-    
-    const recruiterData: any = useSelector(
-        (store: RootState) => store.userReducer.authData
-    );
+    const [numberOfPages, setNumberOfPages] = useState(0);
+    const JOBS_PER_PAGE: number = 2;
+
+    const fetchJobApplications = async (currentPage: number) => {
+        const jobsApplicationsData: IResponse = await getAllJobsApplicationsForRecruiterApi(
+            currentPage,
+            JOBS_PER_PAGE
+        );
+        setJobApplicationsData(jobsApplicationsData.data.applications);
+        setNumberOfPages(jobsApplicationsData.data.numberOfPages);
+    };
 
     useEffect(() => {
-        (async () => {
-            const response = await getAllJobsApplicationsForRecruiterApi(
-                recruiterData?.id
-            );
-
-            setJobApplicationsData(response.data);
-        })();
+        fetchJobApplications(1); // Fetch initial data for the first page
     }, []);
+
 
     const viewApplicationDetails = async (jobId: string) => {
         navigate(`/recruiter/application-details/${jobId}`);
     };
 
     const columns = [
+        { Header: "Candidate", accessor: "candidateId.name" },
+        { Header: "Email", accessor: "candidateId.email" },
+        { Header: "Job Title", accessor: "jobId.title", },
+        { Header: "Application Status", button:  (row: { applicationStatus: string }) => (
+            <div
+                className={`badge ${
+                    row?.applicationStatus == "Applied"
+                        ? "badge badge-accent  gap-2 w-24"
+                        : row.applicationStatus == "Shortlisted"
+                        ? "badge badge-success gap-2 w-24"
+                        : "badge badge-error gap-2 w-24"
+                } `}
+            >
+                {row?.applicationStatus}
+            </div>
+        ), },
+        
         {
-            name: "Candidate",
-            selector: (row?: { candidateId?: { name: string } }) =>
-                row?.candidateId?.name,
-            sortable: true,
-        },
-        {
-            name: "Email",
-            selector: (row?: { candidateId?: { email: string } }) =>
-                row?.candidateId?.email,
-            sortable: true,
-        },
-        {
-            name: "Job Title",
-            selector: (row?: { jobId?: { title: string } }) =>
-                row?.jobId?.title,
-            sortable: true,
-        },
-        {
-            name: "Application Status",
-            cell: (row: { applicationStatus: string }) => (
-                <div
-                    className={`badge ${
-                        row?.applicationStatus == "Applied"
-                            ? "badge badge-accent  gap-2 w-24"
-                            : row.applicationStatus == "Shortlisted"
-                            ? "badge badge-success gap-2 w-24"
-                            : "badge badge-error gap-2 w-24"
-                    } `}
-                >
-                    {row?.applicationStatus}
-                </div>
-            ),
-        },
-        {
-            name: "Applied on",
-            selector: (row?: { createdAt: string }) =>
+            Header: "Applied on",
+            button :(row: { createdAt: string }) =>
                 formatDate(row?.createdAt!),
-            sortable: true,
-        },
-        {
-            name: "View",
-            cell: (row: { id: string }) => (
+        },{
+            Header: "View",
+            button:  (row: { id: string }) => (
                 <button
                     onClick={() => {
                         viewApplicationDetails(row.id);
@@ -105,6 +88,8 @@ function JobApplicationsPage() {
         },
     ];
 
+
+
     return (
         <div>
             <div className="flex items-center justify-center p-5">
@@ -113,9 +98,11 @@ function JobApplicationsPage() {
 
             {jobsApplicationsData.length > 0 ? (
                 <div className="mx-14">
-                    <TableComponent
+                     <Table
                         columns={columns}
                         data={jobsApplicationsData}
+                        numberOfPages={numberOfPages}
+                        fetchData={fetchJobApplications}
                     />
                 </div>
             ) : (

@@ -34,7 +34,11 @@ import { IResponse } from "../../types/api";
 import { swal } from "../../utils/swal";
 import { checkUserRole } from "../../utils/checkRole";
 
-const TopNavBar = () => {
+interface IMenu{
+    title: string,
+    to: string,
+}
+const TopNavBar = ({menus}:{menus?: IMenu[]}) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -96,26 +100,6 @@ const TopNavBar = () => {
             }
         })();
     }, [currentUser, isCandidateUrl, dispatch]);
-
-    // Dropdown menu items for candidate
-    const menus = [
-        { title: "Jobs", to: "/candidate/all-jobs" },
-
-        {
-            title: "Applied Jobs",
-            to: "/candidate/applied-jobs",
-        },
-        {
-            title: "Profile",
-            to: "/candidate/profile",
-        },
-        {
-            title: "Premium",
-            to: "/candidate/payment-plans",
-        },
-        { title: "Chat", to: `/candidate/chat/${currentUser.id}` },
-        { title: "Reset Password", to: "/candidate/passwordResetMobile" },
-    ];
 
     // chatRoom
     const selectedChatRoom = useSelector(
@@ -336,7 +320,7 @@ const TopNavBar = () => {
                                 tabIndex={0}
                                 className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
                             >
-                                {menus.map((menu: any, index: number) => {
+                                {menus && menus.map((menu: any, index: number) => {
                                     const isActive = useMatch(menu.to);
                                     return (
                                         <li key={index}>

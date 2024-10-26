@@ -3,8 +3,8 @@ import { IResponse } from "../../../types/api";
 import adminApiCalls from "../../admin/apiCalls";
 
 
-export const getAllCandidatesApi = async (): Promise<IResponse> => {
-    return await adminApiCalls("get", adminApiUrlConfig.getAllCandidatesUrl);
+export const getAllCandidatesApi = async (page: number, limit: number): Promise<IResponse> => {
+    return await adminApiCalls("get", adminApiUrlConfig.getAllCandidatesUrl(page, limit));
 };
 
 export const blockUnblockCandidateApi = async (

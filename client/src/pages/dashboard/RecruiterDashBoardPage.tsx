@@ -24,12 +24,8 @@ const RecruiterDashBoardPage: React.FC = () => {
 	useEffect(() => {
 		(async () => {
 			// const data = await getAllRecruiterDashBoardPageCardsDetailsApi();
-			const cardData = await getRecruiterDashboardCardsApi(
-				recruiterData.id
-			);
-			const graphData = await getRecruiterDashboadGraphApi(
-				recruiterData.id
-			);
+			const cardData = await getRecruiterDashboardCardsApi();
+			const graphData = await getRecruiterDashboadGraphApi();
 			if (cardData && cardData.data) {
 				// const { addedJobsCount, jobApplicationsCount } = cardData.data;
 				setCardData({ ...cardData.data });

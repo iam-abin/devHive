@@ -16,9 +16,9 @@ export = (dependencies: IDependency) => {
 	const execute = async (recruiterId: string) => {
 		const [applied, shortlisted, rejected]: any =
 			await Promise.all([
-				jobApplicationRepository.getCountOfApplicationStatus(recruiterId, APPLICATION_STATUS.APPLIED),
-				jobApplicationRepository.getCountOfApplicationStatus(recruiterId, APPLICATION_STATUS.SHORTLISTED),
-				jobApplicationRepository.getCountOfApplicationStatus(recruiterId, APPLICATION_STATUS.REJECTED),
+				jobApplicationRepository.getCountOfApplicationsStatus(recruiterId, APPLICATION_STATUS.APPLIED),
+				jobApplicationRepository.getCountOfApplicationsStatus(recruiterId, APPLICATION_STATUS.SHORTLISTED),
+				jobApplicationRepository.getCountOfApplicationsStatus(recruiterId, APPLICATION_STATUS.REJECTED),
 			]);
 			
 		return { applied, shortlisted, rejected };

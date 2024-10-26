@@ -7,20 +7,23 @@ const ADMIN_PAYMENT_URL = `admin/payment`;
 
 const adminApiUrlConfig = {
     // jobs
-    getAllJobsUrl: `${JOB_ADMIN_URL}/jobs`,
+    getAllJobsUrl: (page: number, limit: number) =>
+        `${JOB_ADMIN_URL}/jobs/${page}/${limit}`,
     blockUnblockJobUrl: (jobId: string) =>
         `${JOB_ADMIN_URL}/blockUnblock/${jobId}`,
     viewJobDetailsUrl: (jobId: string) => `${JOB_ADMIN_URL}/viewJob/${jobId}`,
 
     // Recruiter
-    getAllRecruitersUrl: `${RECRUITER_ADMIN_URL}/recruiters`,
+    getAllRecruitersUrl: (page: number, limit: number) =>
+        `${RECRUITER_ADMIN_URL}/recruiters/${page}/${limit}`,
     blockUnblockRecruiterUrl: (userId: string) =>
         `${RECRUITER_ADMIN_URL}/blockUnblock/${userId}`,
     viewRecruiterProfileDetailsUrl: (userId: string) =>
         `${RECRUITER_ADMIN_URL}/viewProfile/${userId}`,
 
     // Candidate
-    getAllCandidatesUrl: `${CANDIDATE_ADMIN_URL}/candidates`,
+    getAllCandidatesUrl: (page: number, limit: number) =>
+        `${CANDIDATE_ADMIN_URL}/candidates/${page}/${limit}`,
     blockUnblockCandidateUrl: (userId: string) =>
         `${CANDIDATE_ADMIN_URL}/blockUnblock/${userId}`,
     viewCandidateProfileDetailsUrl: (userId: string) =>

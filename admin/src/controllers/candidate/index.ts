@@ -1,4 +1,4 @@
-import getAllCandidatesController from "./viewCandidates.controller";
+import getAllCandidatesController from "./getCandidates.controller";
 import getCandidateByIdController from "./viewProfile.controller";
 import candidateBlockUnblockController from "./blockUnblock.controller";
 

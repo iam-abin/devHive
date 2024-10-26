@@ -21,9 +21,9 @@ export = (dependencies: IDependency) => {
 	const execute = async () => {
 		const [candidateCount, recruiterCount, jobCount, totalRevenue]: any =
 			await Promise.all([
-				candidateRepository.numberOfCandidates(),
-				recruiterRepository.numberOfRecruiters(),
-				jobRepository.numberOfJobs(),
+				candidateRepository.getCountOfCandidates(),
+				recruiterRepository.getCountOfRecruiters(),
+				jobRepository.getCountOfJobs(),
 				paymentRepository.totalRevenue(),
 			]);
 			
