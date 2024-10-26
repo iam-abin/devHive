@@ -3,8 +3,6 @@ import { IResponse } from "../../../types/api";
 import { ISignin } from "../../../types/user";
 import adminApiCalls from "../../admin/apiCalls";
 
-//@dec      Admin login
-//@method   POST
 export const adminSigninApi = async (data: ISignin): Promise<IResponse> => {
 	return await adminApiCalls(
 		"post",

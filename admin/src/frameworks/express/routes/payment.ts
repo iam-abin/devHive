@@ -8,7 +8,7 @@ export const paymentRouter = (dependencies: IDependency)=>{
 
     const paymentController = paymentControllers(dependencies);
     
-    router.get("/get-all-payments", paymentController.getAllPaymentsController);
+    router.get("/get-all-payments/:page/:limit", paymentController.getAllPaymentsController);
     
     return router
 }

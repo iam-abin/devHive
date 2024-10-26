@@ -3,52 +3,46 @@ const RECRUITER_ADMIN_URL = `admin/recruiter`; // recruiter management in admin 
 const CANDIDATE_ADMIN_URL = `admin/candidate`;
 const DASHBOARD_ADMIN_URL = `admin/dashboard`;
 const ADMIN_MEMBERSHIP_PLANS_URL = `admin/membership`;
-const ADMIN_PAYMENT_URL = `admin/payment`
+const ADMIN_PAYMENT_URL = `admin/payment`;
 
 const adminApiUrlConfig = {
-	
-	// jobs
-	getAllJobsUrl: `${JOB_ADMIN_URL}/jobs`,
-	blockUnblockJobUrl: (jobId: string) =>
-		`${JOB_ADMIN_URL}/blockUnblock/${jobId}`,
-	viewJobDetailsUrl: (jobId: string) => `${JOB_ADMIN_URL}/viewJob/${jobId}`,
+    // jobs
+    getAllJobsUrl: `${JOB_ADMIN_URL}/jobs`,
+    blockUnblockJobUrl: (jobId: string) =>
+        `${JOB_ADMIN_URL}/blockUnblock/${jobId}`,
+    viewJobDetailsUrl: (jobId: string) => `${JOB_ADMIN_URL}/viewJob/${jobId}`,
 
+    // Recruiter
+    getAllRecruitersUrl: `${RECRUITER_ADMIN_URL}/recruiters`,
+    blockUnblockRecruiterUrl: (userId: string) =>
+        `${RECRUITER_ADMIN_URL}/blockUnblock/${userId}`,
+    viewRecruiterProfileDetailsUrl: (userId: string) =>
+        `${RECRUITER_ADMIN_URL}/viewProfile/${userId}`,
 
-	// Recruiter
-	getAllRecruitersUrl: `${RECRUITER_ADMIN_URL}/recruiters`,
-	blockUnblockRecruiterUrl: (userId: string) =>
-		`${RECRUITER_ADMIN_URL}/blockUnblock/${userId}`,
-	viewRecruiterProfileDetailsUrl: (userId: string) =>
-		`${RECRUITER_ADMIN_URL}/viewProfile/${userId}`,
+    // Candidate
+    getAllCandidatesUrl: `${CANDIDATE_ADMIN_URL}/candidates`,
+    blockUnblockCandidateUrl: (userId: string) =>
+        `${CANDIDATE_ADMIN_URL}/blockUnblock/${userId}`,
+    viewCandidateProfileDetailsUrl: (userId: string) =>
+        `${CANDIDATE_ADMIN_URL}/viewProfile/${userId}`,
 
+    // Premium plans
+    getAllMembershipPlansUrl: (page: number, limit: number) =>
+        `${ADMIN_MEMBERSHIP_PLANS_URL}/view-membership-plans/${page}/${limit}`,
+    createMembershipPlanUrl: `${ADMIN_MEMBERSHIP_PLANS_URL}/create-membership-plan`,
+    updateMembershipPlanUrl: `${ADMIN_MEMBERSHIP_PLANS_URL}/update-membership-plan`,
+    getAMembershipPlanUrl: (membershipPlanId: string) =>
+        `${ADMIN_MEMBERSHIP_PLANS_URL}/view-membership-plan/${membershipPlanId}`,
+    blockUnblockMembershipPlanUrl: (membershipPlanId: string) =>
+        `${ADMIN_MEMBERSHIP_PLANS_URL}/block-unblock-membership-plan/${membershipPlanId}`,
 
-	// Candidate
-	getAllCandidatesUrl: `${CANDIDATE_ADMIN_URL}/candidates`,
-	blockUnblockCandidateUrl: (userId: string) =>
-		`${CANDIDATE_ADMIN_URL}/blockUnblock/${userId}`,
-	viewCandidateProfileDetailsUrl: (userId: string) =>
-		`${CANDIDATE_ADMIN_URL}/viewProfile/${userId}`,
+    // Payment
+    getAllPaymentsUrl: (page: number, limit: number) =>
+        `${ADMIN_PAYMENT_URL}/get-all-payments/${page}/${limit}`,
 
-
-	// Premium plans
-	getAllMembershipPlansUrl: `${ADMIN_MEMBERSHIP_PLANS_URL}/view-membership-plans`,
-	createMembershipPlanUrl: `${ADMIN_MEMBERSHIP_PLANS_URL}/create-membership-plan`,
-	updateMembershipPlanUrl: `${ADMIN_MEMBERSHIP_PLANS_URL}/update-membership-plan`,
-	getAMembershipPlanUrl: (membershipPlanId: string) =>
-		`${ADMIN_MEMBERSHIP_PLANS_URL}/view-membership-plan/${membershipPlanId}`,
-	blockUnblockMembershipPlanUrl: (membershipPlanId: string) =>
-	`${ADMIN_MEMBERSHIP_PLANS_URL}/block-unblock-membership-plan/${membershipPlanId}`,
-
-
-	// Payment
-	getAllPaymentsUrl: `${ADMIN_PAYMENT_URL}/get-all-payments`,
-
-
-	// dashboard 
-	getAllCardsDetailsUrl: `${DASHBOARD_ADMIN_URL}/data`,
-	getGraphDataUrl: `${DASHBOARD_ADMIN_URL}/graph-data`,
+    // dashboard
+    getAllCardsDetailsUrl: `${DASHBOARD_ADMIN_URL}/data`,
+    getGraphDataUrl: `${DASHBOARD_ADMIN_URL}/graph-data`,
 };
-
-
 
 export default adminApiUrlConfig;

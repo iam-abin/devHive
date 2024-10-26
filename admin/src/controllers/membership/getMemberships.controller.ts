@@ -8,8 +8,11 @@ export = (dependencies: IDependency) => {
 
 	return async (req: Request, res: Response) => {
 		
-		const memberShipPlans = await getAllMembershipPlansUseCase(dependencies).execute();
+		const { membershipPlans, numberOfPages }  = await getAllMembershipPlansUseCase(dependencies).execute(
+            Number(req.params.page) || 1,
+            Number(req.params.limit) || 4
+        );
 		
-		res.status(200).json({ message: "memberShipPlans list", data: memberShipPlans });
+		res.status(200).json({ message: "memberShipPlans list", data: { membershipPlans, numberOfPages }  });
 	};
 };

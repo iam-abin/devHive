@@ -23,8 +23,8 @@ export const getAMembershipPlanApi = async (membershipPlanId: any): Promise<IRes
     return await adminApiCalls("get", adminApiUrlConfig.getAMembershipPlanUrl(membershipPlanId));
 };
 
-export const getAllMembershipPlansApi = async (): Promise<IResponse> => {
-    return await adminApiCalls("get", adminApiUrlConfig.getAllMembershipPlansUrl);
+export const getAllMembershipPlansApi = async (page: number, limit: number): Promise<IResponse> => {
+    return await adminApiCalls("get", adminApiUrlConfig.getAllMembershipPlansUrl(page, limit));
 
 };
 

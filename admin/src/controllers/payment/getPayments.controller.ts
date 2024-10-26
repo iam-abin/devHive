@@ -1,14 +1,21 @@
 import { Request, Response } from "express";
 import { IDependency } from "../../frameworks/types/dependency";
 
-export = (dependencies: IDependency)=>{
+export = (dependencies: IDependency) => {
+    const {
+        useCases: { getAllPaymentsUseCase },
+    } = dependencies;
 
-    const { useCases: { getAllPaymentsUseCase }} = dependencies 
+    return async (req: Request, res: Response) => {
+        const { payments, numberOfPages } = await getAllPaymentsUseCase(dependencies).execute(
+            Number(req.params.page) || 1,
+            Number(req.params.limit) || 4
+        );
 
-    return async (req: Request, res: Response)=>{
-        const payment = await getAllPaymentsUseCase(dependencies).execute();
+        console.log(payments, "payments");
+        console.log(numberOfPages, "numberOfPages");
         
-        res.status(200).json({message: "Payments are ", data: payment })
-    };
 
-}
+        res.status(200).json({ message: "Payments are ", data: { payments, numberOfPages} });
+    };
+};

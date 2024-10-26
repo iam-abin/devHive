@@ -44,13 +44,16 @@ export = {
 
 	},
 
-	getAllPayments: async (): Promise<IPaymentDocument[] | []> => {
-		const payments = await PaymentModel.find({})
+	getAllPayments: async (skip: number, limit: number): Promise<IPaymentDocument[] | []> => {
+		const payments = await PaymentModel.find({}).skip(skip).limit(limit)
 			.populate("candidateId", ["name","email"])
 			.populate("membershipPlanId", ["name", "price"]);
 		return payments;
 	},
 	
+	getCountOfPayments: async(): Promise<number>=>{
+		return await PaymentModel.countDocuments();
+	},
 
 	// populate graph data for admin
 	getGraphData: async () => {

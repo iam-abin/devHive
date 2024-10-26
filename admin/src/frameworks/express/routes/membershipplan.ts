@@ -8,7 +8,7 @@ export const membershipPlanRouter = (dependencies: IDependency) => {
 	const membershipController = membershipControllers(dependencies);
 
 	router.post("/create-membership-plan", membershipController.createMembershipController);
-	router.get("/view-membership-plans", membershipController.viewAllMembershipsController);
+	router.get("/view-membership-plans/:page/:limit", membershipController.viewAllMembershipsController);
 	router.get(
 		"/view-membership-plan/:membershipPlanId",
 		membershipController.viewMembershipController
