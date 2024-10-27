@@ -3,7 +3,7 @@ import { generateHashedPassword } from "../../../utils/password";
 import { ISignup } from "../../../types/user";
 
 
-interface UserDocument extends mongoose.Document, ISignup {
+export interface IUserDocument extends mongoose.Document, ISignup {
 	isVarified:boolean;
 	isActive: boolean;
 }
@@ -89,8 +89,8 @@ userSchema.pre('findOneAndUpdate', async function (next) {
 });
 
 
-interface UserModel extends mongoose.Model<UserDocument> {
-	buildUser(attributes: ISignup): UserDocument;
+interface UserModel extends mongoose.Model<IUserDocument> {
+	buildUser(attributes: ISignup): IUserDocument;
 }
 
 userSchema.statics.buildUser = (attributes: ISignup) => {
@@ -104,6 +104,6 @@ userSchema.statics.buildUser = (attributes: ISignup) => {
 	});
 };
 
-const UserModel = mongoose.model<UserDocument, UserModel>("User", userSchema);
+const UserModel = mongoose.model<IUserDocument, UserModel>("User", userSchema);
 
 export { UserModel };

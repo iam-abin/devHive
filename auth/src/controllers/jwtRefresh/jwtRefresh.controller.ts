@@ -8,7 +8,7 @@ export = (dependencies: IDependency) => {
     } = dependencies;
 
     return async (req: Request, res: Response) => {
-        let refreshData = await refreshTokenUseCase(
+        const refreshData = await refreshTokenUseCase(
             dependencies
         ).execute(req.headers.authorization as string);
 

@@ -12,3 +12,6 @@ export const clearItemFromLocalStorage = (key: string): void => {
     localStorage.removeItem(key);
 };
 
+export const clearLocalStorage = (): void => {
+    localStorage.clear();
+};

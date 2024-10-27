@@ -1,8 +1,9 @@
 import { Twilio } from "twilio";
+import { appConfig } from "../../config/appConfig";
 
-const authToken: string | undefined = process.env.TWILIO_AUTH_TOKEN;
-const accountSid: string | undefined = process.env.TWILIO_ACCOUNT_SID;
-const serviceSID: string | undefined = process.env.TWILIO_SERVICE_SID;
+const authToken: string | undefined = appConfig.TWILIO_AUTH_TOKEN;
+const accountSid: string | undefined = appConfig.TWILIO_ACCOUNT_SID;
+const serviceSID: string | undefined = appConfig.TWILIO_SERVICE_SID;
 
 const client = new Twilio(accountSid, authToken);
 

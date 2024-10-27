@@ -6,25 +6,6 @@ import { IJob } from "../../../types/Job";
 import Table from "../../../components/table/Table";
 import { IResponse } from "../../../types/api";
 
-interface JobInterface {
-    id: string;
-    title: string;
-    recruiter: string;
-    company: string;
-    jobDescription?: string;
-    skills?: string | string[];
-    availablePosition?: string;
-    experienceRequired?: string;
-    educationRequired?: string;
-    location?: string;
-    employmentType?: string;
-    salaryMin?: number;
-    salaryMax?: number;
-    has_applied?: boolean;
-    isActive?: boolean;
-    deadline?: Date;
-}
-
 function JobApplicationsPage() {
     const navigate = useNavigate();
     const [jobsApplicationsData, setJobApplicationsData] = useState<
