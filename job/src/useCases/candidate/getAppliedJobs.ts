@@ -18,15 +18,16 @@ export = (dependencies: IDependency) => {
     ) => {
         // pagination
         const skip = (page - 1) * limit;
-        const appliedJobsCount =
-            await jobApplicationRepository.getCountOfCandidateAppliedJobs(
-                candidateId
-            );
         const appliedJobs =
-            await jobApplicationRepository.getAllAppliedJobsByCandidateId(
-                candidateId,
-                skip,
-                limit
+        await jobApplicationRepository.getAllAppliedJobsByCandidateId(
+            candidateId,
+            skip,
+            limit
+        );
+        
+        const appliedJobsCount =
+            await jobApplicationRepository.getCountOfAppliedJobs(
+                candidateId
             );
 
         const numberOfPages = Math.ceil(appliedJobsCount / limit);

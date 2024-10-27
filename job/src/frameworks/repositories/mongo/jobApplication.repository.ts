@@ -119,6 +119,7 @@ export = {
         return jobApplications;
     },
     
+    // Used by candidates
     getCountOfAppliedJobs: async (
         candidateId: string
     ): Promise<number> => {
@@ -128,7 +129,8 @@ export = {
 
         return totalJobs;
     },
-
+    
+    // Used by recruiters
     getCountOfApplications: async (
         recruiterId: string,
     ): Promise<number> => {
