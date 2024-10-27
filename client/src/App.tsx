@@ -23,13 +23,12 @@ export default function App() {
 
     const { isCandidate, isRecruiter } = checkUserRole(loggedinUser);
 
-    console.log("loggedinUser", loggedinUser);
-
     return (
         <>
             <ToastContainer className="mt-10" />
             <Toaster />
             <Routes>
+                {/* Root Redirect */}
                 <Route
                     path="/"
                     element={
@@ -38,11 +37,12 @@ export default function App() {
                         ) : isRecruiter ? (
                             <Navigate to="/recruiter" />
                         ) : (
-                            <Navigate to="/candidate" />
+                            <Navigate to="/candidate/landing" />
                         )
                     }
                 />
 
+                {/* Route Groups */}
                 <Route path="/admin/*" element={<AdminRoutes />} />
                 <Route
                     path="/candidate/*"

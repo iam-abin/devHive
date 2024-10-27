@@ -26,6 +26,7 @@ const AdminSignin = ({
                                     type="email"
                                     name="email"
                                     placeholder="Email"
+                                    autoComplete="password"
                                     className="w-full py-2 pl-2 text-sm text-black bg-transparent border-b outline-none focus:outline-none"
                                 />
                             </div>
@@ -42,6 +43,7 @@ const AdminSignin = ({
                                     type="password"
                                     name="password"
                                     placeholder="Password"
+                                    autoComplete="password"
                                     className="w-full py-2 pl-2 text-sm text-black bg-transparent border-b outline-none focus:outline-none"
                                 />
                             </div>

@@ -4,8 +4,6 @@ import {
 	getRecruiterDashboardCardsApi,
 	getRecruiterDashboadGraphApi,
 } from "../../axios/apiMethods/jobs-service/jobs";
-import { useSelector } from "react-redux";
-import { RootState } from "../../redux/reducer";
 import ChartThree from "../../components/charts/ChartThree";
 
 const RecruiterDashBoardPage: React.FC = () => {
@@ -16,18 +14,13 @@ const RecruiterDashBoardPage: React.FC = () => {
 	const [graphDataState, setGraphDataState] = useState([
 		{name: "", data: []}
 	]);
-
-	const recruiterData: any = useSelector(
-		(store: RootState) => store.userReducer.authData
-	);
+	
 
 	useEffect(() => {
 		(async () => {
-			// const data = await getAllRecruiterDashBoardPageCardsDetailsApi();
 			const cardData = await getRecruiterDashboardCardsApi();
 			const graphData = await getRecruiterDashboadGraphApi();
 			if (cardData && cardData.data) {
-				// const { addedJobsCount, jobApplicationsCount } = cardData.data;
 				setCardData({ ...cardData.data });
 			}
 
