@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 
-import { IAuthProps } from "../../../types/user";
+import { IAuthProps, IRole } from "../../../types/user";
 import SpinnerLoading from "../../loading/SpinnerLoading";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/reducer";
@@ -22,7 +22,7 @@ const RecruiterAuth = ({
             initialValues={initialValues}
             validationSchema={schemaValues}
             onSubmit={(values) => {
-                handleSubmit(values);
+                handleSubmit({...values, role: IRole.RECRUITER});
             }}
         >
             {(formik) => {

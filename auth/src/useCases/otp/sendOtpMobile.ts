@@ -18,13 +18,11 @@ export = (dependencies: IDependency) => {
         const user = await usersRepository.getByEmail(email);
 
         if (!user) throw new BadRequestError('Invalid email');
-
+        if (typeof phone === 'string') phone = parseInt(phone);
         if (user.phone !== phone) throw new BadRequestError('User with this phone number does not exist');
 
         // sendOtp
         const otpData = await sendOtp(phone);
-        console.log(otpData);
-
         return otpData;
     };
 

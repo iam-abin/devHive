@@ -8,8 +8,6 @@ const { UserModel } = Models;
 // const repository = () => {
 // 	return {
 export = {
-    // these fn's are returning a promise as async so we can define return type as Promise<CandidateDataInterface>
-
     register: async (userData: ISignup): Promise<IUserDocument> => {
         const userObject = UserModel.buildUser(userData);
         return await userObject.save();
@@ -53,7 +51,10 @@ export = {
     },
 
     updateVerification: async (email: string): Promise<IUserDocument | null> => {
+        console.log("inside updateverification repo email ", email);
+        
         const user = await UserModel.findOneAndUpdate({ email }, { isVerified: true }, { new: true });
+        console.log("inside updateverification repo use ", user);
         return user;
     },
 };

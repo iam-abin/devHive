@@ -16,12 +16,12 @@ export = (dependencies: IDependency) => {
     const execute = async ({ name, email, phone, password, role }: ISignup) => {
         const isExistingUser = await usersRepository.getByEmail(email);
 
-        if (isExistingUser && isExistingUser.isVarified) throw new BadRequestError('Email already exist');
+        if (isExistingUser && isExistingUser.isVerified) throw new BadRequestError('Email already exist');
 
         const subject = 'Verify Your Email';
         const topic = 'Enter the 6 digit otp to verify your email';
 
-        if (isExistingUser && !isExistingUser.isVarified) {
+        if (isExistingUser && !isExistingUser.isVerified) {
             await sendVerificationEmail(email, isExistingUser.otp, subject, topic);
 
             return {
@@ -30,7 +30,6 @@ export = (dependencies: IDependency) => {
         }
 
         const { otp } = generateEmailVerificationOtp();
-        console.log(otp);
 
         const user = new User({
             name,
@@ -40,7 +39,6 @@ export = (dependencies: IDependency) => {
             role,
             otp: parseInt(otp),
         });
-        console.log(user);
 
         await usersRepository.register(user);
 

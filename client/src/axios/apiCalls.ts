@@ -10,7 +10,9 @@ const makeApiCall = async (
     data?: any,
     isFileUpload?: boolean
 ): Promise<IResponse> => {
+    // const dispatch = useDispatch()
     try {
+        // dispatch(setLoading())
         let response;
         switch (method.toLowerCase()) {
             case "get":
@@ -44,6 +46,8 @@ const makeApiCall = async (
     } catch (error: any) {
         notify(error.response.data.errors[0].message, "error");
         throw error;
+    }finally{
+        // dispatch(setLoaded())
     }
 };
 

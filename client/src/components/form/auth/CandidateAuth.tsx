@@ -1,5 +1,5 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { IAuthProps, IAuth } from "../../../types/user";
+import { IAuthProps, IAuth, IRole } from "../../../types/user";
 // import googleIcon from "../../../assets/google/google-icon.svg";
 import { Link, useNavigate } from "react-router-dom";
 import SpinnerLoading from "../../loading/SpinnerLoading";
@@ -21,7 +21,7 @@ const CandidateAuth = ({
             initialValues={initialValues as IAuth}
             validationSchema={schemaValues}
             onSubmit={(values) => {
-                handleSubmit(values);
+                handleSubmit({...values, role: IRole.CANDIDATE});
             }}
         >
             {(formik) => {

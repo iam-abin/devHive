@@ -5,20 +5,20 @@ import { IMobileOtp } from '../../frameworks/types/otp';
 
 export = (dependencies: IDependency) => {
     const {
-        useCases: { sendOtpMobileUseCase },
+        useCases: { sendOtpMobileUseCase, sendOtpEmailUseCase },
     } = dependencies;
 
     return async (req: Request, res: Response) => {
         // eslint-disable-next-line prefer-const
         let { email, phone } = req.body as Omit<IMobileOtp, 'otp'>;
-
-        if (typeof phone === 'string') phone = parseInt(phone);
-
-        const isExistingUser = await sendOtpMobileUseCase(dependencies).execute({ email, phone });
+        if (phone) {
+            await sendOtpMobileUseCase(dependencies).execute({ email, phone });
+        } else {
+            await sendOtpEmailUseCase(dependencies).execute({ email });
+        }
 
         res.status(200).json({
-            message: `Otp send to ${phone}`,
-            data: isExistingUser,
+            message: phone ? `Otp send to ${phone}` : `An email is send to ${email}, please verify.`,
         });
     };
 };

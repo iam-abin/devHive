@@ -28,7 +28,7 @@ const recruiterSchema = new mongoose.Schema(
             type: String,
             default: 'recruiter',
         },
-        isVarified: {
+        isVerified: {
             type: Boolean,
             default: true,
         },

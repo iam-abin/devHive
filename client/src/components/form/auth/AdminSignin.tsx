@@ -1,5 +1,5 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { ISigninProps } from "../../../types/user";
+import { IRole, ISigninProps } from "../../../types/user";
 import { FaRegEnvelope } from "react-icons/fa";
 import { MdLockOutline } from "react-icons/md";
 import { useSelector } from "react-redux";
@@ -18,7 +18,7 @@ const AdminSignin = ({
         <Formik
             initialValues={initialSigninValues}
             validationSchema={signinSchema}
-            onSubmit={(values) => handleSubmit(values)}
+            onSubmit={(values) => handleSubmit({...values, role: IRole.ADMIN})}
         >
             {() => (
                 <Form className="mt-8 space-y-6">

@@ -4,6 +4,6 @@ import { IDependency } from '../../frameworks/types/dependency';
 
 export = (dependencies: IDependency) => {
     return {
-        jwtRefreshController: jwtRefreshController(dependencies),
+        jwtRefresh: jwtRefreshController(dependencies),
     };
 };

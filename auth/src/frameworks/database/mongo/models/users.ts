@@ -3,7 +3,7 @@ import { generateHashedPassword } from '../../../utils/password';
 import { ISignup } from '../../../types/user';
 
 export interface IUserDocument extends mongoose.Document, ISignup {
-    isVarified: boolean;
+    isVerified: boolean;
     isActive: boolean;
 }
 
@@ -35,7 +35,7 @@ const userSchema = new mongoose.Schema(
             required: true,
             enum: ['admin', 'candidate', 'recruiter'],
         },
-        isVarified: {
+        isVerified: {
             type: Boolean,
             default: false,
         },

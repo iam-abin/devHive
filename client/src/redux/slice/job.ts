@@ -13,7 +13,7 @@ const initialState: IJobSlice = {
     jobs: [],
     isFIltering: false,
     totalNumberOfPages: 0,
-    currentPage: 0,
+    currentPage: 1,
 };
 
 const JobSlice = createSlice({
@@ -44,7 +44,7 @@ const JobSlice = createSlice({
             state.currentPage = action.payload;
         },
         clearCurrentPage: (state) => {
-            state.currentPage = 0;
+            state.currentPage = 1;
         },
 
 

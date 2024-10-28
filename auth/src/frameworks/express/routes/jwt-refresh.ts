@@ -8,7 +8,7 @@ export const jwtRouter = (dependencies: IDependency) => {
 
     const jwtController = jwtRefreshControllers(dependencies);
 
-    router.post('/refreshToken', jwtController.jwtRefreshController);
+    router.post('/refreshToken', jwtController.jwtRefresh);
 
     return router;
 };

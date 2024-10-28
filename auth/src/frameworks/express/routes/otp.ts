@@ -8,9 +8,9 @@ export const otpRouter = (dependencies: IDependency) => {
 
     const otpController = otpControllers(dependencies);
 
-    router.post('/sendOtp', otpController.sendOtpNodemailerController);
+    router.post('/sendOtp', otpController.sendOtp);
 
-    router.post('/verify-forgotPassword-otp', otpController.verifyOtpNodemailerController);
+    router.post('/verify-forgotPassword-otp', otpController.verifyOtp);
 
     return router;
 };

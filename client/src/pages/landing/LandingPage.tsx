@@ -98,6 +98,8 @@ function LandingPage() {
     };
 
     const handleReset = async () => {
+        dispatch(clearCurrentPage());
+        setFilteredCurrentPage(1);
         const allJobs = await getAllJobsApi(1);
         if (allJobs && allJobs.data) {
             dispatch(setJobs(allJobs.data.jobs));
@@ -108,8 +110,6 @@ function LandingPage() {
                 employmentType: "",
             })
             dispatch(setTotalNumberOfPages(allJobs.data.totalNumberOfPages));
-            dispatch(setCurrentPage(1));
-            setFilteredCurrentPage(1);
         }
     };
 

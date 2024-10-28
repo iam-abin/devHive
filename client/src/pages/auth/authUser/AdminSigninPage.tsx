@@ -20,16 +20,21 @@ function AdminSigninPage() {
     const dispatch = useDispatch();
 
     const handleSubmit = async (userData: ISignin) => {
-        dispatch(setLoading())
-        const response: IResponse = await adminSigninApi(userData);
-        dispatch(
-            setUser({
-                data: response.data
-            })
-        );
-        dispatch(setLoaded())
-        notify(response.message, "success");
-        navigate("/admin");
+        try {
+            dispatch(setLoading())
+            const response: IResponse = await adminSigninApi(userData);
+            dispatch(
+                setUser({
+                    data: response.data
+                })
+            );
+            dispatch(setLoaded())
+            notify(response.message, "success");
+            navigate("/admin");
+            
+        } finally{
+            dispatch(setLoaded());
+        }
     };
         
 

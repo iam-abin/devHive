@@ -1,4 +1,4 @@
-import { BadRequestError } from '@abijobportal/common';
+import { BadRequestError, ROLES } from '@abijobportal/common';
 import { IDependency } from '../../frameworks/types/dependency';
 import { comparePassword } from '../../frameworks/utils/password';
 import { createJwtAccessToken, createJwtRefreshToken } from '../../frameworks/utils/jwtToken';
@@ -10,26 +10,30 @@ export = (dependencies: IDependency) => {
 
     if (!usersRepository) throw new Error('usersRepository should exist in dependencies');
 
-    const execute = async (email: string, password: string, requiredRole: string) => {
+    const execute = async (email: string, password: string, role: string) => {
         const existingUser = await usersRepository.getByEmail(email);
 
         if (!existingUser) {
             throw new BadRequestError('Invalid email or password');
         }
 
-        // check password is correct
-        const isSamePassword = await comparePassword(password, existingUser.password);
+        if (role === ROLES.ADMIN) {
+            if (existingUser.role !== ROLES.ADMIN) throw new BadRequestError('Invalid Admin');
+            // Check admin password is correct
+            const isSamePassword = password === existingUser.password;
+            if (!isSamePassword) throw new BadRequestError('Invalid email or passwordd');
+        } else {
+            const isSamePassword = await comparePassword(password, existingUser.password);
+            if (!isSamePassword) {
+                throw new BadRequestError('Invalid email or passwordd');
+            }
 
-        if (!isSamePassword) {
-            throw new BadRequestError('Invalid email or passwordd');
-        }
-
-        if (existingUser.role !== requiredRole) {
-            throw new BadRequestError(`Invalid ${requiredRole}`);
-        }
-
-        if (!existingUser.isActive) {
-            throw new BadRequestError('This is a blocked user');
+            if (existingUser.role !== role) {
+                throw new BadRequestError(`Invalid ${role}`);
+            }
+            if (!existingUser.isActive) {
+                throw new BadRequestError('This is a blocked user');
+            }
         }
 
         // Generate Jwt

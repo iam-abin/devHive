@@ -1,16 +1,25 @@
 import { SigninFormSchemaType } from "../utils/validations/signin";
 import { SignupFormSchemaType } from "../utils/validations/signup";
 
-interface IUser{
+export enum IRole {
+	ADMIN = 'admin',
+	CANDIDATE = 'candidate',
+	RECRUITER = 'recruiter'
+}
+
+export interface IUser{
 	email: string;
 	password: string;
 }
 
-export interface ISignin extends IUser{} 
+export interface ISignin extends IUser{
+	role?: string
+} 
 
 export interface IAuth extends IUser {
 	name: string;
 	phone: number | string;
+	role?: string
 }
 
 
