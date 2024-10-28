@@ -7,7 +7,7 @@ export = (dependencies: IDependency) => {
     } = dependencies;
 
     return async (req: Request, res: Response) => {
-        const { skills: skills } = req.body;
+        const { skills } = req.body;
         const { userId } = req.currentUser;
 
         const candidate = await updateSkillsUseCase(dependencies).execute(userId, skills);

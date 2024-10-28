@@ -23,17 +23,15 @@ export const deleteResumeApi = async (candidateId: string): Promise<any> => {
     return makeApiCall("patch", profileApiUrlConfig.deleteResumeUrl(candidateId)); 
 };
 
-export const updateCandidateSkillsProfileApi = async (userId: string,skills: Array<string>): Promise<any> => {
+export const updateCandidateSkillsProfileApi = async (skills: Array<string>): Promise<any> => {
     const data = {
-        id: userId,
         skills
     }
     return makeApiCall("patch", profileApiUrlConfig.updateCandidateSkillsUrl, data, true);
 };
 
-export const updateCandidatePreferredJobsProfileApi = async (userId: string,preferredJobs: Array<string>): Promise<any> => {
+export const updateCandidatePreferredJobsProfileApi = async (preferredJobs: Array<string>): Promise<any> => {
     const data = {
-        id: userId,
         preferredJobs
     }
     return makeApiCall("patch", profileApiUrlConfig.updateCandidatePreferredJobsUrl, data, true);

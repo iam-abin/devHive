@@ -16,19 +16,8 @@ export = (dependencies: IDependency) => {
 
         const candidateProfileUpdatedEvent = new CandidateProfileUpdatedEventPublisher(kafkaClient);
         await candidateProfileUpdatedEvent.publish({
-            name: updatedProfile?.name,
-            email: updatedProfile?.email,
-            phone: updatedProfile?.phone,
-            isActive: updatedProfile?.isActive,
-            gender: updatedProfile?.gender,
-            currentLocation: updatedProfile?.currentLocation,
-            address: updatedProfile?.address,
-            skills: updatedProfile?.skills,
-            profileImage: updatedProfile?.profileImage,
-            about: updatedProfile?.about,
-            resume: updatedProfile?.resume,
-            experience: updatedProfile?.experience,
-            userId: updatedProfile?.userId,
+            resume: undefined,
+            userId: updatedProfile?._id,
         });
 
         return updatedProfile;

@@ -15,7 +15,7 @@ export = (dependencies: IDependency) => {
     const execute = async (profileId: string, file: IResume) => {
         try {
             if (!file) return; // Return or handle accordingly
-            const profile = await candidateProfileRepository.findById(profileId);
+            const profile = await candidateProfileRepository.getProfileByUserId(profileId);
             if (!profile) throw new NotFoundError('profile not found');
             const updatedProfile = await candidateProfileRepository.uploadResume(profileId, {
                 url: file?.url,
