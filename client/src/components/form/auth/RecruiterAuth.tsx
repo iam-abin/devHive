@@ -1,7 +1,10 @@
 import { Link, useNavigate } from "react-router-dom";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 
-import { IAuthProps } from "../../../types/user";
+import { IAuthProps, IRole } from "../../../types/user";
+import SpinnerLoading from "../../loading/SpinnerLoading";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../redux/reducer";
 
 const RecruiterAuth = ({
     handleSubmit,
@@ -10,12 +13,16 @@ const RecruiterAuth = ({
     authType,
 }: IAuthProps) => {
     const navigate = useNavigate();
+    const isLoading: boolean = useSelector(
+        (store: RootState) => store.loading.isLoading
+    );
+
     return (
         <Formik
             initialValues={initialValues}
             validationSchema={schemaValues}
             onSubmit={(values) => {
-                handleSubmit(values);
+                handleSubmit({...values, role: IRole.RECRUITER});
             }}
         >
             {(formik) => {
@@ -133,10 +140,15 @@ const RecruiterAuth = ({
                                     <button
                                         type="submit"
                                         className="w-full text-white bg-black rounded-md p-4 my-2 text-center flex items-center justify-center"
+                                        disabled={isLoading} // Disable when loading
                                     >
-                                        {authType === "signin"
-                                            ? "Sign In"
-                                            : "Sign Up"}
+                                        {isLoading ? (
+                                            <SpinnerLoading /> // Show spinner if loading
+                                        ) : authType === "signin" ? (
+                                            "Sign In"
+                                        ) : (
+                                            "Sign Up"
+                                        )}
                                     </button>
                                 </div>
                                 {authType === "signin" && (

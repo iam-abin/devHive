@@ -9,6 +9,7 @@ import {
     updateRecruiterProfileApi,
 } from "../../../axios/apiMethods/profile-service/recruiter";
 import { notify } from "../../../utils/toastMessage";
+import { IUserData } from "../../../types/user";
 
 interface ProfileFormData {
     name: string;
@@ -31,8 +32,8 @@ interface ProfileFormData {
 function RecruiterProfileEditPage() {
     const [profileDetails, setProfileDetails] = useState<any>(null);
     const navigate = useNavigate();
-    const recruiterData: any = useSelector(
-        (state: RootState) => state.userReducer.authData
+    const recruiterData: IUserData = useSelector(
+        (state: RootState) => state.userReducer.authData!
     );
     const { id } = recruiterData;
 
@@ -59,7 +60,7 @@ function RecruiterProfileEditPage() {
             notify("Profile not updated", "error");
         }
     };
-
+    
     const initialProfileValues: ProfileFormData = {
         name: profileDetails?.name ?? undefined,
         email: profileDetails?.email ?? undefined,

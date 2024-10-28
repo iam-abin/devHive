@@ -1,10 +1,11 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { clearItemFromLocalStorage, setItemToLocalStorage } from "../../utils/localStorage";
 import { LOCAL_STORAGE } from "../../utils/constants";
+import { IUserData } from "../../types/user";
 
 
 interface IUserSlice {
-    authData: any,
+    authData: IUserData | null,
     myProfile: any,
     otherUserProfile: any,
     accessToken: string | null,
@@ -25,15 +26,18 @@ const UserSlice = createSlice({
     initialState,
     reducers: {
         setUser: (state, action) => {
-            state.authData = action.payload.data;
+            state.authData = action.payload.data.user;
 
+            console.log(action.payload.data);
+            console.log(action.payload);
+            
             setItemToLocalStorage(
                 LOCAL_STORAGE.ACCESS_TOKEN,
-                JSON.stringify(action.payload?.accessToken)
+                JSON.stringify(action.payload?.data.accessToken!)
             );
             setItemToLocalStorage(
                 LOCAL_STORAGE.REFRESH_TOKEN,
-                JSON.stringify(action.payload?.refreshToken)
+                JSON.stringify(action.payload?.data.refreshToken!)
             );
         },
         clearUser: (state) => {
@@ -42,7 +46,7 @@ const UserSlice = createSlice({
             clearItemFromLocalStorage(LOCAL_STORAGE.REFRESH_TOKEN);
         },
 
-        setMyProfileData: (state, action: PayloadAction<any>) => {
+        setMyProfileData: (state, action) => {
 			state.myProfile = action.payload;
 		},
 

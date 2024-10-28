@@ -1,10 +1,9 @@
-import { IChatRoom } from "../frameworks/types/chatRoom";
-
+import { IChatRoom } from '../frameworks/types/chatRoom';
 
 export class ChatRoom {
-	users: string[];
+    users: string[];
 
-	constructor({ users }: IChatRoom) {
-		this.users = users;
-	}
+    constructor({ users }: IChatRoom) {
+        this.users = users;
+    }
 }

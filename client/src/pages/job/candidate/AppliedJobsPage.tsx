@@ -5,34 +5,17 @@ import { RootState } from "../../../redux/reducer";
 import { useSelector } from "react-redux";
 import JobAppliedCard from "../../../components/cards/JobAppliedCard";
 import Paginate from "../../../components/pagination/Paginate";
+import { IJob } from "../../../types/Job";
 
-interface JobInterface {
-    id: string;
-    title: string;
-    recruiter: string;
-    company: string;
-    jobDescription?: string;
-    skills?: string | string[];
-    availablePosition?: string;
-    experienceRequired?: string;
-    educationRequired?: string;
-    location?: string;
-    employmentType?: string;
-    salaryMin?: number;
-    salaryMax?: number;
-    has_applied?: boolean;
-    isActive?: boolean;
-    deadline?: Date;
-}
 
 function AppliedJobsPage() {
     const [currentPage, setCurrentPage] = useState(1);
     const [pageCount, setpageCount] = useState(1);
+    const [appliedJobsData, setAppliedJobsData] = useState<IJob[]>([]);
 
     const navigate = useNavigate();
-    const [appliedJobsData, setAppliedJobsData] = useState<JobInterface[]>([]);
 
-    const candidateData: any = useSelector(
+    const candidateData = useSelector(
         (store: RootState) => store.userReducer.authData
     );
 
@@ -43,15 +26,17 @@ function AppliedJobsPage() {
     useEffect(() => {
         (async () => {
             // dispatch(setLoading());
-            const response = await getAllCandidateAppliedJobsApi(
-                candidateData?.id,
-                currentPage
-            );
-
-            setAppliedJobsData(response.data.appliedJobs);
-            setpageCount(response.data.totalNumberOfPages);
+            if(candidateData){
+                const response = await getAllCandidateAppliedJobsApi(
+                    candidateData.id,
+                    currentPage
+                );
+    
+                setAppliedJobsData(response.data.appliedJobs);
+                setpageCount(response.data.totalNumberOfPages);
+            }
         })();
-    }, [currentPage]);
+    }, [currentPage, candidateData]);
 
     const viewApplicationDetails = async (jobId: string) => {
         navigate(`/candidate/application-details/${jobId}`);
@@ -78,6 +63,7 @@ function AppliedJobsPage() {
                         {pageCount > 1 && (
                             <Paginate
                                 pageCount={pageCount}
+                                currentPage={currentPage}
                                 handlePageChange={handlePageChange}
                             />
                         )}

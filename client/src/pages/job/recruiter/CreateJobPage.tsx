@@ -7,55 +7,63 @@ import { IJob } from "../../../types/Job";
 import CreateJobForm from "../../../components/form/CreateJobForm";
 import { useEffect, useState } from "react";
 import { recruiterGetProfileApi } from "../../../axios/apiMethods/profile-service/recruiter";
-import { initialJobValues, jobSchema } from "../../../utils/validations/createJob";
-
+import {
+    initialJobValues,
+    jobSchema,
+} from "../../../utils/validations/createJob";
+import { IRecruiterProfileResponse } from "../../../types/profile";
 
 function CreateJobPage() {
-	const recruiterData: any = useSelector(
-		(store: RootState) => store.userReducer.authData
-	);
+    const recruiterData = useSelector(
+        (store: RootState) => store.userReducer.authData
+    );
 
-	const [recruiterProfileData, setecruiterProfileData] = useState<any>({});
+    const [recruiterProfileData, setecruiterProfileData] =
+        useState<IRecruiterProfileResponse>();
 
-	useEffect(() => {
-		(async () => {
-			const recruiterProfile = await recruiterGetProfileApi(
-				recruiterData.id
-			);
-			
-			setecruiterProfileData(recruiterProfile.data);
-			initialJobValues.companyName = recruiterProfile.data.companyName;
-			initialJobValues.companyLocation = recruiterProfile.data.companyLocation;
-		})();
-	}, []);
+    useEffect(() => {
+        (async () => {
+            if (recruiterData) {
+                const recruiterProfile = await recruiterGetProfileApi(
+                    recruiterData.id
+                );
 
-	const navigate = useNavigate();
+                setecruiterProfileData(recruiterProfile.data);
+                initialJobValues.companyName =
+                    recruiterProfile.data.companyName;
+                initialJobValues.companyLocation =
+                    recruiterProfile.data.companyLocation;
+            }
+        })();
+    }, [recruiterData]);
 
-	const handleSubmit = async (jobData: IJob) => {
-			if (!recruiterProfileData?.companyName) {
-				notify(
-					"Please provide company details in your profile before creating a job!!!",
-					"warning"
-				);
-				return;
-			}
-			const response = await createJobApi(jobData!);
-			notify(response.message, "success");
-			navigate("/recruiter/recruiter-added-jobs");
-	};
+    const navigate = useNavigate();
 
-	return (
-		<>
-			<div className="flex items-center justify-center h-full bg-fuchsia-50">
-				<CreateJobForm
-					initialJobValues={initialJobValues}
-					handleSubmit={handleSubmit}
-					recruiterData={recruiterProfileData}
-					jobSchema = {jobSchema}
-				/>
-			</div>
-		</>
-	);
+    const handleSubmit = async (jobData: IJob) => {
+        if (!recruiterProfileData?.companyName) {
+            notify(
+                "Please provide company details in your profile before creating a job!!!",
+                "warning"
+            );
+            return;
+        }
+        const response = await createJobApi(jobData!);
+        notify(response.message, "success");
+        navigate("/recruiter/recruiter-added-jobs");
+    };
+
+    return (
+        <>
+            <div className="flex items-center justify-center h-full bg-fuchsia-50">
+                <CreateJobForm
+                    initialJobValues={initialJobValues}
+                    handleSubmit={handleSubmit}
+                    recruiterData={recruiterProfileData!}
+                    jobSchema={jobSchema}
+                />
+            </div>
+        </>
+    );
 }
 
 export default CreateJobPage;

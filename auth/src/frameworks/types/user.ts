@@ -1,20 +1,18 @@
-interface IUser{
-	email: string;
-	password: string;
-	role: string;
+interface IUser {
+    email: string;
+    password: string;
+    role: string;
 }
 
 export interface ISignup extends IUser {
-	name: string;
-	phone: number;
-	otp?: number;
+    name: string;
+    phone: number;
+    otp?: number;
 }
 
-export interface ISignin extends IUser{} 
-
-
+export type ISignin = IUser;
 
 export interface IUpdatePassword {
-	userId: string;
-	password: string;
+    userId: string;
+    password: string;
 }

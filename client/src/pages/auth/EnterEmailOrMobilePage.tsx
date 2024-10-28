@@ -14,6 +14,8 @@ import {
 } from "../../axios/apiMethods/auth-service/recruiterAuth";
 import { IEmailOrMobile } from "../../types/otp";
 import { swal } from "../../utils/swal";
+import { IResponse } from "../../types/api";
+import { ROLES } from "../../utils/constants";
 
 function EnterEmailOrMobilePage() {
     const navigate = useNavigate();
@@ -24,10 +26,14 @@ function EnterEmailOrMobilePage() {
         "forgotPasswordEmail"
     );
 
-    const isCandidateUrl: boolean = locationUrl.pathname.includes("candidate");
+    const isCandidateUrl: boolean = locationUrl.pathname.includes(
+        ROLES.CANDIDATE
+    );
 
-    const userType = isCandidateUrl ? "candidate" : "recruiter";
-    const valueType = isEmailEnterPage ? "email" : "mobile";
+    const userType: "candidate" | "recruiter" = isCandidateUrl
+        ? ROLES.CANDIDATE
+        : ROLES.RECRUITER;
+    const valueType: "email" | "mobile" = isEmailEnterPage ? "email" : "mobile";
 
     const isLoading = useSelector(
         (store: RootState) => store.loading.isLoading
@@ -44,9 +50,9 @@ function EnterEmailOrMobilePage() {
         try {
             dispatch(setLoading());
 
-            let response;
+            let response: IResponse;
             switch (userType) {
-                case "candidate":
+                case ROLES.CANDIDATE:
                     if (valueType === "email") {
                         response = await forgotPasswordEmailCandidateApi(
                             values.email!
@@ -59,10 +65,7 @@ function EnterEmailOrMobilePage() {
                     }
                     break;
 
-                case "recruiter":
-                    console.log("recruiter ====== ", valueType);
-                    console.log("userData ====== ", userData);
-
+                case ROLES.RECRUITER:
                     if (valueType === "email") {
                         response = await forgotPasswordEmailRecruiterApi(
                             values.email!
@@ -78,8 +81,6 @@ function EnterEmailOrMobilePage() {
                 default:
                     throw new Error("Invalid user type");
             }
-
-            console.log(response);
 
             swal(
                 response?.message ||

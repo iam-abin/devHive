@@ -1,8 +1,17 @@
-import Models from "../../database/mongo/models";
-import { IJobDocument } from "../../database/mongo/models/job";
-import { IJob } from "../../types/job";
+import Models from '../../database/mongo/models';
+import { IJobDocument } from '../../database/mongo/models/job';
+import { IFilter, IJob } from '../../types/job';
 
 const { JobModel } = Models;
+
+const JOB_LIST_SELECT_FIELDS: string[] = [
+    'title',
+    'companyLocation',
+    'employmentType',
+    'salaryMax',
+    'isActive',
+    'createdAt',
+];
 
 export = {
     createJob: async (jobData: IJob): Promise<IJobDocument> => {
@@ -16,16 +25,12 @@ export = {
     },
 
     updateJob: async (jobId: string, data: Partial<IJob>): Promise<IJobDocument | null> => {
-        const updatedJob = await JobModel.findByIdAndUpdate(
-            jobId,
-            { $set: data },
-            { new: true }
-        );
+        const updatedJob = await JobModel.findByIdAndUpdate(jobId, { $set: data }, { new: true });
 
         return updatedJob;
     },
 
-    changeClosejobStatus: async (jobId: string): Promise<IJobDocument | null>  => {
+    changeClosejobStatus: async (jobId: string): Promise<IJobDocument | null> => {
         const job: IJobDocument | null = await JobModel.findById(jobId);
         if (job) {
             job.isActive = !job?.isActive; // Toggle the boolean field
@@ -35,26 +40,33 @@ export = {
         return job;
     },
 
-    filterJob: async (jobFilterData: object): Promise<IJobDocument[] | []> => {
-        const filteredJobs = await JobModel.find(jobFilterData);
+    filterJobs: async (jobFilterData: IFilter, skip: number, limit: number): Promise<IJobDocument[] | []> => {
+        const filteredJobs = await JobModel.find(jobFilterData)
+            .skip(skip)
+            .limit(limit)
+            .select(JOB_LIST_SELECT_FIELDS);
         return filteredJobs;
+    },
+
+    getCountOfFilterdJobs: async (jobFilterData: IFilter): Promise<number> => {
+        return await JobModel.countDocuments(jobFilterData);
     },
 
     getAllJobs: async (
         skip: number,
         limit: number,
-        applicationJobIds?: string[]
-    ): Promise<IJobDocument[] | []> => {
-        let jobs;
-        // console.log("applicationJobIds ",applicationJobIds);
-        
+        applicationJobIds?: string[],
+    ): Promise<Partial<IJobDocument>[] | []> => {
+        let jobs: Partial<IJobDocument>[] | [];
         if (applicationJobIds) {
             jobs = await JobModel.find({ _id: { $nin: applicationJobIds } })
+                .select(JOB_LIST_SELECT_FIELDS)
                 .sort({ createdAt: -1 })
                 .skip(skip)
                 .limit(limit);
         } else {
-            jobs = await JobModel.find({isActive: true})
+            jobs = await JobModel.find({ isActive: true })
+                .select(JOB_LIST_SELECT_FIELDS)
                 .sort({ createdAt: -1 })
                 .skip(skip)
                 .limit(limit);
@@ -68,7 +80,7 @@ export = {
         if (applicationJobIds) {
             totalJobs = await JobModel.countDocuments({
                 _id: { $nin: applicationJobIds },
-                isActive: true
+                isActive: true,
             });
         } else {
             totalJobs = await JobModel.countDocuments();
@@ -77,9 +89,9 @@ export = {
         return totalJobs;
     },
 
-    getAllJobsDistinctValues: async (fields: Array<string>): Promise<any> => {
+    getAllJobsDistinctValues: async (fields: string[]): Promise<Record<string, string[]>> => {
         // Get distinct values for the specified fields
-        const distinctValues: any = {};
+        const distinctValues: Record<string, string[]> = {};
         for (const field of fields) {
             distinctValues[field] = await JobModel.distinct(field);
         }
@@ -87,27 +99,23 @@ export = {
         return distinctValues;
     },
 
-    getAllJobsByRecruiterId: async (id: string): Promise<IJobDocument[] | []> => {
-        const jobs = await JobModel.find({ recruiterId: id }).sort({
+    getAllJobsByRecruiterId: async (recruiterId: string): Promise<IJobDocument[] | []> => {
+        return await JobModel.find({ recruiterId }).sort({
             createdAt: -1,
         });
-
-        return jobs;
     },
 
-    numberOfCreatedJobsByMe: async (id: string): Promise<number> => {
-        const jobs = await JobModel.countDocuments({ recruiterId: id });
-
-        return jobs;
+    getCountOfCreatedJobs: async (recruiterId: string): Promise<number> => {
+        return await JobModel.countDocuments({ recruiterId });
     },
 
     getSearchResults: async (
         searchKey: string,
         skip: number,
-        limit: number
+        limit: number,
     ): Promise<IJobDocument[] | []> => {
-        const searchedJobs: any = await JobModel.find({
-            jobTitle: { $regex: new RegExp(searchKey, "i") },
+        const searchedJobs: IJobDocument[] | [] = await JobModel.find({
+            jobTitle: { $regex: new RegExp(searchKey, 'i') },
         })
             .skip(skip)
             .limit(limit);
@@ -116,19 +124,15 @@ export = {
     },
 
     getCountOfSearchResults: async (searchKey: string): Promise<number> => {
-        const searchedJobsCount: number = await JobModel.countDocuments({
-            jobTitle: { $regex: new RegExp(searchKey, "i") },
-        })
-
-        return searchedJobsCount;
+        return await JobModel.countDocuments({
+            jobTitle: { $regex: new RegExp(searchKey, 'i') },
+        });
     },
 
     getAJob: async (jobId: string): Promise<IJobDocument | null> => {
-        const job = await JobModel.findById(jobId).populate({
-            path: "recruiterId",
-            model: "User", // Assuming your User model is named 'User'
+        return await JobModel.findById(jobId).populate({
+            path: 'recruiterId',
+            model: 'User', // Assuming your User model is named 'User'
         });
-
-        return job;
     },
 };

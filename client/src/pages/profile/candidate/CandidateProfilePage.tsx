@@ -18,10 +18,11 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
 import { getACandidateProfileApi } from "../../../axios/apiMethods/profile-service/recruiter";
 import { FaFacebookMessenger } from "react-icons/fa";
-import CircleLoading from "../../../components/loading/CircleLoading";
+import SpinnerLoading from "../../../components/loading/SpinnerLoading";
 import { hotToastMessage } from "../../../utils/hotToastMessage";
 import { setMyProfileData } from "../../../redux/slice/user";
 import { swal } from "../../../utils/swal";
+import { CONSTANTS } from "../../../utils/constants";
 
 const CandidateProfilePage: React.FC = () => {
     const navigate = useNavigate();
@@ -90,15 +91,13 @@ const CandidateProfilePage: React.FC = () => {
 
             setCandidateProfileData(candidateProfile.data);
             dispatch(setMyProfileData(candidateProfile?.data));
-            setSkills([...candidateProfile?.data.skills]);
-            setPreferredJobs([...candidateProfile?.data.preferredJobs]);
+            setSkills([...candidateProfile.data.skills]);
+            setPreferredJobs([...candidateProfile.data.preferredJobs]);
         })();
     }, [addSkillRerender]);
 
     const handleResumeUpload = async () => {
         try {
-            // const formData = new FormData();
-            // formData.append("file", selectedFile);
             if (selectedFile) {
                 // Perform the upload action here
 
@@ -117,8 +116,7 @@ const CandidateProfilePage: React.FC = () => {
                     filename: selectedFile.name,
                     url: downloadURL,
                 });
-                console.log(response);
-
+                
                 if (response) {
                     setCandidateProfileData({
                         ...candidateProfileData,
@@ -160,7 +158,6 @@ const CandidateProfilePage: React.FC = () => {
 
     const handleSavePreferredJobs = async () => {
         const response = await updateCandidatePreferredJobsProfileApi(
-            candidateData.id,
             preferredJobs
         );
 
@@ -175,7 +172,6 @@ const CandidateProfilePage: React.FC = () => {
 
     const handleSaveSkills = async () => {
         const response = await updateCandidateSkillsProfileApi(
-            candidateData.id,
             skills
         );
 
@@ -229,10 +225,10 @@ const CandidateProfilePage: React.FC = () => {
                     <div className=" h-72 flex justify-center  shadow-2xl sm:flex sm: flex-row bg-slate-300 rounded-3xl relative">
                         <div className="items-center w-5/6 justify-between md:flex md:flex-row md:gap-5 ">
                             <div className=" md:w-3/6  sm:w-full h-2/3 flex flex-row">
-                                {imgLoading && <CircleLoading />}
+                                {imgLoading && <SpinnerLoading />}
                                 {!imgLoading && (
                                     <img
-                                        src={candidateProfileData?.profileImage}
+                                        src={candidateProfileData?.profileImage ?? CONSTANTS.CANDIDATE_DEFAULT_PROFILE_IMAGE}
                                         className="md:w-3/6  rounded-full shadow-2xl"
                                     />
                                 )}
@@ -349,7 +345,7 @@ const CandidateProfilePage: React.FC = () => {
                             </div>
                         </div>
 
-                        <div className="bg-gray-100 p-6 my-6 rounded-lg shadow-md">
+                        {isRecruiterUrl && !candidateProfileData?.resume?.filename ?"": <div className="bg-gray-100 p-6 my-6 rounded-lg shadow-md">
                             {candidateProfileData?.resume && (
                                 <>
                                     <label className="block mb-4 text-lg font-semibold">
@@ -414,7 +410,7 @@ const CandidateProfilePage: React.FC = () => {
                                             disabled={pdfLoading}
                                         >
                                             {pdfLoading ? (
-                                                <CircleLoading /> // Show loading spinner when uploading
+                                                <SpinnerLoading /> // Show loading spinner when uploading
                                             ) : (
                                                 "Upload"
                                             )}
@@ -427,7 +423,7 @@ const CandidateProfilePage: React.FC = () => {
                                     Selected File: {selectedFile?.name}
                                 </p>
                             )}
-                        </div>
+                        </div>}
                     </div>
 
                     {/* =============================================Skill start============================================= */}
@@ -525,7 +521,7 @@ const CandidateProfilePage: React.FC = () => {
                     {/* ====modal end ==== */}
 
                     {/* Skills */}
-                    <div className="bg-gray-100 p-6 my-6 rounded-lg shadow-md">
+                    {isRecruiterUrl && skills.length === 0 ?"": <div className="bg-gray-100 p-6 my-6 rounded-lg shadow-md">
                         <div className="">
                             <p className="flex items-center gap-4">
                                 <span className="text-xl font-bold mb-2">
@@ -559,13 +555,13 @@ const CandidateProfilePage: React.FC = () => {
                                     )}
                             </ul>
                         </div>
-                    </div>
+                    </div>}
                     {/* ===============================================Skill end================================================== */}
 
                     {/* =================================================Preferred jobs start================================================ */}
                     {/* ====modal start ==== */}
                     {/* Put this part before </body> tag */}
-
+{isRecruiterUrl && preferredJobs.length === 0 ?"":<>
                     <input
                         type="checkbox"
                         id="my_modal_7"
@@ -692,6 +688,7 @@ const CandidateProfilePage: React.FC = () => {
                             </ul>
                         </div>
                     </div>
+                    </>}
                     {/* =================================================Preferred jobs end================================================ */}
                 </div>
             </div>

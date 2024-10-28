@@ -3,6 +3,8 @@ import { getAllJobsApi } from "../../../axios/apiMethods/jobs-service/jobs";
 import { useNavigate } from "react-router-dom";
 import Paginate from "../../../components/pagination/Paginate";
 import JobCard from "../../../components/cards/JobCard";
+import { IResponse } from "../../../types/api";
+import { IJob } from "../../../types/Job";
 
 function AllJobsPage() {
     const navigate = useNavigate();
@@ -17,20 +19,24 @@ function AllJobsPage() {
         setCurrentPage(selected + 1);
     };
 
-    const handleView = async (jobId: string) => {
+    const handleView = async (jobId: string): Promise<void> => {
         navigate(`/candidate/job-details/${jobId}`);
     };
 
     useEffect(() => {
         (async () => {
-            const allJobs = await getAllJobsApi(currentPage);
+            const allJobs: IResponse = await getAllJobsApi(currentPage);
             setJobs(allJobs.data.jobs);
             setpageCount(allJobs.data.totalNumberOfPages);
         })();
     }, [currentPage]);
 
     const filteredJobs = jobs.filter(
-        (job: any) =>
+        (
+            job: Required<
+                Pick<IJob, "title" | "employmentType" | "companyLocation">
+            >
+        ) =>
             job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
             job.employmentType
                 .toLowerCase()
@@ -51,7 +57,7 @@ function AllJobsPage() {
             {filteredJobs.length > 0 ? (
                 <>
                     <div className="">
-                        {filteredJobs.map((job: any) => (
+                        {filteredJobs.map((job: Partial<IJob>) => (
                             <JobCard
                                 job={job}
                                 key={job.id}
@@ -63,6 +69,7 @@ function AllJobsPage() {
                         {pageCount > 1 && (
                             <Paginate
                                 pageCount={pageCount}
+                                currentPage={currentPage}
                                 handlePageChange={handlePageChange}
                             />
                         )}

@@ -1,21 +1,19 @@
-import { IDependency } from "../../frameworks/types/dependency";
+import { IDependency } from '../../frameworks/types/dependency';
 
 export = (dependencies: IDependency) => {
-	const {
-		repositories: { membershipRepository },
-	} = dependencies;
+    const {
+        repositories: { membershipRepository },
+    } = dependencies;
 
-	if (!membershipRepository) {
-		throw new Error(
-			"membershipRepository should exist in dependencies"
-		);
-	}
+    if (!membershipRepository) {
+        throw new Error('membershipRepository should exist in dependencies');
+    }
 
-	const execute = async () => {
-		const membershipPlans = await membershipRepository.getAllMembershipPlans();
-		
-		return membershipPlans;
-	};
+    const execute = async () => {
+        const membershipPlans = await membershipRepository.getAllMembershipPlans();
 
-	return { execute };
+        return membershipPlans;
+    };
+
+    return { execute };
 };

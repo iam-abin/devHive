@@ -1,9 +1,8 @@
-import mongoose from "mongoose";
-import { IUser } from "../../types/user";
+import mongoose from 'mongoose';
+import { IUser } from '../../types/user';
 
-
-export interface ICandidateDocument extends mongoose.Document, Omit<IUser, "userId"> {
-	_id: mongoose.Schema.Types.ObjectId,
+export interface ICandidateDocument extends mongoose.Document, Omit<IUser, 'userId'> {
+    _id: mongoose.Schema.Types.ObjectId;
     gender: string;
     currentLocation: string;
     address: object;
@@ -39,7 +38,7 @@ const candidateSchema = new mongoose.Schema(
         role: {
             type: String,
             required: true,
-            enum: ["candidate"],
+            enum: ['candidate'],
         },
         isActive: {
             type: Boolean,
@@ -48,7 +47,7 @@ const candidateSchema = new mongoose.Schema(
 
         gender: {
             type: String,
-            enum: ["male", "female", "other"],
+            enum: ['male', 'female', 'other'],
         },
         currentLocation: String,
         address: {
@@ -79,7 +78,7 @@ const candidateSchema = new mongoose.Schema(
             },
         },
         timestamps: true,
-    }
+    },
 );
 
 interface CandidateModel extends mongoose.Model<ICandidateDocument> {
@@ -90,12 +89,11 @@ candidateSchema.statics.buildCandidate = (attributes: IUser) => {
     const { userId, ...rest } = attributes;
     return new CandidateModel({
         ...rest,
-        _id: attributes.userId,
+        _id: userId,
     });
 };
 
 export const CandidateModel = mongoose.model<ICandidateDocument, CandidateModel>(
-    "Candidate",
-    candidateSchema
+    'Candidate',
+    candidateSchema,
 );
-

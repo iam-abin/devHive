@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import { IChatRoom } from "../../../types/chatRoom";
+import mongoose from 'mongoose';
+import { IChatRoom } from '../../../types/chatRoom';
 
 export interface IChatRoomDocument extends mongoose.Document {
     users: mongoose.Types.ObjectId[];
@@ -11,7 +11,7 @@ const chatRoomSchema = new mongoose.Schema(
         users: [
             {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: "User",
+                ref: 'User',
             },
         ],
         lastMessage: String,
@@ -25,7 +25,7 @@ const chatRoomSchema = new mongoose.Schema(
             },
         },
         timestamps: true,
-    }
+    },
 );
 
 interface ChatRoomModel extends mongoose.Model<IChatRoomDocument> {
@@ -38,9 +38,6 @@ chatRoomSchema.statics.buildChatRoom = (attributes: IChatRoom) => {
     });
 };
 
-const ChatRoomModel = mongoose.model<IChatRoomDocument, ChatRoomModel>(
-    "ChatRoom",
-    chatRoomSchema
-);
+const ChatRoomModel = mongoose.model<IChatRoomDocument, ChatRoomModel>('ChatRoom', chatRoomSchema);
 
 export { ChatRoomModel };

@@ -1,18 +1,18 @@
-import { Request, Response } from "express";
-import { IDependency } from "../../frameworks/types/dependencyInterface";
+import { Request, Response } from 'express';
+import { IDependency } from '../../frameworks/types/dependency';
 
-export = (dependencies: IDependency)=>{
+export = (dependencies: IDependency) => {
+    const {
+        useCases: { getAJobApplicationUseCase },
+    } = dependencies;
 
-    const { useCases: { getAJobApplicationUseCase }} = dependencies 
-
-    return async (req: Request, res: Response)=>{
-        const {jobApplicationId} = req.params;
-        const { userId } = req.currentUser!
+    return async (req: Request, res: Response) => {
+        const { jobApplicationId } = req.params;
+        const { userId } = req.currentUser!;
         const application = await getAJobApplicationUseCase(dependencies).execute({
             jobApplicationId,
             recruiterId: userId,
         });
-        res.status(200).json({message: "Job applications are ", data: application })
+        res.status(200).json({ message: 'Job applications are ', data: application });
     };
-
-}
+};

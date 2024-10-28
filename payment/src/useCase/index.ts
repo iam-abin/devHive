@@ -1,3 +1,3 @@
-export * from "./payment";
+export * from './payment';
 
-export * from "./premium";
+export * from './premium';

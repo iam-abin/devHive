@@ -4,7 +4,7 @@ import { IEditJobProps } from "../../types/Job";
 
 function EditJob({initialJobValues, handleSubmit}: IEditJobProps ) {
 	
-	const today = new Date().toISOString().split("T")[0];
+	const today: string = new Date().toISOString().split("T")[0];
 
 	return (
 		<Formik

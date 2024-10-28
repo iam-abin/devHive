@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { INotification } from "../../types/chat";
 
 interface INotificationSlice {
@@ -16,7 +16,7 @@ const NotificationSlice = createSlice({
 	name: "notification-data",
 	initialState,
 	reducers: {
-        setNotifications: (state, action) => {
+        setNotifications: (state, action: PayloadAction<INotification[]>) => {
 			state.notifications = action.payload
         },
 
@@ -25,7 +25,7 @@ const NotificationSlice = createSlice({
         },
 
         // Increment the count by 1
-        setNotificationsCount: (state, action) => {
+        setNotificationsCount: (state, action: PayloadAction<number>) => {
 			state.notificationsCount = action.payload
         },
 

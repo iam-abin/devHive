@@ -1,7 +1,10 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { IAuthProps , IAuth } from "../../../types/user";
+import { IAuthProps, IAuth, IRole } from "../../../types/user";
 // import googleIcon from "../../../assets/google/google-icon.svg";
 import { Link, useNavigate } from "react-router-dom";
+import SpinnerLoading from "../../loading/SpinnerLoading";
+import { RootState } from "../../../redux/reducer";
+import { useSelector } from "react-redux";
 
 const CandidateAuth = ({
     handleSubmit,
@@ -9,13 +12,16 @@ const CandidateAuth = ({
     initialValues,
     authType,
 }: IAuthProps) => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const isLoading: boolean = useSelector(
+        (store: RootState) => store.loading.isLoading
+    );
     return (
         <Formik<IAuth>
             initialValues={initialValues as IAuth}
             validationSchema={schemaValues}
             onSubmit={(values) => {
-                handleSubmit(values);
+                handleSubmit({...values, role: IRole.CANDIDATE});
             }}
         >
             {(formik) => {
@@ -81,7 +87,7 @@ const CandidateAuth = ({
                                         type="text"
                                         name="phone"
                                         placeholder="Phone"
-                                    autoComplete="phone"
+                                        autoComplete="phone"
                                         className={`input input-primary w-full rounded-xl ${
                                             errors.phone && touched.phone
                                                 ? "input-error border-red-500"
@@ -99,42 +105,41 @@ const CandidateAuth = ({
                                 </div>
                             )}
 
-                                <div className="form-control w-6/6">
-                                    <Field
-                                        type="password"
-                                        name="password"
-                                        placeholder="Password"
+                            <div className="form-control w-6/6">
+                                <Field
+                                    type="password"
+                                    name="password"
+                                    placeholder="Password"
                                     autoComplete="password"
-
-                                        className={`input input-primary w-full rounded-xl ${
-                                            errors.password && touched.password
-                                                ? "input-error border-red-500"
-                                                : null
-                                        }`}
-                                    />
-                                    <label className="label">
-                                        <span className="label-text-alt text-red-500">
-                                            <ErrorMessage
-                                                name="password"
-                                                className="error label-text-alt"
-                                            />
-                                        </span>
-                                    </label>
-                                </div>
-                                {authType === "signin" && (
-                                    <label
-                                        className="label flex justify-end"
-                                        onClick={() =>
-                                            navigate(
-                                               "/candidate/forgotPasswordEmail"
-                                            )
-                                        }
-                                    >
-                                        <span className="label-text-alt cursor-pointer">
-                                            Forgot Password?
-                                        </span>
-                                    </label>
-                                )}
+                                    className={`input input-primary w-full rounded-xl ${
+                                        errors.password && touched.password
+                                            ? "input-error border-red-500"
+                                            : null
+                                    }`}
+                                />
+                                <label className="label">
+                                    <span className="label-text-alt text-red-500">
+                                        <ErrorMessage
+                                            name="password"
+                                            className="error label-text-alt"
+                                        />
+                                    </span>
+                                </label>
+                            </div>
+                            {authType === "signin" && (
+                                <label
+                                    className="label flex justify-end"
+                                    onClick={() =>
+                                        navigate(
+                                            "/candidate/forgotPasswordEmail"
+                                        )
+                                    }
+                                >
+                                    <span className="label-text-alt cursor-pointer">
+                                        Forgot Password?
+                                    </span>
+                                </label>
+                            )}
                             <div className="flex items-center justify-between mb-5">
                                 <div className="w-full mt-5 items-center justify-center flex">
                                     {authType === "signin" ? (
@@ -162,15 +167,23 @@ const CandidateAuth = ({
                                     )}
                                 </div>
                             </div>
-
                             <div className="flex items-center justify-center mb-3">
                                 <button
                                     type="submit"
-                                    className="btn btn-outline w-60 btn-primary"
+                                    className={`btn btn-outline w-60 btn-primary ${
+                                        isLoading
+                                            ? "cursor-not-allowed opacity-50"
+                                            : ""
+                                    }`}
+                                    disabled={isLoading}
                                 >
-                                    {authType === "signin"
-                                        ? "Signin"
-                                        : "Signup"}
+                                    {isLoading ? (
+                                        <SpinnerLoading />
+                                    ) : authType === "signin" ? (
+                                        "Signin"
+                                    ) : (
+                                        "Signup"
+                                    )}
                                 </button>
                             </div>
 

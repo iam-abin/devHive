@@ -16,7 +16,7 @@ const CreateJobForm: React.FC< IJobProps > = ({ initialJobValues, handleSubmit, 
 					values.companyLocation = recruiterData.companyLocation;
 				}
 				
-				values.recruiterId = recruiterData?.id!;
+				values.recruiterId = recruiterData.id;
 				handleSubmit(values);
 			}}
 		>

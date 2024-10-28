@@ -1,3 +1,3 @@
-import createPaymentUseCase from "./createPayment";
+import createPaymentUseCase from './createPayment';
 
 export { createPaymentUseCase };

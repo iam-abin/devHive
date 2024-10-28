@@ -1,8 +1,9 @@
 import React from "react";
+import { IJob } from "../../types/Job";
 
 const AdminViewJobDetailsCard: React.FC<{
-	data: any;
-	handleBlockUnblock: any;
+	data: Partial<IJob>;
+	handleBlockUnblock: (jobId:string, isActive: boolean )=> void;
 }> = ({ data, handleBlockUnblock }) => {
 	return (
 		<div className="container mx-auto mt-8 flex justify-center">
@@ -85,7 +86,7 @@ const AdminViewJobDetailsCard: React.FC<{
 						</div>
 						<div className="mb-4 flex justify-end">
 							<button
-								onClick={()=>handleBlockUnblock(data.id)}
+								onClick={()=>handleBlockUnblock(data.id!, data.isActive!)}
 								className={`${
 									data.isActive
 										? "bg-red-500 text-white"

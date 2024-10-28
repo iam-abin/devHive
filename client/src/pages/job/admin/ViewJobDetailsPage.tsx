@@ -7,31 +7,13 @@ import {
 } from "../../../axios/apiMethods/admin-service/job";
 import { notify } from "../../../utils/toastMessage";
 import { swal } from "../../../utils/swal";
+import { IResponse } from "../../../types/api";
+import { IJob } from "../../../types/Job";
 
 const ViewJobDetailsPage: React.FC = () => {
     const { jobId } = useParams();
 
-    interface JobInterface {
-        id: string;
-        jobId: string;
-        title: string;
-        recruiter: string;
-        company: string;
-        jobDescription?: string;
-        skills?: string | string[];
-        availablePosition?: string;
-        experienceRequired?: string;
-        educationRequired?: string;
-        location?: string;
-        employmentType?: string;
-        salaryMin?: number;
-        salaryMax?: number;
-        has_applied?: boolean;
-        isActive?: boolean;
-        deadline?: Date;
-    }
-
-    const [jobDetails, setJobDetails] = useState<JobInterface | {}>();
+    const [jobDetails, setJobDetails] = useState<Partial<IJob>>({});
 
     useEffect(() => {
         (async () => {
@@ -46,12 +28,15 @@ const ViewJobDetailsPage: React.FC = () => {
             "Yes, Block"
         ).then(async (result) => {
             if (result.isConfirmed) {
-                const updatedJob = await blockUnblockJobApi(jobId);
+                const updatedJob: IResponse = await blockUnblockJobApi(jobId);
                 if (updatedJob) {
                     notify(updatedJob.message, "success");
                 }
 
-                setJobDetails(updatedJob);
+                setJobDetails((prevDetails = {}) => ({
+                    ...prevDetails,
+                    ...updatedJob.data,
+                }));
             }
         });
     };

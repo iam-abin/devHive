@@ -1,6 +1,6 @@
-import Models from "../../database/mongo/models";
-import { IChatRoomDocument } from "../../database/mongo/models/chatRoom";
-import { IChatRoom } from "../../types/chatRoom";
+import Models from '../../database/mongo/models';
+import { IChatRoomDocument } from '../../database/mongo/models/chatRoom';
+import { IChatRoom } from '../../types/chatRoom';
 
 const { ChatRoomModel } = Models;
 
@@ -26,17 +26,16 @@ export = {
         const chatRooms = await ChatRoomModel.findByIdAndUpdate(
             roomId,
             { $set: { lastMessage: message } },
-            { new: true }
+            { new: true },
         );
         return chatRooms;
     },
 
-
-    getAllChatRoomsByUserId: async (userId: string): Promise<any[] | []> => {
+    getAllChatRoomsByUserId: async (userId: string): Promise<IChatRoomDocument[] | []> => {
         const chatRooms = await ChatRoomModel.find({
             users: { $elemMatch: { $eq: userId } },
         })
-        .populate("users")
+            .populate('users')
             .sort({ updatedAt: -1 })
             .lean();
 

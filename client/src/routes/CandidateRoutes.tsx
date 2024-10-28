@@ -34,11 +34,15 @@ function CandidateRoutes() {
         (store: RootState) => store.userReducer.authData
     );
 	
-	const { isCandidate } = checkUserRole(loggedinUser)
+	const { isCandidate } = checkUserRole(loggedinUser);
 
 	return (
 		<Suspense fallback={<Loading />}>
 			<Routes>
+				<Route path="/forgotPasswordEmail" element={!isCandidate? <EmailOrMobileEnterPage />: <Navigate to={"/candidate/landing"} />} />
+				<Route path="/forgotPasswordOtp/:email" element={!isCandidate? <OtpFormPage />: <Navigate to={"/candidate/landing"} />} />
+				<Route path="/forgotPassword/:userId" element={!isCandidate? <UpdatePassword />: <Navigate to={"/candidate/landing"} />} />
+
 				<Route path="/" element={isCandidate? <LandingPage />: <Navigate to={"/candidate/landing"} />} />
 				<Route path="/profile" element={isCandidate? <CandidateProfilePage />: <Navigate to={"/candidate/landing"} />} />
 				<Route path="/payment-plans" element={isCandidate? <PaymentPlans />: <Navigate to={"/candidate/landing"} />} />
@@ -50,9 +54,6 @@ function CandidateRoutes() {
 				<Route path="/passwordResetOtp" element={isCandidate? <OtpFormPage />: <Navigate to={"/candidate/landing"} />} />
 				<Route path="/passwordReset" element={isCandidate? <UpdatePassword />: <Navigate to={"/candidate/landing"} />} />
 
-				<Route path="/forgotPasswordEmail" element={!isCandidate? <EmailOrMobileEnterPage />: <Navigate to={"/candidate/landing"} />} />
-				<Route path="/forgotPasswordOtp/:email" element={!isCandidate? <OtpFormPage />: <Navigate to={"/candidate/landing"} />} />
-				<Route path="/forgotPassword/:userId" element={!isCandidate? <UpdatePassword />: <Navigate to={"/candidate/landing"} />} />
 				
 				<Route path="/landing" element={isCandidate?<Navigate to={"/candidate"} />: <LandingPage /> } />
 				<Route path="/signin" element={isCandidate?<Navigate to={"/candidate"} />:<AuthCandidate /> } />

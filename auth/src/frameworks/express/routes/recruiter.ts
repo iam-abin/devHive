@@ -1,61 +1,33 @@
-import express from "express";
+import express from 'express';
 
-import { auth, ROLES } from "@abijobportal/common";
-import {
-    otpControllers,
-    passwordControllers,
-    recruiterControllers,
-} from "../../../controllers";
-import { signupRequestBodyValidatorMiddlewares } from "../../middlewares/signupValidation";
-import { signinRequestBodyValidatorMiddlewares } from "../../middlewares/signinValidation";
-import { IDependency } from "../../types/dependency";
+import { auth, ROLES } from '@abijobportal/common';
+import { otpControllers, passwordControllers, authControllers } from '../../../controllers';
+import { signupRequestBodyValidatorMiddlewares } from '../../middlewares/signupValidation';
+import { signinRequestBodyValidatorMiddlewares } from '../../middlewares/signinValidation';
+import { IDependency } from '../../types/dependency';
 
 export const recruiterRouter = (dependencies: IDependency) => {
     const router = express.Router();
 
-    const recruiterController = recruiterControllers(dependencies);
+    const authController = authControllers(dependencies);
     const otpController = otpControllers(dependencies);
     const passwordController = passwordControllers(dependencies);
 
+    router.post('/signup', signupRequestBodyValidatorMiddlewares, authController.signup);
 
-    router.post(
-        "/signup",
-        signupRequestBodyValidatorMiddlewares,
-        recruiterController.recruiterSignupController
-    );
+    router.post('/verifyEmail', authController.signupEmailOtpVerification);
 
-    router.post(
-        "/verifyEmail",
-        recruiterController.recruiterSignupEmailOtpVerificationController
-    );
+    router.post('/signin', signinRequestBodyValidatorMiddlewares, authController.signin);
 
-    router.post(
-        "/signin",
-        signinRequestBodyValidatorMiddlewares,
-        recruiterController.recruiterSigninController
-    );
+    router.put('/forgotPassword', passwordController.updatePassword);
 
-    router.put("/forgotPassword", passwordController.updatePasswordController);
+    router.post('/sendOtp', auth(ROLES.RECRUITER), otpController.sendOtp);
 
-    router.post(
-        "/sendOtp",
-        auth(ROLES.RECRUITER),
-        otpController.sendOtpTwilioController
-    );
+    router.post('/verifyOtp', auth(ROLES.RECRUITER), otpController.verifyOtp);
 
-    router.post(
-        "/verifyOtp",
-        auth(ROLES.RECRUITER),
-        otpController.verifyOtpTwilioController
-    );
+    router.put('/resetPassword', auth(ROLES.RECRUITER), passwordController.updatePassword);
 
-    router.put(
-        "/resetPassword",
-        auth(ROLES.RECRUITER),
-        passwordController.updatePasswordController
-    );
-
-    router.post("/signout", recruiterController.recruiterSignoutController);
+    router.post('/signout', authController.signout);
 
     return router;
 };

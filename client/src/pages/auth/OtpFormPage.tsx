@@ -7,7 +7,6 @@ import {
     verifyResetPasswordOtpCandidateApi,
     verifySignupOtpCandidateApi,
 } from "../../axios/apiMethods/auth-service/candidateAuth";
-import { setUser } from "../../redux/slice/user";
 import {
     verifyForgotPasswordOtpRecruiterApi,
     verifyResetPasswordOtpRecruiterApi,
@@ -17,6 +16,7 @@ import { notify } from "../../utils/toastMessage";
 import OtpEnterForm from "../../components/form/otpEnterForm";
 import Loading from "../../components/loading/Loading";
 import { IResponse } from "../../types/api";
+import { ROLES } from "../../utils/constants";
 
 function OtpFormPage() {
     const dispatch = useDispatch();
@@ -24,11 +24,11 @@ function OtpFormPage() {
     const locationUrl = useLocation();
 
     const { email } = useParams();
-    const userEmail = email || "";
+    const userEmail: string = email || "";
 
-    const isCandidateUrl: boolean = locationUrl.pathname.includes("candidate");
+    const isCandidateUrl: boolean = locationUrl.pathname.includes(ROLES.CANDIDATE);
 
-    const userType = isCandidateUrl ? "candidate" : "recruiter";
+    const userType = isCandidateUrl ? ROLES.CANDIDATE : ROLES.RECRUITER;
     const urlType = locationUrl.pathname.includes("passwordResetOtp")
         ? "reset"
         : locationUrl.pathname.includes("forgotPasswordOtp")
@@ -52,7 +52,7 @@ function OtpFormPage() {
 
             switch (urlType) {
                 case "forgot":
-                    if (userType === "candidate") {
+                    if (userType === ROLES.CANDIDATE) {
                         response = await verifyForgotPasswordOtpCandidateApi(
                             otp,
                             userEmail
@@ -60,7 +60,7 @@ function OtpFormPage() {
                         navigate(
                             `/candidate/forgotPassword/${response.data.id}`
                         );
-                    } else if (userType === "recruiter") {
+                    } else if (userType === ROLES.RECRUITER) {
                         response = await verifyForgotPasswordOtpRecruiterApi(
                             otp,
                             userEmail
@@ -71,40 +71,38 @@ function OtpFormPage() {
                     }
                     break;
                 case "reset":
-                    if (userType === "candidate") {
+                    if (userType === ROLES.CANDIDATE && candidateData) {
                         response = await verifyResetPasswordOtpCandidateApi(
-                            candidateData?.phone,
+                            candidateData.phone,
                             otp,
                             candidateData.email
                         );
                         navigate("/candidate/passwordReset");
                     }
-                    if (userType === "recruiter") {
+                    if (userType === ROLES.RECRUITER && recruiterData) {
                         response = await verifyResetPasswordOtpRecruiterApi(
-                            recruiterData?.phone,
+                            recruiterData.phone,
                             otp,
-                            recruiterData?.email
+                            recruiterData.email
                         );
                         navigate("/recruiter/passwordReset");
                     }
 
                     break;
                 case "signup":
-                    if (userType === "candidate") {
+                    if (userType === ROLES.CANDIDATE) {
                         response = await verifySignupOtpCandidateApi(
                             otp,
                             userEmail
                         );
-                        dispatch(setUser(response));
-                        navigate("/candidate");
+                        navigate("/candidate/signin");
                     }
-                    if (userType === "recruiter") {
+                    if (userType === ROLES.RECRUITER) {
                         response = await verifySignupOtpRecruiterApi(
                             otp,
                             userEmail
                         );
-                        dispatch(setUser(response));
-                        navigate("/recruiter");
+                        navigate("/recruiter/signin");
                     }
                     break;
 

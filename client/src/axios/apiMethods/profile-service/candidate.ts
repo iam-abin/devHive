@@ -1,45 +1,43 @@
 
 import profileApiUrlConfig from "../../../config/apiUrlsConfig/profileApiUrlConfig";
-import candidateApiCalls from "../../candidate/apiCalls";
+import makeApiCall from "../../apiCalls";
 
 
 export const getCandidateProfileApi = async (userId: string): Promise<any> => {
-    return candidateApiCalls("get", profileApiUrlConfig.getCandidateProfileUrl(userId), userId);
+    return makeApiCall("get", profileApiUrlConfig.getCandidateProfileUrl(userId), userId);
 };
 
 export const updateCandidateProfileApi = async (candidateProfileData: any): Promise<any> => {
-    return candidateApiCalls("patch", profileApiUrlConfig.updateCandidateProfileUrl, candidateProfileData);
+    return makeApiCall("patch", profileApiUrlConfig.updateCandidateProfileUrl, candidateProfileData);
 };
 
 export const uploadCandidateImageProfileApi = async (profileImageData: any): Promise<any> => {
-    return candidateApiCalls("put", profileApiUrlConfig.uploadCandidateImageUrl, profileImageData, true);
+    return makeApiCall("put", profileApiUrlConfig.uploadCandidateImageUrl, profileImageData, true);
 };
 
 export const uploadCandidateResumeProfileApi = async (resumeData: any): Promise<any> => {
-    return candidateApiCalls("put", profileApiUrlConfig.uploadCandidateResumeUrl, resumeData, false); 
+    return makeApiCall("put", profileApiUrlConfig.uploadCandidateResumeUrl, resumeData, false); 
 };
 
 export const deleteResumeApi = async (candidateId: string): Promise<any> => {
-    return candidateApiCalls("patch", profileApiUrlConfig.deleteResumeUrl(candidateId)); 
+    return makeApiCall("patch", profileApiUrlConfig.deleteResumeUrl(candidateId)); 
 };
 
-export const updateCandidateSkillsProfileApi = async (userId: string,skills: Array<string>): Promise<any> => {
+export const updateCandidateSkillsProfileApi = async (skills: Array<string>): Promise<any> => {
     const data = {
-        id: userId,
         skills
     }
-    return candidateApiCalls("patch", profileApiUrlConfig.updateCandidateSkillsUrl, data, true);
+    return makeApiCall("patch", profileApiUrlConfig.updateCandidateSkillsUrl, data, true);
 };
 
-export const updateCandidatePreferredJobsProfileApi = async (userId: string,preferredJobs: Array<string>): Promise<any> => {
+export const updateCandidatePreferredJobsProfileApi = async (preferredJobs: Array<string>): Promise<any> => {
     const data = {
-        id: userId,
         preferredJobs
     }
-    return candidateApiCalls("patch", profileApiUrlConfig.updateCandidatePreferredJobsUrl, data, true);
+    return makeApiCall("patch", profileApiUrlConfig.updateCandidatePreferredJobsUrl, data, true);
 };
 
 
 export const recruiterGetProfileByCandidateApi = async (userId: string): Promise<any> => {
-	return candidateApiCalls("get", profileApiUrlConfig.getRecruiterProfileUrl(userId), userId);
+	return makeApiCall("get", profileApiUrlConfig.getRecruiterProfileUrl(userId), userId);
 };

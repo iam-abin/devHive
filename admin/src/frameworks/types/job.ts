@@ -1,5 +1,5 @@
 export interface IJob {
-	jobId: string
+    jobId: string;
     title: string;
     recruiterId: string;
     companyName: string;
@@ -15,4 +15,3 @@ export interface IJob {
     isActive?: boolean;
     deadline?: Date;
 }
-

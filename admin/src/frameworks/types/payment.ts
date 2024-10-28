@@ -1,4 +1,4 @@
 export interface IPaymentData {
-	candidateId: string;
-	membershipPlanId: string;
+    candidateId: string;
+    membershipPlanId: string;
 }

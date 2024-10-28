@@ -36,7 +36,6 @@ function ViewAllCandidatesPage() {
 
             setCandidatesData(candidates.data.candidates);
             setpageCount(candidates.data.totalNumberOfPages);
-            console.log("pageCount", pageCount);
 
             // dispatch(setLoaded());
         })();
@@ -80,6 +79,7 @@ function ViewAllCandidatesPage() {
             </div>
             <Paginate
                 pageCount={pageCount}
+                currentPage={currentPage}
                 handlePageChange={handlePageChange}
             />
         </>

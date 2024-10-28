@@ -1,15 +1,25 @@
-import { IDependency } from "../../frameworks/types/dependency";
+import { IDependency } from '../../frameworks/types/dependency';
 
 export = (dependencies: IDependency) => {
-	const { repositories:{membershipRepository} } = dependencies;
+    const {
+        repositories: { membershipRepository },
+    } = dependencies;
 
-	if (!membershipRepository) {
-		throw new Error("membershipRepository should exist in dependencies");
-	}
+    if (!membershipRepository) {
+        throw new Error('membershipRepository should exist in dependencies');
+    }
 
-	const execute = async() => {
-		return await membershipRepository.getAllMembershipPlans();
-	};
+    const execute = async (page: number, limit: number) => {
+        // pagination
+        const skip = (page - 1) * limit;
 
-	return { execute };
+        const membershipPlans = await membershipRepository.getAllMembershipPlans(skip, limit);
+        const paymentsCount = await membershipRepository.getCountOfMembershipPlans();
+
+        const numberOfPages = Math.ceil(paymentsCount / limit);
+
+        return { membershipPlans, numberOfPages };
+    };
+
+    return { execute };
 };

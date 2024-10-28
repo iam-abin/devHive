@@ -1,9 +1,9 @@
 import homeImage from "../../assets/landingPage/company-like.jpg";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import NavBarLanding from "../../components/navBar/NavBarLanding";
-import SearchBar from "../../components/searchBar/SearchBar";
+import SearchBar from "../../components/filterBar/FilterBar";
 import JobCard from "../../components/cards/JobCard";
-import { getAllJobsApi } from "../../axios/apiMethods/jobs-service/jobs";
+import { filterJobsApi, getAllJobsApi, getJobFieldsValuesApi } from "../../axios/apiMethods/jobs-service/jobs";
 
 import { Link } from "react-scroll";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,36 +26,97 @@ import { recruiterGetProfileApi } from "../../axios/apiMethods/profile-service/r
 import { IResponse } from "../../types/api";
 import { setLoaded, setLoading } from "../../redux/slice/isLoading";
 import { checkUserRole } from "../../utils/checkRole";
+import { IJob } from "../../types/Job";
+import { IUserData } from "../../types/user";
+import { hotToastMessage } from "../../utils/hotToastMessage";
 
 function LandingPage() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const location = useLocation();
-    const isRecruiterUrl = location.pathname.includes("recruiter");
-    const isCandidateUrl = location.pathname.includes("candidate");
+    const isRecruiterUrl: boolean = location.pathname.includes("recruiter");
+    const isCandidateUrl: boolean = location.pathname.includes("candidate");
 
-    const currentUser = useSelector(
+    const currentUser: IUserData | null = useSelector(
         (store: RootState) => store.userReducer.authData
     );
 
-    const { isCandidate, isRecruiter } = checkUserRole(currentUser);
+    const { isCandidate, isRecruiter } = checkUserRole(currentUser!);
 
-    const pageCount = useSelector(
+    const pageCount: number = useSelector(
         (store: RootState) => store.jobReducer.totalNumberOfPages
     );
 
-    const currentPage = useSelector(
+    const currentPage: number = useSelector(
         (store: RootState) => store.jobReducer.currentPage
     );
 
-    const jobs = useSelector((store: RootState) => {
+
+    const jobs: IJob[] = useSelector((store: RootState) => {
         return store.jobReducer.jobs;
     });
 
+    const [jobFieldsValues, setJobFieldsValues] = useState({
+        title: [],
+        companyLocation: [],
+        employmentType: [],
+    });
+
+    const [jobCriteria, setJobCriteria] = useState({
+        title: "",
+        companyLocation: "",
+        employmentType: "",
+    });
+
+    const [isFiltering, setIsFiltering] = useState(false);
+    const [filteredCurrentPage, setFilteredCurrentPage] = useState(1);
+
+    useEffect(() => {
+        (async () => {
+            const jobFieldsValues = await getJobFieldsValuesApi(["title", "companyLocation", "employmentType"]);
+            setJobFieldsValues(jobFieldsValues.data);
+        })();
+    }, []);
+
+    const handleJobFilter = async () => {
+        if (jobCriteria.title === "" && jobCriteria.companyLocation === "" && jobCriteria.employmentType === "") {
+            hotToastMessage("Please choose options", "warn");
+            return;
+        }
+
+        const filteredJobs = await filterJobsApi(jobCriteria, filteredCurrentPage, 2);
+
+        if (filteredJobs && filteredJobs.data) {
+            dispatch(setCurrentPage(1));
+            dispatch(setJobs(filteredJobs.data.jobs));
+            dispatch(setTotalNumberOfPages(filteredJobs.data.numberOfPages));
+            setIsFiltering(true)
+        }else{
+            dispatch(clearCurrentPage());
+        }
+    };
+
+    const handleReset = async () => {
+        dispatch(clearCurrentPage());
+        setFilteredCurrentPage(1);
+        const allJobs = await getAllJobsApi(1);
+        if (allJobs && allJobs.data) {
+            dispatch(setJobs(allJobs.data.jobs));
+            setIsFiltering(false)
+            setJobCriteria({
+                title: "",
+                companyLocation: "",
+                employmentType: "",
+            })
+            dispatch(setTotalNumberOfPages(allJobs.data.totalNumberOfPages));
+        }
+    };
+
     const handleGetAllJobs = async (page: number) => {
         dispatch(setLoading());
-        const allJobs = await getAllJobsApi(page);
+        
+        const allJobs = isFiltering?await handleJobFilter():await getAllJobsApi(page);
 
         dispatch(setLoaded());
         return allJobs;
@@ -63,21 +124,23 @@ function LandingPage() {
 
     useEffect(() => {
         (async () => {
-            const id = currentUser?.id;
-            let currentUserProfile: IResponse | null = null;
-            if (isCandidateUrl && isCandidate) {
-                currentUserProfile = await getCandidateProfileApi(id);
+            const userId = currentUser?.id;
+            if (userId) {
+                let currentUserProfile: IResponse | null = null;
+                if (isCandidateUrl && isCandidate) {
+                    currentUserProfile = await getCandidateProfileApi(userId);
+                    dispatch(setMyProfileData(currentUserProfile?.data));
+                } else if (isRecruiterUrl && isRecruiter) {
+                    currentUserProfile = await recruiterGetProfileApi(userId);
+                }
                 dispatch(setMyProfileData(currentUserProfile?.data));
-            } else if (isRecruiterUrl && isRecruiter) {
-                currentUserProfile = await recruiterGetProfileApi(id);
             }
-            dispatch(setMyProfileData(currentUserProfile?.data));
         })();
     }, []);
 
     useEffect(() => {
         (async () => {
-            const allJobs = await handleGetAllJobs(currentPage);
+            const allJobs = await handleGetAllJobs(isFiltering ? filteredCurrentPage : currentPage);
             // Check if allJobs.data exists before accessing its properties
             if (allJobs && allJobs.data) {
                 dispatch(setJobs(allJobs.data.jobs));
@@ -89,17 +152,27 @@ function LandingPage() {
             return () => {
                 // This cleanup function will be called when the component is unmounted
                 dispatch(clearJobs());
+                setIsFiltering(false)
+                setJobCriteria({
+                    title: "",
+                    companyLocation: "",
+                    employmentType: "",
+                })
                 dispatch(clearTotalNumberOfPages());
                 dispatch(clearCurrentPage());
             };
         })();
-    }, [currentPage]);
+    }, [currentPage, dispatch, isFiltering, filteredCurrentPage]);
 
     const handlePageChange = async ({ selected }: { selected: number }) => {
-        dispatch(setCurrentPage(selected + 1));
+        if (isFiltering) {
+            setFilteredCurrentPage(selected + 1);
+        } else {
+            dispatch(setCurrentPage(selected + 1));
+        }
     };
 
-    const handleViewJob = async (jobId: string) => {
+    const handleViewJob = async (jobId: string): Promise<void> => {
         if (currentUser && isRecruiter) {
             return navigate(`/recruiter/job-details/${jobId}`);
         }
@@ -161,12 +234,18 @@ function LandingPage() {
                     className=" bg-gradient-to-r from-slate-900 via-purple-900 to-slate-900"
                 >
                     <div className="py-5">
-                        <SearchBar />
+                    <SearchBar 
+                        jobFieldsValues={jobFieldsValues}
+                        jobCriteria={jobCriteria}
+                        setJobCriteria={setJobCriteria}
+                        handleJobFilter={handleJobFilter}
+                        handleReset={handleReset}
+                    />
                     </div>
                     <div>
                         {jobs && jobs.length > 0 ? (
                             jobs.map(
-                                (job: any) =>
+                                (job: Partial<IJob>) =>
                                     job.isActive && (
                                         <JobCard
                                             key={job?.id}
@@ -188,6 +267,7 @@ function LandingPage() {
                     {pageCount > 1 && (
                         <Paginate
                             pageCount={pageCount}
+                            currentPage={currentPage}
                             handlePageChange={handlePageChange}
                         />
                     )}

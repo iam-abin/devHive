@@ -1,10 +1,10 @@
-import express from "express";
+import express from 'express';
 
-import { candidateRouter } from "./candidate";
-import { recruiterRouter } from "./recruiter";
+import { candidateRouter } from './candidate';
+import { recruiterRouter } from './recruiter';
 
-import { IDependency } from "../../types/dependencyInterface";
-import { checkCurrentUser } from "@abijobportal/common";
+import { IDependency } from '../../types/dependency';
+import { checkCurrentUser } from '@abijobportal/common';
 
 export const routes = (dependencies: IDependency) => {
     const router = express.Router();
@@ -12,8 +12,8 @@ export const routes = (dependencies: IDependency) => {
     const candidate = candidateRouter(dependencies);
     const recruiter = recruiterRouter(dependencies);
 
-    router.use("/candidate", checkCurrentUser, candidate);
-    router.use("/recruiter", checkCurrentUser, recruiter);
+    router.use('/candidate', checkCurrentUser, candidate);
+    router.use('/recruiter', checkCurrentUser, recruiter);
 
     return router;
 };

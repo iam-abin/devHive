@@ -1,12 +1,10 @@
 import authApiUrlConfig from "../../../config/apiUrlsConfig/authApiUrlConfig";
 import { IResponse } from "../../../types/api";
 import { ISignin } from "../../../types/user";
-import adminApiCalls from "../../admin/apiCalls";
+import makeApiCall from "../../apiCalls";
 
-//@dec      Admin login
-//@method   POST
 export const adminSigninApi = async (data: ISignin): Promise<IResponse> => {
-	return await adminApiCalls(
+	return await makeApiCall(
 		"post",
 		authApiUrlConfig.signinAdminUrl,
 		data
@@ -14,7 +12,7 @@ export const adminSigninApi = async (data: ISignin): Promise<IResponse> => {
 };
 
 export const adminSignoutApi = async (): Promise<IResponse> => {
-	return await adminApiCalls(
+	return await makeApiCall(
 		"post",
 		authApiUrlConfig.signoutAdminUrl
 	);

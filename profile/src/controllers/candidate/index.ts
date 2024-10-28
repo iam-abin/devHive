@@ -1,15 +1,15 @@
-import viewCandidateProfileController from "./viewProfile.controller";
-import updateCandidateProfileController from "./updateProfile.controller";
-import uploadCandidateProfilePicController from "./uploadProfilePic.controller";
-import uploadResumeController from "./uploadResume.controller";
-import deleteResumeController from "./deleteResume.controller";
-import viewRecruiterProfileController from "./viewRecruiterProfile.controller";
-import updateSkillsController from "./updateSkills.controller";
-import updatePreferredJobsController from "./updatePreferredJobs.controller";
+import viewCandidateProfileController from './viewProfile.controller';
+import updateCandidateProfileController from './updateProfile.controller';
+import uploadCandidateProfilePicController from './uploadProfilePic.controller';
+import uploadResumeController from './uploadResume.controller';
+import deleteResumeController from './deleteResume.controller';
+import viewRecruiterProfileController from './viewRecruiterProfile.controller';
+import updateSkillsController from './updateSkills.controller';
+import updatePreferredJobsController from './updatePreferredJobs.controller';
 
-import { IDependency } from "../../frameworks/types/dependency";
+import { IDependency } from '../../frameworks/types/dependency';
 
-export = (dependencies: IDependency)=>{
+export = (dependencies: IDependency) => {
     return {
         viewCandidateProfileController: viewCandidateProfileController(dependencies),
         updateCandidateProfileController: updateCandidateProfileController(dependencies),
@@ -19,6 +19,5 @@ export = (dependencies: IDependency)=>{
         viewRecruiterProfileByCandidateController: viewRecruiterProfileController(dependencies),
         updateSkillsController: updateSkillsController(dependencies),
         updatePreferredJobsController: updatePreferredJobsController(dependencies),
-
-    }
-}
+    };
+};

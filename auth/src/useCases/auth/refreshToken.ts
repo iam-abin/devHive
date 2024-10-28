@@ -1,36 +1,43 @@
-import {
-    IJwtPayload,
-    NotAuthorizedError,
-    NotFoundError,
-    verifyJwtToken,
-} from "@abijobportal/common";
-import { IDependency } from "../../frameworks/types/dependency";
-import { createJwtAccessToken } from "../../frameworks/utils/jwtToken";
+import { IJwtPayload, NotAuthorizedError, NotFoundError } from '@abijobportal/common';
+import { IDependency } from '../../frameworks/types/dependency';
+import { createJwtAccessToken, verifyRefreshJwtToken } from '../../frameworks/utils/jwtToken';
 
 export = (dependencies: IDependency) => {
     const {
         repositories: { usersRepository },
     } = dependencies;
 
-    if (!usersRepository)
-        throw new Error("usersRepository should exist in dependencies");
+    if (!usersRepository) throw new Error('usersRepository should exist in dependencies');
 
     const execute = async (barerToken: string) => {
         if (!barerToken) throw new NotAuthorizedError();
 
-        let refreshToken: string = "";
-        if (barerToken.startsWith("Bearer ")) {
-            refreshToken = barerToken.substring("Bearer ".length);
+        let refreshToken: string = '';
+        if (barerToken.startsWith('Bearer ')) {
+            refreshToken = barerToken.substring('Bearer '.length);
         }
 
-        const jwtPayload: IJwtPayload = verifyJwtToken(refreshToken);
+        try {
+            const jwtPayload: IJwtPayload = verifyRefreshJwtToken(refreshToken);
 
-        let user = await usersRepository.getByEmail(jwtPayload.email);
+            const user = await usersRepository.getByEmail(jwtPayload.email);
 
-        if (!user) throw new NotFoundError("User not found");
+            if (!user) throw new NotFoundError('User not found');
 
-        const accessToken = createJwtAccessToken(jwtPayload);
-        return { accessToken, refreshToken, user };
+            const accessToken = createJwtAccessToken({
+                userId: user._id,
+                email: user.email,
+                role: user.role,
+            });
+            return { accessToken, refreshToken, user };
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                // Pass the error message string to NotAuthorizedError
+                throw new NotAuthorizedError(error.message);
+            } else {
+                throw new NotAuthorizedError('Authorization error');
+            }
+        }
     };
     return { execute };
 };

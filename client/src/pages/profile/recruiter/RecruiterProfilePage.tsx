@@ -15,7 +15,7 @@ const RecruiterProfilePage: React.FC = () => {
     const { id } = useParams();
     const location = useLocation();
 
-    const isCandidate = location.pathname.includes("candidate");
+    const isCandidate: boolean = location.pathname.includes("candidate");
 
     const [recruiterProfileData, setRecruiterProfileData] = useState<any>([]);
 

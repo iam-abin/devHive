@@ -1,4 +1,4 @@
-import { IDependency } from "../../frameworks/types/dependencyInterface";
+import { IDependency } from '../../frameworks/types/dependency';
 
 export = (dependencies: IDependency) => {
     const {
@@ -6,28 +6,19 @@ export = (dependencies: IDependency) => {
     } = dependencies;
 
     if (!jobApplicationRepository) {
-        throw new Error(
-            "jobApplicationRepository should exist in dependencies"
-        );
+        throw new Error('jobApplicationRepository should exist in dependencies');
     }
 
-    const execute = async (
-        candidateId: string,
-        page: number,
-        limit: number
-    ) => {
+    const execute = async (candidateId: string, page: number, limit: number) => {
         // pagination
         const skip = (page - 1) * limit;
-        const appliedJobsCount =
-            await jobApplicationRepository.getCountOfCandidateAppliedJobs(
-                candidateId
-            );
-        const appliedJobs =
-            await jobApplicationRepository.getAllAppliedJobsByCandidateId(
-                candidateId,
-                skip,
-                limit
-            );
+        const appliedJobs = await jobApplicationRepository.getAllAppliedJobsByCandidateId(
+            candidateId,
+            skip,
+            limit,
+        );
+
+        const appliedJobsCount = await jobApplicationRepository.getCountOfAppliedJobs(candidateId);
 
         const numberOfPages = Math.ceil(appliedJobsCount / limit);
         return { appliedJobs, numberOfPages };

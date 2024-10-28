@@ -23,6 +23,7 @@ import {
     signinSchema,
 } from "../../../utils/validations/signin";
 import { swal } from "../../../utils/swal";
+import { IAuth } from "../../../types/user";
 
 function AuthRecruiter() {
     const dispatch = useDispatch();
@@ -30,7 +31,7 @@ function AuthRecruiter() {
     const locationUrl = useLocation();
 
     const isSigninUrl: boolean = locationUrl.pathname.includes("signin");
-    const authType = isSigninUrl ? "signin" : "signup";
+    const authType: "signin" | "signup" = isSigninUrl ? "signin" : "signup";
 
     const isLoading = useSelector(
         (state: RootState) => state.loading.isLoading
@@ -38,7 +39,7 @@ function AuthRecruiter() {
 
     console.log("authType", authType);
 
-    const handleSubmit = async (userData: any) => {
+    const handleSubmit = async (userData: Partial<IAuth>) => {
         try {
             dispatch(setLoading());
             if (authType === "signin") {
@@ -46,8 +47,6 @@ function AuthRecruiter() {
                 dispatch(
                     setUser({
                         data: response.data,
-                        accessToken: response.accessToken!,
-                        refreshToken: response.refreshToken!,
                     })
                 );
                 notify(response.message, "success");

@@ -34,31 +34,23 @@ const AuthCandidate: React.FC = () => {
     const locationUrl = useLocation();
 
     const isSigninUrl: boolean = locationUrl.pathname.includes("signin");
-    const authType = isSigninUrl ? "signin" : "signup";
+    const authType: "signin" | "signup"  = isSigninUrl ? "signin" : "signup";
 
     const isLoading = useSelector(
         (state: RootState) => state.loading.isLoading
     );
 
-    const handleSubmit = async (userData: IAuth) => {
+    const handleSubmit = async (userData: Partial<IAuth>) => {
         try {
             if (authType === "signin") {
                 dispatch(setLoading());
                 const response: IResponse = await candidateSigninApi(userData);
                 dispatch(
                     setUser({
-                        data: response.data,
-                        accessToken: response.accessToken!,
-                        refreshToken: response.refreshToken!,
+                        data: response.data
                     })
                 );
-                dispatch(
-                    setUser({
-                        data: response.data,
-                        accessToken: response.accessToken!,
-                        refreshToken: response.refreshToken!,
-                    })
-                );
+                
                 notify(response.message, "success");
                 navigate("/candidate");
             } else {

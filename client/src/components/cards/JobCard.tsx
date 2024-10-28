@@ -9,6 +9,8 @@ const JobCard: React.FC<{ job: any; handleViewJob: any }> = ({
 	job,
 	handleViewJob,
 }) => {
+	console.log("jobcard job",job);
+	
 	const diffInDays = dateFormatHumanized(job.createdAt);
 	return (
 		<div className="mx-4 lg:mx-40 pb-4" key={job.id}>

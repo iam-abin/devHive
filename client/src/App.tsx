@@ -12,10 +12,9 @@ import { RootState } from "./redux/reducer";
 import { Toaster } from "react-hot-toast";
 import { SocketProvider } from "./context/socketContext";
 import { checkUserRole } from "./utils/checkRole";
-import TopNavBar from "./components/navBar/TopNavBar";
+
 import CandidateLayout from "./pages/layout/CandidateLayout";
 const NotFound = lazy(() => import("./pages/Error/NotFound"));
-const LandingPage = lazy(() => import("./pages/landing/LandingPage"));
 
 export default function App() {
     const loggedinUser = useSelector(
@@ -24,13 +23,12 @@ export default function App() {
 
     const { isCandidate, isRecruiter } = checkUserRole(loggedinUser);
 
-    console.log("loggedinUser", loggedinUser);
-
     return (
         <>
             <ToastContainer className="mt-10" />
             <Toaster />
             <Routes>
+                {/* Root Redirect */}
                 <Route
                     path="/"
                     element={
@@ -39,11 +37,12 @@ export default function App() {
                         ) : isRecruiter ? (
                             <Navigate to="/recruiter" />
                         ) : (
-                            <LandingPage />
+                            <Navigate to="/candidate/landing" />
                         )
                     }
                 />
 
+                {/* Route Groups */}
                 <Route path="/admin/*" element={<AdminRoutes />} />
                 <Route
                     path="/candidate/*"

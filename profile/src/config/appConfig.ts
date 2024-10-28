@@ -12,7 +12,7 @@ interface IAppConfig {
 
 const appConfig: Readonly<IAppConfig> = Object.freeze({
     PORT: process.env.PORT || 3000,
-    API_PREFIX: process.env.API_PREFIX as string || "/api/v1/profile",
+    API_PREFIX: (process.env.API_PREFIX as string) || '/api/v1/profile',
     MONGO_URL_PROFILE: process.env.MONGO_URL_PROFILE as string,
     ENVIRONMENT: process.env.NODE_ENV as string,
     JWT_SECRET_KEY: process.env.JWT_SECRET_KEY as string,
@@ -21,6 +21,5 @@ const appConfig: Readonly<IAppConfig> = Object.freeze({
     CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET as string,
     CLOUDINARY_CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME as string,
 });
-
 
 export { appConfig };

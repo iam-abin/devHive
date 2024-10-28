@@ -1,5 +1,5 @@
-import { Request, Response } from "express";
-import { IDependency } from "../../frameworks/types/dependency";
+import { Request, Response } from 'express';
+import { IDependency } from '../../frameworks/types/dependency';
 
 export = (dependencies: IDependency) => {
     const {
@@ -9,10 +9,8 @@ export = (dependencies: IDependency) => {
     return async (req: Request, res: Response) => {
         const { userId } = req.params;
 
-        const candidate = await getCandidateProfileByuserIdUseCase(
-            dependencies
-        ).execute(userId);
+        const candidate = await getCandidateProfileByuserIdUseCase(dependencies).execute(userId);
 
-        res.status(200).json({ message: "candidate profile fetched successfully", data: candidate });
+        res.status(200).json({ message: 'candidate profile fetched successfully', data: candidate });
     };
 };

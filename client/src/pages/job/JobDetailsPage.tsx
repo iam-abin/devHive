@@ -9,10 +9,11 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import JobDetails from "../../components/recruiter/JobDetails";
 import { notify } from "../../utils/toastMessage";
 import { swal } from "../../utils/swal";
+import { IJob } from "../../types/Job";
 
 function JobDetailsPage() {
-    const [jobDetails, setJobDetails] = useState<any>(null);
-    const [hasApplied, setHasApplied] = useState<any>(false);
+    const [jobDetails, setJobDetails] = useState<IJob | null>(null);
+    const [hasApplied, setHasApplied] = useState<boolean>(false);
     const navigate = useNavigate();
     const { jobId } = useParams();
     const locationUrl = useLocation();
@@ -34,7 +35,7 @@ function JobDetailsPage() {
         };
 
         fetchJobDetails();
-    }, [jobId]);
+    }, [jobId, userType]);
 
     // Candidate
     const handleApplyJob = async (jobId: string) => {
@@ -52,8 +53,8 @@ function JobDetailsPage() {
     };
 
     // Recruiter
-    const handleEditJob = async (id: string) => {
-        navigate(`/recruiter/edit-job-details/${id}`);
+    const handleEditJob = async (jobId: string) => {
+        navigate(`/recruiter/edit-job-details/${jobId}`);
     };
 
     const handleChangeJobCloseStatus = async (jobId: string) => {
@@ -67,10 +68,10 @@ function JobDetailsPage() {
                 if (result.isConfirmed) {
                     const job = await changeJobCloseStatusApi(jobId);
                     if (job) {
-                        setJobDetails({
-                            ...jobDetails,
-                            isActive: job.data.isActive,
-                        });
+                        setJobDetails((prevDetails: IJob | null) => ({
+                            ...prevDetails,
+                            ...job.data,
+                        }));
 
                         notify(job.message, "success");
                     }

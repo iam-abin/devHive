@@ -1,8 +1,9 @@
 import React from "react";
 import ReactPaginate from "react-paginate";
 
-const Paginate: React.FC<{ pageCount: number; handlePageChange: any }> = ({
+const Paginate: React.FC<{ pageCount: number; currentPage: number, handlePageChange: any }> = ({
 	pageCount,
+	currentPage,
 	handlePageChange,
 }) => {
 	return (
@@ -11,6 +12,7 @@ const Paginate: React.FC<{ pageCount: number; handlePageChange: any }> = ({
 				pageCount={pageCount}
 				pageRangeDisplayed={3}
 				marginPagesDisplayed={1}
+				forcePage={currentPage - 1}
 				onPageChange={handlePageChange}
 				containerClassName={"flex justify-center mt-4"}
 				activeClassName={

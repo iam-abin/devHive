@@ -1,5 +1,4 @@
-import { Job } from "./job";
-import { RecruiterProfile } from "./recruiter";
+import { Job } from './job';
+import { RecruiterProfile } from './recruiter';
 
-
-export { Job, RecruiterProfile }
+export { Job, RecruiterProfile };

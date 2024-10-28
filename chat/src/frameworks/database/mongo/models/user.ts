@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import { IUser } from "../../../types/user";
+import mongoose from 'mongoose';
+import { IUser } from '../../../types/user';
 
 export interface IUserDocument extends mongoose.Document, IUser {}
 
@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema(
         role: {
             type: String,
             required: true,
-            enum: ["candidate", "recruiter"],
+            enum: ['candidate', 'recruiter'],
         },
         isActive: {
             type: Boolean,
@@ -30,7 +30,7 @@ const userSchema = new mongoose.Schema(
             },
         },
         timestamps: true,
-    }
+    },
 );
 
 interface UserModel extends mongoose.Model<IUserDocument> {
@@ -47,6 +47,6 @@ userSchema.statics.buildUser = (attributes: IUser) => {
     });
 };
 
-const UserModel = mongoose.model<IUserDocument, UserModel>("User", userSchema);
+const UserModel = mongoose.model<IUserDocument, UserModel>('User', userSchema);
 
 export { UserModel };

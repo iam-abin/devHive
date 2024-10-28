@@ -1,6 +1,6 @@
 import React from "react";
 
-const CandidateCard: React.FC<{ candidate: any; handleViewCandidate: any }> = ({
+const CandidateCard: React.FC<{ candidate: any; handleViewCandidate: (candidateId: string)=>void }> = ({
 	candidate,
 	handleViewCandidate,
 }) => {

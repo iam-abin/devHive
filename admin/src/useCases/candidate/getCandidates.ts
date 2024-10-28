@@ -1,16 +1,24 @@
-import { IDependency } from "../../frameworks/types/dependency";
+import { IDependency } from '../../frameworks/types/dependency';
 
 export = (dependencies: IDependency) => {
-	const { repositories:{candidateRepository} } = dependencies;
+    const {
+        repositories: { candidateRepository },
+    } = dependencies;
 
-	if (!candidateRepository) {
-		throw new Error("candidateRepository should exist in dependencies");
-	}
+    if (!candidateRepository) {
+        throw new Error('candidateRepository should exist in dependencies');
+    }
 
-	const execute = async() => {
-		const candidates = await candidateRepository.getAllCandidates(); 
-		return candidates
-	};
+    const execute = async (page: number, limit: number) => {
+        // pagination
+        const skip = (page - 1) * limit;
 
-	return { execute };
+        const candidates = await candidateRepository.getAllCandidates(skip, limit);
+        const candidatesCount = await candidateRepository.getCountOfCandidates();
+        const numberOfPages = Math.ceil(candidatesCount / limit);
+
+        return { candidates, numberOfPages };
+    };
+
+    return { execute };
 };

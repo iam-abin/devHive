@@ -10,12 +10,7 @@ import AdminLayout from "../pages/layout/AdminLayout";
 const AdminSigninPage = lazy(
     () => import("../pages/auth/authUser/AdminSigninPage")
 );
-const CandidateManagementPage = lazy(
-    () => import("../pages/admin/CandidatesListPage")
-);
-const RecruiterManagementPage = lazy(
-    () => import("../pages/admin/RecruitersListPage")
-);
+const UsersManagementPage = lazy(() => import("../pages/admin/UsersListPage"));
 const JobsManagementPage = lazy(
     () => import("../pages/job/admin/JobsListPage")
 );
@@ -44,11 +39,15 @@ function AdminRoutes() {
     const loggedinUser = useSelector(
         (store: RootState) => store.userReducer.authData
     );
-    const {isAdmin} = checkUserRole(loggedinUser)
+    const { isAdmin } = checkUserRole(loggedinUser);
+
+    const ProtectedRoute = ({ children }: { children: JSX.Element }) =>
+        isAdmin ? children : <Navigate to="/admin/signin" />;
     return (
         <>
             <Suspense fallback={<Loading />}>
                 <Routes>
+                    {/* Public Admin Sign-in Route */}
                     <Route
                         path="/signin"
                         element={
@@ -64,113 +63,42 @@ function AdminRoutes() {
                     <Route
                         path="/"
                         element={
-                            isAdmin ? (
+                            <ProtectedRoute>
                                 <AdminLayout />
-                            ) : (
-                                <Navigate to="/admin/signin" />
-                            )
+                            </ProtectedRoute>
                         }
                     >
+                        <Route index element={<AdminDashBoard />} />
                         <Route
-                            path="/"
-                            element={
-                                isAdmin ? (
-                                    <AdminDashBoard />
-                                ) : (
-                                    <Navigate to="/admin" />
-                                )
-                            }
+                            path="candidates"
+                            element={<UsersManagementPage />}
                         />
                         <Route
-                            path="/candidates"
-                            element={
-                                isAdmin ? (
-                                    <CandidateManagementPage />
-                                ) : (
-                                    <Navigate to="/admin" />
-                                )
-                            }
+                            path="candidate/viewProfileDetails/:userId"
+                            element={<ViewProfilePage />}
                         />
-
                         <Route
-                            path="/candidate/viewProfileDetails/:userId"
-                            element={
-                                isAdmin ? (
-                                    <ViewProfilePage />
-                                ) : (
-                                    <Navigate to="/admin" />
-                                )
-                            }
+                            path="recruiters"
+                            element={<UsersManagementPage />}
                         />
-
                         <Route
-                            path="/recruiter/viewProfileDetails/:userId"
-                            element={
-                                isAdmin ? (
-                                    <ViewProfilePage />
-                                ) : (
-                                    <Navigate to="/admin" />
-                                )
-                            }
+                            path="recruiter/viewProfileDetails/:userId"
+                            element={<ViewProfilePage />}
                         />
-
+                        <Route path="jobs" element={<JobsManagementPage />} />
                         <Route
-                            path="/recruiters"
-                            element={
-                                isAdmin ? (
-                                    <RecruiterManagementPage />
-                                ) : (
-                                    <Navigate to="/admin" />
-                                )
-                            }
+                            path="job/viewJobDetails/:jobId"
+                            element={<ViewJobDetailsPage />}
                         />
-
                         <Route
-                            path="/jobs"
-                            element={
-                                isAdmin ? (
-                                    <JobsManagementPage />
-                                ) : (
-                                    <Navigate to="/admin" />
-                                )
-                            }
+                            path="memberships"
+                            element={<PremiumMembershipPage />}
                         />
-
-                        <Route
-                            path="/job/viewJobDetails/:jobId"
-                            element={
-                                isAdmin ? (
-                                    <ViewJobDetailsPage />
-                                ) : (
-                                    <Navigate to="/admin" />
-                                )
-                            }
-                        />
-
-                        <Route
-                            path="/memberships"
-                            element={
-                                isAdmin ? (
-                                    <PremiumMembershipPage />
-                                ) : (
-                                    <Navigate to="/admin" />
-                                )
-                            }
-                        />
-
-                        <Route
-                            path="/payments"
-                            element={
-                                isAdmin ? (
-                                    <PaymentsListPage />
-                                ) : (
-                                    <Navigate to="/admin" />
-                                )
-                            }
-                        />
+                        <Route path="payments" element={<PaymentsListPage />} />
                     </Route>
 
-                    <Route path="*" element={<NotFound url={"/admin"} />} />
+                    {/* Catch-all Not Found Route */}
+                    <Route path="*" element={<NotFound url="/admin" />} />
                 </Routes>
             </Suspense>
         </>

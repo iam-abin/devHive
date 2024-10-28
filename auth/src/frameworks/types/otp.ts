@@ -1,8 +1,8 @@
 export interface IOtp {
-	otp: string;
-	email: string;
+    otp: string;
+    email: string;
 }
 
 export interface IMobileOtp extends IOtp {
-	phone: number;
+    phone: number;
 }
