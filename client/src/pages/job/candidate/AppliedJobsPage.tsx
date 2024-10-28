@@ -11,9 +11,9 @@ import { IJob } from "../../../types/Job";
 function AppliedJobsPage() {
     const [currentPage, setCurrentPage] = useState(1);
     const [pageCount, setpageCount] = useState(1);
+    const [appliedJobsData, setAppliedJobsData] = useState<IJob[]>([]);
 
     const navigate = useNavigate();
-    const [appliedJobsData, setAppliedJobsData] = useState<IJob[]>([]);
 
     const candidateData = useSelector(
         (store: RootState) => store.userReducer.authData
@@ -63,6 +63,7 @@ function AppliedJobsPage() {
                         {pageCount > 1 && (
                             <Paginate
                                 pageCount={pageCount}
+                                currentPage={currentPage}
                                 handlePageChange={handlePageChange}
                             />
                         )}

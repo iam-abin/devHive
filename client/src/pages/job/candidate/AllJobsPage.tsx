@@ -69,6 +69,7 @@ function AllJobsPage() {
                         {pageCount > 1 && (
                             <Paginate
                                 pageCount={pageCount}
+                                currentPage={currentPage}
                                 handlePageChange={handlePageChange}
                             />
                         )}
