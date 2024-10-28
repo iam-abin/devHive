@@ -1,4 +1,4 @@
-import candidateProfileRepository from "./candidateProfile.repository";
-import recruiterProfileRepository from "./recruiterProfile.repository"
+import candidateProfileRepository from './candidateProfile.repository';
+import recruiterProfileRepository from './recruiterProfile.repository';
 
-export = { candidateProfileRepository, recruiterProfileRepository }
+export = { candidateProfileRepository, recruiterProfileRepository };

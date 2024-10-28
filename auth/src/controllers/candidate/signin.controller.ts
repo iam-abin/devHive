@@ -1,7 +1,7 @@
-import { Request, Response } from "express";
-import { ROLES } from "@abijobportal/common";
+import { Request, Response } from 'express';
+import { ROLES } from '@abijobportal/common';
 
-import { IDependency } from "../../frameworks/types/dependency";
+import { IDependency } from '../../frameworks/types/dependency';
 
 export = (dependencies: IDependency) => {
     const {
@@ -10,15 +10,15 @@ export = (dependencies: IDependency) => {
 
     return async (req: Request, res: Response) => {
         const { email, password } = req.body;
-        const { user, accessToken, refreshToken } = await signInUseCase(
-            dependencies
-        ).execute(email, password, ROLES.CANDIDATE);
+        const { user, accessToken, refreshToken } = await signInUseCase(dependencies).execute(
+            email,
+            password,
+            ROLES.CANDIDATE,
+        );
 
         res.status(200).json({
-            message: "Login successful",
-            data: user,
-            accessToken,
-            refreshToken,
+            message: 'Login successful',
+            data: { user, accessToken, refreshToken },
         });
     };
 };

@@ -1,4 +1,4 @@
-import { IJob } from "../frameworks/types/job";
+import { IJob } from '../frameworks/types/job';
 
 export class Job {
     title: string;
@@ -31,18 +31,18 @@ export class Job {
         salaryMax,
         deadline,
     }: IJob) {
-        (this.title = title),
-            (this.recruiterId = recruiterId),
-            (this.jobDescription = jobDescription),
-            (this.skills = skills),
-            (this.availablePosition = availablePosition),
-            (this.experienceRequired = experienceRequired),
-            (this.educationRequired = educationRequired),
-            (this.employmentType = employmentType),
-            (this.salaryMin = salaryMin),
-            (this.salaryMax = salaryMax),
-            (this.deadline = deadline),
-            (this.companyName = companyName),
-            (this.companyLocation = companyLocation);
+        this.title = title;
+        this.recruiterId = recruiterId;
+        this.jobDescription = jobDescription;
+        this.skills = skills;
+        this.availablePosition = availablePosition;
+        this.experienceRequired = experienceRequired;
+        this.educationRequired = educationRequired;
+        this.employmentType = employmentType;
+        this.salaryMin = salaryMin;
+        this.salaryMax = salaryMax;
+        this.deadline = deadline;
+        this.companyName = companyName;
+        this.companyLocation = companyLocation;
     }
 }

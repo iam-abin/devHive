@@ -1,8 +1,7 @@
-import { Request, Response } from "express";
-import { IDependency } from "../../frameworks/types/dependency";
+import { Request, Response } from 'express';
 
-export = (dependencies: IDependency) => {
+export = () => {
     return async (req: Request, res: Response) => {
-        res.status(200).json({ message: "candidate successfully logged out" });
+        res.status(200).json({ message: 'candidate successfully logged out' });
     };
 };

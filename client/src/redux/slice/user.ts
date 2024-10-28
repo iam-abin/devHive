@@ -26,15 +26,18 @@ const UserSlice = createSlice({
     initialState,
     reducers: {
         setUser: (state, action) => {
-            state.authData = action.payload.data;
+            state.authData = action.payload.data.user;
 
+            console.log(action.payload.data);
+            console.log(action.payload);
+            
             setItemToLocalStorage(
                 LOCAL_STORAGE.ACCESS_TOKEN,
-                JSON.stringify(action.payload?.accessToken)
+                JSON.stringify(action.payload?.data.accessToken!)
             );
             setItemToLocalStorage(
                 LOCAL_STORAGE.REFRESH_TOKEN,
-                JSON.stringify(action.payload?.refreshToken)
+                JSON.stringify(action.payload?.data.refreshToken!)
             );
         },
         clearUser: (state) => {

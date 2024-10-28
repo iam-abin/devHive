@@ -1,15 +1,15 @@
-import { Request, Response } from "express";
-import { IDependency } from "../../frameworks/types/dependencyInterface";
+import { Request, Response } from 'express';
+import { IDependency } from '../../frameworks/types/dependency';
 
 export = (dependencies: IDependency) => {
-	const {
-		useCases: {getAllJobFieldsDistinctValuesUseCase },
-	} = dependencies;
+    const {
+        useCases: { getAllJobFieldsDistinctValuesUseCase },
+    } = dependencies;
 
-	return async (req: Request, res: Response) => {
-		
-		const jobFields: any = await getAllJobFieldsDistinctValuesUseCase(dependencies).execute(req.body);
+    return async (req: Request, res: Response) => {
+        const jobFields = await getAllJobFieldsDistinctValuesUseCase(dependencies).execute(req.body);
+        console.log(jobFields, 'jobFields');
 
-		res.status(200).json({ message: "Jobs list", data: jobFields });
-	};
+        res.status(200).json({ message: 'Jobs list', data: jobFields });
+    };
 };

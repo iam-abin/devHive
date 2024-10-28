@@ -18,7 +18,7 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
 import { getACandidateProfileApi } from "../../../axios/apiMethods/profile-service/recruiter";
 import { FaFacebookMessenger } from "react-icons/fa";
-import CircleLoading from "../../../components/loading/CircleLoading";
+import SpinnerLoading from "../../../components/loading/SpinnerLoading";
 import { hotToastMessage } from "../../../utils/hotToastMessage";
 import { setMyProfileData } from "../../../redux/slice/user";
 import { swal } from "../../../utils/swal";
@@ -226,7 +226,7 @@ const CandidateProfilePage: React.FC = () => {
                     <div className=" h-72 flex justify-center  shadow-2xl sm:flex sm: flex-row bg-slate-300 rounded-3xl relative">
                         <div className="items-center w-5/6 justify-between md:flex md:flex-row md:gap-5 ">
                             <div className=" md:w-3/6  sm:w-full h-2/3 flex flex-row">
-                                {imgLoading && <CircleLoading />}
+                                {imgLoading && <SpinnerLoading />}
                                 {!imgLoading && (
                                     <img
                                         src={candidateProfileData?.profileImage}
@@ -411,7 +411,7 @@ const CandidateProfilePage: React.FC = () => {
                                             disabled={pdfLoading}
                                         >
                                             {pdfLoading ? (
-                                                <CircleLoading /> // Show loading spinner when uploading
+                                                <SpinnerLoading /> // Show loading spinner when uploading
                                             ) : (
                                                 "Upload"
                                             )}

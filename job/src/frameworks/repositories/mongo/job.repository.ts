@@ -1,16 +1,16 @@
-import Models from "../../database/mongo/models";
-import { IJobDocument } from "../../database/mongo/models/job";
-import { IFilter, IJob } from "../../types/job";
+import Models from '../../database/mongo/models';
+import { IJobDocument } from '../../database/mongo/models/job';
+import { IFilter, IJob } from '../../types/job';
 
 const { JobModel } = Models;
 
 const JOB_LIST_SELECT_FIELDS: string[] = [
-    "title",
-    "companyLocation",
-    "employmentType",
-    "salaryMax",
-    "isActive",
-    "createdAt",
+    'title',
+    'companyLocation',
+    'employmentType',
+    'salaryMax',
+    'isActive',
+    'createdAt',
 ];
 
 export = {
@@ -24,22 +24,13 @@ export = {
         return deletedJob;
     },
 
-    updateJob: async (
-        jobId: string,
-        data: Partial<IJob>
-    ): Promise<IJobDocument | null> => {
-        const updatedJob = await JobModel.findByIdAndUpdate(
-            jobId,
-            { $set: data },
-            { new: true }
-        );
+    updateJob: async (jobId: string, data: Partial<IJob>): Promise<IJobDocument | null> => {
+        const updatedJob = await JobModel.findByIdAndUpdate(jobId, { $set: data }, { new: true });
 
         return updatedJob;
     },
 
-    changeClosejobStatus: async (
-        jobId: string
-    ): Promise<IJobDocument | null> => {
+    changeClosejobStatus: async (jobId: string): Promise<IJobDocument | null> => {
         const job: IJobDocument | null = await JobModel.findById(jobId);
         if (job) {
             job.isActive = !job?.isActive; // Toggle the boolean field
@@ -49,27 +40,22 @@ export = {
         return job;
     },
 
-    filterJobs: async (
-        jobFilterData: IFilter,
-        skip: number,
-        limit: number
-    ): Promise<IJobDocument[] | []> => {
-        
+    filterJobs: async (jobFilterData: IFilter, skip: number, limit: number): Promise<IJobDocument[] | []> => {
         const filteredJobs = await JobModel.find(jobFilterData)
-        .skip(skip)
-        .limit(limit)
-        .select(JOB_LIST_SELECT_FIELDS);
+            .skip(skip)
+            .limit(limit)
+            .select(JOB_LIST_SELECT_FIELDS);
         return filteredJobs;
     },
 
-    getCountOfFilterdJobs: async ( jobFilterData: IFilter): Promise<number> => {
+    getCountOfFilterdJobs: async (jobFilterData: IFilter): Promise<number> => {
         return await JobModel.countDocuments(jobFilterData);
     },
 
     getAllJobs: async (
         skip: number,
         limit: number,
-        applicationJobIds?: string[]
+        applicationJobIds?: string[],
     ): Promise<Partial<IJobDocument>[] | []> => {
         let jobs: Partial<IJobDocument>[] | [];
         if (applicationJobIds) {
@@ -103,9 +89,9 @@ export = {
         return totalJobs;
     },
 
-    getAllJobsDistinctValues: async (fields: Array<string>): Promise<any> => {
+    getAllJobsDistinctValues: async (fields: string[]): Promise<Record<string, string[]>> => {
         // Get distinct values for the specified fields
-        const distinctValues: any = {};
+        const distinctValues: Record<string, string[]> = {};
         for (const field of fields) {
             distinctValues[field] = await JobModel.distinct(field);
         }
@@ -113,10 +99,8 @@ export = {
         return distinctValues;
     },
 
-    getAllJobsByRecruiterId: async (
-        id: string
-    ): Promise<IJobDocument[] | []> => {
-        return await JobModel.find({ recruiterId: id }).sort({
+    getAllJobsByRecruiterId: async (recruiterId: string): Promise<IJobDocument[] | []> => {
+        return await JobModel.find({ recruiterId }).sort({
             createdAt: -1,
         });
     },
@@ -128,10 +112,10 @@ export = {
     getSearchResults: async (
         searchKey: string,
         skip: number,
-        limit: number
+        limit: number,
     ): Promise<IJobDocument[] | []> => {
-        const searchedJobs: any = await JobModel.find({
-            jobTitle: { $regex: new RegExp(searchKey, "i") },
+        const searchedJobs: IJobDocument[] | [] = await JobModel.find({
+            jobTitle: { $regex: new RegExp(searchKey, 'i') },
         })
             .skip(skip)
             .limit(limit);
@@ -141,14 +125,14 @@ export = {
 
     getCountOfSearchResults: async (searchKey: string): Promise<number> => {
         return await JobModel.countDocuments({
-            jobTitle: { $regex: new RegExp(searchKey, "i") },
+            jobTitle: { $regex: new RegExp(searchKey, 'i') },
         });
     },
 
     getAJob: async (jobId: string): Promise<IJobDocument | null> => {
         return await JobModel.findById(jobId).populate({
-            path: "recruiterId",
-            model: "User", // Assuming your User model is named 'User'
+            path: 'recruiterId',
+            model: 'User', // Assuming your User model is named 'User'
         });
     },
 };

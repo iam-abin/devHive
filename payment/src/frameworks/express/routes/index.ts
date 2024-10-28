@@ -1,17 +1,17 @@
-import express from "express"
+import express from 'express';
 
-import { IDependency } from "../../types/dependency";
-import { premiumRouter } from "./premium";
-import { paymentRouter } from "./payment";
+import { IDependency } from '../../types/dependency';
+import { premiumRouter } from './premium';
+import { paymentRouter } from './payment';
 
-export const routes = (dependencies: IDependency) =>{
+export const routes = (dependencies: IDependency) => {
     const router = express.Router();
 
-    const premium = premiumRouter(dependencies)
-    const payment = paymentRouter(dependencies)
+    const premium = premiumRouter(dependencies);
+    const payment = paymentRouter(dependencies);
 
-    router.use("/premium", premium)
-    router.use("/payment-route", payment)
+    router.use('/premium', premium);
+    router.use('/payment-route', payment);
 
-    return router
-}
+    return router;
+};

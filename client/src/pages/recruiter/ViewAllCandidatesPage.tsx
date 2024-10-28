@@ -79,6 +79,7 @@ function ViewAllCandidatesPage() {
             </div>
             <Paginate
                 pageCount={pageCount}
+                currentPage={currentPage}
                 handlePageChange={handlePageChange}
             />
         </>

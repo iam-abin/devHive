@@ -1,4 +1,4 @@
-import { IDependency } from "../../frameworks/types/dependencyInterface";
+import { IDependency } from '../../frameworks/types/dependency';
 
 export = (dependencies: IDependency) => {
     const {
@@ -6,17 +6,14 @@ export = (dependencies: IDependency) => {
     } = dependencies;
 
     if (!jobApplicationRepository) {
-        throw new Error(
-            "jobApplicationRepository should exist in dependencies"
-        );
+        throw new Error('jobApplicationRepository should exist in dependencies');
     }
 
     const execute = async (candidateId: string, jobId: string) => {
-        const isApplicationExist =
-            await jobApplicationRepository.getAnAppliedJobByCandidate(
-                candidateId,
-                jobId
-            );
+        const isApplicationExist = await jobApplicationRepository.getAnAppliedJobByCandidate(
+            candidateId,
+            jobId,
+        );
 
         if (!isApplicationExist) {
             return false;

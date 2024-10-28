@@ -1,9 +1,5 @@
-import applyJobUseCase from "./apply";
-import checkIsAppliedJobUseCase from "./checkApplied";
-import getAllAppliedJobsUseCase from "./getAppliedJobs";
+import applyJobUseCase from './apply';
+import checkIsAppliedJobUseCase from './checkApplied';
+import getAllAppliedJobsUseCase from './getAppliedJobs';
 
-export {
-	applyJobUseCase,
-	checkIsAppliedJobUseCase,
-	getAllAppliedJobsUseCase,
-};
+export { applyJobUseCase, checkIsAppliedJobUseCase, getAllAppliedJobsUseCase };

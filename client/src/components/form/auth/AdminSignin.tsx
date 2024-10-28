@@ -2,14 +2,18 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import { ISigninProps } from "../../../types/user";
 import { FaRegEnvelope } from "react-icons/fa";
 import { MdLockOutline } from "react-icons/md";
-
-
+import { useSelector } from "react-redux";
+import { RootState } from "../../../redux/reducer";
+import SpinnerLoading from "../../loading/SpinnerLoading";
 
 const AdminSignin = ({
     handleSubmit,
     signinSchema,
     initialSigninValues,
 }: ISigninProps) => {
+    const isLoading: boolean = useSelector(
+        (store: RootState) => store.loading.isLoading
+    );
     return (
         <Formik
             initialValues={initialSigninValues}
@@ -57,9 +61,12 @@ const AdminSignin = ({
                     <div>
                         <button
                             type="submit"
-                            className="w-full py-2 mt-6 font-semibold text-white bg-sky-600 rounded-md hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-600 focus:ring-offset-2"
+                            className={`w-full py-2 mt-6 font-semibold text-white bg-sky-600 rounded-md hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-600 focus:ring-offset-2 ${
+                                isLoading ? "cursor-not-allowed opacity-50" : ""
+                            }`}
+                            disabled={isLoading}
                         >
-                            Sign in
+                            {isLoading ? <SpinnerLoading /> : "Sign in"}
                         </button>
                     </div>
                 </Form>

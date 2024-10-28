@@ -13,24 +13,25 @@ import { ISignin } from "../../../types/user";
 import { setUser } from "../../../redux/slice/user";
 import AdminSignin from "../../../components/form/auth/AdminSignin";
 import { IResponse } from "../../../types/api";
+import { setLoaded, setLoading } from "../../../redux/slice/isLoading";
 
 function AdminSigninPage() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const handleSubmit = async (userData: ISignin) => {
+        dispatch(setLoading())
         const response: IResponse = await adminSigninApi(userData);
         dispatch(
             setUser({
-                data: response.data,
-                accessToken: response.accessToken!,
-                refreshToken: response.refreshToken!,
+                data: response.data
             })
         );
-
+        dispatch(setLoaded())
         notify(response.message, "success");
         navigate("/admin");
     };
+        
 
     const adminData = useSelector(
         (store: RootState) => store.userReducer.authData

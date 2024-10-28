@@ -47,18 +47,10 @@ const AuthCandidate: React.FC = () => {
                 const response: IResponse = await candidateSigninApi(userData);
                 dispatch(
                     setUser({
-                        data: response.data,
-                        accessToken: response.accessToken!,
-                        refreshToken: response.refreshToken!,
+                        data: response.data
                     })
                 );
-                dispatch(
-                    setUser({
-                        data: response.data,
-                        accessToken: response.accessToken!,
-                        refreshToken: response.refreshToken!,
-                    })
-                );
+                
                 notify(response.message, "success");
                 navigate("/candidate");
             } else {

@@ -1,7 +1,7 @@
-import { Request, Response } from "express";
+import { Request, Response } from 'express';
 
-import { IDependency } from "../../frameworks/types/dependency";
-import { IOtp } from "../../frameworks/types/otp";
+import { IDependency } from '../../frameworks/types/dependency';
+import { IOtp } from '../../frameworks/types/otp';
 
 export = (dependencies: IDependency) => {
     const {
@@ -13,8 +13,6 @@ export = (dependencies: IDependency) => {
 
         const user = await verifyEmailOtpUseCase(dependencies).execute({ email, otp });
 
-        return res
-            .status(200)
-            .json({ message: `Otp Verified successfully`, data: user });
+        return res.status(200).json({ message: `Otp Verified successfully`, data: user });
     };
 };

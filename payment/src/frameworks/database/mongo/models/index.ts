@@ -1,4 +1,4 @@
-import { MembershipPlanModel } from "./membershipPlan";
-import { PaymentModel } from "./payment";
+import { MembershipPlanModel } from './membershipPlan';
+import { PaymentModel } from './payment';
 
-export default { MembershipPlanModel, PaymentModel }
+export default { MembershipPlanModel, PaymentModel };

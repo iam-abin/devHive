@@ -1,9 +1,9 @@
-import updatePasswordController from "./update.controller";
+import updatePasswordController from './update.controller';
 
-import { IDependency } from "../../frameworks/types/dependency";
+import { IDependency } from '../../frameworks/types/dependency';
 
 export = (dependencies: IDependency) => {
-	return {
+    return {
         updatePasswordController: updatePasswordController(dependencies),
-	};
+    };
 };

@@ -1,5 +1,5 @@
-import { Request, Response } from "express";
-import { IDependency } from "../../frameworks/types/dependencyInterface";
+import { Request, Response } from 'express';
+import { IDependency } from '../../frameworks/types/dependency';
 
 export = (dependencies: IDependency) => {
     const {
@@ -11,11 +11,11 @@ export = (dependencies: IDependency) => {
         const { jobs, numberOfPages } = await getRecruiterCreatedJobsUseCase(dependencies).execute(
             userId,
             Number(req.params.page) || 1,
-            Number(req.params.limit) || 4
+            Number(req.params.limit) || 4,
         );
 
         res.status(201).json({
-            message: "Jobs got successfully",
+            message: 'Jobs got successfully',
             data: { jobs, numberOfPages },
         });
     };

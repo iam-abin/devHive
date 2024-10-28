@@ -1,73 +1,73 @@
-import candidateRepository from "../../repositories/mongo/candidate.repository";
-import recruiterRepository from "../../repositories/mongo/recruiter.repository";
-import jobRepository from "../../repositories/mongo/job.repository";
-import paymentRepository from "../../repositories/mongo/payment.repository";
+import candidateRepository from '../../repositories/mongo/candidate.repository';
+import recruiterRepository from '../../repositories/mongo/recruiter.repository';
+import jobRepository from '../../repositories/mongo/job.repository';
+import paymentRepository from '../../repositories/mongo/payment.repository';
 
 // interface handleMessageInterface {
 // 	data: any;
 // 	message: string;
 // }
 
-export const handleMessage = (data: any, topic: string, message: any) => {
-	switch (topic) {
-		case "USER-CREATED-TOPIC":
-			if (data.role === "candidate") {
-				candidateRepository.createCandidate(data);
-			} else if (data.role === "recruiter") {
-				recruiterRepository.createRecruiter(data);
-			}
-			break;
+// eslint-disable-next-line  @typescript-eslint/no-explicit-any
+export const handleMessage = (data: any, topic: string) => {
+    switch (topic) {
+        case 'USER-CREATED-TOPIC':
+            if (data.role === 'candidate') {
+                candidateRepository.createCandidate(data);
+            } else if (data.role === 'recruiter') {
+                recruiterRepository.createRecruiter(data);
+            }
+            break;
 
-		case "USER-UPDATED-TOPIC":
-			
-			if (data.role === "candidate") {
-				candidateRepository.updateCandidateProfile(data.userId,data);
-			} else if (data.role === "recruiter") {
-				recruiterRepository.updateRecruiterProfile(data.userId, data);
-			}
+        case 'USER-UPDATED-TOPIC':
+            if (data.role === 'candidate') {
+                candidateRepository.updateCandidateProfile(data.userId, data);
+            } else if (data.role === 'recruiter') {
+                recruiterRepository.updateRecruiterProfile(data.userId, data);
+            }
 
-			break;
+            break;
 
-		case "CANDIDATE-PROFILE-CREATED-TOPIC":
-			candidateRepository.createCandidate(data);
-			break;
+        case 'CANDIDATE-PROFILE-CREATED-TOPIC':
+            candidateRepository.createCandidate(data);
+            break;
 
-		case "CANDIDATE-PROFILE-UPDATED-TOPIC":
-			candidateRepository.updateCandidateProfile(data.userId,data);
+        case 'CANDIDATE-PROFILE-UPDATED-TOPIC':
+            candidateRepository.updateCandidateProfile(data.userId, data);
 
-			break;
+            break;
 
-		case "RECRUITER-PROFILE-CREATED-TOPIC":
-			recruiterRepository.createRecruiter(data);
+        case 'RECRUITER-PROFILE-CREATED-TOPIC':
+            recruiterRepository.createRecruiter(data);
 
-			break;
+            break;
 
-		case "RECRUITER-PROFILE-UPDATED-TOPIC":
-			recruiterRepository.updateRecruiterProfile(data.userId, data);
+        case 'RECRUITER-PROFILE-UPDATED-TOPIC':
+            recruiterRepository.updateRecruiterProfile(data.userId, data);
 
-			break;
+            break;
 
-		case "JOB-CREATED-TOPIC":
-			jobRepository.createJob(data);
+        case 'JOB-CREATED-TOPIC':
+            jobRepository.createJob(data);
 
-			break;
+            break;
 
-		case "JOB-UPDATED-TOPIC":
-			jobRepository.updateJob(data.jobId, data);
+        case 'JOB-UPDATED-TOPIC':
+            jobRepository.updateJob(data.jobId, data);
 
-			break;
+            break;
 
-		case "JOB-DELETED-TOPIC":
-			jobRepository.deleteJob(data.jobId);
+        case 'JOB-DELETED-TOPIC':
+            jobRepository.deleteJob(data.jobId);
 
-			break;
+            break;
 
-		case "PAYMENT-CREATED-TOPIC":
-			paymentRepository.createPayment(data);
+        case 'PAYMENT-CREATED-TOPIC':
+            paymentRepository.createPayment(data);
 
-			break;
+            break;
 
-		default:
-			break;
-	}
+        default:
+            break;
+    }
 };

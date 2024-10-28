@@ -47,8 +47,6 @@ function AuthRecruiter() {
                 dispatch(
                     setUser({
                         data: response.data,
-                        accessToken: response.accessToken!,
-                        refreshToken: response.refreshToken!,
                     })
                 );
                 notify(response.message, "success");

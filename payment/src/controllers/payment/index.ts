@@ -1,9 +1,9 @@
-import cratePaymentController from "./createPayment.controller";
+import cratePaymentController from './createPayment.controller';
 
-import { IDependency } from "../../frameworks/types/dependency";
+import { IDependency } from '../../frameworks/types/dependency';
 
 export = (dependencies: IDependency) => {
-	return {
-		cratePaymentController: cratePaymentController(dependencies),
-	};
+    return {
+        cratePaymentController: cratePaymentController(dependencies),
+    };
 };

@@ -1,4 +1,3 @@
-import getAllPaymentsUseCase from "./getPayments";
+import getAllPaymentsUseCase from './getPayments';
 
-
-export { getAllPaymentsUseCase }
+export { getAllPaymentsUseCase };

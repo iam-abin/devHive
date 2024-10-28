@@ -1,5 +1,5 @@
-import { Request, Response } from "express";
-import { IDependency } from "../../frameworks/types/dependencyInterface";
+import { Request, Response } from 'express';
+import { IDependency } from '../../frameworks/types/dependency';
 
 export = (dependencies: IDependency) => {
     const {
@@ -8,14 +8,11 @@ export = (dependencies: IDependency) => {
 
     return async (req: Request, res: Response) => {
         const { chatRoomId } = req.params;
-        const {userId} = req.currentUser;
-        const conversation = await getConversationUseCase(dependencies).execute(
-            userId,
-            chatRoomId
-        );
+        const { userId } = req.currentUser;
+        const conversation = await getConversationUseCase(dependencies).execute(userId, chatRoomId);
 
         res.status(200).json({
-            message: "Conversations are ",
+            message: 'Conversations are ',
             data: conversation,
         });
     };

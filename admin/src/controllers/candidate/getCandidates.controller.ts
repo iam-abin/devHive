@@ -1,18 +1,20 @@
-import { Request, Response } from "express";
-import { IDependency } from "../../frameworks/types/dependency";
+import { Request, Response } from 'express';
+import { IDependency } from '../../frameworks/types/dependency';
 
-export = (dependencies: IDependency)=>{
+export = (dependencies: IDependency) => {
+    const {
+        useCases: { getAllCandidatesUseCase },
+    } = dependencies;
 
-    const { useCases: { getAllCandidatesUseCase }} = dependencies
-
-    return async (req: Request, res: Response)=>{
-        
-        const { candidates, numberOfPages }  = await getAllCandidatesUseCase(dependencies).execute(
+    return async (req: Request, res: Response) => {
+        const { candidates, numberOfPages } = await getAllCandidatesUseCase(dependencies).execute(
             Number(req.params.page) || 1,
-            Number(req.params.limit) || 4
+            Number(req.params.limit) || 4,
         );
 
-        res.status(200).json({message: "candidates fetched successfully", data: { candidates, numberOfPages }  })
+        res.status(200).json({
+            message: 'candidates fetched successfully',
+            data: { candidates, numberOfPages },
+        });
     };
-
-}
+};

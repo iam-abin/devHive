@@ -1,18 +1,16 @@
-import { Request, Response } from "express";
-import { IDependency } from "../../frameworks/types/dependency";
-import { BadRequestError } from "@abijobportal/common";
+import { Request, Response } from 'express';
+import { IDependency } from '../../frameworks/types/dependency';
 
-export = (dependencies: IDependency)=>{
+export = (dependencies: IDependency) => {
+    const {
+        useCases: { getMemberShipPlanByIdUseCase },
+    } = dependencies;
 
-    const { useCases: { getMemberShipPlanByIdUseCase }} = dependencies
+    return async (req: Request, res: Response) => {
+        const { memberShipPlanId } = req.params;
 
-    return async (req: Request, res: Response)=>{
-        const {memberShipPlanId} = req.params;
-        
         const response = await getMemberShipPlanByIdUseCase(dependencies).execute(memberShipPlanId);
-        
-        res.status(200).json({message: "memberShipPlan get successfully", data: response })
 
+        res.status(200).json({ message: 'memberShipPlan get successfully', data: response });
     };
-
-}
+};

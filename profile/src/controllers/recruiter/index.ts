@@ -1,14 +1,13 @@
-import viewRecruiterProfileController from "./viewProfile.controller";
-import updateRecruiterProfileController from "./update.controller";
-import viewAllCandidatesProfilesController from "./getcandidates.controller";
+import viewRecruiterProfileController from './viewProfile.controller';
+import updateRecruiterProfileController from './update.controller';
+import viewAllCandidatesProfilesController from './getcandidates.controller';
 
+import { IDependency } from '../../frameworks/types/dependency';
 
-import { IDependency } from "../../frameworks/types/dependency";
-
-export = (dependencies: IDependency)=>{
+export = (dependencies: IDependency) => {
     return {
         viewRecruiterProfileController: viewRecruiterProfileController(dependencies),
         updateRecruiterProfileController: updateRecruiterProfileController(dependencies),
         viewAllCandidatesProfilesController: viewAllCandidatesProfilesController(dependencies),
-    }
-}
+    };
+};

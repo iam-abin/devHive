@@ -1,16 +1,15 @@
-import { Request, Response } from "express";
-import { IDependency } from "../../frameworks/types/dependency";
+import { Request, Response } from 'express';
+import { IDependency } from '../../frameworks/types/dependency';
 
-export = (dependencies: IDependency)=>{
+export = (dependencies: IDependency) => {
+    const {
+        useCases: { getRecruiterProfileByUserIdUseCase },
+    } = dependencies;
 
-    const { useCases: { getRecruiterProfileByUserIdUseCase }} = dependencies
-    
-
-    return async (req: Request, res: Response)=>{
-        const {userId} = req.currentUser!
+    return async (req: Request, res: Response) => {
+        const { userId } = req.currentUser!;
         const recruiter = await getRecruiterProfileByUserIdUseCase(dependencies).execute(userId);
-        
-        res.status(200).json({message: "recruiter data", data: recruiter })
-    };
 
-}
+        res.status(200).json({ message: 'recruiter data', data: recruiter });
+    };
+};

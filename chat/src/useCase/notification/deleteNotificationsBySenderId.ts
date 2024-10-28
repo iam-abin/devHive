@@ -1,17 +1,17 @@
-import { IDependency } from "../../frameworks/types/dependencyInterface";
+import { IDependency } from '../../frameworks/types/dependency';
 
 export = (dependencies: IDependency) => {
-	const {
-		repositories: { notificationsRepository },
-	} = dependencies;
+    const {
+        repositories: { notificationsRepository },
+    } = dependencies;
 
-	if (!notificationsRepository) {
-		throw new Error("jobApplicationRepository should exist in dependencies");
-	}
+    if (!notificationsRepository) {
+        throw new Error('jobApplicationRepository should exist in dependencies');
+    }
 
-	const execute =async (senderId: string, receiverId: string) => { 
-		return await notificationsRepository.clearAllNotificationsBySenderId( receiverId, senderId );
-	};
+    const execute = async (senderId: string, receiverId: string) => {
+        return await notificationsRepository.clearAllNotificationsBySenderId(receiverId, senderId);
+    };
 
-	return { execute };
+    return { execute };
 };

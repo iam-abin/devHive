@@ -1,6 +1,6 @@
-import Models from "../../database/mongo/models";
-import { IMessageDocument } from "../../database/mongo/models/message";
-import { IMessage } from "../../types/message";
+import Models from '../../database/mongo/models';
+import { IMessageDocument } from '../../database/mongo/models/message';
+import { IMessage } from '../../types/message';
 
 const { MessageModel } = Models;
 
@@ -17,11 +17,11 @@ export = {
         return chatMessages;
     },
 
-    setReadMessage: async (messageId: string): Promise<IMessageDocument | null>  => {
-        let message = await MessageModel.findByIdAndUpdate(
+    setReadMessage: async (messageId: string): Promise<IMessageDocument | null> => {
+        const message = await MessageModel.findByIdAndUpdate(
             messageId,
             { $set: { read: true } },
-            { new: true }
+            { new: true },
         );
         return message;
     },

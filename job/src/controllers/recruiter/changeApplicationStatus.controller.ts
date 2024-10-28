@@ -1,18 +1,22 @@
-import { Request, Response } from "express";
-import { IDependency } from "../../frameworks/types/dependencyInterface";
+import { Request, Response } from 'express';
+import { IDependency } from '../../frameworks/types/dependency';
 
-export = (dependencies: IDependency)=>{
+export = (dependencies: IDependency) => {
+    const {
+        useCases: { changeJobApplicationStatusUseCase },
+    } = dependencies;
 
-    const { useCases: { changeJobApplicationStatusUseCase }} = dependencies 
+    return async (req: Request, res: Response) => {
+        const { userId } = req.currentUser!;
+        const { jobApplicationId } = req.params;
+        const { jobApplicationStatus } = req.body;
 
-    return async (req: Request, res: Response)=>{
-        const {userId} = req.currentUser!;
-        const {jobApplicationId} = req.params;
-        const {jobApplicationStatus} = req.body
-        
-        const application = await changeJobApplicationStatusUseCase(dependencies).execute(jobApplicationId, jobApplicationStatus, userId);
-        
-        res.status(200).json({message: `status updated to ${jobApplicationStatus}`, data: application })
+        const application = await changeJobApplicationStatusUseCase(dependencies).execute(
+            jobApplicationId,
+            jobApplicationStatus,
+            userId,
+        );
+
+        res.status(200).json({ message: `status updated to ${jobApplicationStatus}`, data: application });
     };
-
-}
+};

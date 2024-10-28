@@ -1,43 +1,35 @@
-import { BadRequestError } from "@abijobportal/common";
-import { IDependency } from "../../frameworks/types/dependency";
-import { comparePassword } from "../../frameworks/utils/password";
-import {
-    createJwtAccessToken,
-    createJwtRefreshToken,
-} from "../../frameworks/utils/jwtToken";
+import { BadRequestError } from '@abijobportal/common';
+import { IDependency } from '../../frameworks/types/dependency';
+import { comparePassword } from '../../frameworks/utils/password';
+import { createJwtAccessToken, createJwtRefreshToken } from '../../frameworks/utils/jwtToken';
 
 export = (dependencies: IDependency) => {
     const {
         repositories: { usersRepository },
     } = dependencies;
 
-    if (!usersRepository)
-        throw new Error("usersRepository should exist in dependencies");
+    if (!usersRepository) throw new Error('usersRepository should exist in dependencies');
 
     const execute = async (email: string, password: string, requiredRole: string) => {
         const existingUser = await usersRepository.getByEmail(email);
 
         if (!existingUser) {
-            throw new BadRequestError("Invalid email or password");
+            throw new BadRequestError('Invalid email or password');
         }
 
         // check password is correct
-        const isSamePassword = await comparePassword(
-            password,
-            existingUser.password
-        );
-        
+        const isSamePassword = await comparePassword(password, existingUser.password);
+
         if (!isSamePassword) {
-            throw new BadRequestError("Invalid email or passwordd");
+            throw new BadRequestError('Invalid email or passwordd');
         }
 
         if (existingUser.role !== requiredRole) {
             throw new BadRequestError(`Invalid ${requiredRole}`);
         }
 
-        
         if (!existingUser.isActive) {
-            throw new BadRequestError("This is a blocked user");
+            throw new BadRequestError('This is a blocked user');
         }
 
         // Generate Jwt

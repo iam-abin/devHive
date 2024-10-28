@@ -7,7 +7,6 @@ import {
     verifyResetPasswordOtpCandidateApi,
     verifySignupOtpCandidateApi,
 } from "../../axios/apiMethods/auth-service/candidateAuth";
-import { setUser } from "../../redux/slice/user";
 import {
     verifyForgotPasswordOtpRecruiterApi,
     verifyResetPasswordOtpRecruiterApi,
@@ -96,16 +95,14 @@ function OtpFormPage() {
                             otp,
                             userEmail
                         );
-                        dispatch(setUser(response));
-                        navigate("/candidate");
+                        navigate("/candidate/signin");
                     }
                     if (userType === ROLES.RECRUITER) {
                         response = await verifySignupOtpRecruiterApi(
                             otp,
                             userEmail
                         );
-                        dispatch(setUser(response));
-                        navigate("/recruiter");
+                        navigate("/recruiter/signin");
                     }
                     break;
 

@@ -1,7 +1,6 @@
-import { Request, Response } from "express";
+import { Request, Response } from 'express';
 
-import { IDependency } from "../../frameworks/types/dependency";
-
+import { IDependency } from '../../frameworks/types/dependency';
 
 export = (dependencies: IDependency) => {
     const {
@@ -9,7 +8,7 @@ export = (dependencies: IDependency) => {
     } = dependencies;
 
     return async (req: Request, res: Response) => {
-        let { email } = req.body;
+        const { email } = req.body;
 
         await sendOtpEmailUseCase(dependencies).execute({ email });
         res.status(200).json({

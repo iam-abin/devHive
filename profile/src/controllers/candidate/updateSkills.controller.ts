@@ -1,18 +1,16 @@
-import { Request, Response } from "express";
-import { IDependency } from "../../frameworks/types/dependency";
-import { CandidateProfileUpdatedEventPublisher } from "../../frameworks/utils/kafka-events/publishers/candidate-profile-updated-publisher ";
-import { kafkaClient } from "../../config/kafka.connection";
+import { Request, Response } from 'express';
+import { IDependency } from '../../frameworks/types/dependency';
 
-export = (dependencies: IDependency)=>{
+export = (dependencies: IDependency) => {
+    const {
+        useCases: { updateSkillsUseCase },
+    } = dependencies;
 
-    const { useCases: { updateSkillsUseCase }} = dependencies
+    return async (req: Request, res: Response) => {
+        const { skills: skills } = req.body;
+        const { userId } = req.currentUser;
 
-    return async (req: Request, res: Response)=>{
-        const {skills: skills} = req.body;
-        const {userId} = req.currentUser
-        
         const candidate = await updateSkillsUseCase(dependencies).execute(userId, skills);
-        res.status(201).json({message: "skills updated", data: candidate })
+        res.status(201).json({ message: 'skills updated', data: candidate });
     };
-
-}
+};

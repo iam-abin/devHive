@@ -1,7 +1,7 @@
-import mongoose from "mongoose";
-import { IJob } from "../../../types/job";
+import mongoose from 'mongoose';
+import { IJob } from '../../../types/job';
 
-export interface IJobDocument extends mongoose.Document, Omit<IJob, "recruiterId"> {
+export interface IJobDocument extends mongoose.Document, Omit<IJob, 'recruiterId'> {
     recruiterId: mongoose.Schema.Types.ObjectId;
     isActive: boolean;
 }
@@ -11,20 +11,20 @@ const jobSchema = new mongoose.Schema(
         title: { type: String, required: true },
         recruiterId: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "User",
+            ref: 'User',
             required: true,
         },
         companyName: { type: String, required: true },
         companyLocation: { type: String, required: true },
         jobDescription: String,
-        skills: Array<String>,
+        skills: Array<string>,
         availablePosition: String,
         experienceRequired: String,
         educationRequired: String,
         employmentType: {
             type: String,
-            enum: ["full-time", "part-time", "internship", "contract"],
-            default: "full-time",
+            enum: ['full-time', 'part-time', 'internship', 'contract'],
+            default: 'full-time',
         },
         salaryMin: Number,
         salaryMax: Number,
@@ -43,7 +43,7 @@ const jobSchema = new mongoose.Schema(
             },
         },
         timestamps: true,
-    }
+    },
 );
 
 interface JobModel extends mongoose.Model<IJobDocument> {
@@ -55,7 +55,4 @@ jobSchema.statics.buildJob = (attributes: IJob) => {
     return new JobModel(attributes);
 };
 
-export const JobModel = mongoose.model<IJobDocument, JobModel>(
-    "Job",
-    jobSchema
-);
+export const JobModel = mongoose.model<IJobDocument, JobModel>('Job', jobSchema);

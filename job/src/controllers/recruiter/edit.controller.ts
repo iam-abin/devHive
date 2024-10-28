@@ -1,18 +1,21 @@
-import { Request, Response } from "express";
-import { IDependency } from "../../frameworks/types/dependencyInterface";
-import { IJob } from "../../frameworks/types/job";
+import { Request, Response } from 'express';
+import { IDependency } from '../../frameworks/types/dependency';
+import { IJob } from '../../frameworks/types/job';
 
-export = (dependencies: IDependency)=>{
+export = (dependencies: IDependency) => {
+    const {
+        useCases: { updateJobUseCase },
+    } = dependencies;
 
-    const { useCases: { updateJobUseCase }} = dependencies
-
-    return async (req: Request, res: Response)=>{
+    return async (req: Request, res: Response) => {
         const { jobId } = req.params;
-        const {userId} = req.currentUser!
-        const updatedJob = await updateJobUseCase(dependencies).execute(jobId, userId, req.body as Partial<IJob>);
-       
+        const { userId } = req.currentUser!;
+        const updatedJob = await updateJobUseCase(dependencies).execute(
+            jobId,
+            userId,
+            req.body as Partial<IJob>,
+        );
 
-        res.status(200).json({message: "Job updated successfully", data: updatedJob })
+        res.status(200).json({ message: 'Job updated successfully', data: updatedJob });
     };
-
-}
+};

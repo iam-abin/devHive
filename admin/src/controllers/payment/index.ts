@@ -1,9 +1,9 @@
-import { IDependency } from "../../frameworks/types/dependency";
+import { IDependency } from '../../frameworks/types/dependency';
 
-import getAllPaymentsController from "./getPayments.controller";
+import getAllPaymentsController from './getPayments.controller';
 
 export = (dependencies: IDependency) => {
-	return {
-		getAllPaymentsController: getAllPaymentsController(dependencies),
-	};
+    return {
+        getAllPaymentsController: getAllPaymentsController(dependencies),
+    };
 };

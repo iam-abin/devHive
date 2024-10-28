@@ -1,6 +1,6 @@
-import Models from "../../database/mongo/models";
-import { IUserDocument } from "../../database/mongo/models/users";
-import { ISignup, IUpdatePassword } from "../../types/user";
+import Models from '../../database/mongo/models';
+import { IUserDocument } from '../../database/mongo/models/users';
+import { ISignup, IUpdatePassword } from '../../types/user';
 
 const { UserModel } = Models;
 
@@ -8,70 +8,54 @@ const { UserModel } = Models;
 // const repository = () => {
 // 	return {
 export = {
-	// these fn's are returning a promise as async so we can define return type as Promise<CandidateDataInterface>
+    // these fn's are returning a promise as async so we can define return type as Promise<CandidateDataInterface>
 
-	register: async (userData: ISignup): Promise<IUserDocument> => {
-		const userObject = UserModel.buildUser(userData);
-		return await userObject.save();
-	},
+    register: async (userData: ISignup): Promise<IUserDocument> => {
+        const userObject = UserModel.buildUser(userData);
+        return await userObject.save();
+    },
 
-	updatePassword: async ({
-		userId,
-		password,
-	}: IUpdatePassword): Promise<IUserDocument | null> => {
-		const user = await UserModel.findByIdAndUpdate(userId, {password}, {new: true});
-		return user
-	},
+    updatePassword: async ({ userId, password }: IUpdatePassword): Promise<IUserDocument | null> => {
+        const user = await UserModel.findByIdAndUpdate(userId, { password }, { new: true });
+        return user;
+    },
 
-	getByEmail: async (email: string): Promise<IUserDocument | null> => {
-		const user = await UserModel.findOne({ email });
+    getByEmail: async (email: string): Promise<IUserDocument | null> => {
+        const user = await UserModel.findOne({ email });
 
-		return user;
-	},
+        return user;
+    },
 
-	getByPhone: async (phone: number): Promise<IUserDocument | null> => {
-		const user = await UserModel.findOne({ phone });
-		return user;
-	},
+    getByPhone: async (phone: number): Promise<IUserDocument | null> => {
+        const user = await UserModel.findOne({ phone });
+        return user;
+    },
 
-	// "setOtp" using only in forgot password email otp
-	setOtp: async (email: string, otp: any): Promise<IUserDocument | null> => {
-		const result = await UserModel.findOneAndUpdate(
-			{ email },
-			{ $set: { otp: otp } },
-			{ new: true }
-		);
+    // "setOtp" using only in forgot password email otp
+    setOtp: async (email: string, otp: number): Promise<IUserDocument | null> => {
+        const result = await UserModel.findOneAndUpdate({ email }, { $set: { otp: otp } }, { new: true });
 
-		return result;
-	},
+        return result;
+    },
 
-	deleteOtp: async (email: string): Promise<IUserDocument | null> => {
-		
-		const result = await UserModel.findOneAndUpdate(
-			{ email },
-			{ $unset: { otp: "" } },
-			{ new: true }
-		);
-		
-		if (!result) throw new Error("User not found");
-			
-		return result;
-	},
+    deleteOtp: async (email: string): Promise<IUserDocument | null> => {
+        const result = await UserModel.findOneAndUpdate({ email }, { $unset: { otp: '' } }, { new: true });
 
-	// user status is updated only by 'admin'
-	updateUser: async (userId: string, data: any): Promise<IUserDocument | null> => {
-		const user = await UserModel.findByIdAndUpdate(
-			userId,
-			{ $set: data },
-			{ new: true }
-		);
-		return user;
-	},
+        if (!result) throw new Error('User not found');
 
-	updateVerification: async (email: string): Promise<IUserDocument | null> => {
-		const user = await UserModel.findOneAndUpdate({ email }, {isVerified: true}, {new: true});
-		return user
-	},
+        return result;
+    },
+
+    // user status is updated only by 'admin'
+    updateUser: async (userId: string, data: Partial<ISignup>): Promise<IUserDocument | null> => {
+        const user = await UserModel.findByIdAndUpdate(userId, { $set: data }, { new: true });
+        return user;
+    },
+
+    updateVerification: async (email: string): Promise<IUserDocument | null> => {
+        const user = await UserModel.findOneAndUpdate({ email }, { isVerified: true }, { new: true });
+        return user;
+    },
 };
 // };
 

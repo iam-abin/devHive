@@ -1,5 +1,5 @@
 export interface IPayment {
-	candidateId: string;
-	membershipPlanId: string;
-	stripeId: string;
+    candidateId: string;
+    membershipPlanId: string;
+    stripeId: string;
 }

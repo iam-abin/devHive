@@ -1,4 +1,4 @@
-import { IUser } from "./user";
+import { IUser } from './user';
 
 export interface ICandidateProfile extends IUser {
     gender: string;
@@ -13,9 +13,9 @@ export interface ICandidateProfile extends IUser {
     experience: string;
     preferredJobs: string[];
     isPremiumUser: boolean;
+    address: string;
     isActive: boolean;
 }
-
 
 export interface IResume {
     filename: string;

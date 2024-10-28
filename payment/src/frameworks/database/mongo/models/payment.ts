@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import { IPayment } from "../../../types/payment";
+import mongoose from 'mongoose';
+import { IPayment } from '../../../types/payment';
 
 export interface IPaymentDocument extends mongoose.Document {
     candidateId: mongoose.Schema.Types.ObjectId;
@@ -31,7 +31,7 @@ const paymentSchema = new mongoose.Schema(
             },
         },
         timestamps: true,
-    }
+    },
 );
 
 interface PaymentModel extends mongoose.Model<IPaymentDocument> {
@@ -46,9 +46,6 @@ paymentSchema.statics.buildPayment = (attributes: IPayment) => {
     });
 };
 
-const PaymentModel = mongoose.model<IPaymentDocument, PaymentModel>(
-    "Payment",
-    paymentSchema
-);
+const PaymentModel = mongoose.model<IPaymentDocument, PaymentModel>('Payment', paymentSchema);
 
 export { PaymentModel };
