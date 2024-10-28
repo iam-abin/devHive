@@ -5,6 +5,13 @@ export interface IChatRoom {
 	createdAt: string
 }
 
+// export interface IChatRoomResponse {
+// 	_id: string,
+//     users: string[];
+// 	lastMessage: string
+// 	createdAt: string
+// }
+
 export interface IMessage {
 	senderId: string;
 	roomId: string;

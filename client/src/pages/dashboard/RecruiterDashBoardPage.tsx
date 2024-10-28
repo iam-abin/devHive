@@ -5,6 +5,7 @@ import {
 	getRecruiterDashboadGraphApi,
 } from "../../axios/apiMethods/jobs-service/jobs";
 import ChartThree from "../../components/charts/ChartThree";
+import { IResponse } from "../../types/api";
 
 const RecruiterDashBoardPage: React.FC = () => {
 	const [cardData, setCardData] = useState({
@@ -18,8 +19,8 @@ const RecruiterDashBoardPage: React.FC = () => {
 
 	useEffect(() => {
 		(async () => {
-			const cardData = await getRecruiterDashboardCardsApi();
-			const graphData = await getRecruiterDashboadGraphApi();
+			const cardData: IResponse = await getRecruiterDashboardCardsApi();
+			const graphData: IResponse = await getRecruiterDashboadGraphApi();
 			if (cardData && cardData.data) {
 				setCardData({ ...cardData.data });
 			}

@@ -7,6 +7,8 @@ import CandidateProfile from "../../../components/admin/profile/CandidateProfile
 import { setLoaded, setLoading } from "../../../redux/slice/isLoading";
 import { viewRecruiterProfileDetailsApi } from "../../../axios/apiMethods/admin-service/recruiters";
 import RecruiterProfile from "../../../components/admin/profile/RecruiterProfile";
+import { RootState } from "../../../redux/reducer";
+import { ICandidateProfile } from "../../../types/profile";
 
 const ViewProfile: React.FC = () => {
     const dispatch = useDispatch();
@@ -15,9 +17,9 @@ const ViewProfile: React.FC = () => {
 
     const isCandidateUrl = urlPath.pathname.includes("candidate");
 
-    const loadingStatus = useSelector((state: any) => state.loading.isLoading);
+    const loadingStatus = useSelector((store: RootState) => store.loading.isLoading);
 
-    const [profileData, setProfileData] = useState();
+    const [profileData, setProfileData] = useState<Partial<ICandidateProfile>>({});
 
     useEffect(() => {
         const fetchProfileDetails = async () => {

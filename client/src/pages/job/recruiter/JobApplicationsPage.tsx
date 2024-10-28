@@ -53,7 +53,7 @@ function JobApplicationsPage() {
         {
             Header: "Applied on",
             button :(row: { createdAt: string }) =>
-                formatDate(row?.createdAt!),
+                formatDate(row.createdAt!),
         },{
             Header: "View",
             button:  (row: { id: string }) => (

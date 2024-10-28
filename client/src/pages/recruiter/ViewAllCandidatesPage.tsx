@@ -36,7 +36,6 @@ function ViewAllCandidatesPage() {
 
             setCandidatesData(candidates.data.candidates);
             setpageCount(candidates.data.totalNumberOfPages);
-            console.log("pageCount", pageCount);
 
             // dispatch(setLoaded());
         })();

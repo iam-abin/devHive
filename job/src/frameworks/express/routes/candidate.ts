@@ -23,7 +23,7 @@ export const candidateRouter = (dependencies: IDependency) => {
         jobsController.viewJobByJobIdController
     );
 
-    router.post("/filter", jobsController.filterJobsController);
+    router.post("/filter/:page/:limit", jobsController.filterJobsController);
 
     router.post("/search/:page", jobsController.searchJobsController);
 

@@ -1,10 +1,11 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { clearItemFromLocalStorage, setItemToLocalStorage } from "../../utils/localStorage";
 import { LOCAL_STORAGE } from "../../utils/constants";
+import { IUserData } from "../../types/user";
 
 
 interface IUserSlice {
-    authData: any,
+    authData: IUserData | null,
     myProfile: any,
     otherUserProfile: any,
     accessToken: string | null,
@@ -42,7 +43,7 @@ const UserSlice = createSlice({
             clearItemFromLocalStorage(LOCAL_STORAGE.REFRESH_TOKEN);
         },
 
-        setMyProfileData: (state, action: PayloadAction<any>) => {
+        setMyProfileData: (state, action) => {
 			state.myProfile = action.payload;
 		},
 

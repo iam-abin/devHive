@@ -13,7 +13,7 @@ import { IJob } from "../../types/Job";
 
 function JobDetailsPage() {
     const [jobDetails, setJobDetails] = useState<IJob | null>(null);
-    const [hasApplied, setHasApplied] = useState<any>(false);
+    const [hasApplied, setHasApplied] = useState<boolean>(false);
     const navigate = useNavigate();
     const { jobId } = useParams();
     const locationUrl = useLocation();
@@ -35,7 +35,7 @@ function JobDetailsPage() {
         };
 
         fetchJobDetails();
-    }, [jobId]);
+    }, [jobId, userType]);
 
     // Candidate
     const handleApplyJob = async (jobId: string) => {
@@ -53,8 +53,8 @@ function JobDetailsPage() {
     };
 
     // Recruiter
-    const handleEditJob = async (id: string) => {
-        navigate(`/recruiter/edit-job-details/${id}`);
+    const handleEditJob = async (jobId: string) => {
+        navigate(`/recruiter/edit-job-details/${jobId}`);
     };
 
     const handleChangeJobCloseStatus = async (jobId: string) => {

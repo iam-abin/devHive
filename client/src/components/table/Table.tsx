@@ -13,10 +13,10 @@ const Table = ({
 }) => {
     const [currentPage, setCurrentPage] = useState(1);
 
-    const getNestedValue = (nestedObj: any, path: any) => {
+    const getNestedValue = (nestedObj: any, path: string) => {
         return path
             .split(".")
-            .reduce((acc: any, curr: any) => acc && acc[curr], nestedObj);
+            .reduce((acc: any, curr: string) => acc && acc[curr], nestedObj);
     };
 
     const handlePageChange = async (pageNumber: number) => {
@@ -39,7 +39,7 @@ const Table = ({
                             {columns.map((col: any, index: number) => (
                                 <th
                                     key={index}
-                                    className="py-3 px-6 text-left text-sm font-medium text-white uppercase tracking-wider"
+                                    className="py-3 px-6 text-center text-sm font-medium text-white uppercase tracking-wider"
                                 >
                                     {col.Header}
                                 </th>
@@ -60,7 +60,7 @@ const Table = ({
                                     {columns.map((col: any, index: number) => (
                                         <td
                                             key={index}
-                                            className="py-4 px-6 text-sm text-gray-700"
+                                            className="py-4 px-6 text-center text-sm text-gray-700"
                                         >
                                             {col.button
                                                 ? col.button(row) // Use custom Cell if defined

@@ -90,15 +90,13 @@ const CandidateProfilePage: React.FC = () => {
 
             setCandidateProfileData(candidateProfile.data);
             dispatch(setMyProfileData(candidateProfile?.data));
-            setSkills([...candidateProfile?.data.skills]);
-            setPreferredJobs([...candidateProfile?.data.preferredJobs]);
+            setSkills([...candidateProfile.data.skills]);
+            setPreferredJobs([...candidateProfile.data.preferredJobs]);
         })();
     }, [addSkillRerender]);
 
     const handleResumeUpload = async () => {
         try {
-            // const formData = new FormData();
-            // formData.append("file", selectedFile);
             if (selectedFile) {
                 // Perform the upload action here
 
@@ -117,8 +115,7 @@ const CandidateProfilePage: React.FC = () => {
                     filename: selectedFile.name,
                     url: downloadURL,
                 });
-                console.log(response);
-
+                
                 if (response) {
                     setCandidateProfileData({
                         ...candidateProfileData,

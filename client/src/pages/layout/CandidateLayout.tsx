@@ -3,15 +3,15 @@ import TopNavBar from "../../components/navBar/TopNavBar";
 import Footer from "../../components/footer/Footer";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/reducer";
+import { IUserData } from "../../types/user";
 
 const CandidateLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
-     // Dropdown menu items for candidate
-     const currentUser = useSelector(
+    // Dropdown menu items for candidate
+    const candidateData: IUserData | null = useSelector(
         (store: RootState) => store.userReducer.authData
     );
 
-
-     const menus = [
+    const menus = [
         { title: "Jobs", to: "/candidate/all-jobs" },
 
         {
@@ -26,7 +26,7 @@ const CandidateLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
             title: "Premium",
             to: "/candidate/payment-plans",
         },
-        { title: "Chat", to: `/candidate/chat/${currentUser.id}` },
+        { title: "Chat", to: `/candidate/chat/${candidateData?.id}` },
         { title: "Reset Password", to: "/candidate/passwordResetMobile" },
     ];
 

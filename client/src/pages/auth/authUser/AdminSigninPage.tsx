@@ -32,9 +32,9 @@ function AdminSigninPage() {
         navigate("/admin");
     };
 
-    const adminData = useSelector((store: RootState) => {
-        return store.userReducer.authData;
-    });
+    const adminData = useSelector(
+        (store: RootState) => store.userReducer.authData
+    );
 
     useEffect(() => {
         if (adminData) {

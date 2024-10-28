@@ -4,7 +4,7 @@ const RECRUITER_JOB_URL = `job/recruiter`;
 const jobApiUrlConfig = {
     // Common
     getAllJobsUrl: (page: number) => `${CANDIDATE_JOB_URL}/all-jobs/${page}`,
-    filterJobsUrl: `${CANDIDATE_JOB_URL}/filter`,
+    filterJobsUrl: (page: number,limit: number)=> `${CANDIDATE_JOB_URL}/filter/${page}/${limit}`,
     getJobFieldsDistinctValuesUrl: `${CANDIDATE_JOB_URL}/all-job-fields-distinct-values`,
     getAJobUrl: (id: string) => `${RECRUITER_JOB_URL}/${id}`,
 

@@ -4,8 +4,7 @@ import { useParams } from "react-router-dom";
 import JobApplicationDetails from "../../../components/recruiter/JobApplicationDetails";
 
 function JobApplicationDetailsPage() {
-    const [jobApplicationDetails, setJobApplicationDetails] =
-        useState<any>(null);
+    const [jobApplicationDetails, setJobApplicationDetails] = useState(null);
 
     const { jobApplicationId } = useParams();
     useEffect(() => {

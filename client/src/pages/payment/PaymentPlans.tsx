@@ -10,11 +10,11 @@ import { getAllMembershipPlansByCandidateApi } from "../../axios/apiMethods/prem
 const PaymentPlans: React.FC = () => {
     const [membershipPlansData, setMembershipPlansData] = useState<[]>([]);
 
-    const candidateData: any = useSelector(
+    const candidateData = useSelector(
         (store: RootState) => store.userReducer.authData
     );
 
-    const candidateProfileData: any = useSelector(
+    const candidateProfileData = useSelector(
         (store: RootState) => store.userReducer.myProfile
     );
 

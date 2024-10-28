@@ -1,6 +1,7 @@
 import React from "react";
+import { ICandidateProfile } from "../../../types/profile";
 
-const CandidateProfile: React.FC<{ data: any }> = ({ data }) => {
+const CandidateProfile: React.FC<{ data: Partial<ICandidateProfile> }> = ({ data }) => {
 	return (
 		<div className="container mx-auto mt-8">
 			<div className="bg-white p-8 rounded-lg shadow-md">

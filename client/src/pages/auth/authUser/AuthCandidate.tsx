@@ -34,7 +34,7 @@ const AuthCandidate: React.FC = () => {
     const locationUrl = useLocation();
 
     const isSigninUrl: boolean = locationUrl.pathname.includes("signin");
-    const authType = isSigninUrl ? "signin" : "signup";
+    const authType: "signin" | "signup"  = isSigninUrl ? "signin" : "signup";
 
     const isLoading = useSelector(
         (state: RootState) => state.loading.isLoading

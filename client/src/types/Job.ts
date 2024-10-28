@@ -1,7 +1,7 @@
 import { JobFormSchemaType } from "../utils/validations/createJob";
 import {  IRecruiterProfileResponse } from "./profile";
 
-interface IOptionalProperties {
+interface IJobOptionalProperties {
     id: string;
     jobDescription: string;
     skills: string[];
@@ -16,7 +16,7 @@ interface IOptionalProperties {
 }
 
 
-export interface IJob extends Partial<IOptionalProperties> {
+export interface IJob extends Partial<IJobOptionalProperties> {
     title: string;
     recruiterId: string ;
     companyName: string;
@@ -47,4 +47,11 @@ export interface IJobApplication {
     candidateId: string;
     recruiterId: string;
     applicationStatus: string;
+}
+
+
+export interface IFilter {
+    title: string;
+    companyLocation: string;
+    employmentType: string;
 }

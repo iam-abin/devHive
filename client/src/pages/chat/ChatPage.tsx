@@ -117,7 +117,7 @@ const ChatPage = () => {
             // socket.off("chatNotification");
             dispatch(clearSelectedChatRoom());
         };
-    }, []);
+    }, [dispatch]);
 
     useEffect(() => {
         socket.on("connect_error", (error) => {

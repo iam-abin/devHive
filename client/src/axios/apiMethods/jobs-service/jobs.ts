@@ -1,6 +1,7 @@
 
 import jobApiUrlConfig from "../../../config/apiUrlsConfig/jobApiUrlConfig";
 import { IResponse } from "../../../types/api";
+import { IFilter } from "../../../types/Job";
 import makeApiCall from "../../apiCalls";
 
 
@@ -8,8 +9,8 @@ export const getAllJobsApi = async (page: number): Promise<IResponse> => {
     return await makeApiCall("get", jobApiUrlConfig.getAllJobsUrl(page));
 };
 
-export const filterJobsApi = async (filterData: any): Promise<IResponse> => {
-    return await makeApiCall("post", jobApiUrlConfig.filterJobsUrl, filterData);
+export const filterJobsApi = async (filterData: IFilter, page: number, limit: number): Promise<IResponse> => {
+    return await makeApiCall("post", jobApiUrlConfig.filterJobsUrl(page,limit), filterData);
 };
 
 

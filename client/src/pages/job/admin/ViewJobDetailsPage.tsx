@@ -13,7 +13,7 @@ import { IJob } from "../../../types/Job";
 const ViewJobDetailsPage: React.FC = () => {
     const { jobId } = useParams();
 
-    const [jobDetails, setJobDetails] = useState<IJob | {}>();
+    const [jobDetails, setJobDetails] = useState<Partial<IJob>>({});
 
     useEffect(() => {
         (async () => {
@@ -33,7 +33,7 @@ const ViewJobDetailsPage: React.FC = () => {
                     notify(updatedJob.message, "success");
                 }
 
-                 setJobDetails((prevDetails: IJob | {}) => ({
+                setJobDetails((prevDetails = {}) => ({
                     ...prevDetails,
                     ...updatedJob.data,
                 }));

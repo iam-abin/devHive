@@ -30,7 +30,7 @@ function JobsManagementPage() {
     }, []);
 
 
-    const viewJobDetails = async (jobId: string) => {
+    const viewJobDetails = async (jobId: string): Promise<void> => {
         navigate(`/admin/job/viewJobDetails/${jobId}`);
     };
 

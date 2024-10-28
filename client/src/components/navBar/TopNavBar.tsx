@@ -33,12 +33,13 @@ import { recruiterSignoutApi } from "../../axios/apiMethods/auth-service/recruit
 import { IResponse } from "../../types/api";
 import { swal } from "../../utils/swal";
 import { checkUserRole } from "../../utils/checkRole";
+import { CONSTANTS } from "../../utils/constants";
 
-interface IMenu{
-    title: string,
-    to: string,
+interface IMenu {
+    title: string;
+    to: string;
 }
-const TopNavBar = ({menus}:{menus?: IMenu[]}) => {
+const TopNavBar = ({ menus }: { menus?: IMenu[] }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -50,15 +51,13 @@ const TopNavBar = ({menus}:{menus?: IMenu[]}) => {
         (store: RootState) => store.userReducer.authData
     );
 
-    const myProfile: any = useSelector((store: RootState) => {
+    const myProfile = useSelector((store: RootState) => {
         return store.userReducer.myProfile;
     });
 
-    const { isCandidate, isRecruiter } = checkUserRole(currentUser);
-    console.log(currentUser);
-    
+    const { isCandidate, isRecruiter } = checkUserRole(currentUser!);
 
-    const handleLogout = async () => {
+    const handleLogout = async (): Promise<void> => {
         swal("Do you want to Logout?", "Yes, Logout").then(async (result) => {
             if (result.isConfirmed) {
                 let response: IResponse | null = null;
@@ -92,7 +91,7 @@ const TopNavBar = ({menus}:{menus?: IMenu[]}) => {
 
     useEffect(() => {
         (async () => {
-            if (isCandidateUrl && isCandidate) {
+            if (isCandidateUrl && isCandidate && currentUser?.id) {
                 const candidateProfileData = await getCandidateProfileApi(
                     currentUser?.id
                 );
@@ -102,13 +101,13 @@ const TopNavBar = ({menus}:{menus?: IMenu[]}) => {
     }, [currentUser, isCandidateUrl, dispatch]);
 
     // chatRoom
-    const selectedChatRoom = useSelector(
+    const selectedChatRoom: IChatRoom | null = useSelector(
         (store: RootState) => store.chatReducer.roomData
     );
 
     const getOtherChatRoomUser = (chatRoom: IChatRoom) => {
         console.log("getOtherChatRoomUser", chatRoom);
-        
+
         const otherUser = chatRoom?.users?.find(
             (value: any) => value?._id !== myProfile?.id
         );
@@ -123,7 +122,6 @@ const TopNavBar = ({menus}:{menus?: IMenu[]}) => {
         setOpenNotifications(!openNotifications);
         dispatch(clearNotificationsCount()); // Reset count to 0 when opened
     };
-
 
     useEffect(() => {
         if (openNotifications) {
@@ -177,11 +175,11 @@ const TopNavBar = ({menus}:{menus?: IMenu[]}) => {
     ]);
 
     // Notifications
-    const notificationsCount = useSelector(
+    const notificationsCount: number = useSelector(
         (store: RootState) => store.notificationReducer.notificationsCount
     );
 
-    const notifications = useSelector(
+    const notifications: INotification[] = useSelector(
         (store: RootState) => store.notificationReducer.notifications
     );
 
@@ -207,7 +205,7 @@ const TopNavBar = ({menus}:{menus?: IMenu[]}) => {
     }, [notifications, selectedChatRoom, dispatch]);
 
     useEffect(() => {
-        socket.on("chatNotification", (data: any) => {
+        socket.on("chatNotification", (data: INotification) => {
             if (!selectedChatRoom) {
                 setNotifications([...notifications, data]);
             }
@@ -295,7 +293,7 @@ const TopNavBar = ({menus}:{menus?: IMenu[]}) => {
                         />
                     )}
                 </div>
-                
+
                 {isCandidate && (
                     <div className="flex-none ">
                         {myProfile && myProfile?.name}
@@ -307,11 +305,11 @@ const TopNavBar = ({menus}:{menus?: IMenu[]}) => {
                             >
                                 <div className="w-10 rounded-full ">
                                     <img
-                                        alt="Tailwind CSS Navbar component"
+                                        alt="profile image"
                                         src={`${
-                                            myProfile
+                                            myProfile && myProfile.profileImage
                                                 ? myProfile.profileImage
-                                                : "https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+                                                : CONSTANTS.RECRUITER_DEFAULT_PROFILE_IMAGE
                                         }`}
                                     />
                                 </div>
@@ -320,24 +318,25 @@ const TopNavBar = ({menus}:{menus?: IMenu[]}) => {
                                 tabIndex={0}
                                 className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
                             >
-                                {menus && menus.map((menu: any, index: number) => {
-                                    const isActive = useMatch(menu.to);
-                                    return (
-                                        <li key={index}>
-                                            <Link
-                                                className={`${
-                                                    isActive
-                                                        ? "font-bold bg-base-300"
-                                                        : ""
-                                                }`}
-                                                to={menu.to}
-                                            >
-                                                {menu.title}
-                                            </Link>
-                                        </li>
-                                    );
-                                })}
-                                
+                                {menus &&
+                                    menus.map((menu: IMenu, index: number) => {
+                                        const isActive = useMatch(menu.to);
+                                        return (
+                                            <li key={index}>
+                                                <Link
+                                                    className={`${
+                                                        isActive
+                                                            ? "font-bold bg-base-300"
+                                                            : ""
+                                                    }`}
+                                                    to={menu.to}
+                                                >
+                                                    {menu.title}
+                                                </Link>
+                                            </li>
+                                        );
+                                    })}
+
                                 <li onClick={handleLogout}>
                                     <a>Logout</a>
                                 </li>

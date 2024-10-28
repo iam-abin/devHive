@@ -21,6 +21,7 @@ export interface ICandidateProfile extends IUserProfile {
     experience: string;
     preferredJobs: string[];
     isPremiumUser: boolean;
+    address: string;
     isActive: boolean;
 }
 

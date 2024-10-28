@@ -9,58 +9,61 @@ import LeftNavBarRecruiter from "../../components/navBar/LeftNavBarRecruiter";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/reducer";
 import TopNavBar from "../../components/navBar/TopNavBar";
+import { IUserData } from "../../types/user";
 
 const RecruiterLayout = () => {
-	const recruiterData: any = useSelector(
-		(store: RootState) => store.userReducer.authData
-	);
+    const recruiterData: IUserData = useSelector(
+        (store: RootState) => store.userReducer.authData!
+    );
 
-	const menus = [
-		{ title: "Dashboard", src: dashboard, to: "/recruiter" },
-		{
-			title: "Candidates",
-			src: dashboard,
-			to: "/recruiter/all-candidates",
-		},
-		// { title: "Jobs", src: finance, to: "/recruiter/all-jobs" },
-		{
-			title: "Added Jobs",
-			src: finance,
-			to: "/recruiter/recruiter-added-jobs",
-		},
-		{
-			title: "Applicants",
-			src: companies,
-			to: "/recruiter/applications",
-		},
-		{
-			title: "Chats",
-			src: candidates,
-			to: `/recruiter/chat/${recruiterData?.id!}`,
-		},
-		{ title: "Profile", src: membership, to: "/recruiter/profile" },
-	];
+    const menus = [
+        { title: "Dashboard", src: dashboard, to: "/recruiter" },
+        {
+            title: "Candidates",
+            src: dashboard,
+            to: "/recruiter/all-candidates",
+        },
+        // { title: "Jobs", src: finance, to: "/recruiter/all-jobs" },
+        {
+            title: "Added Jobs",
+            src: finance,
+            to: "/recruiter/recruiter-added-jobs",
+        },
+        {
+            title: "Applicants",
+            src: companies,
+            to: "/recruiter/applications",
+        },
+        {
+            title: "Chats",
+            src: candidates,
+            to: `/recruiter/chat/${recruiterData.id}`,
+        },
+        { title: "Profile", src: membership, to: "/recruiter/profile" },
+    ];
 
-	return (
-		<>
-			{/*top-nav-bar */}
-			<TopNavBar />
+    return (
+        <>
+            {/*top-nav-bar */}
+            <TopNavBar />
 
-			<div className="flex">
-				{/* left-nav-bar for screens larger >=md */}
-				{<div
-					className={`sticky hidden md:block top-0  overflow-y-auto `} // Hide on small screens, show on medium and larger screens
-				>
-					<LeftNavBarRecruiter menus={menus} />
-				</div>}
+            <div className="flex">
+                {/* left-nav-bar for screens larger >=md */}
+                {
+                    <div
+                        className={`sticky hidden md:block top-0  overflow-y-auto `} // Hide on small screens, show on medium and larger screens
+                    >
+                        <LeftNavBarRecruiter menus={menus} />
+                    </div>
+                }
 
-				{/* right-side */}
-				<div className="flex-1 sm:h-screen overflow-auto pt-16 bg-slate-400">
-					{<Outlet />}
-				</div>
-			</div>
-		</>
-	);
+                {/* right-side */}
+                <div className="flex-1 sm:h-screen overflow-auto pt-16 bg-slate-400">
+                    {<Outlet />}
+                </div>
+            </div>
+        </>
+    );
 };
 
 export default RecruiterLayout;
