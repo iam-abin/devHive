@@ -1,4 +1,4 @@
-import { Kafka, KafkaMessage } from 'kafkajs';
+import { Kafka } from 'kafkajs';
 import { KafkaConsumer, TOPICS, MEMBERSHIP_PLAN_CREATED_EVENT } from '@abijobportal/common';
 import { handleMessage } from '../handleMessage';
 
@@ -11,12 +11,8 @@ export class MembershipPlanCreatedEventConsumer extends KafkaConsumer<MEMBERSHIP
         super(client);
     }
 
-    async onMessage(
-        data: MEMBERSHIP_PLAN_CREATED_EVENT['data'],
-        topic: string,
-        message: KafkaMessage,
-    ): Promise<void> {
+    async onMessage(data: MEMBERSHIP_PLAN_CREATED_EVENT['data'], topic: string): Promise<void> {
         // dont need to check role as every users are stored in one collection
-        handleMessage(data, topic );
+        handleMessage(data, topic);
     }
 }

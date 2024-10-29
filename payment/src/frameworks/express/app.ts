@@ -17,8 +17,7 @@ app.use(cors());
 // Middlewares
 app.use(morgan('dev'));
 
-app.use(express.json()); // Set the maximum allowed request body size
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(compression());
 
 // Routes

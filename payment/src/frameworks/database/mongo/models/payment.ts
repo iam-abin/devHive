@@ -39,11 +39,7 @@ interface PaymentModel extends mongoose.Model<IPaymentDocument> {
 }
 
 paymentSchema.statics.buildPayment = (attributes: IPayment) => {
-    return new PaymentModel({
-        candidateId: attributes.candidateId,
-        membershipPlanId: attributes.membershipPlanId,
-        stripeId: attributes.stripeId,
-    });
+    return new PaymentModel(attributes);
 };
 
 const PaymentModel = mongoose.model<IPaymentDocument, PaymentModel>('Payment', paymentSchema);

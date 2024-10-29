@@ -4,6 +4,7 @@ import { kafkaClient } from '../../config/kafka.connection';
 import { stripeInstance } from '../../config/stripe';
 import { IDependency } from '../../frameworks/types/dependency';
 import { PremiumPaymentDonePublisher } from '../../frameworks/utils/kafka-events/publishers/paymentDonePublisher';
+import { Payment } from '../../entities/payment';
 
 export = (dependencies: IDependency) => {
     const {
@@ -11,6 +12,7 @@ export = (dependencies: IDependency) => {
     } = dependencies;
 
     if (!paymentRepository) throw new Error('paymentRepository should exist in dependencies');
+    if (!membershipRepository) throw new Error('membershipRepository should exist in dependencies');
 
     const execute = async (candidateId: string, membershipPlanId: string, amount: number) => {
         const plan = await membershipRepository.getById(membershipPlanId);
@@ -35,18 +37,17 @@ export = (dependencies: IDependency) => {
             cancel_url: appConfig.PAYMENT_CANCEL_URL,
         });
 
+        const payment = new Payment({ candidateId, membershipPlanId, stripeId: session.id });
+        const createdPayment = await paymentRepository.createPayment(payment);
+
         const paymentCreatedEvent = new PremiumPaymentDonePublisher(kafkaClient);
 
         await paymentCreatedEvent.publish({
             candidateId,
             membershipPlanId,
         });
-        //   return session
-        return await paymentRepository.createPayment({
-            candidateId,
-            membershipPlanId,
-            stripeId: session.id,
-        });
+
+        return createdPayment;
     };
 
     return { execute };
