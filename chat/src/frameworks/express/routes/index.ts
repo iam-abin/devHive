@@ -1,19 +1,17 @@
 import express from 'express';
 
 import { IDependency } from '../../types/dependency';
-import { candidateRouter } from './candidate';
-import { recruiterRouter } from './recruiter';
+import { chatRouter } from './routes';
 
-import { checkCurrentUser } from '@abijobportal/common';
+import { auth, checkCurrentUser, ROLES } from '@abijobportal/common';
 
 export const routes = (dependencies: IDependency) => {
     const router = express.Router();
 
-    const candidate = candidateRouter(dependencies);
-    const recruiter = recruiterRouter(dependencies);
+    const routes = chatRouter(dependencies);
 
-    router.use('/candidate', checkCurrentUser, candidate);
-    router.use('/recruiter', checkCurrentUser, recruiter);
+    router.use('/candidate', checkCurrentUser, auth(ROLES.CANDIDATE), routes);
+    router.use('/recruiter', checkCurrentUser, auth(ROLES.RECRUITER), routes);
 
     return router;
 };

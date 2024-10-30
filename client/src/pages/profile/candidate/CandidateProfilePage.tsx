@@ -4,10 +4,10 @@ import { RootState } from "../../../redux/reducer";
 import {
     getCandidateProfileApi,
     deleteResumeApi,
-    updateCandidatePreferredJobsProfileApi,
-    updateCandidateSkillsProfileApi,
-    uploadCandidateImageProfileApi,
-    uploadCandidateResumeProfileApi,
+    updateCandidatePreferredJobsApi,
+    updateCandidateSkillsApi,
+    uploadCandidateImageApi,
+    uploadCandidateResumeApi,
 } from "../../../axios/apiMethods/profile-service/candidate";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import ImageFileUpload from "../../../components/upload/ImageFileUpload";
@@ -84,9 +84,7 @@ const CandidateProfilePage: React.FC = () => {
                     candidateId ?? id
                 );
             } else {
-                candidateProfile = await getCandidateProfileApi(
-                    candidateId ?? id
-                );
+                candidateProfile = await getCandidateProfileApi();
             }
 
             setCandidateProfileData(candidateProfile.data);
@@ -112,7 +110,7 @@ const CandidateProfilePage: React.FC = () => {
                 );
                 const downloadURL = await getDownloadURL(uploadResume.ref);
 
-                const response = await uploadCandidateResumeProfileApi({
+                const response = await uploadCandidateResumeApi({
                     filename: selectedFile.name,
                     url: downloadURL,
                 });
@@ -140,9 +138,7 @@ const CandidateProfilePage: React.FC = () => {
         swal(`Do you want to delete this resume`, `Yes, delete`).then(
             async (result) => {
                 if (result.isConfirmed) {
-                    const updatedCandidate = await deleteResumeApi(
-                        candidateData.id
-                    );
+                    const updatedCandidate = await deleteResumeApi();
 
                     if (updatedCandidate) {
                         setCandidateProfileData({
@@ -157,7 +153,7 @@ const CandidateProfilePage: React.FC = () => {
     };
 
     const handleSavePreferredJobs = async () => {
-        const response = await updateCandidatePreferredJobsProfileApi(
+        const response = await updateCandidatePreferredJobsApi(
             preferredJobs
         );
 
@@ -171,7 +167,7 @@ const CandidateProfilePage: React.FC = () => {
     };
 
     const handleSaveSkills = async () => {
-        const response = await updateCandidateSkillsProfileApi(
+        const response = await updateCandidateSkillsApi(
             skills
         );
 
@@ -190,7 +186,7 @@ const CandidateProfilePage: React.FC = () => {
             formData.append("file", selectedFile);
 
             setImgLoading(true);
-            const response = await uploadCandidateImageProfileApi(formData);
+            const response = await uploadCandidateImageApi(formData);
 
             if (response.data) {
                 hotToastMessage(response.message, "success");

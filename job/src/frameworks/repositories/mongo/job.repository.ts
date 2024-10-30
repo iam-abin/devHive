@@ -20,13 +20,16 @@ export = {
     },
 
     deleteJob: async (jobId: string) => {
-        const deletedJob = await JobModel.findByIdAndDelete(jobId);
+        const deletedJob = await JobModel.findByIdAndUpdate(
+            jobId,
+            { $set: { isDeleted: true } },
+            { new: true },
+        );
         return deletedJob;
     },
 
     updateJob: async (jobId: string, data: Partial<IJob>): Promise<IJobDocument | null> => {
         const updatedJob = await JobModel.findByIdAndUpdate(jobId, { $set: data }, { new: true });
-
         return updatedJob;
     },
 

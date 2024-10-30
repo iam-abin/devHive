@@ -8,6 +8,7 @@ import Loading from "../components/loading/Loading";
 
 import RecruiterLayout from "../pages/layout/RecruiterLayout";
 import { checkUserRole } from "../utils/checkRole";
+import { IUserData } from "../types/user";
 
 const RecruiterDashBoard = lazy(()=> import("../pages/dashboard/RecruiterDashBoardPage"))
 const CandidateProfilePage = lazy(()=> import("../pages/profile/candidate/CandidateProfilePage"))
@@ -31,7 +32,7 @@ const NotFound = lazy(()=> import("../pages/Error/NotFound"))
 
 function RecruiterRouters() {
 	
-	const loggedinUser = useSelector(
+	const loggedinUser: IUserData | null = useSelector(
         (store: RootState) => store.userReducer.authData
     );
 

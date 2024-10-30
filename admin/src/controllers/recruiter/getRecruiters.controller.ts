@@ -12,8 +12,6 @@ export = (dependencies: IDependency) => {
             Number(req.params.limit) || 4,
         );
 
-        console.log({ recruiters, numberOfPages });
-
         res.status(200).json({ message: 'all recruiters', data: { recruiters, numberOfPages } });
     };
 };

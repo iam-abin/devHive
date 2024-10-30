@@ -1,3 +1,4 @@
+import { ROLES } from '@abijobportal/common';
 import candidateProfileRepository from '../../repository/mongo/candidateProfile.repository';
 import recruiterProfileRepository from '../../repository/mongo/recruiterProfile.repository';
 
@@ -5,17 +6,17 @@ import recruiterProfileRepository from '../../repository/mongo/recruiterProfile.
 export const handleMessage = (data: any, topic: string) => {
     switch (topic) {
         case 'USER-CREATED-TOPIC':
-            if (data.role === 'candidate') {
+            if (data.role === ROLES.CANDIDATE) {
                 candidateProfileRepository.createCandidateProfile(data);
-            } else if (data.role === 'recruiter') {
+            } else if (data.role === ROLES.RECRUITER) {
                 recruiterProfileRepository.createRecruiterProfile(data);
             }
             break;
 
         case 'USER-UPDATED-TOPIC':
-            if (data.role === 'candidate') {
+            if (data.role === ROLES.CANDIDATE) {
                 candidateProfileRepository.updateCandidateProfile(data.userId, data);
-            } else if (data.role === 'recruiter') {
+            } else if (data.role === ROLES.RECRUITER) {
                 recruiterProfileRepository.updateRecruiterProfile(data.userId, data);
             }
             break;

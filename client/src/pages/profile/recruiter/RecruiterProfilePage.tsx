@@ -5,7 +5,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { RootState } from "../../../redux/reducer";
 import { recruiterGetProfileApi } from "../../../axios/apiMethods/profile-service/recruiter";
-import { recruiterGetProfileByCandidateApi } from "../../../axios/apiMethods/profile-service/candidate";
+import { getARecruiterProfileApi } from "../../../axios/apiMethods/profile-service/candidate";
 
 const RecruiterProfilePage: React.FC = () => {
     const recruiterData: any = useSelector(
@@ -24,11 +24,9 @@ const RecruiterProfilePage: React.FC = () => {
         (async () => {
             let recruiterProfile = null;
             if (isCandidate) {
-                recruiterProfile = await recruiterGetProfileByCandidateApi(id!);
+                recruiterProfile = await getARecruiterProfileApi(id!);
             } else {
-                recruiterProfile = await recruiterGetProfileApi(
-                    recruiterData.id
-                );
+                recruiterProfile = await recruiterGetProfileApi();
             }
 
             setRecruiterProfileData(recruiterProfile);

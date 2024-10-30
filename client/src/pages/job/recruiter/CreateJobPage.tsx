@@ -24,9 +24,7 @@ function CreateJobPage() {
     useEffect(() => {
         (async () => {
             if (recruiterData) {
-                const recruiterProfile = await recruiterGetProfileApi(
-                    recruiterData.id
-                );
+                const recruiterProfile = await recruiterGetProfileApi();
 
                 setecruiterProfileData(recruiterProfile.data);
                 initialJobValues.companyName =
@@ -54,7 +52,7 @@ function CreateJobPage() {
 
     return (
         <>
-            <div className="flex items-center justify-center h-full bg-fuchsia-50">
+            <div className="flex items-center justify-center bg-fuchsia-50">
                 <CreateJobForm
                     initialJobValues={initialJobValues}
                     handleSubmit={handleSubmit}

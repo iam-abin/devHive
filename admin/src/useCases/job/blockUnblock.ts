@@ -18,10 +18,9 @@ export = (dependencies: IDependency) => {
         const isBlocked = await jobRepository.blockUnblock(jobId);
 
         // to produce a message to kafka topic
-        // isBlocked contains user data with 'isActive' value changed
         const jobUpdatedEvent = new JobUpdatedEventPublisher(kafkaClient);
         await jobUpdatedEvent.publish({
-            jobId: isBlocked.jobId,
+            jobId: isBlocked._id,
             isActive: isBlocked.isActive,
         });
 

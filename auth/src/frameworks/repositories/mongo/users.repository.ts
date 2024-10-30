@@ -51,10 +51,8 @@ export = {
     },
 
     updateVerification: async (email: string): Promise<IUserDocument | null> => {
-        console.log("inside updateverification repo email ", email);
         
         const user = await UserModel.findOneAndUpdate({ email }, { isVerified: true }, { new: true });
-        console.log("inside updateverification repo use ", user);
         return user;
     },
 };

@@ -9,8 +9,8 @@ export const candidateRouter = (dependencies: IDependency) => {
 
     // candidate
     router.get('/candidates/:page/:limit', candidateController.getAllCandidatesController);
-    router.get('/viewProfile/:userId', candidateController.getCandidateByIdController);
-    router.put('/blockUnblock/:userId', candidateController.candidateBlockUnblockController);
+    router.get('/view-profile/:userId', candidateController.getCandidateByIdController);
+    router.put('/block-unblock/:userId', candidateController.candidateBlockUnblockController);
 
     return router;
 };

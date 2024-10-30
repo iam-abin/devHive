@@ -12,7 +12,7 @@ export = (dependencies: IDependency) => {
         const job = await changeClosejobStatusUseCase(dependencies).execute(jobId, userId);
 
         res.status(200).json({
-            message: `close status updated to ${job?.isActive ? 'Close' : 'Open'}`,
+            message: `close status updated to ${job?.isActive ? 'Open' : 'Close'}`,
             data: job,
         });
     };

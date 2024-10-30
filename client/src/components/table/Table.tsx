@@ -27,9 +27,7 @@ const Table = ({
     useEffect(() => {
         setCurrentPage(currentPage);
     }, [data]);
-
-    console.log("Payments Data:", data);
-
+    
     return (
         <>
             <div className="overflow-x-auto">

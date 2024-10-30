@@ -1,6 +1,6 @@
 import updateCandidateProfileUseCase from './updateProfile';
 import uploadResumeUseCase from './uploadResume';
-import getCandidateProfileByUserIdUseCase from './getProfileById';
+import getCandidateProfileByIdUseCase from './getProfileById';
 import getCandidateProfileByEmailUseCase from './getProfileByEmail';
 import uploadCandidateProfilePicUseCase from './uploadProfilePic';
 import updateSkillsUseCase from './updateSkills';
@@ -11,7 +11,7 @@ export {
     updateCandidateProfileUseCase,
     uploadResumeUseCase,
     deleteResumeUseCase,
-    getCandidateProfileByUserIdUseCase,
+    getCandidateProfileByIdUseCase,
     getCandidateProfileByEmailUseCase,
     uploadCandidateProfilePicUseCase,
     updateSkillsUseCase,

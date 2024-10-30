@@ -1,6 +1,6 @@
 import express, { Router } from 'express';
 
-import { candidateProfileControllers } from '../../../controllers';
+import { candidateProfileControllers, recruiterProfileControllers } from '../../../controllers';
 import { IDependency } from '../../types/dependency';
 import { auth, ROLES } from '@abijobportal/common';
 import { multerConfig } from '../../../config/multer';
@@ -8,25 +8,30 @@ import { multerConfig } from '../../../config/multer';
 export const candidateRouter = (dependencies: IDependency) => {
     const router: Router = express.Router();
 
-    const profileController = candidateProfileControllers(dependencies);
+    const candidateProfileController = candidateProfileControllers(dependencies);
+    const recruiterProfileController = recruiterProfileControllers(dependencies);
 
     // candidate authentication
     router.use(auth(ROLES.CANDIDATE));
 
     // candidate
-    router.get('/viewProfile/:userId', profileController.viewCandidateProfileController);
-    router.patch('/updateProfile', profileController.updateCandidateProfileController);
-    router.patch('/updateSkills', profileController.updateSkillsController);
-    router.patch('/updatePreferredJobs', profileController.updatePreferredJobsController);
+    router.get('/', candidateProfileController.viewCandidateProfileController);
+    router.patch('/', candidateProfileController.updateCandidateProfileController);
+    router.patch('/skills', candidateProfileController.updateSkillsController);
+    router.patch('/preferred-jobs', candidateProfileController.updatePreferredJobsController);
 
-    router.put(
-        '/uploadProfilePic',
+    router.patch(
+        '/upload/image',
         multerConfig.single('file'),
-        profileController.uploadCandidateProfilePicController,
+        candidateProfileController.uploadCandidateProfilePicController,
     );
-    router.put('/uploadResume', multerConfig.single('file'), profileController.uploadResumeController);
-    router.patch('/delete-resume/:userId', profileController.deleteResumeController);
-    router.get('/viewRecruiterProfile/:id', profileController.viewRecruiterProfileByCandidateController);
+    router.patch(
+        '/upload/resume',
+        multerConfig.single('file'),
+        candidateProfileController.uploadResumeController,
+    );
+    router.delete('/resume', candidateProfileController.deleteResumeController);
+    router.get('/recruiter/:recruiterId', recruiterProfileController.viewRecruiterProfileController);
 
     return router;
 };

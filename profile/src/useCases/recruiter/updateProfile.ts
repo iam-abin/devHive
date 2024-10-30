@@ -1,4 +1,4 @@
-import { NotFoundError } from '@abijobportal/common';
+import { NotFoundError, ROLES } from '@abijobportal/common';
 import { IDependency } from '../../frameworks/types/dependency';
 import { IRecruiterProfile } from '../../frameworks/types/recruiter';
 import { RecruiterProfileUpdatedEventPublisher } from '../../frameworks/utils/kafka-events/publishers/recruiter-profile-updated-publisher';
@@ -43,7 +43,7 @@ export = (dependencies: IDependency) => {
             name: updatedProfile.name,
             email: updatedProfile.email,
             phone: updatedProfile.phone,
-            role: 'recruiter',
+            role: ROLES.RECRUITER,
             userId: updatedProfile.id!,
             isActive: updatedProfile.isActive!,
         });

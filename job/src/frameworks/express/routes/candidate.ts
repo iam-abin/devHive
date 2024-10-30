@@ -10,25 +10,25 @@ export const candidateRouter = (dependencies: IDependency) => {
     const jobsController = jobsControllers(dependencies);
     const candidateJobController = candidateJobControllers(dependencies);
 
-    router.get('/all-jobs/:page', jobsController.viewAllJobsController);
+    router.get('/jobs/:page', jobsController.viewAllJobsController);
 
-    router.post('/all-job-fields-distinct-values', jobsController.viewAllJobFieldsDistinctValuesController);
-
-    router.get('/:id', auth(ROLES.CANDIDATE), jobsController.viewJobByJobIdController);
+    router.post('/filter-bar-values', jobsController.viewAllJobFieldsDistinctValuesController);
 
     router.post('/filter/:page/:limit', jobsController.filterJobsController);
 
-    router.post('/search/:page', jobsController.searchJobsController);
-
     router.use(auth(ROLES.CANDIDATE));
 
+    router.get('/:id', jobsController.viewJobByJobIdController);
+
+    // router.post('/search/:page', jobsController.searchJobsController);
+
     router.post('/apply/:jobId', candidateJobController.applyJobController);
+
+    router.get('/application/:jobApplicationId', candidateJobController.getAppliedJobApplicationController);
 
     router.get('/applied/:candidateId/:page', candidateJobController.appliedJobsController);
 
     router.get('/hasApplied/:jobId', candidateJobController.checkAppliedController);
-
-    router.get('/application/:jobApplicationId', candidateJobController.getAppliedJobApplicationController);
 
     return router;
 };

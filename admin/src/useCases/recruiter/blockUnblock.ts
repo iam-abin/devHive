@@ -18,10 +18,10 @@ export = (dependencies: IDependency) => {
         if (!recruiter) throw new NotFoundError('recruiter not found');
         const isBlocked: Partial<IRecruiterDocument> = await recruiterRepository.blockUnblock(userId);
         // to produce a message to kafka topic
-        // isBlocked contains user data with 'isActive' value changed
         const userUpdatedEvent = new UserUpdatedEventPublisher(kafkaClient);
         await userUpdatedEvent.publish({
             userId: isBlocked.id,
+            role: isBlocked.role,
             isActive: isBlocked.isActive!,
         });
         return isBlocked;

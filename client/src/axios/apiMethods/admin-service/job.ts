@@ -1,6 +1,5 @@
 
 import adminApiUrlConfig from "../../../config/apiUrlsConfig/adminServiceApiUrlConfig";
-import jobApiUrlConfig from "../../../config/apiUrlsConfig/jobApiUrlConfig";
 import { IResponse } from "../../../types/api";
 import makeApiCall from "../../apiCalls";
 
@@ -13,5 +12,5 @@ export const blockUnblockJobApi = async (jobId: string): Promise<IResponse> => {
 };
 
 export const viewJobDetailsApi = async (jobId: string): Promise<IResponse> => {
-    return await makeApiCall("get", jobApiUrlConfig.getAJobUrl(jobId));
+    return await makeApiCall("get", adminApiUrlConfig.getAJobAdminUrl(jobId));
 };

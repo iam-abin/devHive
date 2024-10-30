@@ -3,12 +3,14 @@ import { IDependency } from '../../frameworks/types/dependency';
 
 export = (dependencies: IDependency) => {
     const {
-        useCases: { getCandidateProfileByUserIdUseCase },
+        useCases: { getCandidateProfileByIdUseCase },
     } = dependencies;
 
     return async (req: Request, res: Response) => {
-        const { userId } = req.params;
-        const candidate = await getCandidateProfileByUserIdUseCase(dependencies).execute(userId);
+        const { userId } = req.currentUser!;
+        const { candidateId } = req.params!;
+
+        const candidate = await getCandidateProfileByIdUseCase(dependencies).execute(candidateId ?? userId);
         res.status(200).json({ message: 'candidate profile feched successfully', data: candidate });
     };
 };

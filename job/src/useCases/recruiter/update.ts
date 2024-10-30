@@ -23,9 +23,7 @@ export = (dependencies: IDependency) => {
         if (data.deadline) {
             data.deadline = new Date(data.deadline);
         }
-
-        console.log(data);
-
+        
         if (!data.salaryMin || !data.salaryMax) throw new BadRequestError('must add all salary fields!!');
         if (data.salaryMin > data.salaryMax)
             throw new BadRequestError('min salary must be less than max salary!!');

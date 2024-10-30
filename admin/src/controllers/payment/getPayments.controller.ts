@@ -11,10 +11,6 @@ export = (dependencies: IDependency) => {
             Number(req.params.page) || 1,
             Number(req.params.limit) || 4,
         );
-
-        console.log(payments, 'payments');
-        console.log(numberOfPages, 'numberOfPages');
-
         res.status(200).json({ message: 'Payments are ', data: { payments, numberOfPages } });
     };
 };

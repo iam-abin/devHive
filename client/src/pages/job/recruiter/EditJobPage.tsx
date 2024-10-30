@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import EditJob from "../../../components/form/EditJob";
 import { useNavigate, useParams } from "react-router-dom";
 import {
-    editJobApi,
-    getAJobApi,
+    updateJobApi,
+    getAJobRecruiterApi,
 } from "../../../axios/apiMethods/jobs-service/jobs";
 import { notify } from "../../../utils/toastMessage";
 import { IJob } from "../../../types/Job";
@@ -17,9 +17,7 @@ function EditJobPage() {
     useEffect(() => {
         const fetchJobDetails = async () => {
             if (jobId) {
-                const job: IResponse = await getAJobApi(jobId);
-                console.log(job);
-
+                const job: IResponse = await getAJobRecruiterApi(jobId);
                 setJobDetails(job.data);
             }
         };
@@ -31,9 +29,7 @@ function EditJobPage() {
     }
 
     const handleSubmit = async (jobData: Partial<IJob>) => {
-		console.log(jobData);
-		
-        const data = await editJobApi(jobId!, jobData);
+        const data = await updateJobApi(jobId!, jobData);
 
         if (data.data) {
             notify("updated successfully", "success");

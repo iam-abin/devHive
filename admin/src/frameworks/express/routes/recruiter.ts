@@ -8,8 +8,8 @@ export const recruiterRouter = (dependencies: IDependency) => {
     const recruiterController = recruiterControllers(dependencies);
 
     router.get('/recruiters/:page/:limit', recruiterController.getAllRecruitersController);
-    router.get('/viewProfile/:userId', recruiterController.getRecruiterByIdController);
-    router.put('/blockUnblock/:userId', recruiterController.recruiterBlockUnblockController);
+    router.get('/view-profile/:userId', recruiterController.getRecruiterByIdController);
+    router.put('/block-unblock/:userId', recruiterController.recruiterBlockUnblockController);
 
     return router;
 };

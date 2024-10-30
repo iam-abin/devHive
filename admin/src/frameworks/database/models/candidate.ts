@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import { IUser } from '../../types/user';
+import { ROLES } from '@abijobportal/common';
 
 export interface ICandidateDocument extends mongoose.Document, Omit<IUser, 'userId'> {
     _id: mongoose.Schema.Types.ObjectId;
@@ -38,7 +39,7 @@ const candidateSchema = new mongoose.Schema(
         role: {
             type: String,
             required: true,
-            enum: ['candidate'],
+            enum: [ROLES.CANDIDATE],
         },
         isActive: {
             type: Boolean,

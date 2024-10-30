@@ -2,13 +2,13 @@ import { createContext, useContext, useEffect, useState, ReactNode } from 'react
 import { Socket } from 'socket.io-client'; // Import Socket type from socket.io-client
 import socket from '../config/socket';
 
-interface SocketState {
+type SocketState = {
   socket: Socket | null;
 }
 
 const SocketContext = createContext<SocketState>({ socket: null });
 
-interface SocketProviderProps {
+type SocketProviderProps = {
   children: ReactNode;
   currentUserId: string
 }

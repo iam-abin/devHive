@@ -5,7 +5,7 @@ import getDashboardGraphDetailsController from './dashboardGraph.controller';
 
 export = (dependencies: IDependency) => {
     return {
-        dashboardDataController: dashboardController(dependencies),
+        dashboardCardsDataController: dashboardController(dependencies),
         getDashboardGraphDetailsController: getDashboardGraphDetailsController(dependencies),
     };
 };

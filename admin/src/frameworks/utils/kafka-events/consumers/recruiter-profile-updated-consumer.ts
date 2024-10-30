@@ -1,4 +1,4 @@
-import { Kafka, KafkaMessage } from 'kafkajs';
+import { Kafka } from 'kafkajs';
 import { KafkaConsumer, TOPICS, RECRUITER_PROFILE_UPDATED_EVENT } from '@abijobportal/common';
 import { handleMessage } from '../handleMessage';
 
@@ -11,12 +11,7 @@ export class RecruiterProfileUpdatedEventConsumer extends KafkaConsumer<RECRUITE
         super(client);
     }
 
-    async onMessage(
-        data: RECRUITER_PROFILE_UPDATED_EVENT['data'],
-        topic: string,
-        message: KafkaMessage,
-    ): Promise<void> {
-        // dont need to check role as every users are stored in one collection
-        handleMessage(data, topic );
+    async onMessage(data: RECRUITER_PROFILE_UPDATED_EVENT['data'], topic: string): Promise<void> {
+        handleMessage(data, topic);
     }
 }

@@ -39,7 +39,7 @@ function RecruiterProfileEditPage() {
 
     useEffect(() => {
         const fetchProfileDetails = async () => {
-            const profile = await recruiterGetProfileApi(id);
+            const profile = await recruiterGetProfileApi();
             setProfileDetails(profile.data);
         };
 

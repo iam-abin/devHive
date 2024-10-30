@@ -23,14 +23,17 @@ export = {
     },
 
     getById: async (jobId: string): Promise<JobDocument | null> => {
-        const job = await JobModel.findById(jobId);
-        return job;
+        return await JobModel.findById(jobId);
     },
 
     deleteJob: async (jobId: string): Promise<JobDocument | null> => {
-        const deletedJob = await JobModel.findByIdAndDelete(jobId, {
-            new: true,
-        });
+        const deletedJob = await JobModel.findByIdAndUpdate(
+            jobId,
+            { $set: { isDeleted: true } },
+            {
+                new: true,
+            },
+        );
         return deletedJob;
     },
 

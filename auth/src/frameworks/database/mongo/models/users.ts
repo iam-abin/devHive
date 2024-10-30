@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import { generateHashedPassword } from '../../../utils/password';
 import { ISignup } from '../../../types/user';
+import { ROLES } from '@abijobportal/common';
 
 export interface IUserDocument extends mongoose.Document, ISignup {
     isVerified: boolean;
@@ -33,7 +34,7 @@ const userSchema = new mongoose.Schema(
         role: {
             type: String,
             required: true,
-            enum: ['admin', 'candidate', 'recruiter'],
+            enum: [ROLES.ADMIN, ROLES.CANDIDATE, ROLES.RECRUITER],
         },
         isVerified: {
             type: Boolean,
@@ -75,8 +76,7 @@ userSchema.pre('save', async function (next) {
 userSchema.pre('findOneAndUpdate', async function (next) {
     const update = this.getUpdate() as Partial<ISignup>;
     if (!update.password) return next();
-    console.log('updated password ===================', update.password);
-
+    
     try {
         const hashedPassword: string = await generateHashedPassword(update.password);
         this.setUpdate({ ...update, password: hashedPassword });
