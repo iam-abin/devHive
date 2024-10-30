@@ -62,7 +62,7 @@ export = {
     ): Promise<Partial<IJobDocument>[] | []> => {
         let jobs: Partial<IJobDocument>[] | [];
         if (applicationJobIds) {
-            jobs = await JobModel.find({ _id: { $nin: applicationJobIds } })
+            jobs = await JobModel.find({ _id: { $nin: applicationJobIds }, isDeleted: false })
                 .select(JOB_LIST_SELECT_FIELDS)
                 .sort({ createdAt: -1 })
                 .skip(skip)
@@ -83,6 +83,7 @@ export = {
         if (applicationJobIds) {
             totalJobs = await JobModel.countDocuments({
                 _id: { $nin: applicationJobIds },
+                isDeleted: false,
                 isActive: true,
             });
         } else {
@@ -103,13 +104,13 @@ export = {
     },
 
     getAllJobsByRecruiterId: async (recruiterId: string): Promise<IJobDocument[] | []> => {
-        return await JobModel.find({ recruiterId }).sort({
+        return await JobModel.find({ recruiterId, isDeleted: false }).sort({
             createdAt: -1,
         });
     },
 
     getCountOfCreatedJobs: async (recruiterId: string): Promise<number> => {
-        return await JobModel.countDocuments({ recruiterId });
+        return await JobModel.countDocuments({ recruiterId, isDeleted: false });
     },
 
     getSearchResults: async (
@@ -118,7 +119,7 @@ export = {
         limit: number,
     ): Promise<IJobDocument[] | []> => {
         const searchedJobs: IJobDocument[] | [] = await JobModel.find({
-            jobTitle: { $regex: new RegExp(searchKey, 'i') },
+            jobTitle: { $regex: new RegExp(searchKey, 'i'), isDeleted: false },
         })
             .skip(skip)
             .limit(limit);
@@ -128,12 +129,12 @@ export = {
 
     getCountOfSearchResults: async (searchKey: string): Promise<number> => {
         return await JobModel.countDocuments({
-            jobTitle: { $regex: new RegExp(searchKey, 'i') },
+            jobTitle: { $regex: new RegExp(searchKey, 'i'), isDeleted: false },
         });
     },
 
     getAJob: async (jobId: string): Promise<IJobDocument | null> => {
-        return await JobModel.findById(jobId).populate({
+        return await JobModel.findById(jobId, {isDeleted: false}).populate({
             path: 'recruiterId',
             model: 'User', // Assuming your User model is named 'User'
         });

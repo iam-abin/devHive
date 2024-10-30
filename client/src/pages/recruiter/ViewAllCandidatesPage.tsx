@@ -13,7 +13,7 @@ interface CandidateInterface {
 }
 
 function ViewAllCandidatesPage() {
-    const [currentPage, setCurrentPage] = useState(0);
+    const [currentPage, setCurrentPage] = useState(1);
     const [pageCount, setpageCount] = useState(1);
     const [searchTerm, setSearchTerm] = useState("");
 
