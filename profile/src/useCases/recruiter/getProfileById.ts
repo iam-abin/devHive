@@ -9,8 +9,8 @@ export = (dependencies: IDependency) => {
     if (!recruiterProfileRepository)
         throw new Error('recruiterProfileRepository should exist in dependencies');
 
-    const execute = async (userId: string) => {
-        const profile = await recruiterProfileRepository.getProfileByUserId(userId);
+    const execute = async (recruiterId: string) => {
+        const profile = await recruiterProfileRepository.getProfileByUserId(recruiterId);
         if (!profile) throw new NotFoundError('profile not found');
         return profile;
     };

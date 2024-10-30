@@ -8,9 +8,6 @@ export = (dependencies: IDependency) => {
 
     return async (req: Request, res: Response) => {
         const { id } = req.params;
-        // const {userId} = req.currentUser!
-        // console.log(userId,"===========");
-
         const job = await getJobByIdUseCase(dependencies).execute(id);
         res.status(200).json({ message: 'Job get successfully', data: job });
     };

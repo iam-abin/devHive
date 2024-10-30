@@ -44,7 +44,6 @@ const PaymentPlans: React.FC = () => {
         };
 
         const payment = await createPaymentApi(paymentData);
-        console.log(payment);
 
         await stripePromise?.redirectToCheckout({
             sessionId: payment?.data?.stripeId,

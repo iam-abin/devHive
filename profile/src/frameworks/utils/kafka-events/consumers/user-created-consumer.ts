@@ -12,7 +12,6 @@ export class UserCreatedEventConsumer extends KafkaConsumer<USER_CREATED_EVENT> 
     }
 
     async onMessage(data: USER_CREATED_EVENT['data'], topic: string): Promise<void> {
-        // dont need to check role as every users are stored in one collection
         handleMessage(data, topic);
     }
 }

@@ -1,5 +1,5 @@
 import updateRecruiterProfileUseCase from './updateProfile';
-import getRecruiterProfileByUserIdUseCase from './getProfile';
+import getRecruiterProfileByIdUseCase from './getProfileById';
 import getAllCandidatesProfilesUseCase from './getCandidateProfiles';
 
-export { updateRecruiterProfileUseCase, getRecruiterProfileByUserIdUseCase, getAllCandidatesProfilesUseCase };
+export { updateRecruiterProfileUseCase, getRecruiterProfileByIdUseCase, getAllCandidatesProfilesUseCase };

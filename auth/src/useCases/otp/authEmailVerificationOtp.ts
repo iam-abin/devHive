@@ -31,7 +31,6 @@ export = (dependencies: IDependency) => {
         await usersRepository.deleteOtp(email);
         // to update user verification status in users collection
         const result = await usersRepository.updateVerification(email);
-        console.log("verifiedResult ",result);
         
         // to produce a message to kafka topic
         const userCreatedEvent = new UserCreatedEventPublisher(kafkaClient);

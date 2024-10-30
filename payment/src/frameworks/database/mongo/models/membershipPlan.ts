@@ -47,13 +47,10 @@ interface MembershipPlanModel extends mongoose.Model<IMembershipPlanDocument> {
 }
 
 membershipPlanSchema.statics.buildMembershipPlan = (attributes: IMembershipPlan) => {
+    const { membershipPlanId, ...rest } = attributes;
     return new MembershipPlanModel({
-        _id: attributes.membershipPlanId,
-        name: attributes.name,
-        features: attributes.features,
-        description: attributes.description,
-        price: attributes.price,
-        isActive: attributes.isActive,
+        ...rest,
+        _id: membershipPlanId,
     });
 };
 

@@ -3,16 +3,19 @@ import {
     candidateApplyJobApi,
     changeJobCloseStatusApi,
     checkJobAppliedApi,
-    getAJobApi,
+    getAJobCandidateApi,
+    getAJobRecruiterApi,
 } from "../../axios/apiMethods/jobs-service/jobs";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import JobDetails from "../../components/recruiter/JobDetails";
 import { notify } from "../../utils/toastMessage";
 import { swal } from "../../utils/swal";
 import { IJob } from "../../types/Job";
+import { ROLES } from "../../utils/constants";
+import { IResponse } from "../../types/api";
 
 function JobDetailsPage() {
-    const [jobDetails, setJobDetails] = useState<IJob | null>(null);
+    const [jobDetails, setJobDetails] = useState<Partial<IJob> | null>(null);
     const [hasApplied, setHasApplied] = useState<boolean>(false);
     const navigate = useNavigate();
     const { jobId } = useParams();
@@ -24,12 +27,18 @@ function JobDetailsPage() {
     useEffect(() => {
         const fetchJobDetails = async () => {
             if (jobId) {
-                const job = await getAJobApi(jobId);
-                setJobDetails(job.data);
+                let job: IResponse | undefined;
 
-                if (userType === "candidate") {
+                if (userType === ROLES.CANDIDATE) {
+                    job = await getAJobCandidateApi(jobId);
                     const hasApplied = await checkJobAppliedApi(jobId);
                     setHasApplied(hasApplied.data.isApplied);
+                } else if (userType === ROLES.RECRUITER) {
+                    job = await getAJobRecruiterApi(jobId);
+                }
+
+                if (job) {
+                    setJobDetails(job.data);
                 }
             }
         };
@@ -66,11 +75,13 @@ function JobDetailsPage() {
                 `Yes, ${jobDetails?.isActive ? "close job" : "open job"}`
             ).then(async (result) => {
                 if (result.isConfirmed) {
+                    
                     const job = await changeJobCloseStatusApi(jobId);
+
                     if (job) {
-                        setJobDetails((prevDetails: IJob | null) => ({
+                        setJobDetails((prevDetails: any | null) => ({
                             ...prevDetails,
-                            ...job.data,
+                            isActive: job.data.isActive!,
                         }));
 
                         notify(job.message, "success");

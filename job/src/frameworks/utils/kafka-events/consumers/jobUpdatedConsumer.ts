@@ -1,4 +1,4 @@
-import { Kafka, KafkaMessage } from 'kafkajs';
+import { Kafka } from 'kafkajs';
 import { KafkaConsumer, TOPICS, JOB_UPDATED_EVENT } from '@abijobportal/common';
 import { handleMessage } from '../handleMessage';
 
@@ -11,7 +11,7 @@ export class jobUpdatedEventConsumer extends KafkaConsumer<JOB_UPDATED_EVENT> {
         super(client);
     }
 
-    async onMessage(data: JOB_UPDATED_EVENT['data'], topic: string, message: KafkaMessage): Promise<void> {
+    async onMessage(data: JOB_UPDATED_EVENT['data'], topic: string): Promise<void> {
         handleMessage(data, topic);
     }
 }

@@ -11,7 +11,10 @@ export = {
     },
 
     getAJobApplication: async (applicationId: string): Promise<IJobApplicationDocument | null> => {
-        const application = await jobApplicationModel.findById(applicationId).populate('jobId');
+        const application = await jobApplicationModel
+            .findById(applicationId)
+            .populate('jobId')
+            .populate('candidateId', ['name', 'email']);
         return application;
     },
 
@@ -45,8 +48,6 @@ export = {
         skip: number,
         limit: number,
     ) => {
-        // use populate
-        // const jobApplications = await jobApplicationModel.find({},{recruiterId:id});
         let jobApplications;
         if (recruiterId) {
             jobApplications = await jobApplicationModel

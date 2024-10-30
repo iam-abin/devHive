@@ -92,9 +92,7 @@ const TopNavBar = ({ menus }: { menus?: IMenu[] }) => {
     useEffect(() => {
         (async () => {
             if (isCandidateUrl && isCandidate && currentUser?.id) {
-                const candidateProfileData = await getCandidateProfileApi(
-                    currentUser?.id
-                );
+                const candidateProfileData = await getCandidateProfileApi();
                 dispatch(setMyProfileData(candidateProfileData?.data));
             }
         })();
@@ -106,8 +104,6 @@ const TopNavBar = ({ menus }: { menus?: IMenu[] }) => {
     );
 
     const getOtherChatRoomUser = (chatRoom: IChatRoom) => {
-        console.log("getOtherChatRoomUser", chatRoom);
-
         const otherUser = chatRoom?.users?.find(
             (value: any) => value?._id !== myProfile?.id
         );
@@ -117,8 +113,6 @@ const TopNavBar = ({ menus }: { menus?: IMenu[] }) => {
 
     const [openNotifications, setOpenNotifications] = useState(false);
     const handleOpenNotifications = () => {
-        console.log("handleopen notification", openNotifications);
-
         setOpenNotifications(!openNotifications);
         dispatch(clearNotificationsCount()); // Reset count to 0 when opened
     };
@@ -185,13 +179,11 @@ const TopNavBar = ({ menus }: { menus?: IMenu[] }) => {
 
     useEffect(() => {
         socket.on("receiveMessage", (message) => {
-            console.log("receiveMessage", message);
             // If no rooms are selected
             if (
                 !selectedChatRoom ||
                 selectedChatRoom._id !== message.messageData.roomId.toString()
             ) {
-                console.log("inside if notifications", notifications);
                 // New notification logic
                 dispatch(setNotifications([...notifications, message])); // Add new notification
                 dispatch(setNotificationsCount(notifications.length + 1)); // Increment count

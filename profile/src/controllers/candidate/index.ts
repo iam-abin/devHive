@@ -3,7 +3,6 @@ import updateCandidateProfileController from './updateProfile.controller';
 import uploadCandidateProfilePicController from './uploadProfilePic.controller';
 import uploadResumeController from './uploadResume.controller';
 import deleteResumeController from './deleteResume.controller';
-import viewRecruiterProfileController from './viewRecruiterProfile.controller';
 import updateSkillsController from './updateSkills.controller';
 import updatePreferredJobsController from './updatePreferredJobs.controller';
 
@@ -16,7 +15,6 @@ export = (dependencies: IDependency) => {
         uploadCandidateProfilePicController: uploadCandidateProfilePicController(dependencies),
         uploadResumeController: uploadResumeController(dependencies),
         deleteResumeController: deleteResumeController(dependencies),
-        viewRecruiterProfileByCandidateController: viewRecruiterProfileController(dependencies),
         updateSkillsController: updateSkillsController(dependencies),
         updatePreferredJobsController: updatePreferredJobsController(dependencies),
     };

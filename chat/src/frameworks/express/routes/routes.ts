@@ -2,15 +2,12 @@ import express from 'express';
 
 import { chatControllers, notificationControllers } from '../../../controllers';
 import { IDependency } from '../../types/dependency';
-import { auth, ROLES } from '@abijobportal/common';
 
-export const recruiterRouter = (dependencies: IDependency) => {
+export const chatRouter = (dependencies: IDependency) => {
     const router = express.Router();
 
     const chatController = chatControllers(dependencies);
     const notificationController = notificationControllers(dependencies);
-
-    router.use(auth(ROLES.RECRUITER));
 
     // Chat
     router.get('/chat-rooms/:userId', chatController.getAllChatRoomsByUserIDController);
@@ -20,9 +17,9 @@ export const recruiterRouter = (dependencies: IDependency) => {
     // Notification
     router.get('/notifications', notificationController.getAllNotificationsController);
 
-    router.get('/notifications/count', notificationController.getAllNotificationsCountController);
-
     router.delete('/notifications', notificationController.deleteAllNotificationsController);
+
+    router.get('/notifications/count', notificationController.getAllNotificationsCountController);
 
     router.delete(
         '/notifications/sender/:senderId',

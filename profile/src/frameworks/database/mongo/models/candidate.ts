@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import { ICandidateProfile } from '../../../types/candidate';
 import { IUser } from '../../../types/user';
+import { ROLES } from '@abijobportal/common';
 
 export interface ICandidateDocument extends mongoose.Document, Omit<ICandidateProfile, 'userId'> {
     _id: mongoose.Schema.Types.ObjectId;
@@ -26,7 +27,7 @@ const candidateSchema = new mongoose.Schema(
         },
         role: {
             type: String,
-            default: 'candidate',
+            default: ROLES.CANDIDATE,
         },
         gender: {
             type: String,

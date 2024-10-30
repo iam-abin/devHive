@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../redux/reducer";
 import Loading from "../components/loading/Loading";
 import { checkUserRole } from "../utils/checkRole";
+import { IUserData } from "../types/user";
 
 
 const PaymentFailed = lazy(()=> import("../pages/payment/PaymentFailed"))
@@ -30,7 +31,7 @@ const NotFound = lazy(()=> import("../pages/Error/NotFound"))
 
 
 function CandidateRoutes() {
-	const loggedinUser = useSelector(
+	const loggedinUser: IUserData | null  = useSelector(
         (store: RootState) => store.userReducer.authData
     );
 	

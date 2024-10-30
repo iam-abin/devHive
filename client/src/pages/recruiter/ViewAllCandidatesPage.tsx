@@ -23,8 +23,6 @@ function ViewAllCandidatesPage() {
     );
 
     const handlePageChange = async ({ selected }: { selected: number }) => {
-        console.log(selected);
-
         setCurrentPage(selected + 1);
     };
 
@@ -32,7 +30,6 @@ function ViewAllCandidatesPage() {
         (async () => {
             // dispatch(setLoading());
             const candidates = await getAllCandidatesProfilesApi(currentPage);
-            console.log(candidates);
 
             setCandidatesData(candidates.data.candidates);
             setpageCount(candidates.data.totalNumberOfPages);

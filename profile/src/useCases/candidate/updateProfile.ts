@@ -1,4 +1,4 @@
-import { ForbiddenError, NotFoundError } from '@abijobportal/common';
+import { ForbiddenError, NotFoundError, ROLES } from '@abijobportal/common';
 import { IDependency } from '../../frameworks/types/dependency';
 import { kafkaClient } from '../../config/kafka.connection';
 import { UserUpdatedEventPublisher } from '../../frameworks/utils/kafka-events/publishers/user-updated-publisher';
@@ -52,7 +52,7 @@ export = (dependencies: IDependency) => {
             email: updatedProfile.email,
             phone: updatedProfile.phone,
             isActive: updatedProfile.isActive,
-            role: 'candidate',
+            role: ROLES.CANDIDATE,
             userId: updatedProfile._id,
         });
 

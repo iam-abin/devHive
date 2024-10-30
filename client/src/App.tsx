@@ -48,7 +48,7 @@ export default function App() {
                     path="/candidate/*"
                     element={
                         isCandidate ? (
-                            <SocketProvider currentUserId={loggedinUser.id}>
+                            <SocketProvider currentUserId={loggedinUser! && loggedinUser.id!}>
                                 <CandidateLayout>
                                     <CandidateRoutes />
                                 </CandidateLayout>
@@ -62,7 +62,7 @@ export default function App() {
                     path="/recruiter/*"
                     element={
                         isRecruiter ? (
-                            <SocketProvider currentUserId={loggedinUser.id}>
+                            <SocketProvider currentUserId={loggedinUser! && loggedinUser.id!}>
                                 <RecruiterRouters />
                             </SocketProvider>
                         ) : (

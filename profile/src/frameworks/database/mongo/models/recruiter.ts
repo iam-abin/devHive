@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import { IRecruiterProfile } from '../../../types/recruiter';
 import { IUser } from '../../../types/user';
+import { ROLES } from '@abijobportal/common';
 
 export interface IRecruiterDocument extends mongoose.Document, Omit<IRecruiterProfile, 'userId'> {
     _id: mongoose.Schema.Types.ObjectId;
@@ -26,7 +27,7 @@ const recruiterSchema = new mongoose.Schema(
         },
         role: {
             type: String,
-            default: 'recruiter',
+            default: ROLES.RECRUITER,
         },
         isVerified: {
             type: Boolean,

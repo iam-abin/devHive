@@ -1,9 +1,9 @@
 import homeImage from "../../assets/landingPage/company-like.jpg";
 import { useEffect, useState } from "react";
 import NavBarLanding from "../../components/navBar/NavBarLanding";
-import SearchBar from "../../components/filterBar/FilterBar";
+import FilterBar from "../../components/filterBar/FilterBar";
 import JobCard from "../../components/cards/JobCard";
-import { filterJobsApi, getAllJobsApi, getJobFieldsValuesApi } from "../../axios/apiMethods/jobs-service/jobs";
+import { filterJobsApi, getAllJobsApi, getJobFilterBarValuesApi } from "../../axios/apiMethods/jobs-service/jobs";
 
 import { Link } from "react-scroll";
 import { useDispatch, useSelector } from "react-redux";
@@ -74,7 +74,7 @@ function LandingPage() {
 
     useEffect(() => {
         (async () => {
-            const jobFieldsValues = await getJobFieldsValuesApi(["title", "companyLocation", "employmentType"]);
+            const jobFieldsValues = await getJobFilterBarValuesApi(["title", "companyLocation", "employmentType"]);
             setJobFieldsValues(jobFieldsValues.data);
         })();
     }, []);
@@ -128,10 +128,10 @@ function LandingPage() {
             if (userId) {
                 let currentUserProfile: IResponse | null = null;
                 if (isCandidateUrl && isCandidate) {
-                    currentUserProfile = await getCandidateProfileApi(userId);
+                    currentUserProfile = await getCandidateProfileApi();
                     dispatch(setMyProfileData(currentUserProfile?.data));
                 } else if (isRecruiterUrl && isRecruiter) {
-                    currentUserProfile = await recruiterGetProfileApi(userId);
+                    currentUserProfile = await recruiterGetProfileApi();
                 }
                 dispatch(setMyProfileData(currentUserProfile?.data));
             }
@@ -234,7 +234,7 @@ function LandingPage() {
                     className=" bg-gradient-to-r from-slate-900 via-purple-900 to-slate-900"
                 >
                     <div className="py-5">
-                    <SearchBar 
+                    <FilterBar 
                         jobFieldsValues={jobFieldsValues}
                         jobCriteria={jobCriteria}
                         setJobCriteria={setJobCriteria}

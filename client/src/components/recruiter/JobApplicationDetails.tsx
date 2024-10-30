@@ -15,8 +15,7 @@ const JobApplicationDetails: React.FC<{
     handleChangeApplicationStatus: any;
 }> = ({ jobApplicationDetails }) => {
     const location = useLocation();
-    console.log(jobApplicationDetails);
-
+    
     const isRecruiterPage = location.pathname.includes("recruiter");
     const isCandidatePage = location.pathname.includes("candidate");
 
@@ -42,7 +41,7 @@ const JobApplicationDetails: React.FC<{
 
     const handleViewCandidate = () => {
         navigate(
-            `/recruiter/candidate-profile/${jobApplicationDetails?.candidateId}`
+            `/recruiter/candidate-profile/${jobApplicationDetails?.candidateId?.id}`
         );
     };
 

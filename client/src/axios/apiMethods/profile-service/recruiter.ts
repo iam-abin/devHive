@@ -1,15 +1,15 @@
 
 import profileApiUrlConfig from "../../../config/apiUrlsConfig/profileApiUrlConfig";
 import { IResponse } from "../../../types/api";
+import { IRecruiterProfile } from "../../../types/profile";
 import makeApiCall from "../../apiCalls";
 
 
-export const recruiterGetProfileApi = async (userId: string): Promise<IResponse> => {
-	return await makeApiCall("get", profileApiUrlConfig.getgetRecruiterProfileUrl(userId), userId);
+export const recruiterGetProfileApi = async (): Promise<IResponse> => {
+	return await makeApiCall("get", profileApiUrlConfig.getRecruiterProfileUrl);
 };
 
-
-export const updateRecruiterProfileApi = async (recruiterProfileData: any): Promise<IResponse> => {
+export const updateRecruiterProfileApi = async (recruiterProfileData: Partial<IRecruiterProfile>): Promise<IResponse> => {
 	return await makeApiCall("patch", profileApiUrlConfig.updategetRecruiterProfileUrl, recruiterProfileData);
 };
 

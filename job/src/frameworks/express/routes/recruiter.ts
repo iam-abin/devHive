@@ -10,17 +10,11 @@ export const recruiterRouter = (dependencies: IDependency) => {
     const jobsController = jobsControllers(dependencies);
     const recruiterJobController = recruiterJobControllers(dependencies);
 
-    router.get('/all-jobs/:page', jobsController.viewAllJobsController);
-
-    router.get('/:id', jobsController.viewJobByJobIdController);
-
-    router.post('/filter', jobsController.filterJobsController);
+    router.get('/jobs/:page', jobsController.viewAllJobsController);
 
     router.use(auth(ROLES.RECRUITER));
 
-    router.get('/dashboard/cardsDetails', recruiterJobController.recruiterDashboardCardsController);
-
-    router.get('/dashboard/graphDetails', recruiterJobController.recruiterDashboardGraphController);
+    router.get('/:id', jobsController.viewJobByJobIdController);
 
     router.post('/create', recruiterJobController.createJobController);
 
@@ -28,18 +22,21 @@ export const recruiterRouter = (dependencies: IDependency) => {
 
     router.delete('/:id', recruiterJobController.deleteJobController);
 
+    router.patch('/change-close-status/:jobId', recruiterJobController.changeJobCloseStatusController);
+
     router.get('/created-jobs/:page/:limit', recruiterJobController.createdJobsByRecruiterController);
 
     router.get('/applications/:page/:limit', recruiterJobController.viewJobApplicationsController);
 
-    router.get('/application/:jobApplicationId', recruiterJobController.viewJobApplicationController);
-
-    router.post(
-        '/change-application-status/:jobApplicationId',
+    router.patch(
+        '/application/statuss/:jobApplicationId',
         recruiterJobController.changeJobApplicationStatusController,
     );
+    router.get('/application/:jobApplicationId', recruiterJobController.viewJobApplicationController);
 
-    router.patch('/change-close-status/:jobId', recruiterJobController.changeJobCloseStatusController);
+    router.get('/dashboard/cards-data', recruiterJobController.recruiterDashboardCardsController);
+
+    router.get('/dashboard/graph-data', recruiterJobController.recruiterDashboardGraphController);
 
     return router;
 };

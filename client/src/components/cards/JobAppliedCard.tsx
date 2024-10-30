@@ -11,7 +11,6 @@ const JobAppliedCard: React.FC<{ job: any; handleViewJob: any }> = ({
 }) => {
 	const date1 = dayjs(Date.now());
 	const diffInDays = date1.diff(job.createdAt, "day");
-	console.log(job);
 	
 	return (
 		<div className="mx-4 md:mx-40 pb-4" key={job.id}>

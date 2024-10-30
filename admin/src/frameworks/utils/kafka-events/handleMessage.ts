@@ -2,27 +2,23 @@ import candidateRepository from '../../repositories/mongo/candidate.repository';
 import recruiterRepository from '../../repositories/mongo/recruiter.repository';
 import jobRepository from '../../repositories/mongo/job.repository';
 import paymentRepository from '../../repositories/mongo/payment.repository';
-
-// interface handleMessageInterface {
-// 	data: any;
-// 	message: string;
-// }
+import { ROLES } from '@abijobportal/common';
 
 // eslint-disable-next-line  @typescript-eslint/no-explicit-any
 export const handleMessage = (data: any, topic: string) => {
     switch (topic) {
         case 'USER-CREATED-TOPIC':
-            if (data.role === 'candidate') {
+            if (data.role === ROLES.CANDIDATE) {
                 candidateRepository.createCandidate(data);
-            } else if (data.role === 'recruiter') {
+            } else if (data.role === ROLES.RECRUITER) {
                 recruiterRepository.createRecruiter(data);
             }
             break;
 
         case 'USER-UPDATED-TOPIC':
-            if (data.role === 'candidate') {
+            if (data.role === ROLES.CANDIDATE) {
                 candidateRepository.updateCandidateProfile(data.userId, data);
-            } else if (data.role === 'recruiter') {
+            } else if (data.role === ROLES.RECRUITER) {
                 recruiterRepository.updateRecruiterProfile(data.userId, data);
             }
 
@@ -59,7 +55,6 @@ export const handleMessage = (data: any, topic: string) => {
 
         case 'JOB-DELETED-TOPIC':
             jobRepository.deleteJob(data.jobId);
-
             break;
 
         case 'PAYMENT-CREATED-TOPIC':

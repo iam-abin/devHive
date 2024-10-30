@@ -1,7 +1,7 @@
 import { IUserData } from "../types/user";
 import { ROLES } from "./constants";
 
-export const checkUserRole = (loggedinUser: IUserData) => {
+export const checkUserRole = (loggedinUser: IUserData | null) => {
     let isCandidate: boolean = false;
     let isRecruiter: boolean = false;
     let isAdmin: boolean = false;

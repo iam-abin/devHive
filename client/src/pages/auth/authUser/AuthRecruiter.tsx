@@ -36,9 +36,7 @@ function AuthRecruiter() {
     const isLoading = useSelector(
         (state: RootState) => state.loading.isLoading
     );
-
-    console.log("authType", authType);
-
+    
     const handleSubmit = async (userData: Partial<IAuth>) => {
         try {
             dispatch(setLoading());

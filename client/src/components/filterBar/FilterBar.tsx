@@ -1,6 +1,6 @@
 import React from 'react';
 
-interface SearchBarProps {
+interface FilterBarProps {
     jobFieldsValues: {
         title: string[];
         companyLocation: string[];
@@ -20,7 +20,7 @@ interface SearchBarProps {
     handleReset: () => void;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({
+const FilterBar: React.FC<FilterBarProps> = ({
     jobFieldsValues,
     jobCriteria,
     setJobCriteria,
@@ -101,4 +101,4 @@ const SearchBar: React.FC<SearchBarProps> = ({
     );
 };
 
-export default SearchBar;
+export default FilterBar;

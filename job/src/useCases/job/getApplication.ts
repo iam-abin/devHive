@@ -38,7 +38,7 @@ export = (dependencies: IDependency) => {
 
         // If current user is candidate
         if (candidateId) {
-            if (candidateId !== jobApplication.candidateId.toString()) {
+            if (candidateId !== jobApplication.candidateId.id.toString()) {
                 throw new ForbiddenError('You cannot access others application');
             }
         }

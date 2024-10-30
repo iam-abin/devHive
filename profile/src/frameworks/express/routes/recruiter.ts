@@ -14,14 +14,10 @@ export const recruiterRouter = (dependencies: IDependency) => {
     // recruiter
     router.use(auth(ROLES.RECRUITER));
 
-    router.get('/viewProfile/:id', recruiterProfileController.viewRecruiterProfileController);
-    router.patch('/updateProfile', recruiterProfileController.updateRecruiterProfileController);
-    router.put('/uploadProfilePic', recruiterProfileController.updateRecruiterProfileController);
-    router.get('/candidate/Profile/:userId', candidateProfileController.viewCandidateProfileController);
-    router.get(
-        '/viewAllCandidatesProfiles/:page',
-        recruiterProfileController.viewAllCandidatesProfilesController,
-    );
+    router.get('/', recruiterProfileController.viewRecruiterProfileController);
+    router.patch('/', recruiterProfileController.updateRecruiterProfileController);
+    router.get('/candidate/:candidateId', candidateProfileController.viewCandidateProfileController);
+    router.get('/candidates/:page', recruiterProfileController.viewAllCandidatesProfilesController);
 
     return router;
 };

@@ -8,8 +8,6 @@ export = (dependencies: IDependency) => {
 
     return async (req: Request, res: Response) => {
         const jobFields = await getAllJobFieldsDistinctValuesUseCase(dependencies).execute(req.body);
-        console.log(jobFields, 'jobFields');
-
         res.status(200).json({ message: 'Jobs list', data: jobFields });
     };
 };

@@ -21,8 +21,6 @@ export = (dependencies: IDependency) => {
         await jobRepository.deleteJob(jobId);
 
         // to produce a message to kafka topic
-        // isBlocked contains user data with 'isActive' value changed
-        // await produceMessage(deletedJob, 'JOB_DELETED_TOPIC')
         const jobDeletedEvent = new JobDeletedEventPublisher(kafkaClient);
         await jobDeletedEvent.publish({ jobId });
         const remainingJobs = await jobRepository.getAllJobsByRecruiterId(recruiterId);

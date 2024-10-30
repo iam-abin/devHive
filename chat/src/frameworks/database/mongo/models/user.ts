@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import { IUser } from '../../../types/user';
+import { ROLES } from '@abijobportal/common';
 
 export interface IUserDocument extends mongoose.Document, IUser {}
 
@@ -13,7 +14,7 @@ const userSchema = new mongoose.Schema(
         role: {
             type: String,
             required: true,
-            enum: ['candidate', 'recruiter'],
+            enum: [ROLES.CANDIDATE, ROLES.RECRUITER],
         },
         isActive: {
             type: Boolean,
