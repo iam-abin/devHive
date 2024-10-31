@@ -6,7 +6,7 @@ import {
     forgotPasswordEmailCandidateApi,
     passwordResetMobileCandidateApi,
 } from "../../axios/apiMethods/auth-service/candidateAuth";
-import Loading from "../../components/loading/Loading";
+import Loading from "../../components/loading/BarLoading";
 import EmailOrMobile from "../../components/form/EmailOrMobile";
 import {
     forgotPasswordEmailRecruiterApi,

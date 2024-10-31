@@ -1,9 +1,13 @@
 import homeImage from "../../assets/landingPage/company-like.jpg";
 import { useEffect, useState } from "react";
 import NavBarLanding from "../../components/navBar/NavBarLanding";
-import FilterBar from "../../components/filterBar/FilterBar";
+import FilterBar from "../../components/filterSearch/FilterBar";
 import JobCard from "../../components/cards/JobCard";
-import { filterJobsApi, getAllJobsApi, getJobFilterBarValuesApi } from "../../axios/apiMethods/jobs-service/jobs";
+import {
+    filterJobsApi,
+    getAllJobsApi,
+    getJobFilterBarValuesApi,
+} from "../../axios/apiMethods/jobs-service/jobs";
 
 import { Link } from "react-scroll";
 import { useDispatch, useSelector } from "react-redux";
@@ -52,7 +56,6 @@ function LandingPage() {
         (store: RootState) => store.jobReducer.currentPage
     );
 
-
     const jobs: IJob[] = useSelector((store: RootState) => {
         return store.jobReducer.jobs;
     });
@@ -74,25 +77,43 @@ function LandingPage() {
 
     useEffect(() => {
         (async () => {
-            const jobFieldsValues = await getJobFilterBarValuesApi(["title", "companyLocation", "employmentType"]);
+            const jobFieldsValues = await getJobFilterBarValuesApi([
+                "title",
+                "companyLocation",
+                "employmentType",
+            ]);
             setJobFieldsValues(jobFieldsValues.data);
         })();
+        // return () => {
+        //     dispatch(clearTotalNumberOfPages());
+        //     dispatch(clearCurrentPage());
+        // };
     }, []);
 
     const handleJobFilter = async () => {
-        if (jobCriteria.title === "" && jobCriteria.companyLocation === "" && jobCriteria.employmentType === "") {
+        if (
+            jobCriteria.title === "" &&
+            jobCriteria.companyLocation === "" &&
+            jobCriteria.employmentType === ""
+        ) {
             hotToastMessage("Please choose options", "warn");
             return;
         }
 
-        const filteredJobs = await filterJobsApi(jobCriteria, filteredCurrentPage, 2);
+        const filteredJobs = await filterJobsApi(
+            jobCriteria,
+            filteredCurrentPage,
+            2
+        );
 
         if (filteredJobs && filteredJobs.data) {
             dispatch(setCurrentPage(1));
             dispatch(setJobs(filteredJobs.data.jobs));
+            // console.log();
+
             dispatch(setTotalNumberOfPages(filteredJobs.data.numberOfPages));
-            setIsFiltering(true)
-        }else{
+            setIsFiltering(true);
+        } else {
             dispatch(clearCurrentPage());
         }
     };
@@ -103,20 +124,22 @@ function LandingPage() {
         const allJobs = await getAllJobsApi(1);
         if (allJobs && allJobs.data) {
             dispatch(setJobs(allJobs.data.jobs));
-            setIsFiltering(false)
+            setIsFiltering(false);
             setJobCriteria({
                 title: "",
                 companyLocation: "",
                 employmentType: "",
-            })
-            dispatch(setTotalNumberOfPages(allJobs.data.totalNumberOfPages));
+            });
+            dispatch(setTotalNumberOfPages(allJobs.data.numberOfPages));
         }
     };
 
     const handleGetAllJobs = async (page: number) => {
         dispatch(setLoading());
-        
-        const allJobs = isFiltering?await handleJobFilter():await getAllJobsApi(page);
+
+        const allJobs = isFiltering
+            ? await handleJobFilter()
+            : await getAllJobsApi(page);
 
         dispatch(setLoaded());
         return allJobs;
@@ -140,24 +163,24 @@ function LandingPage() {
 
     useEffect(() => {
         (async () => {
-            const allJobs = await handleGetAllJobs(isFiltering ? filteredCurrentPage : currentPage);
+            const allJobs = await handleGetAllJobs(
+                isFiltering ? filteredCurrentPage : currentPage
+            );
             // Check if allJobs.data exists before accessing its properties
             if (allJobs && allJobs.data) {
                 dispatch(setJobs(allJobs.data.jobs));
 
-                dispatch(
-                    setTotalNumberOfPages(allJobs.data.totalNumberOfPages)
-                );
+                dispatch(setTotalNumberOfPages(allJobs.data.numberOfPages));
             }
             return () => {
                 // This cleanup function will be called when the component is unmounted
                 dispatch(clearJobs());
-                setIsFiltering(false)
+                setIsFiltering(false);
                 setJobCriteria({
                     title: "",
                     companyLocation: "",
                     employmentType: "",
-                })
+                });
                 dispatch(clearTotalNumberOfPages());
                 dispatch(clearCurrentPage());
             };
@@ -234,13 +257,13 @@ function LandingPage() {
                     className=" bg-gradient-to-r from-slate-900 via-purple-900 to-slate-900"
                 >
                     <div className="py-5">
-                    <FilterBar 
-                        jobFieldsValues={jobFieldsValues}
-                        jobCriteria={jobCriteria}
-                        setJobCriteria={setJobCriteria}
-                        handleJobFilter={handleJobFilter}
-                        handleReset={handleReset}
-                    />
+                        <FilterBar
+                            jobFieldsValues={jobFieldsValues}
+                            jobCriteria={jobCriteria}
+                            setJobCriteria={setJobCriteria}
+                            handleJobFilter={handleJobFilter}
+                            handleReset={handleReset}
+                        />
                     </div>
                     <div>
                         {jobs && jobs.length > 0 ? (

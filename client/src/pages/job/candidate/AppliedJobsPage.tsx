@@ -49,7 +49,7 @@ function AppliedJobsPage() {
                     <div className="flex items-center justify-center mt-5">
                         <h1 className="text-3xl font-bold">My Applied Jobs</h1>
                     </div>
-                    <div className="justify-center h-[70vh]">
+                    <div className="justify-center">
                         {appliedJobsData.map((job: any) => (
                             <JobAppliedCard
                                 key={job?.id}

@@ -6,7 +6,7 @@ import { notify } from "../../../utils/toastMessage";
 import { recruiterSigninApi } from "../../../axios/apiMethods/auth-service/recruiterAuth";
 import { recruiterSignupApi } from "../../../axios/apiMethods/auth-service/recruiterAuth";
 import { RootState } from "../../../redux/reducer";
-import Loading from "../../../components/loading/Loading";
+import Loading from "../../../components/loading/BarLoading";
 import { RiArrowLeftFill } from "react-icons/ri";
 import { setUser } from "../../../redux/slice/user";
 

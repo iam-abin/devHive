@@ -39,7 +39,7 @@ function ViewAllCandidatesPage() {
         })();
     }, [currentPage]);
 
-    const filteredCandidated = candidatesData.filter((candidate: any) =>
+    const filteredCandidates = candidatesData.filter((candidate: any) =>
         candidate.name.toLowerCase().includes(searchKey.toLowerCase())
     );
 
@@ -63,10 +63,10 @@ function ViewAllCandidatesPage() {
                     </div>
                 </div>
 
-                {filteredCandidated.length <= 0 ? (
+                {filteredCandidates.length <= 0 ? (
                     <div>No Candidates are registered yet</div>
                 ) : (
-                    filteredCandidated.map((candidate) => (
+                    filteredCandidates.map((candidate) => (
                         <CandidateCard
                             key={candidate.id}
                             candidate={candidate}

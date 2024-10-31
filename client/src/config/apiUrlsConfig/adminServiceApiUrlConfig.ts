@@ -1,3 +1,5 @@
+import { ISearch } from "../../types/Job";
+
 const JOB_ADMIN_URL = `admin/job`; // job management in admin service
 const RECRUITER_ADMIN_URL = `admin/recruiter`; // recruiter management in admin service
 const CANDIDATE_ADMIN_URL = `admin/candidate`;
@@ -16,6 +18,9 @@ const adminApiUrlConfig = {
     // Recruiter
     getAllRecruitersUrl: (page: number, limit: number) =>
         `${RECRUITER_ADMIN_URL}/recruiters/${page}/${limit}`,
+    searchRecruitersUrl: (searchData: ISearch, page: number, limit: number) =>
+        `${RECRUITER_ADMIN_URL}/recruiters/search/${page}/${limit}?searchKey=${searchData.searchKey}`,
+
     blockUnblockRecruiterUrl: (userId: string) =>
         `${RECRUITER_ADMIN_URL}/block-unblock/${userId}`,
     viewRecruiterProfileDetailsUrl: (userId: string) =>
@@ -24,6 +29,9 @@ const adminApiUrlConfig = {
     // Candidate
     getAllCandidatesUrl: (page: number, limit: number) =>
         `${CANDIDATE_ADMIN_URL}/candidates/${page}/${limit}`,
+    searchCandidatesUrl: (searchData: ISearch, page: number, limit: number) =>
+        `${CANDIDATE_ADMIN_URL}/candidates/search/${page}/${limit}?searchKey=${searchData.searchKey}`,
+
     blockUnblockCandidateUrl: (userId: string) =>
         `${CANDIDATE_ADMIN_URL}/block-unblock/${userId}`,
     viewCandidateProfileDetailsUrl: (userId: string) =>

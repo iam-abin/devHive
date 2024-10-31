@@ -1,6 +1,8 @@
 import { CandidateModel, ICandidateDocument } from '../../database/models';
 import { ICandidate, IUser } from '../../types/user';
 
+const CANDIDATES_SELECT_FIELDS: string[] = ['name', 'email', 'phone', 'isActive'];
+
 export = {
     createCandidate: async (userData: IUser): Promise<Partial<ICandidateDocument>> => {
         const candidate = CandidateModel.buildCandidate(userData);
@@ -31,13 +33,31 @@ export = {
     },
 
     getAllCandidates: async (skip: number, limit: number): Promise<ICandidateDocument[] | null> => {
-        return await CandidateModel.find({})
-            .skip(skip)
-            .limit(limit)
-            .select(['name', 'email', 'phone', 'isActive']);
+        return await CandidateModel.find({}).skip(skip).limit(limit).select(CANDIDATES_SELECT_FIELDS);
     },
 
     getCountOfCandidates: async (): Promise<number> => {
         return await CandidateModel.countDocuments();
+    },
+
+    searchCandidates: async (
+        searchKey: string,
+        skip: number,
+        limit: number,
+    ): Promise<ICandidateDocument[] | null> => {
+
+        return await CandidateModel.find({
+            name: {
+                $regex: new RegExp(searchKey, 'i'),
+            },
+        })
+            .skip(skip)
+            .limit(limit)
+            .select(CANDIDATES_SELECT_FIELDS);
+    },
+
+    getCountOfSearchedCandidates: async (searchKey: string): Promise<number> => {
+
+        return await CandidateModel.countDocuments({ name: { $regex: new RegExp(searchKey, 'i') } });
     },
 };

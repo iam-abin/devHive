@@ -6,9 +6,11 @@ import { useSelector } from "react-redux";
 import { loadStripe } from "@stripe/stripe-js";
 import PaymentPlanCard from "../../components/cards/PaymentPlanCard";
 import { getAllMembershipPlansByCandidateApi } from "../../axios/apiMethods/premium-plans-service/candidate";
+import PaymentPlanCardShimmer from "../../components/shimmer/PaymentPlanCardShimmer";
 
 const PaymentPlans: React.FC = () => {
     const [membershipPlansData, setMembershipPlansData] = useState<[]>([]);
+    const [loading, setLoading] = useState<boolean>(false);
 
     const candidateData = useSelector(
         (store: RootState) => store.userReducer.authData
@@ -24,8 +26,13 @@ const PaymentPlans: React.FC = () => {
 
     useEffect(() => {
         (async () => {
-            const recruiters = await getAllMembershipPlansByCandidateApi();
-            setMembershipPlansData(recruiters.data);
+            setLoading(true);
+            try {
+                const recruiters = await getAllMembershipPlansByCandidateApi();
+                setMembershipPlansData(recruiters.data);
+            } finally {
+                setLoading(false);
+            }
         })();
     }, []);
 
@@ -63,22 +70,28 @@ const PaymentPlans: React.FC = () => {
                         job search experience.
                     </p>
                 </div>
-                <div className="flex md:flex-row gap-5 sm:flex-col flex-wrap justify-center">
+                <div className="flex flex-wrap md:flex-row gap-5 sm:flex-col justify-center">
                     {/* Pricing Card */}
-                    {membershipPlansData.length > 0
-                        ? membershipPlansData.map((plan: any) => {
-                              return (
-                                  <PaymentPlanCard
-                                      key={plan?.id}
-                                      makePayment={makePayment}
-                                      planData={plan}
-                                      candidateProfileData={
-                                          candidateProfileData
-                                      }
-                                  />
-                              );
-                          })
-                        : "No plans are avaiable"}
+                    {
+                    loading ?
+                     (
+                        <PaymentPlanCardShimmer />
+                    ) 
+                    : membershipPlansData.length > 0 ? (
+                        membershipPlansData.map((plan: any) => {
+                            return (
+                                <PaymentPlanCard
+                                    key={plan?.id}
+                                    makePayment={makePayment}
+                                    planData={plan}
+                                    candidateProfileData={candidateProfileData}
+                                />
+                            );
+                        })
+                    ) : (
+                        "No plans are avaiable"
+                    )
+                    }
                 </div>
             </div>
         </div>

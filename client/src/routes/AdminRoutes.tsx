@@ -3,7 +3,7 @@ import { lazy, Suspense } from "react";
 import { useSelector } from "react-redux";
 
 import { RootState } from "../redux/reducer";
-import Loading from "../components/loading/Loading";
+import BarLoading from "../components/loading/BarLoading";
 
 import AdminLayout from "../pages/layout/AdminLayout";
 
@@ -46,7 +46,7 @@ function AdminRoutes() {
         isAdmin ? children : <Navigate to="/admin/signin" />;
     return (
         <>
-            <Suspense fallback={<Loading />}>
+            <Suspense fallback={<BarLoading />}>
                 <Routes>
                     {/* Public Admin Sign-in Route */}
                     <Route

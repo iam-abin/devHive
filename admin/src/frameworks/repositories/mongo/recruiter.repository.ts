@@ -1,6 +1,8 @@
 import { RecruiterModel, IRecruiterDocument } from '../../database/models';
 import { IRecruiter, IUser } from '../../types/user';
 
+const RECRUITERS_SELECT_FIELDS: string[] = ['name', 'email', 'phone', 'isActive'];
+
 export = {
     createRecruiter: async (userData: IUser): Promise<IRecruiterDocument> => {
         const recruiter = RecruiterModel.buildRecruiter(userData);
@@ -30,14 +32,30 @@ export = {
     },
 
     getAllRecruiters: async (skip: number, limit: number): Promise<IRecruiterDocument[] | []> => {
-        return await RecruiterModel.find({})
-            .skip(skip)
-            .limit(limit)
-            .select(['name', 'email', 'phone', 'isActive']);
+        return await RecruiterModel.find({}).skip(skip).limit(limit).select(RECRUITERS_SELECT_FIELDS);
     },
 
     getCountOfRecruiters: async (): Promise<number> => {
         const count = await RecruiterModel.countDocuments();
         return count;
+    },
+
+    searchRecruiters: async (
+        searchKey: string,
+        skip: number,
+        limit: number,
+    ): Promise<IRecruiterDocument[] | null> => {
+        return await RecruiterModel.find({
+            name: {
+                $regex: new RegExp(searchKey, 'i'),
+            },
+        })
+            .skip(skip)
+            .limit(limit)
+            .select(RECRUITERS_SELECT_FIELDS);
+    },
+
+    getCountOfSearchedRecruiters: async (searchKey: string): Promise<number> => {
+        return await RecruiterModel.countDocuments({ name: { $regex: new RegExp(searchKey, 'i') } });
     },
 };

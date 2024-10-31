@@ -5,10 +5,12 @@ import { notify } from "../../utils/toastMessage";
 import {
     blockUnblockCandidateApi,
     getAllCandidatesApi,
+    searchCandidatesApi,
 } from "../../axios/apiMethods/admin-service/candidates";
 import {
     blockUnblockRecruiterApi,
     getAllRecruitersApi,
+    searchRecruitersApi,
 } from "../../axios/apiMethods/admin-service/recruiters";
 
 import { IResponse } from "../../types/api";
@@ -16,11 +18,15 @@ import { IUserData } from "../../types/user";
 import { swal } from "../../utils/swal";
 import Table from "../../components/table/Table";
 import { ROLES } from "../../utils/constants";
+import SearchBar from "../../components/filterSearch/SearchBar";
 
 function UsersListPage() {
     const navigate = useNavigate();
     const [usersData, setUsersData] = useState<IUserData[]>([]);
-    const [numberOfPages, setNumberOfPages] = useState(0);
+    const [numberOfPages, setNumberOfPages] = useState(1);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [searchKey, setSearchKey] = useState("");
+    const urlPath = useLocation()
 
     const locationUrl = useLocation();
     const isCandidateUrl: boolean = locationUrl.pathname.includes(
@@ -32,11 +38,41 @@ function UsersListPage() {
     const fetchUsers = async (currentPage: number) => {
         let usersData: IResponse | null = null;
         if (isCandidateUrl) {
-            usersData = await getAllCandidatesApi(currentPage, USERS_PER_PAGE);
-            setUsersData(usersData.data.candidates);
+            if (!searchKey) {
+                console.log("no search key");
+                usersData = await getAllCandidatesApi(
+                    currentPage,
+                    USERS_PER_PAGE
+                );
+            } else {
+                console.log("yes search key");
+                
+                usersData = await searchCandidatesApi(
+                    {searchKey},
+                    currentPage,
+                    USERS_PER_PAGE
+                );
+            }
+
+            if (usersData) {
+                setUsersData(usersData.data.candidates);
+            }
         } else {
-            usersData = await getAllRecruitersApi(currentPage, USERS_PER_PAGE);
-            setUsersData(usersData.data.recruiters);
+            if (!searchKey) {
+                usersData = await getAllRecruitersApi(
+                    currentPage,
+                    USERS_PER_PAGE
+                );
+            } else {
+                usersData = await searchRecruitersApi(
+                    {searchKey},
+                    currentPage,
+                    USERS_PER_PAGE
+                );
+            }
+            if (usersData) {
+                setUsersData(usersData.data.recruiters);
+            }
         }
 
         if (usersData) {
@@ -45,8 +81,18 @@ function UsersListPage() {
     };
 
     useEffect(() => {
-        fetchUsers(1); // Fetch initial data for the first page
+        setSearchKey("");
     }, [locationUrl]);
+
+
+    // Reset to page 1 when starting a new search
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [searchKey]);
+
+    useEffect(() => {
+        fetchUsers(1); // Fetch initial data for the first page
+    }, [locationUrl, searchKey, currentPage]);
 
     const viewProfileDetails = async (userId: string) => {
         if (isCandidateUrl) {
@@ -141,8 +187,6 @@ function UsersListPage() {
         },
     ];
 
-    
-
     return (
         <div className="text-center mx-10">
             <h1 className="font-semibold text-5xl mt-4 mb-10">
@@ -150,6 +194,9 @@ function UsersListPage() {
                     ? "Candidates Management"
                     : " Recruiters Management"}
             </h1>
+            <div>
+                <SearchBar onSearch={setSearchKey} />
+            </div>
             <Table
                 columns={columns}
                 data={usersData}

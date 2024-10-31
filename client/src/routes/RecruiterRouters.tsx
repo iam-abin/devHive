@@ -4,7 +4,7 @@ import { lazy, Suspense } from "react";
 import { useSelector } from "react-redux"
 
 import { RootState } from "../redux/reducer"
-import Loading from "../components/loading/Loading";
+import BarLoading from "../components/loading/BarLoading";
 
 import RecruiterLayout from "../pages/layout/RecruiterLayout";
 import { checkUserRole } from "../utils/checkRole";
@@ -40,7 +40,7 @@ function RecruiterRouters() {
 
   return (
     <>
-		<Suspense fallback={<Loading />}>
+		<Suspense fallback={<BarLoading />}>
 				
 			<Routes>
 				<Route path="/landing" element={isRecruiter?<Navigate to={"/recruiter"} />: <LandingPage /> } />
