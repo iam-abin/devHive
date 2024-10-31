@@ -4,7 +4,7 @@ import { IFilter, IJob } from '../../types/job';
 
 const { JobModel } = Models;
 
-const JOB_LIST_SELECT_FIELDS: string[] = [
+const JOBS_SELECT_FIELDS: string[] = [
     'title',
     'companyLocation',
     'employmentType',
@@ -47,7 +47,7 @@ export = {
         const filteredJobs = await JobModel.find({...jobFilterData, isDeleted: false})
             .skip(skip)
             .limit(limit)
-            .select(JOB_LIST_SELECT_FIELDS);
+            .select(JOBS_SELECT_FIELDS);
         return filteredJobs;
     },
 
@@ -63,13 +63,13 @@ export = {
         let jobs: Partial<IJobDocument>[] | [];
         if (applicationJobIds) {
             jobs = await JobModel.find({ _id: { $nin: applicationJobIds }, isDeleted: false })
-                .select(JOB_LIST_SELECT_FIELDS)
+                .select(JOBS_SELECT_FIELDS)
                 .sort({ createdAt: -1 })
                 .skip(skip)
                 .limit(limit);
         } else {
             jobs = await JobModel.find({ isActive: true })
-                .select(JOB_LIST_SELECT_FIELDS)
+                .select(JOBS_SELECT_FIELDS)
                 .sort({ createdAt: -1 })
                 .skip(skip)
                 .limit(limit);

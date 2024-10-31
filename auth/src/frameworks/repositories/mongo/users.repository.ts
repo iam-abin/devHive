@@ -51,7 +51,6 @@ export = {
     },
 
     updateVerification: async (email: string): Promise<IUserDocument | null> => {
-        
         const user = await UserModel.findOneAndUpdate({ email }, { isVerified: true }, { new: true });
         return user;
     },

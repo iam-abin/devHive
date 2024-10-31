@@ -76,7 +76,7 @@ userSchema.pre('save', async function (next) {
 userSchema.pre('findOneAndUpdate', async function (next) {
     const update = this.getUpdate() as Partial<ISignup>;
     if (!update.password) return next();
-    
+
     try {
         const hashedPassword: string = await generateHashedPassword(update.password);
         this.setUpdate({ ...update, password: hashedPassword });
