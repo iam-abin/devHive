@@ -1,5 +1,4 @@
-import { ISearch } from "../../types/Job";
-
+const ADMIN_URL = `admin`;
 const JOB_ADMIN_URL = `admin/job`; // job management in admin service
 const RECRUITER_ADMIN_URL = `admin/recruiter`; // recruiter management in admin service
 const CANDIDATE_ADMIN_URL = `admin/candidate`;
@@ -18,9 +17,6 @@ const adminApiUrlConfig = {
     // Recruiter
     getAllRecruitersUrl: (page: number, limit: number) =>
         `${RECRUITER_ADMIN_URL}/recruiters/${page}/${limit}`,
-    searchRecruitersUrl: (searchData: ISearch, page: number, limit: number) =>
-        `${RECRUITER_ADMIN_URL}/recruiters/search/${page}/${limit}?searchKey=${searchData.searchKey}`,
-
     blockUnblockRecruiterUrl: (userId: string) =>
         `${RECRUITER_ADMIN_URL}/block-unblock/${userId}`,
     viewRecruiterProfileDetailsUrl: (userId: string) =>
@@ -29,9 +25,6 @@ const adminApiUrlConfig = {
     // Candidate
     getAllCandidatesUrl: (page: number, limit: number) =>
         `${CANDIDATE_ADMIN_URL}/candidates/${page}/${limit}`,
-    searchCandidatesUrl: (searchData: ISearch, page: number, limit: number) =>
-        `${CANDIDATE_ADMIN_URL}/candidates/search/${page}/${limit}?searchKey=${searchData.searchKey}`,
-
     blockUnblockCandidateUrl: (userId: string) =>
         `${CANDIDATE_ADMIN_URL}/block-unblock/${userId}`,
     viewCandidateProfileDetailsUrl: (userId: string) =>
@@ -51,9 +44,13 @@ const adminApiUrlConfig = {
     getAllPaymentsUrl: (page: number, limit: number) =>
         `${ADMIN_PAYMENT_URL}/payments/${page}/${limit}`,
 
-    // dashboard
+    // Dashboard
     getAllCardsDetailsUrl: `${DASHBOARD_ADMIN_URL}/cards-data`,
     getGraphDataUrl: `${DASHBOARD_ADMIN_URL}/graph-data`,
+
+    // Search
+    getSearchResultsUrl: (searchKey: string, resourceType: string, page: number, limit: number) =>
+        `${ADMIN_URL}/search/${resourceType}/${page}/${limit}?searchKey=${searchKey}`,
 };
 
 export default adminApiUrlConfig;

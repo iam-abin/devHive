@@ -44,7 +44,7 @@ export = {
         searchKey: string,
         skip: number,
         limit: number,
-    ): Promise<ICandidateDocument[] | null> => {
+    ): Promise<ICandidateDocument[] | []> => {
 
         return await CandidateModel.find({
             name: {
@@ -57,7 +57,6 @@ export = {
     },
 
     getCountOfSearchedCandidates: async (searchKey: string): Promise<number> => {
-
         return await CandidateModel.countDocuments({ name: { $regex: new RegExp(searchKey, 'i') } });
     },
 };

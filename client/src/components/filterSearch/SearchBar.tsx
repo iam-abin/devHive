@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 
 interface SearchBarProps {
     onSearch: (searchTerm: string) => void;
+    placeholder: string
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
+const SearchBar: React.FC<SearchBarProps> = ({ placeholder, onSearch }) => {
     const [searchKey, setSearchKey] = useState("");
     const [debouncedSearchKey, setDebouncedSearchKey] = useState("");
 
@@ -12,9 +13,9 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
     useEffect(() => {
         const timer = setTimeout(() => {
             setDebouncedSearchKey(searchKey);
-        }, 800); // 800ms debounce time
+        }, 500); // 500 ms debounce time
 
-        // Clear timer if searchKey changes before 800ms
+        // Clear timer if searchKey changes before 500 ms
         return () => clearTimeout(timer);
     }, [searchKey]);
 
@@ -26,8 +27,8 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
     return (
         <input
             type="text"
-            placeholder="Search"
-            className="px-4 mx-11 py-2 border border-gray-300 rounded-md"
+            placeholder={placeholder}
+            className="px-4 py-2 border w-4/12 border-gray-300 rounded-md"
             onChange={(e) => setSearchKey(e.target.value.trim())}
         />
     );

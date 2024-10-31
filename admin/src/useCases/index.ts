@@ -9,3 +9,5 @@ export * from './payment';
 export * from './membership';
 
 export * from './dashboard';
+
+export * from './search';

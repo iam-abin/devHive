@@ -1,6 +1,8 @@
 import { IMembershipPlanData } from '../../../entities/membership-plan';
 import { IMembershipPlansDocument, MembershipPlansModel } from '../../database/models';
 
+const MEMBERSHIP_SELECT_FIELDS = ["name", "price","isActive"]
+
 export = {
     createMembershipPlan: async (
         membershipPlanData: IMembershipPlanData,
@@ -58,11 +60,25 @@ export = {
         const membershipPlans = await MembershipPlansModel.find({})
             .skip(skip)
             .limit(limit)
-            .select(['name', 'price']);
+            .select(MEMBERSHIP_SELECT_FIELDS);
         return membershipPlans;
     },
 
     getCountOfMembershipPlans: async (): Promise<number> => {
         return await MembershipPlansModel.countDocuments();
+    },
+
+    searchMembershipPlans: async (searchKey: string, skip: number, limit: number): Promise<IMembershipPlansDocument[] | []> => {
+        return await MembershipPlansModel.find({
+            name: {
+                $regex: new RegExp(searchKey, 'i'),
+            },
+        }).select(MEMBERSHIP_SELECT_FIELDS)
+            .skip(skip)
+            .limit(limit);
+    },
+
+    getCountOfSearchedMembershipPlans: async (searchKey: string): Promise<number> => {
+        return await MembershipPlansModel.countDocuments({ name: { $regex: new RegExp(searchKey, 'i') } });
     },
 };

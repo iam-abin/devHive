@@ -3,21 +3,22 @@ import { IDependency } from '../../frameworks/types/dependency';
 
 export = (dependencies: IDependency) => {
     const {
-        useCases: { searchCandidatesUseCase },
+        useCases: { searchUseCase },
     } = dependencies;
 
     return async (req: Request, res: Response) => {
+        const { type: resourceType } = req.params;
         const { searchKey } = req.query;
-
-        const { candidates, numberOfPages } = await searchCandidatesUseCase(dependencies).execute(
-            searchKey,
+        const { result, numberOfPages } = await searchUseCase(dependencies).execute(
+            resourceType,
+            searchKey as string,
             Number(req.params.page) || 1,
             Number(req.params.limit) || 4,
         );
-
+        
         res.status(200).json({
-            message: 'candidates fetched successfully',
-            data: { candidates, numberOfPages },
+            message: 'search results fetched successfully',
+            data: { result, numberOfPages },
         });
     };
 };

@@ -21,8 +21,8 @@ const ViewJobDetailsPage = lazy(
     () => import("../pages/job/admin/ViewJobDetailsPage")
 );
 
-const PremiumMembershipPage = lazy(
-    () => import("../pages/payment/PremiumMembershipPage")
+const MembershipsListPage = lazy(
+    () => import("../pages/payment/MembershipsListPage")
 );
 
 const PaymentsListPage = lazy(
@@ -93,7 +93,7 @@ function AdminRoutes() {
                         />
                         <Route
                             path="memberships"
-                            element={<PremiumMembershipPage />}
+                            element={<MembershipsListPage />}
                         />
                         <Route path="payments" element={<PaymentsListPage />} />
                     </Route>

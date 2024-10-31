@@ -44,7 +44,7 @@ export = {
         searchKey: string,
         skip: number,
         limit: number,
-    ): Promise<IRecruiterDocument[] | null> => {
+    ): Promise<IRecruiterDocument[] | []> => {
         return await RecruiterModel.find({
             name: {
                 $regex: new RegExp(searchKey, 'i'),

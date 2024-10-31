@@ -5,19 +5,19 @@ import { notify } from "../../utils/toastMessage";
 import {
     blockUnblockCandidateApi,
     getAllCandidatesApi,
-    searchCandidatesApi,
 } from "../../axios/apiMethods/admin-service/candidates";
 import {
     blockUnblockRecruiterApi,
     getAllRecruitersApi,
-    searchRecruitersApi,
 } from "../../axios/apiMethods/admin-service/recruiters";
+
+import { searchApi } from "../../axios/apiMethods/admin-service/search";
 
 import { IResponse } from "../../types/api";
 import { IUserData } from "../../types/user";
 import { swal } from "../../utils/swal";
 import Table from "../../components/table/Table";
-import { ROLES } from "../../utils/constants";
+import { ROLES, SEARCH_RESOURCE_TYPES } from "../../utils/constants";
 import SearchBar from "../../components/filterSearch/SearchBar";
 
 function UsersListPage() {
@@ -26,7 +26,6 @@ function UsersListPage() {
     const [numberOfPages, setNumberOfPages] = useState(1);
     const [currentPage, setCurrentPage] = useState(1);
     const [searchKey, setSearchKey] = useState("");
-    const urlPath = useLocation()
 
     const locationUrl = useLocation();
     const isCandidateUrl: boolean = locationUrl.pathname.includes(
@@ -36,7 +35,7 @@ function UsersListPage() {
     const USERS_PER_PAGE: number = 2;
 
     const fetchUsers = async (currentPage: number) => {
-        let usersData: IResponse | null = null;
+        let usersData: IResponse | [] = [];
         if (isCandidateUrl) {
             if (!searchKey) {
                 console.log("no search key");
@@ -44,34 +43,32 @@ function UsersListPage() {
                     currentPage,
                     USERS_PER_PAGE
                 );
-            } else {
-                console.log("yes search key");
-                
-                usersData = await searchCandidatesApi(
-                    {searchKey},
+                setUsersData(usersData.data.candidates);
+            } else {                
+                usersData = await searchApi(
+                    searchKey,
+                    SEARCH_RESOURCE_TYPES.CANDIDATE,
                     currentPage,
                     USERS_PER_PAGE
                 );
+                setUsersData(usersData.data.result);
             }
-
-            if (usersData) {
-                setUsersData(usersData.data.candidates);
-            }
+            
         } else {
             if (!searchKey) {
                 usersData = await getAllRecruitersApi(
                     currentPage,
                     USERS_PER_PAGE
                 );
+                setUsersData(usersData.data.recruiters);
             } else {
-                usersData = await searchRecruitersApi(
-                    {searchKey},
+                usersData = await searchApi(
+                    searchKey,
+                    SEARCH_RESOURCE_TYPES.RECRUITER,
                     currentPage,
                     USERS_PER_PAGE
                 );
-            }
-            if (usersData) {
-                setUsersData(usersData.data.recruiters);
+                setUsersData(usersData.data.result);
             }
         }
 
@@ -124,7 +121,7 @@ function UsersListPage() {
                         if (user.id === userId) {
                             return {
                                 ...user,
-                                isActive: updatedUser.data.isActive,
+                                isActive: updatedUser?.data.isActive,
                             };
                         }
 
@@ -194,8 +191,8 @@ function UsersListPage() {
                     ? "Candidates Management"
                     : " Recruiters Management"}
             </h1>
-            <div>
-                <SearchBar onSearch={setSearchKey} />
+            <div className="flex flex-row justify-end my-2">
+                <SearchBar placeholder={"search with name"} onSearch={setSearchKey} />
             </div>
             <Table
                 columns={columns}

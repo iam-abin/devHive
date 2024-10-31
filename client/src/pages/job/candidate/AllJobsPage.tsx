@@ -1,12 +1,13 @@
-// src/pages/AllJobsPage.tsx
 import { useEffect, useState } from "react";
-import { getAllJobsApi, serachJobsApi } from "../../../axios/apiMethods/jobs-service/jobs";
+import { getAllJobsApi } from "../../../axios/apiMethods/jobs-service/jobs";
 import { useNavigate } from "react-router-dom";
 import Paginate from "../../../components/pagination/Paginate";
 import JobCard from "../../../components/cards/JobCard";
 import SearchBar from "../../../components/filterSearch/SearchBar";
 import { IResponse } from "../../../types/api";
 import { IJob } from "../../../types/Job";
+import { searchApi } from "../../../axios/apiMethods/admin-service/search";
+import { SEARCH_RESOURCE_TYPES } from "../../../utils/constants";
 
 function AllJobsPage() {
     const navigate = useNavigate();
@@ -34,7 +35,12 @@ function AllJobsPage() {
             if (!searchKey) {
                 allJobs = await getAllJobsApi(currentPage);
             } else {
-                allJobs = await serachJobsApi({ searchKey }, currentPage, 2);
+                allJobs = await searchApi(
+                    searchKey,
+                    SEARCH_RESOURCE_TYPES.JOBS,
+                    currentPage,
+                    2
+                );
             }
 
             if (allJobs) {
@@ -47,7 +53,10 @@ function AllJobsPage() {
     return (
         <div className="container mx-auto my-8">
             <div className="mb-4 flex justify-end">
-                <SearchBar onSearch={setSearchKey} />
+                <SearchBar
+                    placeholder={"searach with title"}
+                    onSearch={setSearchKey}
+                />
             </div>
             {jobs.length > 0 ? (
                 <>
@@ -70,7 +79,9 @@ function AllJobsPage() {
                 </>
             ) : (
                 <div className="flex justify-center items-center h-[39.7vh]">
-                    <h1 className="font-bold text-3xl">No jobs are listed yet</h1>
+                    <h1 className="font-bold text-3xl">
+                        No jobs are listed yet
+                    </h1>
                 </div>
             )}
         </div>
