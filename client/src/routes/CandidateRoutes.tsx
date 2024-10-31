@@ -4,7 +4,7 @@ import { lazy, Suspense } from "react";
 import { useSelector } from "react-redux";
 
 import { RootState } from "../redux/reducer";
-import Loading from "../components/loading/Loading";
+import BarLoading from "../components/loading/BarLoading";
 import { checkUserRole } from "../utils/checkRole";
 import { IUserData } from "../types/user";
 
@@ -38,7 +38,7 @@ function CandidateRoutes() {
 	const { isCandidate } = checkUserRole(loggedinUser);
 
 	return (
-		<Suspense fallback={<Loading />}>
+		<Suspense fallback={<BarLoading />}>
 			<Routes>
 				<Route path="/forgotPasswordEmail" element={!isCandidate? <EmailOrMobileEnterPage />: <Navigate to={"/candidate/landing"} />} />
 				<Route path="/forgotPasswordOtp/:email" element={!isCandidate? <OtpFormPage />: <Navigate to={"/candidate/landing"} />} />

@@ -2,20 +2,15 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import CheckmarkSvg from "../../assets/payment/wired-flat-37-approve-checked-simple (3).gif";
 import { getCandidateProfileApi } from "../../axios/apiMethods/profile-service/candidate";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/reducer";
+import { useDispatch } from "react-redux";
 import { setMyProfileData } from "../../redux/slice/user";
 
 const PaymentSuccessFul: React.FC = () => {
     const dispatch = useDispatch();
-    const candidateData: any = useSelector(
-        (state: RootState) => state.userReducer.authData
-    );
+    
     useEffect(() => {
         (async () => {
-            const candidateProfileData = await getCandidateProfileApi(
-                candidateData?.id
-            );
+            const candidateProfileData = await getCandidateProfileApi();
 
             dispatch(setMyProfileData(candidateProfileData?.data));
         })();

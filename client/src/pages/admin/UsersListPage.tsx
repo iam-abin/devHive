@@ -11,16 +11,21 @@ import {
     getAllRecruitersApi,
 } from "../../axios/apiMethods/admin-service/recruiters";
 
+import { searchApi } from "../../axios/apiMethods/admin-service/search";
+
 import { IResponse } from "../../types/api";
 import { IUserData } from "../../types/user";
 import { swal } from "../../utils/swal";
 import Table from "../../components/table/Table";
-import { ROLES } from "../../utils/constants";
+import { ROLES, SEARCH_RESOURCE_TYPES } from "../../utils/constants";
+import SearchBar from "../../components/filterSearch/SearchBar";
 
 function UsersListPage() {
     const navigate = useNavigate();
     const [usersData, setUsersData] = useState<IUserData[]>([]);
-    const [numberOfPages, setNumberOfPages] = useState(0);
+    const [numberOfPages, setNumberOfPages] = useState(1);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [searchKey, setSearchKey] = useState("");
 
     const locationUrl = useLocation();
     const isCandidateUrl: boolean = locationUrl.pathname.includes(
@@ -30,13 +35,41 @@ function UsersListPage() {
     const USERS_PER_PAGE: number = 2;
 
     const fetchUsers = async (currentPage: number) => {
-        let usersData: IResponse | null = null;
+        let usersData: IResponse | [] = [];
         if (isCandidateUrl) {
-            usersData = await getAllCandidatesApi(currentPage, USERS_PER_PAGE);
-            setUsersData(usersData.data.candidates);
+            if (!searchKey) {
+                console.log("no search key");
+                usersData = await getAllCandidatesApi(
+                    currentPage,
+                    USERS_PER_PAGE
+                );
+                setUsersData(usersData.data.candidates);
+            } else {                
+                usersData = await searchApi(
+                    searchKey,
+                    SEARCH_RESOURCE_TYPES.CANDIDATE,
+                    currentPage,
+                    USERS_PER_PAGE
+                );
+                setUsersData(usersData.data.result);
+            }
+            
         } else {
-            usersData = await getAllRecruitersApi(currentPage, USERS_PER_PAGE);
-            setUsersData(usersData.data.recruiters);
+            if (!searchKey) {
+                usersData = await getAllRecruitersApi(
+                    currentPage,
+                    USERS_PER_PAGE
+                );
+                setUsersData(usersData.data.recruiters);
+            } else {
+                usersData = await searchApi(
+                    searchKey,
+                    SEARCH_RESOURCE_TYPES.RECRUITER,
+                    currentPage,
+                    USERS_PER_PAGE
+                );
+                setUsersData(usersData.data.result);
+            }
         }
 
         if (usersData) {
@@ -45,8 +78,18 @@ function UsersListPage() {
     };
 
     useEffect(() => {
-        fetchUsers(1); // Fetch initial data for the first page
+        setSearchKey("");
     }, [locationUrl]);
+
+
+    // Reset to page 1 when starting a new search
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [searchKey]);
+
+    useEffect(() => {
+        fetchUsers(1); // Fetch initial data for the first page
+    }, [locationUrl, searchKey, currentPage]);
 
     const viewProfileDetails = async (userId: string) => {
         if (isCandidateUrl) {
@@ -78,7 +121,7 @@ function UsersListPage() {
                         if (user.id === userId) {
                             return {
                                 ...user,
-                                isActive: updatedUser.data.isActive,
+                                isActive: updatedUser?.data.isActive,
                             };
                         }
 
@@ -141,8 +184,6 @@ function UsersListPage() {
         },
     ];
 
-    
-
     return (
         <div className="text-center mx-10">
             <h1 className="font-semibold text-5xl mt-4 mb-10">
@@ -150,6 +191,9 @@ function UsersListPage() {
                     ? "Candidates Management"
                     : " Recruiters Management"}
             </h1>
+            <div className="flex flex-row justify-end my-2">
+                <SearchBar placeholder={"search with name"} onSearch={setSearchKey} />
+            </div>
             <Table
                 columns={columns}
                 data={usersData}

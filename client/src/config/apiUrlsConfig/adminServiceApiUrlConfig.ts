@@ -1,3 +1,4 @@
+const ADMIN_URL = `admin`;
 const JOB_ADMIN_URL = `admin/job`; // job management in admin service
 const RECRUITER_ADMIN_URL = `admin/recruiter`; // recruiter management in admin service
 const CANDIDATE_ADMIN_URL = `admin/candidate`;
@@ -43,9 +44,13 @@ const adminApiUrlConfig = {
     getAllPaymentsUrl: (page: number, limit: number) =>
         `${ADMIN_PAYMENT_URL}/payments/${page}/${limit}`,
 
-    // dashboard
+    // Dashboard
     getAllCardsDetailsUrl: `${DASHBOARD_ADMIN_URL}/cards-data`,
     getGraphDataUrl: `${DASHBOARD_ADMIN_URL}/graph-data`,
+
+    // Search
+    getSearchResultsUrl: (searchKey: string, resourceType: string, page: number, limit: number) =>
+        `${ADMIN_URL}/search/${resourceType}/${page}/${limit}?searchKey=${searchKey}`,
 };
 
 export default adminApiUrlConfig;

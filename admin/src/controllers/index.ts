@@ -4,6 +4,7 @@ import recruiterControllers from './recruiter';
 import dashboardControllers from './admin';
 import membershipControllers from './membership';
 import paymentControllers from './payment';
+import searchControllers from './search';
 
 export {
     candidateControllers,
@@ -12,4 +13,5 @@ export {
     dashboardControllers,
     membershipControllers,
     paymentControllers,
+    searchControllers
 };

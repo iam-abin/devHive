@@ -43,19 +43,6 @@ export = {
         }
     },
 
-    getAllPayments: async (skip: number, limit: number): Promise<IPaymentDocument[] | []> => {
-        const payments = await PaymentModel.find({})
-            .skip(skip)
-            .limit(limit)
-            .populate('candidateId', ['name', 'email'])
-            .populate('membershipPlanId', ['name', 'price']);
-        return payments;
-    },
-
-    getCountOfPayments: async (): Promise<number> => {
-        return await PaymentModel.countDocuments();
-    },
-
     // populate graph data for admin
     getGraphData: async () => {
         const monthlyPayments = await PaymentModel.aggregate([
@@ -95,5 +82,111 @@ export = {
         ]);
 
         return monthlyPayments;
+    },
+
+    getAllPayments: async (skip: number, limit: number): Promise<IPaymentDocument[] | []> => {
+        const payments = await PaymentModel.find({})
+            .skip(skip)
+            .limit(limit)
+            .populate('candidateId', ['name', 'email'])
+            .populate('membershipPlanId', ['name', 'price']);
+        return payments;
+    },
+
+    getCountOfPayments: async (): Promise<number> => {
+        return await PaymentModel.countDocuments();
+    },
+
+    searchPayments: async (
+        searchKey: string,
+        skip: number,
+        limit: number,
+    ): Promise<IPaymentDocument[] | []> => {
+        return await PaymentModel.aggregate([
+            {
+                $lookup: {
+                    from: 'candidates',
+                    foreignField: '_id',
+                    localField: 'candidateId',
+                    as: 'candidate',
+                },
+            },
+            {
+                $lookup: {
+                    from: 'membershipplans',
+                    foreignField: '_id',
+                    localField: 'membershipPlanId',
+                    as: 'membershipPlan',
+                },
+            },
+            {
+                $unwind: {
+                    path: "$candidate",
+                    preserveNullAndEmptyArrays: true
+                }
+            },
+            {
+                $unwind: {
+                    path: "$membershipPlan",
+                    preserveNullAndEmptyArrays: true
+                }
+            },
+            {
+                $project: {
+                    candidateId: {
+                        _id: "$candidate._id",
+                        name: "$candidate.name",
+                        email: "$candidate.email",
+                    },
+                    membershipPlanId: {
+                        _id: "$membershipPlan._id",
+                        name: "$membershipPlan.name",
+                        price: "$membershipPlan.price",
+                    },
+                    createdAt: 1,
+                    updatedAt: 1,
+                },
+            },
+            {
+                $match: {
+                    'candidateId.name': {
+                        $regex: new RegExp(searchKey, 'i'),
+                    },
+                },
+            },
+            { $skip: skip },
+            { $limit: limit },
+        ]);
+    },
+
+    getCountOfSearchedPayments: async (searchKey: string): Promise<number> => {
+        const result = await PaymentModel.aggregate([
+            {
+                $lookup: {
+                    from: 'candidates',
+                    foreignField: '_id',
+                    localField: 'candidateId',
+                    as: 'candidate',
+                },
+            },
+            {
+                $unwind: {
+                    path: "$candidate",
+                    preserveNullAndEmptyArrays: true
+                }
+            },
+            {
+                $match: {
+                    'candidate.name': {
+                        $regex: new RegExp(searchKey, 'i'),
+                    },
+                },
+            },
+            {
+                $count: "totalCount"
+            }
+        ]);
+    
+        return result[0]?.totalCount || 0;
     },
 };

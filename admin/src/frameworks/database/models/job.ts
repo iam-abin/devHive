@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import { IJob } from '../../types/job';
 
-export type JobDocument = mongoose.Document & Omit<IJob, 'jobId'>;
+export type IJobDocument = mongoose.Document & Omit<IJob, 'jobId'>;
 
 const jobSchema = new mongoose.Schema(
     {
@@ -39,8 +39,8 @@ const jobSchema = new mongoose.Schema(
     },
 );
 
-interface JobModel extends mongoose.Model<JobDocument> {
-    buildJob(attributes: IJob): JobDocument;
+interface JobModel extends mongoose.Model<IJobDocument> {
+    buildJob(attributes: IJob): IJobDocument;
 }
 
 jobSchema.statics.buildJob = (attributes: IJob) => {
@@ -48,4 +48,4 @@ jobSchema.statics.buildJob = (attributes: IJob) => {
     return new JobModel({ ...rest, _id: jobId });
 };
 
-export const JobModel = mongoose.model<JobDocument, JobModel>('Job', jobSchema);
+export const JobModel = mongoose.model<IJobDocument, JobModel>('Job', jobSchema);

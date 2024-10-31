@@ -19,7 +19,6 @@ export const filterJobsApi = async (filterData: IFilter, page: number, limit: nu
     return await makeApiCall("post", jobApiUrlConfig.filterJobsUrl(page,limit), filterData);
 };
 
-
 // Candidate
 export const getAJobCandidateApi = async (id: string): Promise<IResponse> => {
     return await makeApiCall("get", jobApiUrlConfig.getAJobCandidateUrl(id));

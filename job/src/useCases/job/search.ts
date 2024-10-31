@@ -9,14 +9,15 @@ export = (dependencies: IDependency) => {
         throw new Error('jobRepository should exist in dependencies');
     }
 
-    const execute = async (searchText: string, skip: number, limit: number) => {
-        // Fetch the list of jobIds that the current user has already applied to
-
-        const searchResult = await jobRepository.getSearchResults(searchText, skip, limit);
+    const execute = async (searchText: string, page: number, limit: number) => {
+       // pagination
+       const skip = (page - 1) * limit;
+        const searchResult = await jobRepository.getSearchResults(searchText.trim(), skip, limit);
 
         // It is used to get the total number of pages
         const searchResultCount = await jobRepository.getCountOfSearchResults(searchText);
-        return { searchResult, searchResultCount };
+        const numberOfPages = Math.ceil(searchResultCount / limit);
+        return { jobs: searchResult, numberOfPages };
     };
 
     return { execute };

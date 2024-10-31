@@ -14,7 +14,7 @@ export = (dependencies: IDependency) => {
 
         res.status(200).json({
             message: 'Jobs list fetched successfully',
-            data: { jobs, totalNumberOfPages: numberOfPages },
+            data: { jobs, numberOfPages },
         });
     };
 };

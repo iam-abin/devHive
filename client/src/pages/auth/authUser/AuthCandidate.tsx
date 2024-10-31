@@ -19,7 +19,7 @@ import { setLoaded, setLoading } from "../../../redux/slice/isLoading";
 
 import { notify } from "../../../utils/toastMessage";
 import { RootState } from "../../../redux/reducer";
-import Loading from "../../../components/loading/Loading";
+import Loading from "../../../components/loading/BarLoading";
 import candidateLoginImage from "../../../assets/auth/candidate-login.svg";
 import { setUser } from "../../../redux/slice/user";
 

@@ -33,7 +33,9 @@ const CandidateLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
     return (
         <div className="flex h-screen flex-col">
             <TopNavBar menus={menus} />
-            <main className="pt-16">{children}</main>
+            <main className="pt-16 flex-grow">
+                {children}
+                </main>
             <Footer />
         </div>
     );

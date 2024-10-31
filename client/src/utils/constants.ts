@@ -18,3 +18,12 @@ export const ROLES = Object.freeze({
     CANDIDATE: "candidate",
     RECRUITER: "recruiter",
 });
+
+
+export const SEARCH_RESOURCE_TYPES = Object.freeze({
+    CANDIDATE: 'candidate',
+    RECRUITER: 'recruiter',
+    JOBS: 'jobs',
+    PAYMENTS: 'payments',
+    PLANS: 'palns',
+});

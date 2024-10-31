@@ -6,15 +6,14 @@ const PaymentPlanCard: React.FC<{
     planData: any;
 }> = ({ makePayment, candidateProfileData, planData }) => {
     return (
-        <div className="flex flex-col p-6 mx-auto max-w-lg text-center text-gray-900 bg-white rounded-lg border border-gray-100 dark:border-gray-600 xl:p-8 dark:bg-gray-800 dark:text-white shadow-2xl shadow-indigo-500/30">
+        <div className="flex flex-col w-4/12 p-6 mx-auto max-w-lg text-center text-gray-900 bg-white rounded-lg border border-gray-100 dark:border-gray-600 xl:p-8 dark:bg-gray-800 dark:text-white shadow-2xl shadow-indigo-500/30">
             <h3 className="mb-4 text-2xl font-semibold">
                 {planData?.name}
                 {/* Life long */}
             </h3>
             <p className="font-light text-gray-500 sm:text-lg dark:text-gray-400">
                 {planData?.description}
-                {/* Best option for candidate who are looking for a
-        job and to know more about recruiter. */}
+                {/* Best option for candidate who are looking for a job and to know more about recruiter. */}
             </p>
             <div className="flex justify-center items-baseline my-8">
                 <span className="mr-2 text-5xl font-extrabold">
@@ -24,7 +23,10 @@ const PaymentPlanCard: React.FC<{
                 {/* Rupee symbol */}
             </div>
             {/* List */}
-            <ul role="list" className="mb-8 space-y-4 text-left">
+            <ul
+                role="list"
+                className="mb-8 space-y-4 text-left flex flex-col flex-grow"
+            >
                 {planData?.features.length > 0
                     ? planData.features.map((item: string, index: number) => (
                           <li

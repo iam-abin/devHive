@@ -3,7 +3,7 @@ import { lazy, Suspense } from "react";
 import { useSelector } from "react-redux";
 
 import { RootState } from "../redux/reducer";
-import Loading from "../components/loading/Loading";
+import BarLoading from "../components/loading/BarLoading";
 
 import AdminLayout from "../pages/layout/AdminLayout";
 
@@ -21,8 +21,8 @@ const ViewJobDetailsPage = lazy(
     () => import("../pages/job/admin/ViewJobDetailsPage")
 );
 
-const PremiumMembershipPage = lazy(
-    () => import("../pages/payment/PremiumMembershipPage")
+const MembershipsListPage = lazy(
+    () => import("../pages/payment/MembershipsListPage")
 );
 
 const PaymentsListPage = lazy(
@@ -46,7 +46,7 @@ function AdminRoutes() {
         isAdmin ? children : <Navigate to="/admin/signin" />;
     return (
         <>
-            <Suspense fallback={<Loading />}>
+            <Suspense fallback={<BarLoading />}>
                 <Routes>
                     {/* Public Admin Sign-in Route */}
                     <Route
@@ -93,7 +93,7 @@ function AdminRoutes() {
                         />
                         <Route
                             path="memberships"
-                            element={<PremiumMembershipPage />}
+                            element={<MembershipsListPage />}
                         />
                         <Route path="payments" element={<PaymentsListPage />} />
                     </Route>

@@ -4,7 +4,7 @@ import { IFilter, IJob } from '../../types/job';
 
 const { JobModel } = Models;
 
-const JOB_LIST_SELECT_FIELDS: string[] = [
+const JOBS_SELECT_FIELDS: string[] = [
     'title',
     'companyLocation',
     'employmentType',
@@ -44,15 +44,15 @@ export = {
     },
 
     filterJobs: async (jobFilterData: IFilter, skip: number, limit: number): Promise<IJobDocument[] | []> => {
-        const filteredJobs = await JobModel.find(jobFilterData)
+        const filteredJobs = await JobModel.find({...jobFilterData, isDeleted: false})
             .skip(skip)
             .limit(limit)
-            .select(JOB_LIST_SELECT_FIELDS);
+            .select(JOBS_SELECT_FIELDS);
         return filteredJobs;
     },
 
     getCountOfFilterdJobs: async (jobFilterData: IFilter): Promise<number> => {
-        return await JobModel.countDocuments(jobFilterData);
+        return await JobModel.countDocuments({...jobFilterData, isDeleted: false});
     },
 
     getAllJobs: async (
@@ -62,14 +62,14 @@ export = {
     ): Promise<Partial<IJobDocument>[] | []> => {
         let jobs: Partial<IJobDocument>[] | [];
         if (applicationJobIds) {
-            jobs = await JobModel.find({ _id: { $nin: applicationJobIds } })
-                .select(JOB_LIST_SELECT_FIELDS)
+            jobs = await JobModel.find({ _id: { $nin: applicationJobIds }, isDeleted: false })
+                .select(JOBS_SELECT_FIELDS)
                 .sort({ createdAt: -1 })
                 .skip(skip)
                 .limit(limit);
         } else {
             jobs = await JobModel.find({ isActive: true })
-                .select(JOB_LIST_SELECT_FIELDS)
+                .select(JOBS_SELECT_FIELDS)
                 .sort({ createdAt: -1 })
                 .skip(skip)
                 .limit(limit);
@@ -83,6 +83,7 @@ export = {
         if (applicationJobIds) {
             totalJobs = await JobModel.countDocuments({
                 _id: { $nin: applicationJobIds },
+                isDeleted: false,
                 isActive: true,
             });
         } else {
@@ -103,13 +104,13 @@ export = {
     },
 
     getAllJobsByRecruiterId: async (recruiterId: string): Promise<IJobDocument[] | []> => {
-        return await JobModel.find({ recruiterId }).sort({
+        return await JobModel.find({ recruiterId, isDeleted: false }).sort({
             createdAt: -1,
         });
     },
 
     getCountOfCreatedJobs: async (recruiterId: string): Promise<number> => {
-        return await JobModel.countDocuments({ recruiterId });
+        return await JobModel.countDocuments({ recruiterId, isDeleted: false });
     },
 
     getSearchResults: async (
@@ -117,8 +118,11 @@ export = {
         skip: number,
         limit: number,
     ): Promise<IJobDocument[] | []> => {
+        console.log(searchKey, skip, limit);
+        
         const searchedJobs: IJobDocument[] | [] = await JobModel.find({
-            jobTitle: { $regex: new RegExp(searchKey, 'i') },
+            title: { $regex: new RegExp(searchKey, 'i') },
+            isDeleted: false,
         })
             .skip(skip)
             .limit(limit);
@@ -128,12 +132,13 @@ export = {
 
     getCountOfSearchResults: async (searchKey: string): Promise<number> => {
         return await JobModel.countDocuments({
-            jobTitle: { $regex: new RegExp(searchKey, 'i') },
+            title: { $regex: new RegExp(searchKey, 'i') },
+            isDeleted: false,
         });
     },
 
     getAJob: async (jobId: string): Promise<IJobDocument | null> => {
-        return await JobModel.findById(jobId).populate({
+        return await JobModel.findById(jobId, { isDeleted: false }).populate({
             path: 'recruiterId',
             model: 'User', // Assuming your User model is named 'User'
         });

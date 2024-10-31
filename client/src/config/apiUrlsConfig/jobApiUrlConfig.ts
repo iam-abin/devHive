@@ -7,6 +7,9 @@ const jobApiUrlConfig = {
     getJobFilterBarValuesUrl: `${CANDIDATE_JOB_URL}/filter-bar-values`,
     filterJobsUrl: (page: number,limit: number)=> `${CANDIDATE_JOB_URL}/filter/${page}/${limit}`,
     
+    // Common for candidate and recruiter
+    searchJobsUrl: (page: number,limit: number)=> `${CANDIDATE_JOB_URL}/search/${page}/${limit}`,
+    
     // Candidate
     getAJobCandidateUrl: (id: string) => `${CANDIDATE_JOB_URL}/${id}`,
     candidateApplyJobUrl: (jobId: string) =>

@@ -14,7 +14,7 @@ import {
 } from "../../axios/apiMethods/auth-service/recruiterAuth";
 import { notify } from "../../utils/toastMessage";
 import OtpEnterForm from "../../components/form/otpEnterForm";
-import Loading from "../../components/loading/Loading";
+import Loading from "../../components/loading/BarLoading";
 import { IResponse } from "../../types/api";
 import { ROLES } from "../../utils/constants";
 
