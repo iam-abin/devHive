@@ -33,7 +33,7 @@ function AppliedJobsPage() {
                 );
     
                 setAppliedJobsData(response.data.appliedJobs);
-                setpageCount(response.data.totalNumberOfPages);
+                setpageCount(response.data.numberOfPages);
             }
         })();
     }, [currentPage, candidateData]);

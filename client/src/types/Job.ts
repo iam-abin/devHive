@@ -55,3 +55,7 @@ export interface IFilter {
     companyLocation: string;
     employmentType: string;
 }
+
+export interface ISearch {
+    searchKey: string;
+}

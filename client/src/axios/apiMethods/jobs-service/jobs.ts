@@ -1,7 +1,7 @@
 
 import jobApiUrlConfig from "../../../config/apiUrlsConfig/jobApiUrlConfig";
 import { IResponse } from "../../../types/api";
-import { IFilter, IJob } from "../../../types/Job";
+import { IFilter, IJob, ISearch } from "../../../types/Job";
 import makeApiCall from "../../apiCalls";
 
 
@@ -17,6 +17,11 @@ export const getJobFilterBarValuesApi = async (fields: string[]): Promise<IRespo
 
 export const filterJobsApi = async (filterData: IFilter, page: number, limit: number): Promise<IResponse> => {
     return await makeApiCall("post", jobApiUrlConfig.filterJobsUrl(page,limit), filterData);
+};
+
+// Common for candidate and recruiter
+export const serachJobsApi = async (searchData: ISearch, page: number, limit: number): Promise<IResponse> => {
+    return await makeApiCall("post", jobApiUrlConfig.searchJobsUrl(page,limit), searchData);
 };
 
 

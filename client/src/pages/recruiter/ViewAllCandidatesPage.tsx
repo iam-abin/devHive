@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import CandidateCard from "../../components/cards/CandidateCard";
 import { getAllCandidatesProfilesApi } from "../../axios/apiMethods/profile-service/recruiter";
 import Paginate from "../../components/pagination/Paginate";
+
 interface CandidateInterface {
     id: string;
     name: string;
@@ -15,7 +16,7 @@ interface CandidateInterface {
 function ViewAllCandidatesPage() {
     const [currentPage, setCurrentPage] = useState(1);
     const [pageCount, setpageCount] = useState(1);
-    const [searchTerm, setSearchTerm] = useState("");
+    const [searchKey, setSearchKey] = useState("");
 
     const navigate = useNavigate();
     const [candidatesData, setCandidatesData] = useState<CandidateInterface[]>(
@@ -39,7 +40,7 @@ function ViewAllCandidatesPage() {
     }, [currentPage]);
 
     const filteredCandidated = candidatesData.filter((candidate: any) =>
-        candidate.name.toLowerCase().includes(searchTerm.toLowerCase())
+        candidate.name.toLowerCase().includes(searchKey.toLowerCase())
     );
 
     const viewProfileDetails = async (candidateId: string) => {
@@ -55,7 +56,7 @@ function ViewAllCandidatesPage() {
                             <input
                                 type="text"
                                 placeholder="Search"
-                                onChange={(e) => setSearchTerm(e.target.value)}
+                                onChange={(e) => setSearchKey(e.target.value)}
                                 className="input input-bordered w-24 md:w-auto"
                             />
                         </div>

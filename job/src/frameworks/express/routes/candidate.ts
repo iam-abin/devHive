@@ -16,11 +16,11 @@ export const candidateRouter = (dependencies: IDependency) => {
 
     router.post('/filter/:page/:limit', jobsController.filterJobsController);
 
+    router.post('/search/:page/:limit', jobsController.searchJobsController);
+    
     router.use(auth(ROLES.CANDIDATE));
-
+    
     router.get('/:id', jobsController.viewJobByJobIdController);
-
-    // router.post('/search/:page', jobsController.searchJobsController);
 
     router.post('/apply/:jobId', candidateJobController.applyJobController);
 
