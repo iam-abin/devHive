@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { loadStripe } from "@stripe/stripe-js";
 import PaymentPlanCard from "../../components/cards/PaymentPlanCard";
 import { getAllMembershipPlansByCandidateApi } from "../../axios/apiMethods/premium-plans-service/candidate";
-import PaymentPlanCardShimmer from "../../components/shimmer/PaymentPlanCardShimmer";
+import PaymentPlanCardShimmer from "../../components/shimmer/payment/PaymentPlanCardShimmer";
 
 const PaymentPlans: React.FC = () => {
     const [membershipPlansData, setMembershipPlansData] = useState<[]>([]);

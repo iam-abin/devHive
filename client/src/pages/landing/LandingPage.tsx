@@ -33,6 +33,7 @@ import { checkUserRole } from "../../utils/checkRole";
 import { IJob } from "../../types/Job";
 import { IUserData } from "../../types/user";
 import { hotToastMessage } from "../../utils/hotToastMessage";
+import JobCardShimmer from "../../components/shimmer/JobCardShimmer";
 
 function LandingPage() {
     const dispatch = useDispatch();
@@ -54,6 +55,10 @@ function LandingPage() {
 
     const currentPage: number = useSelector(
         (store: RootState) => store.jobReducer.currentPage
+    );
+
+    const loading: boolean = useSelector(
+        (store: RootState) => store.loading.isLoading
     );
 
     const jobs: IJob[] = useSelector((store: RootState) => {
@@ -84,10 +89,6 @@ function LandingPage() {
             ]);
             setJobFieldsValues(jobFieldsValues.data);
         })();
-        // return () => {
-        //     dispatch(clearTotalNumberOfPages());
-        //     dispatch(clearCurrentPage());
-        // };
     }, []);
 
     const handleJobFilter = async () => {
@@ -266,7 +267,11 @@ function LandingPage() {
                         />
                     </div>
                     <div>
-                        {jobs && jobs.length > 0 ? (
+                        {loading ? (
+                            <>
+                                <JobCardShimmer /> <JobCardShimmer />{" "}
+                            </>
+                        ) : jobs && jobs.length > 0 ? (
                             jobs.map(
                                 (job: Partial<IJob>) =>
                                     job.isActive && (

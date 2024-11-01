@@ -1,19 +1,25 @@
 import { useEffect, useState } from "react";
-import { getAllJobsApi } from "../../../axios/apiMethods/jobs-service/jobs";
+import {
+    getAllJobsApi,
+    searchJobsCandidateApi,
+} from "../../../axios/apiMethods/jobs-service/jobs";
 import { useNavigate } from "react-router-dom";
 import Paginate from "../../../components/pagination/Paginate";
 import JobCard from "../../../components/cards/JobCard";
 import SearchBar from "../../../components/filterSearch/SearchBar";
 import { IResponse } from "../../../types/api";
 import { IJob } from "../../../types/Job";
-import { searchApi } from "../../../axios/apiMethods/admin-service/search";
 import { SEARCH_RESOURCE_TYPES } from "../../../utils/constants";
+import JobCardShimmer from "../../../components/shimmer/JobCardShimmer";
+
+const LIMIT: number = 2;
 
 function AllJobsPage() {
     const navigate = useNavigate();
     const [currentPage, setCurrentPage] = useState(1);
     const [numberOfPages, setNumberOfPages] = useState(1);
     const [jobs, setJobs] = useState([]);
+    const [loading, setLoading] = useState(false);
     const [searchKey, setSearchKey] = useState("");
 
     const handlePageChange = ({ selected }: { selected: number }) => {
@@ -31,43 +37,56 @@ function AllJobsPage() {
 
     useEffect(() => {
         (async () => {
-            let allJobs: IResponse | null = null;
-            if (!searchKey) {
-                allJobs = await getAllJobsApi(currentPage);
-            } else {
-                allJobs = await searchApi(
-                    searchKey,
-                    SEARCH_RESOURCE_TYPES.JOBS,
-                    currentPage,
-                    2
-                );
-            }
+            try {
+                let allJobs: IResponse | null = null;
+                setLoading(true);
+                if (!searchKey) {
+                    allJobs = await getAllJobsApi(currentPage);
+                } else {
+                    allJobs = await searchJobsCandidateApi(
+                        searchKey,
+                        SEARCH_RESOURCE_TYPES.JOBS,
+                        currentPage,
+                        LIMIT
+                    );
+                }
 
-            if (allJobs) {
-                setJobs(allJobs.data.jobs);
-                setNumberOfPages(allJobs.data.numberOfPages);
+                if (allJobs) {
+                    setJobs(allJobs.data.jobs);
+                    setNumberOfPages(allJobs.data.numberOfPages);
+                }
+            } finally {
+                setLoading(false);
             }
         })();
     }, [currentPage, searchKey]);
 
     return (
-        <div className="container mx-auto my-8">
-            <div className="mb-4 flex justify-end">
+        <div className="container mx-auto my-8 px-4 md:px-0">
+            {" "}
+            {/* Added padding for consistency */}
+            <div className="mb-4 flex justify-end mr-4 sm:mr-20 md:mr-40">
+                {" "}
+                {/* Adjusted margin */}
                 <SearchBar
-                    placeholder={"searach with title"}
+                    placeholder={"search with title"}
                     onSearch={setSearchKey}
                 />
             </div>
             {jobs.length > 0 ? (
                 <>
                     <div>
-                        {jobs.map((job: Partial<IJob>) => (
-                            <JobCard
-                                job={job}
-                                key={job.id}
-                                handleViewJob={handleView}
-                            />
-                        ))}
+                        {loading
+                            ? Array.from({ length: LIMIT }).map((_, index) => (
+                                  <JobCardShimmer key={index} />
+                              ))
+                            : jobs.map((job: Partial<IJob>) => (
+                                  <JobCard
+                                      job={job}
+                                      key={job.id}
+                                      handleViewJob={handleView}
+                                  />
+                              ))}
                     </div>
                     {numberOfPages > 1 && (
                         <Paginate

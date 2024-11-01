@@ -22,9 +22,9 @@ const start = async () => {
     const userUpdatedEvent = new UserUpdatedEventConsumer(kafkaClient);
     const jobUpdatedEvent = new jobUpdatedEventConsumer(kafkaClient);
 
-    await userUpdatedEvent.subscribe();
-    await userCreatedEvent.subscribe();
-    await jobUpdatedEvent.subscribe();
+    // await userUpdatedEvent.subscribe();
+    // await userCreatedEvent.subscribe();
+    // await jobUpdatedEvent.subscribe();
 
     app.listen(appConfig.PORT, () => {
         console.log(`job service Listening on port ${appConfig.PORT}....`);

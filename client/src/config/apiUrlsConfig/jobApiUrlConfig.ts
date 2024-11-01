@@ -12,13 +12,15 @@ const jobApiUrlConfig = {
     
     // Candidate
     getAJobCandidateUrl: (id: string) => `${CANDIDATE_JOB_URL}/${id}`,
+    getSearchResultsUrl: (searchKey: string, resourceType: string, page: number, limit: number) =>
+        `${CANDIDATE_JOB_URL}/search/${resourceType}/${page}/${limit}?searchKey=${searchKey}`,
     candidateApplyJobUrl: (jobId: string) =>
         `${CANDIDATE_JOB_URL}/apply/${jobId}`,
     
     getAnAppliedJobUrl: (jobApplicationId: string) =>
         `${CANDIDATE_JOB_URL}/application/${jobApplicationId}`,
-    getAllCandidateAppliedJobsUrl: (candidateId: string, currentPage: number) =>
-        `${CANDIDATE_JOB_URL}/applied/${candidateId}/${currentPage}`,
+    getAllCandidateAppliedJobsUrl: (page: number, limit: number) =>
+        `${CANDIDATE_JOB_URL}/applied/${page}/${limit}`,
 
     checkAppliedUrl: (jobId: string) =>
         `${CANDIDATE_JOB_URL}/hasApplied/${jobId}`,
