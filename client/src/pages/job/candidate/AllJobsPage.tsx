@@ -10,7 +10,7 @@ import SearchBar from "../../../components/filterSearch/SearchBar";
 import { IResponse } from "../../../types/api";
 import { IJob } from "../../../types/Job";
 import { SEARCH_RESOURCE_TYPES } from "../../../utils/constants";
-import JobCardShimmer from "../../../components/shimmer/JobCardShimmer";
+import JobCardShimmer from "../../../components/shimmer/job/JobCardShimmer";
 
 const LIMIT: number = 2;
 

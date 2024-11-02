@@ -33,7 +33,7 @@ import { checkUserRole } from "../../utils/checkRole";
 import { IJob } from "../../types/Job";
 import { IUserData } from "../../types/user";
 import { hotToastMessage } from "../../utils/hotToastMessage";
-import JobCardShimmer from "../../components/shimmer/JobCardShimmer";
+import JobCardShimmer from "../../components/shimmer/job/JobCardShimmer";
 
 function LandingPage() {
     const dispatch = useDispatch();

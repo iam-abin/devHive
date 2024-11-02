@@ -4,7 +4,7 @@ import { getAllCandidateAppliedJobsApi, searchJobsCandidateApi } from "../../../
 import JobAppliedCard from "../../../components/cards/JobAppliedCard";
 import Paginate from "../../../components/pagination/Paginate";
 import { IJob } from "../../../types/Job";
-import JobCardShimmer from "../../../components/shimmer/JobCardShimmer";
+import JobCardShimmer from "../../../components/shimmer/job/JobCardShimmer";
 import { IResponse } from "../../../types/api";
 // import SearchBar from "../../../components/filterSearch/SearchBar";
 import { SEARCH_RESOURCE_TYPES } from "../../../utils/constants";

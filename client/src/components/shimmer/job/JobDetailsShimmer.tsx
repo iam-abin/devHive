@@ -23,17 +23,17 @@ const JobDetailsCardShimmer: React.FC<ShimmerJobDetailsProps> = ({ lines }) => {
         <div className="container mx-auto my-8">
             <div className="max-w-2xl mx-auto bg-white p-8 rounded shadow-md animate-pulse">
                 <div className="flex justify-between items-center my-8 mb-4">
-                    <ShimmerLine width="60%" height="2rem" />
-                    <div className="mb-4 flex gap-2 items-center my-8">
-                        <ShimmerLine width="2rem" height="2rem" className="rounded-full" />
-                        <ShimmerLine width="40%" height="1.5rem" />
-                    </div>
+                    <ShimmerLine width="40%" height="2rem" />
+                    
                 </div>
+                    <div className='flex flex-row justify-end'>
+                    <ShimmerLine width="30%" height="1rem" className="font-extrabold" />
+                    </div>
                 {/* Repeat ShimmerLine for job details */}
                 {Array.from({ length: lines }).map((_, index) => (
-                    <div key={index} className="mb-4 flex items-center my-8">
-                        <ShimmerLine width="60%" height="1.5rem" className="font-extrabold" />
-                        <ShimmerLine width="60%" height="1.5rem" />
+                    <div key={index} className="mb-4 gap-24 md:gap-44 flex  items-center my-8">
+                        <ShimmerLine width="20%" height="1.5rem" className="font-extrabold" />
+                        <ShimmerLine width="20%" height="1.5rem" />
                     </div>
                 ))}
             </div>
