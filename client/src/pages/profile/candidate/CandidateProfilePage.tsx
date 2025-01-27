@@ -114,7 +114,7 @@ const CandidateProfilePage: React.FC = () => {
                     filename: selectedFile.name,
                     url: downloadURL,
                 });
-                
+
                 if (response) {
                     setCandidateProfileData({
                         ...candidateProfileData,
@@ -153,9 +153,7 @@ const CandidateProfilePage: React.FC = () => {
     };
 
     const handleSavePreferredJobs = async () => {
-        const response = await updateCandidatePreferredJobsApi(
-            preferredJobs
-        );
+        const response = await updateCandidatePreferredJobsApi(preferredJobs);
 
         if (response.data) {
             hotToastMessage(response.message, "success");
@@ -167,9 +165,7 @@ const CandidateProfilePage: React.FC = () => {
     };
 
     const handleSaveSkills = async () => {
-        const response = await updateCandidateSkillsApi(
-            skills
-        );
+        const response = await updateCandidateSkillsApi(skills);
 
         if (response.data) {
             hotToastMessage(response.message, "success");
@@ -224,7 +220,10 @@ const CandidateProfilePage: React.FC = () => {
                                 {imgLoading && <SpinnerLoading />}
                                 {!imgLoading && (
                                     <img
-                                        src={candidateProfileData?.profileImage ?? CONSTANTS.CANDIDATE_DEFAULT_PROFILE_IMAGE}
+                                        src={
+                                            candidateProfileData?.profileImage ??
+                                            CONSTANTS.CANDIDATE_DEFAULT_PROFILE_IMAGE
+                                        }
                                         className="md:w-3/6  rounded-full shadow-2xl"
                                     />
                                 )}
@@ -341,85 +340,95 @@ const CandidateProfilePage: React.FC = () => {
                             </div>
                         </div>
 
-                        {isRecruiterUrl && !candidateProfileData?.resume?.filename ?"": <div className="bg-gray-100 p-6 my-6 rounded-lg shadow-md">
-                            {candidateProfileData?.resume && (
-                                <>
-                                    <label className="block mb-4 text-lg font-semibold">
-                                        Resume
-                                    </label>
-                                    <div
-                                        className=" max-w-fit p-2 my-5 flex items-c
+                        {isRecruiterUrl &&
+                        !candidateProfileData?.resume?.filename ? (
+                            ""
+                        ) : (
+                            <div className="bg-gray-100 p-6 my-6 rounded-lg shadow-md">
+                                {candidateProfileData?.resume && (
+                                    <>
+                                        <label className="block mb-4 text-lg font-semibold">
+                                            Resume
+                                        </label>
+                                        <div
+                                            className=" max-w-fit p-2 my-5 flex items-c
 										
 										enter gap-3 border border-gray-400"
-                                    >
-                                        {candidateProfileData?.resume?.filename}
-                                        {!isRecruiterUrl && (
+                                        >
+                                            {
+                                                candidateProfileData?.resume
+                                                    ?.filename
+                                            }
+                                            {!isRecruiterUrl && (
+                                                <div
+                                                    className="tooltip tooltip-top"
+                                                    data-tip="delete resume"
+                                                >
+                                                    <MdDelete
+                                                        onClick={
+                                                            handleResumeDelete
+                                                        }
+                                                    />
+                                                </div>
+                                            )}
+
                                             <div
                                                 className="tooltip tooltip-top"
-                                                data-tip="delete resume"
+                                                data-tip="view resume"
                                             >
-                                                <MdDelete
-                                                    onClick={handleResumeDelete}
-                                                />
+                                                <Link
+                                                    to={
+                                                        candidateProfileData
+                                                            ?.resume?.url
+                                                    }
+                                                >
+                                                    <FaEye />
+                                                </Link>
                                             </div>
-                                        )}
-
-                                        <div
-                                            className="tooltip tooltip-top"
-                                            data-tip="view resume"
-                                        >
-                                            <Link
-                                                to={
-                                                    candidateProfileData?.resume
-                                                        ?.url
-                                                }
-                                            >
-                                                <FaEye />
-                                            </Link>
                                         </div>
-                                    </div>
-                                </>
-                            )}
+                                    </>
+                                )}
 
-                            <label className="block mb-4 text-lg font-semibold">
-                                {!isRecruiterUrl &&
-                                    (candidateProfileData?.resume
-                                        ? "Change Your Resume"
-                                        : "Upload Your Resume")}
-                            </label>
-                            <div className="flex items-center justify-between space-x-2">
-                                {!isRecruiterUrl && (
-                                    <div>
-                                        <input
-                                            type="file"
-                                            name="image"
-                                            // accept=".pdf, .doc, .docx"
-                                            accept=".pdf "
-                                            className="border-2 border-gray-300 p-2 w-full md:w-64 "
-                                            onChange={handleFileChange}
-                                        />
+                                <label className="block mb-4 text-lg font-semibold">
+                                    {!isRecruiterUrl &&
+                                        (candidateProfileData?.resume
+                                            ? "Change Your Resume"
+                                            : "Upload Your Resume")}
+                                </label>
+                                <div className="flex items-center justify-between space-x-2">
+                                    {!isRecruiterUrl && (
+                                        <div>
+                                            <input
+                                                type="file"
+                                                name="image"
+                                                // accept=".pdf, .doc, .docx"
+                                                accept=".pdf "
+                                                className="border-2 border-gray-300 p-2 w-full md:w-64 "
+                                                onChange={handleFileChange}
+                                            />
 
-                                        <button
-                                            type="button"
-                                            onClick={handleResumeUpload}
-                                            className="bg-blue-500 ml-4 text-white p-2 w-24  rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue"
-                                            disabled={pdfLoading}
-                                        >
-                                            {pdfLoading ? (
-                                                <SpinnerLoading /> // Show loading spinner when uploading
-                                            ) : (
-                                                "Upload"
-                                            )}
-                                        </button>
-                                    </div>
+                                            <button
+                                                type="button"
+                                                onClick={handleResumeUpload}
+                                                className="bg-blue-500 ml-4 text-white p-2 w-24  rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue"
+                                                disabled={pdfLoading}
+                                            >
+                                                {pdfLoading ? (
+                                                    <SpinnerLoading /> // Show loading spinner when uploading
+                                                ) : (
+                                                    "Upload"
+                                                )}
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
+                                {selectedFile && (
+                                    <p className="mt-4">
+                                        Selected File: {selectedFile?.name}
+                                    </p>
                                 )}
                             </div>
-                            {selectedFile && (
-                                <p className="mt-4">
-                                    Selected File: {selectedFile?.name}
-                                </p>
-                            )}
-                        </div>}
+                        )}
                     </div>
 
                     {/* =============================================Skill start============================================= */}
@@ -517,174 +526,182 @@ const CandidateProfilePage: React.FC = () => {
                     {/* ====modal end ==== */}
 
                     {/* Skills */}
-                    {isRecruiterUrl && skills.length === 0 ?"": <div className="bg-gray-100 p-6 my-6 rounded-lg shadow-md">
-                        <div className="">
-                            <p className="flex items-center gap-4">
-                                <span className="text-xl font-bold mb-2">
-                                    Skills{" "}
-                                </span>
-                                {/* The button to open modal */}
-                                <span
-                                    className="tooltip tooltip-top"
-                                    data-tip="add or edit skills"
-                                >
-                                    {!isRecruiterUrl && (
-                                        <label htmlFor="my_modal_6">
-                                            <FaEdit />
-                                        </label>
-                                    )}
-                                </span>
-                            </p>
+                    {isRecruiterUrl && skills.length === 0 ? (
+                        ""
+                    ) : (
+                        <div className="bg-gray-100 p-6 my-6 rounded-lg shadow-md">
+                            <div className="">
+                                <p className="flex items-center gap-4">
+                                    <span className="text-xl font-bold mb-2">
+                                        Skills{" "}
+                                    </span>
+                                    {/* The button to open modal */}
+                                    <span
+                                        className="tooltip tooltip-top"
+                                        data-tip="add or edit skills"
+                                    >
+                                        {!isRecruiterUrl && (
+                                            <label htmlFor="my_modal_6">
+                                                <FaEdit />
+                                            </label>
+                                        )}
+                                    </span>
+                                </p>
 
-                            <ul className="list-none flex flex-wrap gap-2">
-                                {/* Add more skills based on your data */}
-                                {skills.length > 0 &&
-                                    candidateProfileData?.skills.map(
-                                        (skill: string) => (
-                                            <div
-                                                key={skill}
-                                                className="badge text-white bg-sky-700 p-4 flex flex-row gap-2"
-                                            >
-                                                <li>{skill}</li>
-                                            </div>
-                                        )
-                                    )}
-                            </ul>
+                                <ul className="list-none flex flex-wrap gap-2">
+                                    {/* Add more skills based on your data */}
+                                    {skills.length > 0 &&
+                                        candidateProfileData?.skills.map(
+                                            (skill: string) => (
+                                                <div
+                                                    key={skill}
+                                                    className="badge text-white bg-sky-700 p-4 flex flex-row gap-2"
+                                                >
+                                                    <li>{skill}</li>
+                                                </div>
+                                            )
+                                        )}
+                                </ul>
+                            </div>
                         </div>
-                    </div>}
+                    )}
                     {/* ===============================================Skill end================================================== */}
 
                     {/* =================================================Preferred jobs start================================================ */}
                     {/* ====modal start ==== */}
                     {/* Put this part before </body> tag */}
-{isRecruiterUrl && preferredJobs.length === 0 ?"":<>
-                    <input
-                        type="checkbox"
-                        id="my_modal_7"
-                        className="modal-toggle"
-                    />
+                    {isRecruiterUrl && preferredJobs.length === 0 ? (
+                        ""
+                    ) : (
+                        <>
+                            <input
+                                type="checkbox"
+                                id="my_modal_7"
+                                className="modal-toggle"
+                            />
 
-                    <div className="modal " role="dialog">
-                        <div className="modal-box">
-                            <h3 className="font-bold text-lg">
-                                Add your Preffered Jobs
-                            </h3>
+                            <div className="modal " role="dialog">
+                                <div className="modal-box">
+                                    <h3 className="font-bold text-lg">
+                                        Add your Preffered Jobs
+                                    </h3>
 
-                            <div className="flex gap-3 mt-3 mb-3">
-                                <input
-                                    type="text"
-                                    placeholder="Type here"
-                                    className="input input-bordered input-accent w-full max-w-xs"
-                                    value={preferredJob}
-                                    onChange={handleSetPreferredJob}
-                                />
-                                <label
-                                    className="btn"
-                                    onClick={handleSetPreferredJobs}
-                                >
-                                    Add
-                                </label>
-                            </div>
-                            <ul className="list-none flex flex-wrap gap-2 ">
-                                {/* Add more skills based on your data */}
-                                {preferredJobs.length > 0 &&
-                                    candidateProfileData?.preferredJobs.map(
-                                        (preferredJob: string) => (
-                                            <div
-                                                key={preferredJob}
-                                                className="badge text-white bg-sky-700 p-4 flex flex-row gap-2"
-                                            >
-                                                <li>{preferredJob}</li>
-                                                <span>
-                                                    <svg
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                        fill="none"
-                                                        viewBox="0 0 24 24"
-                                                        className="inline-block w-4 h-4 stroke-current hover: cursor-pointer "
-                                                        onClick={() => {
-                                                            const preferredJobsAfterRemove =
-                                                                preferredJobs.filter(
-                                                                    (
-                                                                        currentPreferredJob: string
-                                                                    ) => {
-                                                                        return (
-                                                                            currentPreferredJob !==
-                                                                            preferredJob
-                                                                        );
-                                                                    }
-                                                                );
-                                                            setPreferredJobs(
-                                                                preferredJobsAfterRemove
-                                                            );
-                                                        }}
-                                                    >
-                                                        <path
-                                                            strokeLinecap="round"
-                                                            strokeLinejoin="round"
-                                                            strokeWidth="2"
-                                                            d="M6 18L18 6M6 6l12 12"
-                                                        ></path>
-                                                    </svg>
-                                                </span>
-                                            </div>
-                                        )
-                                    )}
-                            </ul>
-                            <div className="modal-action">
-                                <label
-                                    htmlFor="my_modal_7"
-                                    className="btn rounded-xl"
-                                >
-                                    Close
-                                </label>
-                                <label
-                                    htmlFor="my_modal_7"
-                                    className="btn rounded-xl bg-yellow-600"
-                                    onClick={handleSavePreferredJobs}
-                                >
-                                    Save
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    {/* ====modal end ==== */}
-                    {/* Preferred jobs */}
-                    <div className="bg-gray-100 p-6 my-6 rounded-lg shadow-md">
-                        <div className="">
-                            <p className="flex items-center gap-4">
-                                <span className="text-xl font-bold mb-2">
-                                    Preferred jobs{" "}
-                                </span>
-                                {/* The button to open modal */}
-                                <span
-                                    className="tooltip tooltip-top"
-                                    data-tip="add or edit Preferred jobs"
-                                >
-                                    {!isRecruiterUrl && (
-                                        <label htmlFor="my_modal_7">
-                                            <FaEdit />
+                                    <div className="flex gap-3 mt-3 mb-3">
+                                        <input
+                                            type="text"
+                                            placeholder="Type here"
+                                            className="input input-bordered input-accent w-full max-w-xs"
+                                            value={preferredJob}
+                                            onChange={handleSetPreferredJob}
+                                        />
+                                        <label
+                                            className="btn"
+                                            onClick={handleSetPreferredJobs}
+                                        >
+                                            Add
                                         </label>
-                                    )}
-                                </span>
-                            </p>
+                                    </div>
+                                    <ul className="list-none flex flex-wrap gap-2 ">
+                                        {/* Add more skills based on your data */}
+                                        {preferredJobs.length > 0 &&
+                                            candidateProfileData?.preferredJobs.map(
+                                                (preferredJob: string) => (
+                                                    <div
+                                                        key={preferredJob}
+                                                        className="badge text-white bg-sky-700 p-4 flex flex-row gap-2"
+                                                    >
+                                                        <li>{preferredJob}</li>
+                                                        <span>
+                                                            <svg
+                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                fill="none"
+                                                                viewBox="0 0 24 24"
+                                                                className="inline-block w-4 h-4 stroke-current hover: cursor-pointer "
+                                                                onClick={() => {
+                                                                    const preferredJobsAfterRemove =
+                                                                        preferredJobs.filter(
+                                                                            (
+                                                                                currentPreferredJob: string
+                                                                            ) => {
+                                                                                return (
+                                                                                    currentPreferredJob !==
+                                                                                    preferredJob
+                                                                                );
+                                                                            }
+                                                                        );
+                                                                    setPreferredJobs(
+                                                                        preferredJobsAfterRemove
+                                                                    );
+                                                                }}
+                                                            >
+                                                                <path
+                                                                    strokeLinecap="round"
+                                                                    strokeLinejoin="round"
+                                                                    strokeWidth="2"
+                                                                    d="M6 18L18 6M6 6l12 12"
+                                                                ></path>
+                                                            </svg>
+                                                        </span>
+                                                    </div>
+                                                )
+                                            )}
+                                    </ul>
+                                    <div className="modal-action">
+                                        <label
+                                            htmlFor="my_modal_7"
+                                            className="btn rounded-xl"
+                                        >
+                                            Close
+                                        </label>
+                                        <label
+                                            htmlFor="my_modal_7"
+                                            className="btn rounded-xl bg-yellow-600"
+                                            onClick={handleSavePreferredJobs}
+                                        >
+                                            Save
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            {/* ====modal end ==== */}
+                            {/* Preferred jobs */}
+                            <div className="bg-gray-100 p-6 my-6 rounded-lg shadow-md">
+                                <div className="">
+                                    <p className="flex items-center gap-4">
+                                        <span className="text-xl font-bold mb-2">
+                                            Preferred jobs{" "}
+                                        </span>
+                                        {/* The button to open modal */}
+                                        <span
+                                            className="tooltip tooltip-top"
+                                            data-tip="add or edit Preferred jobs"
+                                        >
+                                            {!isRecruiterUrl && (
+                                                <label htmlFor="my_modal_7">
+                                                    <FaEdit />
+                                                </label>
+                                            )}
+                                        </span>
+                                    </p>
 
-                            <ul className="list-none flex flex-wrap gap-2">
-                                {/* Add more skills based on your data */}
-                                {preferredJobs.length > 0 &&
-                                    candidateProfileData?.preferredJobs.map(
-                                        (job: string) => (
-                                            <div
-                                                key={job}
-                                                className="badge text-white bg-sky-700 p-4 flex flex-row gap-2"
-                                            >
-                                                <li>{job}</li>
-                                            </div>
-                                        )
-                                    )}
-                            </ul>
-                        </div>
-                    </div>
-                    </>}
+                                    <ul className="list-none flex flex-wrap gap-2">
+                                        {/* Add more skills based on your data */}
+                                        {preferredJobs.length > 0 &&
+                                            candidateProfileData?.preferredJobs.map(
+                                                (job: string) => (
+                                                    <div
+                                                        key={job}
+                                                        className="badge text-white bg-sky-700 p-4 flex flex-row gap-2"
+                                                    >
+                                                        <li>{job}</li>
+                                                    </div>
+                                                )
+                                            )}
+                                    </ul>
+                                </div>
+                            </div>
+                        </>
+                    )}
                     {/* =================================================Preferred jobs end================================================ */}
                 </div>
             </div>

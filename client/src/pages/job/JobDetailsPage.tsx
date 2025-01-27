@@ -13,6 +13,7 @@ import { swal } from "../../utils/swal";
 import { IJob } from "../../types/Job";
 import { ROLES } from "../../utils/constants";
 import { IResponse } from "../../types/api";
+import JobDetailsCardShimmer from "../../components/shimmer/job/JobDetailsShimmer";
 
 function JobDetailsPage() {
     const [jobDetails, setJobDetails] = useState<Partial<IJob> | null>(null);
@@ -75,7 +76,6 @@ function JobDetailsPage() {
                 `Yes, ${jobDetails?.isActive ? "close job" : "open job"}`
             ).then(async (result) => {
                 if (result.isConfirmed) {
-                    
                     const job = await changeJobCloseStatusApi(jobId);
 
                     if (job) {
@@ -94,14 +94,20 @@ function JobDetailsPage() {
         navigate(-1);
     };
     return (
-        <JobDetails
-            jobDetails={jobDetails}
-            hasApplied={hasApplied}
-            handleApplyJob={handleApplyJob}
-            handleEditJob={handleEditJob}
-            handleChangeJobCloseStatus={handleChangeJobCloseStatus}
-            handleGoBack={handleGoBack}
-        />
+        <>
+            {!jobDetails ? (
+                <JobDetailsCardShimmer lines={10} />
+            ) : (
+                <JobDetails
+                    jobDetails={jobDetails}
+                    hasApplied={hasApplied}
+                    handleApplyJob={handleApplyJob}
+                    handleEditJob={handleEditJob}
+                    handleChangeJobCloseStatus={handleChangeJobCloseStatus}
+                    handleGoBack={handleGoBack}
+                />
+            )}
+        </>
     );
 }
 

@@ -24,6 +24,7 @@ export const SEARCH_RESOURCE_TYPES = Object.freeze({
     CANDIDATE: 'candidate',
     RECRUITER: 'recruiter',
     JOBS: 'jobs',
+    APPLIED_JOBS: 'applied-jobs',
     PAYMENTS: 'payments',
     PLANS: 'palns',
 });

@@ -94,7 +94,7 @@ const ChatPage = () => {
         return () => {
             dispatch(clearChatRooms());
         };
-    }, [selectedChatRoom, selectedChatRoomMessages]);
+    }, [selectedChatRoom]);
 
     useEffect(() => {
         socket.on("chatNotification", () => {
@@ -145,9 +145,9 @@ const ChatPage = () => {
             }
         });
 
-        return () => {
-            socket.off("receiveMessage");
-        };
+        // return () => {
+        //     socket.off("receiveMessage");
+        // };
     }, [selectedChatRoom, userData.id]);
 
     const sendMessage = (message: string) => {

@@ -20,8 +20,12 @@ export const filterJobsApi = async (filterData: IFilter, page: number, limit: nu
 };
 
 // Candidate
-export const getAJobCandidateApi = async (id: string): Promise<IResponse> => {
-    return await makeApiCall("get", jobApiUrlConfig.getAJobCandidateUrl(id));
+export const getAJobCandidateApi = async (jobId: string): Promise<IResponse> => {
+    return await makeApiCall("get", jobApiUrlConfig.getAJobCandidateUrl(jobId));
+};
+
+export const searchJobsCandidateApi = async (searchKey: string, resourceType: string, page: number, limit: number): Promise<IResponse> => {
+    return await makeApiCall("get", jobApiUrlConfig.getSearchResultsUrl(searchKey, resourceType, page, limit));
 };
 
 export const candidateApplyJobApi = async (jobId: string): Promise<IResponse> => {
@@ -46,9 +50,10 @@ export const getAnAppliedJobApi = async (jobApplicationId: string): Promise<IRes
     return await makeApiCall("get", jobApiUrlConfig.getAnAppliedJobUrl(jobApplicationId));
 };
 
-export const getAllCandidateAppliedJobsApi = async (candidateId: string, currentPage: number): Promise<IResponse> => {
-   return await makeApiCall("get", jobApiUrlConfig.getAllCandidateAppliedJobsUrl(candidateId, currentPage));
+export const getAllCandidateAppliedJobsApi = async ( page: number, limit: number): Promise<IResponse> => {
+   return await makeApiCall("get", jobApiUrlConfig.getAllCandidateAppliedJobsUrl(page, limit));
 };
+
 
 export const changeJobApplicationStatusApi = async (jobApplicationId: string, jobApplicationStatus: any): Promise<IResponse> => {
     return await makeApiCall("post", jobApiUrlConfig.changeJobApplicationStatusUrl(jobApplicationId), jobApplicationStatus);

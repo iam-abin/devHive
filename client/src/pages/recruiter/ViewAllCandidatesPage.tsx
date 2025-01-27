@@ -3,23 +3,19 @@ import { useNavigate } from "react-router-dom";
 import CandidateCard from "../../components/cards/CandidateCard";
 import { getAllCandidatesProfilesApi } from "../../axios/apiMethods/profile-service/recruiter";
 import Paginate from "../../components/pagination/Paginate";
+import CandidateCardShimmer from "../../components/shimmer/recruiter/CandidateCardShimmer";
+import { IUserData } from "../../types/user";
 
-interface CandidateInterface {
-    id: string;
-    name: string;
-    email: string;
-    phone: string;
-    isActive: boolean;
-    userId: string;
-}
 
+const LIMIT: number = 2
 function ViewAllCandidatesPage() {
     const [currentPage, setCurrentPage] = useState(1);
     const [pageCount, setpageCount] = useState(1);
     const [searchKey, setSearchKey] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
-    const [candidatesData, setCandidatesData] = useState<CandidateInterface[]>(
+    const [candidatesData, setCandidatesData] = useState<IUserData[]>(
         []
     );
 
@@ -29,17 +25,24 @@ function ViewAllCandidatesPage() {
 
     useEffect(() => {
         (async () => {
-            // dispatch(setLoading());
-            const candidates = await getAllCandidatesProfilesApi(currentPage);
+            setLoading(true);
+            try {
+                const candidates = await getAllCandidatesProfilesApi(
+                    currentPage,
+                    LIMIT
+                );
 
-            setCandidatesData(candidates.data.candidates);
-            setpageCount(candidates.data.totalNumberOfPages);
+                setCandidatesData(candidates.data.candidates);
+                setpageCount(candidates.data.totalNumberOfPages);
+            } finally {
+                setLoading(false);
+            }
 
             // dispatch(setLoaded());
         })();
     }, [currentPage]);
 
-    const filteredCandidates = candidatesData.filter((candidate: any) =>
+    const filteredCandidates = candidatesData.filter((candidate: IUserData) =>
         candidate.name.toLowerCase().includes(searchKey.toLowerCase())
     );
 
@@ -63,7 +66,9 @@ function ViewAllCandidatesPage() {
                     </div>
                 </div>
 
-                {filteredCandidates.length <= 0 ? (
+                {loading ? (
+                    Array.from({length: LIMIT}).map((_, index)=>  <CandidateCardShimmer key={index} />)
+                ) : filteredCandidates.length <= 0 ? (
                     <div>No Candidates are registered yet</div>
                 ) : (
                     filteredCandidates.map((candidate) => (

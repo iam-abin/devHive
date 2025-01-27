@@ -4,6 +4,15 @@ import { IJobApplication } from '../../types/jobApplication';
 
 const { jobApplicationModel } = Models;
 
+const APPLIED_JOBS_SELECT_FIELDS: string[] = [
+    '_id',
+    'title',
+    'companyLocation',
+    'salaryMax',
+    'employmentType',
+    'createdAt',
+];
+
 export = {
     applyJob: async (data: IJobApplication): Promise<IJobApplicationDocument> => {
         const newApplication = await jobApplicationModel.create(data);
@@ -23,23 +32,23 @@ export = {
         skip: number,
         limit: number,
     ): Promise<IJobApplicationDocument[] | []> => {
-        // use populate
         const appliedJobs = await jobApplicationModel
             .find({ candidateId })
-            .populate('jobId', [
-                '_id',
-                'title',
-                'companyLocation',
-                'salaryMax',
-                'employmentType',
-                'createdAt',
-            ])
+            .populate('jobId', APPLIED_JOBS_SELECT_FIELDS)
             .select('jobId')
             .sort({ createdAt: -1 })
             .skip(skip)
             .limit(limit);
 
         return appliedJobs;
+    },
+
+    getCountOfAppliedJobs: async (candidateId: string): Promise<number> => {
+        const totalJobs: number = await jobApplicationModel.countDocuments({
+            candidateId,
+        });
+
+        return totalJobs;
     },
 
     getAllJobApplicationsByUserId: async (
@@ -66,6 +75,14 @@ export = {
         }
 
         return jobApplications;
+    },
+
+    getCountOfApplications: async (recruiterId: string): Promise<number> => {
+        const totalJobs: number = await jobApplicationModel.countDocuments({
+            recruiterId,
+        });
+
+        return totalJobs;
     },
 
     updateJobApplicationStatus: async (id: string, status: object) => {
@@ -108,24 +125,6 @@ export = {
         return jobApplications;
     },
 
-    // Used by candidates
-    getCountOfAppliedJobs: async (candidateId: string): Promise<number> => {
-        const totalJobs: number = await jobApplicationModel.countDocuments({
-            candidateId,
-        });
-
-        return totalJobs;
-    },
-
-    // Used by recruiters
-    getCountOfApplications: async (recruiterId: string): Promise<number> => {
-        const totalJobs: number = await jobApplicationModel.countDocuments({
-            recruiterId,
-        });
-
-        return totalJobs;
-    },
-
     getCountOfApplicationsStatus: async (recruiterId: string, applicationStatus: string): Promise<number> => {
         const totalJobs: number = await jobApplicationModel.countDocuments({
             recruiterId,
@@ -133,5 +132,60 @@ export = {
         });
 
         return totalJobs;
+    },
+
+    searchAppliedJobs: async (
+        searchKey: string,
+        skip: number,
+        limit: number,
+    ): Promise<IJobApplicationDocument[] | []> => {
+        console.log(searchKey);
+        
+        const searchedJobs: IJobApplicationDocument[] | [] = await jobApplicationModel
+            .aggregate([
+                {
+                    $lookup: {
+                        from: 'jobs',
+                        foreignField: '_id',
+                        localField: 'jobId',
+                        as: 'jobDetails',
+                    },
+                },
+                {
+                    $unwind: '$jobDetails', // Unwind to access individual job fields
+                },
+
+                {
+                    $match: {
+                        'jobDetails.title': { $regex: searchKey, $options: 'i' }, // Case-insensitive regex match
+                    },
+                },
+                {
+                    $project: {
+                        jobId: 1,
+                        candidateId: 1,
+                        recruiterId: 1,
+                        applicationStatus: 1,
+                        'jobDetails.title': 1, // Include the title from Job details
+                    },
+                },
+                // {
+                //     $match: {
+                //         title: {
+                //             $regex: new RegExp(searchKey, 'i'),
+                //         },
+                //     },
+                // },
+            ])
+            .skip(skip)
+            .limit(limit);
+        return searchedJobs;
+    },
+
+    searchAppliedJobsCount: async (searchKey: string): Promise<number> => {
+        return await jobApplicationModel.countDocuments({
+            title: { $regex: new RegExp(searchKey, 'i') },
+            isDeleted: false,
+        });
     },
 };

@@ -113,7 +113,7 @@ export = {
         return await JobModel.countDocuments({ recruiterId, isDeleted: false });
     },
 
-    getSearchResults: async (
+    searchJob: async (
         searchKey: string,
         skip: number,
         limit: number,
@@ -130,7 +130,7 @@ export = {
         return searchedJobs;
     },
 
-    getCountOfSearchResults: async (searchKey: string): Promise<number> => {
+    searchJobCount: async (searchKey: string): Promise<number> => {
         return await JobModel.countDocuments({
             title: { $regex: new RegExp(searchKey, 'i') },
             isDeleted: false,

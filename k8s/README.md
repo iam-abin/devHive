@@ -1,80 +1,80 @@
 # devHive setup
----
 
-<br/>
 
 ## Getting Started
+This guide will help you set up and run the devHive application locally on your system. Follow the steps below based on your operating system.
+
 ## Prerequisites To Run Locally:
 
-- in ubuntu,
+***in ubuntu***,
 1. install docker (refer any documents)
 2. install minikube (refer any documents)
-- start minikube if already installed
-```
- minikube start
-```
-3. enable ingress, 
+- enable ingress,
 ```
  minikube addons enable ingress
 ```
-4. enable dashboard (optional), 
+
+- enable dashboard (optional)
 ```
  minikube addons enable dashboard
 ```
-5. [Install Skaffold](https://skaffold.dev/docs/install/) (optional)
+
+3. Install kubectl
+4. [Install Skaffold](https://skaffold.dev/docs/install/) (optional)
   
-- in windows,
+***in windows***,
 
 1. [install Docker Desktop](https://docs.docker.com/get-docker/)
-2. Enable Kubernetes in the Docker Desktop
-3. [Install Ingress Nginx](https://kubernetes.github.io/ingress-nginx/deploy/)
+- Download and install Docker Desktop from Docker's official website.
+- Enable Kubernetes in Docker Desktop settings.
+2. Install kubectl
+3. Install skaffold
+4. [Install Ingress Nginx using helm](https://kubernetes.github.io/ingress-nginx/deploy/)
 
 ## steps to start application
-1. start minikube
+1. Create the required secrets(env's) [check the .env.example file](https://github.com/iam-abin/devHive/blob/master/.env.example)
+
+2. start minikube
 
 ```
 minikube start
 ```
+- To check minikube is running
+```
+minikube status
+```
 
-2. Create the required secrets(env's) (example)
+3. To apply the configurations of deployment, services and pods
 
-[.env.example](https://github.com/iam-abin/devHive/blob/master/.env.example)
-
-3. To apply configuration of deployment, services and pods
-
-- go to root folder
-1) 
-### for ingress deployments
+- Go to root folder
+**For ingress deployments**
 
 ```
 kubectl apply -f k8s/ingress/dev/ingress-srv.yaml
 ```
-2) 
-### for stateful deployments
+**For stateful deployments (data that should persist)**
 
-#### imp:- 
+#### Important:
 
-- if using mongodb atlas not necessary to apply the mongodb-srv yaml files inside the stateful folder,
-    But we need to apply the configuration file for kafka().
-### for kafka deployments
+- If using mongodb atlas, it's not necessary to apply the mongodb-deployment yaml files inside the stateful folder.
+- But we need to apply the configuration file for kafka (message broker).
+#### for kafka deployments
 ``` 
 kubectl apply -f k8s/stateful/kafka-deployment.yaml
 ```
-
 - if not using mongodb atlas
 
 ```
 kubectl apply -f k8s/stateful/
 ```
-3) 
-### for stateless deployments
+
+**For stateless deployments (servers)**
 
 ```
 kubectl apply -f ./k8s/stateless
 ```
 
-4. 
-## If Skaffold is installed run,
+4. If Skaffold is installed run
 
 ```
 skaffold dev
@@ -82,7 +82,7 @@ skaffold dev
 
 ---
 
-## last
+## last steps for ubuntu
 
 ### get minikube ip,
 
@@ -91,11 +91,12 @@ minikube ip
 ``` 
 
 ### Setup /etc/hosts
+- Open '/etc/hosts' file in nano editor
 ```
-sudo nano /etc/hosts - to open '/etc/hosts' file in nano editor
+sudo nano /etc/hosts
 ```
 
-- add at last,
+- Add at last,
 
 ```
 192.168.49.2 devhive.dev
@@ -111,14 +112,11 @@ ctrl x - to exit nano editor
 ### Open your browser and type 
 
 ```
-https://ticketing.dev 
+https://devhive.dev 
 ```
 
 - to stop minikube context or cluster
 
-```
-minikube stop
-```
 
 ### optional: To open minikube minikube dashboard to see kubernetes cluster information
 
@@ -177,7 +175,7 @@ kubectl delete pods --all
 ### to bild an image for a service
 
 ```
-docker build -t your_image_name:tag .
+docker build -t <your_image_name>:<tag> .
 ```
 here,
 - -t: Specifies the name and optionally a tag to the Docker image.
@@ -204,10 +202,10 @@ docker login
 2. After logging in, you can push the image:
 
 ```
-docker push your_image_name:tag
+docker push <your_image_name>:<tag>
 ```
 
-eg:- docker push abin12334324/auth
+eg:- docker push abin12334324/auth:latest
 
 
 # in production

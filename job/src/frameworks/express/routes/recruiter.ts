@@ -1,7 +1,7 @@
 import express from 'express';
 
 import { auth, ROLES } from '@abijobportal/common';
-import { jobsControllers, recruiterJobControllers } from '../../../controllers';
+import { jobsControllers, recruiterJobControllers, searchControllers } from '../../../controllers';
 import { IDependency } from '../../types/dependency';
 
 export const recruiterRouter = (dependencies: IDependency) => {
@@ -9,6 +9,8 @@ export const recruiterRouter = (dependencies: IDependency) => {
 
     const jobsController = jobsControllers(dependencies);
     const recruiterJobController = recruiterJobControllers(dependencies);
+    const searchController  = searchControllers(dependencies);
+
 
     router.get('/jobs/:page', jobsController.viewAllJobsController);
 
@@ -37,6 +39,8 @@ export const recruiterRouter = (dependencies: IDependency) => {
     router.get('/dashboard/cards-data', recruiterJobController.recruiterDashboardCardsController);
 
     router.get('/dashboard/graph-data', recruiterJobController.recruiterDashboardGraphController);
+
+    router.get('/search/:type/:page/:limit', searchController.searchController);
 
     return router;
 };
