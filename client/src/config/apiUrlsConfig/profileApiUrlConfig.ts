@@ -15,8 +15,8 @@ const profileApiUrlConfig = {
     // Recruiter
     getRecruiterProfileUrl: `${RECRUITER_PROFILE_URL}`,
     updategetRecruiterProfileUrl: `${RECRUITER_PROFILE_URL}`,
-    getAllCandidatesProfilesUrl: (page: number) =>
-        `${RECRUITER_PROFILE_URL}/candidates/${page}`,
+    getAllCandidatesProfilesUrl: (page: number, limit: number) =>
+        `${RECRUITER_PROFILE_URL}/candidates/${page}/${limit}`,
     getACandidateProfileUrl: (candidateId: string) =>
         `${RECRUITER_PROFILE_URL}/candidate/${candidateId}`,
 };

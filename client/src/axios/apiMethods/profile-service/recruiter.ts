@@ -17,6 +17,6 @@ export const getACandidateProfileApi = async (userId: string): Promise<IResponse
 	return await makeApiCall("get", profileApiUrlConfig.getACandidateProfileUrl(userId));
 };
 
-export const getAllCandidatesProfilesApi = async (page: number): Promise<IResponse> => {
-	return await makeApiCall("get", profileApiUrlConfig.getAllCandidatesProfilesUrl(page));
+export const getAllCandidatesProfilesApi = async (page: number, limit: number): Promise<IResponse> => {
+	return await makeApiCall("get", profileApiUrlConfig.getAllCandidatesProfilesUrl(page, limit));
 };

@@ -17,7 +17,7 @@ export const recruiterRouter = (dependencies: IDependency) => {
     router.get('/', recruiterProfileController.viewRecruiterProfileController);
     router.patch('/', recruiterProfileController.updateRecruiterProfileController);
     router.get('/candidate/:candidateId', candidateProfileController.viewCandidateProfileController);
-    router.get('/candidates/:page', recruiterProfileController.viewAllCandidatesProfilesController);
+    router.get('/candidates/:page/:limit', recruiterProfileController.viewAllCandidatesProfilesController);
 
     return router;
 };

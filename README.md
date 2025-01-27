@@ -3,7 +3,7 @@
 ### About
 
 - This is a Job Finding Application.
-- This application is built using MERN stack and microservices architecture. Containerized each services    to be deployed in kubernetes the cluster.
+- This application is built using MERN stack and microservices architecture. Containerized each services    to be deployed in kubernetes cluster.
 - This application have mainly 3 user roles,
   1. admin
   2. candidate

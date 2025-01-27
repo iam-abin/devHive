@@ -9,21 +9,28 @@ import { IJob } from "../../../types/Job";
 import { swal } from "../../../utils/swal";
 import Table from "../../../components/table/Table";
 import { IResponse } from "../../../types/api";
+import TableShimmer from "../../../components/shimmer/table/TableShimmer";
 
 function AllAddedJobs() {
     const navigate = useNavigate();
     const [jobsData, setJobsData] = useState<IJob[]>([]);
     const [numberOfPages, setNumberOfPages] = useState(0);
+    const [loading, setLoading] = useState(false);
 
     const JOBS_PER_PAGE: number = 2;
 
     const fetchJobs = async (currentPage: number) => {
-        const jobsData: IResponse = await getAllRecruiterAddedJobsApi(
-            currentPage,
-            JOBS_PER_PAGE
-        );
-        setJobsData(jobsData.data.jobs);
-        setNumberOfPages(jobsData.data.numberOfPages);
+        try {
+            setLoading(true)
+            const jobsData: IResponse = await getAllRecruiterAddedJobsApi(
+                currentPage,
+                JOBS_PER_PAGE
+            );
+            setJobsData(jobsData.data.jobs);
+            setNumberOfPages(jobsData.data.numberOfPages);
+        } finally {
+            setLoading(false)
+        }
     };
 
     useEffect(() => {
@@ -127,7 +134,7 @@ function AllAddedJobs() {
                     </button>
                 </div>
             </div>
-            {jobsData.length > 0 ? (
+            {loading?<TableShimmer columnCount={4} rowCount={JOBS_PER_PAGE} />:jobsData.length > 0 ? (
                 <div className="mx-14">
                     <Table
                         columns={columns}
