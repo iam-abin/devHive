@@ -1,7 +1,7 @@
 import { Server, Socket } from 'socket.io';
 import http from 'http';
 
-import { BadRequestError, NotFoundError } from '@abijobportal/common';
+import { BadRequestError, NotFoundError, verifyJwtToken } from '@abijobportal/common';
 import userRepository from '../repositories/mongo/user.repository';
 import messageRepository from '../repositories/mongo/message.repository';
 import chatRoomRepository from '../repositories/mongo/chatRoom.repository';
@@ -51,16 +51,34 @@ export const setupSocketIO = (httpServer: http.Server): void => {
         },
     });
 
+    io.use((socket, next) => {
+        const accessToken = socket.handshake.auth?.accessToken; // Get accessToken from handshake auth
+      
+        if (!accessToken) {
+          return next(new Error("Authentication failed: No accessToken provided"));
+        }
+      
+        try {
+          const decoded = verifyJwtToken(accessToken.substring("Bearer ".length));
+          socket.data.user = decoded; // Store user data in socket object
+          next(); // Proceed with the connection
+        } catch (err) {
+          return next(new Error("Authentication failed: Invalid accessToken"));
+        }
+      });
+
     io.on('connection', (socket: Socket) => {
         onSocketConnection(io, socket);
     });
 };
 
 export const onSocketConnection = (io: Server, socket: Socket): void => {
-    console.log(`||| A New user connected ,socket id is: ${socket.id} ||| `);
-
+    const { userId } = socket.data.user
+    console.log(`||| A New user ${socket.data.user.userId} connected ,socket id is: ${socket.id} ||| `);
+    // addUserToOnline(userId, socket.id);
     // to get or create the rooms of user
     socket.on('createChatRoom', async (senderId: string, recepientId: string) => {
+        
         try {
             console.log('In createChatRoom event');
 

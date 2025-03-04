@@ -29,8 +29,6 @@ export = (dependencies: IDependency) => {
             case SEARCH_RESOURCE_TYPES.APPLIED_JOBS: {
                 jobs = await jobApplicationRepository.searchAppliedJobs(searchKey.trim(), skip, limit);
                 count = await jobApplicationRepository.searchAppliedJobsCount(searchKey);
-                console.log("adf",jobs);
-                
                 break;
             }
 

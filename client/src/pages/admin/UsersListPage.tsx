@@ -38,7 +38,6 @@ function UsersListPage() {
         let usersData: IResponse | [] = [];
         if (isCandidateUrl) {
             if (!searchKey) {
-                console.log("no search key");
                 usersData = await getAllCandidatesApi(
                     currentPage,
                     USERS_PER_PAGE

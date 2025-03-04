@@ -139,7 +139,6 @@ export = {
         skip: number,
         limit: number,
     ): Promise<IJobApplicationDocument[] | []> => {
-        console.log(searchKey);
         
         const searchedJobs: IJobApplicationDocument[] | [] = await jobApplicationModel
             .aggregate([
