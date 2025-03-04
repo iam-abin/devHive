@@ -1,4 +1,4 @@
-interface IAppConfig {
+export interface IAppConfig {
     PORT: string | number;
     API_PREFIX: string;
     MONGO_URL_PAYMENT: string;

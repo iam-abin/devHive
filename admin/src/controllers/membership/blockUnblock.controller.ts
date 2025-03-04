@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import { IDependency } from '../../frameworks/types/dependency';
 import { kafkaClient } from '../../config/kafka.connection';
-// import { JobUpdatedEventPublisher } from "../../frameworks/services/kafka-events/publishers/job-updated-publisher";
 import { MemberShipPlanUpdatedEventPublisher } from '../../frameworks/utils/kafka-events/publishers/membership-plan-updated-publisher ';
 import { NotFoundError } from '@abijobportal/common';
 
