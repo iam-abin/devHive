@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { IDependency } from '../../frameworks/types/dependency';
+import { IJwtPayload } from '@abijobportal/common';
 
 export = (dependencies: IDependency) => {
     const {
@@ -8,8 +9,8 @@ export = (dependencies: IDependency) => {
 
     return async (req: Request, res: Response) => {
         const { membershipPlanId, amount } = req.body;
-        const { userId: candidateId } = req.currentUser!;
-
+        const { userId: candidateId } = req.currentUser as IJwtPayload;
+        
         const paymentCreated = await createPaymentUseCase(dependencies).execute(
             candidateId,
             membershipPlanId,

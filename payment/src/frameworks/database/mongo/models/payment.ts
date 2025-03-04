@@ -4,7 +4,6 @@ import { IPayment } from '../../../types/payment';
 export interface IPaymentDocument extends mongoose.Document {
     candidateId: mongoose.Schema.Types.ObjectId;
     membershipPlanId: mongoose.Schema.Types.ObjectId;
-    stripeId: mongoose.Schema.Types.ObjectId;
 }
 
 const paymentSchema = new mongoose.Schema(
@@ -18,7 +17,7 @@ const paymentSchema = new mongoose.Schema(
             required: true,
         },
         stripeId: {
-            type: mongoose.Schema.Types.ObjectId,
+            type: String,
             required: true,
         },
     },

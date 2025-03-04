@@ -1,6 +1,4 @@
 const TableShimmer = ({ columnCount, rowCount }: { columnCount: number; rowCount: number }) => {
-    console.log(Array.from({ length: rowCount }));
-    console.log(Array.from({ length: columnCount }));
     
     return (
         <tbody>

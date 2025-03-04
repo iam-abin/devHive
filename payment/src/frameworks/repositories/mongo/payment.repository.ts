@@ -13,6 +13,7 @@ export = {
         stripeId: string;
         membershipPlanId: string;
     }): Promise<IPaymentDocument> => {
+        
         const payment = PaymentModel.buildPayment({
             candidateId,
             membershipPlanId,

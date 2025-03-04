@@ -110,8 +110,6 @@ function LandingPage() {
         if (filteredJobs && filteredJobs.data) {
             dispatch(setCurrentPage(1));
             dispatch(setJobs(filteredJobs.data.jobs));
-            // console.log();
-
             dispatch(setTotalNumberOfPages(filteredJobs.data.numberOfPages));
             setIsFiltering(true);
         } else {
