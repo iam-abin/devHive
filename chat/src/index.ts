@@ -1,4 +1,4 @@
-import { appConfig } from './config/appConfig';
+import { appConfig, IAppConfig } from './config/appConfig';
 import { connectDB } from './config/db.connection';
 import { kafkaClient } from './config/kafka.connection';
 import { httpServer } from './frameworks/express/app';
@@ -10,9 +10,22 @@ import { setupSocketIO } from './frameworks/webSocket/socket';
 const start = async () => {
     console.log('chat service Starting up....');
 
-    if (!appConfig.MONGO_URL_CHAT) throw new Error('MONGO_URL_CHAT must be defined');
-    if (!appConfig.JWT_SECRET_KEY) throw new Error('JWT_SECRET_KEY must be defined');
-    if (!appConfig.JWT_REFRESH_SECRET_KEY) throw new Error('JWT_REFRESH_SECRET_KEY must be defined');
+    // Env checking
+    const REQUIRED_ENV_VARIABLES = (Object.keys(appConfig) as (keyof IAppConfig)[])
+
+    const missingEnvVariables: string[] = REQUIRED_ENV_VARIABLES.filter((key: keyof IAppConfig) => {
+        const value: string | number | string[] = appConfig[key];
+        return !value || (Array.isArray(value) && !value.length);
+    });
+
+    if (missingEnvVariables.length) {
+        // eslint-disable-next-line no-console
+        console.error(
+            `🚨 Missing the following required environment variable${missingEnvVariables.length === 1 ? '' : 's'}: ` +
+            `${missingEnvVariables.map((variable) => `"${variable}"`).join(', ')} `,
+        );
+        process.exit(1);
+    }
 
     console.log('before socket instance');
     setupSocketIO(httpServer);
